@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. CHIP - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <link rel="stylesheet" href="css/mrchip-styles.css">
+    
+</head>
+<body>
+    <header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html"><div class="header-logo">
+            <div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div></a>
+        </div>
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link">Predicciones</a>
+            <a href="ranking.html" class="nav-link">Ranking</a>
+            <a href="calendario.html" class="nav-link">Calendario</a>
+            <a href="mrchip.html" class="nav-link active">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link active">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+    <!-- MAIN CONTENT -->
+    <main class="container">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="chip-header">
+                <div class="chip-icon">🤖</div>
+                <div>
+                    <h1>Mr. CHIP</h1>
+                    <p>Análisis en vivo de predicciones por partido</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Selector de Partido -->
+        <section class="match-selector">
+            <div class="selector-label">
+                <span class="selector-icon">⚽</span>
+                Selecciona un partido:
+            </div>
+            <select id="partidoSelect" class="partido-select">
+                <option value="">Cargando partidos...</option>
+            </select>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-container">
+            <div class="spinner"></div>
+            <p>Cargando datos del partido...</p>
+        </div>
+
+        <!-- VS Card Principal -->
+        <section id="vsCard" class="vs-card" style="display: none;">
+            <!-- Match Info -->
+            <div class="match-info">
+                <div class="match-date" id="matchDate">11 Jun 2026 - 14:00</div>
+                <div class="match-phase" id="matchPhase">Fase de Grupos</div>
+                <div class="match-status" id="matchStatus">
+                    <span class="status-badge pending">Pendiente</span>
+                </div>
+            </div>
+
+            <!-- VS Section -->
+            <div class="vs-section">
+                <div class="team team-home" id="teamHome">
+                    <div class="team-flag">🇲🇽</div>
+                    <div class="team-name">MÉXICO</div>
+                    <div class="team-score" id="scoreHome">-</div>
+                </div>
+
+                <div class="vs-divider">
+                    <span class="vs-text">VS</span>
+                </div>
+
+                <div class="team team-away" id="teamAway">
+                    <div class="team-flag">🇿🇦</div>
+                    <div class="team-name">SUDÁFRICA</div>
+                    <div class="team-score" id="scoreAway">-</div>
+                </div>
+            </div>
+
+            <!-- Stats Summary -->
+            <div class="stats-summary">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalPredicciones">0</span>
+                    <span class="stat-label">Predicciones</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="porcentajeLocal">0%</span>
+                    <span class="stat-label">Ganador Local</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="porcentajeEmpate">0%</span>
+                    <span class="stat-label">Empate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="porcentajeVisitante">0%</span>
+                    <span class="stat-label">Ganador Visitante</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Predictions Grid -->
+        <section id="predictionsGrid" class="predictions-grid" style="display: none;">
+            <!-- Columna Local -->
+            <div class="prediction-column column-local">
+                <div class="column-header">
+                    <div class="column-icon">🏆</div>
+                    <div class="column-title">GANADOR</div>
+                    <div class="column-subtitle" id="teamLocalName">EQUIPO LOCAL</div>
+                    <div class="column-count" id="countLocal">0</div>
+                </div>
+                <div class="users-list" id="usersLocal">
+                    <!-- Se llenará con JS -->
+                </div>
+            </div>
+
+            <!-- Columna Empate -->
+            <div class="prediction-column column-empate">
+                <div class="column-header">
+                    <div class="column-icon">🤝</div>
+                    <div class="column-title">EMPATE</div>
+                    <div class="column-subtitle">RESULTADO IGUALADO</div>
+                    <div class="column-count" id="countEmpate">0</div>
+                </div>
+                <div class="users-list" id="usersEmpate">
+                    <!-- Se llenará con JS -->
+                </div>
+            </div>
+
+            <!-- Columna Visitante -->
+            <div class="prediction-column column-visitante">
+                <div class="column-header">
+                    <div class="column-icon">🏆</div>
+                    <div class="column-title">GANADOR</div>
+                    <div class="column-subtitle" id="teamVisitanteName">EQUIPO VISITANTE</div>
+                    <div class="column-count" id="countVisitante">0</div>
+                </div>
+                <div class="users-list" id="usersVisitante">
+                    <!-- Se llenará con JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Usuarios sin predicción -->
+        <section id="sinPrediccionSection" class="sin-prediccion-section" style="display: none;">
+            <div class="section-header">
+                <span class="section-icon">⏳</span>
+                <h3>Sin Predicción</h3>
+            </div>
+            <div class="users-sin-prediccion" id="usersSinPrediccion">
+                <!-- Se llenará con JS -->
+            </div>
+        </section>
+
+        <!-- Empty State -->
+        <section id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-icon">📊</div>
+            <h3>Sin Predicciones</h3>
+            <p>Aún no hay predicciones registradas para este partido.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/mrchip.js"></script>
+</body>
+</html>

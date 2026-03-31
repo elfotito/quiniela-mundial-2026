@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicciones - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <link rel="stylesheet" href="css/predicciones-styles.css">
+</head>
+<body>
+    <header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <a href="index.html"><div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div></a>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link active">Predicciones</a>
+            <a href="ranking.html" class="nav-link">Ranking</a>
+            <a href="calendario.html" class="nav-link">Calendario</a>
+            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link active">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+    
+    <!-- HERO SECTION -->
+    <section class="hero-hero-prediccion">
+        <div class="hero-overlay"></div>
+        <div class="hero-content"><br>
+            <div class="hero-badge"></div>
+            <h1 class="hero-title">Predicciones</h1>
+            <p class="hero-subtitle"></p>
+        </div>
+    </section>
+    
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="main-container">
+        
+        <!-- TABS DE NAVEGACIÓN -->
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="pending">
+                <span class="tab-icon">🎯</span>
+                <span>Por Predecir</span>
+            </button>
+            <button class="tab-btn" data-tab="completed">
+                <span class="tab-icon">📋</span>
+                <span>Mis Predicciones</span>
+            </button>
+        </div>
+        
+        <!-- TAB 1: PARTIDOS POR PREDECIR -->
+        <div id="tab-pending" class="tab-content active">
+            <!-- Filtros -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label class="filter-label">Fase</label>
+                    <select class="filter-select" id="filterPhase">
+                        <option value="grupos" selected>Fase de Grupos</option>
+                        <option value="Grupo A">Grupo A</option>
+                        <option value="Grupo B">Grupo B</option>
+                        <option value="Grupo C">Grupo C</option>
+                        <option value="Grupo D">Grupo D</option>
+                        <option value="Grupo E">Grupo E</option>
+                        <option value="Grupo F">Grupo F</option>
+                        <option value="Grupo G">Grupo G</option>
+                        <option value="Grupo H">Grupo H</option>
+                        <option value="Grupo I">Grupo I</option>
+                        <option value="Grupo J">Grupo J</option>
+                        <option value="Grupo K">Grupo K</option>
+                        <option value="Grupo L">Grupo L</option>
+                        <!-- DESBLOQUEAR EN FASE ELIMINATORIA
+                        <option value="16vos">Dieciseisavos</option>
+                        <option value="8vos">Octavos de Final</option>
+                        <option value="4tos">Cuartos de Final</option>
+                        <option value="Semifinal">Semifinales</option>
+                        <option value="Final">Final</option>-->
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Ordenar por</label>
+                    <select class="filter-select" id="sortBy">
+                        <option value="fechacercana" selected>Fecha más cercana</option>
+                        <option value="fechalejana">Fecha más lejana</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Grid de partidos -->
+            <div id="matchesGrid" class="matches-grid">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 1rem; color: var(--text-gray);">Cargando partidos...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TAB 2: PREDICCIONES REALIZADAS -->
+        <div id="tab-completed" class="tab-content">
+                <!-- Filtros para predicciones realizadas -->
+    <div class="filters-bar">
+        <div class="filter-group">
+            <label class="filter-label">Fase</label>
+            <select class="filter-select" id="filterPhaseCompleted">
+                <option value="grupos" selected>Fase de Grupos</option>
+                <option value="Grupo A">Grupo A</option>
+                <option value="Grupo B">Grupo B</option>
+                <option value="Grupo C">Grupo C</option>
+                <option value="Grupo D">Grupo D</option>
+                <option value="Grupo E">Grupo E</option>
+                <option value="Grupo F">Grupo F</option>
+                <option value="Grupo G">Grupo G</option>
+                <option value="Grupo H">Grupo H</option>
+                <option value="Grupo I">Grupo I</option>
+                <option value="Grupo J">Grupo J</option>
+                <option value="Grupo K">Grupo K</option>
+                <option value="Grupo L">Grupo L</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label class="filter-label">Ordenar por</label>
+            <select class="filter-select" id="sortByCompleted">
+                <option value="fechacercana">Fecha más cercana</option>
+                <option value="fechalejana">Fecha más lejana</option>
+            </select>
+        </div>
+    </div>
+            <div id="completedList" class="predictions-list">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 1rem; color: var(--text-gray);">Cargando predicciones...</p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/predicciones.js"></script>
+</body>
+</html>

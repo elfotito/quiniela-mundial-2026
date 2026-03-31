@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Quiniela - Mundial 2026</title>
+    <link rel="stylesheet" href="css/quiniela-styles.css">
+    <link rel="stylesheet" href="css/index-styles.css">
+<style>
+:root {
+    /* FIFA Colors */
+    --fifa-blue: #0066CC;
+    --fifa-dark-blue: #003d7a;
+    --fifa-gold: #FFD700;
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --dark-card-hover: #252525;
+    --text-white: #ffffff;
+    --text-gray: #a0a0a0;
+    --border-color: #333333;
+    --success: #00D084;
+    --warning: #FFB800;
+    --error: #FF4444;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    
+    /* Transitions */
+    --transition: all 0.3s ease;
+}
+/* ESTILOS ULTRA COMPACTOS - RESULTADO IZQ, PREDICCIÓN DER */
+.prediction-item {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: 70px 1fr 140px 140px 150px;
+    gap: 1.5rem;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.prediction-item:hover {
+    border-color: var(--text-gray);
+    transform: translateX(3px);
+}
+
+.prediction-item.exacto { border-left: 4px solid var(--success); }
+.prediction-item.parcial { border-left: 4px solid var(--fifa-gold); }
+.prediction-item.fallado { border-left: 4px solid var(--error); }
+
+/* Fecha compacta */
+.prediction-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.prediction-day {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    line-height: 1;
+}
+
+.prediction-month {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+}
+
+/* Equipos compactos */
+.prediction-match {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.prediction-team {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.team-flag {
+    font-size: 1.8rem;
+}
+
+.team-name {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.match-vs {
+    font-weight: 700;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* RESULTADO REAL - IZQUIERDA */
+.real-score-column {
+    text-align: center;
+}
+
+.real-score-label {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.real-score-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.real-score-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    min-width: 30px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.real-score-separator {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    font-weight: 700;
+}
+
+/* TU PREDICCIÓN - DERECHA */
+.prediction-score-column {
+    text-align: center;
+}
+
+.prediction-score-label {
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.prediction-score-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.prediction-score-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    min-width: 30px;
+    text-align: center;
+}
+
+.prediction-score-separator {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    font-weight: 700;
+}
+
+/* Resultado - columna derecha */
+.prediction-result {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+}
+/* Estructura principal de la tarjeta de partido */
+.match-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Contenedor de equipos y VS */
+.match-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;  /* Tres columnas: equipo1, VS, equipo2 */
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Cada equipo se alinea a su lado */
+.match-team.home {
+    justify-self: start;  /* se pega a la izquierda */
+    text-align: left;
+}
+
+.match-team.away {
+    justify-self: end;    /* se pega a la derecha */
+    text-align: right;
+}
+
+/* VS siempre centrado horizontalmente */
+.match-vs {
+    font-weight: 700;
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0 0.5rem;
+}
+
+/* Para móviles: apilar verticalmente */
+@media (max-width: 768px) {
+    .match-teams {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .match-team.home,
+    .match-team.away {
+        justify-self: center;
+        text-align: center;
+    }
+    
+    .match-vs {
+        order: 2;  /* hace que el VS quede entre los equipos al apilar */
+        margin: 0.5rem 0;
+    }
+}
+.result-badge {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.result-badge.exacto {
+    background: rgba(76, 175, 80, 0.25);
+    color: var(--success);
+}
+
+.result-badge.parcial {
+    background: rgba(255, 215, 0, 0.25);
+    color: var(--fifa-gold);
+}
+
+.result-badge.fallado {
+    background: rgba(244, 67, 54, 0.25);
+    color: var(--error);
+}
+
+.result-badge.pendiente {
+    background: rgba(160, 160, 160, 0.25);
+    color: var(--text-gray);
+}
+
+.result-points {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    line-height: 1;
+}
+
+.result-label {
+    color: var(--text-gray);
+    font-size: 0.65rem;
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+}
+
+/* Sin desglose en versión compacta */
+.points-breakdown {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .prediction-item {
+        grid-template-columns: 60px 1fr 120px 120px 130px;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .team-name {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .prediction-item {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .prediction-match {
+        justify-content: center;
+    }
+    
+    .real-score-column,
+    .prediction-score-column {
+        border-top: 1px solid var(--border-color);
+        padding-top: 0.75rem;
+    }
+}
+</style>
+</head>
+<body>
+<header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <a href="index.html"><div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div></a>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="quiniela.html" class="nav-link active">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link">Predicciones</a>
+            <a href="ranking.html" class="nav-link">Ranking</a>
+            <a href="calendario.html" class="nav-link">Calendario</a>
+            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link active">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+    
+    <!-- HERO SECTION -->
+    <section class="hero-hero-quiniela">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Mi Quiniela</h1>
+        </div>
+    </section>
+    
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="main-container">
+        
+        <!-- RESUMEN RÁPIDO -->
+        <section class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/alineacion.png" alt="D"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPredicciones">0</div>
+                    <div class="stat-label">Partidos Jugados</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/star.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPuntos">0</div>
+                    <div class="stat-label">Puntos</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/trofeo.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPosicion">-</div>
+                    <div class="stat-label">Posición</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/efectividad.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statEfectividad">0%</div>
+                    <div class="stat-label">Efectividad</div>
+                </div>
+            </div>
+        </section>
+        <!-- GRÁFICOS -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>📊 Distribución de Resultados</h3>
+                <div class="chart-container">
+                    <canvas id="effectivenessChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h3>📈 Evolución de Puntos</h3>
+                <div class="chart-container">
+                    <canvas id="pointsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <section class="section-card achievements-section">
+            <div class="section-header">
+                    <h3>🏆 Logros</h3>
+                <div class="achievements-counter">
+                    <span id="achievementsCount">0/8</span>
+                </div>
+            </div>
+            <div class="achievements-carousel">
+                <button class="carousel-btn prev" onclick="scrollAchievements('left')">‹</button>
+                <div id="achievementsGrid" class="achievements-grid"></div>
+                <button class="carousel-btn next" onclick="scrollAchievements('right')">›</button>
+            </div>
+        </section>
+        <div class="two-columns-grid">   
+        <section class="section-card">
+            <div class="section-header">
+                <h3>
+                    ⚠️ Partidos sin predicciónes
+                </h3>
+                <a href="predicciones.html" class="section-link">Hacer predicciones →</a>
+            </div>
+            
+            <div id="upcomingMatches">
+                <div class="loading">Cargando partidos...</div>
+            </div>
+        </section>
+            
+    
+        <section class="section-card">
+                    <div class="section-header">
+                        <h3>
+                            ⚽ Próximos partidos
+                        </h3>
+                        <a href="predicciones.html" class="section-link">Ver todos →</a>
+                    </div>
+                    
+                    <div class="matches-list" id="proximosPartidos">
+                        <div class="loading">Cargando partidos...</div>
+                    </div>
+        </section>
+       </div>
+
+
+        <!-- HISTORIAL DE PREDICCIONES -->
+        <section class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-icon">📜</span>
+                    Mi Quiniela
+                </h2>
+            </div>
+            <div class="history-filters">
+                <div class="phase-filters">
+                    <button class="phase-filter-btn active" onclick="cambiarFiltroFase('todas')">Todas</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('grupos')">Fase de Grupos</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('16vos')">Diesicesavos de final</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('8vos')">Octavos de final</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('4tos')">Cuartos de final</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('Semis')">Semifinales</button>
+                    <button class="phase-filter-btn" onclick="cambiarFiltroFase('Final')">Final</button>
+                </div>
+            </div>
+            <div class="history-filters">
+                <button class="filter-btn active" data-filter="todas">Todas</button>
+                <button class="filter-btn" data-filter="exactas">Exactas (9pts)</button>
+                <button class="filter-btn" data-filter="parciales7">Ganador + Marcador (7pts)</button>
+                <button class="filter-btn" data-filter="parciales5">Ganador o Empate (5pts)</button>
+                <button class="filter-btn" data-filter="parciales2">Solo Marcador (2pts)</button>
+                <button class="filter-btn" data-filter="falladas">Falladas (0pts)</button>
+                <button class="filter-btn" data-filter="pendientes">Pendientes</button>
+            </div>
+            
+            <div class="predictions-list" id="predictionsList">
+                <div class="loading">Cargando predicciones...</div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Drogueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/quiniela.js"></script>
+</body>
+</html>

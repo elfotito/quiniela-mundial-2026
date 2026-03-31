@@ -1,0 +1,1413 @@
+/* ===============================================
+   INDEX - ESTILO FIFA WORLD CUP 2026
+   =============================================== */
+
+:root {
+    /* Colores FIFA */
+    --fifa-blue: #0C87D1;
+    --fifa-dark-blue: #2A398D;
+    --fifa-gold: #ffd830;
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --text-white: #ffffff;
+    --text-gray: #D1D4D1;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --success: #3CAC3B;
+    --error: #f44336;
+}
+
+/* ===============================================
+   RESET Y BASE
+   =============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-white);
+    line-height: 1.6;
+}
+
+/* ===============================================
+   HEADER
+   =============================================== */
+
+.header {
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+        .content-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title-main {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-icon { font-size: 2.5rem; }
+        .content-text { color: #a0a0a0; line-height: 1.8; margin-bottom: 1.5rem; }
+        
+        .rule-list { list-style: none; padding: 0; }
+        .rule-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid #FFD700;
+            display: flex;
+            gap: 1rem;
+        }
+        .rule-number { font-size: 1.5rem; font-weight: 900; color: #FFD700; min-width: 40px; }
+        .rule-content { flex: 1; color: #a0a0a0; }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 204, 0.1));
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .highlight-title { font-size: 1.5rem; font-weight: 900; color: #FFD700; margin-bottom: 0.5rem; }
+        .highlight-text { color: white; font-size: 1.1rem; }
+        
+        .link-sistema {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0066CC, #003d7a);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .link-sistema:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
+        }
+        .term-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, var(--dark-card), #1f1f1f);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--fifa-blue);
+}
+
+.stat-icon {
+    width: 80px;        /* Tamaño fijo para el contenedor */
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;     /* Evita que se encoja */
+}
+
+.stat-icon img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    display: block;      /* Elimina espacios extras */
+}
+
+.stat-info h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--fifa-gold);
+    margin-bottom: 0.25rem;
+}
+
+.stat-info p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* Color variations */
+.stat-card.predictions { border-left: 4px solid var(--fifa-blue); }
+.stat-card.points { border-left: 4px solid var(--fifa-gold); }
+.stat-card.position { border-left: 4px solid var(--success); }
+.stat-card.accuracy { border-left: 4px solid var(--warning); }
+
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+/* Logo */
+.header {
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    overflow: visible; /* IMPORTANTE: permite que el logo sobresalga */
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative; /* IMPORTANTE */
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 1002;
+}
+
+.logo-icon {
+    position: absolute;
+    left: -20%;
+    top: 100%;
+    transform: translateY(-40%); /* Centra verticalmente con el header */
+    background: #1a1a1a;
+    padding: 0.10rem;
+    border-radius: 12px;
+    z-index: 1002;
+}
+
+.logo-icon img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.logo-text {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px; /* Espacio para el logo */
+}
+
+.logo-main {
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--fifa-gold);
+}
+
+.logo-sub {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-gray);
+}
+
+/* Navegación Desktop */
+.nav-desktop {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.nav-link {
+    padding: 0.75rem 1.25rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+    color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: var(--fifa-gold);
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.user-icon {
+    font-size: 1.1rem;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.btn-admin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid var(--fifa-gold);
+    border-radius: 8px;
+    color: var(--fifa-gold);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+    background: rgba(255, 215, 0, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-logout {
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-gray);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+/* Menú móvil */
+.btn-menu-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+    width: 24px;
+    height: 2px;
+    background: var(--text-white);
+    transition: all 0.3s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+    content: '';
+    display: block;
+}
+
+.menu-icon::before {
+    transform: translateY(-6px);
+}
+
+.menu-icon::after {
+    transform: translateY(4px);
+}
+
+.nav-mobile {
+    display: none;
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+}
+
+.nav-mobile-link {
+    display: block;
+    padding: 0.75rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-mobile-link:hover,
+.nav-mobile-link.active {
+    color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+/* ===============================================
+   HERO SECTION
+   =============================================== */
+
+.hero {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue)),
+                url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=2000') center/cover;
+    background-blend-mode: overlay;
+}
+
+.hero-hero-terminos {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../img/terminos.png') center/cover;
+    background-blend-mode: overlay;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+    .hero-hero-terminos {
+        height: 400px; /* Altura reducida en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-hero-terminos {
+        height: 350px;
+    }
+}
+
+.hero-hero-reglamento {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../img/reglamento.png') center/cover;
+    background-blend-mode: overlay;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+    .hero-hero-reglamento {
+        height: 400px; /* Altura reducida en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-hero-reglamento {
+        height: 350px;
+    }
+}
+
+.hero-hero-sistema {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../img/sistema.png') center/cover;
+    background-blend-mode: overlay;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+    .hero-hero-sistema {
+        height: 400px; /* Altura reducida en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-hero-sistema {
+        height: 350px;
+    }
+}
+
+.hero-hero-calendario {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../img/calendario.png') center/cover;
+    background-blend-mode: overlay;
+}
+
+/* Versión responsive */
+@media (max-width: 768px) {
+    .hero-hero-terminos {
+        height: 400px; /* Altura reducida en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-hero-terminos {
+        height: 350px;
+    }
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(10, 10, 10, 0.8));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-badge {
+    font-size: 2.5rem;
+    letter-spacing: 1rem;
+    margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* Para más énfasis, puedes usar múltiples sombras */
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-hero {
+    padding: 1rem 2.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-hero.primary {
+    background: var(--fifa-gold);
+    color: #000;
+}
+
+.btn-hero.primary:hover {
+    background: #ffd000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-hero.secondary {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-hero.secondary:hover {
+    background: white;
+    color: #000;
+}
+
+/* ===============================================
+   CARRIL DE NOTICIAS
+   =============================================== */
+
+.news-ticker {
+    background: var(--fifa-blue);
+    padding: 1rem 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative; /* Añadido para contexto de apilamiento */
+}
+
+.ticker-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 2rem;
+    font-weight: 700;
+    white-space: nowrap;
+    background: var(--dark-card);
+    height: 100%;
+    position: relative; /* Añadido */
+    z-index: 10; /* Añadido - valor alto para estar por encima */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* Opcional: sombra para destacar */
+}
+
+.ticker-content {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    gap: 3rem;
+    position: relative; /* Añadido */
+    z-index: 1; /* Añadido - valor bajo para estar por debajo */
+}
+
+.ticker-item {
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Opcional: si quieres un efecto más profesional */
+.ticker-label::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 0;
+    height: 100%;
+    width: 10px;
+    background: linear-gradient(to right, var(--dark-card), transparent);
+    pointer-events: none;
+}
+
+/* ===============================================
+   CONTENEDOR PRINCIPAL
+   =============================================== */
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* ===============================================
+   ESTADÍSTICAS RÁPIDAS
+   =============================================== */
+
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--fifa-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.15);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--fifa-gold);
+}
+
+.stat-label {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* ===============================================
+   GRID DE CONTENIDO
+   =============================================== */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/*.content-lefhalf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}*/
+.content-righthalf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* ===============================================
+   SECCIONES
+   =============================================== */
+
+.section-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.title-icon {
+    font-size: 1.75rem;
+}
+
+.section-link {
+    color: var(--fifa-blue);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.section-link:hover {
+    color: var(--fifa-gold);
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-gray);
+}
+
+/* Info Card */
+.info-card {
+    background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+    border-color: var(--fifa-blue);
+}
+
+.info-icon {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.info-icon img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+}
+
+.info-title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.info-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.info-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--fifa-gold);
+    font-weight: bold;
+}
+
+.btn-info {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===============================================
+   FOOTER
+   =============================================== */
+
+.footer {
+    background: var(--dark-card);
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.footer-title {
+    color: var(--fifa-gold);
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    display: block;
+    color: var(--text-gray);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--fifa-gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* ===============================================
+   ANIMACIONES
+   =============================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===============================================
+   RESPONSIVE
+   =============================================== */
+
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-desktop {
+        display: none;
+    }
+    
+    .btn-menu-mobile {
+        display: flex;
+    }
+    
+    .nav-mobile.active {
+        display: block;
+    }
+    
+    .hero {
+        height: 400px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .quick-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+    }
+    
+    .header-container {
+        padding: 1rem;
+    }
+    
+    .main-container {
+        padding: 2rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quick-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+    }
+    
+    .btn-hero {
+        width: 100%;
+    }
+    
+    .user-info {
+        padding: 0.4rem 0.75rem;
+    }
+    
+    .user-name {
+        display: none;
+    }
+}
+/* ===============================================
+   COUNTDOWN DENTRO DEL HERO
+   =============================================== */
+
+.hero {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem;
+    background: linear-gradient(135deg, #0033A0, #0055CC);
+}
+
+.countdown-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.countdown-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+}
+
+.countdown-label h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.countdown-label p {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.countdown-timer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.time-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 80px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.time-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: white;
+}
+
+.time-label {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.25rem;
+}
+
+.btn-view-matches {
+    background: white;
+    color: #0033A0;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-view-matches:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Hero content se mantiene abajo */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .countdown-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .countdown-label {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .time-box {
+        min-width: 60px;
+        padding: 0.75rem;
+    }
+    
+    .time-value {
+        font-size: 1.8rem;
+    }
+    
+    .hero {
+        min-height: 500px;
+    }
+}
+
+/* ===============================================
+   CARRUSEL DE NOTICIAS ESTILO FIFA
+   Agregar a index-styles.css
+   =============================================== */
+
+.hero-carousel {
+    background: linear-gradient(135deg, #0033A0, #0055CC);
+    padding: 2rem;
+    position: relative;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* COUNTDOWN (ya lo tienes, ajustamos levemente) */
+.countdown-container {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* CARRUSEL PRINCIPAL */
+.carousel-main {
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    height: 450px;  /* Añade altura fija aquí también */
+}
+
+.carousel-slides {
+    position: relative;
+    width: 100%;
+    height: 450px;           /* ← Cambiar a height FIJO */
+    overflow: hidden;         /* ← Agregar esto */
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 450px;  /* Ya lo tienes, pero asegúrate que sea fijo */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+/* Contenido del slide */
+.slide-content {
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.slide-text {
+    max-width: 500px;
+}
+
+.slide-category {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid var(--fifa-gold);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--fifa-gold);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.slide-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.slide-description {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.btn-read-more {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: white;
+    color: #0033A0;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-read-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Imagen del slide */
+.slide-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 12px 12px 0;
+}
+
+/*.slide-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #0033A0 0%, transparent 50%);
+    z-index: 1;
+}*/
+
+.slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.carousel-slide.active .slide-image img {
+    transform: scale(1.05);
+}
+
+/* NAVEGACIÓN INFERIOR */
+.carousel-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1400px;
+    width: 100%;
+    margin: 2rem auto 0;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-arrow {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+.carousel-thumbnails {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    flex: 1;
+}
+
+.carousel-thumbnails::-webkit-scrollbar {
+    display: none;
+}
+
+.thumbnail {
+    flex: 0 0 280px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.thumbnail:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.thumbnail.active {
+    border-color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.thumb-category {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--fifa-gold);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.thumb-title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.thumb-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--fifa-gold);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.thumbnail.active .thumb-progress {
+    animation: progressBar 5s linear;
+}
+
+@keyframes progressBar {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .carousel-slide {
+        grid-template-columns: 1fr;
+    }
+    
+    .slide-image {
+        display: none;
+    }
+    
+    .slide-content {
+        padding: 2rem;
+    }
+    
+    .slide-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-nav {
+        flex-wrap: wrap;
+    }
+    
+    .carousel-thumbnails {
+        order: -1;
+        width: 100%;
+    }
+    
+    .thumbnail {
+        flex: 0 0 220px;
+    }
+    
+    .countdown-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .carousel-slides {
+        height: 400px;  /* ← Cambiar a height: 400px; */
+    }
+    
+    .carousel-slide {
+        height: 400px;       /* ✅ Mantener fijo */
+    }
+    
+    .slide-title {
+        font-size: 1.75rem;
+    }
+}

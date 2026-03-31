@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/login-styles.css">
+</head>
+<body>
+    <!-- Contenedor split -->
+    <div class="split-container">
+        
+        <!-- LADO IZQUIERDO: Imagen y mensaje -->
+        <div class="split-left">
+            <br><br><br>
+            <div class="brand-logo">
+                <img src="img/logoblanco.png" alt="logologin" class="logo-login">
+            </div>
+            <br>
+            <div class="hero-content">
+                <h2 class="hero-title">El Mundial al alcance de tus manos.</h2>
+                <p class="hero-description">
+                    Compite con tus amigos y vive la emoción del Mundial <br>USA • México • Canadá 2026.
+                </p>
+                <div class="hero-flags">🇺🇸 🇲🇽 🇨🇦</div>
+            </div>
+            
+            <div class="hero-footer">
+                <p>©2026 Drogueria Carrisan, C.A. Todos los derechos reservados.</p>
+            </div>
+        </div>
+        
+        <!-- LADO DERECHO: Formulario -->
+        <div class="split-right">
+            <div class="form-container">
+                
+                <div class="form-header">
+                    <h2 class="form-title">Iniciar Sesión</h2>
+                    <p class="form-subtitle">Ingresa tu código de acceso para continuar</p>
+                </div>
+                
+                <!-- Mensajes -->
+                <div class="message error-message" id="errorMessage" style="display: none;">
+                    <span class="message-icon">⚠️</span>
+                    <span class="message-text"></span>
+                </div>
+
+                <div class="message success-message" id="successMessage" style="display: none;">
+                    <span class="message-icon">✅</span>
+                    <span class="message-text"></span>
+                </div>
+                
+                <!-- Formulario -->
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="codigoInput" class="form-label">Código de Acceso</label>
+                        <input 
+                            type="text" 
+                            id="codigoInput" 
+                            class="form-input"
+                            placeholder="Ej: PEDRO2026"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="loginBtn">
+                        <span class="btn-text">Ingresar</span>
+                    </button>
+                </form>
+                
+                <!-- Divider -->
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">¿Nuevo aquí?</span>
+                    <span class="divider-line"></span>
+                </div>
+                
+                <!-- Botón de registro -->
+                <a href="registro.html" class="btn-secondary">
+                    Crear Cuenta
+                </a>
+                
+                <!-- Footer links -->
+                <div class="form-footer">
+                    <a href="reglamento.html" class="footer-link">Reglamento</a>
+                    <span class="footer-separator">|</span>
+                    <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const codigoInput = document.getElementById('codigoInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Auto-focus
+        codigoInput.focus();
+
+        // Convertir a mayúsculas
+        codigoInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase();
+        });
+
+        // Manejar envío
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const codigo = codigoInput.value.trim();
+
+            if (!codigo) {
+                mostrarError('Por favor ingresa tu código de acceso');
+                return;
+            }
+
+            // Loading
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Verificando...</span>';
+
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ codigo })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Error al iniciar sesión');
+                }
+
+                // Login exitoso
+                auth.setUser(data.usuario);
+                
+                mostrarExito('¡Bienvenido! Redirigiendo...');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+
+            } catch (error) {
+                console.error('Error en login:', error);
+                mostrarError(error.message);
+                
+                // Restaurar botón
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<span class="btn-text">Ingresar</span>';
+            }
+        });
+
+        function mostrarError(mensaje) {
+            errorMessage.querySelector('.message-text').textContent = mensaje;
+            errorMessage.style.display = 'flex';
+            successMessage.style.display = 'none';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        function mostrarExito(mensaje) {
+            successMessage.querySelector('.message-text').textContent = mensaje;
+            successMessage.style.display = 'flex';
+            errorMessage.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

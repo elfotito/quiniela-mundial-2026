@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Puntuación - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <style>
+        .hero-sistema {
+            height: 300px;
+            background: linear-gradient(135deg, #003d7a, #0066CC);
+        }
+        
+        .content-section {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title-main {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-icon { font-size: 2.5rem; }
+        
+        .points-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .points-table th,
+        .points-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        .points-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            font-weight: 700;
+        }
+        
+        .points-table td:first-child {
+            font-weight: 900;
+            color: #FFD700;
+            font-size: 1.8rem;
+        }
+        
+        .points-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        /* CALCULADORA INTERACTIVA */
+        .calculator-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 2px solid #0066CC;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+        
+        .match-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+        
+        .team-section {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .team-flag {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .score-input {
+            width: 100%;
+            max-width: 120px;
+            padding: 1rem;
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            background: #0a0a0a;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #FFD700;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .score-input:focus {
+            outline: none;
+            border-color: #0066CC;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+        
+        .vs-text {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #666;
+        }
+        
+        .label-text {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #333;
+            margin: 2rem 0;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 10px;
+            color: #0a0a0a;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .result-display {
+            background: rgba(0, 102, 204, 0.1);
+            border: 2px solid #0066CC;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .result-display.show {
+            display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-points {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .result-label {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-explanation {
+            font-size: 1rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .example-box {
+            background: rgba(0, 208, 132, 0.1);
+            border-left: 4px solid #00D084;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .example-title {
+            font-weight: 700;
+            color: #00D084;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .example-content {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .quick-test {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .test-btn {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .test-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="header-logo">
+                <a href="index.html"><div class="logo-icon">
+                    <img src="img/logomenu.png" alt="logomenu">
+                </div>
+                <div class="logo-text">
+                    <img src="img/logoblancomenu.png" alt="logomenu">
+                </div></a>
+            </div>
+            <div class="header-actions">
+                <button class="btn-logout" onclick="history.back()">Volver</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-hero-sistema">
+        <div class="hero-overlay"></div>
+        <div class="hero-content"><br>
+            <div class="hero-badge"></div>
+            <h1 class="hero-title">Sistema de Puntuación</h1>
+            <p class="hero-subtitle"></p>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- TABLA DE PUNTOS -->
+        <section class="content-section">
+            <h2 class="section-title-main">
+                <span class="section-icon">📊</span>
+                Tabla de Puntuación
+            </h2>
+            
+            <table class="points-table">
+                <thead>
+                    <tr>
+                        <th>Puntos</th>
+                        <th>Condición</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>9</td>
+                        <td><strong>Resultado Exacto</strong><br>Aciertas el marcador completo</td>
+                        <td>Predices 2-1, resultado real 2-1 ✅</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><strong>Ganador + Marcador</strong><br>Aciertas quién gana y el marcador de un equipo</td>
+                        <td>Predices 2-1, resultado real 2-0 ✅</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Ganador o empate</strong><br>Aciertas ganador o empate sin acertar marcador</td>
+                        <td>Predices 2-2, resultado real 0-0 ✅</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Marcador</strong><br>Aciertas el marcador de un equipo sin acertar ganador</td>
+                        <td>Predices 2-1, resultado real 2-2 ✅</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td><strong>No hit No run</strong><br>No aciertas nada</td>
+                        <td>Predices 2-1, resultado real 0-0 ❌</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- CALCULADORA INTERACTIVA -->
+        <section class="content-section">
+            <h2 class="section-title-main">
+                <span class="section-icon">🧮</span>
+                Calculadora Interactiva
+            </h2>
+            
+            <p style="color: #a0a0a0; margin-bottom: 2rem;">
+                Ingresa diferentes resultados y ve cuántos puntos obtendrías. ¡Practica aquí!
+            </p>
+
+            <div class="calculator-container">
+                <div class="match-display">
+                    <div class="team-section">
+                        <div class="team-flag">🇲🇽</div>
+                        <div class="team-name">MÉXICO</div>
+                        <div class="label-text">TU PREDICCIÓN</div>
+                        <input type="number" id="predLocal" class="score-input" min="0" max="9" value="2">
+                        <div class="divider"></div>
+                        <div class="label-text">RESULTADO REAL</div>
+                        <input type="number" id="realLocal" class="score-input" min="0" max="9" value="2">
+                    </div>
+
+                    <div style="text-align: center;">
+                        <div class="vs-text">VS</div>
+                    </div>
+
+                    <div class="team-section">
+                        <div class="team-flag">🇧🇷</div>
+                        <div class="team-name">BRASIL</div>
+                        <div class="label-text">TU PREDICCIÓN</div>
+                        <input type="number" id="predVisitante" class="score-input" min="0" max="9" value="1">
+                        <div class="divider"></div>
+                        <div class="label-text">RESULTADO REAL</div>
+                        <input type="number" id="realVisitante" class="score-input" min="0" max="9" value="1">
+                    </div>
+                </div>
+
+                <button class="btn-calculate" onclick="calcularPuntos()">
+                    🎯 CALCULAR PUNTOS
+                </button>
+
+                <div class="result-display" id="resultDisplay">
+                    <div class="result-label">OBTIENES</div>
+                    <div class="result-points" id="resultPoints">9</div>
+                    <div class="result-label" id="resultType">PUNTOS</div>
+                    <div class="result-explanation" id="resultExplanation"></div>
+                </div>
+
+                <!-- PRUEBAS RÁPIDAS -->
+                <div style="margin-top: 2rem;">
+                    <div class="label-text" style="margin-bottom: 1rem;">PRUEBAS RÁPIDAS:</div>
+                    <div class="quick-test">
+                        <button class="test-btn" onclick="cargarEjemplo(2,1,2,1)">Exacto: 2-1 vs 2-1</button>
+                        <button class="test-btn" onclick="cargarEjemplo(3,1,2,1)">Ganador+Dif: 3-1 vs 2-1</button>
+                        <button class="test-btn" onclick="cargarEjemplo(2,1,3,0)">Solo Ganador: 2-1 vs 3-0</button>
+                        <button class="test-btn" onclick="cargarEjemplo(1,1,2,2)">Empate: 1-1 vs 2-2</button>
+                        <button class="test-btn" onclick="cargarEjemplo(2,1,1,2)">Error: 2-1 vs 1-2</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EJEMPLOS DETALLADOS -->
+        <section class="content-section">
+            <h2 class="section-title-main">
+                <span class="section-icon">💡</span>
+                Ejemplos Detallados
+            </h2>
+
+            <div class="example-box">
+                <div class="example-title">🎯 Ejemplo 1: Resultado Exacto (9 puntos)</div>
+                <div class="example-content">
+                    <strong>Predicción:</strong> México 2 - 1 Brasil<br>
+                    <strong>Resultado Real:</strong> México 2 - 1 Brasil<br>
+                    <strong>Puntos:</strong> 9 (acertaste todo perfectamente)
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🎯 Ejemplo 2: Ganador + 1 Acierto de marcador (7 puntos)</div>
+                <div class="example-content">
+                    <strong>Predicción:</strong> México 3 - 0 Brasil (+2 pts por acierto de marcador)<br>
+                    <strong>Resultado Real:</strong> México 2 - 0 Brasil<br>
+                    <strong>Puntos:</strong> 7 (acertaste ganador y 1 marcador)
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🎯 Ejemplo 3: Solo Ganador (5 puntos)</div>
+                <div class="example-content">
+                    <strong>Predicción:</strong> México 2 - 1 Brasil (No acerto goles)<br>
+                    <strong>Resultado Real:</strong> México 3 - 0 Brasil<br>
+                    <strong>Puntos:</strong> 5 (solo acertaste el ganador)
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🎯 Ejemplo 4: Empate Parcial (5 puntos)</div>
+                <div class="example-content">
+                    <strong>Predicción:</strong> México 1 - 1 Brasil (empate)<br>
+                    <strong>Resultado Real:</strong> México 2 - 2 Brasil (empate)<br>
+                    <strong>Puntos:</strong> 5 (acertaste que empatan, pero no el marcador)
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function calcularPuntos() {
+            const predLocal = parseInt(document.getElementById('predLocal').value);
+            const predVisitante = parseInt(document.getElementById('predVisitante').value);
+            const realLocal = parseInt(document.getElementById('realLocal').value);
+            const realVisitante = parseInt(document.getElementById('realVisitante').value);
+
+            let puntos = 0;
+            let tipo = '';
+            let explicacion = '';
+
+            // Resultado exacto
+            if (predLocal === realLocal && predVisitante === realVisitante) {
+                puntos = 9;
+                tipo = '¡RESULTADO EXACTO!';
+                explicacion = `Acertaste el marcador exacto: ${predLocal}-${predVisitante}`;
+            }
+            // Ganador + Diferencia
+            else if ((predLocal === realLocal || predVisitante === realVisitante) && Math.sign(predLocal - predVisitante) === Math.sign(realLocal - realVisitante) && 
+                     (predLocal - predVisitante) !== 0) {
+                puntos = 7;
+                tipo = 'GANADOR + 1 MARCADOR ACERTADO';
+                explicacion = `Acertaste el ganador o el empate y acertaste los goles de un solo equipo (${Math.abs(realLocal - realVisitante)})`;
+            }
+            // Solo ganador
+            else if (Math.sign(predLocal - predVisitante) === Math.sign(realLocal - realVisitante) && 
+                     (predLocal - predVisitante) !== 0) {
+                puntos = 5;
+                tipo = 'SOLO GANADOR O EMPATE';
+                explicacion = `Acertaste quién gana o el empate, pero no los goles`;
+            }
+            else if (predLocal === predVisitante && realLocal === realVisitante) {
+                puntos = 5;
+                tipo = 'SOLO GANADOR O EMPATE';
+                explicacion = `Acertaste quién gana o el empate, pero no los goles`;
+            }
+            // Empate parcial
+            else if (predLocal === realLocal || predVisitante === realVisitante) {
+                puntos = 2;
+                tipo = 'MARCADOR ACERTADO';
+                explicacion = `Acertaste los goles de un equipo pero no el ganador o el empate`;
+            }
+            // Error total
+            else {
+                puntos = 0;
+                tipo = 'SIN PUNTOS';
+                explicacion = `No acertaste nada`;
+            }
+
+            // Mostrar resultado
+            document.getElementById('resultPoints').textContent = puntos;
+            document.getElementById('resultType').textContent = tipo;
+            document.getElementById('resultExplanation').textContent = explicacion;
+            
+            const display = document.getElementById('resultDisplay');
+            display.classList.add('show');
+        }
+
+        function cargarEjemplo(pl, pv, rl, rv) {
+            document.getElementById('predLocal').value = pl;
+            document.getElementById('predVisitante').value = pv;
+            document.getElementById('realLocal').value = rl;
+            document.getElementById('realVisitante').value = rv;
+            calcularPuntos();
+        }
+
+        // Calcular automáticamente al cambiar inputs
+        document.querySelectorAll('.score-input').forEach(input => {
+            input.addEventListener('input', () => {
+                if (document.getElementById('resultDisplay').classList.contains('show')) {
+                    calcularPuntos();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

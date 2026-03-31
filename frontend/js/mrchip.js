@@ -1,0 +1,400 @@
+// mrchip.js - Análisis de predicciones por partido
+
+// Verificar autenticación
+if (!auth.isAuthenticated()) {
+    window.location.href = 'login.html';
+}
+
+const usuario = auth.getUser();
+let todosPartidos = [];
+let partidoActualId = null;
+
+// ===================================
+// FUNCIÓN PARA OBTENER BANDERAS EMOJI
+// ===================================
+
+function obtenerBandera(codigoEquipo) {
+    const banderas = {
+        // CONCACAF
+        'MEX': '🇲🇽', 'USA': '🇺🇸', 'CAN': '🇨🇦', 'CRC': '🇨🇷', 'JAM': '🇯🇲',
+        'PAN': '🇵🇦', 'HON': '🇭🇳', 'TRI': '🇹🇹', 'CUW': '🇨🇼', 'HAI': '🇭🇹',
+        
+        // CONMEBOL
+        'ARG': '🇦🇷', 'BRA': '🇧🇷', 'URU': '🇺🇾', 'COL': '🇨🇴', 'CHI': '🇨🇱',
+        'ECU': '🇪🇨', 'PER': '🇵🇪', 'PAR': '🇵🇾', 'VEN': '🇻🇪', 'BOL': '🇧🇴',
+        
+        // UEFA
+        'ESP': '🇪🇸', 'GER': '🇩🇪', 'FRA': '🇫🇷', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'ITA': '🇮🇹',
+        'NED': '🇳🇱', 'POR': '🇵🇹', 'BEL': '🇧🇪', 'CRO': '🇭🇷', 'DEN': '🇩🇰',
+        'SUI': '🇨🇭', 'AUT': '🇦🇹', 'POL': '🇵🇱', 'SWE': '🇸🇪', 'UKR': '🇺🇦',
+        'WAL': '🏴󠁧󠁢󠁷󠁬󠁳󠁿', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'SRB': '🇷🇸', 'TUR': '🇹🇷',
+        
+        // CAF
+        'SEN': '🇸🇳', 'MAR': '🇲🇦', 'TUN': '🇹🇳', 'NGR': '🇳🇬', 'CMR': '🇨🇲',
+        'GHA': '🇬🇭', 'CIV': '🇨🇮', 'MLI': '🇲🇱', 'BFA': '🇧🇫', 'EGY': '🇪🇬',
+        
+        // AFC
+        'JPN': '🇯🇵', 'KOR': '🇰🇷', 'AUS': '🇦🇺', 'IRN': '🇮🇷', 'KSA': '🇸🇦',
+        'QAT': '🇶🇦', 'IRQ': '🇮🇶', 'UAE': '🇦🇪', 'CHN': '🇨🇳', 'THA': '🇹🇭',
+        
+        // OFC
+        'NZL': '🇳🇿', 'FIJ': '🇫🇯', 'NCL': '🇳🇨', 'PNG': '🇵🇬', 'TAH': '🇵🇫'
+    };
+    
+    return banderas[codigoEquipo] || '⚽';
+}
+
+// ===================================
+// INICIALIZACIÓN
+// ===================================
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Actualizar nombre de usuario
+    const userNameElement = document.getElementById('userName');
+    if (userNameElement && usuario) {
+        userNameElement.textContent = usuario.nombre;
+    }
+
+    // Mostrar botón admin si corresponde
+    if (auth.isAdmin()) {
+        const adminBtn = document.getElementById('adminBtn');
+        if (adminBtn) {
+            adminBtn.style.display = 'flex';
+            adminBtn.onclick = () => window.location.href = 'admin.html';
+        }
+    }
+
+    // Cargar datos iniciales
+    await cargarPartidos();
+    await cargarProximoPartido();
+
+    // Configurar selector de partidos
+    configurarSelectorPartidos();
+});
+
+// ===================================
+// CARGAR PARTIDOS
+// ===================================
+
+async function cargarPartidos() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/partidos`);
+        todosPartidos = await response.json();
+
+        llenarSelectorPartidos();
+    } catch (error) {
+        console.error('Error cargando partidos:', error);
+        mostrarError('Error al cargar la lista de partidos');
+    }
+}
+
+function llenarSelectorPartidos() {
+    const select = document.getElementById('partidoSelect');
+    
+    select.innerHTML = '<option value="">-- Selecciona un partido --</option>';
+    
+    todosPartidos.forEach(partido => {
+        const fechaStr = formatearFecha(partido.fecha_hora);
+        const horaStr = formatearHora(partido.fecha_hora);
+        
+        const option = document.createElement('option');
+        option.value = partido.id;
+        option.textContent = `${fechaStr} ${horaStr} | ${partido.equipo_local} vs ${partido.equipo_visitante}`;
+        
+        if (partido.estado === 'finalizado') {
+            option.textContent += ` (${partido.goles_local_real}-${partido.goles_visitante_real})`;
+        }
+        
+        select.appendChild(option);
+    });
+}
+
+// ===================================
+// CARGAR PRÓXIMO PARTIDO
+// ===================================
+
+async function cargarProximoPartido() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/mrchip/proximo-partido`);
+        const data = await response.json();
+        
+        if (data.id) {
+            partidoActualId = data.id;
+            document.getElementById('partidoSelect').value = data.id;
+            await cargarDatosPartido(data.id);
+        }
+    } catch (error) {
+        console.error('Error cargando próximo partido:', error);
+    }
+}
+
+// ===================================
+// CONFIGURAR SELECTOR
+// ===================================
+
+function configurarSelectorPartidos() {
+    const select = document.getElementById('partidoSelect');
+    
+    select.addEventListener('change', async function() {
+        const partidoId = this.value;
+        
+        if (partidoId) {
+            partidoActualId = partidoId;
+            await cargarDatosPartido(partidoId);
+        }
+    });
+}
+
+// ===================================
+// CARGAR DATOS DEL PARTIDO
+// ===================================
+
+async function cargarDatosPartido(partidoId) {
+    mostrarLoading(true);
+    ocultarSecciones();
+
+    try {
+        // Cargar predicciones del partido
+        const response = await fetch(`${CONFIG.API_URL}/mrchip/partido/${partidoId}`);
+        const data = await response.json();
+
+        // Cargar usuarios sin predicción
+        const sinPredResponse = await fetch(`${CONFIG.API_URL}/mrchip/usuarios-sin-prediccion/${partidoId}`);
+        const usuariosSinPred = await sinPredResponse.json();
+
+        mostrarLoading(false);
+
+        // Mostrar datos
+        mostrarPartido(data.partido);
+        mostrarPredicciones(data.predicciones, data.partido);
+        mostrarUsuariosSinPrediccion(usuariosSinPred);
+        mostrarEstadisticas(data.predicciones, data.total_predicciones);
+
+    } catch (error) {
+        console.error('Error cargando datos:', error);
+        mostrarLoading(false);
+        mostrarError('Error al cargar los datos del partido');
+    }
+}
+
+// ===================================
+// MOSTRAR PARTIDO
+// ===================================
+
+function mostrarPartido(partido) {
+    const vsCard = document.getElementById('vsCard');
+    vsCard.style.display = 'block';
+
+    // Fecha y fase
+    document.getElementById('matchDate').textContent = 
+        `${formatearFecha(partido.fecha_hora)} - ${formatearHora(partido.fecha_hora)}`;
+    document.getElementById('matchPhase').textContent = partido.fase;
+
+    // Estado
+    const statusBadge = document.getElementById('matchStatus');
+    let statusClass = 'pending';
+    let statusText = 'Pendiente';
+
+    if (partido.estado === 'en_juego') {
+        statusClass = 'live';
+        statusText = '🔴 EN VIVO';
+    } else if (partido.estado === 'finalizado') {
+        statusClass = 'finished';
+        statusText = 'Finalizado';
+    }
+
+    statusBadge.innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
+
+    // Equipo local
+    const teamHome = document.getElementById('teamHome');
+    teamHome.querySelector('.team-flag').textContent = obtenerBandera(partido.equipo_local);
+    teamHome.querySelector('.team-name').textContent = partido.equipo_local;
+    
+    const scoreHome = document.getElementById('scoreHome');
+    scoreHome.textContent = partido.goles_local_real !== null ? partido.goles_local_real : '-';
+
+    // Equipo visitante
+    const teamAway = document.getElementById('teamAway');
+    teamAway.querySelector('.team-flag').textContent = obtenerBandera(partido.equipo_visitante);
+    teamAway.querySelector('.team-name').textContent = partido.equipo_visitante;
+    
+    const scoreAway = document.getElementById('scoreAway');
+    scoreAway.textContent = partido.goles_visitante_real !== null ? partido.goles_visitante_real : '-';
+}
+
+// ===================================
+// MOSTRAR PREDICCIONES
+// ===================================
+
+function mostrarPredicciones(predicciones, partido) {
+    const grid = document.getElementById('predictionsGrid');
+    
+    // Actualizar nombres de equipos en columnas
+    document.getElementById('teamLocalName').textContent = partido.equipo_local.toUpperCase();
+    document.getElementById('teamVisitanteName').textContent = partido.equipo_visitante.toUpperCase();
+
+    // Contadores
+    document.getElementById('countLocal').textContent = predicciones.local.length;
+    document.getElementById('countEmpate').textContent = predicciones.empate.length;
+    document.getElementById('countVisitante').textContent = predicciones.visitante.length;
+
+    // Mostrar usuarios en cada columna
+    mostrarUsuariosColumna('usersLocal', predicciones.local);
+    mostrarUsuariosColumna('usersEmpate', predicciones.empate);
+    mostrarUsuariosColumna('usersVisitante', predicciones.visitante);
+
+    // Mostrar grid si hay predicciones
+    const hayPredicciones = predicciones.local.length + predicciones.empate.length + predicciones.visitante.length > 0;
+    
+    if (hayPredicciones) {
+        grid.style.display = 'grid';
+        document.getElementById('emptyState').style.display = 'none';
+    } else {
+        grid.style.display = 'none';
+        document.getElementById('emptyState').style.display = 'flex';
+    }
+}
+
+function mostrarUsuariosColumna(containerId, usuarios) {
+    const container = document.getElementById(containerId);
+    
+    if (usuarios.length === 0) {
+        container.innerHTML = '<div class="empty-column">Sin predicciones</div>';
+        return;
+    }
+
+    container.innerHTML = usuarios.map(user => `
+        <div class="user-card">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <div class="user-name">${user.nombre}</div>
+                <div class="user-prediction">${user.goles_local} - ${user.goles_visitante}</div>
+            </div>
+            ${user.puntos !== null ? `
+                <div class="user-points ${getPuntosClass(user.puntos)}">
+                    ${user.puntos} pts
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
+}
+
+function getPuntosClass(puntos) {
+    if (puntos === 9) return 'points-perfect';
+    if (puntos === 7) return 'points-good';
+    if (puntos === 5 || puntos === 2) return 'points-partial';
+    return 'points-none';
+}
+
+// ===================================
+// MOSTRAR USUARIOS SIN PREDICCIÓN
+// ===================================
+
+function mostrarUsuariosSinPrediccion(usuarios) {
+    const section = document.getElementById('sinPrediccionSection');
+    const container = document.getElementById('usersSinPrediccion');
+
+    if (usuarios.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    container.innerHTML = usuarios.map(user => `
+        <div class="user-sin-pred">
+            <span class="user-avatar-small">👤</span>
+            <span class="user-name-small">${user.nombre}</span>
+        </div>
+    `).join('');
+}
+
+// ===================================
+// MOSTRAR ESTADÍSTICAS
+// ===================================
+
+function mostrarEstadisticas(predicciones, total) {
+    document.getElementById('totalPredicciones').textContent = total;
+
+    if (total === 0) {
+        document.getElementById('porcentajeLocal').textContent = '0%';
+        document.getElementById('porcentajeEmpate').textContent = '0%';
+        document.getElementById('porcentajeVisitante').textContent = '0%';
+        return;
+    }
+
+    const pctLocal = ((predicciones.local.length / total) * 100).toFixed(0);
+    const pctEmpate = ((predicciones.empate.length / total) * 100).toFixed(0);
+    const pctVisitante = ((predicciones.visitante.length / total) * 100).toFixed(0);
+
+    document.getElementById('porcentajeLocal').textContent = `${pctLocal}%`;
+    document.getElementById('porcentajeEmpate').textContent = `${pctEmpate}%`;
+    document.getElementById('porcentajeVisitante').textContent = `${pctVisitante}%`;
+}
+
+// ===================================
+// UI HELPERS
+// ===================================
+
+function mostrarLoading(mostrar) {
+    document.getElementById('loadingState').style.display = mostrar ? 'flex' : 'none';
+}
+
+function ocultarSecciones() {
+    document.getElementById('vsCard').style.display = 'none';
+    document.getElementById('predictionsGrid').style.display = 'none';
+    document.getElementById('sinPrediccionSection').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'none';
+}
+
+function mostrarError(mensaje) {
+    console.error(mensaje);
+    // TODO: Implementar sistema de notificaciones
+}
+
+// ===================================
+// UTILIDADES
+// ===================================
+
+function formatearFecha(fechaStr) {
+    const fecha = new Date(fechaStr);
+    
+    // Verificar si la fecha es válida
+    if (isNaN(fecha.getTime())) {
+        return 'Fecha no disponible';
+    }
+    
+    const opciones = { 
+        day: '2-digit', 
+        month: 'short',
+        year: 'numeric'
+    };
+    
+    return fecha.toLocaleDateString('es-ES', opciones);
+}
+
+function formatearHora(fechaStr) {
+    const fecha = new Date(fechaStr);
+    
+    // Verificar si la fecha es válida
+    if (isNaN(fecha.getTime())) {
+        return '--:--';
+    }
+    
+    const opciones = { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false
+    };
+    
+    return fecha.toLocaleTimeString('es-ES', opciones);
+}
+
+// ===================================
+// LOGOUT
+// ===================================
+
+function logout() {
+    if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+        auth.logout();
+    }
+}

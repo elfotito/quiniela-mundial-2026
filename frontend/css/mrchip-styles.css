@@ -1,0 +1,712 @@
+/* ===============================================
+   MR. CHIP - ANÁLISIS DE PREDICCIONES
+   Nota: Los selectores ::-webkit-scrollbar solo funcionan en Chrome/Safari
+   =============================================== */
+
+:root {
+    --fifa-blue: #0066CC;
+    --fifa-dark-blue: #003d7a;
+    --fifa-gold: #FFD700;
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --border-color: #333333;
+    --success: #00D084;
+    --warning: #FFB800;
+    --error: #FF4444;
+}
+
+/* ===============================================
+   CONTAINER Y LAYOUT BASE
+   =============================================== */
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* ===============================================
+   PAGE HEADER
+   =============================================== */
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.chip-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.chip-icon {
+    font-size: 3rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: #a0a0a0;
+    font-size: 1rem;
+}
+
+/* ===============================================
+   SELECTOR DE PARTIDO
+   =============================================== */
+
+.match-selector {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.selector-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fifa-gold);
+    margin-bottom: 1rem;
+}
+
+.selector-icon {
+    font-size: 1.3rem;
+}
+
+.partido-select {
+    width: 100%;
+    padding: 0.875rem;
+    background: var(--dark-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.partido-select:hover {
+    border-color: var(--fifa-blue);
+}
+
+.partido-select:focus {
+    outline: none;
+    border-color: var(--fifa-gold);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+}
+
+/* ===============================================
+   LOADING STATE
+   =============================================== */
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    gap: 1.5rem;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 215, 0, 0.1);
+    border-top-color: var(--fifa-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===============================================
+   VS CARD - TAMAÑO REDUCIDO
+   =============================================== */
+
+.vs-card {
+    background: linear-gradient(135deg, var(--dark-card) 0%, #1a1a2e 100%);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Match Info */
+.match-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.match-date {
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    font-weight: 500;
+}
+
+.match-phase {
+    padding: 0.4rem 0.875rem;
+    background: rgba(0, 102, 204, 0.2);
+    border: 1px solid var(--fifa-blue);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--fifa-blue);
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 0.4rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-badge.pending {
+    background: rgba(255, 184, 0, 0.2);
+    color: var(--warning);
+    border: 1px solid var(--warning);
+}
+
+.status-badge.live {
+    background: rgba(255, 68, 68, 0.2);
+    color: var(--error);
+    border: 1px solid var(--error);
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+.status-badge.finished {
+    background: rgba(0, 208, 132, 0.2);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* VS Section - REDUCIDO */
+.vs-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    gap: 1.5rem;
+}
+
+.team {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.team-flag {
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.team-name {
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-align: center;
+    color: white;
+}
+
+.team-score {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+}
+
+.vs-text {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #666;
+    letter-spacing: 3px;
+}
+
+/* Stats Summary */
+.stats-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    text-align: center;
+}
+
+/* ===============================================
+   PREDICTIONS GRID
+   =============================================== */
+
+.predictions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.prediction-column {
+    background: var(--dark-card);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.prediction-column:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Column Headers */
+.column-header {
+    padding: 1.25rem;
+    text-align: center;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.column-local .column-header {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.2) 0%, rgba(0, 102, 204, 0.05) 100%);
+}
+
+.column-empate .column-header {
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.2) 0%, rgba(255, 184, 0, 0.05) 100%);
+}
+
+.column-visitante .column-header {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.2) 0%, rgba(255, 68, 68, 0.05) 100%);
+}
+
+.column-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.column-title {
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 0.25rem;
+    letter-spacing: 1px;
+}
+
+.column-local .column-title {
+    color: var(--fifa-blue);
+}
+
+.column-empate .column-title {
+    color: var(--warning);
+}
+
+.column-visitante .column-title {
+    color: var(--error);
+}
+
+.column-subtitle {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.column-count {
+    display: inline-block;
+    padding: 0.35rem 0.875rem;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    color: var(--fifa-gold);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Users List */
+.users-list {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Scrollbar personalizado (solo Chrome/Safari) */
+@supports selector(::-webkit-scrollbar) {
+    .users-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .users-list::-webkit-scrollbar-track {
+        background: var(--dark-bg);
+    }
+
+    .users-list::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 3px;
+    }
+
+    .users-list::-webkit-scrollbar-thumb:hover {
+        background: #444;
+    }
+}
+
+.empty-column {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* User Card */
+.user-card {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.user-card:hover {
+    border-color: var(--fifa-blue);
+    transform: translateX(4px);
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--fifa-blue), var(--fifa-dark-blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.user-prediction {
+    font-size: 0.85rem;
+    color: var(--fifa-gold);
+    font-weight: 700;
+}
+
+.user-points {
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.points-perfect {
+    background: rgba(0, 208, 132, 0.2);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.points-good {
+    background: rgba(0, 102, 204, 0.2);
+    color: var(--fifa-blue);
+    border: 1px solid var(--fifa-blue);
+}
+
+.points-partial {
+    background: rgba(255, 184, 0, 0.2);
+    color: var(--warning);
+    border: 1px solid var(--warning);
+}
+
+.points-none {
+    background: rgba(255, 68, 68, 0.2);
+    color: var(--error);
+    border: 1px solid var(--error);
+}
+
+/* ===============================================
+   SIN PREDICCIÓN SECTION
+   =============================================== */
+
+.sin-prediccion-section {
+    background: var(--dark-card);
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.section-icon {
+    font-size: 1.3rem;
+}
+
+.section-header h3 {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+}
+
+.users-sin-prediccion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.user-sin-pred {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.user-sin-pred:hover {
+    border-color: var(--fifa-gold);
+    transform: translateY(-2px);
+}
+
+.user-avatar-small {
+    font-size: 1.1rem;
+}
+
+.user-name-small {
+    color: #a0a0a0;
+}
+
+/* ===============================================
+   EMPTY STATE
+   =============================================== */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: var(--dark-card);
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.3rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+/* ===============================================
+   FOOTER - ESTILO INDEPENDIENTE
+   =============================================== */
+
+.footer {
+    background: var(--dark-card);
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #a0a0a0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--fifa-gold);
+}
+
+.footer p {
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* ===============================================
+   RESPONSIVE
+   =============================================== */
+
+@media (max-width: 1024px) {
+    .predictions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .vs-section {
+        flex-direction: column;
+        padding: 1.25rem 0;
+    }
+    
+    .team-flag {
+        font-size: 2.5rem;
+    }
+    
+    .team-name {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .vs-card {
+        padding: 1.25rem;
+    }
+    
+    .match-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .team-flag {
+        font-size: 2.5rem;
+    }
+    
+    .team-name {
+        font-size: 1.1rem;
+    }
+    
+    .team-score {
+        font-size: 1.75rem;
+    }
+    
+    .stats-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-links {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .chip-icon {
+        font-size: 2.5rem;
+    }
+    
+    .match-selector {
+        padding: 1.25rem;
+    }
+    
+    .vs-card {
+        padding: 1rem;
+    }
+    
+    .team-flag {
+        font-size: 2rem;
+    }
+    
+    .team-name {
+        font-size: 1rem;
+    }
+    
+    .team-score {
+        font-size: 1.5rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+}

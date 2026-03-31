@@ -1,0 +1,1394 @@
+/* ===============================================
+   RANKING STYLES - FIFA WORLD CUP 2026
+   =============================================== */
+
+:root {
+    /* Colores FIFA */
+    --fifa-blue: #0066CC;
+    --fifa-dark-blue: #003d7a;
+    --fifa-gold: #FFD700;
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --text-white: #ffffff;
+    --text-gray: #a0a0a0;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --success: #4CAF50;
+    --error: #f44336;
+    
+    /* Colores para podio */
+    --gold: #FFD700;
+    --silver: #C0C0C0;
+    --bronze: #CD7F32;
+}
+
+/* ===============================================
+   RESET Y BASE
+   =============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-white);
+    line-height: 1.6;
+}
+
+/* ===============================================
+   HEADER (copiado del index)
+   =============================================== */
+
+.header {
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+/* Logo */
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main {
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--fifa-gold);
+}
+
+.logo-sub {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-gray);
+}
+
+/* Navegación Desktop */
+.nav-desktop {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.nav-link {
+    padding: 0.75rem 1.25rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+    color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: var(--fifa-gold);
+}
+
+/* Header Actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.user-icon {
+    font-size: 1.1rem;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.btn-admin {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid var(--fifa-gold);
+    border-radius: 8px;
+    color: var(--fifa-gold);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+    background: rgba(255, 215, 0, 0.25);
+    transform: translateY(-1px);
+}
+
+.btn-logout {
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-gray);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+/* Menú móvil */
+.btn-menu-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+    width: 24px;
+    height: 2px;
+    background: var(--text-white);
+    transition: all 0.3s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+    content: '';
+    display: block;
+}
+
+.menu-icon::before {
+    transform: translateY(-6px);
+}
+
+.menu-icon::after {
+    transform: translateY(4px);
+}
+
+.nav-mobile {
+    display: none;
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+}
+
+.nav-mobile-link {
+    display: block;
+    padding: 0.75rem;
+    color: var(--text-gray);
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-mobile-link:hover,
+.nav-mobile-link.active {
+    color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+/* ===============================================
+   HERO SECTION RANKING
+   =============================================== */
+
+.hero-ranking {
+    position: relative;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue)),
+                url('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=2000') center/cover;
+    background-blend-mode: overlay;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, rgba(10, 10, 10, 0.8));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-icon {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--fifa-gold), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===============================================
+   CONTENEDOR PRINCIPAL
+   =============================================== */
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+/* ===============================================
+   PODIO TOP 3
+   =============================================== */
+
+.podium-section {
+    margin-bottom: 3rem;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.podium-loading {
+    text-align: center;
+}
+
+.podium-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: flex-end;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.podium-place {
+    background: var(--dark-card);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.podium-place::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--fifa-blue);
+}
+
+/* Orden de posiciones (2do, 1ro, 3ro) */
+.podium-place:nth-child(1) {
+    order: 2; /* Segundo lugar (centro-izquierda) */
+    transform: translateY(30px);
+}
+
+.podium-place:nth-child(2) {
+    order: 1; /* Primer lugar (centro) */
+    transform: translateY(0);
+}
+
+.podium-place:nth-child(3) {
+    order: 3; /* Tercer lugar (centro-derecha) */
+    transform: translateY(60px);
+}
+
+/* Colores de borde para cada lugar */
+.podium-place:nth-child(1)::before {
+    background: linear-gradient(90deg, var(--silver), #fff);
+}
+
+.podium-place:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--gold), #fff);
+}
+
+.podium-place:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--bronze), #fff);
+}
+
+.podium-place:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
+}
+
+.podium-medal {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.podium-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.podium-flag {
+    font-size: 1.5rem;
+}
+
+.podium-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.podium-liga {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+}
+
+.podium-points {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    margin-bottom: 0.25rem;
+}
+
+.podium-label {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===============================================
+   FILTROS Y BÚSQUEDA
+   =============================================== */
+
+.filters-section {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filters-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 1.5rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+.filter-icon {
+    font-size: 1.1rem;
+}
+
+.filter-select,
+.filter-input {
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.filter-select:hover,
+.filter-input:hover {
+    border-color: var(--fifa-blue);
+}
+
+.filter-select:focus,
+.filter-input:focus {
+    outline: none;
+    border-color: var(--fifa-gold);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.filter-select option {
+    background: var(--dark-card);
+    color: var(--text-white);
+}
+
+.participants-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(0, 102, 204, 0.15);
+    border: 1px solid var(--fifa-blue);
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--fifa-blue);
+    white-space: nowrap;
+}
+
+.count-icon {
+    font-size: 1.2rem;
+}
+
+/* ===============================================
+   TABLA DE RANKING
+   =============================================== */
+
+.ranking-table-section {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.ranking-table thead {
+    background: rgba(0, 102, 204, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.ranking-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--fifa-gold);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--fifa-blue);
+}
+
+.th-pos {
+    width: 60px;
+    text-align: center;
+}
+
+.th-user {
+    min-width: 200px;
+}
+
+.th-liga {
+    min-width: 120px;
+}
+
+.th-fase {
+    width: 80px;
+    text-align: center;
+}
+
+.th-total {
+    width: 100px;
+    text-align: center;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.ranking-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.ranking-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.ranking-table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Posición */
+.td-pos {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Top 3 destacados */
+.ranking-table tbody tr:nth-child(1) {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), transparent);
+    border-left: 3px solid var(--gold);
+}
+
+.ranking-table tbody tr:nth-child(2) {
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.08), transparent);
+    border-left: 3px solid var(--silver);
+}
+
+.ranking-table tbody tr:nth-child(3) {
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.08), transparent);
+    border-left: 3px solid var(--bronze);
+}
+
+.ranking-table tbody tr:nth-child(1) .td-pos,
+.ranking-table tbody tr:nth-child(2) .td-pos,
+.ranking-table tbody tr:nth-child(3) .td-pos {
+    font-size: 1.5rem;
+}
+
+/* Usuario */
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-flag {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+/* Liga badge */
+.liga-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+/* Puntos por fase */
+.td-fase {
+    text-align: center;
+    font-weight: 500;
+    color: var(--text-gray);
+}
+
+.td-fase.has-points {
+    color: var(--text-white);
+}
+
+/* Total */
+.td-total {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+/* Fila de usuario actual */
+.ranking-table tbody tr.current-user {
+    background: rgba(0, 102, 204, 0.15);
+    border: 2px solid var(--fifa-blue);
+    box-shadow: 0 0 20px rgba(0, 102, 204, 0.2);
+}
+
+/* Loading row */
+.loading-row {
+    text-align: center;
+    padding: 3rem !important;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-white);
+}
+
+.empty-state p {
+    color: var(--text-gray);
+}
+
+/* ===============================================
+   INFO ADICIONAL
+   =============================================== */
+
+.info-section {
+    margin-top: 2rem;
+}
+
+.info-card {
+    background: var(--dark-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-icon {
+    font-size: 1.75rem;
+}
+
+.info-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.info-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.points-rule {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.points-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--fifa-gold);
+}
+
+.points-desc {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+/* ===============================================
+   LOADING SPINNER
+   =============================================== */
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--fifa-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===============================================
+   FOOTER
+   =============================================== */
+
+.footer {
+    background: var(--dark-card);
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.footer-title {
+    color: var(--fifa-gold);
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    display: block;
+    color: var(--text-gray);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--fifa-gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+        /* Estilos específicos para ranking */
+        
+        .hero-ranking {
+            height: 300px;
+            background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+        }
+        
+        .hero-ranking .hero-title {
+            font-size: 3rem;
+        }
+        
+        /* Podio Top 3 */
+        .podium-section {
+            margin-bottom: 3rem;
+        }
+        
+        .podium-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            align-items: end;
+        }
+        
+        .podium-place {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .podium-place:nth-child(1) { /* Segundo lugar */
+            order: 1;
+            margin-top: 2rem;
+        }
+        
+        .podium-place:nth-child(2) { /* Primer lugar */
+            order: 2;
+            border-color: var(--fifa-gold);
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .podium-place:nth-child(3) { /* Tercer lugar */
+            order: 3;
+            margin-top: 4rem;
+        }
+        
+        .podium-medal {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+        
+        .podium-user {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .podium-flag {
+            font-size: 2rem;
+        }
+        
+        .podium-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .podium-liga {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .podium-points {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+            margin-bottom: 0.25rem;
+        }
+        
+        .podium-label {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+        
+        /* Filtros */
+        .filters-section {
+            margin-bottom: 2rem;
+        }
+        
+        .filters-container {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 1.5rem;
+            align-items: end;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        .filter-icon {
+            font-size: 1.1rem;
+        }
+        
+        .filter-select,
+        .filter-input {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-select:focus,
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--fifa-blue);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .filter-select option {
+            background: var(--dark-card);
+            color: var(--text-white);
+        }
+        
+        .participants-count {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 102, 204, 0.15);
+            border: 1px solid var(--fifa-blue);
+            border-radius: 8px;
+            color: var(--fifa-blue);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .count-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Tabla de ranking */
+        .ranking-table-section {
+            margin-bottom: 3rem;
+        }
+        
+        .table-container {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .ranking-table thead {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .ranking-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--fifa-gold);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .ranking-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .ranking-table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .ranking-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .ranking-table tbody tr.current-user {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 3px solid var(--fifa-gold);
+        }
+        
+        .th-pos { width: 60px; text-align: center; }
+        .th-user { min-width: 200px; }
+        .th-liga { min-width: 120px; }
+        .th-fase { width: 70px; text-align: center; }
+        .th-total { width: 80px; text-align: center; font-size: 1rem; }
+        
+        .td-pos {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-flag {
+            font-size: 1.5rem;
+        }
+        
+        .user-name {
+            font-weight: 600;
+        }
+        
+        .liga-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .td-fase {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .td-fase.has-points {
+            color: var(--text-white);
+            font-weight: 600;
+        }
+        
+        .td-total {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+        }
+        
+        .loading-row {
+            text-align: center;
+            padding: 3rem !important;
+            color: var(--text-gray);
+        }
+        
+        /* Empty state */
+        .empty-state {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+        
+        .empty-state p {
+            color: var(--text-gray);
+        }
+        
+        /* Info section */
+        .info-section {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .info-card {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-header .info-icon {
+            font-size: 2rem;
+        }
+        
+        .info-header h3 {
+            font-size: 1.25rem;
+            color: var(--fifa-gold);
+        }
+        
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .points-rule {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+        
+        .points-value {
+            font-weight: 700;
+            color: var(--fifa-gold);
+            font-size: 1.1rem;
+        }
+        
+        .points-desc {
+            color: var(--text-gray);
+        }
+        
+        /* Loading spinner */
+        .podium-loading,
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 3rem;
+        }
+        
+        .loading-spinner::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--fifa-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .filters-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .participants-count {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .podium-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .podium-place:nth-child(1),
+            .podium-place:nth-child(2),
+            .podium-place:nth-child(3) {
+                order: initial;
+                margin-top: 0;
+            }
+            
+            .ranking-table {
+                font-size: 0.85rem;
+            }
+            
+            .ranking-table th,
+            .ranking-table td {
+                padding: 0.5rem;
+            }
+            
+            .th-fase {
+                width: 50px;
+            }
+            
+            .user-name {
+                font-size: 0.9rem;
+            }
+        }
+
+/* ===============================================
+   ANIMACIONES
+   =============================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===============================================
+   RESPONSIVE
+   =============================================== */
+
+@media (max-width: 1024px) {
+    .podium-container {
+        gap: 1rem;
+    }
+    
+    .filters-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .participants-count {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-desktop {
+        display: none;
+    }
+    
+    .btn-menu-mobile {
+        display: flex;
+    }
+    
+    .nav-mobile.active {
+        display: block;
+    }
+    
+    .hero-ranking {
+        height: 250px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .podium-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .podium-place:nth-child(1),
+    .podium-place:nth-child(2),
+    .podium-place:nth-child(3) {
+        order: initial;
+        transform: translateY(0) !important;
+    }
+    
+    .header-container {
+        padding: 1rem;
+    }
+    
+    .main-container {
+        padding: 2rem 1rem;
+    }
+    
+    .ranking-table {
+        font-size: 0.85rem;
+    }
+    
+    .ranking-table th,
+    .ranking-table td {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .th-fase {
+        width: 60px;
+    }
+    
+    .info-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-info {
+        padding: 0.4rem 0.75rem;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    .podium-medal {
+        font-size: 3rem;
+    }
+    
+    .podium-name {
+        font-size: 1rem;
+    }
+    
+    .podium-points {
+        font-size: 2rem;
+    }
+    
+    .ranking-table th,
+    .ranking-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .user-flag {
+        font-size: 1.2rem;
+    }
+    
+    .liga-badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+    }
+}

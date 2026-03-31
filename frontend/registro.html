@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/login-styles.css">
+    <link rel="stylesheet" href="css/registro-extra.css">
+</head>
+<body>
+    <!-- Contenedor split -->
+    <div class="split-container">
+        
+        <!-- LADO IZQUIERDO: Imagen y mensaje (MISMO QUE LOGIN) -->
+        <div class="split-left">
+            <div class="brand-logo">
+                <img src="img/logoblanco.png" alt="logologin" class="logo-login">
+            </div>
+            <br>
+            <div class="hero-content">
+                <h2 class="hero-title">El Mundial al alcance de tus manos.</h2>
+                <p class="hero-description">
+                    Compite con tus amigos, predice resultados y vive la emoción del Mundial USA • México • Canadá 2026.
+                </p>
+                <div class="hero-flags">🇺🇸 🇲🇽 🇨🇦</div>
+            </div>
+            
+            <div class="hero-footer">
+                <p>©2026 Drogueria Carrisan, C.A. Todos los derechos reservados.</p>
+            </div>
+        </div>
+        
+        <!-- LADO DERECHO: Formulario de Registro -->
+        <div class="split-right">
+            <div class="form-container registro-form-container">
+                
+                <div class="form-header">
+                    <h2 class="form-title">Crear Cuenta</h2>
+                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026</p>
+                </div>
+                
+                <!-- Mensajes -->
+                <div class="message error-message" id="errorMessage" style="display: none;">
+                    <span class="message-icon">⚠️</span>
+                    <span class="message-text"></span>
+                </div>
+
+                <div class="message success-message" id="successMessage" style="display: none;">
+                    <span class="message-icon">✅</span>
+                    <span class="message-text"></span>
+                </div>
+                
+                <!-- Formulario -->
+                <form id="registroForm" class="login-form">
+                    
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label for="nombreInput" class="form-label">Nombre Público</label>
+                        <input 
+                            type="text" 
+                            id="nombreInput" 
+                            class="form-input"
+                            placeholder="Como aparecerás en el ranking"
+                            required
+                            maxlength="50"
+                        >
+                    </div>
+
+                    <!-- Código de Acceso -->
+                    <div class="form-group">
+                        <label for="codigoInput" class="form-label">Código de Acceso</label>
+                        <input 
+                            type="text" 
+                            id="codigoInput" 
+                            class="form-input"
+                            placeholder="Mínimo 6 caracteres (letras y números)"
+                            required
+                            minlength="6"
+                            maxlength="20"
+                        >
+                        <small class="form-hint" id="codigoHint">
+                            Debe contener al menos una letra y un número
+                        </small>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                        <label for="telefonoInput" class="form-label">Teléfono</label>
+                        <input 
+                            type="tel" 
+                            id="telefonoInput" 
+                            class="form-input"
+                            placeholder="+58 414 123 4567"
+                            required
+                            maxlength="20"
+                        >
+                    </div>
+
+                    <!-- Selección de Campeón -->
+                    <div class="form-group">
+                        <label class="form-label">¿Quién será el campeón? 🏆</label>
+                        <div class="equipos-grid" id="equiposContainer">
+                            <div class="loading-equipos">Cargando equipos...</div>
+                        </div>
+                    </div>
+
+                    <!-- Selección de Ligas -->
+                    <div class="form-group">
+                        <label class="form-label">Selecciona tus Ligas</label>
+                        <p class="form-hint">Podrás ver tu posición en el ranking de cada liga</p>
+                        <div class="ligas-grid" id="ligasContainer">
+                            <div class="loading-ligas">Cargando ligas...</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">Crear Cuenta</span>
+                    </button>
+                </form>
+                
+                <!-- Link al login -->
+                <div class="form-footer">
+                    <span class="footer-text">¿Ya tienes cuenta?</span>
+                    <a href="login.html" class="footer-link-blue">Inicia sesión aquí</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script>
+        let ligasDisponibles = [];
+        let equiposDisponibles = [];
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', async () => {
+            await Promise.all([
+                cargarLigas(),
+                cargarEquipos()
+            ]);
+        });
+
+        async function cargarLigas() {
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/ligas`);
+                
+                if (!response.ok) {
+                    throw new Error('Error cargando ligas');
+                }
+
+                ligasDisponibles = await response.json();
+                mostrarLigas();
+
+            } catch (error) {
+                console.error('Error cargando ligas:', error);
+                document.getElementById('ligasContainer').innerHTML = 
+                    '<p class="error-text">Error cargando ligas</p>';
+            }
+        }
+
+        async function cargarEquipos() {
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/equipos`);
+                
+                if (!response.ok) {
+                    throw new Error('Error cargando equipos');
+                }
+
+                equiposDisponibles = await response.json();
+                mostrarEquipos();
+
+            } catch (error) {
+                console.error('Error cargando equipos:', error);
+                document.getElementById('equiposContainer').innerHTML = 
+                    '<p class="error-text">Error cargando equipos</p>';
+            }
+        }
+
+        function mostrarLigas() {
+            const container = document.getElementById('ligasContainer');
+            
+            container.innerHTML = ligasDisponibles.map(liga => `
+                <label class="liga-checkbox">
+                    <input type="checkbox" name="ligas" value="${liga.id}">
+                    <span class="liga-content">
+                        <span class="liga-icon">${liga.icono}</span>
+                        <span class="liga-nombre">${liga.nombre}</span>
+                    </span>
+                </label>
+            `).join('');
+        }
+
+        function mostrarEquipos() {
+            const container = document.getElementById('equiposContainer');
+            
+            container.innerHTML = equiposDisponibles.map(equipo => `
+                <label class="equipo-radio">
+                    <input type="radio" name="campeon" value="${equipo.codigo_fifa}">
+                    <span class="equipo-content">
+                        <span class="equipo-bandera">${equipo.bandera_emoji}</span>
+                        <span class="equipo-nombre">${equipo.nombre}</span>
+                    </span>
+                </label>
+            `).join('');
+        }
+
+        // Validación en tiempo real del código
+        document.getElementById('codigoInput').addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase();
+            
+            const codigo = e.target.value;
+            const hint = document.getElementById('codigoHint');
+            
+            const tieneLetras = /[A-Z]/.test(codigo);
+            const tieneNumeros = /[0-9]/.test(codigo);
+            const longitudOk = codigo.length >= 6;
+            
+            if (codigo.length === 0) {
+                hint.textContent = 'Debe contener al menos una letra y un número';
+                hint.className = 'form-hint';
+            } else if (!tieneLetras || !tieneNumeros) {
+                hint.textContent = '❌ Debe tener al menos una letra Y un número';
+                hint.className = 'form-hint error';
+            } else if (!longitudOk) {
+                hint.textContent = `⚠️ Mínimo 6 caracteres (tienes ${codigo.length})`;
+                hint.className = 'form-hint warning';
+            } else {
+                hint.textContent = '✅ Código válido';
+                hint.className = 'form-hint success';
+            }
+        });
+
+        // Manejar envío del formulario
+        document.getElementById('registroForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+
+            // Limpiar mensajes
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            // Obtener datos
+            const nombre = document.getElementById('nombreInput').value.trim();
+            const codigo = document.getElementById('codigoInput').value.trim().toUpperCase();
+            const telefono = document.getElementById('telefonoInput').value.trim();
+
+            const campeonSeleccionado = document.querySelector('input[name="campeon"]:checked');
+            const ligasSeleccionadas = Array.from(
+                document.querySelectorAll('input[name="ligas"]:checked')
+            ).map(cb => parseInt(cb.value));
+
+            // Validaciones
+            if (!nombre || !codigo || !telefono) {
+                mostrarError('Completa todos los campos obligatorios');
+                return;
+            }
+
+            if (!campeonSeleccionado) {
+                mostrarError('Selecciona un equipo campeón');
+                return;
+            }
+
+            if (ligasSeleccionadas.length === 0) {
+                mostrarError('Selecciona al menos una liga');
+                return;
+            }
+
+            // Loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Creando cuenta...</span>';
+
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/registro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre_publico: nombre,
+                        codigo_acceso: codigo,
+                        telefono,
+                        campeon_elegido: campeonSeleccionado.value,
+                        ligas: ligasSeleccionadas
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Error al crear cuenta');
+                }
+
+                // Éxito
+                const equipoNombre = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.nombre;
+                const equipoBandera = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.bandera_emoji;
+
+                mostrarExito(`¡Cuenta creada! Tu código: ${codigo} | Campeón: ${equipoBandera} ${equipoNombre}`);
+
+                // Redirigir después de 3 segundos
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error en registro:', error);
+                mostrarError(error.message);
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-text">Crear Cuenta</span>';
+            }
+        });
+
+        function mostrarError(mensaje) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.querySelector('.message-text').textContent = mensaje;
+            errorEl.style.display = 'flex';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            // Scroll al mensaje
+            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function mostrarExito(mensaje) {
+            const successEl = document.getElementById('successMessage');
+            successEl.querySelector('.message-text').textContent = mensaje;
+            successEl.style.display = 'flex';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            // Ocultar formulario
+            document.getElementById('registroForm').style.display = 'none';
+            
+            // Scroll al mensaje
+            successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>

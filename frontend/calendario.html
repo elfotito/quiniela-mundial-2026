@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario - Mundial 2026</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <style>
+        .hero-calendario {
+            height: 250px;
+            background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+        }
+        
+        /* DATE SCROLLER - Estilo FIFA */
+        .date-scroller-container {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .scroller-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .live-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .live-toggle.active {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: var(--success);
+        }
+        
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--text-gray);
+            border-radius: 50%;
+        }
+        
+        .live-toggle.active .live-dot {
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .live-label {
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+        
+        .live-toggle.active .live-label {
+            color: var(--success);
+        }
+        
+        .live-count {
+            background: var(--error);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .date-scroller {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scroller-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroller-nav:hover {
+            background: var(--fifa-blue);
+            border-color: var(--fifa-blue);
+        }
+        
+        .scroller-nav.left {
+            left: 5px;
+        }
+        
+        .scroller-nav.right {
+            right: 5px;
+        }
+        
+        .dates-track {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+        }
+        
+        .dates-track::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .date-item {
+            flex: 0 0 auto;
+            width: 80px;
+            padding: 1rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .date-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .date-item.active {
+            background: var(--fifa-blue);
+            border-color: var(--fifa-blue);
+        }
+        
+        .date-item.today {
+            border-color: var(--fifa-gold);
+        }
+        
+        .date-day-name {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+        
+        .date-day-number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-white);
+            margin-bottom: 0.25rem;
+        }
+        
+        .date-item.active .date-day-number {
+            color: var(--fifa-gold);
+        }
+        
+        .date-month {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+        
+        .date-match-count {
+            margin-top: 0.5rem;
+            padding: 0.25rem;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--fifa-gold);
+            font-weight: 600;
+        }
+        
+        /* MATCHES CONTAINER */
+        .matches-container {
+            min-height: 400px;
+        }
+        
+        .day-section {
+            margin-bottom: 2rem;
+        }
+        
+        .day-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--fifa-gold);
+        }
+        
+        .day-match-count {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .match-card-fifa {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 80px 1fr 120px 1fr 100px;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .match-card-fifa:hover {
+            border-color: var(--fifa-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.15);
+        }
+        
+        .match-time {
+            text-align: center;
+        }
+        
+        .match-hour {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        
+        .match-phase {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+        
+        .match-team {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .match-team.away {
+            flex-direction: row-reverse;
+        }
+        
+        .team-flag-fifa {
+            font-size: 2rem;
+        }
+        
+        .team-name-fifa {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .match-score {
+            text-align: center;
+        }
+        
+        .score-display-fifa {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+        }
+        
+        .score-vs {
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .match-status {
+            text-align: center;
+        }
+        
+        .status-badge-fifa {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .status-badge-fifa.live {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        .status-badge-fifa.finished {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+        
+        .status-badge-fifa.pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .match-card-fifa {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .match-team,
+            .match-team.away {
+                justify-content: center;
+                flex-direction: row;
+            }
+            
+            .date-item {
+                width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <a href="index.html"><div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div></a>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link">Predicciones</a>
+            <a href="ranking.html" class="nav-link">Ranking</a>
+            <a href="calendario.html" class="nav-link active">Calendario</a>
+            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link active">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+    
+    <!-- HERO -->
+    <section class="hero-hero-calendario">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Calendario</h1>
+        </div>
+    </section>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+        
+        <!-- DATE SCROLLER -->
+        <div class="date-scroller-container">
+            <div class="scroller-header">
+                <h3 style="color: var(--text-white); font-size: 1.1rem; margin: 0;">Selecciona una fecha</h3>
+                
+                <div class="live-toggle" id="liveToggle">
+                    <div class="live-dot"></div>
+                    <span class="live-label">En Vivo</span>
+                    <span class="live-count" id="liveCount" style="display: none;">0</span>
+                </div>
+            </div>
+            
+            <div class="date-scroller">
+                <div class="scroller-nav left" id="scrollLeft">◀</div>
+                <div class="scroller-nav right" id="scrollRight">▶</div>
+                
+                <div class="dates-track" id="datesTrack">
+                    <!-- Las fechas se generarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- MATCHES CONTAINER -->
+        <div class="matches-container" id="matchesContainer">
+            <div class="loading" style="text-align: center; padding: 3rem; color: var(--text-gray);">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 1rem;">Cargando partidos...</p>
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/calendario.js"></script>
+</body>
+</html>

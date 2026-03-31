@@ -1,0 +1,20 @@
+{
+  "name": "predicciones-backend",
+  "version": "1.0.0",
+  "description": "API para sistema de predicciones Mundial 2026",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "node-cron": "^4.2.1",
+    "pg": "^8.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

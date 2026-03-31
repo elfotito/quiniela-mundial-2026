@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiniela Mundial 2026 - Inicio</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+</head>
+<body>
+<!-- HEADER / NAVEGACIÓN -->
+<header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link active">Inicio</a>
+            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link">Predicciones</a>
+            <a href="ranking.html" class="nav-link">Ranking</a>
+            <a href="calendario.html" class="nav-link">Calendario</a>
+            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link active">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+
+<!-- HERO CON CARRUSEL -->
+<section class="hero-carousel">
+    <!-- Countdown arriba -->
+    <div class="countdown-container">
+        <div class="countdown-label">
+            <img src="img/logomenu.png" alt="FIFA" style="height: 60px;">
+            <div>
+                <h2>FIFA World Cup 2026™</h2>
+                <p>11 Junio - 19 Julio</p>
+            </div>
+        </div>
+        
+        <div class="countdown-timer">
+            <div class="time-box">
+                <div class="time-value" id="days">107</div>
+                <div class="time-label">dias</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">horas</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="mins">04</div>
+                <div class="time-label">min</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="secs">18</div>
+                <div class="time-label">seg</div>
+            </div>
+        </div>
+        
+        <a href="calendario.html" class="btn-view-matches">Ver Partidos</a>
+    </div>
+
+    <!-- Carrusel Principal -->
+    <div class="carousel-main">
+        <div class="carousel-slides" id="carouselSlides">
+            <!-- Slide 1 -->
+            <div class="carousel-slide active">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-category">SELECCION NACIONAL</span>
+                        <h2 class="slide-title">Se confirma la alineacion de la vinotinto de cara al televisor</h2>
+                        <p class="slide-description">El capitán vinotinto asegura que el equipo esta preparado para buscar el hielo y las curdas.</p>
+                        <a href="noticia1.html" class="btn-read-more">Leer más</a>
+                    </div>
+                </div>
+                <div class="slide-image">
+                    <img src="img/vinosofa.png" alt="Noticia1" width="600" height="450">
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-category">Noticias</span>
+                        <h2 class="slide-title">Carrisan lanza su quiniela digital</h2>
+                        <p class="slide-description">La droguería da el salto tecnológico con una plataforma web que promete revolucionar las quinielas familiares.</p>
+                        <a href="noticia2.html" class="btn-read-more">Leer más</a>
+                    </div>
+                </div>
+                <div class="slide-image">
+                    <img src="img/noticiaquiniela.png" alt="Noticia2" width="600" height="450">
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-category">TUTORIAL</span>
+                        <h2 class="slide-title">¡Preparate para la quiniela!</h2>
+                        <p class="slide-description">Ya que estas aqui, echale un ojo a el sistema de puntos y a las reglas del juego</p>
+                        <a href="terminos.html" class="btn-read-more">Terminos</a> |
+                        <a href="reglamento.html" class="btn-read-more">Reglamento</a> |
+                        <a href="sistema.html" class="btn-read-more">Sistema Puntos</a>
+                    </div>
+                </div>
+                <div class="slide-image">
+                    <img src="img/sistema.png" alt="Sistema" width="600" height="450">
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-category">NOTIFICACION</span>
+                        <h2 class="slide-title">¡Recibe, se cuadra y ... NO LO CARGA!</h2>
+                        <p class="slide-description"><br> Dale, dale, dale. ¡Ingresá tus predicciones antes de que el arbitro se lleve el pito a la boca! (espera, khe 😳)</p>
+                        <a href="predicciones.html" class="btn-read-more">Ingresar Predicciones</a>
+                    </div>
+                </div>
+                <div class="slide-image">
+                    <img src="img/pasalamano.png" alt="pasalamano" width="600" height="450">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación inferior -->
+    <div class="carousel-nav">
+        <button class="nav-arrow nav-prev" id="navPrev">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+
+        <div class="carousel-thumbnails" id="carouselThumbnails">
+            <button class="thumbnail active" data-slide="0">
+                <span class="thumb-category">Selecion Nacional</span>
+                <span class="thumb-title">La vinotinto se prepara para el mundial</span>
+                <div class="thumb-progress"></div>
+            </button>
+            <button class="thumbnail" data-slide="1">
+                <span class="thumb-category">Noticias</span>
+                <span class="thumb-title">Carrisan lanza su quiniela digital</span>
+                <div class="thumb-progress"></div>
+            </button>
+            <button class="thumbnail" data-slide="2">
+                <span class="thumb-category">TUTORIAL</span>
+                <span class="thumb-title">Enterate de como jugar antes del pitazo inicial</span>
+                <div class="thumb-progress"></div>
+            </button>
+            <button class="thumbnail" data-slide="3">
+                <span class="thumb-category">notificacion</span>
+                <span class="thumb-title">¿Ya hiciste tu primera prediccion?</span>
+                <div class="thumb-progress"></div>
+            </button>
+        </div>
+
+        <button class="nav-arrow nav-next" id="navNext">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+    
+</section>
+    <!-- CARRIL DE NOTICIAS -->
+    <section class="news-ticker">
+        <div class="ticker-label">
+            ULTIMO MOMENTO
+        </div>
+        <div class="ticker-content" id="tickerContent">
+            <div class="ticker-item">⚽ ¡Bienvenido a la Quiniela Mundial 2026!</div>
+            <div class="ticker-item">🗣️ ¡Se confirma la alineacion de la vinotinto de cara al televisor!</div>
+            <div class="ticker-item">👨‍💼 ¡Se el presidente de tu liga! Crea una liga para ti y tus amigos</div>
+            <div class="ticker-item">📅 ¡Todos los partidos estan disponible en el calendario!</div>
+            <div class="ticker-item">📊 ¡Revisa tus prediccionesy puntos en Mi Quiniela!</div>
+            <div class="ticker-item"></div>
+        </div>
+    </section>
+    
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="main-container">
+        
+        <!-- RESUMEN RÁPIDO -->
+        <!-- RESUMEN RÁPIDO -->
+        <section class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/alineacion.png" alt="D"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPredicciones">0</div>
+                    <div class="stat-label">Predicciones</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/star.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPuntos">0</div>
+                    <div class="stat-label">Puntos</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/trofeo.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statPosicion">-</div>
+                    <div class="stat-label">Posición</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon"><img src="img/efectividad.png" alt="marcador"></div>
+                <div class="stat-content">
+                    <div class="stat-value" id="statEfectividad">0%</div>
+                    <div class="stat-label">Efectividad</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECCIÓN PRINCIPAL -->
+        <div class="content-grid">
+            
+            <!-- Columna Izquierda -->
+            <div class="content-left">
+                <section class="content-section">
+                <h2 class="section-title-main">
+                    <span class="section-icon">🎰</span>
+                    Sistema de Puntuación
+                </h2>
+                <p class="content-text">
+                    Los puntos se otorgan según qué tan precisa sea tu predicción comparada con el resultado real del partido.
+                </p>
+                <div class="highlight-box">
+                    <div class="highlight-title">¿Quieres entender el sistema a fondo?</div>
+                    <div class="highlight-text">
+                        Visita nuestra página interactiva donde podrás practicar y ver ejemplos en tiempo real
+                    </div>
+                    <a href="sistema.html" class="link-sistema">🎓 Ir al Tutorial Interactivo</a>
+                </div>
+                </section>
+                <!-- Últimos Resultados -->
+                <section class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="title-icon">📋</span>
+                            Últimos Resultados
+                        </h2>
+                        <a href="calendario.html" class="section-link">Ver todos →</a>
+                    </div>
+                    
+                    <div class="results-list" id="ultimosResultados">
+                        <div class="loading">Cargando resultados...</div>
+                    </div>
+                </section>
+                
+            </div>
+            
+            <!-- Columna Derecha -->
+            <div class="content-right">
+                
+                <!-- Ranking Top 5 -->
+                <section class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="title-icon">🏆</span>
+                            Top 5 Ranking
+                        </h2>
+                        <a href="ranking.html" class="section-link">Ver Ranking →</a>
+                    </div>
+                    
+                    <div class="ranking-preview" id="rankingTop5">
+                        <div class="loading">Cargando ranking...</div>
+                    </div>
+                </section>
+                <!-- Próximos Partidos -->
+                <section class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="title-icon">⚽</span>
+                            Próximos Partidos
+                        </h2>
+                        <a href="predicciones.html" class="section-link">Ver todos →</a>
+                    </div>
+                    
+                    <div class="matches-list" id="proximosPartidos">
+                        <div class="loading">Cargando partidos...</div>
+                    </div>
+                </section>
+                <!-- Info Card -->
+                <section class="section-card info-card">
+                    <div class="info-icon"><img src="img/reglamentolibro.png" alt="marcador"></div>
+                    <h3 class="info-title">Reglamento</h3>
+                    <ul class="info-list">
+                        <li>Limite de prediccion es 10 min antes del partido</li>
+                        <li>Una prediccion por partido</li>
+                        <li>Sistema VAR</li>
+                        <li>Aprobado por la FIAC</li>
+                    </ul>
+                    <a href="reglamento.html" class="btn-info">Ver Reglamento</a>
+                </section>
+                
+            </div>
+            
+        </div>
+        
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/index-styles.css">
+    <style>
+        /* RANKING ESPECÍFICO */
+        .hero-ranking {
+            height: 250px;
+            background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+        }
+        
+        .ranking-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        /* SIDEBAR FILTROS */
+        .filters-sidebar {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .filter-select,
+        .filter-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-white);
+            font-size: 0.95rem;
+        }
+        
+        .filter-select:focus,
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--fifa-gold);
+        }
+        
+        .filter-select option {
+            background: var(--dark-card);
+        }
+        
+        .participants-badge {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid var(--fifa-gold);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .participants-count {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+            display: block;
+        }
+        
+        .participants-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+            display: block;
+        }
+        
+        .btn-share {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--fifa-gold), #ffa500);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-share:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        /* CONTENIDO PRINCIPAL */
+        .ranking-content {
+            min-width: 0;
+        }
+        
+        /* PODIO MÁS ANCHO */
+        .podium-section {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .podium-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .podium-place {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .podium-place:hover {
+            border-color: var(--fifa-gold);
+            transform: translateY(-5px);
+        }
+        
+        .podium-place.first {
+            border-color: var(--fifa-gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+        }
+        
+        .podium-place.second {
+            border-color: #C0C0C0;
+        }
+        
+        .podium-place.third {
+            border-color: #CD7F32;
+        }
+        
+        .podium-image {
+            width: 100%;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 2px dashed var(--border-color);
+        }
+        
+        .podium-medal {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .podium-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .podium-liga {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+        
+        .podium-points {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+            margin-bottom: 0.25rem;
+        }
+        
+        .podium-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* TABLA */
+        .table-section {
+            background: var(--dark-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .ranking-table th,
+        .ranking-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .ranking-table th {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--fifa-gold);
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .ranking-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .ranking-table tr.current-user {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--fifa-gold);
+        }
+        
+        .td-pos {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-align: center;
+        }
+        
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .user-flag {
+            font-size: 1.5rem;
+        }
+        
+        .user-name {
+            font-weight: 700;
+        }
+        
+        .liga-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .td-fase {
+            text-align: center;
+            color: var(--text-gray);
+        }
+        
+        .td-fase.has-points {
+            color: var(--text-white);
+            font-weight: 700;
+        }
+        
+        .td-total {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--fifa-gold);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-gray);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .ranking-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-sidebar {
+                position: static;
+            }
+            
+            .podium-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.85rem;
+            }
+            
+            .ranking-table th,
+            .ranking-table td {
+                padding: 0.75rem 0.5rem;
+            }
+            
+            .podium-image {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="header-container">
+        <!-- Logo -->
+        <div class="header-logo">
+            <a href="index.html"><div class="logo-icon">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
+            </div></a>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav class="nav-desktop">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="predicciones.html" class="nav-link">Predicciones</a>
+            <a href="ranking.html" class="nav-link active">Ranking</a>
+            <a href="calendario.html" class="nav-link">Calendario</a>
+            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        </nav>
+        
+        <!-- Usuario y Admin -->
+        <div class="header-actions">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-name" id="userName">Usuario</span>
+            </div>
+            <button class="btn-admin" id="adminBtn" style="display: none;">
+                <span class="btn-icon">🛠️</span>
+                Admin
+            </button>
+            <button class="btn-logout" onclick="logout()">Salir</button>
+        </div>
+        
+        <!-- Menú móvil -->
+        <button class="btn-menu-mobile" id="btnMenuMobile">
+            <span class="menu-icon"></span>
+        </button>
+    </div>
+</header>
+    
+    <!-- Navegación Móvil -->
+    <nav class="nav-mobile" id="navMobile">
+        <a href="index.html" class="nav-mobile-link active">Inicio</a>
+        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
+        <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
+        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
+        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+    </nav>
+    
+    <!-- HERO -->
+    <section class="hero hero-ranking">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">👑</div>
+            <h1 class="hero-title">Ranking Mundial</h1>
+            <p class="hero-subtitle">Tabla de posiciones general</p>
+        </div>
+    </section>
+    
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+        
+        <div class="ranking-layout">
+            
+            <!-- SIDEBAR FILTROS -->
+            <aside class="filters-sidebar">
+                <h3 class="sidebar-title">
+                    <span>🔍</span>
+                    Filtros
+                </h3>
+                
+                <div class="filter-group">
+                    <label class="filter-label">🏅 Liga</label>
+                    <select class="filter-select" id="ligaFilter">
+                        <option value="">Todas las ligas</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">👤 Buscar usuario</label>
+                    <input 
+                        type="text" 
+                        class="filter-input" 
+                        id="searchInput" 
+                        placeholder="Nombre..."
+                    >
+                </div>
+                
+                <div class="participants-badge">
+                    <span class="participants-count" id="participantsCount">0</span>
+                    <span class="participants-label">Participantes</span>
+                </div>
+                
+                <button class="btn-share" onclick="compartirRanking()">
+                    <span>📸</span>
+                    Compartir Ranking
+                </button>
+            </aside>
+            
+            <!-- CONTENIDO PRINCIPAL -->
+            <div class="ranking-content">
+                
+                <!-- PODIO TOP 3 -->
+                <section class="podium-section">
+                    <h2 class="card-title" style="font-size: 1.5rem; font-weight: 900; color: var(--fifa-gold); margin-bottom: 1rem;">
+                        🏆 Podio
+                    </h2>
+                    <div id="podiumSection">
+                        <div style="text-align: center; padding: 2rem; color: var(--text-gray);">
+                            Cargando podio...
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- TABLA DE RANKING -->
+                <section class="table-section">
+                    <div class="table-header">
+                        <h2 class="table-title">📊 Tabla Completa</h2>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="ranking-table">
+                            <thead>
+                                <tr>
+                                    <th class="td-pos">Pos</th>
+                                    <th>Usuario</th>
+                                    <th>Liga</th>
+                                    <th style="text-align: center;">Grupos</th>
+                                    <th style="text-align: center;">16avos</th>
+                                    <th style="text-align: center;">8vos</th>
+                                    <th style="text-align: center;">4tos</th>
+                                    <th style="text-align: center;">Semis</th>
+                                    <th style="text-align: center;">3er</th>
+                                    <th style="text-align: center;">Final</th>
+                                    <th style="text-align: center;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rankingTableBody">
+                                <tr>
+                                    <td colspan="11" style="text-align: center; padding: 3rem; color: var(--text-gray);">
+                                        Cargando ranking...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="empty-state" id="emptyState" style="display: none;">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No se encontraron resultados</h3>
+                        <p>Intenta con otros filtros</p>
+                    </div>
+                </section>
+                
+            </div>
+        </div>
+        
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4 class="footer-title">Quiniela Mundial 2026</h4>
+                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Enlaces</h4>
+                <a href="reglamento.html" class="footer-link">Reglamento</a>
+                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4 class="footer-title">Mundial 2026</h4>
+                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ranking.js"></script>
+</body>
+</html>
