@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "build": {
     "builder": "NIXPACKS",
     "buildCommand": "npm install"
@@ -7,3 +8,15 @@
     "startCommand": "npm start"
   }
 }
+=======
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+>>>>>>> e0afb273af7a445e48de0731185ba205da0b05c5
