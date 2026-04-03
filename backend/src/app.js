@@ -88,6 +88,23 @@ app.use((req, res) => {
   `);
 });
 
+let dbConnected = false;
+
+// Intenta conectar pero no detengas el servidor
+const connectDB = async () => {
+    try {
+        const pool = require('./db');
+        await pool.query('SELECT NOW()');
+        dbConnected = true;
+        console.log('✅ PostgreSQL conectado correctamente');
+    } catch (err) {
+        console.error('⚠️ PostgreSQL no disponible, pero el servidor sigue funcionando');
+        console.error('   La app funcionará cuando la BD esté lista');
+    }
+};
+
+// Llama a connectDB pero NO esperes a que termine para iniciar el servidor
+connectDB();
 // --------------------------------------------------------------
 // 5. INICIAR EL SERVIDOR
 // --------------------------------------------------------------
