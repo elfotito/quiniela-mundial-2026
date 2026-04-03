@@ -3,8 +3,8 @@
 // ===============================================
 
 const CONFIG = {
-    // URL del backend
-    API_URL: 'http://localhost:3000/api',
+
+    API_URL: window.location.origin + '/api',
     
     // Límite de predicción (minutos antes del partido)
     TIEMPO_LIMITE_PREDICCION: 10,
@@ -18,5 +18,4 @@ const CONFIG = {
     }
 };
 
-// Hacer disponible globalmente
 window.CONFIG = CONFIG;
