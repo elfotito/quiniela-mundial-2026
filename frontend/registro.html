@@ -36,7 +36,12 @@
                 
                 <div class="form-header">
                     <h2 class="form-title">Crear Cuenta</h2>
-                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026</p>
+                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026<br><br>
+                    Costos de mantenimiento:<br>
+                    - 2$ Registro de usuario<br>
+                    - 3$ Creacion de liga<br>
+                    <br>Unete a nuestro <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank" title="Enlace directo al canal de whatsapp de la quiniela">canal de whatsapp</a> <br>para más información.</p>
+                    </p>
                 </div>
                 
                 <!-- Mensajes -->
@@ -98,7 +103,7 @@
 
                     <!-- Selección de Campeón -->
                     <div class="form-group">
-                        <label class="form-label">¿Quién será el campeón? 🏆</label>
+                        <label class="form-label">Elige tu campeón:</label>
                         <div class="equipos-grid" id="equiposContainer">
                             <div class="loading-equipos">Cargando equipos...</div>
                         </div>
@@ -106,8 +111,8 @@
 
                     <!-- Selección de Ligas -->
                     <div class="form-group">
-                        <label class="form-label">Selecciona tus Ligas</label>
-                        <p class="form-hint">Podrás ver tu posición en el ranking de cada liga</p>
+                        <label class="form-label">Selecciona tu Liga:</label>
+                        <p class="form-hint">Compite con tus amigos en la liga que fuiste invitado.<br> <br><strong>Si tu liga no ha sido creada</strong>, puedes entrar en la GENERAL <br>y se te reasignara una vez se cree la liga.<br> <br>Puedes unirte a varias ligas pero solo el presidente de cada liga aprobara cada integrante. <br><br></p>
                         <div class="ligas-grid" id="ligasContainer">
                             <div class="loading-ligas">Cargando ligas...</div>
                         </div>
@@ -221,7 +226,7 @@
                 hint.textContent = 'Debe contener al menos una letra y un número';
                 hint.className = 'form-hint';
             } else if (!tieneLetras || !tieneNumeros) {
-                hint.textContent = '❌ Debe tener al menos una letra Y un número';
+                hint.textContent = '❌ Debe tener al menos una letra y un número';
                 hint.className = 'form-hint error';
             } else if (!longitudOk) {
                 hint.textContent = `⚠️ Mínimo 6 caracteres (tienes ${codigo.length})`;

@@ -117,13 +117,13 @@ body {
 
 /* Versión responsive */
 @media (max-width: 768px) {
-    .hero-hero-terminos {
+    .hero-hero-quiniela {
         height: 400px; /* Altura reducida en móviles */
     }
 }
 
 @media (max-width: 480px) {
-    .hero-hero-terminos {
+    .hero-hero-quiniela {
         height: 350px;
     }
 }
@@ -169,8 +169,10 @@ body {
     font-size: 1.1rem;
 }
 
-.user-name {
-    font-weight: 500;
+.user-name, .user-icon {
+    font-weight: 400;
+    color: white;
+    margin-bottom: 0.25rem;
     font-size: 0.9rem;
 }
 

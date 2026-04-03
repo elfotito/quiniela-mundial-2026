@@ -12,7 +12,7 @@ router.get("/:codigo", async (req, res) => {
     client = await pool.connect();
     
     const query = `
-      SELECT id, codigo_acceso, nombre_publico, email, esta_activo
+      SELECT id, codigo_acceso, nombre_publico, email, esta_activo, campeon_elegido
       FROM usuarios 
       WHERE codigo_acceso = $1 AND esta_activo = true
     `;
@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
   try {
     client = await pool.connect();
     const result = await client.query(`
-      SELECT id, codigo_acceso, nombre_publico, email, esta_activo, telefono
+      SELECT id, codigo_acceso, nombre_publico, email, fecha_registro, ultima_prediccion, total_predicciones, campeon_elegido, logros_desbloqueados esta_activo, telefono
       FROM usuarios
       ORDER BY id
     `);

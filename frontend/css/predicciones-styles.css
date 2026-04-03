@@ -10,6 +10,13 @@
     background-blend-mode: overlay;
 }
 
+.user-name, .user-icon {
+    font-weight: 400;
+    color: white;
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+}
+
 /* Versión responsive */
 @media (max-width: 768px) {
     .hero-hero-prediccion {

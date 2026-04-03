@@ -1,5 +1,5 @@
 // mrchip.js - Análisis de predicciones por partido
-
+console.log('campeon guardado:', localStorage.getItem('quiniela_campeon'));
 // Verificar autenticación
 if (!auth.isAuthenticated()) {
     window.location.href = 'login.html';
@@ -12,36 +12,66 @@ let partidoActualId = null;
 // ===================================
 // FUNCIÓN PARA OBTENER BANDERAS EMOJI
 // ===================================
-
-function obtenerBandera(codigoEquipo) {
-    const banderas = {
-        // CONCACAF
-        'MEX': '🇲🇽', 'USA': '🇺🇸', 'CAN': '🇨🇦', 'CRC': '🇨🇷', 'JAM': '🇯🇲',
-        'PAN': '🇵🇦', 'HON': '🇭🇳', 'TRI': '🇹🇹', 'CUW': '🇨🇼', 'HAI': '🇭🇹',
-        
-        // CONMEBOL
-        'ARG': '🇦🇷', 'BRA': '🇧🇷', 'URU': '🇺🇾', 'COL': '🇨🇴', 'CHI': '🇨🇱',
-        'ECU': '🇪🇨', 'PER': '🇵🇪', 'PAR': '🇵🇾', 'VEN': '🇻🇪', 'BOL': '🇧🇴',
-        
-        // UEFA
-        'ESP': '🇪🇸', 'GER': '🇩🇪', 'FRA': '🇫🇷', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'ITA': '🇮🇹',
-        'NED': '🇳🇱', 'POR': '🇵🇹', 'BEL': '🇧🇪', 'CRO': '🇭🇷', 'DEN': '🇩🇰',
-        'SUI': '🇨🇭', 'AUT': '🇦🇹', 'POL': '🇵🇱', 'SWE': '🇸🇪', 'UKR': '🇺🇦',
-        'WAL': '🏴󠁧󠁢󠁷󠁬󠁳󠁿', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'SRB': '🇷🇸', 'TUR': '🇹🇷',
-        
-        // CAF
-        'SEN': '🇸🇳', 'MAR': '🇲🇦', 'TUN': '🇹🇳', 'NGR': '🇳🇬', 'CMR': '🇨🇲',
-        'GHA': '🇬🇭', 'CIV': '🇨🇮', 'MLI': '🇲🇱', 'BFA': '🇧🇫', 'EGY': '🇪🇬',
-        
-        // AFC
-        'JPN': '🇯🇵', 'KOR': '🇰🇷', 'AUS': '🇦🇺', 'IRN': '🇮🇷', 'KSA': '🇸🇦',
-        'QAT': '🇶🇦', 'IRQ': '🇮🇶', 'UAE': '🇦🇪', 'CHN': '🇨🇳', 'THA': '🇹🇭',
-        
-        // OFC
-        'NZL': '🇳🇿', 'FIJ': '🇫🇯', 'NCL': '🇳🇨', 'PNG': '🇵🇬', 'TAH': '🇵🇫'
+function obtenerCampeon(codigo) {
+    const campeon = {
+        'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
+        'BEL': '🇧🇪', 'BOL': '🇧🇴', 'BRA': '🇧🇷', 'CPV': '🇨🇻',
+        'CAN': '🇨🇦', 'QAT': '🇶🇦', 'COL': '🇨🇴', 'KOR': '🇰🇷',
+        'CIV': '🇨🇮', 'CRO': '🇭🇷', 'CUW': '🇨🇼', 'ECU': '🇪🇨',
+        'EGY': '🇪🇬', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'ESP': '🇪🇸', 'USA': '🇺🇸',
+        'FRA': '🇫🇷', 'GHA': '🇬🇭', 'HAI': '🇭🇹', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'IRQ': '🇮🇶', 'IRN': '🇮🇷', 'JAM': '🇯🇲', 'JPN': '🇯🇵',
+        'JOR': '🇯🇴', 'MAR': '🇲🇦', 'MEX': '🇲🇽', 'NOR': '🇳🇴',
+        'NCL': '🇳🇨', 'NZL': '🇳🇿', 'NED': '🇳🇱', 'PAN': '🇵🇦',
+        'PAR': '🇵🇾', 'POR': '🇵🇹', 'COD': '🇨🇩', 'SEN': '🇸🇳',
+        'RSA': '🇿🇦', 'SUI': '🇨🇭', 'SUR': '🇸🇷', 'TUN': '🇹🇳',
+        'URU': '🇺🇾', 'UZB': '🇺🇿', 'KSA': '🇸🇦', 'ALG': '🇩🇿'
     };
+    return campeon[codigo] || '🏴';
+}
+
+function obtenerBandera(nombre) {
+    const banderas = {
+    // Anfitriones y CONCACAF
+    'México': '🇲🇽', 'EE.UU.': '🇺🇸', 'USA': '🇺🇸', 'Canadá': '🇨🇦',
+    'Costa Rica': '🇨🇷', 'Panamá': '🇵🇦', 'Jamaica': '🇯🇲', 'Haití': '🇭🇹',
+    'Curazao': '🇨🇼', 'Islas de Cabo Verde': '🇨🇻',
     
-    return banderas[codigoEquipo] || '⚽';
+    // Sudamérica (CONMEBOL)
+    'Brasil': '🇧🇷', 'Argentina': '🇦🇷', 'Uruguay': '🇺🇾', 'Ecuador': '🇪🇨',
+    'Colombia': '🇨🇴', 'Paraguay': '🇵🇾', 'Chile': '🇨🇱', 'Perú': '🇵🇪',
+    'Venezuela': '🇻🇪', 'Bolivia': '🇧🇴',
+    
+    // Europa (UEFA) - Clasificados directos
+    'España': '🇪🇸', 'Alemania': '🇩🇪', 'Francia': '🇫🇷', 'Inglaterra': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    'Portugal': '🇵🇹', 'Italia': '🇮🇹', 'Paises Bajos': '🇳🇱', 'Países Bajos': '🇳🇱',
+    'Bélgica': '🇧🇪', 'Croacia': '🇭🇷', 'Suiza': '🇨🇭', 'Polonia': '🇵🇱',
+    'Austria': '🇦🇹', 'Escocia': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Noruega': '🇳🇴',
+    
+    // Europa (UEFA) - Repechaje (16 equipos)
+    'Dinamarca': '🇩🇰', 'Turquía': '🇹🇷', 'Ucrania': '🇺🇦', 'Gales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+    'República Checa': '🇨🇿', 'Eslovaquia': '🇸🇰', 'Albania': '🇦🇱', 'Irlanda': '🇮🇪',
+    'Bosnia': '🇧🇦', 'Kosovo': '🇽🇰', 'Rumania': '🇷🇴', 'Suecia': '🇸🇪',
+    'Macedonia del Norte': '🇲🇰', 'Irlanda del Norte': '🏴󠁧󠁢󠁮󠁩󠁲󠁿',
+    
+    // Asia (AFC)
+    'Japón': '🇯🇵', 'Corea del Sur': '🇰🇷', 'Australia': '🇦🇺', 'Irán': '🇮🇷',
+    'Arabia Saudí': '🇸🇦', 'Catar': '🇶🇦', 'Uzbekistán': '🇺🇿', 'Jordania': '🇯🇴',
+    'Irak': '🇮🇶',
+    
+    // África (CAF)
+    'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
+    'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
+    'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬',
+    'Congo': '🇨🇬',
+    
+    // Oceanía (OFC)
+    'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',
+    
+    // Repechaje Intercontinental (adicionales)
+    'Surinam': '🇸🇷'
+};
+    return banderas[nombre] || '🏴';
 }
 
 // ===================================
@@ -50,6 +80,8 @@ function obtenerBandera(codigoEquipo) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     // Actualizar nombre de usuario
+    const userCampeon = document.getElementById('userCampeon');
+    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
     const userNameElement = document.getElementById('userName');
     if (userNameElement && usuario) {
         userNameElement.textContent = usuario.nombre;
@@ -79,12 +111,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function cargarPartidos() {
     try {
         const response = await fetch(`${CONFIG.API_URL}/partidos`);
-        todosPartidos = await response.json();
-
+        const data = await response.json();
+        console.log('Respuesta /partidos:', data[0]); // <-- agrega esto
+        todosPartidos = data;
         llenarSelectorPartidos();
     } catch (error) {
         console.error('Error cargando partidos:', error);
-        mostrarError('Error al cargar la lista de partidos');
     }
 }
 
@@ -93,13 +125,13 @@ function llenarSelectorPartidos() {
     
     select.innerHTML = '<option value="">-- Selecciona un partido --</option>';
     
-    todosPartidos.forEach(partido => {
-        const fechaStr = formatearFecha(partido.fecha_hora);
+    todosPartidos.filter(p => p.fase.startsWith('Grupo ')).forEach(partido => {
+        const fechaStr = formatearFecha(partido.fecha);
         const horaStr = formatearHora(partido.fecha_hora);
         
         const option = document.createElement('option');
         option.value = partido.id;
-        option.textContent = `${fechaStr} ${horaStr} | ${partido.equipo_local} vs ${partido.equipo_visitante}`;
+        option.textContent = ` ${fechaStr}  | ${partido.equipo_local} vs ${partido.equipo_visitante}`;
         
         if (partido.estado === 'finalizado') {
             option.textContent += ` (${partido.goles_local_real}-${partido.goles_visitante_real})`;
@@ -157,7 +189,7 @@ async function cargarDatosPartido(partidoId) {
         // Cargar predicciones del partido
         const response = await fetch(`${CONFIG.API_URL}/mrchip/partido/${partidoId}`);
         const data = await response.json();
-
+        console.log('prediccion local[0]:', data.predicciones.local[0]);
         // Cargar usuarios sin predicción
         const sinPredResponse = await fetch(`${CONFIG.API_URL}/mrchip/usuarios-sin-prediccion/${partidoId}`);
         const usuariosSinPred = await sinPredResponse.json();
@@ -229,6 +261,8 @@ function mostrarPartido(partido) {
 function mostrarPredicciones(predicciones, partido) {
     const grid = document.getElementById('predictionsGrid');
     
+    document.getElementById('teamLocalIcon').textContent = obtenerBandera(partido.equipo_local)
+    document.getElementById('teamVisitanteIcon').textContent = obtenerBandera(partido.equipo_visitante)
     // Actualizar nombres de equipos en columnas
     document.getElementById('teamLocalName').textContent = partido.equipo_local.toUpperCase();
     document.getElementById('teamVisitanteName').textContent = partido.equipo_visitante.toUpperCase();
@@ -265,7 +299,7 @@ function mostrarUsuariosColumna(containerId, usuarios) {
 
     container.innerHTML = usuarios.map(user => `
         <div class="user-card">
-            <div class="user-avatar">👤</div>
+            <div class="user-avatar">${obtenerCampeon(user.campeon_elegido)}</div>
             <div class="user-info">
                 <div class="user-name">${user.nombre}</div>
                 <div class="user-prediction">${user.goles_local} - ${user.goles_visitante}</div>
@@ -277,6 +311,7 @@ function mostrarUsuariosColumna(containerId, usuarios) {
             ` : ''}
         </div>
     `).join('');
+    
 }
 
 function getPuntosClass(puntos) {
@@ -302,7 +337,7 @@ function mostrarUsuariosSinPrediccion(usuarios) {
     section.style.display = 'block';
     container.innerHTML = usuarios.map(user => `
         <div class="user-sin-pred">
-            <span class="user-avatar-small">👤</span>
+            <span class="user-avatar-small">😴</span>
             <span class="user-name-small">${user.nombre}</span>
         </div>
     `).join('');
@@ -355,38 +390,32 @@ function mostrarError(mensaje) {
 // UTILIDADES
 // ===================================
 
+function parsearFecha(fechaStr) {
+    if (!fechaStr) return null;
+    const normalizada = fechaStr
+        .replace(' ', 'T')
+        .replace(/(\.\d+)?([+-]\d{2})$/, '$2:00'); // maneja milisegundos antes del offset
+    const fecha = new Date(normalizada);
+    return isNaN(fecha.getTime()) ? null : fecha;
+}
+
 function formatearFecha(fechaStr) {
-    const fecha = new Date(fechaStr);
-    
-    // Verificar si la fecha es válida
-    if (isNaN(fecha.getTime())) {
-        return 'Fecha no disponible';
-    }
-    
-    const opciones = { 
+    const fecha = parsearFecha(fechaStr);
+    if (!fecha) return 'Fecha no disponible';
+    return fecha.toLocaleDateString('es-ES', { 
         day: '2-digit', 
         month: 'short',
-        year: 'numeric'
-    };
-    
-    return fecha.toLocaleDateString('es-ES', opciones);
+    });
 }
 
 function formatearHora(fechaStr) {
-    const fecha = new Date(fechaStr);
-    
-    // Verificar si la fecha es válida
-    if (isNaN(fecha.getTime())) {
-        return '--:--';
-    }
-    
-    const opciones = { 
+    const fecha = parsearFecha(fechaStr);
+    if (!fecha) return '--:--';
+    return fecha.toLocaleTimeString('es-ES', { 
         hour: '2-digit', 
         minute: '2-digit',
         hour12: false
-    };
-    
-    return fecha.toLocaleTimeString('es-ES', opciones);
+    });
 }
 
 // ===================================

@@ -13,7 +13,7 @@
         <!-- LADO IZQUIERDO: Imagen y mensaje -->
         <div class="split-left">
             <br><br><br>
-            <div class="brand-logo">
+            <div class="brand-logo">c
                 <img src="img/logoblanco.png" alt="logologin" class="logo-login">
             </div>
             <br>
@@ -141,6 +141,7 @@
                 }
 
                 // Login exitoso
+                console.log('data.usuario:', data.usuario);
                 auth.setUser(data.usuario);
                 
                 mostrarExito('¡Bienvenido! Redirigiendo...');

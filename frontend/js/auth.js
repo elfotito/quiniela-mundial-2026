@@ -17,6 +17,7 @@ const AuthManager = {
             id: localStorage.getItem('quiniela_id'),
             nombre: localStorage.getItem('quiniela_nombre'),
             codigo: localStorage.getItem('quiniela_usuario'),
+            campeon_elegido: localStorage.getItem('quiniela_campeon'),
             isAdmin: this.isAdmin()
         };
     },
@@ -26,6 +27,7 @@ const AuthManager = {
         localStorage.setItem('quiniela_usuario',  usuario.codigo);
         localStorage.setItem('quiniela_nombre',   usuario.nombre);
         localStorage.setItem('quiniela_isAdmin',  usuario.isAdmin);
+        localStorage.setItem('quiniela_campeon', usuario.campeon_elegido);
         console.log('✅ Sesión guardada:', this.getUser());
     },
 

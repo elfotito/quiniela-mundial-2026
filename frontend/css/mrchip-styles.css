@@ -306,10 +306,6 @@
     transition: all 0.3s ease;
 }
 
-.prediction-column:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-}
 
 /* Column Headers */
 .column-header {
@@ -393,10 +389,6 @@
         background: var(--border-color);
         border-radius: 3px;
     }
-
-    .users-list::-webkit-scrollbar-thumb:hover {
-        background: #444;
-    }
 }
 
 .empty-column {
@@ -422,31 +414,33 @@
 
 .user-card:hover {
     border-color: var(--fifa-blue);
-    transform: translateX(4px);
 }
 
 .user-avatar {
-    width: 36px;
-    height: 36px;
-    background: linear-gradient(135deg, var(--fifa-blue), var(--fifa-dark-blue));
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 3rem;
     flex-shrink: 0;
+    clip-path: circle(50%);
+    background: var(--dark-bg);     
+    padding-bottom: 4px;
+    padding-left: 0px;  
 }
 
 .user-info {
     flex: 1;
 }
 
-.user-name {
-    font-weight: 600;
+.user-name, .user-icon {
+    font-weight: 400;
     color: white;
     margin-bottom: 0.25rem;
     font-size: 0.9rem;
 }
+
 
 .user-prediction {
     font-size: 0.85rem;

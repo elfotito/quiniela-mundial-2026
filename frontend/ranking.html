@@ -7,9 +7,73 @@
     <link rel="stylesheet" href="css/index-styles.css">
     <style>
         /* RANKING ESPECÍFICO */
-        .hero-ranking {
-            height: 250px;
-            background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+        .hero-hero-ranking {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('/frontend/img/ranking.jpg') center/cover;
+            background-blend-mode: overlay;
+        }
+
+        /* Versión responsive */
+        @media (max-width: 768px) {
+            .hero-hero-ranking {
+                height: 400px; /* Altura reducida en móviles */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-hero-ranking {
+                height: 350px;
+            }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(10, 10, 10, 0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge {
+            font-size: 2.5rem;
+            letter-spacing: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            /* Para más énfasis, puedes usar múltiples sombras */
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .ranking-layout {
@@ -284,8 +348,8 @@
             font-size: 1.5rem;
         }
         
-        .user-name {
-            font-weight: 700;
+        .user-nametable {
+            font-weight: 500;
         }
         
         .liga-badge {
@@ -374,7 +438,7 @@
         <!-- Navegación Desktop -->
         <nav class="nav-desktop">
             <a href="index.html" class="nav-link">Inicio</a>
-            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="quiniela.html" class="nav-link ">Mi Quiniela</a>
             <a href="predicciones.html" class="nav-link">Predicciones</a>
             <a href="ranking.html" class="nav-link active">Ranking</a>
             <a href="calendario.html" class="nav-link">Calendario</a>
@@ -384,7 +448,7 @@
         <!-- Usuario y Admin -->
         <div class="header-actions">
             <div class="user-info">
-                <span class="user-icon">👤</span>
+                <span class="user-icon" id="userCampeon">👤</span>
                 <span class="user-name" id="userName">Usuario</span>
             </div>
             <button class="btn-admin" id="adminBtn" style="display: none;">
@@ -403,21 +467,19 @@
     
     <!-- Navegación Móvil -->
     <nav class="nav-mobile" id="navMobile">
-        <a href="index.html" class="nav-mobile-link active">Inicio</a>
+        <a href="index.html" class="nav-mobile-link">Inicio</a>
         <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
         <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
-        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
+        <a href="ranking.html" class="nav-mobile-link active">Ranking</a>
         <a href="calendario.html" class="nav-mobile-link">Calendario</a>
         <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
     </nav>
     
-    <!-- HERO -->
-    <section class="hero hero-ranking">
+    <!-- HERO SECTION -->
+    <section class="hero-hero-ranking">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <div class="hero-badge">👑</div>
-            <h1 class="hero-title">Ranking Mundial</h1>
-            <p class="hero-subtitle">Tabla de posiciones general</p>
+            <h1 class="hero-title">Ranking</h1>
         </div>
     </section>
     
@@ -542,7 +604,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+            <p>©2026 Drogueria Carrisan. Todos los derechos reservados.</p>
         </div>
     </footer>
 

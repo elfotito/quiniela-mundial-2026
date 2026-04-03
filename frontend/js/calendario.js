@@ -12,10 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'login.html';
         return;
     }
-
     const usuario = auth.getUser();
     document.getElementById('userName').textContent = usuario.nombre || usuario.codigo;
-
+    document.getElementById('userCampeon').textContent = obtenerCampeon(usuario.campeon_elegido);
     // Botón admin
     const adminBtn = document.getElementById('adminBtn');
     if (adminBtn && auth.isAdmin()) {
@@ -356,7 +355,7 @@ function obtenerBandera(nombre) {
     'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
     'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
     'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬',
-    'República del Congo': '🇨🇬',
+    'Congo': '🇨🇬',
     
     // Oceanía (OFC)
     'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',
@@ -365,6 +364,23 @@ function obtenerBandera(nombre) {
     'Surinam': '🇸🇷'
 };
     return banderas[nombre] || '🏴';
+}
+function obtenerCampeon(codigo) {
+    const campeon = {
+        'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
+        'BEL': '🇧🇪', 'BOL': '🇧🇴', 'BRA': '🇧🇷', 'CPV': '🇨🇻',
+        'CAN': '🇨🇦', 'QAT': '🇶🇦', 'COL': '🇨🇴', 'KOR': '🇰🇷',
+        'CIV': '🇨🇮', 'CRO': '🇭🇷', 'CUW': '🇨🇼', 'ECU': '🇪🇨',
+        'EGY': '🇪🇬', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'ESP': '🇪🇸', 'USA': '🇺🇸',
+        'FRA': '🇫🇷', 'GHA': '🇬🇭', 'HAI': '🇭🇹', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'IRQ': '🇮🇶', 'IRN': '🇮🇷', 'JAM': '🇯🇲', 'JPN': '🇯🇵',
+        'JOR': '🇯🇴', 'MAR': '🇲🇦', 'MEX': '🇲🇽', 'NOR': '🇳🇴',
+        'NCL': '🇳🇨', 'NZL': '🇳🇿', 'NED': '🇳🇱', 'PAN': '🇵🇦',
+        'PAR': '🇵🇾', 'POR': '🇵🇹', 'COD': '🇨🇩', 'SEN': '🇸🇳',
+        'RSA': '🇿🇦', 'SUI': '🇨🇭', 'SUR': '🇸🇷', 'TUN': '🇹🇳',
+        'URU': '🇺🇾', 'UZB': '🇺🇿', 'KSA': '🇸🇦', 'ALG': '🇩🇿'
+    };
+    return campeon[codigo] || '🏴';
 }
 
 function logout() {

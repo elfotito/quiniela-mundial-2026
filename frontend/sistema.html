@@ -471,32 +471,32 @@
             else if ((predLocal === realLocal || predVisitante === realVisitante) && Math.sign(predLocal - predVisitante) === Math.sign(realLocal - realVisitante) && 
                      (predLocal - predVisitante) !== 0) {
                 puntos = 7;
-                tipo = 'GANADOR + 1 MARCADOR ACERTADO';
-                explicacion = `Acertaste el ganador o el empate y acertaste los goles de un solo equipo (${Math.abs(realLocal - realVisitante)})`;
+                tipo = 'GANADOR + UN MARCADOR ACERTADO';
+                explicacion = `Acertaste el ganador y acertaste los goles de un solo equipo (${Math.abs(realLocal - realVisitante)})`;
             }
             // Solo ganador
             else if (Math.sign(predLocal - predVisitante) === Math.sign(realLocal - realVisitante) && 
                      (predLocal - predVisitante) !== 0) {
                 puntos = 5;
                 tipo = 'SOLO GANADOR O EMPATE';
-                explicacion = `Acertaste quién gana o el empate, pero no los goles`;
+                explicacion = `Acertaste quién gana o el empate, pero no los goles de ningun equipo`;
             }
             else if (predLocal === predVisitante && realLocal === realVisitante) {
                 puntos = 5;
                 tipo = 'SOLO GANADOR O EMPATE';
-                explicacion = `Acertaste quién gana o el empate, pero no los goles`;
+                explicacion = `Acertaste quién gana o el empate, pero no los goles de ningun equipo`;
             }
             // Empate parcial
             else if (predLocal === realLocal || predVisitante === realVisitante) {
                 puntos = 2;
                 tipo = 'MARCADOR ACERTADO';
-                explicacion = `Acertaste los goles de un equipo pero no el ganador o el empate`;
+                explicacion = `Acertaste los goles de un equipo pero no el ganador`;
             }
             // Error total
             else {
                 puntos = 0;
                 tipo = 'SIN PUNTOS';
-                explicacion = `No acertaste nada`;
+                explicacion = `¿FRIO? 🥶`;
             }
 
             // Mostrar resultado

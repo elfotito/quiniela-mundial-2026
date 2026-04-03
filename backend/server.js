@@ -60,7 +60,8 @@ app.post('/api/login', async (req, res) => {
                 codigo_acceso AS codigo,
                 email,
                 isadmin AS "isAdmin",
-                esta_activo
+                esta_activo,
+                campeon_elegido
             FROM usuarios 
             WHERE UPPER(codigo_acceso) = UPPER($1)
             AND esta_activo = true
@@ -82,6 +83,7 @@ app.post('/api/login', async (req, res) => {
                 nombre: usuario.nombre,
                 codigo: usuario.codigo,
                 email: usuario.email,
+                campeon_elegido: usuario.campeon_elegido,
                 isAdmin: usuario.isAdmin
             }
         });
@@ -970,6 +972,7 @@ app.get('/api/mrchip/partido/:partido_id', async (req, res) => {
                 
                 -- Usuario
                 u.nombre_publico as nombre_usuario,
+                u.campeon_elegido,
                 
                 -- Clasificación de la predicción
                 CASE 
@@ -1021,13 +1024,14 @@ app.get('/api/mrchip/partido/:partido_id', async (req, res) => {
         result.rows.forEach(row => {
             if (row.prediccion_id) {
                 const pred = {
-                    id: row.prediccion_id,
-                    usuario_id: row.usuario_id,
-                    nombre: row.nombre_usuario,
-                    goles_local: row.goles_local_pred,
-                    goles_visitante: row.goles_visitante_pred,
-                    puntos: row.puntos_obtenidos
-                };
+                        id: row.prediccion_id,
+                        usuario_id: row.usuario_id,
+                        nombre: row.nombre_usuario,
+                        campeon_elegido: row.campeon_elegido,
+                        goles_local: row.goles_local_pred,
+                        goles_visitante: row.goles_visitante_pred,
+                        puntos: row.puntos_obtenidos
+                    };
                 predicciones[row.prediccion_tipo].push(pred);
             }
         });
@@ -1055,7 +1059,8 @@ app.get('/api/mrchip/usuarios-sin-prediccion/:partido_id', async (req, res) => {
         const query = `
             SELECT 
                 u.id,
-                u.nombre_publico as nombre
+                u.nombre_publico as nombre,
+                u.campeon_elegido
             FROM usuarios u
             WHERE u.esta_activo = true
             AND u.id NOT IN (

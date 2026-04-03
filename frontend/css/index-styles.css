@@ -308,8 +308,10 @@ body {
     font-size: 1.1rem;
 }
 
-.user-name {
-    font-weight: 500;
+.user-name, .user-icon {
+    font-weight: 400;
+    color: white;
+    margin-bottom: 0.25rem;
     font-size: 0.9rem;
 }
 
@@ -511,6 +513,7 @@ body {
         height: 350px;
     }
 }
+
 
 .hero-overlay {
     position: absolute;

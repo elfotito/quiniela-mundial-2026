@@ -152,10 +152,7 @@ body {
     font-size: 1.1rem;
 }
 
-.user-name {
-    font-weight: 500;
-    font-size: 0.9rem;
-}
+
 
 .btn-admin {
     display: flex;
@@ -642,8 +639,8 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.user-name {
-    font-weight: 600;
+.user-nametable {
+    font-weight: 400;
     color: var(--text-white);
 }
 

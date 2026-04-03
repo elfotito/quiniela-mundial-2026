@@ -12,18 +12,19 @@
     <header class="header">
     <div class="header-container">
         <!-- Logo -->
-        <a href="index.html"><div class="header-logo">
-            <div class="logo-icon">
+        <div class="header-logo">
+            <a href="index.html"><div class="logo-icon">
                 <img src="img/logomenu.png" alt="logomenu">
             </div>
             <div class="logo-text">
                 <img src="img/logoblancomenu.png" alt="logomenu">
             </div></a>
         </div>
+        
         <!-- Navegación Desktop -->
         <nav class="nav-desktop">
             <a href="index.html" class="nav-link">Inicio</a>
-            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
+            <a href="quiniela.html" class="nav-link ">Mi Quiniela</a>
             <a href="predicciones.html" class="nav-link">Predicciones</a>
             <a href="ranking.html" class="nav-link">Ranking</a>
             <a href="calendario.html" class="nav-link">Calendario</a>
@@ -33,7 +34,7 @@
         <!-- Usuario y Admin -->
         <div class="header-actions">
             <div class="user-info">
-                <span class="user-icon">👤</span>
+                <span class="user-icon" id="userCampeon">👤</span>
                 <span class="user-name" id="userName">Usuario</span>
             </div>
             <button class="btn-admin" id="adminBtn" style="display: none;">
@@ -52,19 +53,19 @@
     
     <!-- Navegación Móvil -->
     <nav class="nav-mobile" id="navMobile">
-        <a href="index.html" class="nav-mobile-link active">Inicio</a>
+        <a href="index.html" class="nav-mobile-link">Inicio</a>
         <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
         <a href="predicciones.html" class="nav-mobile-link">Predicciones</a>
         <a href="ranking.html" class="nav-mobile-link">Ranking</a>
         <a href="calendario.html" class="nav-mobile-link">Calendario</a>
-        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
+        <a href="mrchip.html" class="nav-link active">Mr. CHIP</a>
     </nav>
     <!-- MAIN CONTENT -->
     <main class="container">
         <!-- Page Header -->
         <section class="page-header">
             <div class="chip-header">
-                <div class="chip-icon">🤖</div>
+                <div class="chip-icon">🤓</div>
                 <div>
                     <h1>Mr. CHIP</h1>
                     <p>Análisis en vivo de predicciones por partido</p>
@@ -145,7 +146,7 @@
             <!-- Columna Local -->
             <div class="prediction-column column-local">
                 <div class="column-header">
-                    <div class="column-icon">🏆</div>
+                    <div class="column-icon" id="teamLocalIcon">LOCAL</div>
                     <div class="column-title">GANADOR</div>
                     <div class="column-subtitle" id="teamLocalName">EQUIPO LOCAL</div>
                     <div class="column-count" id="countLocal">0</div>
@@ -171,7 +172,7 @@
             <!-- Columna Visitante -->
             <div class="prediction-column column-visitante">
                 <div class="column-header">
-                    <div class="column-icon">🏆</div>
+                    <div class="column-icon" id="teamVisitanteIcon">VISITANTE</div>
                     <div class="column-title">GANADOR</div>
                     <div class="column-subtitle" id="teamVisitanteName">EQUIPO VISITANTE</div>
                     <div class="column-count" id="countVisitante">0</div>
@@ -212,7 +213,6 @@
                 <h4 class="footer-title">Enlaces</h4>
                 <a href="reglamento.html" class="footer-link">Reglamento</a>
                 <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
-                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
             </div>
             
             <div class="footer-section">
@@ -222,7 +222,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
+            <p>©2026 Drogueria Carrisan. Todos los derechos reservados.</p>
         </div>
     </footer>
 

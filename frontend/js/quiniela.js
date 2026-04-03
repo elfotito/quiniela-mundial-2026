@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function configurarUI() {
+    const userCampeon = document.getElementById('userCampeon');
+    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
     const userNameElement = document.getElementById('userName');
     if (userNameElement) {
         userNameElement.textContent = usuario.nombre || usuario.codigo;
@@ -57,7 +59,23 @@ function configurarUI() {
         });
     }
 }
-
+function obtenerCampeon(codigo) {
+    const campeon = {
+        'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
+        'BEL': '🇧🇪', 'BOL': '🇧🇴', 'BRA': '🇧🇷', 'CPV': '🇨🇻',
+        'CAN': '🇨🇦', 'QAT': '🇶🇦', 'COL': '🇨🇴', 'KOR': '🇰🇷',
+        'CIV': '🇨🇮', 'CRO': '🇭🇷', 'CUW': '🇨🇼', 'ECU': '🇪🇨',
+        'EGY': '🇪🇬', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'ESP': '🇪🇸', 'USA': '🇺🇸',
+        'FRA': '🇫🇷', 'GHA': '🇬🇭', 'HAI': '🇭🇹', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'IRQ': '🇮🇶', 'IRN': '🇮🇷', 'JAM': '🇯🇲', 'JPN': '🇯🇵',
+        'JOR': '🇯🇴', 'MAR': '🇲🇦', 'MEX': '🇲🇽', 'NOR': '🇳🇴',
+        'NCL': '🇳🇨', 'NZL': '🇳🇿', 'NED': '🇳🇱', 'PAN': '🇵🇦',
+        'PAR': '🇵🇾', 'POR': '🇵🇹', 'COD': '🇨🇩', 'SEN': '🇸🇳',
+        'RSA': '🇿🇦', 'SUI': '🇨🇭', 'SUR': '🇸🇷', 'TUN': '🇹🇳',
+        'URU': '🇺🇾', 'UZB': '🇺🇿', 'KSA': '🇸🇦', 'ALG': '🇩🇿'
+    };
+    return campeon[codigo] || '🏴';
+}
 function configurarEventos() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
@@ -795,7 +813,11 @@ async function cargarLogros() {
             titulo: 'Top 10', 
             descripcion: 'Entraste al top 10 del ranking general',
             rareza: 'bronce',
-            desbloqueado: ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) < 11 
+            desbloqueado: (() => {
+                            const enTop10 = ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) < 11;
+                            const tienePrediccionesEvaluadas = predicciones.some(p => p.puntos_obtenidos !== null);
+                            return enTop10 && tienePrediccionesEvaluadas;
+                                })() 
         },
         { 
             id: 'top_3', 
@@ -803,7 +825,11 @@ async function cargarLogros() {
             titulo: 'Top 3', 
             descripcion: 'Entraste al top 3 del ranking general',
             rareza: 'plata',
-            desbloqueado: ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) < 4 
+            desbloqueado:  (() => {
+                            const enTop10 = ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) < 4
+                            const tienePrediccionesEvaluadas = predicciones.some(p => p.puntos_obtenidos !== null);
+                            return enTop10 && tienePrediccionesEvaluadas;
+                                })()
         },
         { 
             id: 'top_1', 
@@ -812,18 +838,28 @@ async function cargarLogros() {
             descripcion: 'Haz alcanzado el primer lugar por primera vez',
             rareza: 'oro',
             desbloqueado: verificarLogroPermanente(
-            'primer_lugar',
-            ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) === 0) 
+                'primer_lugar',
+                (() => {
+                    const esPrimero = ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) === 0;
+                    const tienePrediccionesEvaluadas = predicciones.some(p => p.puntos_obtenidos !== null);
+                    return esPrimero && tienePrediccionesEvaluadas;
+                })()
+            ) 
         },
         { 
             id: 'ultimo_lugar', 
             imagen: 'img/logros/tenfe.png',
             titulo: 'La fe no se detiene', 
-            descripcion: 'Tocaste el fondo de la tabla, habras perdidos puntos pero no la fe',
+            descripcion: 'Tocaste el fondo de la tabla, habras perdido puntos pero no la fe',
             rareza: 'bronce',
             desbloqueado: verificarLogroPermanente(
                 'ultimo_lugar',
-                ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) === ranking.length - 1)
+                (() => {
+                    const esUltimo = ranking.findIndex(u => u.usuario_id === parseInt(usuario.id)) === ranking.length - 1;
+                    const tienePrediccionesEvaluadas = predicciones.some(p => p.puntos_obtenidos !== null);
+                    return esUltimo && tienePrediccionesEvaluadas;
+                })()
+            )
         },
     ];
     
@@ -920,7 +956,7 @@ function obtenerBandera(nombre) {
     'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
     'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
     'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬',
-    'República del Congo': '🇨🇬',
+    'Congo': '🇨🇬',
     
     // Oceanía (OFC)
     'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',

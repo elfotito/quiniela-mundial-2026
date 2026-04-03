@@ -10,7 +10,7 @@ let usuarioId = null;
 // ===============================================
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🏠 Index cargando...');
+
     
     // Verificar login
     await verificarLogin();
@@ -30,24 +30,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ===============================================
 
 async function verificarLogin() {
-    const codigo = localStorage.getItem('quiniela_usuario');
-    if (!codigo) {
+    
+    if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
         return;
     }
     
-    usuarioId = parseInt(localStorage.getItem('quiniela_id'));
-    const nombre = localStorage.getItem('quiniela_nombre');
-    const isAdmin = localStorage.getItem('quiniela_isAdmin') === 'true';
+    const usuario = auth.getUser();
+    usuarioId = parseInt(usuario.id);
     
     // Mostrar nombre de usuario
     const userNameEl = document.getElementById('userName');
-    if (userNameEl && nombre) {
-        userNameEl.textContent = nombre;
-    }
+    if (userNameEl) userNameEl.textContent = usuario.nombre;
+    
+    // Mostrar campeón elegido
+    const userCampeon = document.getElementById('userCampeon');
+    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
     
     // Mostrar botón admin si corresponde
-    if (isAdmin) {
+    if (usuario.isAdmin) {
         const adminBtn = document.getElementById('adminBtn');
         if (adminBtn) {
             adminBtn.style.display = 'flex';
@@ -342,7 +343,7 @@ function obtenerBandera(nombre) {
     'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
     'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
     'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬',
-    'República del Congo': '🇨🇬',
+    'Congo': '🇨🇬',
     
     // Oceanía (OFC)
     'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',
@@ -351,6 +352,23 @@ function obtenerBandera(nombre) {
     'Surinam': '🇸🇷'
 };
     return banderas[nombre] || '🏴';
+}
+function obtenerCampeon(codigo) {
+    const campeon = {
+        'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
+        'BEL': '🇧🇪', 'BOL': '🇧🇴', 'BRA': '🇧🇷', 'CPV': '🇨🇻',
+        'CAN': '🇨🇦', 'QAT': '🇶🇦', 'COL': '🇨🇴', 'KOR': '🇰🇷',
+        'CIV': '🇨🇮', 'CRO': '🇭🇷', 'CUW': '🇨🇼', 'ECU': '🇪🇨',
+        'EGY': '🇪🇬', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'ESP': '🇪🇸', 'USA': '🇺🇸',
+        'FRA': '🇫🇷', 'GHA': '🇬🇭', 'HAI': '🇭🇹', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'IRQ': '🇮🇶', 'IRN': '🇮🇷', 'JAM': '🇯🇲', 'JPN': '🇯🇵',
+        'JOR': '🇯🇴', 'MAR': '🇲🇦', 'MEX': '🇲🇽', 'NOR': '🇳🇴',
+        'NCL': '🇳🇨', 'NZL': '🇳🇿', 'NED': '🇳🇱', 'PAN': '🇵🇦',
+        'PAR': '🇵🇾', 'POR': '🇵🇹', 'COD': '🇨🇩', 'SEN': '🇸🇳',
+        'RSA': '🇿🇦', 'SUI': '🇨🇭', 'SUR': '🇸🇷', 'TUN': '🇹🇳',
+        'URU': '🇺🇾', 'UZB': '🇺🇿', 'KSA': '🇸🇦', 'ALG': '🇩🇿'
+    };
+    return campeon[codigo] || '🏴';
 }
 // ===============================================
 // TICKER INFINITO

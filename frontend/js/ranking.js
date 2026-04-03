@@ -31,10 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ===============================================
 
 function configurarUI() {
+    
     const userNameElement = document.getElementById('userName');
     if (userNameElement) {
         userNameElement.textContent = usuario.nombre || usuario.codigo;
     }
+    const userCampeon = document.getElementById('userCampeon');
+    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
 
     const adminBtn = document.getElementById('adminBtn');
     if (adminBtn && auth.isAdmin()) {
@@ -157,6 +160,11 @@ function mostrarPodio(ranking) {
     
     const top3 = ranking.slice(0, 3);
     const medallas = ['🥈', '🥇', '🥉'];
+    const images = [
+    'img/baggio.jpg',   // 2do lugar (posición visual izquierda)
+    'img/messi.png',   // 1er lugar (posición visual centro)
+    'img/turquia.jpg'    // 3er lugar (posición visual derecha)
+    ];
     const posiciones = [1, 0, 2]; // Orden visual: 2do, 1ro, 3ro
     const clases = ['second', 'first', 'third'];
     
@@ -169,7 +177,7 @@ function mostrarPodio(ranking) {
                 return `
                     <div class="podium-place ${clases[displayIndex]}">
                         <div class="podium-image">
-                            ${medallas[displayIndex]}
+                            <img src="${images[displayIndex]}" alt="podio" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
                         </div>
                         <div class="podium-medal">${medallas[displayIndex]}</div>
                         <div class="podium-name">${user.nombre_publico || user.nombre || 'Usuario'}</div>
@@ -219,8 +227,8 @@ function mostrarTablaRanking(ranking) {
                 <td class="td-pos">${obtenerMedallaPosicion(posicion)}</td>
                 <td>
                     <div class="user-cell">
-                        <span class="user-flag">${obtenerBandera(user.campeon_elegido)}</span>
-                        <span class="user-name">${user.nombre_publico || user.nombre || 'Usuario'}</span>
+                        <!-- PUEDE SERVIR PARA METER LAS BANDERAS DEL EQUIPO CAMPEON <span class="user-flag">${obtenerBandera(user.campeon_elegido)}</span> -->
+                        <span class="user-nametable">${user.nombre_publico || user.nombre || 'Usuario'}</span>
                     </div>
                 </td>
                 <td>
@@ -388,7 +396,23 @@ function obtenerBandera(codigoEquipo) {
     
     return banderas[codigoEquipo] || '🏆';
 }
-
+function obtenerCampeon(codigo) {
+    const campeon = {
+        'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
+        'BEL': '🇧🇪', 'BOL': '🇧🇴', 'BRA': '🇧🇷', 'CPV': '🇨🇻',
+        'CAN': '🇨🇦', 'QAT': '🇶🇦', 'COL': '🇨🇴', 'KOR': '🇰🇷',
+        'CIV': '🇨🇮', 'CRO': '🇭🇷', 'CUW': '🇨🇼', 'ECU': '🇪🇨',
+        'EGY': '🇪🇬', 'SCO': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'ESP': '🇪🇸', 'USA': '🇺🇸',
+        'FRA': '🇫🇷', 'GHA': '🇬🇭', 'HAI': '🇭🇹', 'ENG': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'IRQ': '🇮🇶', 'IRN': '🇮🇷', 'JAM': '🇯🇲', 'JPN': '🇯🇵',
+        'JOR': '🇯🇴', 'MAR': '🇲🇦', 'MEX': '🇲🇽', 'NOR': '🇳🇴',
+        'NCL': '🇳🇨', 'NZL': '🇳🇿', 'NED': '🇳🇱', 'PAN': '🇵🇦',
+        'PAR': '🇵🇾', 'POR': '🇵🇹', 'COD': '🇨🇩', 'SEN': '🇸🇳',
+        'RSA': '🇿🇦', 'SUI': '🇨🇭', 'SUR': '🇸🇷', 'TUN': '🇹🇳',
+        'URU': '🇺🇾', 'UZB': '🇺🇿', 'KSA': '🇸🇦', 'ALG': '🇩🇿'
+    };
+    return campeon[codigo] || '🏴';
+}
 function actualizarContador(cantidad) {
     const counter = document.getElementById('participantsCount');
     if (counter) {
