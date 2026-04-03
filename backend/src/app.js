@@ -108,10 +108,10 @@ connectDB();
 // --------------------------------------------------------------
 // 5. INICIAR EL SERVIDOR
 // --------------------------------------------------------------
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;  // Railway usa PORT, no 3000
 
-app.listen(PORT, () => {
-  console.log(`
+app.listen(PORT, '0.0.0.0', () => {  // Importante: '0.0.0.0'
+    console.log(`
 ╔══════════════════════════════════════════════════╗
 ║   ⚽ SISTEMA DE PREDICCIONES MUNDIAL 2026        ║
 ║   🚀 Backend API + Frontend estático             ║
