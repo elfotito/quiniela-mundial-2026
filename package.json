@@ -2,9 +2,9 @@
   "name": "predicciones-backend",
   "version": "1.0.0",
   "description": "API para sistema de predicciones Mundial 2026",
-  "main": "src/app.js",
+  "main": "backend/src/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node backend/src/app.js",
     "dev": "nodemon src/app.js"
   },
   "dependencies": {
