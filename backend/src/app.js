@@ -37,7 +37,6 @@ app.get('/', (req, res) => {
 // Rutas de la API
 app.use('/api/partidos', partidosRoutes);
 app.use('/api/usuarios', usuariosRoutes);
-app.use('/api/predicciones', prediccionesRoutes);
 app.use('/api/ranking', rankingRoutes);
 app.use("/api/admin", adminRoutes);
 
