@@ -90,21 +90,29 @@ app.use((req, res) => {
 
 let dbConnected = false;
 
-// Intenta conectar pero no detengas el servidor
-const connectDB = async () => {
-    try {
-        const pool = require('./db');
-        await pool.query('SELECT NOW()');
-        dbConnected = true;
-        console.log('✅ PostgreSQL conectado correctamente');
-    } catch (err) {
-        console.error('⚠️ PostgreSQL no disponible, pero el servidor sigue funcionando');
-        console.error('   La app funcionará cuando la BD esté lista');
-    }
-};
+// Temporalmente comenta esto:
+// const connectDB = async () => {
+//     try {
+//         const pool = require('./db');
+//         await pool.query('SELECT NOW()');
+//         console.log('✅ PostgreSQL conectado');
+//     } catch (err) {
+//         console.error('⚠️ Error BD:', err.message);
+//     }
+// };
+// connectDB();
 
 // Llama a connectDB pero NO esperes a que termine para iniciar el servidor
 connectDB();
+// Health check para Railway (debe responder rápido)
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
+// También para la raíz
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/index.html'));
+});
 // --------------------------------------------------------------
 // 5. INICIAR EL SERVIDOR
 // --------------------------------------------------------------
