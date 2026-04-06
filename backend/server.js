@@ -13,33 +13,46 @@ const PORT = process.env.PORT || 3000;
 // ===============================================
 // CONEXIÓN A POSTGRESQL
 // ===============================================
-const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'postgres',
-    password: process.env.DB_PASSWORD || '141092',
-    port: process.env.DB_PORT || 5432,
-});
+const poolConfig = process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+      }
+    : {
+        user: process.env.DB_USER || 'postgres',
+        host: process.env.DB_HOST || 'localhost',
+        database: process.env.DB_NAME || 'postgres',
+        password: process.env.DB_PASSWORD || '141092',
+        port: process.env.DB_PORT || 5432,
+      };
+
+console.log('DATABASE_URL existe:', !!process.env.DATABASE_URL);
+
+const pool = new Pool(poolConfig);
 
 // Probar conexión
 pool.connect((err, client, release) => {
     if (err) {
-        console.error('❌ Error conectando a PostgreSQL:', err);
-        process.exit(1);
+        console.error('❌ Error conectando a PostgreSQL:', err.message);
+        // NO hacer process.exit(1) — Render reintentará
+    } else {
+        console.log('✅ Conexión a PostgreSQL exitosa');
+        release();
     }
-    console.log('✅ Conexión a PostgreSQL exitosa');
-    release();
 });
 
 // ===============================================
 // MIDDLEWARE
 // ===============================================
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:5500', 'http://localhost:5500'],
+    origin: [
+        'http://localhost:3000',
+        'http://127.0.0.1:5500',
+        'http://localhost:5500',
+        process.env.FRONTEND_URL  // Tu URL de Vercel
+    ],
     credentials: true
 }));
-app.use(express.json());
-
 // ===============================================
 // RUTAS DE AUTENTICACIÓN
 // ===============================================
