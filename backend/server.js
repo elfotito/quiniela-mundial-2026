@@ -41,17 +41,16 @@ pool.connect((err, client, release) => {
     }
 });
 
-// ===============================================
-// MIDDLEWARE
-// ===============================================
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'http://127.0.0.1:5500',
         'http://localhost:5500',
-        process.env.FRONTEND_URL  // Tu URL de Vercel
+        'http://127.0.0.1:5500',
+        'https://quiniela-mundial-2026-omega.vercel.app'  // ← tu URL exacta de Vercel
     ],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-codigo-acceso']
 }));
 // ===============================================
 // RUTAS DE AUTENTICACIÓN
