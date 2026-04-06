@@ -432,18 +432,7 @@ body {
     background-blend-mode: overlay;
 }
 
-/* Versión responsive */
-@media (max-width: 768px) {
-    .hero-hero-terminos {
-        height: 400px; /* Altura reducida en móviles */
-    }
-}
 
-@media (max-width: 480px) {
-    .hero-hero-terminos {
-        height: 350px;
-    }
-}
 
 .hero-hero-reglamento {
     position: relative;
@@ -455,18 +444,7 @@ body {
     background-blend-mode: overlay;
 }
 
-/* Versión responsive */
-@media (max-width: 768px) {
-    .hero-hero-reglamento {
-        height: 400px; /* Altura reducida en móviles */
-    }
-}
 
-@media (max-width: 480px) {
-    .hero-hero-reglamento {
-        height: 350px;
-    }
-}
 
 .hero-hero-sistema {
     position: relative;
@@ -476,19 +454,6 @@ body {
     justify-content: center;
     background: url('../img/sistema.png') center/cover;
     background-blend-mode: overlay;
-}
-
-/* Versión responsive */
-@media (max-width: 768px) {
-    .hero-hero-sistema {
-        height: 400px; /* Altura reducida en móviles */
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-hero-sistema {
-        height: 350px;
-    }
 }
 
 .hero-hero-calendario {
@@ -501,18 +466,7 @@ body {
     background-blend-mode: overlay;
 }
 
-/* Versión responsive */
-@media (max-width: 768px) {
-    .hero-hero-terminos {
-        height: 400px; /* Altura reducida en móviles */
-    }
-}
 
-@media (max-width: 480px) {
-    .hero-hero-terminos {
-        height: 350px;
-    }
-}
 
 
 .hero-overlay {
@@ -910,79 +864,7 @@ body {
     }
 }
 
-/* ===============================================
-   RESPONSIVE
-   =============================================== */
 
-@media (max-width: 1024px) {
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .nav-desktop {
-        display: none;
-    }
-    
-    .btn-menu-mobile {
-        display: flex;
-    }
-    
-    .nav-mobile.active {
-        display: block;
-    }
-    
-    .hero {
-        height: 400px;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .quick-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .stat-value {
-        font-size: 2rem;
-    }
-    
-    .header-container {
-        padding: 1rem;
-    }
-    
-    .main-container {
-        padding: 2rem 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .quick-stats {
-        grid-template-columns: 1fr;
-    }
-    
-    .hero-actions {
-        flex-direction: column;
-    }
-    
-    .btn-hero {
-        width: 100%;
-    }
-    
-    .user-info {
-        padding: 0.4rem 0.75rem;
-    }
-    
-    .user-name {
-        display: none;
-    }
-}
 /* ===============================================
    COUNTDOWN DENTRO DEL HERO
    =============================================== */
@@ -1078,31 +960,7 @@ body {
     margin-bottom: 2rem;
 }
 
-@media (max-width: 768px) {
-    .countdown-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 1.5rem;
-    }
-    
-    .countdown-label {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .time-box {
-        min-width: 60px;
-        padding: 0.75rem;
-    }
-    
-    .time-value {
-        font-size: 1.8rem;
-    }
-    
-    .hero {
-        min-height: 500px;
-    }
-}
+
 
 /* ===============================================
    CARRUSEL DE NOTICIAS ESTILO FIFA
@@ -1363,54 +1221,94 @@ body {
     to { width: 100%; }
 }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .carousel-slide {
-        grid-template-columns: 1fr;
+
+/* ===============================================
+   NAVBAR RESPONSIVE - MÓVIL Y TABLET
+   =============================================== */
+
+@media (max-width: 768px) {
+
+    /* Fix del logo que se sale */
+    .logo-icon {
+        position: static;
+        transform: none;
+        background: transparent;
+        padding: 0;
     }
-    
-    .slide-image {
+
+    .logo-icon img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .logo-text {
+        margin-left: 0;
+        width: auto;
+    }
+
+    /* Header más compacto */
+    .header-container {
+        padding: 0.6rem 1rem;
+        gap: 0.75rem;
+    }
+
+    /* Nav links — ocultar texto, dejar solo iconos o reducir */
+    .nav-link span {
         display: none;
     }
-    
-    .slide-content {
-        padding: 2rem;
+
+    /* Botón admin más pequeño */
+    .btn-admin {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
     }
-    
-    .slide-title {
-        font-size: 2rem;
+
+    /* Contenido principal sin overflow horizontal */
+    .main-content {
+        padding: 1rem;
+        overflow-x: hidden;
+    }
+
+    /* Botones del tutorial que se cortaban */
+    .tutorial-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .tutorial-actions a,
+    .tutorial-actions button {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Área negra a la derecha — fix de overflow */
+    body {
+        overflow-x: hidden;
+    }
+
+    .container,
+    .main-content,
+    section {
+        max-width: 100%;
+        overflow-x: hidden;
     }
 }
 
-@media (max-width: 768px) {
-    .carousel-nav {
-        flex-wrap: wrap;
+@media (max-width: 480px) {
+    .logo-icon img {
+        width: 42px;
+        height: 42px;
     }
-    
-    .carousel-thumbnails {
-        order: -1;
-        width: 100%;
+
+    .header-container {
+        padding: 0.5rem 0.75rem;
     }
-    
-    .thumbnail {
-        flex: 0 0 220px;
+
+    .logo-main {
+        font-size: 1rem;
     }
-    
-    .countdown-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 1.5rem;
-    }
-    
-    .carousel-slides {
-        height: 400px;  /* ← Cambiar a height: 400px; */
-    }
-    
-    .carousel-slide {
-        height: 400px;       /* ✅ Mantener fijo */
-    }
-    
-    .slide-title {
-        font-size: 1.75rem;
+
+    .logo-sub {
+        font-size: 0.6rem;
     }
 }
