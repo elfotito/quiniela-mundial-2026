@@ -451,9 +451,7 @@ body {
     }
 }
 
-/* ===============================================
-   MOBILE - Banner con título y banderas visibles
-   =============================================== */
+/* Reemplaza SOLO el bloque @media (max-width: 768px) que tienes */
 
 @media (max-width: 768px) {
     body {
@@ -466,19 +464,17 @@ body {
     }
 
     .split-left {
-        flex: 0 0 240px;
-        min-height: 240px;
-        max-height: 240px;
-        padding: 1rem 1.25rem;
-        justify-content: flex-start;
+        flex: 0 0 280px;
+        min-height: 280px;
+        max-height: 280px;
+        padding: 1rem 1.25rem 1.25rem;
+        justify-content: space-between;
         background-attachment: scroll;
-        gap: 0.5rem;
     }
 
-    /* Logo estático en móvil */
     .logo-login {
         position: static;
-        width: 140px;
+        width: 130px;
         margin: 0;
         display: block;
     }
@@ -486,36 +482,33 @@ body {
     .brand-logo {
         position: static;
         text-align: left;
-        margin-bottom: 0.25rem;
     }
 
-    /* Mostrar hero resumido */
     .hero-content {
         display: flex;
         flex-direction: column;
-        gap: 0.25rem;
+        gap: 0.5rem;
     }
 
     .hero-title {
-        font-size: 1.3rem;
-        margin-bottom: 0.25rem;
+        font-size: 1.25rem;
+        margin-bottom: 0;
         line-height: 1.2;
     }
 
     .hero-description {
-        display: none; /* ocupa mucho espacio en móvil */
+        display: none;
     }
 
     .hero-flags {
-        font-size: 1.5rem;
-        letter-spacing: 0.4rem;
+        font-size: 1.6rem;
+        letter-spacing: 0.5rem;
     }
 
     .hero-footer {
         display: none;
     }
 
-    /* Formulario */
     .split-right {
         flex: 1;
         padding: 1.75rem 1.25rem;
@@ -534,16 +527,21 @@ body {
 
 @media (max-width: 480px) {
     .split-left {
-        flex: 0 0 200px;
-        min-height: 200px;
-        max-height: 200px;
+        flex: 0 0 250px;
+        min-height: 250px;
+        max-height: 250px;
     }
 
     .logo-login {
-        width: 120px;
+        width: 115px;
     }
 
     .hero-title {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
+    }
+
+    .hero-flags {
+        font-size: 1.4rem;
+        letter-spacing: 0.4rem;
     }
 }
