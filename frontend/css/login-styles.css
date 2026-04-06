@@ -396,16 +396,68 @@ body {
 }
 
 /* ===============================================
-   RESPONSIVE
+   TABLET / IPAD - Dos columnas mejoradas
    =============================================== */
 
+@media (min-width: 769px) and (max-width: 1024px) {
+    .split-left {
+        padding: 2rem 1.5rem;
+        justify-content: space-between;
+        background-attachment: scroll;
+    }
+
+    /* Logo estático arriba, no absolute */
+    .logo-login {
+        position: static;
+        width: 200px;
+        margin: 0;
+        display: block;
+    }
+
+    .brand-logo {
+        position: static;
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-flags {
+        font-size: 2rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .hero-footer {
+        font-size: 0.8rem;
+    }
+
+    .split-right {
+        flex: 0 0 400px;
+    }
+}
+
 /* ===============================================
-   MOBILE MEJORADO - Reemplaza los @media actuales
+   MOBILE - Banner con título y banderas visibles
    =============================================== */
 
 @media (max-width: 768px) {
     body {
-        overflow: auto; /* permite scroll si es necesario */
+        overflow: auto;
     }
 
     .split-container {
@@ -413,41 +465,61 @@ body {
         min-height: 100vh;
     }
 
-    /* Lado izquierdo: solo banner compacto */
     .split-left {
-        flex: 0 0 180px;
-        min-height: 180px;
-        max-height: 180px;
-        padding: 1rem;
-        justify-content: flex-end;
-        background-attachment: scroll; /* fixed no funciona bien en móvil */
+        flex: 0 0 240px;
+        min-height: 240px;
+        max-height: 240px;
+        padding: 1rem 1.25rem;
+        justify-content: flex-start;
+        background-attachment: scroll;
+        gap: 0.5rem;
     }
 
-    /* Ocultar texto hero en móvil, solo se ve el fondo */
-    .hero-content,
-    .hero-footer {
-        display: none;
-    }
-
-    /* Logo reposicionado para móvil */
+    /* Logo estático en móvil */
     .logo-login {
-        position: static;   /* quita el absolute */
-        width: 180px;
-        margin: 0 auto;
+        position: static;
+        width: 140px;
+        margin: 0;
         display: block;
     }
 
     .brand-logo {
-        text-align: center;
         position: static;
+        text-align: left;
+        margin-bottom: 0.25rem;
     }
 
-    /* Lado derecho: ocupa el resto */
+    /* Mostrar hero resumido */
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .hero-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        display: none; /* ocupa mucho espacio en móvil */
+    }
+
+    .hero-flags {
+        font-size: 1.5rem;
+        letter-spacing: 0.4rem;
+    }
+
+    .hero-footer {
+        display: none;
+    }
+
+    /* Formulario */
     .split-right {
         flex: 1;
-        padding: 2rem 1.25rem;
+        padding: 1.75rem 1.25rem;
         align-items: flex-start;
-        padding-top: 2rem;
     }
 
     .form-container {
@@ -462,16 +534,16 @@ body {
 
 @media (max-width: 480px) {
     .split-left {
-        flex: 0 0 140px;
-        min-height: 140px;
-        max-height: 140px;
+        flex: 0 0 200px;
+        min-height: 200px;
+        max-height: 200px;
     }
 
     .logo-login {
-        width: 140px;
+        width: 120px;
     }
 
-    .split-right {
-        padding: 1.5rem 1rem;
+    .hero-title {
+        font-size: 1.15rem;
     }
 }
