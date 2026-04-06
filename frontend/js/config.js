@@ -4,12 +4,13 @@
 
 const CONFIG = {
 
-    API_URL: window.location.origin + '/api',
-    
-    // Límite de predicción (minutos antes del partido)
+    // En producción apunta a Render, en local apunta a localhost
+    API_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000/api'
+        : 'https://quinielamundial2026.onrender.com/api',
+
     TIEMPO_LIMITE_PREDICCION: 10,
-    
-    // Claves de localStorage
+
     STORAGE_KEYS: {
         USUARIO_ID: 'quiniela_id',
         USUARIO_CODIGO: 'quiniela_usuario',
