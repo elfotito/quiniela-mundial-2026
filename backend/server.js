@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 3000;
 const poolConfig = process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
+        ssl: { rejectUnauthorized: false },
+        family: 4  // ← fuerza IPv4
       }
     : {
         user: process.env.DB_USER || 'postgres',
