@@ -1,7 +1,7 @@
-﻿// src/app.js - VERSIÓN COMPLETA CON FRONTEND ESTÁTICO
+﻿// src/app.js
 const express = require('express');
 const cors = require('cors');
-const path = require('path');   // ← Necesario para rutas de archivos
+const path = require('path');
 require('dotenv').config();
 
 // Importar rutas
@@ -9,124 +9,81 @@ const partidosRoutes = require('./routes/partidos');
 const usuariosRoutes = require('./routes/usuarios');
 const prediccionesRoutes = require('./routes/predicciones');
 const rankingRoutes = require('./routes/ranking');
-const adminRoutes = require("./routes/admin");
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// --------------------------------------------------------------
+// CORS - Permite peticiones desde tu frontend en Vercel
+// --------------------------------------------------------------
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://127.0.0.1:5500',       // Live Server local
+    process.env.FRONTEND_URL       // Tu URL de Vercel (la pones en variables de Render)
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // --------------------------------------------------------------
-// 1. SERVIR ARCHIVOS ESTÁTICOS DEL FRONTEND (HTML, CSS, JS)
-// --------------------------------------------------------------
-// La carpeta 'frontend' está al mismo nivel que 'backend'
-app.use(express.static(path.join(__dirname, '../../frontend')));
-
-// --------------------------------------------------------------
-// 2. RUTAS DE LA API (tienen prioridad sobre el frontend)
+// RUTAS DE LA API
 // --------------------------------------------------------------
 app.use('/api/partidos', partidosRoutes);
 app.use('/api/usuarios', usuariosRoutes);
-app.use('/api/predicciones', prediccionesRoutes);   // ← estaba faltando
+app.use('/api/predicciones', prediccionesRoutes);
 app.use('/api/ranking', rankingRoutes);
-app.use("/api/admin", adminRoutes);
-
-// Ruta de salud del sistema (útil para Railway)
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    database: 'PostgreSQL conectado',
-    timestamp: new Date().toISOString()
-  });
-});
+app.use('/api/admin', adminRoutes);
 
 // --------------------------------------------------------------
-// 3. RUTAS DEL FRONTEND (para que sirva las páginas HTML)
+// HEALTH CHECK (Render lo usa para saber si el servidor vive)
 // --------------------------------------------------------------
-// Raíz del sitio → sirve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/index.html'));
-});
-
-// Opcional: si quieres que otras rutas como /login, /predicciones también funcionen
-// (express.static ya sirve login.html, predicciones.html, etc. si existen)
-// Pero por si acaso, forzamos la respuesta para rutas comunes del frontend:
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/login.html'));
-});
-app.get('/predicciones.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/predicciones.html'));
-});
-app.get('/admin.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/admin.html'));
-});
-
-// --------------------------------------------------------------
-// 4. MANEJO DE ERROR 404 (solo para rutas no encontradas)
-// --------------------------------------------------------------
-// Si llega hasta aquí, no era API ni archivo estático ni página conocida
-app.use((req, res) => {
-  // Si la petición empezaba con /api, devolvemos JSON de error
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({
-      error: 'Ruta de API no encontrada',
-      path: req.path
-    });
+app.get('/health', async (req, res) => {
+  try {
+    const pool = require('./db');
+    await pool.query('SELECT NOW()');
+    res.json({ status: 'ok', database: 'conectada', timestamp: new Date().toISOString() });
+  } catch (err) {
+    res.status(500).json({ status: 'error', database: err.message });
   }
-  // Para el resto, mostramos un mensaje amigable o redirigimos al inicio
-  res.status(404).send(`
-    <!DOCTYPE html>
-    <html>
-    <head><title>Página no encontrada</title></head>
-    <body>
-      <h1>404 - Página no encontrada</h1>
-      <p>Lo sentimos, la página que buscas no existe.</p>
-      <a href="/">Volver al inicio</a>
-    </body>
-    </html>
-  `);
 });
 
-let dbConnected = false;
-
-// Temporalmente comenta esto:
-// const connectDB = async () => {
-//     try {
-//         const pool = require('./db');
-//         await pool.query('SELECT NOW()');
-//         console.log('✅ PostgreSQL conectado');
-//     } catch (err) {
-//         console.error('⚠️ Error BD:', err.message);
-//     }
-// };
-// connectDB();
-
-// Llama a connectDB pero NO esperes a que termine para iniciar el servidor
-connectDB();
-// Health check para Railway (debe responder rápido)
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
-});
-
-// También para la raíz
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/index.html'));
-});
 // --------------------------------------------------------------
-// 5. INICIAR EL SERVIDOR
+// 404 para rutas API no encontradas
 // --------------------------------------------------------------
-const PORT = process.env.PORT || 8080;  // Railway usa PORT, no 3000
+app.use((req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'Ruta no encontrada', path: req.path });
+  }
+  res.status(404).json({ error: '404 - Not found' });
+});
 
-app.listen(PORT, '0.0.0.0', () => {  // Importante: '0.0.0.0'
+// --------------------------------------------------------------
+// INICIAR SERVIDOR
+// --------------------------------------------------------------
+const PORT = process.env.PORT || 3000;
+
+const startServer = async () => {
+  try {
+    const pool = require('./db');
+    await pool.query('SELECT NOW()');
+    console.log('✅ PostgreSQL conectado');
+  } catch (err) {
+    console.error('⚠️ Error conectando a la BD:', err.message);
+    // No matamos el servidor, Render reintentará
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`
 ╔══════════════════════════════════════════════════╗
-║   ⚽ SISTEMA DE PREDICCIONES MUNDIAL 2026        ║
-║   🚀 Backend API + Frontend estático             ║
+║   ⚽ QUINIELA MUNDIAL 2026 - Backend API         ║
 ╠══════════════════════════════════════════════════╣
-║   📡 Servidor corriendo en puerto: ${PORT}         ║
-║   🌐 Frontend disponible en: /                   ║
-║   📅 ${new Date().toLocaleString()}              ║
+║   📡 Puerto: ${PORT}                                 ║
+║   🌐 Frontend: ${process.env.FRONTEND_URL || 'localhost'} 
 ╚══════════════════════════════════════════════════╝
-  `);
-});
+    `);
+  });
+};
+
+startServer();
