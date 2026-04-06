@@ -1,3 +1,5 @@
+console.log('DATABASE_URL existe:', !!process.env.DATABASE_URL);
+console.log('DB_HOST:', process.env.DB_HOST);
 // src/db.js
 const { Pool } = require('pg');
 require('dotenv').config();
