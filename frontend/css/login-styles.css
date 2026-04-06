@@ -399,74 +399,79 @@ body {
    RESPONSIVE
    =============================================== */
 
-/* Tablet */
-@media (max-width: 1024px) {
-    .split-left {
-        padding: 2rem;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .split-right {
-        flex: 0 0 420px;
-    }
-}
+/* ===============================================
+   MOBILE MEJORADO - Reemplaza los @media actuales
+   =============================================== */
 
-/* Mobile */
 @media (max-width: 768px) {
+    body {
+        overflow: auto; /* permite scroll si es necesario */
+    }
+
     .split-container {
         flex-direction: column;
+        min-height: 100vh;
     }
-    
+
+    /* Lado izquierdo: solo banner compacto */
     .split-left {
-        flex: 0 0 auto;
-        min-height: 300px;
-        padding: 2rem 1.5rem;
+        flex: 0 0 180px;
+        min-height: 180px;
+        max-height: 180px;
+        padding: 1rem;
+        justify-content: flex-end;
+        background-attachment: scroll; /* fixed no funciona bien en móvil */
     }
-    
-    .hero-title {
-        font-size: 2rem;
+
+    /* Ocultar texto hero en móvil, solo se ve el fondo */
+    .hero-content,
+    .hero-footer {
+        display: none;
     }
-    
-    .hero-description {
-        font-size: 1rem;
+
+    /* Logo reposicionado para móvil */
+    .logo-login {
+        position: static;   /* quita el absolute */
+        width: 180px;
+        margin: 0 auto;
+        display: block;
     }
-    
-    .hero-flags {
-        font-size: 2rem;
+
+    .brand-logo {
+        text-align: center;
+        position: static;
     }
-    
+
+    /* Lado derecho: ocupa el resto */
     .split-right {
         flex: 1;
-        padding: 2rem 1.5rem;
+        padding: 2rem 1.25rem;
+        align-items: flex-start;
+        padding-top: 2rem;
     }
-    
+
     .form-container {
         max-width: 100%;
+        width: 100%;
+    }
+
+    .form-title {
+        font-size: 1.75rem;
     }
 }
 
 @media (max-width: 480px) {
     .split-left {
-        min-height: 250px;
-        padding: 1.5rem;
+        flex: 0 0 140px;
+        min-height: 140px;
+        max-height: 140px;
     }
-    
-    .logo-text {
-        font-size: 2rem;
+
+    .logo-login {
+        width: 140px;
     }
-    
-    .hero-title {
-        font-size: 1.75rem;
-    }
-    
+
     .split-right {
         padding: 1.5rem 1rem;
-    }
-    
-    .form-title {
-        font-size: 1.75rem;
     }
 }
