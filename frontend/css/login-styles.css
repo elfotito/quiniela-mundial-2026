@@ -478,7 +478,7 @@ body {
         margin: 0;
         display: block;
     }
-    
+
     .logodrogueria {
         position: static;
         width: 130px;
@@ -540,6 +540,10 @@ body {
     }
 
     .logo-login {
+        width: 115px;
+    }
+
+    .logodrogueria {
         width: 115px;
     }
 
