@@ -230,7 +230,7 @@ function crearCardPartido(partido) {
                        max="9" 
                        placeholder="0"
                        onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-                <span class="separator">-</span>
+                <span class="separator"> - </span>
                 <input type="number" 
                        class="goal-input" 
                        id="visitante_${partido.id}" 
