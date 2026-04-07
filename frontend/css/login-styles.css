@@ -478,6 +478,13 @@ body {
         margin: 0;
         display: block;
     }
+    
+    .logodrogueria {
+        position: static;
+        width: 130px;
+        margin: 0;
+        display: block;
+    }
 
     .brand-logo {
         position: static;
