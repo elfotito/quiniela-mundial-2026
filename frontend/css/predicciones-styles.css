@@ -17,18 +17,6 @@
     font-size: 0.9rem;
 }
 
-/* Versión responsive */
-@media (max-width: 768px) {
-    .hero-hero-prediccion {
-        height: 400px; /* Altura reducida en móviles */
-    }
-}
-
-@media (max-width: 480px) {
-    .hero-hero-prediccion {
-        height: 350px;
-    }
-}
         
         /* Tabs de navegación */
         .tabs-container {
@@ -486,9 +474,17 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
+
+        @media (max-width: 480px) {
+            .hero-hero-prediccion {
+        height: 350px;
+            }
+        }
         /* Responsive */
         @media (max-width: 768px) {
+            .hero-hero-prediccion {
+            height: 400px; /* Altura reducida en móviles */
+            }
             .matches-grid {
                 grid-template-columns: 1fr;
             }
