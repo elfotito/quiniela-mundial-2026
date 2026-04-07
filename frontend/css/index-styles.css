@@ -1222,9 +1222,209 @@ body {
 }
 
 
-@media (max-width: 480px) {
+/* ===============================================
+   RESPONSIVE COMPLETO - REEMPLAZA TODO LO QUE
+   TENÍAS DE @media AL FINAL DEL ARCHIVO
+   =============================================== */
 
-    /* Grid principal → 1 columna en móvil pequeño */
+/* ---- TABLET (769px - 1024px) ---- */
+@media (max-width: 1024px) {
+    .carousel-slide {
+        grid-template-columns: 1fr;
+    }
+    .slide-image {
+        display: none;
+    }
+    .slide-content {
+        padding: 2rem;
+    }
+    .slide-title {
+        font-size: 2rem;
+    }
+}
+
+/* ---- MÓVIL (hasta 768px) ---- */
+@media (max-width: 768px) {
+
+    /* BODY */
+    body { overflow-x: hidden; }
+
+    /* === HEADER === */
+    .header { overflow: visible; }
+
+    .header-container {
+        padding: 0.6rem 1rem;
+        gap: 0.5rem;
+    }
+
+    /* Logo — quita el absolute que lo rompe todo */
+    .logo-icon {
+        position: static;
+        transform: none;
+        background: transparent;
+        padding: 0;
+        left: auto;
+        top: auto;
+    }
+
+    .logo-icon img {
+        width: 44px;
+        height: 44px;
+    }
+
+    .logo-text {
+        margin-left: 0.5rem;
+        width: 110px;
+    }
+
+    .logo-text img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Ocultar nav desktop */
+    .nav-desktop { display: none; }
+
+    /* Header actions compacto */
+    .header-actions { gap: 0.4rem; }
+
+    .user-name { display: none; }
+
+    .user-info {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .btn-admin {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .btn-logout {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    /* Botón hamburguesa */
+    .btn-menu-mobile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 36px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 6px;
+        cursor: pointer;
+        gap: 5px;
+        padding: 6px;
+    }
+
+    /* Nav móvil desplegable */
+    .nav-mobile {
+        display: none;
+        flex-direction: column;
+        background: #1a1a1a;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding: 0.5rem 0;
+        position: sticky;
+        top: 57px;
+        z-index: 999;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile-link,
+    .nav-mobile .nav-link {
+        padding: 0.85rem 1.5rem;
+        color: white;
+        text-decoration: none;
+        font-size: 0.95rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-mobile-link.active { color: var(--fifa-gold); font-weight: 600; }
+
+    /* === HERO CAROUSEL === */
+    .hero-carousel {
+        min-height: auto;       /* ← quita el 700px fijo */
+        padding: 1rem;
+    }
+
+    /* Countdown — 1 columna */
+    .countdown-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .countdown-label {
+        justify-content: center;
+    }
+
+    /* Time boxes — más pequeños */
+    .countdown-timer {
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .time-box {
+        min-width: 60px;
+        padding: 0.6rem 0.5rem;
+    }
+
+    .time-value {
+        font-size: 1.75rem;
+    }
+
+    .time-label {
+        font-size: 0.75rem;
+    }
+
+    /* Botón Ver Partidos */
+    .btn-view-matches {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Carousel slides */
+    .carousel-slides,
+    .carousel-slide {
+        height: 350px;
+    }
+
+    .carousel-slide {
+        grid-template-columns: 1fr;
+    }
+
+    .slide-image { display: none; }
+
+    .slide-content { padding: 1.25rem; }
+
+    .slide-title { font-size: 1.4rem; }
+
+    .slide-description { font-size: 0.95rem; margin-bottom: 1rem; }
+
+    /* Thumbnails del carrusel */
+    .carousel-nav { flex-wrap: wrap; gap: 0.5rem; }
+
+    .carousel-thumbnails {
+        order: -1;
+        width: 100%;
+    }
+
+    .thumbnail { flex: 0 0 180px; }
+
+    /* === STATS === */
+    .stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 0 0.75rem;
+    }
+
+    /* === WIDGETS GRID === */
     .dashboard-grid,
     .widgets-grid,
     .main-grid {
@@ -1233,17 +1433,33 @@ body {
         padding: 0 0.75rem;
     }
 
-    /* Cards de partidos — texto que se corta */
-    .match-teams,
+    /* Nombres de equipos que se cortan */
     .team-name {
         font-size: 0.8rem;
         word-break: break-word;
     }
+}
 
-    /* Cards más cómodas */
-    .widget-card,
-    .card,
-    .dashboard-card {
-        padding: 1rem;
+/* ---- MÓVIL PEQUEÑO (hasta 480px) ---- */
+@media (max-width: 480px) {
+
+    .logo-icon img {
+        width: 36px;
+        height: 36px;
     }
+
+    .logo-text { width: 95px; }
+
+    .stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .time-box { min-width: 52px; padding: 0.5rem; }
+
+    .time-value { font-size: 1.5rem; }
+
+    .carousel-slides,
+    .carousel-slide { height: 300px; }
+
+    .slide-title { font-size: 1.2rem; }
 }
