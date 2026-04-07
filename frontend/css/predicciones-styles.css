@@ -483,7 +483,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero-hero-prediccion {
-            height: 400px; /* Altura reducida en móviles */
+            height: 400px;
             }
             .matches-grid {
                 grid-template-columns: 1fr;
@@ -506,5 +506,8 @@
                 right: 10px;
                 left: 10px;
                 min-width: auto;
+            }
+            .footer-bottom {
+            font-size: 1rem; 
             }
         }
