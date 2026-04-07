@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     await cargarDatos();
 });
 
+    const btnMenu = document.getElementById('btnMenuMobile');
+    const navMobile = document.getElementById('navMobile');
+    if (btnMenu && navMobile) {
+        btnMenu.addEventListener('click', () => {
+            navMobile.classList.toggle('open');
+        });
+    }
+
 function configurarUI() {
     const userCampeon = document.getElementById('userCampeon');
     if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
