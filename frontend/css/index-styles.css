@@ -1222,227 +1222,28 @@ body {
 }
 
 
-/* ===============================================
-   NAVBAR RESPONSIVE - MÓVIL Y TABLET
-/* ===============================================
-   NAVBAR - MOBILE RESPONSIVE COMPLETO
-   =============================================== */
-
-/* Ocultar nav desktop en móvil */
-@media (max-width: 768px) {
-
-    /* ---- HEADER ---- */
-    .header-container {
-        padding: 0.6rem 1rem;
-        gap: 0.5rem;
-    }
-
-    /* ---- LOGO ---- */
-    .logo-icon {
-        position: static;
-        transform: none;
-        background: transparent;
-        padding: 0;
-    }
-
-    .logo-icon img {
-        width: 44px;
-        height: 44px;
-    }
-
-    .logo-text {
-        margin-left: 0;
-        width: 120px;
-    }
-
-    .logo-text img {
-        width: 100%;
-        height: auto;
-    }
-
-    /* ---- NAV DESKTOP → ocultar ---- */
-    .nav-desktop {
-        display: none;
-    }
-
-    /* ---- HEADER ACTIONS → compactar ---- */
-    .header-actions {
-        gap: 0.4rem;
-    }
-
-    .user-name {
-        display: none; /* solo mostrar icono */
-    }
-
-    .btn-admin {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.75rem;
-    }
-
-    .btn-logout {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.75rem;
-    }
-
-    /* ---- BOTÓN HAMBURGUESA → mostrar ---- */
-    .btn-menu-mobile {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 36px;
-        height: 36px;
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.3);
-        border-radius: 6px;
-        cursor: pointer;
-        gap: 5px;
-        padding: 6px;
-    }
-
-    .menu-icon,
-    .menu-icon::before,
-    .menu-icon::after {
-        display: block;
-        width: 18px;
-        height: 2px;
-        background: white;
-        border-radius: 2px;
-        content: '';
-    }
-
-    .menu-icon {
-        position: relative;
-    }
-
-    .menu-icon::before {
-        position: absolute;
-        top: -6px;
-    }
-
-    .menu-icon::after {
-        position: absolute;
-        top: 6px;
-    }
-
-    /* ---- NAV MOBILE → menú desplegable ---- */
-    .nav-mobile {
-        display: none;
-        flex-direction: column;
-        background: #1a1a1a;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        padding: 0.5rem 0;
-        position: sticky;
-        top: 57px;
-        z-index: 999;
-    }
-
-    .nav-mobile.open {
-        display: flex;
-    }
-
-    .nav-mobile-link,
-    .nav-mobile .nav-link {
-        padding: 0.85rem 1.5rem;
-        color: white;
-        text-decoration: none;
-        font-size: 0.95rem;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: background 0.2s;
-    }
-
-    .nav-mobile-link:hover,
-    .nav-mobile .nav-link:hover {
-        background: rgba(255,255,255,0.08);
-    }
-
-    .nav-mobile-link.active {
-        color: var(--fifa-gold);
-        font-weight: 600;
-    }
-
-    /* ---- CONTENIDO PRINCIPAL ---- */
-    body {
-        overflow-x: hidden;
-    }
-
-    .main-content,
-    .container,
-    section {
-        max-width: 100%;
-        overflow-x: hidden;
-    }
-
-    /* Hero/countdown */
-    .countdown-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 1rem;
-        padding: 1rem;
-    }
-
-    .countdown-label {
-        justify-content: center;
-    }
-
-    /* Carousel */
-    .carousel-slides {
-        height: 400px;
-    }
-
-    .carousel-slide {
-        grid-template-columns: 1fr;
-        height: 400px;
-    }
-
-    .slide-image {
-        display: none;
-    }
-
-    .slide-content {
-        padding: 1.5rem;
-    }
-
-    .slide-title {
-        font-size: 1.5rem;
-    }
-
-    .carousel-nav {
-        flex-wrap: wrap;
-    }
-
-    .carousel-thumbnails {
-        order: -1;
-        width: 100%;
-    }
-
-    .thumbnail {
-        flex: 0 0 200px;
-    }
-
-    /* Stats cards */
-    .stats-overview {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-        padding: 0 1rem;
-    }
-}
-
 @media (max-width: 480px) {
-    .logo-icon img {
-        width: 36px;
-        height: 36px;
+
+    /* Grid principal → 1 columna en móvil pequeño */
+    .dashboard-grid,
+    .widgets-grid,
+    .main-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 0.75rem;
     }
 
-    .logo-text {
-        width: 100px;
+    /* Cards de partidos — texto que se corta */
+    .match-teams,
+    .team-name {
+        font-size: 0.8rem;
+        word-break: break-word;
     }
 
-    .stats-overview {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .slide-title {
-        font-size: 1.25rem;
+    /* Cards más cómodas */
+    .widget-card,
+    .card,
+    .dashboard-card {
+        padding: 1rem;
     }
 }
