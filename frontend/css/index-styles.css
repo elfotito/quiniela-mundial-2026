@@ -1493,7 +1493,7 @@ body {
    NAVBAR MÓVIL - PREDICCIONES
    =============================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 735px) {
 
     /* Fix logo superpuesto */
     .logo-icon {
