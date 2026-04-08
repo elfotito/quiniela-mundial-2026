@@ -148,8 +148,7 @@ body {
     max-width: 80px;
     max-height: 80px;
     width: auto;
-    height: auto;
-    display: block;      /* Elimina espacios extras */
+    height: auto;  
 }
 
 .stat-info h3 {
@@ -575,7 +574,7 @@ body {
 
 .ticker-content {
     display: flex;
-    animation: scroll 30s linear infinite;
+    animation: scroll 60s linear infinite;
     gap: 3rem;
     position: relative; /* Añadido */
     z-index: 1; /* Añadido - valor bajo para estar por debajo */
