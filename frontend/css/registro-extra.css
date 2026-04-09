@@ -207,6 +207,21 @@
 }
 
 /* ===============================================
+   ANIMACIONES
+   =============================================== */
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===============================================
    RESPONSIVE
    =============================================== */
 
@@ -232,6 +247,136 @@
         max-height: none;
         padding-right: 0;
     }
+    .split-left {
+        padding: 2rem 1.5rem;
+        justify-content: space-between;
+        background-attachment: scroll;
+    }
+
+    /* Logo estático arriba, no absolute */
+    .logo-login {
+        position: static;
+        width: 200px;
+        margin: 0;
+        display: block;
+    }
+
+    .brand-logo {
+        position: static;
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-flags {
+        font-size: 2rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .hero-footer {
+        font-size: 0.8rem;
+    }
+
+    .split-right {
+        flex: 0 0 400px;
+    }
+}
+
+/* Reemplaza SOLO el bloque @media (max-width: 768px) que tienes */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    body {
+        overflow: auto;
+    }
+
+    .split-container {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .split-left {
+        flex: 0 0 280px;
+        min-height: 280px;
+        max-height: 280px;
+        padding: 1rem 1.25rem 1.25rem;
+        justify-content: space-between;
+        background-attachment: scroll;
+    }
+
+    .logo-login {
+        position: static;
+        width: 130px;
+        margin: 0;
+        display: block;
+    }
+
+    .logodrogueria {
+        position: static;
+        width: 130px;
+        margin: 0;
+        display: block;
+    }
+
+    .brand-logo {
+        position: static;
+        text-align: left;
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .hero-title {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+        line-height: 1.2;
+    }
+
+    .hero-description {
+        display: none;
+    }
+
+    .hero-flags {
+        font-size: 1.6rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .hero-footer {
+        display: none;
+    }
+
+    .split-right {
+        flex: 1;
+        padding: 1.75rem 1.25rem;
+        align-items: flex-start;
+    }
+
+    .form-container {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .form-title {
+        font-size: 1.75rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -250,5 +395,27 @@
     
     .equipo-nombre {
         font-size: 0.65rem;
+    }
+        .split-left {
+        flex: 0 0 250px;
+        min-height: 250px;
+        max-height: 250px;
+    }
+
+    .logo-login {
+        width: 115px;
+    }
+
+    .logodrogueria {
+        width: 115px;
+    }
+
+    .hero-title {
+        font-size: 1.1rem;
+    }
+
+    .hero-flags {
+        font-size: 1.4rem;
+        letter-spacing: 0.4rem;
     }
 }
