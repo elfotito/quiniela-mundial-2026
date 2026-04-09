@@ -474,8 +474,8 @@ body {
 
     .logo-login {
         position: static;
-        width: 130px;
-        margin: 0;
+        width: 150px;
+        margin-top: 5px;
         display: block;
     }
 
