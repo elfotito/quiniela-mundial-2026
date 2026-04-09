@@ -1421,6 +1421,7 @@ body {
 
 @media (max-width: 768px) {
 
+    
     /* Fix logo superpuesto */
     .logo-icon {
         position: static;
@@ -1543,3 +1544,22 @@ body {
         font-size: 0.85rem;
     }
 }
+    /* Ocultar flechas */
+    .nav-arrow {
+        display: none;
+    }
+    
+    /* Centrar y expandir thumbnails */
+    .carousel-nav {
+        justify-content: center;
+    }
+    
+    .carousel-thumbnails {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Opcional: hacer los thumbnails más pequeños para que quepan más */
+    .thumbnail {
+        flex: 0 0 180px;
+    }
