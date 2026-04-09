@@ -474,8 +474,8 @@ body {
 
     .logo-login {
         position: static;
-        width: 150px;
-        margin-top: 5px;
+        width: 130px;
+        margin: 0;
         display: block;
     }
 
@@ -540,7 +540,9 @@ body {
     }
 
     .logo-login {
-        width: 115px;
+        width: 150px;
+        margin-top: 5px;
+        
     }
 
     .logodrogueria {
