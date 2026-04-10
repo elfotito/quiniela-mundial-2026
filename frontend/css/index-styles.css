@@ -80,6 +80,58 @@ body {
   height: 150px;
   object-fit: cover;
 }
+
+/* Contenedor principal */
+.fifa-carousel {
+  width: 100%;
+  overflow-x: auto; /* Permite el scroll */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Suavidad en iPhone */
+  scrollbar-width: none; /* Oculta scroll en Firefox */
+}
+
+.fifa-carousel::-webkit-scrollbar {
+  display: none; /* Oculta scroll en Chrome/Safari */
+}
+
+/* La fila que contiene las tarjetas */
+.fifa-track {
+  display: flex;
+  padding: 10px 20px; /* Margen inicial para que no pegue al borde */
+  scroll-snap-type: x mandatory; /* ESTO ES LO QUE HACE LA FIFA */
+  gap: 16px;
+}
+
+/* Cada tarjeta individual */
+.fifa-slide {
+  flex: 0 0 85%; /* Muestra el 85% de la tarjeta (deja ver un poco de la siguiente) */
+  scroll-snap-align: center; /* La tarjeta se centra al soltar el dedo */
+}
+
+.card-content {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  height: 100%;
+}
+
+.card-content img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.card-info {
+  padding: 15px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: bold;
+  color: #0d6efd;
+  text-transform: uppercase;
+}
 /* ===============================================
    HEADER
    =============================================== */
