@@ -32,70 +32,7 @@ body {
     color: var(--text-white);
     line-height: 1.6;
 }
-/* Mobile Bottom Navigation - Fija abajo */
-.mobile-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #0a0a0a;
-    backdrop-filter: blur(10px);
-    background: rgba(10, 10, 10, 0.95);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    z-index: 1000;
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
-}
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: #888;
-    font-size: 0.7rem;
-    transition: all 0.2s ease;
-    padding: 6px 10px;
-    border-radius: 30px;
-}
-
-.nav-icon {
-    width: 22px;
-    height: 22px;
-    filter: brightness(0) invert(0.6);
-    transition: filter 0.2s;
-}
-
-.nav-item.active {
-    color: #ff3d00;
-}
-
-.nav-item.active .nav-icon {
-    filter: brightness(0) invert(0.3) sepia(1) saturate(10) hue-rotate(340deg);
-}
-
-.nav-item span {
-    font-weight: 500;
-}
-
-/* Ajuste para que el contenido no quede oculto detrás de la barra */
-body {
-    padding-bottom: 70px;
-}
-
-/* Solo mostrar en móviles */
-@media (min-width: 769px) {
-    .mobile-bottom-nav {
-        display: none;
-    }
-    body {
-        padding-bottom: 0;
-    }
-}
 
 /* Contenedor principal */
 .fifa-carousel {
