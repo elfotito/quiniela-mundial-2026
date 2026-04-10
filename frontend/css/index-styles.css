@@ -1596,8 +1596,8 @@ body {
         font-size: 0.85rem;
     }
 }
-    /* ============================================
-   FIX BARRA INFERIOR - SIEMPRE FIJA
+/* ============================================
+   BARRA INFERIOR FIJA - VERSIÓN ULTRA ROBUSTA
    ============================================ */
 .mobile-bottom-nav {
     position: fixed !important;
@@ -1605,16 +1605,30 @@ body {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    z-index: 9999 !important;
-    transform: none !important; /* Evita que cualquier transform la mueva */
+    background: #0a0a0a !important;
+    backdrop-filter: blur(10px) !important;
+    background: rgba(10, 10, 10, 0.95) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    padding: 0.5rem 0.75rem !important;
+    z-index: 999999 !important; /* extremadamente alto */
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5) !important;
+    transform: none !important;
+    transition: none !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-/* Asegurar que el body tenga padding inferior suficiente */
+/* Aseguramos que el body tenga padding inferior */
 body {
-    padding-bottom: 80px !important; /* Ajusta según la altura real de tu barra */
+    padding-bottom: 80px !important;
+    margin-bottom: 0 !important;
 }
 
-/* En desktop, ocultar la barra y quitar el padding */
+/* En desktop, ocultar barra y quitar padding */
 @media (min-width: 769px) {
     .mobile-bottom-nav {
         display: none !important;
@@ -1622,4 +1636,16 @@ body {
     body {
         padding-bottom: 0 !important;
     }
+}
+
+/* Aseguramos que ningún elemento pueda cubrir la barra */
+body, html {
+    position: static !important;
+    transform: none !important;
+}
+
+/* Evitar que cualquier padre rompa el fixed */
+*:not(.mobile-bottom-nav) {
+    /* No aplicamos transform a nada que pueda afectar */
+    transform-style: flat;
 }
