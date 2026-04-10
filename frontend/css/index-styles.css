@@ -32,7 +32,26 @@ body {
     color: var(--text-white);
     line-height: 1.6;
 }
+.bottom-nav .nav-link {
+  font-size: 10px; /* Texto pequeño como en la web de FIFA */
+  color: #6c757d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.bottom-nav .nav-link.active {
+  color: #000; /* O el color azul/dorado de la FIFA */
+}
+
+.bottom-nav i {
+  font-size: 1.4rem; /* Tamaño del icono */
+}
+
+/* Evitar que el contenido de la página quede oculto detrás de la barra */
+body {
+  padding-bottom: 70px; 
+}
 /* ===============================================
    HEADER
    =============================================== */
