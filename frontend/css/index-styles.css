@@ -52,6 +52,34 @@ body {
 body {
   padding-bottom: 70px; 
 }
+
+.news-scroll {
+  display: flex;
+  overflow-x: auto; /* Permite el scroll horizontal */
+  scroll-snap-type: x mandatory; /* Hace que las tarjetas se "peguen" al centro al soltar */
+  gap: 15px;
+  padding: 10px 20px;
+  scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
+}
+
+.news-scroll::-webkit-scrollbar {
+  display: none; /* Oculta la barra de scroll en Chrome/Safari */
+}
+
+.news-card {
+  flex: 0 0 85%; /* Cada tarjeta ocupa el 85% del ancho para que se vea un poco de la siguiente */
+  scroll-snap-align: start;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.news-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
 /* ===============================================
    HEADER
    =============================================== */
