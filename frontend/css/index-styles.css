@@ -32,53 +32,69 @@ body {
     color: var(--text-white);
     line-height: 1.6;
 }
-.bottom-nav .nav-link {
-  font-size: 10px; /* Texto pequeño como en la web de FIFA */
-  color: #6c757d;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Mobile Bottom Navigation - Fija abajo */
+.mobile-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #0a0a0a;
+    backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    z-index: 1000;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.bottom-nav .nav-link.active {
-  color: #000; /* O el color azul/dorado de la FIFA */
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #888;
+    font-size: 0.7rem;
+    transition: all 0.2s ease;
+    padding: 6px 10px;
+    border-radius: 30px;
 }
 
-.bottom-nav i {
-  font-size: 1.4rem; /* Tamaño del icono */
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(0.6);
+    transition: filter 0.2s;
 }
 
-/* Evitar que el contenido de la página quede oculto detrás de la barra */
+.nav-item.active {
+    color: #ff3d00;
+}
+
+.nav-item.active .nav-icon {
+    filter: brightness(0) invert(0.3) sepia(1) saturate(10) hue-rotate(340deg);
+}
+
+.nav-item span {
+    font-weight: 500;
+}
+
+/* Ajuste para que el contenido no quede oculto detrás de la barra */
 body {
-  padding-bottom: 70px; 
+    padding-bottom: 70px;
 }
 
-.news-scroll {
-  display: flex;
-  overflow-x: auto; /* Permite el scroll horizontal */
-  scroll-snap-type: x mandatory; /* Hace que las tarjetas se "peguen" al centro al soltar */
-  gap: 15px;
-  padding: 10px 20px;
-  scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
-}
-
-.news-scroll::-webkit-scrollbar {
-  display: none; /* Oculta la barra de scroll en Chrome/Safari */
-}
-
-.news-card {
-  flex: 0 0 85%; /* Cada tarjeta ocupa el 85% del ancho para que se vea un poco de la siguiente */
-  scroll-snap-align: start;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.news-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
+/* Solo mostrar en móviles */
+@media (min-width: 769px) {
+    .mobile-bottom-nav {
+        display: none;
+    }
+    body {
+        padding-bottom: 0;
+    }
 }
 
 /* Contenedor principal */
