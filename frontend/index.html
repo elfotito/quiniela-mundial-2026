@@ -61,8 +61,38 @@
         <a href="calendario.html" class="nav-mobile-link">Calendario</a>
         <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
     </nav>
-
-<!-- HERO CON CARRUSEL -->
+    <!-- Countdown arriba -->
+    <div class="countdown-container">
+        <div class="countdown-label">
+            <img src="img/logomenu.png" alt="FIFA" style="height: 60px;">
+            <div>
+                <h2>FIFA World Cup 2026™</h2>
+                <p>11 Junio - 19 Julio</p>
+            </div>
+        </div>
+        
+        <div class="countdown-timer">
+            <div class="time-box">
+                <div class="time-value" id="days">107</div>
+                <div class="time-label">dias</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">horas</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="mins">04</div>
+                <div class="time-label">min</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="secs">18</div>
+                <div class="time-label">seg</div>
+            </div>
+        </div>
+        
+        <a href="calendario.html" class="btn-view-matches">Ver Partidos</a>
+    </div>
+<!-- Carrusel Principal -->
 <div class="fifa-carousel">
   <div class="swiper main-swiper" id="heroSwiper">
     <div class="swiper-wrapper">
@@ -151,142 +181,7 @@
   </nav>
 </div>
 <section class="hero-carousel">
-    <!-- Countdown arriba -->
-    <div class="countdown-container">
-        <div class="countdown-label">
-            <img src="img/logomenu.png" alt="FIFA" style="height: 60px;">
-            <div>
-                <h2>FIFA World Cup 2026™</h2>
-                <p>11 Junio - 19 Julio</p>
-            </div>
-        </div>
-        
-        <div class="countdown-timer">
-            <div class="time-box">
-                <div class="time-value" id="days">107</div>
-                <div class="time-label">dias</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="hours">00</div>
-                <div class="time-label">horas</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="mins">04</div>
-                <div class="time-label">min</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="secs">18</div>
-                <div class="time-label">seg</div>
-            </div>
-        </div>
-        
-        <a href="calendario.html" class="btn-view-matches">Ver Partidos</a>
-    </div>
-
-    <!-- Carrusel Principal -->
-    <div class="carousel-main">
-        <div class="carousel-slides" id="carouselSlides">
-            <!-- Slide 1 -->
-            <div class="carousel-slide active">
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <span class="slide-category">SELECCION NACIONAL</span>
-                        <h2 class="slide-title">Se confirma la alineacion de la vinotinto de cara al televisor</h2>
-                        <p class="slide-description">El capitán vinotinto asegura que el equipo esta preparado para buscar el hielo y las curdas.</p>
-                        <a href="noticia1.html" class="btn-read-more"></a>
-                    </div>
-                </div>
-                <div class="slide-image">
-                    <img src="img/vinosofa.png" alt="Noticia1" width="600" height="450">
-                </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <span class="slide-category">Noticias</span>
-                        <h2 class="slide-title">Carrisan lanza su quiniela digital</h2>
-                        <p class="slide-description">La droguería da el salto tecnológico con una plataforma web que promete revolucionar las quinielas familiares.</p>
-                        <a href="noticia2.html" class="btn-read-more">Leer más</a>
-                    </div>
-                </div>
-                <div class="slide-image">
-                    <img src="img/noticiaquiniela.png" alt="Noticia2" width="600" height="450">
-                </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <span class="slide-category">TUTORIAL</span>
-                        <h2 class="slide-title">¡Preparate para la quiniela!</h2>
-                        <p class="slide-description">Ya que estas aqui, echale un ojo a el sistema de puntos y a las reglas del juego</p>
-                        <a href="reglamento.html" class="btn-read-more">Reglamento</a> |
-                        <a href="sistema.html" class="btn-read-more">Sistema Puntos</a>
-                    </div>
-                </div>
-                <div class="slide-image">
-                    <img src="img/sistema.png" alt="Sistema" width="600" height="450">
-                </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <div class="slide-text">
-                        <span class="slide-category">NOTIFICACION</span>
-                        <h2 class="slide-title">¡Recibe, se cuadra y ... NO LO CARGA!</h2>
-                        <p class="slide-description"><br> Dale, dale, dale. ¡Ingresá tus predicciones antes de que el arbitro se lleve el pito a la boca! (espera, khe 😳)</p>
-                        <a href="predicciones.html" class="btn-read-more">Ingresar Predicciones</a>
-                    </div>
-                </div>
-                <div class="slide-image">
-                    <img src="img/pasalamano.png" alt="pasalamano" width="600" height="450">
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Navegación inferior -->
-    <div class="carousel-nav">
-        <button class="nav-arrow nav-prev" id="navPrev">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-        </button>
-
-        <div class="carousel-thumbnails" id="carouselThumbnails">
-            <button class="thumbnail active" data-slide="0">
-                <span class="thumb-category">Selecion Nacional</span>
-                <span class="thumb-title">La vinotinto se prepara para el mundial</span>
-                <div class="thumb-progress"></div>
-            </button>
-            <button class="thumbnail" data-slide="1">
-                <span class="thumb-category">Noticias</span>
-                <span class="thumb-title">Carrisan lanza su quiniela digital</span>
-                <div class="thumb-progress"></div>
-            </button>
-            <button class="thumbnail" data-slide="2">
-                <span class="thumb-category">TUTORIAL</span>
-                <span class="thumb-title">Enterate de como jugar antes del pitazo inicial</span>
-                <div class="thumb-progress"></div>
-            </button>
-            <button class="thumbnail" data-slide="3">
-                <span class="thumb-category">notificacion</span>
-                <span class="thumb-title">¿Ya hiciste tu primera prediccion?</span>
-                <div class="thumb-progress"></div>
-            </button>
-        </div>
-
-        <button class="nav-arrow nav-next" id="navNext">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-        </button>
-    </div>
     
-</section>
     <!-- CARRIL DE NOTICIAS -->
     <section class="news-ticker">
         <div class="ticker-content" id="tickerContent">
