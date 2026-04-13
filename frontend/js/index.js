@@ -4,7 +4,33 @@
 
 const API_URL = CONFIG.API_URL;
 let usuarioId = null;
+const DURATION = 5000;
+let timer = null;
+let elapsed = 0;
+let startTime = null;
+let activeIdx = 0;
 
+const swiper = new Swiper('#heroSwiper', {
+  slidesPerView: 1,
+  speed: 600,
+  allowTouchMove: true,
+  on: {
+    slideChange: function() {
+      goTo(this.activeIndex);
+    }
+  }
+});
+
+const navItems = document.querySelectorAll('.nav-item');
+const progs = [0,1,2,3].map(i => document.getElementById('prog'+i));
+
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const idx = parseInt(item.dataset.index);
+    swiper.slideTo(idx);
+    goTo(idx);
+  });
+});
 // ===============================================
 // INICIALIZACIÓN
 // ===============================================
@@ -69,34 +95,6 @@ async function cargarDatos() {
         cargarRankingTop5()
     ]);
 }
-
-const DURATION = 5000;
-let timer = null;
-let elapsed = 0;
-let startTime = null;
-let activeIdx = 0;
-
-const swiper = new Swiper('#heroSwiper', {
-  slidesPerView: 1,
-  speed: 600,
-  allowTouchMove: true,
-  on: {
-    slideChange: function() {
-      goTo(this.activeIndex);
-    }
-  }
-});
-
-const navItems = document.querySelectorAll('.nav-item');
-const progs = [0,1,2,3].map(i => document.getElementById('prog'+i));
-
-navItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const idx = parseInt(item.dataset.index);
-    swiper.slideTo(idx);
-    goTo(idx);
-  });
-});
 
 function goTo(idx) {
   clearInterval(timer);
