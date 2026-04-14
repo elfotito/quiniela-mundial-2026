@@ -2033,7 +2033,61 @@ body, html {
     background: #fff;
     transition: width linear; /* la duración se asigna con JS */
 }
+/* =============================================== */
+/* FIX SWIPER CARRUSEL - TAMAÑO Y COMPORTAMIENTO   */
+/* =============================================== */
 
+/* Contenedor principal del carrusel */
+.news-hero {
+    width: 100%;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: hidden;
+    border-radius: 12px; /* opcional, para que combine con el diseño */
+}
+
+/* Swiper debe tener altura fija en desktop */
+.news-hero .swiper {
+    width: 100%;
+    height: 520px; /* igual al alto definido para .slide-inner en desktop */
+}
+
+/* Los slides deben ocupar toda la altura del swiper */
+.news-hero .swiper-slide {
+    height: 100%;
+    width: 100%;
+}
+
+/* La wrapper interna también debe tener altura completa */
+.news-hero .swiper-wrapper {
+    height: 100%;
+}
+
+/* Ajustar .slide-inner para que herede la altura del slide */
+.slide-inner {
+    height: 100%;
+    /* resto de propiedades (grid, etc.) se mantienen */
+}
+
+/* En móvil la altura es automática para que se adapte al contenido */
+@media (max-width: 640px) {
+    .news-hero .swiper {
+        height: auto;
+    }
+    .slide-inner {
+        height: auto;
+        grid-template-rows: 260px auto;
+    }
+}
+
+/* Asegurar visibilidad de la barra de progreso */
+.nav-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    transition: width linear; /* la duración se asigna con JS */
+}
 /* =============================================== */
 /* HACER QUE EL CARRUSEL OCUPE TODO EL ANCHO       */
 /* =============================================== */
