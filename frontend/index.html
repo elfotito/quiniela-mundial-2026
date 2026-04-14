@@ -35,106 +35,40 @@
         </div>
     </div>
 </header>
-<!-- NUEVO NAVBAR BOOTSTRAP FIFA 2026 -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container-fluid px-3 px-lg-5">
-    
-    <!-- Logo / Marca -->
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="img/logomenu.png" alt="Logo" width="40" height="40" class="d-inline-block align-top me-2">
-      <span class="fw-bold text-warning">Quiniela Mundial 2026</span>
-    </a>
-
-    <!-- Botón hamburguesa móvil -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarFifa" 
-            aria-controls="navbarFifa" aria-expanded="false" aria-label="Menú">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Contenido colapsable: enlaces + usuario -->
-    <div class="collapse navbar-collapse" id="navbarFifa">
-      
-      <!-- Enlaces principales centrados (opcional) -->
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="quiniela.html">Mi Quiniela</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="predicciones.html">Predicciones</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="ranking.html">Ranking</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="calendario.html">Calendario</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="mrchip.html">Mr. CHIP</a>
-        </li>
-      </ul>
-
-      <!-- Zona derecha: usuario + admin + logout -->
-      <div class="d-flex align-items-center gap-2">
-        
-        <!-- Dropdown de usuario -->
-        <div class="dropdown">
-          <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center gap-2" 
-                  type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <span id="userCampeon">🏆</span>
-            <span id="userName">Usuario</span>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="perfil.html"><i class="bi bi-person-circle me-2"></i>Mi Perfil</a></li>
-            <li><a class="dropdown-item" href="quiniela.html"><i class="bi bi-trophy me-2"></i>Mi Quiniela</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión</a></li>
-          </ul>
+          <div class="small-logo-container">
+            <a class="small-logo" href="#">↥Small Logo</a>
+          </div>
         </div>
-
-        <!-- Botón Admin (visible solo si es admin) -->
-        <a href="admin.html" class="btn btn-warning btn-sm d-none" id="adminBtn">
-          <i class="bi bi-shield-lock me-1"></i>Admin
-        </a>
-
-        <!-- Botón salir rápido (opcional, pero el dropdown ya lo tiene) -->
-        <!-- <button class="btn btn-outline-danger btn-sm" onclick="logout()">Salir</button> -->
-        
+        <div class="navbar-collapse collapse">
+          
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Active</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </div>
-  </div>
-</nav>
 
-<!-- Espaciador para que el contenido no quede tapado por el navbar fijo -->
-<div style="padding-top: 76px;"></div>
-<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="#">MI<span>LOGO</span></a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Proyectos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Servicios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn-contacto" href="#">Contacto</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+    <div class="container-fluid big-logo-row">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 big-logo-container">
+            <h1 class="big-logo">↧Big Logo</h1>
+          </div><!--/.col-xs-12 -->
+        </div><!--/.row -->
+      </div><!--/.container -->
+    </div><!--/.container-fluid -->
 <br>
     <!-- Countdown arriba -->
     <div class="countdown-container">
