@@ -1978,3 +1978,72 @@ body, html {
     /* No aplicamos transform a nada que pueda afectar */
     transform-style: flat;
 }
+
+/* ===============================================
+   CORRECCIONES SWIPER - SECCIÓN NEWS-HERO
+   =============================================== */
+
+/* Asegurar que el contenedor principal no limite a Swiper */
+.news-hero {
+    width: 100%;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    overflow: visible; /* Cambiado de hidden a visible */
+    margin-bottom: 2rem;
+}
+
+/* Contenedor Swiper */
+.news-hero .swiper {
+    width: 100%;
+    height: auto; /* Se adapta al contenido */
+    overflow: hidden; /* Swiper maneja su overflow */
+    border-radius: 12px 12px 0 0;
+}
+
+/* Slides de Swiper */
+.news-hero .swiper-slide {
+    height: auto; /* Se ajusta al contenido del slide */
+    width: 100%;
+}
+
+/* Slide inner (el grid que ya tienes) */
+.news-hero .slide-inner {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    height: 520px; /* Altura fija desktop */
+    width: 100%;
+    position: relative;
+    background: #0a0a0a;
+}
+
+/* Imagen dentro del slide */
+.news-hero .slide-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Ajustes responsive para mantener altura */
+@media (max-width: 640px) {
+    .news-hero .slide-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: 260px auto;
+        height: auto;
+        min-height: 400px;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+    .news-hero .slide-inner {
+        height: 400px;
+    }
+}
+
+/* Prevenir conflictos con otros estilos de carrusel */
+.fifa-carousel,
+.carousel-main,
+.hero-carousel {
+    display: none; /* Ocultar estilos viejos si no se usan */
+}

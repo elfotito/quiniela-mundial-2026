@@ -82,21 +82,18 @@ async function cargarDatos() {
 // ===============================================
 
 function inicializarCarrusel() {
-    // Si no existe el elemento en esta página, salir silenciosamente
     if (!document.getElementById('heroSwiper')) return;
 
-    const DURATION  = 5000;
-    let activeIdx   = 0;
-    let timer       = null;
+    const DURATION = 5000;
+    let activeIdx = 0;
+    let timer = null;
 
     const swiper = new Swiper('#heroSwiper', {
-        slidesPerView : 1,
-        speed         : 600,
+        slidesPerView: 1,
+        speed: 600,
         allowTouchMove: true,
         on: {
             slideChange: function () {
-                // Solo sincroniza barra si viene de swipe manual
-                // (no de goTo para evitar bucle)
                 if (this.activeIndex !== activeIdx) {
                     goTo(this.activeIndex);
                 }
@@ -105,12 +102,12 @@ function inicializarCarrusel() {
     });
 
     const navItems = document.querySelectorAll('.nav-item');
-    const progs    = [0, 1, 2, 3].map(i => document.getElementById('prog' + i));
+    // ✅ IDs corregidos: 'p0', 'p1', 'p2', 'p3'
+    const progs = [0, 1, 2, 3].map(i => document.getElementById('p' + i));
 
-    // Clic en la barra de navegación inferior
     navItems.forEach(item => {
         item.addEventListener('click', () => {
-            const idx = parseInt(item.dataset.index || item.dataset.idx);
+            const idx = parseInt(item.dataset.idx);
             swiper.slideTo(idx);
             goTo(idx);
         });
@@ -138,7 +135,7 @@ function inicializarCarrusel() {
             }));
         }
 
-        // Pasar al siguiente automáticamente
+        // Programar siguiente slide automático
         timer = setTimeout(() => {
             const next = (activeIdx + 1) % navItems.length;
             swiper.slideTo(next);
@@ -146,8 +143,15 @@ function inicializarCarrusel() {
         }, DURATION);
     }
 
-    // Arrancar desde el primer slide
-    goTo(0);
+    // ✅ Iniciar el carrusel automáticamente después de que Swiper esté listo
+    swiper.on('init', () => {
+        goTo(0);
+    });
+
+    // Si Swiper ya se inicializó antes de registrar el evento, lo forzamos
+    if (swiper.initialized) {
+        goTo(0);
+    }
 }
 
 // ===============================================
