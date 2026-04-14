@@ -2210,3 +2210,93 @@ body {
 .btn-contacto::after {
     display: none;
 }
+
+/* Fondo y colores base */
+.navbar.bg-dark {
+    background-color: #0a0a0a !important;
+    border-bottom: 2px solid #FFD700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.navbar-brand span {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Enlaces de navegación */
+.navbar-nav .nav-link {
+    color: rgba(255,255,255,0.75) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px;
+    transition: all 0.2s;
+    margin: 0 2px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #FFD700 !important;
+    background-color: rgba(255,215,0,0.1);
+}
+
+.navbar-nav .nav-link.active {
+    color: #FFD700 !important;
+    background-color: rgba(255,215,0,0.15);
+    font-weight: 600;
+}
+
+/* Dropdown de usuario */
+#userDropdown {
+    border-color: rgba(255,215,0,0.5);
+    color: #fff;
+    background-color: rgba(255,255,255,0.05);
+}
+#userDropdown:hover {
+    background-color: rgba(255,215,0,0.1);
+    border-color: #FFD700;
+}
+
+.dropdown-menu-dark {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+}
+.dropdown-menu-dark .dropdown-item {
+    color: #ddd;
+}
+.dropdown-menu-dark .dropdown-item:hover {
+    background-color: #2a2a2a;
+    color: #FFD700;
+}
+
+/* Botón Admin */
+#adminBtn {
+    background-color: #FFD700;
+    border-color: #FFD700;
+    color: #000;
+    font-weight: 600;
+}
+#adminBtn:hover {
+    background-color: #e6c200;
+    border-color: #e6c200;
+}
+
+/* Ajuste para el espaciador en móvil */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: #0a0a0a;
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        margin-top: 10px;
+    }
+    .navbar-nav {
+        margin-bottom: 1rem;
+    }
+    .d-flex.gap-2 {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
+/* Corregir posible solapamiento con el carrusel */
+body {
+    padding-top: 0 !important; /* Bootstrap fixed-top ya agrega padding, nosotros usamos un div espaciador */
+}
