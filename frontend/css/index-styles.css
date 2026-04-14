@@ -1979,71 +1979,58 @@ body, html {
     transform-style: flat;
 }
 
-/* ===============================================
-   CORRECCIONES SWIPER - SECCIÓN NEWS-HERO
-   =============================================== */
+/* =============================================== */
+/* FIX SWIPER CARRUSEL - TAMAÑO Y COMPORTAMIENTO   */
+/* =============================================== */
 
-/* Asegurar que el contenedor principal no limite a Swiper */
+/* Contenedor principal del carrusel */
 .news-hero {
     width: 100%;
     background: #0a0a0a;
     color: #fff;
     font-family: 'Segoe UI', system-ui, sans-serif;
-    overflow: visible; /* Cambiado de hidden a visible */
-    margin-bottom: 2rem;
+    overflow: hidden;
+    border-radius: 12px; /* opcional, para que combine con el diseño */
 }
 
-/* Contenedor Swiper */
+/* Swiper debe tener altura fija en desktop */
 .news-hero .swiper {
     width: 100%;
-    height: auto; /* Se adapta al contenido */
-    overflow: hidden; /* Swiper maneja su overflow */
-    border-radius: 12px 12px 0 0;
+    height: 520px; /* igual al alto definido para .slide-inner en desktop */
 }
 
-/* Slides de Swiper */
+/* Los slides deben ocupar toda la altura del swiper */
 .news-hero .swiper-slide {
-    height: auto; /* Se ajusta al contenido del slide */
-    width: 100%;
-}
-
-/* Slide inner (el grid que ya tienes) */
-.news-hero .slide-inner {
-    display: grid;
-    grid-template-columns: 45% 55%;
-    height: 520px; /* Altura fija desktop */
-    width: 100%;
-    position: relative;
-    background: #0a0a0a;
-}
-
-/* Imagen dentro del slide */
-.news-hero .slide-img img {
-    width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
+    width: 100%;
 }
 
-/* Ajustes responsive para mantener altura */
+/* La wrapper interna también debe tener altura completa */
+.news-hero .swiper-wrapper {
+    height: 100%;
+}
+
+/* Ajustar .slide-inner para que herede la altura del slide */
+.slide-inner {
+    height: 100%;
+    /* resto de propiedades (grid, etc.) se mantienen */
+}
+
+/* En móvil la altura es automática para que se adapte al contenido */
 @media (max-width: 640px) {
-    .news-hero .slide-inner {
-        grid-template-columns: 1fr;
-        grid-template-rows: 260px auto;
+    .news-hero .swiper {
         height: auto;
-        min-height: 400px;
+    }
+    .slide-inner {
+        height: auto;
+        grid-template-rows: 260px auto;
     }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
-    .news-hero .slide-inner {
-        height: 400px;
-    }
-}
-
-/* Prevenir conflictos con otros estilos de carrusel */
-.fifa-carousel,
-.carousel-main,
-.hero-carousel {
-    display: none; /* Ocultar estilos viejos si no se usan */
+/* Asegurar visibilidad de la barra de progreso */
+.nav-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+    transition: width linear; /* la duración se asigna con JS */
 }
