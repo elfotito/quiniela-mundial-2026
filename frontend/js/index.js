@@ -31,66 +31,6 @@ navItems.forEach(item => {
     goTo(idx);
   });
 });
-t SLIDE_DURATION = 6000; // ms entre slides (6 segundos)
-    const TOTAL_SLIDES   = 4;
-
-    let activeIdx  = 0;
-    let autoTimer  = null;
-    let animFrame  = null;
-
-    /* Inicializar Swiper sin autoplay propio
-       (lo manejamos manualmente para sincronizar
-       con la barra de progreso inferior) */
-    const swiper = new Swiper('#heroSwiper', {
-      slidesPerView : 1,
-      speed         : 700,
-      allowTouchMove: true,
-      on: {
-        slideChange() { activateSlide(this.activeIndex, false); }
-      }
-    });
-
-    /* ---- Barra de progreso animada ---- */
-    function activateSlide(idx, fromAuto) {
-      /* Limpiar estado previo */
-      clearTimeout(autoTimer);
-      cancelAnimationFrame(animFrame);
-
-      document.querySelectorAll('.nav-item').forEach((el, i) => {
-        el.classList.toggle('active', i === idx);
-        const fill = document.getElementById('p' + i);
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-      });
-
-      activeIdx = idx;
-
-      /* Iniciar barra de progreso con animación CSS */
-      const fill = document.getElementById('p' + idx);
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        fill.style.transition = `width ${SLIDE_DURATION}ms linear`;
-        fill.style.width = '100%';
-      }));
-
-      /* Pasar al siguiente después de SLIDE_DURATION */
-      autoTimer = setTimeout(() => {
-        const next = (idx + 1) % TOTAL_SLIDES;
-        swiper.slideTo(next);
-        activateSlide(next, true);
-      }, SLIDE_DURATION);
-    }
-
-    /* ---- Clic en la barra de navegación ---- */
-    document.querySelectorAll('.nav-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const idx = parseInt(item.dataset.idx);
-        swiper.slideTo(idx);
-        activateSlide(idx, false);
-      });
-    });
-
-    /* ---- Arrancar ---- */
-    activateSlide(0, false);
 // ===============================================
 // INICIALIZACIÓN
 // ===============================================
