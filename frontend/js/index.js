@@ -77,6 +77,16 @@ async function cargarDatos() {
     ]);
 }
 
+window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.custom-navbar');
+    if (window.scrollY > 50) {
+        nav.style.padding = '10px 0';
+        nav.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
+    } else {
+        nav.style.padding = '15px 0';
+        nav.style.boxShadow = 'none';
+    }
+});
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
