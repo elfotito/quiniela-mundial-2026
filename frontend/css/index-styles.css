@@ -1387,7 +1387,6 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    background:var(--fifa-blue);
 }
 
 .countdown-label {
