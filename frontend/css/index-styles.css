@@ -2033,3 +2033,55 @@ body, html {
     background: #fff;
     transition: width linear; /* la duración se asigna con JS */
 }
+
+/* =============================================== */
+/* HACER QUE EL CARRUSEL OCUPE TODO EL ANCHO       */
+/* =============================================== */
+
+/* Elimina el padding del body para el carrusel */
+body {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: hidden; /* evita scroll horizontal por si acaso */
+}
+
+/* El carrusel debe estirarse de borde a borde */
+.news-hero {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+/* El header también debería ser de ancho completo */
+.header {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    position: sticky;
+}
+
+/* Ajustamos el contenedor del header para que el contenido interno no se pegue a los bordes */
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* El main-container debe tener padding lateral para que el contenido no toque los bordes */
+.main-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Opcional: el countdown-container también se beneficia de márgenes internos */
+.countdown-container {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
