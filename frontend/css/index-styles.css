@@ -80,7 +80,6 @@
             padding: 0 20px;
             height: 70px;
             position: relative;
-            overflow: visible;
         }
 
         .menu-btn-desktop {
@@ -169,62 +168,7 @@
             font-size: 1.2rem;
             align-items: center;
         }
-
-.brand-area {
-  display: flex;
-  align-items: center;
-  gap: 20px; /* Espacio entre el emblema y el logo horizontal */
-  padding-left: 20px;
-  position: relative;
-}
-
-.logo-vertical {
-  background-color: var(--bg-black);
-  width: 90px;  /* Ajusta según el tamaño de tu imagen */
-  height: 110px; /* Más alto que el main-tier para que sobresalga */
-  padding: 10px; /* Este es el espaciado interno que pediste */
-  border-radius: 0 0 15px 15px; /* Bordes redondeados abajo */
-  position: relative;
-  top: 15px; /* Empuja el logo hacia abajo para que rompa la línea del header */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3); /* Sombra para dar profundidad */
-  z-index: 100;
-}
-
-.logo-vertical img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.logo-horizontal {
-  height: 40px; /* Ajusta para que combine con la altura del texto del menú */
-  display: flex;
-  align-items: center;
-}
-
-.logo-horizontal img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-}
-
-/* Ajuste del menú para que no choque con el logo */
-.main-nav-links {
-  margin-left: 30px; 
-  display: flex;
-  gap: 20px;
-}
-
-.main-nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-}
+        
         /* --- Navegación --- */
         .main-nav-links {
             margin-left: 180px; /* Suficiente espacio para el logo-wrapper */
