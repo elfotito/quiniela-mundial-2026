@@ -10,29 +10,34 @@
     <link rel="stylesheet" href="css/index-styles.css">
     <style>
         /* ── Fix carrusel desktop ─────────────────────────
-           Corrige el gap entre panel de texto e imagen,
-           y limita la altura máxima en pantallas grandes.
+           Fuente única de verdad — pisa las reglas
+           conflictivas acumuladas en index-styles.css
         ──────────────────────────────────────────────── */
+
+        /* 1. Ancho completo, sin border-radius ni márgenes raros */
+        .news-hero {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            border-radius: 0 !important;
+            overflow: hidden;
+        }
+
+        /* 2. Grid sin gap — elimina el espacio entre texto e imagen */
         .slide-inner {
-            height: 480px;
-            align-items: stretch; /* ambas columnas igual de altas */
+            height: 500px;
+            align-items: stretch;
+            gap: 0 !important;
+            column-gap: 0 !important;
         }
 
-        /* En pantallas muy anchas el carrusel no crece más */
-        @media (min-width: 1200px) {
-            .news-hero {
-                max-width: 1400px;
-                margin: 0 auto;
-            }
-            .slide-inner {
-                height: 500px;
-            }
-        }
-
-        /* La imagen llena exactamente su columna sin gaps */
+        /* 3. Imagen llena exactamente su columna */
         .slide-img {
             height: 100% !important;
             display: block;
+            margin: 0;
+            padding: 0;
         }
         .slide-img img {
             width: 100%;
@@ -42,9 +47,16 @@
             display: block;
         }
 
-        /* El panel de texto también ocupa toda la altura */
+        /* 4. Panel de texto misma altura que imagen */
         .slide-text {
             height: 100%;
+        }
+
+        /* 5. Móvil — altura automática */
+        @media (max-width: 640px) {
+            .slide-inner { height: auto !important; }
+            .slide-img   { height: 260px !important; }
+            .slide-text  { height: auto; }
         }
     </style>
 </head>
