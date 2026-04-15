@@ -1718,7 +1718,7 @@ body, html {
 /* --- Layout del slide (Desktop: 45% texto | 55% imagen) --- */
 .slide-inner {
     display: grid;
-    grid-template-columns: 45% 55%;
+    grid-template-columns: 55% 45%;
     align-items: stretch;   /* ← esto elimina el gap entre columnas */
     height: 500px;          /* altura fija en desktop              */
     position: relative;
