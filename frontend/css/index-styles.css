@@ -29,24 +29,26 @@
         }
 
         body {
-            font-family: sans-serif;
-            background-color: #050d26;
+            font-family: var(--font-main);
+            background-color: var(--bg-dark-blue); /* Fondo debajo del header */
             color: var(--text-white);
-            /* Espaciado para que el contenido no quede oculto bajo las barras fijas */
-            padding-top: 130px; 
+            padding-bottom: 70px; /* Espacio para el navbar móvil */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         /* =========================================
-           HEADER ESCRITORIO (FIXED/STICKY)
+           VISTA DE ESCRITORIO (DESKTOP)
            ========================================= */
         .desktop-header {
             display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .top-tier {
@@ -54,95 +56,78 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 40px;
-            font-size: 0.7rem;
-            border-bottom: 1px solid #222;
+            padding: 5px 20px;
+            font-size: 0.75rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .top-tier-links {
+            display: flex;
+            gap: 20px;
         }
 
         .main-tier {
             background-color: var(--bg-black);
             display: flex;
             align-items: center;
-            padding: 0 40px;
-            height: 80px;
+            padding: 0 20px;
+            height: 70px;
+            position: relative;
+        }
+
+        .menu-btn-desktop {
+            background: #222;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo-container {
-            height: 90px;
-            width: 75px;
-            background-color: #111;
-            border: 2px solid #333;
-            border-radius: 0 0 10px 10px;
+            height: 100px; /* El logo sobresale hacia abajo */
+            width: 70px;
+            background-color: #111; /* Placeholder del logo */
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: absolute;
-            top: 0;
-            left: 40px;
+            top: 10px;
+            left: 70px;
+            z-index: 10;
             font-weight: bold;
-            z-index: 1001;
-        }
-
-        /* --- Recuadro Marcador VS --- */
-        .vs-widget {
-            margin-left: 140px;
-            background: #1a1a1a;
-            padding: 5px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #333;
-        }
-
-        .vs-widget span {
-            font-size: 0.7rem;
-            color: var(--accent-gold);
-            font-weight: bold;
-        }
-
-        .vs-input {
-            width: 35px;
-            background: #000;
-            border: 1px solid #444;
-            color: white;
             text-align: center;
-            border-radius: 4px;
-            font-weight: bold;
-            padding: 2px;
+            line-height: 1.2;
+            border: 2px solid #000;
         }
 
-        /* --- Navegación Central --- */
         .main-nav-links {
             display: flex;
             gap: 20px;
-            margin-left: 30px;
-            font-size: 0.8rem;
+            margin-left: 140px; /* Espacio para el logo que sobresale */
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
-        /* --- Usuario y Saludo --- */
-        .right-section {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .user-greeting {
-            font-size: 0.85rem;
-            color: var(--accent-gold);
-            font-weight: 500;
+        .main-nav-links a:hover {
+            color: var(--text-gray);
         }
 
         .right-icons {
+            margin-left: auto;
             display: flex;
-            gap: 15px;
-            font-size: 1.1rem;
+            gap: 25px;
+            font-size: 1.2rem;
+            align-items: center;
         }
 
         /* =========================================
-           DISEÑO MÓVIL
+           VISTA MÓVIL (MOBILE)
            ========================================= */
         .mobile-top-bar {
             display: none;
@@ -151,10 +136,18 @@
             width: 100%;
             position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            z-index: 100;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
+            border-bottom: 1px solid #222;
+        }
+
+        .mobile-top-bar .logo-mobile {
+            height: 40px;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .mobile-bottom-nav {
@@ -164,7 +157,8 @@
             width: 100%;
             position: fixed;
             bottom: 0;
-            z-index: 1000;
+            left: 0;
+            z-index: 100;
             justify-content: space-around;
             align-items: center;
             border-top: 1px solid #1a2544;
@@ -174,44 +168,85 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             color: var(--text-gray);
-            font-size: 0.6rem;
+            font-size: 0.65rem;
+            gap: 5px;
+            cursor: pointer;
             width: 20%;
         }
 
-        .bottom-nav-item.active { color: white; }
-        .bottom-nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+        .bottom-nav-item.active {
+            color: var(--text-white);
+        }
 
-        .menu-circle {
-            background: #3b4668;
-            width: 35px;
-            height: 35px;
+        .bottom-nav-item i {
+            font-size: 1.4rem;
+        }
+
+        .bottom-nav-item .menu-icon-circle {
+            background-color: #3b4668;
             border-radius: 50%;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            font-size: 1rem;
         }
 
-        /* Overlay Menú */
+        /* Overlay del Menú Móvil */
         .mobile-menu-overlay {
             display: none;
             position: fixed;
-            top: 60px;
-            bottom: 70px;
+            top: 60px; /* Debajo de la barra superior */
+            bottom: 70px; /* Encima de la barra inferior */
             left: 0;
             width: 100%;
-            background: #000;
-            z-index: 999;
-            padding: 20px;
+            background-color: var(--bg-black);
+            z-index: 90;
             overflow-y: auto;
+            padding: 20px;
         }
 
-        .mobile-menu-overlay.show { display: block; }
+        .mobile-menu-overlay.show {
+            display: block;
+        }
 
-        @media (max-width: 1024px) {
-            body { padding-top: 70px; padding-bottom: 80px; }
-            .desktop-header { display: none; }
-            .mobile-top-bar, .mobile-bottom-nav { display: flex; }
+        .mobile-menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .mobile-menu-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+        }
+
+        .mobile-menu-list li i {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           MEDIA QUERIES (RESPONSIVE)
+           ========================================= */
+        @media (max-width: 1100px) {
+            .desktop-header {
+                display: none;
+            }
+            .mobile-top-bar {
+                display: flex;
+            }
+            .mobile-bottom-nav {
+                display: flex;
+            }
         }
 /* ===============================================
    RESET Y BASE

@@ -69,9 +69,7 @@
             <div class="logo-icon">
                 <img src="img/logomenu.png" alt="logomenu">
             </div>
-            <div class="logo-text">
-                <img src="img/logoblancomenu.png" alt="logomenu">
-            </div>
+
         </div>
         <!-- Usuario y Admin -->
         <div class="header-actions">
@@ -88,94 +86,115 @@
 </header>
 <header class="desktop-header">
         <div class="top-tier">
-            <div style="font-weight: bold; letter-spacing: 1px;">FIFA</div>
-            <div style="display: flex; gap: 15px;">
-                <a href="#">TICKETS</a>
-                <a href="#">STORE</a>
+            <div style="font-weight: 900; font-size: 1rem; letter-spacing: 1px;">FIFA</div>
+            <div class="top-tier-links">
+                <a href="#">TICKETS & HOSPITALITY</a>
+                <a href="#">FIFA STORE</a>
+                <a href="#">FIFA REWARDS</a>
                 <a href="#">FIFA+</a>
+                <a href="#">INSIDE FIFA</a>
             </div>
         </div>
         <div class="main-tier">
-            <div class="logo-container">LOGO</div>
-            
-            <div class="vs-widget">
-                <span>PRÓXIMO JUEGO:</span>
-                <input type="number" class="vs-input" placeholder="0" id="local-score">
-                <span style="color: white;">VS</span>
-                <input type="number" class="vs-input" placeholder="0" id="visit-score">
+            <div class="logo-container">
+                <img src="img/logomenu.png" alt="logomenu">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="logomenu">
             </div>
 
             <nav class="main-nav-links">
-                <a href="#">PARTIDOS</a>
-                <a href="#">POSICIONES</a>
-                <a href="#">EQUIPOS</a>
-                <a href="#">REGLAS</a>
+                <a href="index.html">INICIO</a>
+                <a href="predicciones.html">PREDICCIONES</a>
+                <a href="quiniela.html">QUINIELA</a>
+                <a href="ranking.html">RANKING</a>
+                <a href="mrchip.html">MR CHIP</a>
+                <a href="calendario.html">CALENDARIO</a>
+                <a href="#">HOSPITALITY</a>
             </nav>
 
-            <div class="right-section">
-                <span class="user-greeting">Hola, @usuario</span>
-                <div class="right-icons">
-                    <i class="fas fa-search"></i>
-                    <i class="far fa-user"></i>
-                </div>
+            <div class="right-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-globe"></i>
+                <i class="far fa-user"></i>
             </div>
         </div>
     </header>
 
     <header class="mobile-top-bar">
-        <i class="fas fa-search"></i>
-        <div style="font-weight: bold;">QUINIE LA 26</div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 0.7rem; color: var(--accent-gold);">@usuario</span>
-            <i class="far fa-user"></i>
-        </div>
+        <i class="fas fa-search" style="font-size: 1.2rem;"></i>
+        <div class="logo-mobile">LOGO 26</div>
+        <i class="far fa-user" style="font-size: 1.2rem;"></i>
     </header>
 
     <div class="mobile-menu-overlay" id="mobileMenu">
-        <div style="margin-bottom: 20px; background: #111; padding: 15px; border-radius: 10px;">
-            <p style="font-size: 0.8rem; color: var(--accent-gold); margin-bottom: 10px;">PRÓXIMO JUEGO</p>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <input type="number" class="vs-input" style="width: 50px; height: 30px;">
-                <span>VS</span>
-                <input type="number" class="vs-input" style="width: 50px; height: 30px;">
-            </div>
-        </div>
-        <ul style="list-style: none; line-height: 3;">
-            <li><a href="#">PARTIDOS</a></li>
-            <li><a href="#">POSICIONES</a></li>
-            <li><a href="#">EQUIPOS</a></li>
-            <li><a href="#">MI PERFIL</a></li>
-            <li><a href="#">CERRAR SESIÓN</a></li>
+        <ul class="mobile-menu-list">
+            <li><a href="#">SCORES & FIXTURES</a></li>
+            <li><a href="#">STANDINGS</a></li>
+            <li><a href="#">TEAMS</a></li>
+            <li><a href="#">QUALIFIERS</a></li>
+            <li><a href="#">HOST COUNTRIES AND CITIES</a> <i class="fas fa-chevron-right"></i></li>
+            <li><a href="#">TICKETS</a></li>
+            <li><a href="#">HOSPITALITY</a></li>
+            <li><a href="#">FIFA REWARDS</a></li>
+            <li><a href="#">FAN HUB</a> <i class="fas fa-chevron-right"></i></li>
+            <li><a href="#">ORGANISATION</a></li>
+            <li><a href="#">WATCH ON FIFA+</a></li>
+            <li><a href="#">TOURNAMENTS</a> <i class="fas fa-chevron-right"></i></li>
         </ul>
     </div>
 
     <nav class="mobile-bottom-nav">
         <div class="bottom-nav-item active">
             <i class="fas fa-home"></i>
-            <span>INICIO</span>
+            <span>HOME</span>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-chart-line"></i>
-            <span>RANKING</span>
+            <i class="fas fa-trophy"></i>
+            <span>U20</span>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-futbol" style="font-size: 1.8rem; color: white;"></i>
+            <i class="fas fa-futbol" style="font-size: 2rem; color: white;"></i>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-history"></i>
-            <span>HISTORIAL</span>
+            <i class="fas fa-tv"></i>
+            <span>FIFA +</span>
         </div>
-        <div class="bottom-nav-item" id="menuToggle">
-            <div class="menu-circle">
+        <div class="bottom-nav-item" id="menuToggleBtn">
+            <div class="menu-icon-circle">
                 <i class="fas fa-bars"></i>
             </div>
-            <span>MENÚ</span>
+            <span>Menu</span>
         </div>
     </nav>
-
-    <div style="padding: 20px; height: 2000px;">
-        <h2>Tu Contenido Aquí</h2>
-        <p>Baja en la página para probar que el header se queda fijo en escritorio.</p>
+    <!-- Countdown arriba -->
+    <div class="countdown-container">
+        <div class="countdown-label">
+            <img src="img/logomenu.png" alt="FIFA" style="height: 60px;">
+            <div>
+                <h2>FIFA World Cup 2026™</h2>
+                <p>11 Junio - 19 Julio</p>
+            </div>
+        </div>
+        
+        <div class="countdown-timer">
+            <div class="time-box">
+                <div class="time-value" id="days">00</div>
+                <div class="time-label">dias</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="hours">00</div>
+                <div class="time-label">horas</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="mins">00</div>
+                <div class="time-label">min</div>
+            </div>
+            <div class="time-box">
+                <div class="time-value" id="secs">00</div>
+                <div class="time-label">seg</div>
+            </div>
+        </div>
     </div>
 <section class="news-hero">
   <!-- SWIPER PRINCIPAL -->
@@ -460,28 +479,6 @@
             <p>©2026 Drogueria Carrisan, C.A. Todos los derechos reservados.</p>
         </div>
     </footer>
-    <nav class="fixed-bottom bg-dark border-top d-flex justify-content-around py-2 d-md-none" style="z-index: 1050;">
-        <a href="index.html" class="text-center text-white-50 small text-decoration-none">
-            <i class="bi bi-house-door fs-5 d-block"></i>
-            <span>Inicio</span>
-        </a>
-        <a href="quiniela.html" class="text-center text-white-50 small text-decoration-none">
-            <i class="bi bi-trophy fs-5 d-block"></i>
-            <span>Quiniela</span>
-        </a>
-        <a href="predicciones.html" class="text-center text-white-50 small text-decoration-none">
-            <i class="bi bi-pencil-square fs-5 d-block"></i>
-            <span>Predecir</span>
-        </a>
-        <a href="ranking.html" class="text-center text-white-50 small text-decoration-none">
-            <i class="bi bi-bar-chart fs-5 d-block"></i>
-            <span>Ranking</span>
-        </a>
-        <a href="mrchip.html" class="text-center text-white-50 small text-decoration-none">
-            <i class="bi bi-chat fs-5 d-block"></i>
-            <span>Mr. CHIP</span>
-        </a>
-    </nav>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/navbar.js"></script>
