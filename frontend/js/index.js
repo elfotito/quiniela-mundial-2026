@@ -67,7 +67,23 @@ async function verificarLogin() {
 // ===============================================
 // CARGAR DATOS
 // ===============================================
+const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
 
+        menuToggleBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.classList.add('show');
+                // Opcional: Cambiar el icono de hamburguesa a una 'X'
+                menuToggleBtn.querySelector('.menu-icon-circle').innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenu.classList.remove('show');
+                // Restaurar el icono de hamburguesa
+                menuToggleBtn.querySelector('.menu-icon-circle').innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
 async function cargarDatos() {
     await Promise.all([
         cargarEstadisticas(),
