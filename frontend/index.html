@@ -61,67 +61,55 @@
     </style>
 </head>
 <body style="background:#111">
-<!-- HEADER / NAVEGACIÓN -->
-<header class="header">
-    <div class="header-container">
-        <!-- Logo -->
-        <div class="header-logo">
-            <div class="logo-icon">
-                <img src="img/logomenu.png" alt="logomenu">
-            </div>
-
+<header class="desktop-header">
+    <div class="top-tier">
+        <div class="fw-black">FIFA WORLD CUP 2026™</div>
+        <div class="top-tier-links">
+            <a href="reglamento.html">REGLAMENTO</a>
+            <a href="sistema.html">SISTEMA DE PUNTOS</a>
+            <a href="terminos.html">TERMINOS Y CONDICIONES</a>
+            <a href="#">CANAL OFICIAL</a>
+            <a href="#">INSIDE FIFA</a>
         </div>
-        
+    </div>
+    <div class="main-tier">
+        <div class="brand-wrapper">
+            <div class="logo-emblem">
+                <img src="img/logomenu.png" alt="FIFA Logo">
+            </div>
+            <div class="logo-name">
+                <img src="img/logoblancomenu.png" alt="Quiniela 2026">
+            </div>
+        </div>
+
+        <nav class="main-nav-links">
+            <a href="index.html">INICIO</a>
+            <a href="predicciones.html">PREDICCIONES</a>
+            <a href="quiniela.html">QUINIELA</a>
+            <a href="ranking.html">RANKING</a>
+            <a href="mrchip.html">MR CHIP</a>
+            <a href="calendario.html">CALENDARIO</a>
+            <a href="#">HOSPITALITY</a>
+        </nav>
+
+        <div class="right-section">
+            <div class="user-pill">
+                <span class="greeting">Bienvenido,</span>
+                <span class="user-icon" id="userCampeon">👤</span>
+                <span class="user-name" id="userName">Tito</span>
+            </div>
+            
+            <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
+                <i class="fas fa-tools"></i>
+            </button>
+            
+            <button class="btn-logout-elegant" onclick="logout()">
+                <span>SALIR</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
     </div>
 </header>
-<header class="desktop-header">
-        <div class="top-tier">
-            <div style="font-weight: 900; font-size: 1rem; letter-spacing: 1px;">FIFA WORLD CUP 2026™</div>
-            <div class="top-tier-links">
-                <a href="reglamento.html">REGLAMENTO</a>
-                <a href="sistema.html">SISTEMA DE PUNTOS</a>
-                <a href="terminos.html">TERMINOS Y CONDICIONES</a>
-                <a href="#">CANAL OFICIAL</a>
-                <a href="#">INSIDE FIFA</a>
-            </div>
-        </div>
-        <div class="main-tier">
-            <div class="logo-container">
-                <img src="img/logomenu.png" alt="logomenu">
-            </div>
-            <div class="logo-text">
-                <img src="img/logoblancomenu.png" alt="logomenu">
-            </div>
-
-            <nav class="main-nav-links">
-                <a href="index.html">INICIO</a>
-                <a href="predicciones.html">PREDICCIONES</a>
-                <a href="quiniela.html">QUINIELA</a>
-                <a href="ranking.html">RANKING</a>
-                <a href="mrchip.html">MR CHIP</a>
-                <a href="calendario.html">CALENDARIO</a>
-                <a href="#">HOSPITALITY</a>
-            </nav>
-            <!-- Usuario y Admin -->
-            <div class="right-section">
-            <div class="user-greeting">
-                Bienvenido,
-                <span class="user-icon" id="userCampeon">👤</span>
-                <span class="user-name" id="userName">Usuario</span>
-            </div>
-            <button class="btn-admin" id="adminBtn" style="display: none;">
-                <span class="btn-icon">🛠️</span>
-            </button>
-            <button class="btn-logout" onclick="logout()">Salir</button>
-            </div>
-
-            <div class="right-icons">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-globe"></i>
-                <i class="far fa-user"></i>
-            </div>
-        </div>
-    </header>
 
     <header class="mobile-top-bar">
         <i class="fas fa-search" style="font-size: 1.2rem;"></i>

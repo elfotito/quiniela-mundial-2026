@@ -168,7 +168,96 @@
             font-size: 1.2rem;
             align-items: center;
         }
+/* --- Estructura del Logo (Brand) --- */
+.brand-wrapper {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+}
 
+.logo-emblem {
+    background: var(--bg-black);
+    width: 70px;
+    height: 85px;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+.logo-emblem img { width: 100%; object-fit: contain; }
+
+.logo-name {
+    width: 140px; /* Ajusta según el largo de tu imagen de texto */
+    margin-top: 10px;
+}
+
+.logo-name img { width: 100%; height: auto; }
+
+/* --- Navegación --- */
+.main-nav-links {
+    margin-left: 180px; /* Suficiente espacio para el logo-wrapper */
+    display: flex;
+    gap: 25px;
+}
+
+/* --- Sección Usuario Elegante --- */
+.user-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.user-name {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- Botón Salir (Elegante) --- */
+.btn-logout-elegant {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-logout-elegant:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+/* --- Botón Admin --- */
+.btn-admin-custom {
+    background: #f1c40f; /* Color oro/herramienta */
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-admin-custom:hover { transform: scale(1.1); }
         /* =========================================
            VISTA MÓVIL (MOBILE)
            ========================================= */
