@@ -92,7 +92,7 @@
             height: 100px; /* El logo sobresale hacia abajo */
             width: 70px;
             background-color: var(--bg-black); /* Placeholder del logo */
-            border-radius: 15px;
+            border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
