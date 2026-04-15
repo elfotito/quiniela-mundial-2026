@@ -9,22 +9,182 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
     <style>
-        /* ── Fix carrusel desktop ─────────────────────────
-           Fuente única de verdad — pisa las reglas
-           conflictivas acumuladas en index-styles.css
-        ──────────────────────────────────────────────── */
+        /* =====================================================
+           FIXES GLOBALES — pisan reglas conflictivas del CSS
+           ===================================================== */
 
-        /* 1. Ancho completo, sin border-radius ni márgenes raros */
+        /* Alto del header desktop: top-tier(30px) + main-tier(70px) = 100px */
+        :root { --header-h: 100px; }
+
+        /* Body empuja el contenido debajo del header fijo */
+        body {
+            padding-top: var(--header-h) !important;
+            overflow-x: hidden;
+        }
+
+        /* En móvil el header desktop no existe — solo la barra superior de 60px */
+        @media (max-width: 1100px) {
+            body { padding-top: 60px !important; }
+        }
+
+        /* ── Header desktop ────────────────────────────────── */
+        .desktop-header {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Top tier — barra pequeña superior */
+        .top-tier {
+            background: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            height: 30px;
+            font-size: 0.72rem;
+            border-bottom: 1px solid #222;
+            color: rgba(255,255,255,0.6);
+        }
+        .top-tier .fw-black { color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.5px; }
+        .top-tier-links { display: flex; gap: 24px; }
+        .top-tier-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.3px; transition: color 0.2s; }
+        .top-tier-links a:hover { color: #fff; }
+
+        /* Main tier — barra principal con logo y nav */
+        .main-tier {
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            height: 70px;
+            border-bottom: 1px solid #1a1a1a;
+            position: relative;
+        }
+
+        /* Brand wrapper — logo que sobresale */
+        .brand-wrapper {
+            position: relative;
+            width: 160px;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        /* Trofeo / logo principal — sobresale hacia abajo */
+        .logo-container {
+            position: absolute;
+            top: -10px;           /* sube un poco para que sobresalga */
+            left: 0;
+            width: 64px;
+            height: 90px;         /* más alto que el main-tier para sobresalir */
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Texto del logo — va a la derecha del trofeo */
+        .logo-text {
+            position: absolute;
+            top: 50%;
+            left: 68px;
+            transform: translateY(-50%);
+            width: 90px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        .logo-text img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Nav links */
+        .main-nav-links {
+            display: flex;
+            gap: 4px;
+            margin-left: 8px;
+            flex: 1;
+        }
+        .main-nav-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 4px;
+            letter-spacing: 0.3px;
+            transition: color 0.2s, background 0.2s;
+            white-space: nowrap;
+        }
+        .main-nav-links a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+        .main-nav-links a.active { color: #fff; }
+
+        /* Sección derecha — usuario + botones */
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.82rem;
+        }
+        .user-pill .greeting { color: rgba(255,255,255,0.5); }
+        .user-pill .user-name { color: #fff; font-weight: 700; text-transform: uppercase; }
+
+        .btn-admin-custom {
+            background: #f1c40f;
+            border: none;
+            width: 34px; height: 34px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            color: #000;
+            font-size: 0.9rem;
+        }
+        .btn-admin-custom:hover { transform: scale(1.08); }
+
+        .btn-logout-elegant {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-logout-elegant:hover { background: #fff; color: #000; }
+
+        /* ── Carrusel — fuente única de verdad ──────────────── */
         .news-hero {
             width: 100% !important;
             max-width: 100% !important;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
+            margin: 0 !important;
             border-radius: 0 !important;
             overflow: hidden;
         }
 
-        /* 2. Grid sin gap — elimina el espacio entre texto e imagen */
         .slide-inner {
             height: 500px;
             align-items: stretch;
@@ -32,27 +192,21 @@
             column-gap: 0 !important;
         }
 
-        /* 3. Imagen llena exactamente su columna */
         .slide-img {
             height: 100% !important;
             display: block;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
         }
         .slide-img img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
             object-position: center top;
             display: block;
         }
 
-        /* 4. Panel de texto misma altura que imagen */
-        .slide-text {
-            height: 100%;
-        }
+        .slide-text { height: 100%; }
 
-        /* 5. Móvil — altura automática */
+        /* ── Móvil ──────────────────────────────────────────── */
         @media (max-width: 640px) {
             .slide-inner { height: auto !important; }
             .slide-img   { height: 260px !important; }
