@@ -67,6 +67,15 @@ async function verificarLogin() {
 // ===============================================
 // CARGAR DATOS
 // ===============================================
+
+async function cargarDatos() {
+    await Promise.all([
+        cargarEstadisticas(),
+        cargarProximosPartidos(),
+        cargarUltimosResultados(),
+        cargarRankingTop5()
+    ]);
+}
 const btn = document.getElementById('menuToggle');
         const menu = document.getElementById('mobileMenu');
         let isOpen = false;
@@ -76,45 +85,6 @@ const btn = document.getElementById('menuToggle');
             menu.classList.toggle('show');
             btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
         });
-async function cargarDatos() {
-    await Promise.all([
-        cargarEstadisticas(),
-        cargarProximosPartidos(),
-        cargarUltimosResultados(),
-        cargarRankingTop5()
-    ]);
-}
-var navbarHeight = $('.navbar').height(); 
-
-$(window).scroll(function() {
-  var navbarColor = "62,195,246";//color attr for rgba
-  var smallLogoHeight = $('.small-logo').height();
-  var bigLogoHeight = $('.big-logo').height();
-  var smallLogoEndPos = 0;
-  var smallSpeed = (smallLogoHeight / bigLogoHeight);
-  
-  var ySmall = ($(window).scrollTop() * smallSpeed); 
-  
-  var smallPadding = navbarHeight - ySmall;
-  if (smallPadding > navbarHeight) { smallPadding = navbarHeight; }
-  if (smallPadding < smallLogoEndPos) { smallPadding = smallLogoEndPos; }
-  if (smallPadding < 0) { smallPadding = 0; }
-  
-  $('.small-logo-container ').css({ "padding-top": smallPadding});
-  
-  var navOpacity = ySmall / smallLogoHeight; 
-  if  (navOpacity > 1) { navOpacity = 1; }
-  if (navOpacity < 0 ) { navOpacity = 0; }
-  var navBackColor = 'rgba(' + navbarColor + ',' + navOpacity + ')';
-  $('.navbar').css({"background-color": navBackColor});
-  
-  var shadowOpacity = navOpacity * 0.4;
-  if ( ySmall > 1) {
-    $('.navbar').css({"box-shadow": "0 2px 3px rgba(0,0,0," + shadowOpacity + ")"});
-  } else {
-    $('.navbar').css({"box-shadow": "none"});
-  }
-});
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
