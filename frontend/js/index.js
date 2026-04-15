@@ -67,23 +67,15 @@ async function verificarLogin() {
 // ===============================================
 // CARGAR DATOS
 // ===============================================
-const menuToggleBtn = document.getElementById('menuToggleBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        let menuOpen = false;
+const btn = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        let isOpen = false;
 
-        menuToggleBtn.addEventListener('click', () => {
-            menuOpen = !menuOpen;
-            if (menuOpen) {
-                mobileMenu.classList.add('show');
-                // Opcional: Cambiar el icono de hamburguesa a una 'X'
-                menuToggleBtn.querySelector('.menu-icon-circle').innerHTML = '<i class="fas fa-times"></i>';
-            } else {
-                mobileMenu.classList.remove('show');
-                // Restaurar el icono de hamburguesa
-                menuToggleBtn.querySelector('.menu-icon-circle').innerHTML = '<i class="fas fa-bars"></i>';
-            }
+        btn.addEventListener('click', () => {
+            isOpen = !isOpen;
+            menu.classList.toggle('show');
+            btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
         });
-        
 async function cargarDatos() {
     await Promise.all([
         cargarEstadisticas(),

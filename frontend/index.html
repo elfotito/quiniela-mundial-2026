@@ -88,116 +88,94 @@
 </header>
 <header class="desktop-header">
         <div class="top-tier">
-            <div style="font-weight: 900; font-size: 1rem; letter-spacing: 1px;">FIFA</div>
-            <div class="top-tier-links">
-                <a href="#">TICKETS & HOSPITALITY</a>
-                <a href="#">FIFA STORE</a>
-                <a href="#">FIFA REWARDS</a>
+            <div style="font-weight: bold; letter-spacing: 1px;">FIFA</div>
+            <div style="display: flex; gap: 15px;">
+                <a href="#">TICKETS</a>
+                <a href="#">STORE</a>
                 <a href="#">FIFA+</a>
-                <a href="#">INSIDE FIFA</a>
             </div>
         </div>
         <div class="main-tier">
-            <button class="menu-btn-desktop">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="logo-container">LOGO</div>
             
-            <div class="logo-container">
-                LOGO<br>26
+            <div class="vs-widget">
+                <span>PRÓXIMO JUEGO:</span>
+                <input type="number" class="vs-input" placeholder="0" id="local-score">
+                <span style="color: white;">VS</span>
+                <input type="number" class="vs-input" placeholder="0" id="visit-score">
             </div>
 
             <nav class="main-nav-links">
-                <a href="#">SCORES & FIXTURES</a>
-                <a href="#">STANDINGS</a>
-                <a href="#">TEAMS</a>
-                <a href="#">QUALIFIERS</a>
-                <a href="#">HOST COUNTRIES AND CITIES</a>
-                <a href="#">TICKETS</a>
-                <a href="#">HOSPITALITY</a>
+                <a href="#">PARTIDOS</a>
+                <a href="#">POSICIONES</a>
+                <a href="#">EQUIPOS</a>
+                <a href="#">REGLAS</a>
             </nav>
 
-            <div class="right-icons">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-globe"></i>
-                <i class="far fa-user"></i>
+            <div class="right-section">
+                <span class="user-greeting">Hola, @usuario</span>
+                <div class="right-icons">
+                    <i class="fas fa-search"></i>
+                    <i class="far fa-user"></i>
+                </div>
             </div>
         </div>
     </header>
 
     <header class="mobile-top-bar">
-        <i class="fas fa-search" style="font-size: 1.2rem;"></i>
-        <div class="logo-mobile">LOGO 26</div>
-        <i class="far fa-user" style="font-size: 1.2rem;"></i>
+        <i class="fas fa-search"></i>
+        <div style="font-weight: bold;">QUINIE LA 26</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 0.7rem; color: var(--accent-gold);">@usuario</span>
+            <i class="far fa-user"></i>
+        </div>
     </header>
 
     <div class="mobile-menu-overlay" id="mobileMenu">
-        <ul class="mobile-menu-list">
-            <li><a href="#">SCORES & FIXTURES</a></li>
-            <li><a href="#">STANDINGS</a></li>
-            <li><a href="#">TEAMS</a></li>
-            <li><a href="#">QUALIFIERS</a></li>
-            <li><a href="#">HOST COUNTRIES AND CITIES</a> <i class="fas fa-chevron-right"></i></li>
-            <li><a href="#">TICKETS</a></li>
-            <li><a href="#">HOSPITALITY</a></li>
-            <li><a href="#">FIFA REWARDS</a></li>
-            <li><a href="#">FAN HUB</a> <i class="fas fa-chevron-right"></i></li>
-            <li><a href="#">ORGANISATION</a></li>
-            <li><a href="#">WATCH ON FIFA+</a></li>
-            <li><a href="#">TOURNAMENTS</a> <i class="fas fa-chevron-right"></i></li>
+        <div style="margin-bottom: 20px; background: #111; padding: 15px; border-radius: 10px;">
+            <p style="font-size: 0.8rem; color: var(--accent-gold); margin-bottom: 10px;">PRÓXIMO JUEGO</p>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="number" class="vs-input" style="width: 50px; height: 30px;">
+                <span>VS</span>
+                <input type="number" class="vs-input" style="width: 50px; height: 30px;">
+            </div>
+        </div>
+        <ul style="list-style: none; line-height: 3;">
+            <li><a href="#">PARTIDOS</a></li>
+            <li><a href="#">POSICIONES</a></li>
+            <li><a href="#">EQUIPOS</a></li>
+            <li><a href="#">MI PERFIL</a></li>
+            <li><a href="#">CERRAR SESIÓN</a></li>
         </ul>
     </div>
 
     <nav class="mobile-bottom-nav">
         <div class="bottom-nav-item active">
             <i class="fas fa-home"></i>
-            <span>HOME</span>
+            <span>INICIO</span>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-trophy"></i>
-            <span>U20</span>
+            <i class="fas fa-chart-line"></i>
+            <span>RANKING</span>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-futbol" style="font-size: 2rem; color: white;"></i>
+            <i class="fas fa-futbol" style="font-size: 1.8rem; color: white;"></i>
         </div>
         <div class="bottom-nav-item">
-            <i class="fas fa-tv"></i>
-            <span>FIFA +</span>
+            <i class="fas fa-history"></i>
+            <span>HISTORIAL</span>
         </div>
-        <div class="bottom-nav-item" id="menuToggleBtn">
-            <div class="menu-icon-circle">
+        <div class="bottom-nav-item" id="menuToggle">
+            <div class="menu-circle">
                 <i class="fas fa-bars"></i>
             </div>
-            <span>Menu</span>
+            <span>MENÚ</span>
         </div>
     </nav>
-    <!-- Countdown arriba -->
-    <div class="countdown-container">
-        <div class="countdown-label">
-            <img src="img/logomenu.png" alt="FIFA" style="height: 60px;">
-            <div>
-                <h2>FIFA World Cup 2026™</h2>
-                <p>11 Junio - 19 Julio</p>
-            </div>
-        </div>
-        
-        <div class="countdown-timer">
-            <div class="time-box">
-                <div class="time-value" id="days">00</div>
-                <div class="time-label">dias</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="hours">00</div>
-                <div class="time-label">horas</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="mins">00</div>
-                <div class="time-label">min</div>
-            </div>
-            <div class="time-box">
-                <div class="time-value" id="secs">00</div>
-                <div class="time-label">seg</div>
-            </div>
-        </div>
+
+    <div style="padding: 20px; height: 2000px;">
+        <h2>Tu Contenido Aquí</h2>
+        <p>Baja en la página para probar que el header se queda fijo en escritorio.</p>
     </div>
 <section class="news-hero">
   <!-- SWIPER PRINCIPAL -->
