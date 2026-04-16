@@ -1753,6 +1753,7 @@ body, html {
     color: #fff;
     font-family: 'Segoe UI', system-ui, sans-serif;
     overflow: hidden;
+    padding-top: 0px;
 }
 
 /* --- Swiper --- */
