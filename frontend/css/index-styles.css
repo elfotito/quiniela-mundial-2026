@@ -38,7 +38,7 @@
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: var(--font-main); 
             color: var(--text-white);
             padding-top: 130px;
             padding-bottom: 70px; /* Espacio para el navbar móvil */
@@ -182,130 +182,6 @@ body {
 .stat-card.position { border-left: 4px solid var(--success); }
 .stat-card.accuracy { border-left: 4px solid var(--warning); }
 
-
-.header-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
-/* Logo */
-.header {
-    background: var(--dark-card);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    overflow: visible; /* IMPORTANTE: permite que el logo sobresalga */
-}
-
-.header-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    position: relative; /* IMPORTANTE */
-}
-
-.header-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    position: relative;
-    z-index: 1002;
-}
-
-.logo-icon {
-    position: absolute;
-    left: -20%;
-    top: 100%;
-    transform: translateY(-40%); /* Centra verticalmente con el header */
-    background: #1a1a1a;
-    padding: 0.10rem;
-    border-radius: 12px;
-    z-index: 1002;
-}
-
-.logo-icon img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-}
-
-.logo-text {
-    width: 120px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 100px; /* Espacio para el logo */
-}
-
-.logo-main {
-    font-size: 1.25rem;
-    font-weight: 900;
-    letter-spacing: 1px;
-    color: var(--fifa-gold);
-}
-
-.logo-sub {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    color: var(--text-gray);
-}
-
-/* Navegación Desktop */
-.nav-desktop {
-    display: flex;
-    gap: 0.5rem;
-    flex: 1;
-}
-
-.nav-link {
-    padding: 0.75rem 1.25rem;
-    color: var(--text-gray);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: var(--text-white);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.nav-link.active {
-    color: var(--fifa-gold);
-    background: rgba(255, 215, 0, 0.1);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 2px;
-    background: var(--fifa-gold);
-}
-
-/* Header Actions */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
 
 .user-info {
     display: flex;
@@ -1058,8 +934,6 @@ body {
 .countdown-wrapper {
     width: 100%;
     background: var(--fifablue);
-    margin-bottom: 0;
-    line-height: 0;
 }
 
 .countdown-container {
@@ -1677,8 +1551,6 @@ body, html {
     font-family: 'Segoe UI', system-ui, sans-serif;
     overflow: hidden;
     padding-top: 0px;
-    margin-top: 0;
-    padding-top: 0;
 }
 
 /* --- Swiper --- */
