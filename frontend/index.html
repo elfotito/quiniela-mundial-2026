@@ -7,35 +7,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
     <style>
-        /* =====================================================
-           FIXES GLOBALES — pisan reglas conflictivas del CSS
-           ===================================================== */
+        /* ==============================================
+           FIXES GLOBALES — fuente única de verdad
+           Pisa reglas conflictivas de index-styles.css
+           ============================================== */
 
-        /* Alto del header desktop: top-tier(30px) + main-tier(70px) = 100px */
+        /* Alto total del header: top-tier 30px + main-tier 70px = 100px */
         :root { --header-h: 100px; }
 
-        /* Body empuja el contenido debajo del header fijo */
         body {
             padding-top: var(--header-h) !important;
             overflow-x: hidden;
         }
-
-        /* En móvil el header desktop no existe — solo la barra superior de 60px */
         @media (max-width: 1100px) {
             body { padding-top: 60px !important; }
         }
 
-        /* ── Header desktop ────────────────────────────────── */
+        /* ── HEADER DESKTOP ─────────────────────── */
         .desktop-header {
             position: fixed;
             top: 0; left: 0;
             width: 100%;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
 
-        /* Top tier — barra pequeña superior */
+        /* Top tier — barra delgada */
         .top-tier {
             background: #000;
             display: flex;
@@ -43,16 +43,22 @@
             align-items: center;
             padding: 0 24px;
             height: 30px;
-            font-size: 0.72rem;
             border-bottom: 1px solid #222;
-            color: rgba(255,255,255,0.6);
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.5);
         }
-        .top-tier .fw-black { color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 0.5px; }
+        .top-tier .fw-black { font-size: 0.7rem; letter-spacing: 0.5px; }
         .top-tier-links { display: flex; gap: 24px; }
-        .top-tier-links a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.3px; transition: color 0.2s; }
+        .top-tier-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.72rem;
+            letter-spacing: 0.3px;
+            transition: color 0.2s;
+        }
         .top-tier-links a:hover { color: #fff; }
 
-        /* Main tier — barra principal con logo y nav */
+        /* Main tier — barra con logo + nav */
         .main-tier {
             background: #0a0a0a;
             display: flex;
@@ -60,27 +66,31 @@
             padding: 0 24px;
             height: 70px;
             border-bottom: 1px solid #1a1a1a;
-            position: relative;
+            overflow: visible;       /* permite que el logo sobresalga */
         }
 
-        /* Brand wrapper — logo que sobresale */
+        /* Brand wrapper — contenedor del logo */
         .brand-wrapper {
             position: relative;
-            width: 160px;
-            flex-shrink: 0;
-            margin-right: 16px;
-        }
-
-        /* Trofeo / logo principal — sobresale hacia abajo */
-        .logo-container {
-            position: absolute;
-            top: -10px;           /* sube un poco para que sobresalga */
-            left: 0;
-            width: 64px;
-            height: 90px;         /* más alto que el main-tier para sobresalir */
-            z-index: 10;
             display: flex;
             align-items: center;
+            flex-shrink: 0;
+            margin-right: 24px;
+            /* ancho suficiente para trofeo + texto */
+            width: 170px;
+            height: 70px;
+        }
+
+        /* Trofeo — sobresale 20px hacia abajo del main-tier */
+        .logo-container {
+            position: absolute;
+            bottom: -20px;     /* sobresale hacia abajo */
+            left: 0;
+            width: 60px;
+            height: 90px;      /* más alto que el tier */
+            z-index: 10;
+            display: flex;
+            align-items: flex-end;
             justify-content: center;
         }
         .logo-container img {
@@ -89,16 +99,14 @@
             object-fit: contain;
         }
 
-        /* Texto del logo — va a la derecha del trofeo */
+        /* Texto del logo — a la derecha del trofeo, centrado verticalmente */
         .logo-text {
             position: absolute;
-            top: 50%;
             left: 68px;
+            top: 50%;
             transform: translateY(-50%);
-            width: 90px;
-            height: 40px;
-            display: flex;
-            align-items: center;
+            width: 100px;
+            height: 36px;
         }
         .logo-text img {
             width: 100%;
@@ -109,32 +117,30 @@
         /* Nav links */
         .main-nav-links {
             display: flex;
-            gap: 4px;
-            margin-left: 8px;
+            gap: 2px;
             flex: 1;
         }
         .main-nav-links a {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 6px 12px;
+            padding: 6px 11px;
             border-radius: 4px;
             letter-spacing: 0.3px;
-            transition: color 0.2s, background 0.2s;
             white-space: nowrap;
+            transition: color 0.2s, background 0.2s;
         }
-        .main-nav-links a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+        .main-nav-links a:hover  { color: #fff; background: rgba(255,255,255,0.07); }
         .main-nav-links a.active { color: #fff; }
 
-        /* Sección derecha — usuario + botones */
+        /* Sección derecha */
         .right-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-shrink: 0;
         }
-
         .user-pill {
             display: flex;
             align-items: center;
@@ -143,9 +149,9 @@
             padding: 5px 14px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
         }
-        .user-pill .greeting { color: rgba(255,255,255,0.5); }
+        .user-pill .greeting  { color: rgba(255,255,255,0.5); }
         .user-pill .user-name { color: #fff; font-weight: 700; text-transform: uppercase; }
 
         .btn-admin-custom {
@@ -156,14 +162,13 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: transform 0.2s;
-            color: #000;
-            font-size: 0.9rem;
+            color: #000; font-size: 0.9rem;
         }
         .btn-admin-custom:hover { transform: scale(1.08); }
 
         .btn-logout-elegant {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.35);
             color: #fff;
             padding: 6px 16px;
             border-radius: 4px;
@@ -176,7 +181,118 @@
         }
         .btn-logout-elegant:hover { background: #fff; color: #000; }
 
-        /* ── Carrusel — fuente única de verdad ──────────────── */
+        /* ── MÓVIL — barra superior ─────────────── */
+        .mobile-top-bar {
+            background: #0a0a0a;
+            height: 60px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #222;
+            color: #fff;
+        }
+        .mobile-top-bar .logo-mobile {
+            height: 36px;
+            display: flex;
+            align-items: center;
+        }
+        .mobile-top-bar .logo-mobile img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* ── MÓVIL — barra inferior con iconos ─── */
+        .mobile-bottom-nav {
+            background: #0a0a0a;
+            height: 64px;
+            display: none;
+            align-items: center;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0; left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-top: 1px solid #1e2d5a;
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.6rem;
+            gap: 4px;
+            cursor: pointer;
+            width: 20%;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .bottom-nav-item i       { font-size: 1.3rem; }
+        .bottom-nav-item.active  { color: #fff; }
+        .bottom-nav-item:hover   { color: rgba(255,255,255,0.8); }
+
+        /* Botón central del balón */
+        .bottom-nav-item.center-btn i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .menu-icon-circle {
+            background: #2a3a6e;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        /* Overlay menú móvil */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 60px; bottom: 64px;
+            left: 0; width: 100%;
+            background: #0a0a0a;
+            z-index: 900;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .mobile-menu-overlay.show { display: block; }
+        .mobile-menu-list {
+            list-style: none;
+            padding: 0; margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .mobile-menu-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #1a1a1a;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .mobile-menu-list li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .mobile-menu-list li i { color: rgba(255,255,255,0.35); }
+
+        /* Mostrar móvil / ocultar desktop en pantallas pequeñas */
+        @media (max-width: 1100px) {
+            .desktop-header   { display: none !important; }
+            .mobile-top-bar   { display: flex; }
+            .mobile-bottom-nav{ display: flex; }
+        }
+
+        /* ── CARRUSEL — fuente única de verdad ──── */
         .news-hero {
             width: 100% !important;
             max-width: 100% !important;
@@ -184,14 +300,11 @@
             border-radius: 0 !important;
             overflow: hidden;
         }
-
         .slide-inner {
             height: 500px;
             align-items: stretch;
             gap: 0 !important;
-            column-gap: 0 !important;
         }
-
         .slide-img {
             height: 100% !important;
             display: block;
@@ -203,10 +316,8 @@
             object-position: center top;
             display: block;
         }
-
         .slide-text { height: 100%; }
 
-        /* ── Móvil ──────────────────────────────────────────── */
         @media (max-width: 640px) {
             .slide-inner { height: auto !important; }
             .slide-img   { height: 260px !important; }
