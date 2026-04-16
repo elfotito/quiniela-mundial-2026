@@ -68,49 +68,51 @@
             border-bottom: 1px solid #ffffff;
             overflow: visible;       /* permite que el logo sobresalga */
         }
-
-        /* Brand wrapper — contenedor del logo */
+        /* Brand wrapper — contenedor principal de ambos logos */
+                /* 1. Contenedor principal: le quitamos el ancho fijo para que se adapte */
         .brand-wrapper {
             position: relative;
             display: flex;
             align-items: center;
-            flex-shrink: 0;
+            height: 70px; /* Misma altura que el main-tier */
             margin-right: 24px;
-            /* ancho suficiente para trofeo + texto */
-            width: 170px;
-            height: 70px;
         }
 
-        /* Trofeo — sobresale 20px hacia abajo del main-tier */
+        /* 2. El Logo Vertical (Trofeo): Se convierte en la "pestaña" negra */
         .logo-container {
             position: absolute;
-            bottom: -20px;     /* sobresale hacia abajo */
+            top: 0;
             left: 0;
-            width: 60px;
-            height: 90px;      /* más alto que el tier */
+            width: 80px;      /* Ancho de la base negra */
+            height: 100px;    /* 70px del header + 30px que sobresale */
+            background: #000; /* Fondo negro para crear el efecto de pestaña */
             z-index: 10;
             display: flex;
-            align-items: flex-end;
             justify-content: center;
+            align-items: center;
+            /* Redondeamos solo las esquinas de abajo */
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            padding-bottom: 5px;
         }
+
         .logo-container img {
-            width: 100%;
-            height: 100%;
+            width: 55px;      /* Ajusta según el tamaño de tu imagen */
+            height: auto;
             object-fit: contain;
         }
 
-        /* Texto del logo — a la derecha del trofeo, centrado verticalmente */
+        /* 3. El Logo Horizontal (Texto): Lo empujamos a la derecha */
         .logo-text {
-            position: absolute;
-            left: 68px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100px;
-            height: 36px;
+            margin-left: 95px; /* 80px de la pestaña + 15px de espacio */
+            height: 35px;      /* Altura del logo de texto */
+            display: flex;
+            align-items: center;
         }
+
         .logo-text img {
-            width: 100%;
             height: 100%;
+            width: auto;
             object-fit: contain;
         }
 
