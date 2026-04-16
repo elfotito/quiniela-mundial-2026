@@ -7,7 +7,7 @@
     --fifa-blue: #0C87D1;
     --fifa-dark-blue: #2A398D;
     --fifa-gold: #ffd830;
-    --dark-bg: #0a0a0a;
+    --dark-bg: #000000;
     --dark-card: #1a1a1a;
     --text-white: #ffffff;
     --text-gray: #D1D4D1;
@@ -979,7 +979,7 @@ body {
    =============================================== */
 
 .footer {
-    background: var(--dark-card);
+    background: var(--dark-bg);
     border-top: 1px solid var(--border-color);
     margin-top: 4rem;
 }
