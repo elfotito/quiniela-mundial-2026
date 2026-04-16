@@ -39,7 +39,6 @@
 
         body {
             font-family: var(--font-main);
-            background-color: var(--bg-dark-blue); /* Fondo debajo del header */
             color: var(--text-white);
             padding-top: 130px;
             padding-bottom: 70px; /* Espacio para el navbar móvil */
@@ -123,83 +122,6 @@ body {
   color: #0d6efd;
   text-transform: uppercase;
 }
-/* ===============================================
-   HEADER
-   =============================================== */
-
-.header {
-    background: var(--dark-card);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-        .content-section {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title-main {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #FFD700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .section-icon { font-size: 2.5rem; }
-        .content-text { color: #a0a0a0; line-height: 1.8; margin-bottom: 1.5rem; }
-        
-        .rule-list { list-style: none; padding: 0; }
-        .rule-item {
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border-left: 3px solid #FFD700;
-            display: flex;
-            gap: 1rem;
-        }
-        .rule-number { font-size: 1.5rem; font-weight: 900; color: #FFD700; min-width: 40px; }
-        .rule-content { flex: 1; color: #a0a0a0; }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 204, 0.1));
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-        .highlight-title { font-size: 1.5rem; font-weight: 900; color: #FFD700; margin-bottom: 0.5rem; }
-        .highlight-text { color: white; font-size: 1.1rem; }
-        
-        .link-sistema {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #0066CC, #003d7a);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-        .link-sistema:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
-        }
-        .term-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
-        }
 
 .stats-overview {
     display: grid;
@@ -1136,6 +1058,8 @@ body {
 .countdown-wrapper {
     width: 100%;
     background: var(--fifablue);
+    margin-bottom: 0;
+    line-height: 0;
 }
 
 .countdown-container {
@@ -1148,7 +1072,7 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 2;
-    padding-top: 5px;
+    padding-top: 20px;
 }
 
 .countdown-label {
@@ -1753,6 +1677,8 @@ body, html {
     font-family: 'Segoe UI', system-ui, sans-serif;
     overflow: hidden;
     padding-top: 0px;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 /* --- Swiper --- */
