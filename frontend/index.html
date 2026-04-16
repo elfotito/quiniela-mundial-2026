@@ -43,7 +43,7 @@
             align-items: center;
             padding: 0 24px;
             height: 30px;
-            border-bottom: 1px solid #ffffff;
+            border-bottom: 0.5px solid #ffffff;
             font-size: 0.72rem;
             color: rgba(255,255,255,0.5);
         }
@@ -67,24 +67,22 @@
             height: 70px;
             overflow: visible;       /* permite que el logo sobresalga */
         }
-        /* Brand wrapper — contenedor principal de ambos logos */
-                /* 1. Contenedor principal: le quitamos el ancho fijo para que se adapte */
+        
         .brand-wrapper {
             position: relative;
             display: flex;
             align-items: center;
-            height: 70px; /* Misma altura que el main-tier */
+            height: 70px;
             margin-right: 24px;
         }
 
-        /* 2. El Logo Vertical (Trofeo): Se convierte en la "pestaña" negra */
         .logo-container {
             position: absolute;
             top: 0;
             left: 0;
-            width: 80px;      /* Ancho de la base negra */
-            height: 100px;    /* 70px del header + 30px que sobresale */
-            background: #000; /* Fondo negro para crear el efecto de pestaña */
+            width: 80px;      
+            height: 100px;    
+            background: #000;
             z-index: 10;
             display: flex;
             justify-content: center;
@@ -92,7 +90,7 @@
             /* Redondeamos solo las esquinas de abajo */
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
-            padding-bottom: 5px;
+            padding-bottom: 12px;
         }
 
         .logo-container img {
@@ -101,16 +99,15 @@
             object-fit: contain;
         }
 
-        /* 3. El Logo Horizontal (Texto): Lo empujamos a la derecha */
         .logo-text {
-            margin-left: 95px; /* 80px de la pestaña + 15px de espacio */
-            height: 35px;      /* Altura del logo de texto */
+            margin-left: 95px; 
+            height: 35px;      
             display: flex;
             align-items: center;
         }
 
         .logo-text img {
-            height: 50%;
+            height: auto;
             width: auto;
             object-fit: contain;
         }
@@ -153,7 +150,7 @@
             font-size: 0.8rem;
         }
         .user-pill .greeting  { color: rgba(255,255,255,0.5); }
-        .user-pill .user-name { color: #fff; font-weight: 700; text-transform: uppercase; }
+        .user-pill .user-name { color: #fff; font-weight: 700; }
 
         .btn-admin-custom {
             background: #f1c40f;
@@ -360,9 +357,9 @@
 
         <div class="right-section">
             <div class="user-pill">
-                <span class="greeting">¡BIENVENIDO,</span>
+                <span class="greeting">Bienvenido,</span>
                 <span class="user-icon" id="userCampeon">👤</span>
-                <span class="user-name" id="userName">Tito</span>!
+                <span class="user-name" id="userName">Tito</span>
             </div>
             
             <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
