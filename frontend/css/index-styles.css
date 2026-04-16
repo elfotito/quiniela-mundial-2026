@@ -3,8 +3,17 @@
    =============================================== */
 
 :root {
-    /* Colores FIFA */
-    --fifa-blue: #0C87D1;
+    --fifablue: #314fff;
+    --fifapurple: #6101eb;
+    --greenlight: #9ee53d;
+    --fifared: #cb2126;
+    --grey: #c7d5e4;
+    --darkgreen: #054c3f;
+    --fifalila: #7d6cce;
+    --bluemarine: #63fed7;
+    --piel: #fe9e82;
+    --darkpurple: #7044a0;
+    --fifabluelight: #0C87D1;
     --fifa-dark-blue: #2A398D;
     --fifa-gold: #ffd830;
     --dark-bg: #000000;
@@ -1122,7 +1131,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 2rem;
-    background: linear-gradient(135deg, #0033A0, #0055CC);
+    background: var(--fifablue);
 }
 
 .countdown-container {
@@ -1135,6 +1144,7 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 2;
+    margin-top: 5px;
 }
 
 .countdown-label {
