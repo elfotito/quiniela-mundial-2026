@@ -1130,8 +1130,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 2rem;
-    margin-top: 5px;
     background: var(--fifablue);
 }
 
@@ -1150,6 +1148,7 @@ body {
     margin: 0 auto;
     position: relative;
     z-index: 2;
+    padding-top: 5px;
 }
 
 .countdown-label {
