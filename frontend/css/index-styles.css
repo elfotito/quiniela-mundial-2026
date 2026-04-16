@@ -1135,18 +1135,22 @@ body {
     background: var(--fifablue);
 }
 
+.countdown-wrapper {
+    width: 100%;
+    background: var(--fifablue);
+    margin-top: 30px;
+}
+
 .countdown-container {
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 2rem;
     align-items: center;
+    max-width: 1200px;
     width: 100%;
-    background: var(--fifablue);
+    margin: 0 auto;
     position: relative;
     z-index: 2;
-    margin-top: 5px;
-    padding: 0 2rem;
-    box-sizing: border-box;
 }
 
 .countdown-label {
