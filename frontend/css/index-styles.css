@@ -976,7 +976,7 @@ body {
 
 .time-box {
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.5rem;
     min-width: 80px;
     text-align: center;
 }
@@ -988,9 +988,9 @@ body {
 }
 
 .time-label {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: rgb(255, 255, 255);
-    margin-top: 0.1rem;
+    margin-top: 5px;
 }
 
 .btn-view-matches {
