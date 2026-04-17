@@ -428,7 +428,7 @@ body {
    =============================================== */
 
 .news-ticker {
-    background: var(--fifalila) !important;
+    background: var(--fifapurple) !important;
     padding: 1rem 0;
     overflow: hidden;
     display: flex;
@@ -592,19 +592,14 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-/*.content-lefhalf {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}*/
-.content-righthalf {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+.content-left, .content-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 /* ===============================================
