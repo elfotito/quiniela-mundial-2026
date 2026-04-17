@@ -433,29 +433,16 @@ body {
     overflow: hidden;
     display: flex;
     align-items: center;
-    position: relative; /* Añadido para contexto de apilamiento */
-}
-
-.ticker-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0 2rem;
-    font-weight: 700;
-    white-space: nowrap;
-    background: var(--dark-card);
-    height: 100%;
-    position: relative; /* Añadido */
-    z-index: 10; /* Añadido - valor alto para estar por encima */
-    box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* Opcional: sombra para destacar */
+    position: relative;
 }
 
 .ticker-content {
+    background: var(--fifa-blue);
     display: flex;
     animation: scroll 30s linear infinite;
     gap: 3rem;
-    position: relative; /* Añadido */
-    z-index: 1; /* Añadido - valor bajo para estar por debajo */
+    position: relative;
+    z-index: 1;
 }
 
 .ticker-item {
@@ -466,18 +453,6 @@ body {
 @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
-}
-
-/* Opcional: si quieres un efecto más profesional */
-.ticker-label::after {
-    content: '';
-    position: absolute;
-    right: -10px;
-    top: 0;
-    height: 100%;
-    width: 10px;
-    background: linear-gradient(to right, var(--dark-card), transparent);
-    pointer-events: none;
 }
 
 /* ===============================================
