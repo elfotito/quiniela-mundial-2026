@@ -428,7 +428,7 @@ body {
    =============================================== */
 
 .news-ticker {
-    background: red !important;
+    background: var(--fifalila) !important;
     padding: 1rem 0;
     overflow: hidden;
     display: flex;
