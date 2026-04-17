@@ -241,7 +241,6 @@
         }
 
         .menu-icon-circle {
-            background: #2a3a6e;
             border-radius: 50%;
             width: 28px; height: 28px;
             display: flex; align-items: center; justify-content: center;
@@ -572,54 +571,45 @@
 
 </section>
 
-    <!-- CARRIL DE NOTICIAS -->
+    <!-- A LA VERGA COMO ESPN -->
     <section class="news-ticker">
         <div class="ticker-content" id="tickerContent">
             <div class="ticker-item">⚽ ¡Bienvenido a la Quiniela Mundial 2026!</div>
             <div class="ticker-item">🗣️ ¡Se confirma la alineacion de la vinotinto de cara al televisor!</div>
             <div class="ticker-item">👨‍💼 ¡Se el presidente de tu liga! Crea una liga para ti y tus amigos</div>
             <div class="ticker-item">📅 ¡Todos los partidos estan disponible en el calendario!</div>
-            <div class="ticker-item">📊 ¡Revisa tus prediccionesy puntos en Mi Quiniela!</div>
+            <div class="ticker-item">📊 ¡Revisa tus predicciones y puntos en Mi Quiniela!</div>
             <div class="ticker-item"></div>
         </div>
     </section>
     
-    <!-- CONTENEDOR PRINCIPAL -->
-    <main class="main-container">
-        <!-- RESUMEN RÁPIDO -->
-        <section class="quick-stats">
-            <div class="stat-card">
-                <div class="stat-icon"><img src="img/alineacion.png" alt="D"></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="statPredicciones">0</div>
-                    <div class="stat-label">Partidos jugados</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon"><img src="img/star.png" alt="marcador"></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="statPuntos">0</div>
-                    <div class="stat-label">Puntos</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon"><img src="img/trofeo.png" alt="corona"></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="statPosicion">-</div>
-                    <div class="stat-label">Posición</div>
-                </div>
-            </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon"><img src="img/efectividad.png" alt="efectividad"></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="statEfectividad">0%</div>
-                    <div class="stat-label">Efectividad</div>
-                </div>
-            </div>
-        </section>
+        <!-- STATS -->
+    <section class="quick-stats">
+        <div class="stat-card pred">
+            <span class="stat-label">Partidos</span>
+            <div class="stat-value" id="statPredicciones">0</div>
+            <span class="stat-sub">jugados</span>
+            <span class="stat-bg-icon">⚽</span>
+        </div>
+        <div class="stat-card pts">
+            <span class="stat-label">Puntos</span>
+            <div class="stat-value" id="statPuntos">0</div>
+            <span class="stat-sub">acumulados</span>
+            <span class="stat-bg-icon">⭐</span>
+        </div>
+        <div class="stat-card pos">
+            <span class="stat-label">Posición</span>
+            <div class="stat-value" id="statPosicion">—</div>
+            <span class="stat-sub">en el ranking</span>
+            <span class="stat-bg-icon">🏆</span>
+        </div>
+        <div class="stat-card ef">
+            <span class="stat-label">Efectividad</span>
+            <div class="stat-value" id="statEfectividad">0%</div>
+            <span class="stat-sub">de aciertos</span>
+            <span class="stat-bg-icon">🎯</span>
+        </div>
+    </section>
         
         <!-- SECCIÓN PRINCIPAL -->
         <div class="content-grid">
