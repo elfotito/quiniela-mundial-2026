@@ -975,12 +975,12 @@ body {
 }
 
 .time-box {
-    background: rgba(255, 255, 255, 0.15);
+    
     border-radius: 8px;
     padding: 1rem;
     min-width: 80px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    
 }
 
 .time-value {
