@@ -988,9 +988,9 @@ body {
 }
 
 .time-label {
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: rgb(255, 255, 255);
-    margin-top: 5px;
+    padding-top: 5px;
 }
 
 .btn-view-matches {
