@@ -1005,7 +1005,7 @@ body {
 
 /* --- Barra de navegación inferior --- */
 .news-nav {
-    background: #ffffff;
+    background: #000000;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     border-top: 1px solid rgba(255,255,255,0.1);
