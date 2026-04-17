@@ -428,7 +428,7 @@ body {
    =============================================== */
 
 .news-ticker {
-    background: var(--fifa-blue);
+    background: red !important;
     padding: 1rem 0;
     overflow: hidden;
     display: flex;
@@ -518,7 +518,6 @@ body {
    =============================================== */
 
 .quick-stats {
-    background: red !important;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
