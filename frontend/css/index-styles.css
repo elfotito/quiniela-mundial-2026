@@ -521,7 +521,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1px;
-    background: #1a1a1a;
+    background: #ffffff;
 }
 
 .stat-card {
@@ -988,7 +988,9 @@ body {
 
 /* --- Wrapper --- */
 .news-hero {
-    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
     background: #0a0a0a;
     color: #fff;
     font-family: 'Segoe UI', system-ui, sans-serif;
