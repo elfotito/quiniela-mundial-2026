@@ -988,9 +988,7 @@ body {
 
 /* --- Wrapper --- */
 .news-hero {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 3rem 2rem;
+    width: 80%;
     background: #0a0a0a;
     color: #fff;
     font-family: 'Segoe UI', system-ui, sans-serif;
@@ -1007,8 +1005,8 @@ body {
 .slide-inner {
     display: grid;
     grid-template-columns: 55% 45%;
-    align-items: stretch;   /* ← esto elimina el gap entre columnas */
-    height: 500px;          /* altura fija en desktop              */
+    align-items: stretch;   
+    height: 500px;
     position: relative;
 }
 
