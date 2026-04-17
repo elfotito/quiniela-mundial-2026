@@ -975,12 +975,10 @@ body {
 }
 
 .time-box {
-    
     border-radius: 8px;
     padding: 1rem;
     min-width: 80px;
     text-align: center;
-    
 }
 
 .time-value {
@@ -990,9 +988,9 @@ body {
 }
 
 .time-label {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 0.25rem;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+    margin-top: 0.1rem;
 }
 
 .btn-view-matches {
