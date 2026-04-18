@@ -464,7 +464,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .quick-stats { grid-template-columns: repeat(4, 1fr); }
+    .quick-stats { grid-template-columns: repeat(4, 1fr); gap: 0px; }
 }
 
 /* ===============================================
