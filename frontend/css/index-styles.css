@@ -1107,3 +1107,151 @@ body {
     .nav-item:nth-child(4)          { border-top: 1px solid rgba(255,255,255,0.08); }
     .nav-item:nth-child(4)          { border-right: none; }
 }
+/* ─── GRID WRAPPER ──────────────────────────────────────── */
+.dashboard-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 16px 48px;
+    display: grid;
+    grid-template-columns: 260px 1fr 260px;
+    grid-template-areas: "izquierda centro derecha";
+    gap: 24px;
+    align-items: start;
+}
+ 
+/* ─── COLUMNAS ──────────────────────────────────────────── */
+.col-izquierda {
+    grid-area: izquierda;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 80px; /* altura del header */
+}
+ 
+.col-centro {
+    grid-area: centro;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0; /* evita desbordamiento */
+}
+ 
+.col-derecha {
+    grid-area: derecha;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 80px;
+}
+ 
+/* ─── WIDGET PLACEHOLDER (para construir componentes encima) */
+.widget {
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+ 
+/* Header de cada widget — reutilizable */
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.widget-header-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+.widget-header-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dark-bg, #0a0a0a);
+    flex: 1;
+}
+.widget-header-accent {
+    width: 3px;
+    height: 16px;
+    background: var(--fifa-gold, #FFD700);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+ 
+.widget-body {
+    padding: 16px;
+}
+ 
+/* Placeholder visual mientras construimos los widgets */
+.widget-placeholder {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: #ccc;
+    font-size: 12px;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 6px,
+        rgba(0,0,0,0.02) 6px,
+        rgba(0,0,0,0.02) 12px
+    );
+}
+.widget-placeholder i { font-size: 28px; }
+ 
+/* ─── RESPONSIVE ────────────────────────────────────────── */
+ 
+/* Tablet: colapsa a 2 columnas, derecha va abajo */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 240px 1fr;
+        grid-template-areas:
+            "izquierda centro"
+            "derecha   derecha";
+        gap: 20px;
+    }
+    .col-derecha {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .col-izquierda {
+        position: sticky;
+        top: 70px;
+    }
+}
+ 
+/* Mobile: 1 columna, izquierda y derecha se apilan debajo del centro */
+@media (max-width: 700px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "centro"
+            "izquierda"
+            "derecha";
+        padding: 16px 12px 40px;
+        gap: 16px;
+    }
+    .col-izquierda,
+    .col-derecha {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+}
+ 
+@media (max-width: 480px) {
+    .col-izquierda,
+    .col-derecha {
+        grid-template-columns: 1fr;
+    }
+}

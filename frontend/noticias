@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Noticias | Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        :root {
+            --fifa-blue: #0066CC;
+            --fifa-dark-blue: #003d7a;
+            --fifa-gold: #FFD700;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --white: #ffffff;
+            --gray-100: #f5f5f5;
+            --gray-300: #cccccc;
+            --gray-500: #888888;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--dark-bg);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--fifa-gold);
+        }
+        .header-back {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header h1 {
+            color: var(--white);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+        .header-badge {
+            background: var(--fifa-gold);
+            color: var(--dark-bg);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        /* FORM CONTAINER */
+        .container {
+            padding: 20px 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* SELECTOR DE PLANTILLA */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .tipo-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .tipo-btn {
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 14px 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .tipo-btn .tipo-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+        .tipo-btn .tipo-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            letter-spacing: 0.5px;
+        }
+        .tipo-btn .tipo-desc {
+            font-size: 10px;
+            color: var(--gray-300);
+            line-height: 1.3;
+        }
+        .tipo-btn.active {
+            border-color: var(--fifa-blue);
+            background: #EBF3FF;
+        }
+        .tipo-btn.active .tipo-name {
+            color: var(--fifa-blue);
+        }
+
+        /* PREVIEW MINI */
+        .preview-strip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dark-card);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 24px;
+        }
+        .preview-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--fifa-gold);
+        }
+        .preview-text {
+            font-size: 12px;
+            color: var(--gray-300);
+        }
+
+        /* CARD DE FORMULARIO */
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .form-card h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark-bg);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-card h3 i {
+            color: var(--fifa-blue);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group:last-child { margin-bottom: 0; }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 15px;
+            color: var(--dark-bg);
+            background: var(--white);
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+            font-family: inherit;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--fifa-blue);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.5;
+        }
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        /* MARCADOR */
+        .marcador-row {
+            display: grid;
+            grid-template-columns: 1fr 40px 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        .marcador-vs {
+            text-align: center;
+            font-weight: 800;
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+        .marcador-row input[type="number"] {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            padding: 10px 8px;
+        }
+
+        /* EQUIPOS */
+        .equipos-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* IMAGEN URL + PREVIEW */
+        .img-preview-box {
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--gray-100);
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px dashed var(--gray-300);
+        }
+        .img-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .img-preview-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-300);
+            font-size: 12px;
+        }
+        .img-preview-placeholder i { font-size: 28px; }
+
+        /* SECCIÓN OCULTA POR TIPO */
+        .tipo-section { display: none; }
+        .tipo-section.visible { display: block; }
+
+        /* BTN GUARDAR */
+        .btn-guardar {
+            width: 100%;
+            padding: 16px;
+            background: var(--fifa-blue);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .btn-guardar:active { transform: scale(0.98); }
+        .btn-guardar:hover { background: var(--fifa-dark-blue); }
+        .btn-guardar:disabled { background: var(--gray-300); cursor: not-allowed; }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--dark-bg);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 999;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+
+        /* LISTA DE NOTICIAS PUBLICADAS */
+        .noticias-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .noticia-item {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+        }
+        .noticia-item-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--gray-100);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .noticia-item-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .noticia-item-thumb .thumb-icon {
+            font-size: 22px;
+            color: var(--gray-300);
+        }
+        .noticia-item-info { flex: 1; min-width: 0; }
+        .noticia-item-titulo {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark-bg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .noticia-item-meta {
+            font-size: 11px;
+            color: var(--gray-500);
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tipo-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tipo-badge.partido { background: #FFF3CD; color: #856404; }
+        .tipo-badge.hero { background: #D1E7FF; color: #004085; }
+        .tipo-badge.secundaria { background: #D1F2EB; color: #145A32; }
+
+        .btn-eliminar {
+            background: none;
+            border: none;
+            color: var(--gray-300);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+        .btn-eliminar:hover { color: var(--danger); }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray-500);
+            font-size: 13px;
+        }
+        .empty-state i { font-size: 32px; margin-bottom: 8px; display: block; }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--gray-300);
+            margin: 28px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <a href="index.html" class="header-back"><i class="fas fa-arrow-left"></i></a>
+    <h1>📰 Publicar Noticia</h1>
+    <span class="header-badge">ADMIN</span>
+</div>
+
+<div class="container">
+
+    <!-- TIPO DE PLANTILLA -->
+    <div class="section-label">Elige la plantilla</div>
+    <div class="tipo-selector">
+        <button class="tipo-btn active" data-tipo="hero" onclick="setTipo('hero', this)">
+            <span class="tipo-icon">🖼️</span>
+            <span class="tipo-name">Hero</span>
+            <span class="tipo-desc">Imagen grande + texto</span>
+        </button>
+        <button class="tipo-btn" data-tipo="secundaria" onclick="setTipo('secundaria', this)">
+            <span class="tipo-icon">📰</span>
+            <span class="tipo-name">Secundaria</span>
+            <span class="tipo-desc">Imagen chica + texto</span>
+        </button>
+        <button class="tipo-btn" data-tipo="partido" onclick="setTipo('partido', this)">
+            <span class="tipo-icon">⚽</span>
+            <span class="tipo-name">Partido</span>
+            <span class="tipo-desc">Resultado + equipos</span>
+        </button>
+    </div>
+
+    <!-- PREVIEW STRIP -->
+    <div class="preview-strip">
+        <div class="preview-dot"></div>
+        <span class="preview-text" id="previewText">Imagen grande arriba, título destacado y reseña abajo</span>
+    </div>
+
+    <!-- CAMPOS COMUNES -->
+    <div class="form-card">
+        <h3><i class="fas fa-pen"></i> Contenido</h3>
+
+        <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="200">
+        </div>
+
+        <div class="form-group" id="resenaGroup">
+            <label>Reseña breve</label>
+            <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..."></textarea>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: IMAGEN (hero y secundaria) -->
+    <div class="form-card tipo-section visible" id="seccionImagen">
+        <h3><i class="fas fa-image"></i> Imagen</h3>
+        <div class="form-group">
+            <label>URL de la imagen</label>
+            <input type="url" id="imagen_url" placeholder="https://..." oninput="previewImagen(this.value)">
+        </div>
+        <div class="img-preview-box" id="imgPreviewBox">
+            <img id="imgPreview" alt="Preview">
+            <div class="img-preview-placeholder" id="imgPlaceholder">
+                <i class="far fa-image"></i>
+                <span>La imagen aparecerá aquí</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: PARTIDO -->
+    <div class="form-card tipo-section" id="seccionPartido">
+        <h3><i class="fas fa-futbol"></i> Datos del partido</h3>
+
+        <div class="form-group">
+            <div class="equipos-row">
+                <div>
+                    <label>Equipo Local</label>
+                    <select id="equipo_local">
+                        <option value="">Cargando...</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Equipo Visitante</label>
+                    <select id="equipo_visitante">
+                        <option value="">Cargando...</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Marcador final</label>
+            <div class="marcador-row">
+                <input type="number" id="marcador_local" min="0" max="99" value="0" placeholder="0">
+                <div class="marcador-vs">VS</div>
+                <input type="number" id="marcador_visitante" min="0" max="99" value="0" placeholder="0">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Imagen del partido (opcional)</label>
+            <input type="url" id="imagen_url_partido" placeholder="https://..." oninput="previewImagen(this.value)">
+        </div>
+        <div class="img-preview-box" id="imgPreviewBoxPartido" style="margin-top:10px;">
+            <img id="imgPreviewPartido" alt="Preview">
+            <div class="img-preview-placeholder" id="imgPlaceholderPartido">
+                <i class="far fa-image"></i>
+                <span>Opcional</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- BTN GUARDAR -->
+    <button class="btn-guardar" id="btnGuardar" onclick="guardarNoticia()">
+        <i class="fas fa-paper-plane"></i>
+        Publicar noticia
+    </button>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- LISTA PUBLICADAS -->
+    <div class="section-label">Noticias publicadas</div>
+    <div class="noticias-list" id="noticiasList">
+        <div class="empty-state">
+            <i class="fas fa-newspaper"></i>
+            Cargando noticias...
+        </div>
+    </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SCRIPTS -->
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script>
+    // ─── AUTH GUARD ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+        const isAdmin = localStorage.getItem('quiniela_isAdmin');
+        if (!isAdmin || isAdmin === 'false') {
+            window.location.href = 'index.html';
+            return;
+        }
+        await cargarEquipos();
+        await cargarNoticias();
+    });
+
+    // ─── TIPO DE PLANTILLA ───────────────────────────────────
+    let tipoActual = 'hero';
+
+    const descripciones = {
+        hero: 'Imagen grande arriba, título destacado y reseña abajo',
+        secundaria: 'Imagen pequeña a la izquierda, título y reseña a la derecha',
+        partido: 'Equipos enfrentados con marcador y foto del partido'
+    };
+
+    function setTipo(tipo, btn) {
+        tipoActual = tipo;
+        document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('previewText').textContent = descripciones[tipo];
+
+        // Mostrar/ocultar secciones
+        document.getElementById('seccionImagen').classList.toggle('visible', tipo !== 'partido');
+        document.getElementById('seccionPartido').classList.toggle('visible', tipo === 'partido');
+    }
+
+    // ─── PREVIEW DE IMAGEN ──────────────────────────────────
+    function previewImagen(url) {
+        const isPartido = tipoActual === 'partido';
+        const img = document.getElementById(isPartido ? 'imgPreviewPartido' : 'imgPreview');
+        const placeholder = document.getElementById(isPartido ? 'imgPlaceholderPartido' : 'imgPlaceholder');
+
+        if (url && url.startsWith('http')) {
+            img.src = url;
+            img.style.display = 'block';
+            img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'flex'; };
+            img.onload = () => { placeholder.style.display = 'none'; };
+        } else {
+            img.style.display = 'none';
+            placeholder.style.display = 'flex';
+        }
+    }
+
+    // ─── CARGAR EQUIPOS ─────────────────────────────────────
+    async function cargarEquipos() {
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/grupos`); // ajusta al endpoint correcto
+            // Si tu endpoint devuelve equipos directamente:
+            const res2 = await fetch(`${API_BASE_URL}/api/equipos`);
+            const data = await res2.json();
+            const equipos = Array.isArray(data) ? data : data.equipos || [];
+
+            const options = equipos.map(e =>
+                `<option value="${e.nombre}">${e.bandera || ''} ${e.nombre}</option>`
+            ).join('');
+
+            document.getElementById('equipo_local').innerHTML = `<option value="">— Local —</option>${options}`;
+            document.getElementById('equipo_visitante').innerHTML = `<option value="">— Visitante —</option>${options}`;
+        } catch (err) {
+            // Si no hay endpoint de equipos, carga lista estática básica
+            console.warn('No se pudieron cargar equipos:', err);
+            document.getElementById('equipo_local').innerHTML = '<option value="">No disponible</option>';
+            document.getElementById('equipo_visitante').innerHTML = '<option value="">No disponible</option>';
+        }
+    }
+
+    // ─── GUARDAR NOTICIA ────────────────────────────────────
+    async function guardarNoticia() {
+        const titulo = document.getElementById('titulo').value.trim();
+        const resena = document.getElementById('resena').value.trim();
+
+        if (!titulo) { showToast('El título es obligatorio', 'error'); return; }
+
+        const payload = {
+            tipo: tipoActual,
+            titulo,
+            resena
+        };
+
+        if (tipoActual === 'partido') {
+            const local = document.getElementById('equipo_local').value;
+            const visitante = document.getElementById('equipo_visitante').value;
+            if (!local || !visitante) { showToast('Selecciona ambos equipos', 'error'); return; }
+            payload.equipo_local = local;
+            payload.equipo_visitante = visitante;
+            payload.marcador_local = parseInt(document.getElementById('marcador_local').value) || 0;
+            payload.marcador_visitante = parseInt(document.getElementById('marcador_visitante').value) || 0;
+            payload.imagen_url = document.getElementById('imagen_url_partido').value.trim() || null;
+        } else {
+            payload.imagen_url = document.getElementById('imagen_url').value.trim() || null;
+        }
+
+        const btn = document.getElementById('btnGuardar');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/noticias`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('quiniela_token') || ''}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Error al publicar');
+
+            showToast('✅ Noticia publicada', 'success');
+            resetForm();
+            await cargarNoticias();
+        } catch (err) {
+            showToast('Error al publicar la noticia', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
+        }
+    }
+
+    // ─── CARGAR NOTICIAS PUBLICADAS ─────────────────────────
+    async function cargarNoticias() {
+        const list = document.getElementById('noticiasList');
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/noticias?limit=20`);
+            const data = await res.json();
+            const noticias = Array.isArray(data) ? data : data.noticias || [];
+
+            if (!noticias.length) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-newspaper"></i>No hay noticias aún</div>`;
+                return;
+            }
+
+            list.innerHTML = noticias.map(n => `
+                <div class="noticia-item">
+                    <div class="noticia-item-thumb">
+                        ${n.imagen_url
+                            ? `<img src="${n.imagen_url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'thumb-icon\\'>📰</span>'">`
+                            : `<span class="thumb-icon">${n.tipo === 'partido' ? '⚽' : '📰'}</span>`}
+                    </div>
+                    <div class="noticia-item-info">
+                        <div class="noticia-item-titulo">${n.titulo}</div>
+                        <div class="noticia-item-meta">
+                            <span class="tipo-badge ${n.tipo}">${n.tipo}</span>
+                            ${formatFecha(n.created_at)}
+                        </div>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarNoticia(${n.id})" title="Eliminar">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `).join('');
+        } catch (err) {
+            list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i>Error cargando noticias</div>`;
+        }
+    }
+
+    // ─── ELIMINAR NOTICIA ───────────────────────────────────
+    async function eliminarNoticia(id) {
+        if (!confirm('¿Eliminar esta noticia?')) return;
+        try {
+            await fetch(`${API_BASE_URL}/api/noticias/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('quiniela_token') || ''}` }
+            });
+            showToast('Noticia eliminada', 'success');
+            await cargarNoticias();
+        } catch {
+            showToast('Error al eliminar', 'error');
+        }
+    }
+
+    // ─── HELPERS ────────────────────────────────────────────
+    function resetForm() {
+        document.getElementById('titulo').value = '';
+        document.getElementById('resena').value = '';
+        document.getElementById('imagen_url').value = '';
+        document.getElementById('imagen_url_partido').value = '';
+        document.getElementById('marcador_local').value = '0';
+        document.getElementById('marcador_visitante').value = '0';
+        document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('imgPlaceholder').style.display = 'flex';
+        document.getElementById('imgPreviewPartido').style.display = 'none';
+        document.getElementById('imgPlaceholderPartido').style.display = 'flex';
+    }
+
+    function formatFecha(iso) {
+        if (!iso) return '';
+        const d = new Date(iso);
+        return d.toLocaleDateString('es-VE', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function showToast(msg, tipo = 'success') {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = `toast ${tipo} show`;
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+</script>
+
+</body>
+</html>

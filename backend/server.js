@@ -1170,6 +1170,117 @@ app.patch('/api/usuarios/:id/estado', async (req, res) => {
         res.status(500).json({ error: 'Error del servidor' });
     }
 });
+// =============================================
+// ENDPOINTS: Noticias - Quiniela Mundial 2026
+// Pega estas rutas en tu archivo de rutas Express
+// (donde tienes el resto de tus endpoints)
+// =============================================
+
+// ─── GET /api/noticias ───────────────────────────────────
+// Retorna noticias activas ordenadas por fecha desc
+// Público — no requiere auth
+app.get('/api/noticias', async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 10;
+
+        const result = await pool.query(
+            `SELECT 
+                id, tipo, titulo, resena, imagen_url,
+                equipo_local, equipo_visitante,
+                marcador_local, marcador_visitante,
+                created_at
+             FROM noticias
+             WHERE activa = TRUE
+             ORDER BY created_at DESC
+             LIMIT $1`,
+            [limit]
+        );
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error GET /api/noticias:', err);
+        res.status(500).json({ error: 'Error al obtener noticias' });
+    }
+});
+
+// ─── POST /api/noticias ──────────────────────────────────
+// Crea una noticia nueva
+// Solo admin — verifica isAdmin en la sesión/token
+app.post('/api/noticias', verificarAdmin, async (req, res) => {
+    try {
+        const {
+            tipo,
+            titulo,
+            resena,
+            imagen_url,
+            equipo_local,
+            equipo_visitante,
+            marcador_local,
+            marcador_visitante
+        } = req.body;
+
+        // Validaciones básicas
+        if (!tipo || !['hero', 'secundaria', 'partido'].includes(tipo)) {
+            return res.status(400).json({ error: 'Tipo de noticia inválido' });
+        }
+        if (!titulo || titulo.trim().length === 0) {
+            return res.status(400).json({ error: 'El título es obligatorio' });
+        }
+        if (tipo === 'partido' && (!equipo_local || !equipo_visitante)) {
+            return res.status(400).json({ error: 'Los equipos son obligatorios para tipo partido' });
+        }
+
+        const result = await pool.query(
+            `INSERT INTO noticias 
+                (tipo, titulo, resena, imagen_url, equipo_local, equipo_visitante, marcador_local, marcador_visitante)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+             RETURNING *`,
+            [
+                tipo,
+                titulo.trim(),
+                resena?.trim() || null,
+                imagen_url?.trim() || null,
+                equipo_local || null,
+                equipo_visitante || null,
+                marcador_local ?? null,
+                marcador_visitante ?? null
+            ]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error('Error POST /api/noticias:', err);
+        res.status(500).json({ error: 'Error al crear noticia' });
+    }
+});
+
+// ─── DELETE /api/noticias/:id ────────────────────────────
+// Elimina (desactiva) una noticia por ID
+// Solo admin
+app.delete('/api/noticias/:id', verificarAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (isNaN(id)) {
+            return res.status(400).json({ error: 'ID inválido' });
+        }
+
+        const result = await pool.query(
+            `UPDATE noticias SET activa = FALSE WHERE id = $1 RETURNING id`,
+            [id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Noticia no encontrada' });
+        }
+
+        res.json({ ok: true, id: parseInt(id) });
+    } catch (err) {
+        console.error('Error DELETE /api/noticias/:id:', err);
+        res.status(500).json({ error: 'Error al eliminar noticia' });
+    }
+});
+
 
 // ===============================================
 // FIN - Agregar antes de app.listen()
