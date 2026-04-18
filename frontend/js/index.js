@@ -72,7 +72,8 @@ async function cargarDatos() {
         cargarEstadisticas(),
         cargarProximosPartidos(),
         cargarUltimosResultados(),
-        cargarRankingTop5()
+        cargarRankingTop5(),
+        cargarLigaRankingWidget(),
     ]);
 }
 const btn = document.getElementById('menuToggle');
@@ -318,7 +319,101 @@ async function cargarUltimosResultados() {
         container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
-
+async function cargarLigaRankingWidget() {
+    const container = document.getElementById('ligaRankingWidget');
+    const ligaNombre = document.getElementById('ligaWidgetNombre');
+    if (!container) return;
+ 
+    try {
+        // 1. Obtener la liga del usuario
+        const resLigas = await fetch(`${CONFIG.API_URL}/usuarios/${usuarioId}/ligas`);
+        if (!resLigas.ok) throw new Error('Sin ligas');
+        const ligas = await resLigas.json();
+ 
+        if (!ligas.length) {
+            container.innerHTML = '<div class="liga-empty">No estás en ninguna liga</div>';
+            return;
+        }
+ 
+        // Toma la primera liga del usuario
+        const liga = ligas[0];
+        if (ligaNombre) {
+            ligaNombre.textContent = `${liga.icono || '🏅'} ${liga.nombre}`;
+        }
+ 
+        // 2. Obtener ranking completo y filtrar por liga
+        const resRanking = await fetch(`${CONFIG.API_URL}/ranking/top`);
+        if (!resRanking.ok) throw new Error('Sin ranking');
+        const rankingCompleto = await resRanking.json();
+ 
+        // Filtrar usuarios que pertenecen a esta liga
+        const rankingLiga = rankingCompleto
+            .filter(u => u.ligas && u.ligas.includes(parseInt(liga.id)))
+            .sort((a, b) => (b.puntos_totales || 0) - (a.puntos_totales || 0));
+ 
+        if (!rankingLiga.length) {
+            container.innerHTML = '<div class="liga-empty">⏳ El torneo aún no ha comenzado</div>';
+            return;
+        }
+ 
+        const medallas = ['🥇', '🥈', '🥉'];
+ 
+        const filas = rankingLiga.map((user, index) => {
+            const posicion = index + 1;
+            const esYo = user.usuario_id === parseInt(usuarioId);
+            const claseMe = esYo ? 'liga-me' : '';
+ 
+            const pos = posicion <= 3
+                ? `<span style="font-size:13px">${medallas[index]}</span>`
+                : `<span style="font-size:11px;color:#aaa">${posicion}°</span>`;
+ 
+            const nombre = user.nombre_publico || user.nombre || 'Usuario';
+            const nombreCorto = nombre.length > 14 ? nombre.substring(0, 13) + '…' : nombre;
+ 
+            // Columnas +9 +7 +5 +2 — por ahora con — hasta configurar backend
+            // Cuando tengas los campos, reemplaza '—' por:
+            // user.aciertos_exactos || '—'
+            // user.aciertos_ganador_diff || '—'
+            // user.aciertos_ganador || '—'
+            // user.aciertos_empate || '—'
+            const c9  = user.aciertos_exactos      ?? '—';
+            const c7  = user.aciertos_ganador_diff  ?? '—';
+            const c5  = user.aciertos_ganador        ?? '—';
+            const c2  = user.aciertos_empate         ?? '—';
+ 
+            return `
+            <tr class="${claseMe}">
+                <td class="liga-td-pos left">${pos}</td>
+                <td class="liga-td-name left">${nombreCorto}</td>
+                <td class="liga-td-col">${c9}</td>
+                <td class="liga-td-col">${c7}</td>
+                <td class="liga-td-col">${c5}</td>
+                <td class="liga-td-col">${c2}</td>
+                <td class="liga-td-total">${user.puntos_totales || 0}</td>
+            </tr>`;
+        }).join('');
+ 
+        container.innerHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th class="left">#</th>
+                    <th class="left">Jugador</th>
+                    <th title="Resultado exacto (+9)">+9</th>
+                    <th title="Ganador y diferencia (+7)">+7</th>
+                    <th title="Solo el ganador (+5)">+5</th>
+                    <th title="Empate correcto (+2)">+2</th>
+                    <th title="Puntos totales">P</th>
+                </tr>
+            </thead>
+            <tbody>${filas}</tbody>
+        </table>`;
+ 
+    } catch (err) {
+        console.error('Error cargando liga ranking widget:', err);
+        container.innerHTML = '<div class="liga-empty">No disponible</div>';
+    }
+}
 
 // ===============================================
 // MENÚ MÓVIL
