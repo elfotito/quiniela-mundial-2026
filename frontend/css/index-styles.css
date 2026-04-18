@@ -322,7 +322,6 @@ body {
 }
 
 .ticker-content {
-    background: var(--fifa-blue);
     display: flex;
     animation: scroll 30s linear infinite;
     gap: 3rem;

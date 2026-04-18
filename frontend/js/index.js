@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se inicializa aquí para garantizar que el DOM
     // ya existe cuando Swiper busca '#heroSwiper'.
     inicializarCarrusel();
+    cargarRankingTop5();
+    cargarUltimosResultados();
 });
 
 // ===============================================
@@ -239,76 +241,86 @@ async function cargarProximosPartidos() {
     }
 }
 
-// ===============================================
-// ÚLTIMOS RESULTADOS
-// ===============================================
-
-async function cargarUltimosResultados() {
-    try {
-        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
-        if (!response.ok) throw new Error('Error cargando resultados');
-
-        const partidos  = await response.json();
-        const container = document.getElementById('ultimosResultados');
-
-        if (partidos.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#666;">No hay resultados aún</p>';
-            return;
-        }
-
-        container.innerHTML = partidos.map(partido => `
-            <div style="padding:1rem;border-bottom:1px solid rgba(255,255,255,0.1);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
-                    <span style="font-size:.85rem;color:#a0a0a0;">${partido.fase}</span>
-                    <span style="background:#4CAF50;padding:.25rem .75rem;border-radius:12px;font-size:.75rem;">Finalizado</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span>${partido.equipo_local}</span>
-                    <strong style="color:#FFD700;font-size:1.25rem;">${partido.goles_local} - ${partido.goles_visitante}</strong>
-                    <span>${partido.equipo_visitante}</span>
-                </div>
-            </div>`).join('');
-
-    } catch (error) {
-        console.error('Error cargando resultados:', error);
-        document.getElementById('ultimosResultados').innerHTML =
-            '<p style="text-align:center;color:#f44336;">Error cargando resultados</p>';
-    }
-}
-
-// ===============================================
-// TOP 5 RANKING
-// ===============================================
-
+// ─── RANKING TOP 5 ───────────────────────────────────────
 async function cargarRankingTop5() {
+    const container = document.getElementById('rankingTop5');
+    if (!container) return;
+ 
     try {
         const response = await fetch(`${CONFIG.API_URL}/ranking/top`);
         if (!response.ok) throw new Error('Error cargando ranking');
-
-        const ranking   = await response.json();
-        const container = document.getElementById('rankingTop5');
-
-        if (ranking.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#666;">No hay datos de ranking</p>';
+        const ranking = await response.json();
+ 
+        if (!ranking.length) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay datos aún</div>';
             return;
         }
-
+ 
         const medallas = ['🥇', '🥈', '🥉'];
-        container.innerHTML = ranking.map((user, index) => `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid rgba(255,255,255,0.1);">
-                <div style="display:flex;align-items:center;gap:1rem;">
-                    <span style="font-size:1.5rem;">${medallas[index] || `${index + 1}°`}</span>
-                    <span style="font-weight:500;">${user.nombre}</span>
-                </div>
-                <strong style="color:#FFD700;font-size:1.25rem;">${user.puntos_totales}</strong>
-            </div>`).join('');
-
+ 
+        container.innerHTML = ranking.map((user, index) => {
+            // Iniciales para el avatar
+            const iniciales = user.nombre
+                .split(' ')
+                .map(n => n[0])
+                .slice(0, 2)
+                .join('')
+                .toUpperCase();
+ 
+            const posicion = index < 3
+                ? `<span class="rank-medal">${medallas[index]}</span>`
+                : `<span class="rank-pos">${index + 1}°</span>`;
+ 
+            return `
+            <div class="rank-row">
+                ${posicion}
+                <div class="rank-avatar">${iniciales}</div>
+                <span class="rank-name">${user.nombre}</span>
+                <span class="rank-pts">${user.puntos_totales}<span>pts</span></span>
+            </div>`;
+        }).join('');
+ 
     } catch (error) {
         console.error('Error cargando ranking:', error);
-        document.getElementById('rankingTop5').innerHTML =
-            '<p style="text-align:center;color:#f44336;">Error cargando ranking</p>';
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
+ 
+// ─── ÚLTIMOS RESULTADOS ──────────────────────────────────
+async function cargarUltimosResultados() {
+    const container = document.getElementById('ultimosResultados');
+    if (!container) return;
+ 
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
+        if (!response.ok) throw new Error('Error cargando resultados');
+        const partidos = await response.json();
+ 
+        if (!partidos.length) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay resultados aún</div>';
+            return;
+        }
+ 
+        container.innerHTML = partidos.map(partido => `
+            <div class="result-row">
+                <div class="result-meta">
+                    <span class="result-fase">${partido.fase}</span>
+                    <span class="result-badge">Finalizado</span>
+                </div>
+                <div class="result-teams">
+                    <span class="result-team">${obtenerBandera(partido.equipo_local)} ${partido.equipo_local}</span>
+                    <span class="result-score">${partido.goles_local} – ${partido.goles_visitante}</span>
+                    <span class="result-team right">${partido.equipo_visitante} ${obtenerBandera(partido.equipo_visitante)}</span>
+                </div>
+            </div>`
+        ).join('');
+ 
+    } catch (error) {
+        console.error('Error cargando resultados:', error);
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
+    }
+}
+
 
 // ===============================================
 // MENÚ MÓVIL
