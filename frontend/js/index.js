@@ -60,6 +60,11 @@ async function verificarLogin() {
             adminBtn.style.display = 'flex';
             adminBtn.onclick = () => window.location.href = 'admin.html';
         }
+        const adminBtn = document.getElementById('adminNoti');
+        if (adminBtn) {
+            adminBtn.style.display = 'flex';
+            adminBtn.onclick = () => window.location.href = 'noticias.html';
+        }
     }
 }
 

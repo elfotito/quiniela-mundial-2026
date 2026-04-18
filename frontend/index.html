@@ -163,7 +163,17 @@
             color: #000; font-size: 0.9rem;
         }
         .btn-admin-custom:hover { transform: scale(1.08); }
-
+        .btn-admin-noticias {
+            background: #f1c40f;
+            border: none;
+            width: 34px; height: 34px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            color: #000; font-size: 0.9rem;
+        }
+        .btn-admin-noticias:hover { transform: scale(1.08); }
         .btn-logout-elegant {
             background: transparent;
             border: 1px solid rgba(255,255,255,0.35);
@@ -381,7 +391,9 @@
             <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
                 <i class="fas fa-tools"></i>
             </button>
-            
+            <button class="btn-admin-noticias" id="adminNoti" title="Panel Noticias">
+                <i class="fas fa-tools"></i>
+            </button>
             <button class="btn-logout-elegant" onclick="logout()">
                 <span>SALIR</span>
                 <i class="fas fa-sign-out-alt"></i>
