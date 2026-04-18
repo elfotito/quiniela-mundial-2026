@@ -81,15 +81,17 @@ async function cargarDatos() {
         cargarRankingTop5()
     ]);
 }
+// DESPUÉS
 const btn = document.getElementById('menuToggle');
-        const menu = document.getElementById('mobileMenu');
-        let isOpen = false;
-
-        btn.addEventListener('click', () => {
-            isOpen = !isOpen;
-            menu.classList.toggle('show');
-            btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
-        });
+const menu = document.getElementById('mobileMenu');
+if (btn && menu) {
+    let isOpen = false;
+    btn.addEventListener('click', () => {
+        isOpen = !isOpen;
+        menu.classList.toggle('show');
+        btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+    });
+}
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
