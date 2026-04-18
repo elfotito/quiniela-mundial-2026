@@ -1,43 +1,47 @@
 // ===============================================
-// INDEX.JS - PÁGINA PRINCIPAL (CORREGIDO)
+// INDEX.JS - PÁGINA PRINCIPAL
 // ===============================================
 
-// Validación temprana de dependencias
-if (typeof CONFIG === 'undefined') {
-    console.error('❌ CONFIG no está definido. Asegúrate de cargar config.js antes que index.js');
-}
-if (typeof auth === 'undefined') {
-    console.error('❌ auth no está definido. Asegúrate de cargar auth.js antes que index.js');
-}
-
-const API_URL = typeof CONFIG !== 'undefined' ? CONFIG.API_URL : '';
+const API_URL = CONFIG.API_URL;
 let usuarioId = null;
 
 // ===============================================
-// INICIALIZACIÓN (UN SOLO LISTENER)
+// INICIALIZACIÓN
 // ===============================================
+
 document.addEventListener('DOMContentLoaded', async () => {
+
     // Verificar login
     await verificarLogin();
 
-    // Si no está autenticado, no seguimos
-    if (!usuarioId) return;
-
-    // Cargar todos los datos
+    // Cargar datos
     await cargarDatos();
 
-    // Configurar UI
+    // Configurar menú móvil
     configurarMenuMobile();
+
+    // Duplicar ticker para efecto infinito
     duplicarTicker();
+
+    // Countdown al Mundial
     iniciarCountdown();
+
+    // ── Carrusel de noticias (Swiper) ──────────────
+    // Se inicializa aquí para garantizar que el DOM
+    // ya existe cuando Swiper busca '#heroSwiper'.
     inicializarCarrusel();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarRankingTop5();
+    cargarUltimosResultados();
 });
 
 // ===============================================
 // VERIFICAR LOGIN
 // ===============================================
+
 async function verificarLogin() {
-    if (typeof auth === 'undefined') return;
 
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
@@ -47,12 +51,15 @@ async function verificarLogin() {
     const usuario = auth.getUser();
     usuarioId = parseInt(usuario.id);
 
+    // Mostrar nombre de usuario
     const userNameEl = document.getElementById('userName');
     if (userNameEl) userNameEl.textContent = usuario.nombre;
 
+    // Mostrar campeón elegido
     const userCampeon = document.getElementById('userCampeon');
     if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
 
+    // Mostrar botón admin si corresponde
     if (usuario.isAdmin) {
         const adminBtn = document.getElementById('adminBtn');
         if (adminBtn) {
@@ -65,6 +72,7 @@ async function verificarLogin() {
 // ===============================================
 // CARGAR DATOS
 // ===============================================
+
 async function cargarDatos() {
     await Promise.all([
         cargarEstadisticas(),
@@ -73,16 +81,23 @@ async function cargarDatos() {
         cargarRankingTop5()
     ]);
 }
-
+// DESPUÉS
+const btn = document.getElementById('menuToggle');
+const menu = document.getElementById('mobileMenu');
+if (btn && menu) {
+    let isOpen = false;
+    btn.addEventListener('click', () => {
+        isOpen = !isOpen;
+        menu.classList.toggle('show');
+        btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+    });
+}
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
+
 function inicializarCarrusel() {
     if (!document.getElementById('heroSwiper')) return;
-    if (typeof Swiper === 'undefined') {
-        console.warn('⚠️ Swiper no está cargado. El carrusel no funcionará.');
-        return;
-    }
 
     const DURATION = 5000;
     let activeIdx = 0;
@@ -97,14 +112,12 @@ function inicializarCarrusel() {
                 if (this.activeIndex !== activeIdx) {
                     goTo(this.activeIndex);
                 }
-            },
-            init: function () {
-                goTo(0);
             }
         }
     });
 
     const navItems = document.querySelectorAll('.nav-item');
+    // ✅ IDs corregidos: 'p0', 'p1', 'p2', 'p3'
     const progs = [0, 1, 2, 3].map(i => document.getElementById('p' + i));
 
     navItems.forEach(item => {
@@ -118,6 +131,7 @@ function inicializarCarrusel() {
     function goTo(idx) {
         clearTimeout(timer);
 
+        // Resetear barra anterior
         if (progs[activeIdx]) {
             progs[activeIdx].style.transition = 'none';
             progs[activeIdx].style.width = '0%';
@@ -127,6 +141,7 @@ function inicializarCarrusel() {
         activeIdx = idx;
         navItems[activeIdx]?.classList.add('active');
 
+        // Animar barra del slide activo
         const fill = progs[activeIdx];
         if (fill) {
             requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -135,6 +150,7 @@ function inicializarCarrusel() {
             }));
         }
 
+        // Programar siguiente slide automático
         timer = setTimeout(() => {
             const next = (activeIdx + 1) % navItems.length;
             swiper.slideTo(next);
@@ -142,7 +158,12 @@ function inicializarCarrusel() {
         }, DURATION);
     }
 
-    // Si Swiper ya está inicializado, forzamos el inicio
+    // ✅ Iniciar el carrusel automáticamente después de que Swiper esté listo
+    swiper.on('init', () => {
+        goTo(0);
+    });
+
+    // Si Swiper ya se inicializó antes de registrar el evento, lo forzamos
     if (swiper.initialized) {
         goTo(0);
     }
@@ -151,9 +172,10 @@ function inicializarCarrusel() {
 // ===============================================
 // ESTADÍSTICAS DEL USUARIO
 // ===============================================
+
 async function cargarEstadisticas() {
     try {
-        const response = await fetch(`${API_URL}/estadisticas/usuario/${usuarioId}`);
+        const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
         if (!response.ok) throw new Error('Error cargando estadísticas');
 
         const stats = await response.json();
@@ -169,22 +191,23 @@ async function cargarEstadisticas() {
 
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
-        ['statPredicciones', 'statPuntos', 'statPosicion', 'statEfectividad'].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = '—';
-        });
     }
 }
 
 // ===============================================
 // PRÓXIMOS PARTIDOS
 // ===============================================
+
+// ─── WIDGET: PRÓXIMOS PARTIDOS ───────────────────────────
+// Reemplaza tu función cargarProximosPartidos() existente
+// El div destino cambió a: #proximosPartidosWidget
+
 async function cargarProximosPartidos() {
     const container = document.getElementById('proximosPartidosWidget');
     if (!container) return;
 
     try {
-        const response = await fetch(`${API_URL}/partidos?estado=pendiente&limit=3`);
+        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=3`);
         if (!response.ok) throw new Error('Error cargando partidos');
         const partidos = await response.json();
 
@@ -193,6 +216,7 @@ async function cargarProximosPartidos() {
             return;
         }
 
+        // Agrupar por fecha
         const grupos = {};
         partidos.forEach(p => {
             const key = new Date(p.fecha).toLocaleDateString('es-ES', { weekday: 'short', day: '2-digit', month: 'short' });
@@ -222,37 +246,36 @@ async function cargarProximosPartidos() {
     }
 }
 
-// ===============================================
-// RANKING TOP 5
-// ===============================================
+// ─── RANKING TOP 5 ───────────────────────────────────────
 async function cargarRankingTop5() {
     const container = document.getElementById('rankingTop5');
     if (!container) return;
-
+ 
     try {
-        const response = await fetch(`${API_URL}/ranking/top`);
+        const response = await fetch(`${CONFIG.API_URL}/ranking/top`);
         if (!response.ok) throw new Error('Error cargando ranking');
         const ranking = await response.json();
-
+ 
         if (!ranking.length) {
             container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay datos aún</div>';
             return;
         }
-
+ 
         const medallas = ['🥇', '🥈', '🥉'];
-
+ 
         container.innerHTML = ranking.map((user, index) => {
+            // Iniciales para el avatar
             const iniciales = user.nombre
                 .split(' ')
                 .map(n => n[0])
                 .slice(0, 2)
                 .join('')
                 .toUpperCase();
-
+ 
             const posicion = index < 3
                 ? `<span class="rank-medal">${medallas[index]}</span>`
                 : `<span class="rank-pos">${index + 1}°</span>`;
-
+ 
             return `
             <div class="rank-row">
                 ${posicion}
@@ -261,30 +284,28 @@ async function cargarRankingTop5() {
                 <span class="rank-pts">${user.puntos_totales}<span>pts</span></span>
             </div>`;
         }).join('');
-
+ 
     } catch (error) {
         console.error('Error cargando ranking:', error);
         container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
-
-// ===============================================
-// ÚLTIMOS RESULTADOS
-// ===============================================
+ 
+// ─── ÚLTIMOS RESULTADOS ──────────────────────────────────
 async function cargarUltimosResultados() {
     const container = document.getElementById('ultimosResultados');
     if (!container) return;
-
+ 
     try {
-        const response = await fetch(`${API_URL}/partidos?estado=finalizado&limit=3`);
+        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
         if (!response.ok) throw new Error('Error cargando resultados');
         const partidos = await response.json();
-
+ 
         if (!partidos.length) {
             container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay resultados aún</div>';
             return;
         }
-
+ 
         container.innerHTML = partidos.map(partido => `
             <div class="result-row">
                 <div class="result-meta">
@@ -298,37 +319,24 @@ async function cargarUltimosResultados() {
                 </div>
             </div>`
         ).join('');
-
+ 
     } catch (error) {
         console.error('Error cargando resultados:', error);
         container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
 
-// ===============================================
-// MENÚ MÓVIL (UNIFICADO)
-// ===============================================
-function configurarMenuMobile() {
-    // Menú toggle (el que estaba suelto)
-    const btnToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (btnToggle && mobileMenu) {
-        let isOpen = false;
-        btnToggle.addEventListener('click', () => {
-            isOpen = !isOpen;
-            mobileMenu.classList.toggle('show');
-            const icon = btnToggle.querySelector('i');
-            if (icon) {
-                icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
-            }
-        });
-    }
 
-    // Otro menú mobile alternativo (si existe)
-    const btnMenu = document.getElementById('btnMenuMobile');
+// ===============================================
+// MENÚ MÓVIL
+// ===============================================
+
+function configurarMenuMobile() {
+    const btnMenu  = document.getElementById('btnMenuMobile');
     const navMobile = document.getElementById('navMobile');
+
     if (btnMenu && navMobile) {
-        btnMenu.addEventListener('click', () => {
+        btnMenu.addEventListener('click', function () {
             navMobile.classList.toggle('active');
         });
     }
@@ -337,6 +345,7 @@ function configurarMenuMobile() {
 // ===============================================
 // TICKER INFINITO
 // ===============================================
+
 function duplicarTicker() {
     const ticker = document.getElementById('tickerContent');
     if (ticker) {
@@ -348,6 +357,7 @@ function duplicarTicker() {
 // ===============================================
 // LOGOUT
 // ===============================================
+
 function logout() {
     if (confirm('¿Cerrar sesión?')) {
         localStorage.clear();
@@ -358,6 +368,7 @@ function logout() {
 // ===============================================
 // COUNTDOWN AL MUNDIAL
 // ===============================================
+
 function iniciarCountdown() {
     const fechaMundial = new Date('June 11, 2026 00:00:00').getTime();
 
@@ -369,15 +380,10 @@ function iniciarCountdown() {
         const minutos  = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
         const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minsEl = document.getElementById('mins');
-        const secsEl = document.getElementById('secs');
-
-        if (daysEl) daysEl.textContent = dias;
-        if (hoursEl) hoursEl.textContent = horas.toString().padStart(2, '0');
-        if (minsEl) minsEl.textContent = minutos.toString().padStart(2, '0');
-        if (secsEl) secsEl.textContent = segundos.toString().padStart(2, '0');
+        document.getElementById('days').textContent  = dias;
+        document.getElementById('hours').textContent = horas.toString().padStart(2, '0');
+        document.getElementById('mins').textContent  = minutos.toString().padStart(2, '0');
+        document.getElementById('secs').textContent  = segundos.toString().padStart(2, '0');
     }
 
     actualizar();
@@ -387,14 +393,18 @@ function iniciarCountdown() {
 // ===============================================
 // UTILIDADES — BANDERAS
 // ===============================================
+
 function obtenerBandera(nombre) {
     const banderas = {
+        // Anfitriones y CONCACAF
         'México': '🇲🇽', 'EE.UU.': '🇺🇸', 'USA': '🇺🇸', 'Canadá': '🇨🇦',
         'Costa Rica': '🇨🇷', 'Panamá': '🇵🇦', 'Jamaica': '🇯🇲', 'Haití': '🇭🇹',
         'Curazao': '🇨🇼', 'Islas de Cabo Verde': '🇨🇻',
+        // Sudamérica
         'Brasil': '🇧🇷', 'Argentina': '🇦🇷', 'Uruguay': '🇺🇾', 'Ecuador': '🇪🇨',
         'Colombia': '🇨🇴', 'Paraguay': '🇵🇾', 'Chile': '🇨🇱', 'Perú': '🇵🇪',
         'Venezuela': '🇻🇪', 'Bolivia': '🇧🇴',
+        // Europa
         'España': '🇪🇸', 'Alemania': '🇩🇪', 'Francia': '🇫🇷', 'Inglaterra': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
         'Portugal': '🇵🇹', 'Italia': '🇮🇹', 'Paises Bajos': '🇳🇱', 'Países Bajos': '🇳🇱',
         'Bélgica': '🇧🇪', 'Croacia': '🇭🇷', 'Suiza': '🇨🇭', 'Polonia': '🇵🇱',
@@ -403,13 +413,17 @@ function obtenerBandera(nombre) {
         'República Checa': '🇨🇿', 'Eslovaquia': '🇸🇰', 'Albania': '🇦🇱', 'Irlanda': '🇮🇪',
         'Bosnia': '🇧🇦', 'Kosovo': '🇽🇰', 'Rumania': '🇷🇴', 'Suecia': '🇸🇪',
         'Macedonia del Norte': '🇲🇰', 'Irlanda del Norte': '🏴󠁧󠁢󠁮󠁩󠁲󠁿',
+        // Asia
         'Japón': '🇯🇵', 'Corea del Sur': '🇰🇷', 'Australia': '🇦🇺', 'Irán': '🇮🇷',
         'Arabia Saudí': '🇸🇦', 'Catar': '🇶🇦', 'Uzbekistán': '🇺🇿', 'Jordania': '🇯🇴',
         'Irak': '🇮🇶',
+        // África
         'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
         'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
         'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬', 'Congo': '🇨🇬',
+        // Oceanía
         'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',
+        // Repechaje
         'Surinam': '🇸🇷'
     };
     return banderas[nombre] || '🏴';
@@ -418,6 +432,7 @@ function obtenerBandera(nombre) {
 // ===============================================
 // UTILIDADES — CAMPEÓN ELEGIDO
 // ===============================================
+
 function obtenerCampeon(codigo) {
     const campeon = {
         'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
