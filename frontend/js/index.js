@@ -31,12 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ya existe cuando Swiper busca '#heroSwiper'.
     inicializarCarrusel();
 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    cargarRankingTop5();
-    cargarUltimosResultados();
-});
-
 // ===============================================
 // VERIFICAR LOGIN
 // ===============================================
@@ -81,7 +75,6 @@ async function cargarDatos() {
         cargarRankingTop5()
     ]);
 }
-// DESPUÉS
 const btn = document.getElementById('menuToggle');
 const menu = document.getElementById('mobileMenu');
 if (btn && menu) {
@@ -177,20 +170,20 @@ async function cargarEstadisticas() {
     try {
         const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
         if (!response.ok) throw new Error('Error cargando estadísticas');
-
         const stats = await response.json();
-
-        document.getElementById('statPredicciones').textContent = stats.total_predicciones || 0;
-        document.getElementById('statPuntos').textContent       = stats.puntos_totales || 0;
-        document.getElementById('statPosicion').textContent     = stats.posicion_ranking || '-';
-
-        const total       = stats.total_predicciones || 0;
-        const aciertos    = stats.aciertos || 0;
+ 
+        const total      = stats.total_predicciones || 0;
+        const aciertos   = stats.aciertos || 0;
         const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
-        document.getElementById('statEfectividad').textContent = `${efectividad}%`;
-
+ 
+        document.getElementById('statPredicciones').textContent = total;
+        document.getElementById('statPuntos').textContent       = stats.puntos_totales || 0;
+        document.getElementById('statPosicion').textContent     = stats.posicion_ranking || '—';
+        document.getElementById('statEfectividad').textContent  = `${efectividad}%`;
+ 
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
+        // Si falla la carga, deja los guiones que ya tiene el HTML por defecto
     }
 }
 
