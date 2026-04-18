@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se inicializa aquí para garantizar que el DOM
     // ya existe cuando Swiper busca '#heroSwiper'.
     inicializarCarrusel();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     cargarRankingTop5();
     cargarUltimosResultados();
 });
