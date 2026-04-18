@@ -548,7 +548,7 @@ body {
     margin-bottom: 1rem;
 }
 .footer-logo img {
-    height: 75%;
+    height: 40px;
     width: auto;
     object-fit: contain;
 }
