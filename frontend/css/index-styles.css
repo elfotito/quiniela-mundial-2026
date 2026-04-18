@@ -547,11 +547,11 @@ body {
     color: var(--fifa-gold);
     margin-bottom: 1rem;
 }
-.footer-title img {
-            height: 75%;
-            width: auto;
-            object-fit: contain;
-        }
+.footer-logo img {
+    height: 75%;
+    width: auto;
+    object-fit: contain;
+}
 .footer-text {
     color: var(--text-gray);
     margin-bottom: 0.5rem;
