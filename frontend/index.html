@@ -721,31 +721,83 @@
     ══════════════════════════════════ -->
     <aside class="col-izquierda">
  
-        <!-- Widget 1 izquierda — próximamente: Ranking -->
-        <div class="widget">
-            <div class="widget-header">
-                <div class="widget-header-accent"></div>
-                <span class="widget-header-icon">🏆</span>
-                <span class="widget-header-title">Ranking</span>
-            </div>
-            <div class="widget-placeholder">
-                <i class="fas fa-trophy"></i>
-                <span>Componente próximamente</span>
-            </div>
+            <!-- WIDGET 1: Sistema de Puntuación -->
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-header-bar"></div>
+            <span class="widget-header-title">Sistema de Puntuación</span>
         </div>
+        <div class="widget-body">
+            <div class="pts-row">
+                <span class="pts-label">Resultado exacto</span>
+                <span class="pts-badge">+5</span>
+            </div>
+            <div class="pts-row">
+                <span class="pts-label">Ganador + diferencia</span>
+                <span class="pts-badge">+3</span>
+            </div>
+            <div class="pts-row">
+                <span class="pts-label">Solo el ganador</span>
+                <span class="pts-badge">+1</span>
+            </div>
+            <div class="pts-row">
+                <span class="pts-label">Predicción incorrecta</span>
+                <span class="pts-badge zero">0</span>
+            </div>
  
-        <!-- Widget 2 izquierda — próximamente: Mi pronóstico / campéon elegido -->
-        <div class="widget">
-            <div class="widget-header">
-                <div class="widget-header-accent"></div>
-                <span class="widget-header-icon">⭐</span>
-                <span class="widget-header-title">Mi Campeón</span>
-            </div>
-            <div class="widget-placeholder">
-                <i class="fas fa-star"></i>
-                <span>Componente próximamente</span>
+            <div class="widget-highlight">
+                <div class="widget-highlight-title">¿Quieres practicar?</div>
+                <div class="widget-highlight-text">
+                    Prueba el tutorial interactivo con ejemplos en tiempo real
+                </div>
+                <a href="sistema.html" class="widget-highlight-link">Ir al tutorial →</a>
             </div>
         </div>
+    </div>
+ 
+    <!-- WIDGET 2: Próximos Partidos -->
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-header-bar"></div>
+            <span class="widget-header-title">Próximos Partidos</span>
+            <a href="predicciones.html" class="widget-header-link">Ver todos →</a>
+        </div>
+        <div class="widget-body">
+            <!-- Este contenido lo genera JS dinámicamente -->
+            <div id="proximosPartidosWidget">
+                <div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">
+                    Cargando partidos...
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- WIDGET 3: Reglamento -->
+    <div class="widget">
+        <div class="widget-header">
+            <div class="widget-header-bar"></div>
+            <span class="widget-header-title">Reglamento</span>
+        </div>
+        <div class="widget-body">
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Límite de predicción: 10 min antes del partido</span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Una predicción por partido</span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Sistema VAR activo para anulaciones</span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Aprobado por la FIAC</span>
+            </div>
+            <a href="reglamento.html" class="btn-widget-full">Ver reglamento completo</a>
+        </div>
+    </div>
  
     </aside>
  
