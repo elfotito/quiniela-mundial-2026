@@ -192,77 +192,51 @@ async function cargarEstadisticas() {
 // ===============================================
 
 async function cargarProximosPartidos() {
+        const container = document.getElementById('proximosPartidosWidget');
+    if (!container) return;
+ 
     try {
-        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=3`);
-        if (!response.ok) throw new Error('Error cargando partidos');
-
-        const partidos  = await response.json();
-        const container = document.getElementById('proximosPartidos');
-
-        if (partidos.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#666;">No hay partidos pendientes</p>';
+        const res = await fetch(`${API_BASE_URL}/api/partidos/proximos?limit=6`);
+        const partidos = await res.json();
+ 
+        if (!partidos.length) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay partidos próximos</div>';
             return;
         }
-
-        container.innerHTML = partidos.map(partido => {
-            const fecha = new Date(partido.fecha);
-            return `
-                <div style="padding:1rem;border-bottom:1px solid rgba(255,255,255,0.1);">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
-                        <span style="font-size:.85rem;color:#a0a0a0;">${partido.fase}</span>
-                        <span style="font-size:.85rem;color:#a0a0a0;">${fecha.toLocaleDateString('es-ES',{day:'2-digit',month:'short'})}</span>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <strong>${obtenerBandera(partido.equipo_local)} ${partido.equipo_local}</strong>
-                        <span style="color:#FFD700;">VS</span>
-                        <strong>${obtenerBandera(partido.equipo_visitante)} ${partido.equipo_visitante}</strong>
-                    </div>
+ 
+        // Agrupar por fecha
+        const grupos = {};
+        partidos.forEach(p => {
+            const fecha = new Date(p.fecha).toLocaleDateString('es-VE', { weekday: 'short', day: '2-digit', month: 'short' });
+            if (!grupos[fecha]) grupos[fecha] = [];
+            grupos[fecha].push(p);
+        });
+ 
+        let html = '';
+        Object.entries(grupos).forEach(([fecha, lista]) => {
+            html += `<div class="match-date-label">${fecha}</div>`;
+            lista.forEach(p => {
+                const hora = new Date(p.fecha).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' });
+                // Usa obtenerBandera si la tienes disponible
+                const flagLocal = typeof obtenerBandera === 'function' ? obtenerBandera(p.equipo_local) : '';
+                const flagVisit = typeof obtenerBandera === 'function' ? obtenerBandera(p.equipo_visitante) : '';
+                html += `
+                <div class="match-row">
+                    <span class="match-team">${flagLocal} ${p.equipo_local}</span>
+                    <span class="match-time">${hora}</span>
+                    <span class="match-team right">${p.equipo_visitante} ${flagVisit}</span>
                 </div>`;
-        }).join('');
-
-    } catch (error) {
-        console.error('Error cargando partidos:', error);
-        document.getElementById('proximosPartidos').innerHTML =
-            '<p style="text-align:center;color:#f44336;">Error cargando partidos</p>';
+            });
+        });
+ 
+        container.innerHTML = html;
+    } catch (err) {
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
-
-// ===============================================
-// ÚLTIMOS RESULTADOS
-// ===============================================
-
-async function cargarUltimosResultados() {
-    try {
-        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
-        if (!response.ok) throw new Error('Error cargando resultados');
-
-        const partidos  = await response.json();
-        const container = document.getElementById('ultimosResultados');
-
-        if (partidos.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:#666;">No hay resultados aún</p>';
-            return;
-        }
-
-        container.innerHTML = partidos.map(partido => `
-            <div style="padding:1rem;border-bottom:1px solid rgba(255,255,255,0.1);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;">
-                    <span style="font-size:.85rem;color:#a0a0a0;">${partido.fase}</span>
-                    <span style="background:#4CAF50;padding:.25rem .75rem;border-radius:12px;font-size:.75rem;">Finalizado</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span>${partido.equipo_local}</span>
-                    <strong style="color:#FFD700;font-size:1.25rem;">${partido.goles_local} - ${partido.goles_visitante}</strong>
-                    <span>${partido.equipo_visitante}</span>
-                </div>
-            </div>`).join('');
-
-    } catch (error) {
-        console.error('Error cargando resultados:', error);
-        document.getElementById('ultimosResultados').innerHTML =
-            '<p style="text-align:center;color:#f44336;">Error cargando resultados</p>';
-    }
-}
+ 
+// Llama en tu initPage() o DOMContentLoaded
+document.addEventListener('DOMContentLoaded', cargarProximosPartidosWidget);
 
 // ===============================================
 // TOP 5 RANKING
