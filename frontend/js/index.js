@@ -361,16 +361,10 @@ async function cargarLigaRankingWidget() {
             const nombre = user.nombre_publico || user.nombre || 'Usuario';
             const nombreCorto = nombre.length > 14 ? nombre.substring(0, 13) + '…' : nombre;
  
-            // Columnas +9 +7 +5 +2 — por ahora con — hasta configurar backend
-            // Cuando tengas los campos, reemplaza '—' por:
-            // user.aciertos_exactos || '—'
-            // user.aciertos_ganador_diff || '—'
-            // user.aciertos_ganador || '—'
-            // user.aciertos_empate || '—'
-            const c9  = user.aciertos_exactos      ?? '—';
-            const c7  = user.aciertos_ganador_diff  ?? '—';
-            const c5  = user.aciertos_ganador        ?? '—';
-            const c2  = user.aciertos_empate         ?? '—';
+            const c9 = user.aciertos_9 ?? '—';
+            const c7 = user.aciertos_7 ?? '—';
+            const c5 = user.aciertos_5 ?? '—';
+            const c2 = user.aciertos_2 ?? '—';
  
             return `
             <tr class="${claseMe}">

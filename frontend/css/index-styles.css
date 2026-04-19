@@ -1303,7 +1303,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 40px;         /* altura uniforme para todos */
+      height: 40px;       
       min-width: 80px;
       opacity: 0.75;
       transition: opacity 0.2s;
@@ -1313,13 +1313,11 @@ body {
       opacity: 1;
     }
  
-    /* Si usas <img> dentro del .sponsor-logo */
     .sponsor-logo img {
       max-height: 36px;
       max-width: 110px;
       width: auto;
       object-fit: contain;
-      filter: brightness(0) invert(1); /* todos blancos sobre fondo negro */
     }
  
     /* Si no tienes imagen aún, usa texto placeholder */
@@ -1329,9 +1327,7 @@ body {
       letter-spacing: 1px;
       color: var(--text-white);
       text-transform: uppercase;
-      border: 1px solid #333;
       padding: 6px 12px;
-      border-radius: 4px;
       white-space: nowrap;
     }
  
