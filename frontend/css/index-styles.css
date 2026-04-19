@@ -31,6 +31,41 @@
     --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Light.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Black.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ ExtraBlack.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
         * {
             margin: 0;
             padding: 0;
@@ -38,10 +73,10 @@
         }
 
         body {
+            font-family: 'Neue Plak', system-ui, sans-serif;
             font-family: var(--font-main); 
             color: var(--text-white);
             padding-top: 130px;
-            padding-bottom: 70px; /* Espacio para el navbar móvil */
         }
 
         ul {
