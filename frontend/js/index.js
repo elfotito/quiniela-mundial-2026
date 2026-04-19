@@ -420,7 +420,7 @@ function iniciarEasterEgg() {
         { gif: 'img/cucurella.gif',    sound: 'sounds/cucurella.mp3', dur: 2100  },
         { gif: 'img/failshot.gif',     sound: 'sounds/tuco.mp3',      dur: 2300  },
         { gif: 'img/griezman.gif',     sound: 'sounds/67.mp3',        dur: 2800  },
-        { gif: 'img/lamine.gif',       sound: 'sounds/ripgranny.mp3', dur: 8200  },
+        { gif: 'img/lamine.gif',       sound: 'sounds/ripgranny.mp3', dur: 7900  },
         { gif: 'img/kane.gif',         sound: 'sounds/brainfart.mp3', dur: 5300  },
         { gif: 'img/mbappe-zeki.gif',  sound: 'sounds/mbappe.mp3',    dur: 4700  },
         { gif: 'img/neymar.gif',       sound: 'sounds/ack.mp3',       dur: 4200  },
@@ -428,7 +428,7 @@ function iniciarEasterEgg() {
         { gif: 'img/ronaldosiu.gif',   sound: 'sounds/suii.mp3',      dur: 2700  },
         { gif: 'img/speed.gif',        sound: 'sounds/suwi.mp3',      dur: 4600  },
         { gif: 'img/vinicius.gif',     sound: 'sounds/wearec.mp3',    dur: 6000  },
-        { gif: 'img/wirtz.gif',        sound: 'sounds/vine-boom.mp3', dur: 11700 }
+        { gif: 'img/wirtz.gif',        sound: 'sounds/vine-boom.mp3', dur: 1700 }
     ];
  
     let ultimoIdx  = -1;
