@@ -73,10 +73,10 @@
         }
 
         body {
-            font-family: 'Neue Plak', system-ui, sans-serif;
             font-family: var(--font-main); 
             color: var(--text-white);
             padding-top: 130px;
+            padding-bottom: 70px; /* Espacio para el navbar móvil */
         }
 
         ul {

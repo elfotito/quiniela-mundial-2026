@@ -424,7 +424,7 @@ function iniciarEasterEgg() {
         { gif: 'img/kane.gif',         sound: 'sounds/brainfart.mp3', dur: 5300  },
         { gif: 'img/mbappe-zeki.gif',  sound: 'sounds/mbappe.mp3',    dur: 4700  },
         { gif: 'img/neymar.gif',       sound: 'sounds/ack.mp3',       dur: 4200  },
-        { gif: 'img/quemirasbobo.gif', sound: 'sounds/andapalla.mp3', dur: 7200  },
+        { gif: 'img/quemirasbobo.gif', sound: 'sounds/andapaalla.mp3', dur: 7200  },
         { gif: 'img/ronaldosiu.gif',   sound: 'sounds/suii.mp3',      dur: 2700  },
         { gif: 'img/speed.gif',        sound: 'sounds/suwi.mp3',      dur: 4600  },
         { gif: 'img/vinicius.gif',     sound: 'sounds/wearec.mp3',    dur: 6000  },
