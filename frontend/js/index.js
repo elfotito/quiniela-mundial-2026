@@ -417,66 +417,107 @@ function configurarMenuMobile() {
 }
 function iniciarEasterEgg() {
     const memes = [
-        { gif: 'img/cucurella.gif',    sound: 'sounds/cucurella.mp3' },
-        { gif: 'img/failshot.gif',     sound: 'sounds/tuco.mp3'      },
-        { gif: 'img/griezman.gif',     sound: 'sounds/67.mp3'        },
-        { gif: 'img/lamine.gif',       sound: 'sounds/ripgranny.mp3' },
-        { gif: 'img/kane.gif',         sound: 'sounds/brainfart.mp3' },
-        { gif: 'img/mbappe-zeki.gif',  sound: 'sounds/mbappe.mp3'    },
-        { gif: 'img/neymar.gif',       sound: 'sounds/ack.mp3'       },
-        { gif: 'img/quemirasbobo.gif', sound: 'sounds/andapalla.mp3' },
-        { gif: 'img/ronaldosiu.gif',   sound: 'sounds/suii.mp3'      },
-        { gif: 'img/speed.gif',        sound: 'sounds/suwi.mp3'      },
-        { gif: 'img/vinicius.gif',     sound: 'sounds/wearec.mp3'    },
-        { gif: 'img/wirtz.gif',        sound: 'sounds/vine-boom.mp3' }
+        { gif: 'img/cucurella.gif',    sound: 'sounds/cucurella.mp3', dur: 2100  },
+        { gif: 'img/failshot.gif',     sound: 'sounds/tuco.mp3',      dur: 2300  },
+        { gif: 'img/griezman.gif',     sound: 'sounds/67.mp3',        dur: 2800  },
+        { gif: 'img/lamine.gif',       sound: 'sounds/ripgranny.mp3', dur: 8200  },
+        { gif: 'img/kane.gif',         sound: 'sounds/brainfart.mp3', dur: 5300  },
+        { gif: 'img/mbappe-zeki.gif',  sound: 'sounds/mbappe.mp3',    dur: 4700  },
+        { gif: 'img/neymar.gif',       sound: 'sounds/ack.mp3',       dur: 4200  },
+        { gif: 'img/quemirasbobo.gif', sound: 'sounds/andapalla.mp3', dur: 7200  },
+        { gif: 'img/ronaldosiu.gif',   sound: 'sounds/suii.mp3',      dur: 2700  },
+        { gif: 'img/speed.gif',        sound: 'sounds/suwi.mp3',      dur: 4600  },
+        { gif: 'img/vinicius.gif',     sound: 'sounds/wearec.mp3',    dur: 6000  },
+        { gif: 'img/wirtz.gif',        sound: 'sounds/vine-boom.mp3', dur: 11700 }
     ];
-
+ 
     let ultimoIdx  = -1;
     let closeTimer = null;
     let audioActual = null;
-
+ 
     const wrap   = document.getElementById('sponsorEasterEgg');
     const logo   = document.getElementById('sponsorLogo');
     const bubble = document.getElementById('memeBubble');
     const gif    = document.getElementById('memeGif');
-
-    // Si no están los elementos en la página, salir sin error
+ 
     if (!wrap || !logo || !bubble || !gif) return;
-
+ 
     const audios = memes.map(m => {
         const a = new Audio(m.sound);
         a.preload = 'auto';
         return a;
     });
-
+ 
     wrap.addEventListener('click',    disparar);
     wrap.addEventListener('touchend', e => { e.preventDefault(); disparar(); });
-
+ 
+    function posicionarBurbuja() {
+        const rect   = logo.getBoundingClientRect();
+        const bubbleW = bubble.offsetWidth || 320;
+        const bubbleH = bubble.offsetHeight || 240;
+        const margin  = 12;
+ 
+        // Centrar sobre el logo
+        let left = rect.left + (rect.width / 2) - (bubbleW / 2);
+        left = Math.max(margin, Math.min(left, window.innerWidth - bubbleW - margin));
+ 
+        // Encima del logo
+        let top = rect.top - bubbleH - 28;
+ 
+        // Si no cabe arriba, poner debajo
+        if (top < margin) {
+            top = rect.bottom + 28;
+            // Mover cola arriba en lugar de abajo
+            document.querySelector('.meme-bubble-tail').style.cssText =
+                'bottom:auto;top:-14px;border-top:none;border-bottom:14px solid #111;';
+        } else {
+            document.querySelector('.meme-bubble-tail').style.cssText = '';
+        }
+ 
+        bubble.style.left = left + 'px';
+        bubble.style.top  = top  + 'px';
+    }
+ 
     function disparar() {
         let idx;
         do { idx = Math.floor(Math.random() * memes.length); } while (idx === ultimoIdx);
         ultimoIdx = idx;
-
+        const m = memes[idx];
+ 
         logo.classList.remove('shake');
         void logo.offsetWidth;
         logo.classList.add('shake');
-
+ 
         gif.src = '';
-        gif.src = memes[idx].gif;
-        bubble.classList.add('show');
-
+        gif.src = m.gif;
+ 
+        bubble.classList.remove('show');
+        void bubble.offsetWidth;
+ 
+        // Pequeño delay para que el GIF cargue dimensiones antes de posicionar
+        setTimeout(() => {
+            posicionarBurbuja();
+            bubble.classList.add('show');
+        }, 30);
+ 
         if (audioActual) { audioActual.pause(); audioActual.currentTime = 0; }
         audioActual = audios[idx];
         audioActual.currentTime = 0;
         audioActual.play().catch(() => {});
-
+ 
         clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => bubble.classList.remove('show'), 4000);
+        closeTimer = setTimeout(() => bubble.classList.remove('show'), m.dur);
     }
-
+ 
     document.addEventListener('click', e => {
-        if (!wrap.contains(e.target)) bubble.classList.remove('show');
+        if (!wrap.contains(e.target) && !bubble.contains(e.target)) {
+            bubble.classList.remove('show');
+        }
     });
+ 
+    window.addEventListener('scroll', () => {
+        if (bubble.classList.contains('show')) posicionarBurbuja();
+    }, { passive: true });
 }
 // ===============================================
 // TICKER INFINITO
