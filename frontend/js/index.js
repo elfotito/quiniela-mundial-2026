@@ -10,25 +10,11 @@ let usuarioId = null;
 // ===============================================
 
 document.addEventListener('DOMContentLoaded', async () => {
-
-    // Verificar login
-    await verificarLogin();
-
-    // Cargar datos
-    await cargarDatos();
-
-    // Configurar menú móvil
+    await verificarLogin();      
+    await cargarDatos();         
     configurarMenuMobile();
-
-    // Duplicar ticker para efecto infinito
     duplicarTicker();
-
-    // Countdown al Mundial
     iniciarCountdown();
-
-    // ── Carrusel de noticias (Swiper) ──────────────
-    // Se inicializa aquí para garantizar que el DOM
-    // ya existe cuando Swiper busca '#heroSwiper'.
     inicializarCarrusel();
 });
 // ===============================================
@@ -60,10 +46,10 @@ async function verificarLogin() {
             adminBtn.style.display = 'flex';
             adminBtn.onclick = () => window.location.href = 'admin.html';
         }
-        const adminBtn = document.getElementById('adminNoti');
-        if (adminBtn) {
-            adminBtn.style.display = 'flex';
-            adminBtn.onclick = () => window.location.href = 'noticias.html';
+        const adminNotiBtn = document.getElementById('adminNoti');
+        if (adminNotiBtn) {
+            adminNotiBtn.style.display = 'flex';
+            adminNotiBtn.onclick = () => window.location.href = 'noticias.html';
         }
     }
 }
@@ -78,7 +64,7 @@ async function cargarDatos() {
         cargarProximosPartidos(),
         cargarUltimosResultados(),
         cargarRankingTop5(),
-        cargarLigaRankingWidget(),
+        cargarLigaRankingWidget()
     ]);
 }
 const btn = document.getElementById('menuToggle');
