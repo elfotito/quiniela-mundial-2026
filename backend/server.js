@@ -494,7 +494,11 @@ app.get('/api/ranking/top', async (req, res) => {
             SELECT 
                 u.id,
                 u.nombre_publico as nombre,
-                COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales
+                COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 9) as aciertos_9,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 7) as aciertos_7,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 5) as aciertos_5,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 2) as aciertos_2
             FROM usuarios u
             LEFT JOIN predicciones p ON u.id = p.usuario_id
             WHERE u.esta_activo = true
@@ -502,11 +506,10 @@ app.get('/api/ranking/top', async (req, res) => {
             ORDER BY puntos_totales DESC
             LIMIT 5
         `;
-
+ 
         const result = await pool.query(query);
-
         res.json(result.rows);
-
+ 
     } catch (error) {
         console.error('❌ Error obteniendo top 5:', error);
         res.status(500).json({ error: 'Error del servidor' });
