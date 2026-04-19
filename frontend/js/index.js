@@ -414,7 +414,67 @@ function configurarMenuMobile() {
         });
     }
 }
-
+(function () {
+    const memes = [
+        { gif: 'img/cucurella.gif',    sound: 'sounds/cucurella.mp3' },
+        { gif: 'img/failshot.gif',     sound: 'sounds/tuco.mp3'      },
+        { gif: 'img/griezman.gif',     sound: 'sounds/67.mp3'        },
+        { gif: 'img/lamine.gif',       sound: 'sounds/ripgranny.mp3' },
+        { gif: 'img/kane.gif',         sound: 'sounds/brainfart.mp3' },
+        { gif: 'img/mbappe-zeki.gif',  sound: 'sounds/mbappe.mp3'    },
+        { gif: 'img/neymar.gif',       sound: 'sounds/ack.mp3'       },
+        { gif: 'img/quemirasbobo.gif', sound: 'sounds/andapalla.mp3' },
+        { gif: 'img/ronaldosiu.gif',   sound: 'sounds/suii.mp3'      },
+        { gif: 'img/speed.gif',        sound: 'sounds/suwi.mp3'      },
+        { gif: 'img/vinicius.gif',     sound: 'sounds/wearec.mp3'    },
+        { gif: 'img/wirtz.gif',        sound: 'sounds/vine-boom.mp3' }
+    ];
+ 
+    let ultimoIdx  = -1;
+    let closeTimer = null;
+    let audioActual = null;
+ 
+    const wrap   = document.getElementById('sponsorEasterEgg');
+    const logo   = document.getElementById('sponsorLogo');
+    const bubble = document.getElementById('memeBubble');
+    const gif    = document.getElementById('memeGif');
+ 
+    const audios = memes.map(m => {
+        const a = new Audio(m.sound);
+        a.preload = 'auto';
+        return a;
+    });
+ 
+    wrap.addEventListener('click',    disparar);
+    wrap.addEventListener('touchend', e => { e.preventDefault(); disparar(); });
+ 
+    function disparar() {
+        let idx;
+        do { idx = Math.floor(Math.random() * memes.length); } while (idx === ultimoIdx);
+        ultimoIdx = idx;
+ 
+        logo.classList.remove('shake');
+        void logo.offsetWidth;
+        logo.classList.add('shake');
+ 
+        gif.src = '';
+        gif.src = memes[idx].gif;
+ 
+        bubble.classList.add('show');
+ 
+        if (audioActual) { audioActual.pause(); audioActual.currentTime = 0; }
+        audioActual = audios[idx];
+        audioActual.currentTime = 0;
+        audioActual.play().catch(() => {});
+ 
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => bubble.classList.remove('show'), 4000);
+    }
+ 
+    document.addEventListener('click', e => {
+        if (!wrap.contains(e.target)) bubble.classList.remove('show');
+    });
+})();
 // ===============================================
 // TICKER INFINITO
 // ===============================================

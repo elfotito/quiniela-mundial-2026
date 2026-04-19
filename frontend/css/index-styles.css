@@ -1395,7 +1395,58 @@ body {
         min-width: 60px;
       }
     }
-
+    
+.sponsor-wrap {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.easter-logo {
+    transition: transform 0.15s ease;
+    display: block;
+}
+.easter-logo:active { transform: scale(0.93); }
+.easter-logo.shake  { animation: sponsor-shake 0.4s ease; }
+@keyframes sponsor-shake {
+    0%, 100% { transform: rotate(0deg)   scale(1);    }
+    25%       { transform: rotate(-6deg) scale(1.05); }
+    75%       { transform: rotate(6deg)  scale(1.05); }
+}
+.meme-bubble {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    border-radius: 16px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.22s cubic-bezier(.34, 1.56, .64, 1);
+    width: 220px;
+    z-index: 9999;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+.meme-bubble.show {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    pointer-events: auto;
+}
+.meme-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-bottom: none;
+    border-top-color: #111;
+}
+.meme-bubble img {
+    width: 100%;
+    display: block;
+}
     /* ─── WIDGET BASE ───────────────────────────────────────── */
 .widget {
     background: #ffffff;
