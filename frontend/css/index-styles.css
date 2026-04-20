@@ -746,7 +746,7 @@ body {
 
 .slide-category {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 400;
     color: rgba(255,255,255,0.45);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -754,21 +754,22 @@ body {
 }
 
 .slide-title {
-    font-size: clamp(28px, 3.2vw, 48px) !important;
-    font-weight: 900 !important;
-    line-height: 1.1 !important;
-    letter-spacing: -0.5px !important;
-    color: #fff !important;
-    margin-bottom: 1.25rem !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 4 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.5px ;
+    color: #fff ;
+    margin-bottom: 1.25rem ;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* Reseña — visible solo en desktop */
 .slide-desc {
-    font-size: 14px;
+    font-size: 24px;
+    font-weight: 400;
     line-height: 1.7;
     color: rgba(255,255,255,0.55);
     margin-bottom: 2rem;
