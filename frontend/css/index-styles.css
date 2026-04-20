@@ -1,7 +1,7 @@
 /* ===============================================
    INDEX - ESTILO FIFA WORLD CUP 2026
    =============================================== */
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap');
 :root {
     --fifablue: #314fff;
     --fifapurple: #6101eb;
@@ -785,18 +785,23 @@ body {
         margin: 0;
     }
     
-    /* 5. Reducimos los tamaños para evitar que se desborde la pantalla */
-    .time-box {
-        min-width: 45px; /* Reducimos el ancho mínimo */
-        padding: 0; /* Quitamos el padding extra */
-    }
-    
     .time-value {
-        font-size: 1.8rem; /* Tamaño de los números */
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem; 
+        font-weight: 900;
+        line-height: 1; 
+        margin-bottom: 2px; 
+    }
+
+    .time-label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.85rem;
+        padding-top: 0; 
+        font-weight: 500;
     }
     
     .time-label {
-        font-size: 0.8rem; /* Tamaño del texto (días, horas, etc.) */
+        font-size: 0.8rem; 
         padding-top: 2px;
     }
     
