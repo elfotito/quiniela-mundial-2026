@@ -786,7 +786,6 @@ body {
     }
     
     .time-value {
-        font-family: 'Montserrat', sans-serif;
         font-size: 2rem; 
         font-weight: 700;
         line-height: 1; 
@@ -794,7 +793,6 @@ body {
     }
 
     .time-label {
-        font-family: 'Montserrat', sans-serif;
         font-size: 0.85rem;
         padding-top: 0; 
         font-weight: 500;
