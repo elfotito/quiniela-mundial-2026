@@ -781,7 +781,7 @@ body {
     
     /* 4. Ajustamos el espacio entre los números para que quepan bien en pantallas pequeñas */
     .countdown-timer {
-        gap: 0.5rem; 
+        gap: 2px; 
         margin: 0;
     }
     
@@ -802,7 +802,11 @@ body {
         font-size: 0.8rem; 
         padding-top: 2px;
     }
-    
+    .time-box {
+    min-width: 38px;
+    padding: 0;
+    text-align: center;
+}
 }
 
 
