@@ -747,7 +747,7 @@ body {
 .slide-category {
     font-size: 11px;
     font-weight: 400;
-    color: rgba(255,255,255,0.45);
+    color: #fff;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 0.875rem;
@@ -755,7 +755,7 @@ body {
 
 .slide-title {
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 300;
     line-height: 1.1;
     letter-spacing: -0.5px ;
     color: #fff ;
@@ -768,10 +768,11 @@ body {
 
 /* Reseña — visible solo en desktop */
 .slide-desc {
-    font-size: 24px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: -0.5px ;
     line-height: 1.7;
-    color: rgba(255,255,255,0.55);
+    color: #fff;
     margin-bottom: 2rem;
     max-width: 90%;
     display: -webkit-box;
