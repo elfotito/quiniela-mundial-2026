@@ -1307,9 +1307,8 @@ body {
       }
 
     .footer-logo {
-        max-height: 60px;
-        max-width: 110px;
-        display: block;
+    align-items: center;
+    max-width: 110px;
     }
     .footer-tagline {
     font-size: 1rem;
