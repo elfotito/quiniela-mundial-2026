@@ -292,6 +292,38 @@
             .desktop-header   { display: none !important; }
             .mobile-top-bar   { display: flex; }
             .mobile-bottom-nav{ display: flex; }
+            .mobile-top-bar {
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+            
+            .mobile-top-bar * {
+                box-sizing: border-box;
+            }
+            
+            /* El logo móvil no debe desbordar */
+            .mobile-top-bar .logo-mobile {
+                max-width: 160px;
+                overflow: hidden;
+                flex-shrink: 1;
+            }
+            
+            .mobile-top-bar .logo-mobile img {
+                height: 36px;
+                width: auto;
+                max-width: 100%;
+                object-fit: contain;
+                display: block;
+            }
+            
+            /* El contenido de la derecha tampoco */
+            .mobile-top-bar .right-section {
+                flex-shrink: 0;
+                max-width: 50%;
+                overflow: hidden;
+            }
         }
 
 

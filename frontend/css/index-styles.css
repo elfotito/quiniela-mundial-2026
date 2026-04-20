@@ -754,16 +754,16 @@ body {
 }
 
 .slide-title {
-    font-size: clamp(22px, 2.4vw, 36px);
-    font-weight: 700;
-    line-height: 1.15;
-    color: #fff;
-    margin-bottom: 1rem;
-    letter-spacing: -0.5px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: clamp(28px, 3.2vw, 48px) !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px !important;
+    color: #fff !important;
+    margin-bottom: 1.25rem !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
 }
 
 /* Reseña — visible solo en desktop */
@@ -1139,11 +1139,16 @@ body {
     }
  
     .footer-logo {
-      font-size: 1.4rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--text-white);
-      text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    
+    .footer-logo img {
+        height: 36px !important;   /* tamaño fijo controlado */
+        width: auto !important;
+        max-width: 180px !important;
+        object-fit: contain;
     }
  
     /* Redes sociales */
@@ -1306,9 +1311,12 @@ body {
         min-width: 60px;
       }
 
+    .footer-logo img {
+        height: 28px !important;
+        max-width: 140px !important;
+    }
     .footer-logo {
-    align-items: center;
-    max-width: 110px;
+        justify-content: center;
     }
     .footer-tagline {
     font-size: 1rem;
