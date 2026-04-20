@@ -1,7 +1,36 @@
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Light.woff') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Regular.woff') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ SemiBold.woff') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Bold.woff') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Neue Plak';
+    src: url('../fonts/Neue\ Plak\ Black.woff') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
 /* ===============================================
    INDEX - ESTILO FIFA WORLD CUP 2026
    =============================================== */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap');
 :root {
     --fifablue: #314fff;
     --fifapurple: #6101eb;
