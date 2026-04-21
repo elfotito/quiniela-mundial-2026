@@ -636,7 +636,10 @@ async function guardarNoticia(event) {
     event.preventDefault();
     
     console.log('🚀 Guardando noticia...');
-    
+    // DEBUG: Ver la URL exacta
+    console.log('CONFIG.API_URL:', CONFIG.API_URL);
+    const urlCompleta = `${CONFIG.API_URL}/noticias`;
+    console.log('URL completa:', urlCompleta);
     // Obtener valores del formulario
     const formData = {
         tipo: document.getElementById('tipo_noticia')?.value || 'partido',
