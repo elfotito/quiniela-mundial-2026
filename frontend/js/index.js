@@ -520,9 +520,9 @@ function iniciarEasterEgg() {
     }, { passive: true });
 }
 // ===============================================
-// TICKER MODO PROOOOOOO
+// TICKER INFINITO
 // ===============================================
-
+ 
 function iniciarTicker() {
       var noticias = [
         {
@@ -559,7 +559,7 @@ function iniciarTicker() {
             "color": "#ffffff",
             "fontFamily": "Yolk",      
             "fontSize":   14,
-            "font-style": italic,            
+            "font-style": "italic",            
             "fontWeight": "700"
         },
         "data": noticias
