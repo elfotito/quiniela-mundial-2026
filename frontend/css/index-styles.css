@@ -1901,6 +1901,12 @@ body {
 }
 
 /* ─── News ticker ────────────────────────────────────────── */
+
+    #newsTicker3 {
+    max-width: 1600px;
+    margin: 0 auto;      
+    color: #ffffff;
+    }
     .ent_wrapper {
       display: flex;
       flex-direction: row;

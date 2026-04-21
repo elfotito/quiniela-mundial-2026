@@ -528,19 +528,19 @@ function iniciarEasterEgg() {
       // ── Tus noticias aquí ──
       var noticias = [
         {
-          "date": "Junio 2026",
+          "date": "Febrero 2026",
           "prefix": "📅 Mundial:",
           "heading": "Todos los partidos estan disponible en el calendario.",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/calendario.html"
         },
         {
-          "date": "Junio 2026",
+          "date": "Abril 2026",
           "prefix": "🎯 Quiniela:",
           "heading": "¡Registra tus predicciones antes del inicio del torneo!",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/predicciones.html"
         },
         {
-          "date": "Junio 2026",
+          "date": "Abril 2026",
           "prefix": "👨‍💼 Ligas:",
           "heading": "Vicente es el nuevo presidente de la liga Montesushi.",
           "url": "https://"
@@ -556,7 +556,9 @@ function iniciarEasterEgg() {
         },
         "label": {
             "enable": true,
-            "text":   "QUINIELATV"
+            "text":   "QMTV",
+            "background": "#cb2126",
+            "color": "#ffffff"
         },
         "data": noticias
       });
