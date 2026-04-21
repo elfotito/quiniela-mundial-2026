@@ -60,149 +60,273 @@
         <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
     </nav>
     
-    <!-- HERO SECTION -->
-    <section class="hero-hero-prediccion">
-        <div class="hero-overlay"></div>
-        <div class="hero-content"><br>
-            <div class="hero-badge"></div>
-            <h1 class="hero-title">Predicciones</h1>
-            <p class="hero-subtitle"></p>
-        </div>
-    </section>
-    
-    <!-- CONTENEDOR PRINCIPAL -->
-    <main class="main-container">
-        
-        <!-- TABS DE NAVEGACIÓN -->
-        <div class="tabs-container">
-            <button class="tab-btn active" data-tab="pending">
-                <span class="tab-icon">🎯</span>
-                <span>Por Predecir</span>
-            </button>
-            <button class="tab-btn" data-tab="completed">
-                <span class="tab-icon">📋</span>
-                <span>Mis Predicciones</span>
-            </button>
-        </div>
-        
-        <!-- TAB 1: PARTIDOS POR PREDECIR -->
-        <div id="tab-pending" class="tab-content active">
-            <!-- Filtros -->
-            <div class="filters-bar">
-                <div class="filter-group">
-                    <label class="filter-label">Fase</label>
-                    <select class="filter-select" id="filterPhase">
-                        <option value="grupos" selected>Fase de Grupos</option>
-                        <option value="Grupo A">Grupo A</option>
-                        <option value="Grupo B">Grupo B</option>
-                        <option value="Grupo C">Grupo C</option>
-                        <option value="Grupo D">Grupo D</option>
-                        <option value="Grupo E">Grupo E</option>
-                        <option value="Grupo F">Grupo F</option>
-                        <option value="Grupo G">Grupo G</option>
-                        <option value="Grupo H">Grupo H</option>
-                        <option value="Grupo I">Grupo I</option>
-                        <option value="Grupo J">Grupo J</option>
-                        <option value="Grupo K">Grupo K</option>
-                        <option value="Grupo L">Grupo L</option>
-                        <!-- DESBLOQUEAR EN FASE ELIMINATORIA
-                        <option value="16vos">Dieciseisavos</option>
-                        <option value="8vos">Octavos de Final</option>
-                        <option value="4tos">Cuartos de Final</option>
-                        <option value="Semifinal">Semifinales</option>
-                        <option value="Final">Final</option>-->
-                    </select>
+    <div class="pred-hero">
+        <div class="pred-hero-inner">
+            <div class="pred-hero-left">
+ 
+                <div class="pred-hero-eyebrow">
+                    <div class="pred-hero-eyebrow-line"></div>
+                    <span>Quiniela Mundial 2026</span>
                 </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">Ordenar por</label>
-                    <select class="filter-select" id="sortBy">
-                        <option value="fechacercana" selected>Fecha más cercana</option>
-                        <option value="fechalejana">Fecha más lejana</option>
-                    </select>
+ 
+                <h1 class="pred-hero-title">
+                    Haz tus<br><em>predicciones</em>
+                </h1>
+ 
+                <p class="pred-hero-sub">
+                    Predice el marcador de cada partido antes del pitazo inicial.
+                    Cuanto más preciso seas, más puntos acumulas en el ranking.
+                </p>
+ 
+                <div class="pred-hero-stats">
+                    <div class="pred-hero-stat">
+                        <span class="pred-hero-stat-val" id="heroTotalPartidos">—</span>
+                        <span class="pred-hero-stat-lbl">Partidos</span>
+                    </div>
+                    <div class="pred-hero-stat">
+                        <span class="pred-hero-stat-val gold" id="heroPuntos">—</span>
+                        <span class="pred-hero-stat-lbl">Mis puntos</span>
+                    </div>
+                    <div class="pred-hero-stat">
+                        <span class="pred-hero-stat-val" id="heroPosicion">—</span>
+                        <span class="pred-hero-stat-lbl">Posición</span>
+                    </div>
                 </div>
+ 
             </div>
-            
-            <!-- Grid de partidos -->
-            <div id="matchesGrid" class="matches-grid">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p style="margin-top: 1rem; color: var(--text-gray);">Cargando partidos...</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- TAB 2: PREDICCIONES REALIZADAS -->
-        <div id="tab-completed" class="tab-content">
-                <!-- Filtros para predicciones realizadas -->
-    <div class="filters-bar">
-        <div class="filter-group">
-            <label class="filter-label">Fase</label>
-            <select class="filter-select" id="filterPhaseCompleted">
-                <option value="grupos" selected>Fase de Grupos</option>
-                <option value="Grupo A">Grupo A</option>
-                <option value="Grupo B">Grupo B</option>
-                <option value="Grupo C">Grupo C</option>
-                <option value="Grupo D">Grupo D</option>
-                <option value="Grupo E">Grupo E</option>
-                <option value="Grupo F">Grupo F</option>
-                <option value="Grupo G">Grupo G</option>
-                <option value="Grupo H">Grupo H</option>
-                <option value="Grupo I">Grupo I</option>
-                <option value="Grupo J">Grupo J</option>
-                <option value="Grupo K">Grupo K</option>
-                <option value="Grupo L">Grupo L</option>
-            </select>
-        </div>
-        
-        <div class="filter-group">
-            <label class="filter-label">Ordenar por</label>
-            <select class="filter-select" id="sortByCompleted">
-                <option value="fechacercana">Fecha más cercana</option>
-                <option value="fechalejana">Fecha más lejana</option>
-            </select>
+ 
+            <div class="pred-hero-ball">⚽</div>
         </div>
     </div>
-            <div id="completedList" class="predictions-list">
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p style="margin-top: 1rem; color: var(--text-gray);">Cargando predicciones...</p>
+ 
+ 
+    <!-- ── GRID 3 COLUMNAS ───────────────────────────── -->
+    <div class="pred-grid-bg">
+    <div class="pred-grid">
+ 
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="pred-col-left">
+ 
+            <!-- Widget: Resumen personal -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Mi Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="resumen-row">
+                        <span class="resumen-label">Predicciones hechas</span>
+                        <span class="resumen-val blue" id="resumenTotal">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Puntos acumulados</span>
+                        <span class="resumen-val gold" id="resumenPuntos">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Efectividad</span>
+                        <span class="resumen-val" id="resumenEfectividad">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Posición ranking</span>
+                        <span class="resumen-val" id="resumenPosicion">—</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-    </main>
-    
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4 class="footer-title">Quiniela Mundial 2026</h4>
-                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+ 
+            <!-- Widget: Reglas rápidas -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Reglas</span>
+                    <a href="reglamento.html" class="widget-link">Ver →</a>
+                </div>
+                <div class="widget-body">
+                    <div class="rule-item">
+                        <div class="rule-dot"></div>
+                        <span class="rule-text">Predice antes de los 10 min del pitazo</span>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-dot"></div>
+                        <span class="rule-text">Una predicción por partido</span>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-dot"></div>
+                        <span class="rule-text">No se puede modificar después del inicio</span>
+                    </div>
+                    <div class="rule-item">
+                        <div class="rule-dot"></div>
+                        <span class="rule-text">Sistema VAR activo para anulaciones</span>
+                    </div>
+                </div>
             </div>
-            
-            <div class="footer-section">
-                <h4 class="footer-title">Enlaces</h4>
-                <a href="reglamento.html" class="footer-link">Reglamento</a>
-                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
-                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+ 
+        </aside>
+ 
+ 
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="pred-col-main">
+ 
+            <!-- Tabs -->
+            <div class="pred-tabs">
+                <button class="pred-tab-btn active" data-tab="pending">
+                    <i class="bi bi-crosshair"></i>
+                    Por Predecir
+                </button>
+                <button class="pred-tab-btn" data-tab="completed">
+                    <i class="bi bi-clipboard-check"></i>
+                    Mis Predicciones
+                </button>
             </div>
-            
-            <div class="footer-section">
-                <h4 class="footer-title">FIFA World Cup 2026™</h4>
-                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+ 
+            <!-- TAB 1: Por Predecir -->
+            <div id="tab-pending" class="pred-tab-content active">
+ 
+                <div class="pred-filters">
+                    <div class="pred-filter-group">
+                        <label class="pred-filter-label">Fase</label>
+                        <select class="pred-filter-select" id="filterPhase">
+                            <option value="grupos" selected>Fase de Grupos</option>
+                            <option value="Grupo A">Grupo A</option>
+                            <option value="Grupo B">Grupo B</option>
+                            <option value="Grupo C">Grupo C</option>
+                            <option value="Grupo D">Grupo D</option>
+                            <option value="Grupo E">Grupo E</option>
+                            <option value="Grupo F">Grupo F</option>
+                            <option value="Grupo G">Grupo G</option>
+                            <option value="Grupo H">Grupo H</option>
+                            <option value="Grupo I">Grupo I</option>
+                            <option value="Grupo J">Grupo J</option>
+                            <option value="Grupo K">Grupo K</option>
+                            <option value="Grupo L">Grupo L</option>
+                        </select>
+                    </div>
+                    <div class="pred-filter-group">
+                        <label class="pred-filter-label">Ordenar por</label>
+                        <select class="pred-filter-select" id="sortBy">
+                            <option value="fechacercana" selected>Fecha más cercana</option>
+                            <option value="fechalejana">Fecha más lejana</option>
+                        </select>
+                    </div>
+                </div>
+ 
+                <div id="matchesGrid" class="matches-grid"></div>
+ 
             </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>©2026 Drogueria Carrisan. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/navbar.js"></script>
+ 
+            <!-- TAB 2: Mis Predicciones -->
+            <div id="tab-completed" class="pred-tab-content">
+ 
+                <div class="pred-filters">
+                    <div class="pred-filter-group">
+                        <label class="pred-filter-label">Fase</label>
+                        <select class="pred-filter-select" id="filterPhaseCompleted">
+                            <option value="grupos" selected>Fase de Grupos</option>
+                            <option value="Grupo A">Grupo A</option>
+                            <option value="Grupo B">Grupo B</option>
+                            <option value="Grupo C">Grupo C</option>
+                            <option value="Grupo D">Grupo D</option>
+                            <option value="Grupo E">Grupo E</option>
+                            <option value="Grupo F">Grupo F</option>
+                            <option value="Grupo G">Grupo G</option>
+                            <option value="Grupo H">Grupo H</option>
+                            <option value="Grupo I">Grupo I</option>
+                            <option value="Grupo J">Grupo J</option>
+                            <option value="Grupo K">Grupo K</option>
+                            <option value="Grupo L">Grupo L</option>
+                        </select>
+                    </div>
+                    <div class="pred-filter-group">
+                        <label class="pred-filter-label">Ordenar por</label>
+                        <select class="pred-filter-select" id="sortByCompleted">
+                            <option value="fechacercana">Fecha más cercana</option>
+                            <option value="fechalejana">Fecha más lejana</option>
+                        </select>
+                    </div>
+                </div>
+ 
+                <div id="completedList" class="predictions-list"></div>
+ 
+            </div>
+ 
+        </main>
+ 
+ 
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="pred-col-right">
+ 
+            <!-- Widget CTA: Ranking -->
+            <div class="widget widget-cta-dark">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">¿Cómo vas?</span>
+                </div>
+                <div class="widget-body">
+                    <p class="cta-text">Revisa tu posición en el ranking general y compara con tu liga.</p>
+                    <a href="ranking.html" class="cta-btn">Ver Ranking</a>
+                </div>
+            </div>
+ 
+            <!-- Widget: Sistema de puntuación -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Puntuación</span>
+                    <a href="sistema.html" class="widget-link">Tutorial →</a>
+                </div>
+                <div class="widget-body">
+                    <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5">
+                        <span style="font-size:12px;color:#333">Resultado exacto</span>
+                        <span style="font-size:11px;font-weight:800;color:#004085;background:#D1E7FF;border-radius:20px;padding:2px 10px">+9</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5">
+                        <span style="font-size:12px;color:#333">Ganador + marcador</span>
+                        <span style="font-size:11px;font-weight:800;color:#004085;background:#D1E7FF;border-radius:20px;padding:2px 10px">+7</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5">
+                        <span style="font-size:12px;color:#333">Ganador o empate</span>
+                        <span style="font-size:11px;font-weight:800;color:#004085;background:#D1E7FF;border-radius:20px;padding:2px 10px">+5</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;padding:7px 0">
+                        <span style="font-size:12px;color:#333">Solo el marcador</span>
+                        <span style="font-size:11px;font-weight:800;color:#004085;background:#D1E7FF;border-radius:20px;padding:2px 10px">+2</span>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Widget: Próximos partidos -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Próximos</span>
+                </div>
+                <div class="widget-body">
+                    <div id="proximosPartidosWidget">
+                        <div style="text-align:center;padding:16px 0;font-size:12px;color:#aaa;">Cargando...</div>
+                    </div>
+                </div>
+            </div>
+ 
+        </aside>
+ 
+    </div>
+    </div>
+    <!-- fin pred-grid -->
+ 
+ 
+    <!-- ═══════════════════════════════
+         PEGA TU FOOTER AQUÍ
+         ═══════════════════════════════ -->
+ 
+ 
+    <!-- ═══════════════════════════════
+         PEGA TU NAVBAR MÓVIL AQUÍ
+         ═══════════════════════════════ -->
+ 
+ 
+    <!-- SCRIPTS — mismo orden que tenías -->
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/predicciones.js"></script>
-</body>
+
+    </body>
 </html>

@@ -422,7 +422,38 @@ function mostrarToast(mensaje, tipo = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
+    /* ── TABS ────────────────────────────────────────── */
+    document.querySelectorAll('.pred-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pred-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pred-tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+    });
+ 
+    /* ── STATS HERO desde localStorage ──────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+        // Rellena los stats del hero si están disponibles en localStorage
+        // (los mismos que usa cargarEstadisticas en index.js)
+        const pts  = localStorage.getItem('quiniela_puntos');
+        const pos  = localStorage.getItem('quiniela_posicion');
+        const pred = localStorage.getItem('quiniela_predicciones');
+ 
+        if (pts)  {
+            document.getElementById('heroPuntos').textContent    = pts;
+            document.getElementById('resumenPuntos').textContent = pts;
+        }
+        if (pos)  {
+            document.getElementById('heroPosicion').textContent   = pos + '°';
+            document.getElementById('resumenPosicion').textContent = pos + '°';
+        }
+        if (pred) {
+            document.getElementById('heroTotalPartidos').textContent = pred;
+            document.getElementById('resumenTotal').textContent      = pred;
+        }
+    });
+    
 function obtenerBandera(nombre) {
     const banderas = {
     // Anfitriones y CONCACAF
