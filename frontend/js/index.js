@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     await verificarLogin();      
     await cargarDatos();         
     configurarMenuMobile();
-    duplicarTicker();
     iniciarCountdown();
     inicializarCarrusel();
     iniciarEasterEgg();
@@ -558,7 +557,11 @@ function iniciarEasterEgg() {
             "enable": true,
             "text":   "QMTV",
             "background": "#cb2126",
-            "color": "#ffffff"
+            "color": "#ffffff",
+            "fontFamily": "Yolk",      
+            "fontSize":   14,
+            "font-style": italic,            
+            "fontWeight": "700"
         },
         "data": noticias
       });
