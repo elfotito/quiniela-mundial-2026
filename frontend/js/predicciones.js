@@ -195,64 +195,75 @@ function renderizarPartidos() {
 
 function crearCardPartido(partido) {
     const fecha = new Date(partido.fecha);
-
+ 
+    const fechaCorta = fecha.toLocaleDateString('es', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    }); // → 06/11/2026
+ 
+    const hora = fecha.toLocaleTimeString('es', {
+        hour: '2-digit',
+        minute: '2-digit'
+    }); // → 15:00
+ 
+    // Detectar estadio si viene en los datos, si no omitir
+    const estadio = partido.estadio ? ` · ${partido.estadio}` : '';
+ 
     return `
         <div class="match-card" id="card-${partido.id}">
-            <div class="match-header">
-                <span class="match-phase">${partido.fase}</span>
-                <span class="match-date">${fecha.toLocaleDateString('es', { 
-                    day: '2-digit', 
-                    month: 'short',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })}</span>
+ 
+            <!-- CABECERA: competición + fecha -->
+            <div class="mc-header">
+                <span class="mc-competition">FIFA World Cup 2026™</span>
+                <span class="mc-date">${fechaCorta}</span>
             </div>
-            
-            <div class="match-teams">
-                <div class="team">
-                    <span class="team-flag">${obtenerBandera(partido.equipo_local)}</span>
-                    <span class="team-name">${partido.equipo_local}</span>
+ 
+            <!-- SUBTÍTULO: fase + estadio -->
+            <div class="mc-subtitle">
+                First Stage · ${partido.fase}${estadio}
+            </div>
+ 
+            <!-- EQUIPOS + INPUT DE PREDICCIÓN -->
+            <div class="mc-body">
+ 
+                <!-- Equipo Local -->
+                <div class="mc-team">
+                    <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
+                    <span class="mc-name">${partido.equipo_local}</span>
                 </div>
-                
-                <span class="vs">VS</span>
-                
-                <div class="team">
-                    <span class="team-flag">${obtenerBandera(partido.equipo_visitante)}</span>
-                    <span class="team-name">${partido.equipo_visitante}</span>
+ 
+                <!-- Input marcador -->
+                <div class="mc-score-input">
+                    <input type="number"
+                           class="mc-goal-input"
+                           id="local_${partido.id}"
+                           min="0" max="9"
+                           placeholder="0"
+                           onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
+                    <span class="mc-score-sep">:</span>
+                    <input type="number"
+                           class="mc-goal-input"
+                           id="visitante_${partido.id}"
+                           min="0" max="9"
+                           placeholder="0"
+                           onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
+                    <span class="mc-hora">${hora}</span>
                 </div>
+ 
+                <!-- Equipo Visitante -->
+                <div class="mc-team mc-team-right">
+                    <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
+                    <span class="mc-name">${partido.equipo_visitante}</span>
+                </div>
+ 
             </div>
-            
-            <div class="prediction-inputs">
-                <input type="number" 
-                       class="goal-input" 
-                       id="local_${partido.id}" 
-                       min="0" 
-                       max="9" 
-                       placeholder="0"
-                       onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-                <span class="separator"> - </span>
-                <input type="number" 
-                       class="goal-input" 
-                       id="visitante_${partido.id}" 
-                       min="0" 
-                       max="9" 
-                       placeholder="0"
-                       onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-            </div>
-            
-            <button class="btn-predict" onclick="enviarPrediccion(${partido.id})">
-                <span>💾</span>
-                <span>Guardar Predicción</span>
+ 
+            <!-- BOTÓN GUARDAR -->
+            <button class="mc-btn-predict" onclick="enviarPrediccion(${partido.id})">
+                Guardar Predicción
             </button>
-            
-            <div class="time-limit">
-                <span>📅</span>
-                <span>${fecha.toLocaleDateString('es', { 
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long'
-                })}</span>
-            </div>
+ 
         </div>
     `;
 }
@@ -453,7 +464,7 @@ function mostrarToast(mensaje, tipo = 'success') {
             document.getElementById('resumenTotal').textContent      = pred;
         }
     });
-    
+
 function obtenerBandera(nombre) {
     const banderas = {
     // Anfitriones y CONCACAF
