@@ -1902,10 +1902,18 @@ body {
 
 /* ─── News ticker ────────────────────────────────────────── */
 
+    .ticker-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    }
+
     #newsTicker3 {
+    width: 100%;
     max-width: 1600px;
-    margin: 0 auto;      
     color: #ffffff;
+    position: relative;
+    z-index: 1;
     }
     .ent_wrapper {
       display: flex;
