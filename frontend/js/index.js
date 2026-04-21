@@ -558,8 +558,7 @@ function iniciarTicker() {
             "background": "#cb2126",
             "color": "#ffffff",
             "fontFamily": "Yolk",      
-            "fontSize":   14,
-            "font-style": "italic",            
+            "fontSize":   36,            
             "fontWeight": "700"
         },
         "data": noticias
