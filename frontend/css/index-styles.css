@@ -1,30 +1,57 @@
 @font-face {
-    font-family: 'Neue Plak';
-    src: url('../fonts/Neue\ Plak\ Light.woff') format('woff2');
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-thin.woff') format('woff');
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-light.woff') format('woff');
     font-weight: 300;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Neue Plak';
-    src: url('../fonts/Neue\ Plak\ Regular.woff') format('woff2');
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-light-italic.woff') format('woff'); 
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk.woff') format('woff');
     font-weight: 400;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Neue Plak';
-    src: url('../fonts/Neue\ Plak\ SemiBold.woff') format('woff2');
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-medium-italic.woff') format('woff'); 
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-semibold.woff') format('woff');
     font-weight: 600;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Neue Plak';
-    src: url('../fonts/Neue\ Plak\ Bold.woff') format('woff2');
-    font-weight: 800;
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-bold.woff') format('woff');
+    font-weight: 700;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Neue Plak';
-    src: url('../fonts/Neue\ Plak\ Black.woff') format('woff2');
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-bold-italic.woff') format('woff'); 
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-black.woff') format('woff');
     font-weight: 900;
     font-display: swap;
 }
