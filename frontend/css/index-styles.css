@@ -1915,6 +1915,9 @@ body {
     position: relative;
     z-index: 1;
     }
+    #newsTicker3 .ent_label span {
+    font-style: italic;
+    }
     .ent_wrapper {
       display: flex;
       flex-direction: row;
