@@ -606,83 +606,46 @@
 
     // ─── CARGAR EQUIPOS ─────────────────────────────────────
     async function cargarEquipos() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/api/equipos`);
+        
+        // 🔍 DEBUG: Ver el status y texto de la respuesta
+        console.log('Status:', response.status);
+        
+        const textResponse = await response.text();
+        console.log('Respuesta cruda:', textResponse);
+        
+        // Intentar parsear como JSON
+        let equipos;
         try {
-            const res = await fetch(`${CONFIG.API_URL}/api/equipos`);
-            const equipos = await res.json();
-
-            if (!Array.isArray(equipos) || equipos.length === 0) {
-                throw new Error('No hay equipos disponibles');
-            }
-
-            const options = equipos.map(e => 
-                `<option value="${e.nombre}">${e.bandera_emoji || '🏳️'} ${e.nombre}</option>`
-            ).join('');
-
-            const htmlSelect = `<option value="">— Seleccionar equipo —</option>${options}`;
-            
-            document.getElementById('equipo_local').innerHTML = htmlSelect;
-            document.getElementById('equipo_visitante').innerHTML = htmlSelect;
-            
-        } catch (err) {
-            console.error('❌ Error cargando equipos:', err);
-            const errorHtml = '<option value="">Error al cargar equipos</option>';
-            document.getElementById('equipo_local').innerHTML = errorHtml;
-            document.getElementById('equipo_visitante').innerHTML = errorHtml;
+            equipos = JSON.parse(textResponse);
+        } catch (parseError) {
+            console.error('❌ Error parseando JSON:', parseError);
+            console.error('Texto recibido:', textResponse);
+            throw new Error('Respuesta no válida del servidor');
         }
+
+        if (!Array.isArray(equipos) || equipos.length === 0) {
+            console.warn('⚠️ No hay equipos disponibles');
+            throw new Error('No hay equipos disponibles');
+        }
+
+        const options = equipos.map(e => 
+            `<option value="${e.nombre}">${e.bandera_emoji || '🏳️'} ${e.nombre}</option>`
+        ).join('');
+
+        const htmlSelect = `<option value="">— Seleccionar equipo —</option>${options}`;
+        
+        document.getElementById('equipo_local').innerHTML = htmlSelect;
+        document.getElementById('equipo_visitante').innerHTML = htmlSelect;
+        
+    } catch (err) {
+        console.error('❌ Error cargando equipos:', err);
+        const errorHtml = '<option value="">Error al cargar equipos</option>';
+        document.getElementById('equipo_local').innerHTML = errorHtml;
+        document.getElementById('equipo_visitante').innerHTML = errorHtml;
     }
-
-    // ─── GUARDAR NOTICIA ────────────────────────────────────
-    async function guardarNoticia() {
-        const titulo = document.getElementById('titulo').value.trim();
-        const resena = document.getElementById('resena').value.trim();
-
-        if (!titulo) { showToast('El título es obligatorio', 'error'); return; }
-
-        const payload = {
-            tipo: tipoActual,
-            titulo,
-            resena
-        };
-
-        if (tipoActual === 'partido') {
-            const local = document.getElementById('equipo_local').value;
-            const visitante = document.getElementById('equipo_visitante').value;
-            if (!local || !visitante) { showToast('Selecciona ambos equipos', 'error'); return; }
-            payload.equipo_local = local;
-            payload.equipo_visitante = visitante;
-            payload.marcador_local = parseInt(document.getElementById('marcador_local').value) || 0;
-            payload.marcador_visitante = parseInt(document.getElementById('marcador_visitante').value) || 0;
-            payload.imagen_url = document.getElementById('imagen_url_partido').value.trim() || null;
-        } else {
-            payload.imagen_url = document.getElementById('imagen_url').value.trim() || null;
-        }
-
-        const btn = document.getElementById('btnGuardar');
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
-
-        try {
-            const res = await fetch(`${CONFIG.API_URL}/api/noticias`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('quiniela_token') || ''}`
-                },
-                body: JSON.stringify(payload)
-            });
-
-            if (!res.ok) throw new Error('Error al publicar');
-
-            showToast('✅ Noticia publicada', 'success');
-            resetForm();
-            await cargarNoticias();
-        } catch (err) {
-            showToast('Error al publicar la noticia', 'error');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
-        }
-    }
+}
 
     // ─── CARGAR NOTICIAS PUBLICADAS ─────────────────────────
     async function cargarNoticias() {
