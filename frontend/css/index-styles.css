@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'Yolk';
     src: url('../fonts/yolk-thin.woff') format('woff');
@@ -59,6 +60,13 @@
    INDEX - ESTILO FIFA WORLD CUP 2026
    =============================================== */
 :root {
+    --black-color: #151515;
+    --dark-gray-color: #232323;
+    --gray-color: #3f3f3f;
+    --light-color: #8a8a8a;
+    --white-color: #E1E8EB;
+    --violet-color: #7952B3;
+	--yellow-color: #FFC107;
     --fifablue: #314fff;
     --fifapurple: #6101eb;
     --greenlight: #9ee53d;
@@ -772,8 +780,8 @@ body {
 }
 
 .slide-category {
-    font-size: 1.5rem;
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 400;
     color: #fff;
     text-transform: capitalize;
     letter-spacing: 0,5px;
@@ -1891,3 +1899,117 @@ body {
     font-size: 12px;
     color: #aaa;
 }
+
+/* ─── News ticker ────────────────────────────────────────── */
+    .ent_wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      overflow: hidden;
+      z-index: 9999;
+    }
+ 
+    .ent_wrapper * { box-sizing: border-box; }
+ 
+    /* Label (etiqueta izquierda) */
+    .ent_wrapper .ent_label {
+      position: relative;
+      width: auto;
+      height: 100%;
+      flex: 0 1 auto;
+      display: flex;
+      align-items: center;
+    }
+    .ent_wrapper .ent_label span { display: block; }
+ 
+    /* Área de noticias */
+    .ent_wrapper .ent_news_wrapper {
+      position: relative;
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news .ent_news_url {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      white-space: nowrap;
+      outline: none !important;
+      box-shadow: none !important;
+      background: none !important;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news .ent_news_url .ent_date,
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news .ent_news_url .ent_prefix {
+      margin-right: 10px;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news .ent_news_url .ent_heading {
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+ 
+    .ent_wrapper .ent_news_wrapper .ent_news_container .ent_news .ent_news_url:hover .ent_heading {
+      text-decoration: underline;
+    }
+ 
+    /* Navegación (flechas prev/next) */
+    .ent_wrapper .ent_navigation {
+      position: relative;
+      height: 100%;
+      flex: 0 1 auto;
+      display: flex;
+      align-items: center;
+    }
+ 
+    .ent_wrapper .ent_navigation .ent_prev_news,
+    .ent_wrapper .ent_navigation .ent_next_news {
+      position: relative;
+      width: 20px;
+      height: 25px;
+      cursor: pointer;
+    }
+ 
+    .ent_wrapper .ent_navigation .ent_prev_news:after,
+    .ent_wrapper .ent_navigation .ent_next_news:after {
+      position: absolute;
+      content: '';
+      top: 50%; left: 50%;
+      padding: 4px;
+      border-color: inherit;
+      border-style: solid;
+      border-width: 0 3px 3px 0;
+      pointer-events: none;
+      transition: all 100ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .ent_wrapper .ent_navigation .ent_prev_news:hover:after,
+    .ent_wrapper .ent_navigation .ent_next_news:hover:after { padding: 6px; }
+    .ent_wrapper .ent_navigation .ent_prev_news:active:after,
+    .ent_wrapper .ent_navigation .ent_next_news:active:after { padding: 2px; }
+    .ent_wrapper .ent_navigation .ent_prev_news:after { transform: translate(-50%, -50%) rotate(135deg); }
+    .ent_wrapper .ent_navigation .ent_next_news:after { transform: translate(-50%, -50%) rotate(-45deg); }
+ 
+    /* ── Efecto SLIDE HORIZONTAL (el único que usamos) ── */
+    .ent_wrapper.slide-horizontal-effect .ent_news_container { display: flex; }
+    .ent_wrapper.slide-horizontal-effect .ent_news_container .ent_news { flex: 1 0 100%; }

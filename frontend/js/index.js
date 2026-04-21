@@ -530,6 +530,41 @@ function duplicarTicker() {
         ticker.parentElement.appendChild(clone);
     }
 }
+    $(document).ready(function () {
+ 
+      // ── Tus noticias aquí ──
+      var noticias = [
+        {
+          "date": "Junio 2026",
+          "prefix": "⚽ Mundial:",
+          "heading": "Venezuela debuta en el Grupo A contra México el 12 de junio.",
+          "url": "https://"
+        },
+        {
+          "date": "Junio 2026",
+          "prefix": "🏆 Quiniela:",
+          "heading": "¡Registra tus predicciones antes del inicio del torneo!",
+          "url": "https://"
+        },
+        {
+          "date": "Junio 2026",
+          "prefix": "📊 Ranking:",
+          "heading": "Carlos lidera la tabla con 42 puntos tras la fase de grupos.",
+          "url": "https://"
+        }
+      ];
+ 
+      $("#newsTicker3").easyNewsTicker({
+        "animation": {
+          "effect":   "slide-horizontal",
+          "easing":   "easeInOutExpo",
+          "duration": 1500        // ms de la transición
+          // "delay": 4000        // ms entre cada noticia (opcional, default ~3000)
+        },
+        "data": noticias
+      });
+ 
+    });
 
 // ===============================================
 // LOGOUT
