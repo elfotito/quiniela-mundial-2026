@@ -523,33 +523,26 @@ function iniciarEasterEgg() {
 // TICKER INFINITO
 // ===============================================
 
-function duplicarTicker() {
-    const ticker = document.getElementById('tickerContent');
-    if (ticker) {
-        const clone = ticker.cloneNode(true);
-        ticker.parentElement.appendChild(clone);
-    }
-}
     $(document).ready(function () {
  
       // ── Tus noticias aquí ──
       var noticias = [
         {
           "date": "Junio 2026",
-          "prefix": "⚽ Mundial:",
-          "heading": "Venezuela debuta en el Grupo A contra México el 12 de junio.",
-          "url": "https://"
+          "prefix": "📅 Mundial:",
+          "heading": "Todos los partidos estan disponible en el calendario.",
+          "url": "https://quiniela-mundial-2026-omega.vercel.app/calendario.html"
         },
         {
           "date": "Junio 2026",
-          "prefix": "🏆 Quiniela:",
+          "prefix": "🎯 Quiniela:",
           "heading": "¡Registra tus predicciones antes del inicio del torneo!",
-          "url": "https://"
+          "url": "https://quiniela-mundial-2026-omega.vercel.app/predicciones.html"
         },
         {
           "date": "Junio 2026",
-          "prefix": "📊 Ranking:",
-          "heading": "Carlos lidera la tabla con 42 puntos tras la fase de grupos.",
+          "prefix": "👨‍💼 Ligas:",
+          "heading": "Vicente es el nuevo presidente de la liga Montesushi.",
           "url": "https://"
         }
       ];
@@ -558,8 +551,12 @@ function duplicarTicker() {
         "animation": {
           "effect":   "slide-horizontal",
           "easing":   "easeInOutExpo",
-          "duration": 1500        // ms de la transición
-          // "delay": 4000        // ms entre cada noticia (opcional, default ~3000)
+          "duration": 1600,        // ms de la transición
+          "delay": 4000        // ms entre cada noticia (opcional, default ~3000)
+        },
+        "label": {
+            "enable": true,
+            "text":   "QUINIELATV"
         },
         "data": noticias
       });
