@@ -416,6 +416,11 @@
             background: var(--gray-300);
             margin: 28px 0;
         }
+        .btn-guardar:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -632,42 +637,71 @@
     }
 
     // ─── GUARDAR NOTICIA ────────────────────────────────────
+// ─── GUARDAR NOTICIA ────────────────────────────────────
 async function guardarNoticia(event) {
     event.preventDefault();
     
     console.log('🚀 Guardando noticia...');
-    // DEBUG: Ver la URL exacta
-    console.log('CONFIG.API_URL:', CONFIG.API_URL);
-    const urlCompleta = `${CONFIG.API_URL}/noticias`;
-    console.log('URL completa:', urlCompleta);
+    
+    // ✅ USAR EL TIPO SELECCIONADO EN LAS PLANTILLAS
+    const tipo = tipoActual; // 'hero', 'secundaria' o 'partido'
+    
     // Obtener valores del formulario
-    const formData = {
-        tipo: document.getElementById('tipo_noticia')?.value || 'partido',
-        titulo: document.getElementById('titulo')?.value,
-        resena: document.getElementById('resena')?.value,
-        imagen_url: document.getElementById('imagen_url')?.value || null,
-        equipo_local: document.getElementById('equipo_local')?.value || null,
-        equipo_visitante: document.getElementById('equipo_visitante')?.value || null,
-        marcador_local: parseInt(document.getElementById('marcador_local')?.value) || 0,
-        marcador_visitante: parseInt(document.getElementById('marcador_visitante')?.value) || 0
-    };
+    const titulo = document.getElementById('titulo')?.value?.trim();
+    const resena = document.getElementById('resena')?.value?.trim();
+    
+    // Para partido, usar la URL de imagen específica
+    let imagen_url;
+    if (tipo === 'partido') {
+        imagen_url = document.getElementById('imagen_url_partido')?.value || null;
+    } else {
+        imagen_url = document.getElementById('imagen_url')?.value || null;
+    }
+    
+    // Equipos y marcadores (solo para tipo partido)
+    const equipo_local = tipo === 'partido' ? document.getElementById('equipo_local')?.value || null : null;
+    const equipo_visitante = tipo === 'partido' ? document.getElementById('equipo_visitante')?.value || null : null;
+    const marcador_local = tipo === 'partido' ? parseInt(document.getElementById('marcador_local')?.value) || 0 : 0;
+    const marcador_visitante = tipo === 'partido' ? parseInt(document.getElementById('marcador_visitante')?.value) || 0 : 0;
 
-    // Validaciones simples
-    if (!formData.titulo || formData.titulo.trim() === '') {
-        alert('❌ El título es obligatorio');
+    // Validaciones básicas para todos los tipos
+    if (!titulo) {
+        showToast('El título es obligatorio', 'error');
         return;
     }
     
-    if (!formData.resena || formData.resena.trim() === '') {
-        alert('❌ La reseña es obligatoria');
+    if (!resena) {
+        showToast('La reseña es obligatoria', 'error');
         return;
     }
 
+    // Validaciones específicas para partido
+    if (tipo === 'partido') {
+        if (!equipo_local || !equipo_visitante) {
+            showToast('Debes seleccionar ambos equipos para un partido', 'error');
+            return;
+        }
+    }
+
+    const formData = {
+        tipo: tipo,
+        titulo: titulo,
+        resena: resena,
+        imagen_url: imagen_url,
+        equipo_local: equipo_local,
+        equipo_visitante: equipo_visitante,
+        marcador_local: marcador_local,
+        marcador_visitante: marcador_visitante
+    };
+
     console.log('📦 Datos a enviar:', formData);
-    console.log('📤 URL:', `${CONFIG.API_URL}/noticias`);
+
+    // Deshabilitar botón mientras se envía
+    const btnGuardar = document.getElementById('btnGuardar');
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
 
     try {
-        // Petición SIN autenticación
         const response = await fetch(`${CONFIG.API_URL}/noticias`, {
             method: 'POST',
             headers: {
@@ -676,25 +710,29 @@ async function guardarNoticia(event) {
             body: JSON.stringify(formData)
         });
 
-        console.log('📥 Status:', response.status);
+        const data = await response.json();
 
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Respuesta del servidor:', errorText);
-            throw new Error(`Error ${response.status}`);
+            throw new Error(data.error || 'Error al guardar');
         }
 
-        const data = await response.json();
         console.log('✅ Noticia guardada:', data);
         
-        alert('✅ ¡Noticia guardada exitosamente!');
+        showToast('✅ ¡Noticia publicada exitosamente!', 'success');
         
         // Limpiar formulario
-        document.getElementById('formNoticia').reset();
+        resetForm();
+        
+        // Recargar lista de noticias
+        await cargarNoticias();
         
     } catch (error) {
-        console.error('❌ Error completo:', error);
-        alert('❌ Error al guardar la noticia. Revisa la consola.');
+        console.error('❌ Error:', error);
+        showToast('❌ ' + error.message, 'error');
+    } finally {
+        // Re-habilitar botón
+        btnGuardar.disabled = false;
+        btnGuardar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
     }
 }
 
@@ -758,10 +796,22 @@ async function guardarNoticia(event) {
         document.getElementById('imagen_url_partido').value = '';
         document.getElementById('marcador_local').value = '0';
         document.getElementById('marcador_visitante').value = '0';
+        
+        // Resetear previews
         document.getElementById('imgPreview').style.display = 'none';
         document.getElementById('imgPlaceholder').style.display = 'flex';
         document.getElementById('imgPreviewPartido').style.display = 'none';
         document.getElementById('imgPlaceholderPartido').style.display = 'flex';
+        
+        // Resetear selects de equipos a la primera opción
+        if (document.getElementById('equipo_local').options.length > 0) {
+            document.getElementById('equipo_local').selectedIndex = 0;
+            document.getElementById('equipo_visitante').selectedIndex = 0;
+        }
+        
+        // Volver a plantilla Hero por defecto
+        const heroBtn = document.querySelector('[data-tipo="hero"]');
+        if (heroBtn) setTipo('hero', heroBtn);
     }
 
     function formatFecha(iso) {
