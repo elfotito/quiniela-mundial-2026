@@ -607,23 +607,27 @@
     // ─── CARGAR EQUIPOS ─────────────────────────────────────
     async function cargarEquipos() {
         try {
-            const res = await fetch(`${CONFIG.API_URL}/api/grupos`); // ajusta al endpoint correcto
-            // Si tu endpoint devuelve equipos directamente:
-            const res2 = await fetch(`${CONFIG.API_URL}/api/equipos`);
-            const data = await res2.json();
-            const equipos = Array.isArray(data) ? data : data.equipos || [];
+            const res = await fetch(`${CONFIG.API_URL}/api/equipos`);
+            const equipos = await res.json();
 
-            const options = equipos.map(e =>
-                `<option value="${e.nombre}">${e.bandera || ''} ${e.nombre}</option>`
+            if (!Array.isArray(equipos) || equipos.length === 0) {
+                throw new Error('No hay equipos disponibles');
+            }
+
+            const options = equipos.map(e => 
+                `<option value="${e.nombre}">${e.bandera_emoji || '🏳️'} ${e.nombre}</option>`
             ).join('');
 
-            document.getElementById('equipo_local').innerHTML = `<option value="">— Local —</option>${options}`;
-            document.getElementById('equipo_visitante').innerHTML = `<option value="">— Visitante —</option>${options}`;
+            const htmlSelect = `<option value="">— Seleccionar equipo —</option>${options}`;
+            
+            document.getElementById('equipo_local').innerHTML = htmlSelect;
+            document.getElementById('equipo_visitante').innerHTML = htmlSelect;
+            
         } catch (err) {
-            // Si no hay endpoint de equipos, carga lista estática básica
-            console.warn('No se pudieron cargar equipos:', err);
-            document.getElementById('equipo_local').innerHTML = '<option value="">No disponible</option>';
-            document.getElementById('equipo_visitante').innerHTML = '<option value="">No disponible</option>';
+            console.error('❌ Error cargando equipos:', err);
+            const errorHtml = '<option value="">Error al cargar equipos</option>';
+            document.getElementById('equipo_local').innerHTML = errorHtml;
+            document.getElementById('equipo_visitante').innerHTML = errorHtml;
         }
     }
 
