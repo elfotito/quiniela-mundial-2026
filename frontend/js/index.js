@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     configurarMenuMobile();
     iniciarCountdown();
     inicializarCarrusel();
+    iniciarTicker();
     iniciarEasterEgg();
 });
 // ===============================================
@@ -519,12 +520,10 @@ function iniciarEasterEgg() {
     }, { passive: true });
 }
 // ===============================================
-// TICKER INFINITO
+// TICKER MODO PROOOOOOO
 // ===============================================
 
-    $(document).ready(function () {
- 
-      // ── Tus noticias aquí ──
+function iniciarTicker() {
       var noticias = [
         {
           "date": "Febrero 2026",
@@ -566,7 +565,7 @@ function iniciarEasterEgg() {
         "data": noticias
       });
  
-    });
+    };
 
 // ===============================================
 // LOGOUT
