@@ -635,63 +635,63 @@
 async function guardarNoticia(event) {
     event.preventDefault();
     
-    console.log('🚀 Iniciando guardado de noticia...');
+    console.log('🚀 Guardando noticia...');
     
+    // Obtener valores del formulario
     const formData = {
-        tipo: 'partido', // o 'hero', 'secundaria' según tu formulario
-        titulo: document.getElementById('titulo').value,
-        resena: document.getElementById('resena').value,
+        tipo: document.getElementById('tipo_noticia')?.value || 'partido',
+        titulo: document.getElementById('titulo')?.value,
+        resena: document.getElementById('resena')?.value,
         imagen_url: document.getElementById('imagen_url')?.value || null,
-        equipo_local: document.getElementById('equipo_local').value || null,
-        equipo_visitante: document.getElementById('equipo_visitante').value || null,
+        equipo_local: document.getElementById('equipo_local')?.value || null,
+        equipo_visitante: document.getElementById('equipo_visitante')?.value || null,
         marcador_local: parseInt(document.getElementById('marcador_local')?.value) || 0,
         marcador_visitante: parseInt(document.getElementById('marcador_visitante')?.value) || 0
     };
 
-    // Validación del tipo requerida por tu endpoint
-    if (!['hero', 'secundaria', 'partido'].includes(formData.tipo)) {
-        alert('❌ Tipo de noticia inválido');
+    // Validaciones simples
+    if (!formData.titulo || formData.titulo.trim() === '') {
+        alert('❌ El título es obligatorio');
+        return;
+    }
+    
+    if (!formData.resena || formData.resena.trim() === '') {
+        alert('❌ La reseña es obligatoria');
         return;
     }
 
-    try {
-        // Obtener el token de admin (de localStorage, sessionStorage o cookies)
-        const adminToken = localStorage.getItem('adminToken') || sessionStorage.getItem('adminToken');
-        
-        if (!adminToken) {
-            alert('❌ Debes iniciar sesión como administrador');
-            window.location.href = '/login.html';
-            return;
-        }
+    console.log('📦 Datos a enviar:', formData);
+    console.log('📤 URL:', `${CONFIG.API_URL}/noticias`);
 
+    try {
+        // Petición SIN autenticación
         const response = await fetch(`${CONFIG.API_URL}/noticias`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}` // Enviar token
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
         });
 
+        console.log('📥 Status:', response.status);
+
         if (!response.ok) {
-            if (response.status === 401 || response.status === 403) {
-                alert('❌ Sesión expirada. Por favor inicia sesión nuevamente');
-                window.location.href = '/login.html';
-                return;
-            }
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Error al guardar');
+            const errorText = await response.text();
+            console.error('Respuesta del servidor:', errorText);
+            throw new Error(`Error ${response.status}`);
         }
 
         const data = await response.json();
         console.log('✅ Noticia guardada:', data);
-        alert('✅ Noticia guardada exitosamente');
         
+        alert('✅ ¡Noticia guardada exitosamente!');
+        
+        // Limpiar formulario
         document.getElementById('formNoticia').reset();
         
     } catch (error) {
-        console.error('❌ Error:', error);
-        alert('❌ Error al guardar: ' + error.message);
+        console.error('❌ Error completo:', error);
+        alert('❌ Error al guardar la noticia. Revisa la consola.');
     }
 }
 

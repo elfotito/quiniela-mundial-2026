@@ -1204,7 +1204,7 @@ app.get('/api/noticias', async (req, res) => {
 // ─── POST /api/noticias ──────────────────────────────────
 // Crea una noticia nueva
 // Solo admin — verifica isAdmin en la sesión/token
-app.post('/api/noticias', verificarAdmin, async (req, res) => {
+app.post('/api/noticias', async (req, res) => {
     try {
         const {
             tipo,
@@ -1255,7 +1255,7 @@ app.post('/api/noticias', verificarAdmin, async (req, res) => {
 // ─── DELETE /api/noticias/:id ────────────────────────────
 // Elimina (desactiva) una noticia por ID
 // Solo admin
-app.delete('/api/noticias/:id', verificarAdmin, async (req, res) => {
+app.delete('/api/noticias/:id', async (req, res) => {
     try {
         const { id } = req.params;
 

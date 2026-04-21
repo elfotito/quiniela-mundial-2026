@@ -534,7 +534,7 @@ function iniciarTicker() {
         {
           "date": "Abril 2026",
           "prefix": "🎯 Quiniela:",
-          "heading": "¡Registra tus predicciones antes del inicio del torneo!",
+          "heading": "¡Registra tus predicciones antes del inicio del mundial!",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/predicciones.html"
         },
         {
