@@ -84,7 +84,7 @@
     --nav-bottom-bg: #0a1532;
     --text-white: #ffffff;
     --text-gray: #b3b3b3;
-    --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-main: 'Yolk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
         * {
