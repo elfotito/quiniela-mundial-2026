@@ -29,7 +29,13 @@ const poolConfig = process.env.DATABASE_URL
 
 console.log('DATABASE_URL existe:', !!process.env.DATABASE_URL);
 
-const pool = new Pool(poolConfig);
+const pool = new Pool({
+    ...poolConfig,
+    max: 20,                          
+    idleTimeoutMillis: 30000,         
+    connectionTimeoutMillis: 10000,   
+    allowExitOnIdle: true
+    });            
 
 // Probar conexión
 pool.connect((err, client, release) => {
@@ -55,6 +61,36 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// ===============================================
+// 🛡️ MIDDLEWARE DE SEGURIDAD - CABECERAS HTTP
+// ===============================================
+app.use((req, res, next) => {
+    // 1. Forzar HTTPS por 1 año (previene ataques de downgrade)
+    res.setHeader(
+        'Strict-Transport-Security',
+        'max-age=31536000; includeSubDomains; preload'
+    );
+    
+    // 2. Prevenir MIME type sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    
+    // 3. Prevenir clickjacking
+    res.setHeader('X-Frame-Options', 'DENY');
+    
+    // 4. Controlar información del Referer
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    
+    // 5. Restringir APIs del navegador
+    res.setHeader(
+        'Permissions-Policy',
+        'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+    );
+    
+    // 6. OCULTAR información del servidor
+    res.removeHeader('X-Powered-By');
+    
+    next();
+});
 // ===============================================
 // RUTAS DE AUTENTICACIÓN
 // ===============================================
