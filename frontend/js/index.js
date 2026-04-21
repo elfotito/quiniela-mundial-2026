@@ -549,8 +549,8 @@ function iniciarTicker() {
         "animation": {
           "effect":   "slide-horizontal",
           "easing":   "easeInOutExpo",
-          "duration": 1600,        // ms de la transición
-          "delay": 4000        // ms entre cada noticia (opcional, default ~3000)
+          "duration": 1600,        
+          "delay": 4000        
         },
         "label": {
             "enable": true,
