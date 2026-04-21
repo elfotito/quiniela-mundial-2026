@@ -103,7 +103,7 @@
 
         body {
             font-family: var(--font-main); 
-            color: #c7d5e4;
+            color: #8a8a8a;
             padding-top: 130px;
             padding-bottom: 70px; /* Espacio para el navbar móvil */
         }
