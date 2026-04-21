@@ -553,8 +553,8 @@
 <div class="toast" id="toast"></div>
 
 <!-- SCRIPTS -->
-<script src="config.js"></script>
-<script src="auth.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
 <script>
     // ─── AUTH GUARD ──────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', async () => {
@@ -607,9 +607,9 @@
     // ─── CARGAR EQUIPOS ─────────────────────────────────────
     async function cargarEquipos() {
         try {
-            const res = await fetch(`${API_BASE_URL}/api/grupos`); // ajusta al endpoint correcto
+            const res = await fetch(`${CONFIG.API_URL}/api/grupos`); // ajusta al endpoint correcto
             // Si tu endpoint devuelve equipos directamente:
-            const res2 = await fetch(`${API_BASE_URL}/api/equipos`);
+            const res2 = await fetch(`${CONFIG.API_URL}/api/equipos`);
             const data = await res2.json();
             const equipos = Array.isArray(data) ? data : data.equipos || [];
 
@@ -658,7 +658,7 @@
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
 
         try {
-            const res = await fetch(`${API_BASE_URL}/api/noticias`, {
+            const res = await fetch(`${CONFIG.API_URL}/api/noticias`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -684,7 +684,7 @@
     async function cargarNoticias() {
         const list = document.getElementById('noticiasList');
         try {
-            const res = await fetch(`${API_BASE_URL}/api/noticias?limit=20`);
+            const res = await fetch(`${CONFIG.API_URL}/api/noticias?limit=20`);
             const data = await res.json();
             const noticias = Array.isArray(data) ? data : data.noticias || [];
 
@@ -721,7 +721,7 @@
     async function eliminarNoticia(id) {
         if (!confirm('¿Eliminar esta noticia?')) return;
         try {
-            await fetch(`${API_BASE_URL}/api/noticias/${id}`, {
+            await fetch(`${CONFIG.API_URL}/api/noticias/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('quiniela_token') || ''}` }
             });

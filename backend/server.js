@@ -1173,11 +1173,6 @@ app.patch('/api/usuarios/:id/estado', async (req, res) => {
         res.status(500).json({ error: 'Error del servidor' });
     }
 });
-// =============================================
-// ENDPOINTS: Noticias - Quiniela Mundial 2026
-// Pega estas rutas en tu archivo de rutas Express
-// (donde tienes el resto de tus endpoints)
-// =============================================
 
 // ─── GET /api/noticias ───────────────────────────────────
 // Retorna noticias activas ordenadas por fecha desc
