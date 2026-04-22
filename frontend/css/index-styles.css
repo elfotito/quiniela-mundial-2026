@@ -2289,7 +2289,7 @@ body {
         align-items: center;
         justify-content: space-between;
         padding: 10px 16px;
-        gap: 12px;
+        min-height: 60px;
     }
  
     .countdown-label div { display: none; }
@@ -2309,9 +2309,8 @@ body {
  
     /* Timer compacto */
     .countdown-timer {
-        display: flex;
+        display: center;
         gap: 0;
-        flex: 1;
         justify-content: center;
         align-items: center;
     }
