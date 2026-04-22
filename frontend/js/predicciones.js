@@ -215,8 +215,8 @@ function crearCardPartido(partido) {
             <!-- CABECERA -->
             <div class="mc-header">
                 <div>
-                    <div class="mc-competition">FIFA World Cup 2026™</div>
-                    <div class="mc-subtitle">First Stage · ${partido.fase}${estadio}</div>
+                    <div class="mc-competition">Copa Mundial FIFA 2026™</div>
+                    <div class="mc-subtitle">Fase de Grupos · ${partido.fase}${estadio}</div>
                 </div>
                 <span class="mc-date">${fechaCorta}</span>
             </div>

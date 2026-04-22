@@ -107,7 +107,6 @@
             font-size: 0.8rem;
             font-weight: 600;
             padding: 6px 11px;
-            border-radius: 4px;
             letter-spacing: 0.3px;
             white-space: nowrap;
             transition: color 0.2s, background 0.2s;
@@ -527,7 +526,6 @@
     /* ── WIDGET BASE ──────────────────────────────────── */
     .widget {
         background: #fff;
-        border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border: 1px solid #eee;
@@ -560,7 +558,6 @@
         display: flex;
         gap: 0;
         background: #fff;
-        border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border: 1px solid #eee;
@@ -593,7 +590,7 @@
     /* ── FILTROS ──────────────────────────────────────── */
     .pred-filters {
         background: #fff;
-        border-radius: 14px;
+        
         padding: 14px 16px;
         display: flex;
         gap: 12px;
@@ -619,7 +616,7 @@
     .pred-filter-select {
         padding: 8px 12px;
         border: 1px solid #e0e0e0;
-        border-radius: 8px;
+        
         font-size: 13px;
         color: #1a1a1a;
         background: #fff;
@@ -653,7 +650,7 @@
     /* Estado vacío / loading */
     .pred-empty {
         background: #fff;
-        border-radius: 14px;
+        
         padding: 48px 24px;
         text-align: center;
         border: 1px solid #eee;
@@ -746,16 +743,10 @@
         background: #f4f4f4;
     }
 
- /* =====================================================
-   MATCH CARD v3 — alineado con inputs + grid desktop
-   Reemplaza el CSS anterior de match cards en
-   predicciones-styles.css
-   ===================================================== */
-
 /* ── GRID DE CARDS (desktop 3 cols, tablet 2, móvil 1) */
 #matchesGrid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     align-items: start;
 }
@@ -770,7 +761,6 @@
 /* ── CARD BASE ─────────────────────────────────────── */
 .match-card {
     background: #fff;
-    border-radius: 12px;
     border: 1px solid #e8e8e8;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     overflow: hidden;
@@ -826,7 +816,7 @@
 .mc-teams-inputs {
     display: flex;
     flex-direction: column;
-    gap: 12px;   /* espacio entre los dos equipos */
+    gap: 12px; 
     flex: 1;
     min-width: 0;
 }
@@ -840,10 +830,10 @@
 .mc-flag { font-size: 24px; line-height: 1; flex-shrink: 0; }
 
 .mc-name {
-    font-size: 12px;
-    font-weight: 800;
-    color: #1a1a1a;
-    letter-spacing: 0.3px;
+    font-size: 10px;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0.5px;
     flex: 1;
     min-width: 0;
     white-space: nowrap;
@@ -860,7 +850,6 @@
     font-weight: 800;
     color: #1a1a1a;
     border: 1.5px solid #e0e0e0;
-    border-radius: 8px;
     background: #fafafa;
     flex-shrink: 0;
     -moz-appearance: textfield;
@@ -886,8 +875,8 @@
 }
 .mc-hora {
     font-size: 24px;
-    font-weight: 900;
-    color: #1a1a1a;
+    font-weight: 400;
+    color: #000000;
     letter-spacing: -1px;
     line-height: 1;
 }
