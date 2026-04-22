@@ -335,36 +335,119 @@ function renderizarPredicciones() {
 }
 
 function crearCardPrediccion(prediccion) {
-    const fecha = new Date(prediccion.fecha);
-    const esPendiente = prediccion.puntos_obtenidos === null;
-
+    const fecha = new Date(prediccion.fecha_partido || prediccion.fecha);
+    const esPendiente  = prediccion.puntos_obtenidos === null;
+    const esFinalizado = prediccion.estado === 'finalizado';
+ 
+    const fechaCorta = fecha.toLocaleDateString('es', {
+        day: '2-digit', month: '2-digit', year: 'numeric'
+    });
+ 
+    const estadio = prediccion.estadio ? ` · ${prediccion.estadio}` : '';
+ 
+    // Resultado real (solo si el partido finalizó)
+    const tieneResultado = esFinalizado &&
+        prediccion.goles_local !== null &&
+        prediccion.goles_visitante !== null;
+ 
+    // Badge de puntos
+    let puntajeBadge = '';
+    if (!esPendiente) {
+        const pts = prediccion.puntos_obtenidos;
+        let badgeColor = '#EBF3FF'; let textColor = '#0C447C';
+        if (pts >= 9)      { badgeColor = '#D1F2EB'; textColor = '#085041'; }
+        else if (pts >= 7) { badgeColor = '#EAF3DE'; textColor = '#27500A'; }
+        else if (pts >= 5) { badgeColor = '#FAEEDA'; textColor = '#633806'; }
+        else if (pts > 0)  { badgeColor = '#FFF3CD'; textColor = '#856404'; }
+        else               { badgeColor = '#f5f5f5'; textColor = '#888';    }
+ 
+        puntajeBadge = `<span style="
+            display:inline-block;
+            background:${badgeColor};
+            color:${textColor};
+            font-size:13px;
+            font-weight:900;
+            padding:4px 12px;
+            border-radius:20px;
+            letter-spacing:0.3px;
+        ">${pts > 0 ? '+' : ''}${pts} pts</span>`;
+    }
+ 
     return `
-        <div class="prediction-card">
-            <div class="prediction-info">
-                <div class="prediction-match-name">
-                    ${obtenerBandera(prediccion.equipo_local)} ${prediccion.equipo_local} vs 
-                    ${prediccion.equipo_visitante} ${obtenerBandera(prediccion.equipo_visitante)}
+        <div class="pred-card">
+ 
+            <!-- CABECERA -->
+            <div class="pred-card-header">
+                <div>
+                    <div class="pred-card-competition">FIFA World Cup 2026™</div>
+                    <div class="pred-card-subtitle">First Stage · ${prediccion.fase}${estadio}</div>
                 </div>
-                <div class="prediction-details">
-                    <span>${prediccion.fase}</span>
-                    <span>•</span>
-                    <span>${fecha.toLocaleDateString('es', { day: '2-digit', month: 'short' })}</span>
+                <span class="pred-card-date">${fechaCorta}</span>
+            </div>
+ 
+            <!-- CUERPO: equipos + marcadores -->
+            <div class="pred-card-body">
+ 
+                <!-- Equipos (izquierda) -->
+                <div class="pred-card-teams">
+                    <div class="pred-card-team-row">
+                        <span class="pred-card-flag">${obtenerBandera(prediccion.equipo_local)}</span>
+                        <span class="pred-card-name">${prediccion.equipo_local.toUpperCase()}</span>
+                    </div>
+                    <div class="pred-card-team-row">
+                        <span class="pred-card-flag">${obtenerBandera(prediccion.equipo_visitante)}</span>
+                        <span class="pred-card-name">${prediccion.equipo_visitante.toUpperCase()}</span>
+                    </div>
                 </div>
+ 
+                <!-- Scores (centro-derecha) -->
+                <div class="pred-card-scores">
+ 
+                    <!-- Mi predicción -->
+                    <div class="pred-card-score-col">
+                        <div class="pred-card-score-label">Mi predicción</div>
+                        <div class="pred-card-score-vals">
+                            <span class="pred-card-score-num">${prediccion.goles_local_pred}</span>
+                            <span class="pred-card-score-sep">—</span>
+                            <span class="pred-card-score-num">${prediccion.goles_visitante_pred}</span>
+                        </div>
+                    </div>
+ 
+                    <!-- Separador -->
+                    <div class="pred-card-score-divider"></div>
+ 
+                    <!-- Resultado real -->
+                    <div class="pred-card-score-col">
+                        <div class="pred-card-score-label">Resultado</div>
+                        <div class="pred-card-score-vals">
+                            ${tieneResultado ? `
+                                <span class="pred-card-score-num real">${prediccion.goles_local}</span>
+                                <span class="pred-card-score-sep">—</span>
+                                <span class="pred-card-score-num real">${prediccion.goles_visitante}</span>
+                            ` : `
+                                <span class="pred-card-score-pending">
+                                    ${esPendiente ? 'Por jugar' : '—'}
+                                </span>
+                            `}
+                        </div>
+                    </div>
+ 
+                </div>
+ 
             </div>
-            
-            <div class="prediction-score">
-                ${prediccion.goles_local_pred} - ${prediccion.goles_visitante_pred}
-            </div>
-            
-            <div class="prediction-result">
-                <span class="status-badge ${esPendiente ? 'pendiente' : 'finalizado'}">
+ 
+            <!-- FOOTER: status + puntos -->
+            <div class="pred-card-footer">
+                <span class="pred-card-status ${esPendiente ? 'pendiente' : 'finalizado'}">
                     ${esPendiente ? '⏳ Pendiente' : '✅ Finalizado'}
                 </span>
-                ${!esPendiente ? `<span class="points-display">+${prediccion.puntos_obtenidos}</span>` : ''}
+                ${puntajeBadge}
             </div>
+ 
         </div>
     `;
 }
+
 
 async function enviarPrediccion(partidoId) {
     const inputLocal = document.getElementById(`local_${partidoId}`);
