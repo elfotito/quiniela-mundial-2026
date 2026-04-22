@@ -418,19 +418,19 @@ function crearCardPrediccion(prediccion) {
  
                     <!-- Resultado real -->
                     <div class="pred-card-score-col">
-                        <div class="pred-card-score-label">Resultado</div>
-                        <div class="pred-card-score-vals">
-                            ${tieneResultado ? `
-                                <span class="pred-card-score-num real">${prediccion.goles_local}</span>
-                                <span class="pred-card-score-sep">—</span>
-                                <span class="pred-card-score-num real">${prediccion.goles_visitante}</span>
-                            ` : `
-                                <span class="pred-card-score-pending">
-                                    ${esPendiente ? 'Por jugar' : '—'}
-                                </span>
-                            `}
+                    <div class="pred-card-score-label">${tieneResultado ? 'FINAL' : 'Resultado'}</div>
+                    ${tieneResultado ? `
+                        <div class="pred-card-result-stack">
+                            <span class="pred-card-result-num">${prediccion.goles_local}</span>
+                            <div class="pred-card-result-line"></div>
+                            <span class="pred-card-result-num">${prediccion.goles_visitante}</span>
                         </div>
-                    </div>
+                    ` : `
+                        <div class="pred-card-score-vals">
+                            <span class="pred-card-score-pending">${esPendiente ? 'Por jugar' : '—'}</span>
+                        </div>
+                    `}
+                </div>
  
                 </div>
  

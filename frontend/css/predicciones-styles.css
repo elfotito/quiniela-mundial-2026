@@ -1074,3 +1074,24 @@
 }
 .pred-card-status.pendiente  { color: #BA7517; }
 .pred-card-status.finalizado { color: #16a34a; }
+
+.pred-card-result-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.pred-card-result-num {
+    font-size: 24px;
+    font-weight: 900;
+    color: #0066CC;
+    line-height: 1.2;
+    min-width: 28px;
+    text-align: center;
+}
+.pred-card-result-line {
+    width: 28px;
+    height: 2px;
+    background: #e0e0e0;
+    margin: 2px 0;
+}
