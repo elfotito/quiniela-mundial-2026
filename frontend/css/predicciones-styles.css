@@ -825,6 +825,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    justify-content: space-between;
 }
 
 .mc-flag { font-size: 24px; line-height: 1; flex-shrink: 0; }
@@ -900,3 +901,48 @@
 .mc-btn-predict:hover   { background: #0052a3; }
 .mc-btn-predict:active  { transform: scale(0.98); }
 .mc-btn-predict:disabled { background: #ccc; cursor: not-allowed; }
+
+/* REEMPLAZA .mc-score-spinner */
+.mc-score-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.mc-spin-btn {
+    width: 36px;
+    height: 16px;
+    background: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 8px;
+    color: #555;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    padding: 0;
+    line-height: 1;
+}
+.mc-spin-btn:hover  { background: #0066CC; color: #fff; border-color: #0066CC; }
+.mc-spin-btn:active { transform: scale(0.95); }
+
+.mc-goal-input {
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1a1a1a;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    background: #fafafa;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    padding: 0;
+    cursor: default;
+}
+.mc-goal-input:focus { outline: none; }
