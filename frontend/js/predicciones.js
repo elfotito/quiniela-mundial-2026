@@ -231,20 +231,22 @@ function crearCardPartido(partido) {
                     <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
                     <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
                     <div class="mc-score-spinner">
+                        <div class="mc-spin-arrows">
                         <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', 1)" tabindex="-1">▲</button>
-                        <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0" readonly>
                         <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
-                    </div>
+                        </div>
+                    <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0" readonly>
                 </div>
 
                 <div class="mc-team-row">
                     <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
                     <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
                     <div class="mc-score-spinner">
+                        <div class="mc-spin-arrows">
                         <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', 1)" tabindex="-1">▲</button>
-                        <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0" readonly>
                         <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
                     </div>
+                    <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0" readonly>
                 </div>
 
             </div>
