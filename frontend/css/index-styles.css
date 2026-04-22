@@ -2313,6 +2313,7 @@ body {
         gap: 0;
         flex: 1;
         justify-content: center;
+        align-items: center;
     }
  
     .time-box {
