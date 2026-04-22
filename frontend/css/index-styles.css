@@ -2030,3 +2030,317 @@ body {
     /* ── Efecto SLIDE HORIZONTAL (el único que usamos) ── */
     .ent_wrapper.slide-horizontal-effect .ent_news_container { display: flex; }
     .ent_wrapper.slide-horizontal-effect .ent_news_container .ent_news { flex: 1 0 100%; }
+
+    /* ── TOP BAR ──────────────────────────────────────────────── */
+.mobile-top-bar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 56px;
+    background: #000;
+    z-index: 1100;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+ 
+.mtb-icon-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.mtb-icon-btn:hover { background: rgba(255,255,255,0.08); }
+ 
+.mtb-logo {
+    height: 28px;
+    display: flex;
+    align-items: center;
+}
+.mtb-logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+ 
+/* ── MENU OVERLAY ──────────────────────────────────────────── */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 56px; left: 0;
+    width: 100%;
+    height: calc(100% - 56px - 64px);
+    background: #0a0a0a;
+    z-index: 1050;
+    overflow-y: auto;
+    transform: translateY(-110%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+.mobile-menu-overlay.show {
+    transform: translateY(0);
+}
+ 
+.mmo-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1040;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.mmo-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+ 
+.mmo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid #1a1a1a;
+}
+.mmo-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
+.mmo-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+}
+.mmo-close:hover { background: #1a1a1a; color: #fff; }
+ 
+.mmo-section { padding: 8px 0; }
+ 
+.mmo-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 20px;
+    text-decoration: none;
+    transition: background 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    cursor: pointer;
+}
+.mmo-link:hover { background: #141414; }
+ 
+.mmo-link-main {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+.mmo-link-main i:first-child {
+    width: 20px;
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 14px;
+}
+ 
+.mmo-link-sec {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    padding: 10px 20px 10px 54px;
+    gap: 8px;
+}
+ 
+.mmo-arrow {
+    margin-left: auto;
+    font-size: 11px;
+    color: rgba(255,255,255,0.25) !important;
+    width: auto !important;
+}
+ 
+.mmo-divider {
+    height: 1px;
+    background: #1a1a1a;
+    margin: 4px 20px;
+}
+ 
+.mmo-footer {
+    margin-top: auto;
+    padding: 16px 20px 20px;
+    border-top: 1px solid #1a1a1a;
+}
+.mmo-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.2s, color 0.2s;
+}
+.mmo-logout-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+ 
+/* ── BOTTOM NAV ────────────────────────────────────────────── */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    background: #000;
+    border-top: 1px solid #1a1a1a;
+    z-index: 1100;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 4px;
+}
+ 
+.mbn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: rgba(255,255,255,0.35);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    height: 100%;
+    transition: color 0.2s;
+    padding: 0;
+}
+.mbn-item i { font-size: 1.2rem; }
+.mbn-item.active { color: #fff; }
+.mbn-item:hover:not(.mbn-center) { color: rgba(255,255,255,0.7); }
+ 
+/* Botón central */
+.mbn-center {
+    flex: 0 0 64px;
+    position: relative;
+}
+.mbn-center-ball {
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+    box-shadow: 0 2px 12px rgba(255,255,255,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.mbn-center-ball i {
+    font-size: 1.4rem;
+    color: #000;
+}
+.mbn-center:hover .mbn-center-ball {
+    transform: scale(1.08);
+    box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+}
+.mbn-center:active .mbn-center-ball { transform: scale(0.95); }
+ 
+/* ── MOSTRAR EN MÓVIL ──────────────────────────────────────── */
+@media (max-width: 1100px) {
+    .mobile-top-bar    { display: flex; }
+    .mobile-bottom-nav { display: flex; }
+    .desktop-header    { display: none !important; }
+    body { padding-top: 56px !important; padding-bottom: 64px !important; }
+}
+ 
+ 
+/* ── COUNTDOWN MÓVIL FIX ───────────────────────────────────── */
+@media (max-width: 1100px) {
+ 
+    .countdown-wrapper {
+        background: var(--fifablue, #314fff);
+    }
+ 
+    .countdown-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        gap: 12px;
+    }
+ 
+    /* Ocultar label de texto, solo mostrar logo */
+    .countdown-label div { display: none; }
+    .countdown-label {
+        flex-direction: row;
+        gap: 0;
+        flex-shrink: 0;
+    }
+ 
+    /* Logo/trofeo del countdown */
+    .countdown-label img,
+    .countdown-label .trophy-icon {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+    }
+ 
+    /* Timer compacto */
+    .countdown-timer {
+        display: flex;
+        gap: 0;
+        flex: 1;
+        justify-content: flex-end;
+    }
+ 
+    .time-box {
+        min-width: 0;
+        padding: 0 6px;
+        text-align: center;
+    }
+ 
+    .time-value {
+        font-size: 1.8rem;
+        font-weight: 900;
+        line-height: 1;
+        display: block;
+    }
+ 
+    .time-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        text-transform: lowercase;
+        padding-top: 2px;
+        display: block;
+        opacity: 0.75;
+    }
+ 
+    /* Ocultar botón "Ver Partidos" en móvil */
+    .btn-view-matches { display: none; }
+}

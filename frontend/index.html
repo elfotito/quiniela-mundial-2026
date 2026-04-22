@@ -430,52 +430,117 @@
     </div>
 </header>
 
-    <header class="mobile-top-bar">
-        <i class="fas fa-search" style="font-size: 1.2rem;"></i>
-        <div class="logo-mobile"><img src="img/logoblancomenu.png" alt="Quiniela 2026"></div>
-        <i class="far fa-user" style="font-size: 1.2rem;"></i>
-    </header>
-
-    <div class="mobile-menu-overlay" id="mobileMenu">
-        <ul class="mobile-menu-list">
-            <li><a href="index.html">INICIO</a></li>
-            <li><a href="predicciones.html">PREDICCIONES</a></li>
-            <li><a href="quiniela.html">MI QUINIELA</a></li>
-            <li><a href="ranking.html">RANKING</a></li>
-            <li><a href="mrchip.html">MR CHIP</a> <i class="fas fa-chevron-right"></i></li>
-            <li><a href="calendario.html">CALENDARIO</a></li>
-            <li><a href="sistema.html">SISTEMA</a></li>
-            <li><a href="reglamento.html">REGLAMENTO</a></li>
-            <li><a href="terminos.html">TERMINOS Y CONDICIONES</a> <i class="fas fa-chevron-right"></i></li>
-            <li><a href="#">CANAL OFICIAL</a></li>
-            <li><a href="#">WATCH ON FIFA+</a></li>
-            <li><a href="#">TOURNAMENTS</a> <i class="fas fa-chevron-right"></i></li>
-        </ul>
+    <header class="mobile-top-bar" id="mobileTopBar">
+    <button class="mtb-icon-btn" id="mobileSearchBtn" aria-label="Buscar">
+        <i class="fas fa-search"></i>
+    </button>
+ 
+    <div class="mtb-logo">
+        <img src="img/logoblancomenu.png" alt="Quiniela 2026">
     </div>
-
-    <nav class="mobile-bottom-nav">
-        <div class="bottom-nav-item active">
+ 
+    <button class="mtb-icon-btn" id="mobileUserBtn" aria-label="Mi cuenta">
+        <i class="far fa-user"></i>
+    </button>
+</header>
+ 
+<!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+ 
+    <!-- Cabecera del menú -->
+    <div class="mmo-header">
+        <span class="mmo-title">Menú</span>
+        <button class="mmo-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+ 
+    <!-- Links principales -->
+    <div class="mmo-section">
+        <a href="index.html"         class="mmo-link mmo-link-main">
             <i class="fas fa-home"></i>
-            <span>INICIO</span>
-        </div>
-        <div class="bottom-nav-item">
-            <i class="fas fa-trophy"></i>
-            <span>PREDICCIONES</span>
-        </div>
-        <div class="bottom-nav-item">
-            <i class="fas fa-futbol" style="font-size: 2rem; color: white;"></i>
-        </div>
-        <div class="bottom-nav-item">
+            <span>Inicio</span>
+        </a>
+        <a href="predicciones.html"  class="mmo-link mmo-link-main">
+            <i class="fas fa-crosshairs"></i>
+            <span>Predicciones</span>
+        </a>
+        <a href="quiniela.html"      class="mmo-link mmo-link-main">
             <i class="fas fa-tv"></i>
-            <span>MI QUINIELA</span>
+            <span>Mi Quiniela</span>
+        </a>
+        <a href="ranking.html"       class="mmo-link mmo-link-main">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking</span>
+        </a>
+        <a href="calendario.html"    class="mmo-link mmo-link-main">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendario</span>
+        </a>
+        <a href="mrchip.html"        class="mmo-link mmo-link-main">
+            <i class="fas fa-robot"></i>
+            <span>Mr. CHIP</span>
+            <i class="fas fa-chevron-right mmo-arrow"></i>
+        </a>
+    </div>
+ 
+    <!-- Divisor -->
+    <div class="mmo-divider"></div>
+ 
+    <!-- Links secundarios -->
+    <div class="mmo-section">
+        <a href="sistema.html"       class="mmo-link mmo-link-sec">Sistema de Puntos</a>
+        <a href="reglamento.html"    class="mmo-link mmo-link-sec">Reglamento</a>
+        <a href="terminos.html"      class="mmo-link mmo-link-sec">
+            Términos y Condiciones
+            <i class="fas fa-chevron-right mmo-arrow"></i>
+        </a>
+        <a href="#"                  class="mmo-link mmo-link-sec">Canal Oficial</a>
+    </div>
+ 
+    <!-- Botón de salir -->
+    <div class="mmo-footer">
+        <button class="mmo-logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Cerrar sesión
+        </button>
+    </div>
+ 
+</div>
+<div class="mmo-backdrop" id="mmoBackdrop"></div>
+ 
+<!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+ 
+    <a href="index.html" class="mbn-item active">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </a>
+ 
+    <a href="predicciones.html" class="mbn-item">
+        <i class="fas fa-crosshairs"></i>
+        <span>Predecir</span>
+    </a>
+ 
+    <!-- Botón central — balón destacado -->
+    <a href="quiniela.html" class="mbn-item mbn-center">
+        <div class="mbn-center-ball">
+            <i class="fas fa-futbol"></i>
         </div>
-        <div class="bottom-nav-item" id="menuToggleBtn">
-            <div class="menu-icon-circle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <span>MENU</span>
-        </div>
-    </nav>
+    </a>
+ 
+    <a href="ranking.html" class="mbn-item">
+        <i class="fas fa-trophy"></i>
+        <span>Ranking</span>
+    </a>
+ 
+    <button class="mbn-item" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+        <span>Menú</span>
+    </button>
+ 
+</nav>
+
     <!-- Countdown-->
     <div class="countdown-wrapper">
         <div class="countdown-container">

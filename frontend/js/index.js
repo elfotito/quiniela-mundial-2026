@@ -506,19 +506,8 @@ async function cargarLigaRankingWidget() {
 }
 
 // ===============================================
-// MENÚ MÓVIL
+// MEME EASTER EGG
 // ===============================================
-
-function configurarMenuMobile() {
-    const btnMenu  = document.getElementById('btnMenuMobile');
-    const navMobile = document.getElementById('navMobile');
-
-    if (btnMenu && navMobile) {
-        btnMenu.addEventListener('click', function () {
-            navMobile.classList.toggle('active');
-        });
-    }
-}
 function iniciarEasterEgg() {
     const memes = [
         { gif: 'img/cucurella.gif',    sound: 'sounds/cucurella.mp3', dur: 2100  },
@@ -766,3 +755,42 @@ function obtenerCampeon(codigo) {
     };
     return campeon[codigo] || '🏴';
 }
+
+// ===============================================
+// MENÚ MÓVIL
+// ===============================================
+(function inicializarMenuMovil() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', inicializarMenuMovil);
+        return;
+    }
+    const menuBtn    = document.getElementById('menuToggleBtn');
+    const menu       = document.getElementById('mobileMenu');
+    const backdrop   = document.getElementById('mmoBackdrop');
+    const closeBtn   = document.getElementById('mobileMenuClose');
+ 
+    function openMenu() {
+        menu.classList.add('show');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+ 
+    function closeMenu() {
+        menu.classList.remove('show');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+ 
+    if (menuBtn)  menuBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+ 
+    // Marcar ítem activo según página actual
+    const currentPage = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.mbn-item').forEach(item => {
+        const href = item.getAttribute('href') || '';
+        if (href && href.includes(currentPage)) {
+            item.classList.add('active');
+        }
+    });
+})();
