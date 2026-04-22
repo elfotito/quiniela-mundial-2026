@@ -2342,4 +2342,8 @@ body {
     .mobile-menu-overlay {
         display: flex;
     }
+    .mobile-menu-overlay.show {
+    transform: translateY(0);
+    display: flex;
+    }
 }
