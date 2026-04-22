@@ -4,488 +4,580 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reglamento - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
+
     <style>
-        .hero-reglamento {
-            height: 300px;
-            background: linear-gradient(135deg, #003d7a, #0066CC);
-        }
-        
-        .content-section {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .section-title-main {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #FFD700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .section-icon { font-size: 2.5rem; }
-        .content-text { color: #a0a0a0; line-height: 1.8; margin-bottom: 1.5rem; }
-        
-        .rule-list { list-style: none; padding: 0; }
-        .rule-item {
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border-left: 3px solid #FFD700;
-            display: flex;
-            gap: 1rem;
-        }
-        .rule-number { font-size: 1.5rem; font-weight: 900; color: #FFD700; min-width: 40px; }
-        .rule-content { flex: 1; color: #a0a0a0; }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 204, 0.1));
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-        .highlight-title { font-size: 1.5rem; font-weight: 900; color: #FFD700; margin-bottom: 0.5rem; }
-        .highlight-text { color: white; font-size: 1.1rem; }
-        
-        .link-sistema {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #0066CC, #003d7a);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-        .link-sistema:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.4);
-        }
-        .term-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
-        }
-        
-        .term-title {
-            font-weight: 700;
-            color: var(--fifa-gold);
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .term-content {
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
-        
-        .warning-box {
-            background: rgba(37, 243, 37, 0.1);
-            border: 2px solid rgb(37, 243, 37);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .warning-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: rgb(0, 255, 0);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .warning-content {
-            color: var(--text-gray);
-        }
+    /* =====================================================
+       REGLAMENTO — GRID 3 COLUMNAS
+       ===================================================== */
 
-                
-        .cool-box {
-            background: rgba(255, 0, 0, 0.144);
-            border: 2px solid var(--error);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .cool-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--error);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .info-box {
-            background: rgba(0, 102, 204, 0.1);
-            border-left: 4px solid var(--fifa-blue);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-        
-        .info-title {
-            font-weight: 700;
-            color: var(--fifa-blue);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .info-content {
-            color: var(--text-gray);
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 102, 204, 0.1));
-            border: 2px solid var(--fifa-gold);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-        
-        .highlight-title {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-            margin-bottom: 1rem;
-        }
-        
-        .highlight-text {
-            color: var(--text-white);
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
-        
-        .last-updated {
-            text-align: center;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            padding: 1rem;
-            border-top: 1px solid var(--border-color);
-            margin-top: 2rem;
-        }
-        
-        .numbered-list {
-            counter-reset: term-counter;
-            list-style: none;
-            padding: 0;
-        }
-        
-        .numbered-item {
-            counter-increment: term-counter;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            position: relative;
-            padding-left: 4rem;
-        }
-        
-        .numbered-item::before {
-            content: counter(term-counter);
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 35px;
-            height: 35px;
-            background: var(--fifa-gold);
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.1rem;
-        }
+    /* ── HERO ─────────────────────────────────────────── */
+    .reg-hero {
+        background: #000;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 3px solid var(--fifa-gold, #FFD700);
+    }
+    .reg-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px),
+            repeating-linear-gradient(0deg,  rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px);
+        pointer-events: none;
+    }
+    .reg-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+    }
+    .reg-hero-eyebrow {
+        display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .reg-hero-eyebrow-line { width: 32px; height: 2px; background: var(--fifa-gold, #FFD700); }
+    .reg-hero-eyebrow span {
+        font-size: 11px; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--fifa-gold, #FFD700);
+    }
+    .reg-hero-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 900; color: #fff; line-height: 1;
+        letter-spacing: -2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .reg-hero-title em { font-style: normal; color: var(--fifa-gold, #FFD700); }
+    .reg-hero-sub {
+        font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 480px;
+    }
+    .reg-hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 24px; padding: 10px 18px;
+        background: rgba(255,215,0,0.08);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 8px;
+        font-size: 12px; font-weight: 700; color: var(--fifa-gold, #FFD700);
+        letter-spacing: 0.5px;
+    }
+    .reg-hero-deco {
+        font-size: 110px; opacity: 0.05; line-height: 1;
+        user-select: none; flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+        .reg-hero-inner { grid-template-columns: 1fr; padding: 32px 16px 28px; }
+        .reg-hero-deco  { display: none; }
+    }
 
-                .term-item {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            border-left: 4px solid var(--fifa-blue);
-            transition: all 0.3s ease;
+    /* ── GRID ─────────────────────────────────────────── */
+    .reg-grid-bg { background: #f4f4f4; }
+    .reg-grid {
+        max-width: 1280px; margin: 0 auto;
+        padding: 28px 16px 48px;
+        display: grid;
+        grid-template-columns: 220px 1fr 220px;
+        grid-template-areas: "izquierda centro derecha";
+        gap: 24px; align-items: start;
+    }
+    .reg-col-left  { grid-area: izquierda; display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+    .reg-col-main  { grid-area: centro;    display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+    .reg-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+
+    /* ── WIDGET BASE ──────────────────────────────────── */
+    .widget { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .widget-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+    .widget-bar    { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
+    .widget-title  { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
+    .widget-link   { font-size: 11px; color: #0066CC; text-decoration: none; font-weight: 600; }
+    .widget-body   { padding: 14px 16px; }
+
+    /* ── SECCIONES DEL ARTÍCULO ───────────────────────── */
+    .reg-section {
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border: 1px solid #eee;
+    }
+    .reg-section-header {
+        padding: 18px 24px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex; align-items: center; gap: 12px;
+    }
+    .reg-section-icon { font-size: 22px; line-height: 1; }
+    .reg-section-title {
+        font-size: 16px; font-weight: 800; color: #0a0a0a;
+        letter-spacing: -0.3px;
+    }
+    .reg-section-body { padding: 20px 24px 24px; }
+
+    /* Texto corriente */
+    .reg-text {
+        font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px;
+    }
+    .reg-text:last-child { margin-bottom: 0; }
+
+    /* Highlight box dorado */
+    .reg-highlight {
+        background: #FAFAF0;
+        border: 1.5px solid var(--fifa-gold, #FFD700);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin: 16px 0;
+        text-align: center;
+    }
+    .reg-highlight-title {
+        font-size: 14px; font-weight: 800; color: #BA7517;
+        margin-bottom: 8px; letter-spacing: 0.3px;
+    }
+    .reg-highlight-text { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px; }
+    .reg-highlight-btn {
+        display: inline-block; padding: 10px 20px;
+        background: #0066CC; color: #fff;
+        font-size: 13px; font-weight: 700; border-radius: 8px;
+        text-decoration: none; transition: background 0.2s;
+    }
+    .reg-highlight-btn:hover { background: #0052a3; }
+
+    /* Lista de reglas numeradas */
+    .reg-rule-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .reg-rule-item {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 14px 16px;
+        background: #fafafa;
+        border-radius: 10px;
+        border-left: 3px solid var(--fifa-gold, #FFD700);
+        transition: background 0.15s;
+    }
+    .reg-rule-item:hover { background: #f5f5f5; }
+    .reg-rule-num {
+        font-size: 18px; font-weight: 900;
+        color: var(--fifa-gold, #FFD700);
+        min-width: 32px; line-height: 1.4;
+        flex-shrink: 0;
+    }
+    .reg-rule-content { font-size: 13px; color: #333; line-height: 1.7; }
+    .reg-rule-content strong { color: #0a0a0a; }
+
+    /* Info box azul */
+    .reg-info-box {
+        background: #EBF3FF;
+        border-left: 4px solid #0066CC;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 18px;
+        margin: 16px 0;
+    }
+    .reg-info-title {
+        font-size: 13px; font-weight: 800; color: #0C447C;
+        margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .reg-info-content { font-size: 13px; color: #185FA5; line-height: 1.7; }
+    .reg-info-content strong { color: #0C447C; }
+
+    /* Warning box verde */
+    .reg-warning-box {
+        background: #E8F5E9;
+        border: 1.5px solid #22c55e;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 16px 0;
+    }
+    .reg-warning-title {
+        font-size: 13px; font-weight: 800; color: #16a34a;
+        margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .reg-warning-content { font-size: 13px; color: #166534; line-height: 1.7; }
+
+    /* Cool box rojo */
+    .reg-cool-box {
+        background: #FEF2F2;
+        border: 1.5px solid #ef4444;
+        border-radius: 10px;
+        padding: 16px 18px;
+        margin: 16px 0;
+    }
+    .reg-cool-title {
+        font-size: 13px; font-weight: 800; color: #dc2626;
+        margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .reg-cool-content { font-size: 13px; color: #7f1d1d; line-height: 1.7; }
+
+    /* Term items */
+    .reg-term-item {
+        padding: 14px 16px; margin-bottom: 10px;
+        background: #fafafa;
+        border-left: 4px solid #0066CC;
+        border-radius: 0 8px 8px 0;
+        transition: background 0.15s, transform 0.15s;
+    }
+    .reg-term-item:hover { background: #f0f0f0; transform: translateX(4px); }
+    .reg-term-item:last-child { margin-bottom: 0; }
+    .reg-term-title {
+        font-size: 13px; font-weight: 800; color: #BA7517;
+        margin-bottom: 6px;
+    }
+    .reg-term-content { font-size: 13px; color: #555; line-height: 1.6; }
+
+    /* Lista genérica */
+    .reg-list {
+        list-style: none; padding: 0; margin: 8px 0 0;
+        display: flex; flex-direction: column; gap: 6px;
+    }
+    .reg-list li {
+        font-size: 13px; color: inherit; line-height: 1.5;
+        padding-left: 16px; position: relative;
+    }
+    .reg-list li::before {
+        content: '→'; position: absolute; left: 0;
+        font-weight: 700; font-size: 11px;
+    }
+
+    /* Nav índice lateral */
+    .reg-nav-link {
+        display: flex; align-items: center; gap: 8px;
+        padding: 8px 12px; border-radius: 8px;
+        font-size: 12px; font-weight: 600; color: #555;
+        text-decoration: none; transition: background 0.15s, color 0.15s;
+        margin-bottom: 2px;
+    }
+    .reg-nav-link:hover { background: #f0f0f0; color: #0a0a0a; }
+    .reg-nav-link i { font-size: 12px; width: 14px; text-align: center; opacity: 0.5; }
+
+    /* CTA widget */
+    .widget-cta-dark { background: #0a0a0a !important; border-color: #222 !important; }
+    .widget-cta-dark .widget-header { border-bottom-color: #222; }
+    .widget-cta-dark .widget-title  { color: #fff; }
+    .cta-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 14px; }
+    .cta-btn  { display: block; text-align: center; padding: 11px; background: var(--fifa-gold, #FFD700); color: #000; font-size: 13px; font-weight: 800; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+    .cta-btn:hover { background: #e6c200; }
+
+    /* Stat rows */
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { font-size: 12px; color: #555; }
+    .stat-val   { font-size: 13px; font-weight: 800; color: #0a0a0a; }
+    .stat-val.gold  { color: #BA7517; }
+    .stat-val.green { color: #16a34a; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+        .reg-grid {
+            grid-template-columns: 1fr 200px;
+            grid-template-areas: "centro derecha" "izquierda izquierda";
         }
-        
-        .term-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
+        .reg-col-left { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+    @media (max-width: 700px) {
+        .reg-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
         }
-        
-        .term-title {
-            font-weight: 700;
-            color: var(--fifa-gold);
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .term-content {
-            color: var(--text-gray);
-            line-height: 1.7;
-        }
+        .reg-col-left, .reg-col-right { position: static; }
+        .reg-section-body { padding: 16px 16px 20px; }
+    }
     </style>
 </head>
+
 <body>
-    <header class="header">
-        <div class="header-container">
-            <!-- Logo -->
-            <div class="header-logo">
-                <a href="index.html"><div class="logo-icon">
-                    <img src="img/logomenu.png" alt="logomenu">
+
+    <!-- ═══════════════════════════════
+         PEGA TU HEADER AQUÍ
+         ═══════════════════════════════ -->
+
+
+    <!-- ── HERO ──────────────────────────────────────── -->
+    <div class="reg-hero">
+        <div class="reg-hero-inner">
+            <div>
+                <div class="reg-hero-eyebrow">
+                    <div class="reg-hero-eyebrow-line"></div>
+                    <span>Quiniela Mundial 2026</span>
                 </div>
-                <div class="logo-text">
-                    <img src="img/logoblancomenu.png" alt="logomenu">
-                </div></a>
+                <h1 class="reg-hero-title">Regla<em>mento</em></h1>
+                <p class="reg-hero-sub">
+                    Todo lo que necesitas saber para participar. Léelo con calma,
+                    el VAR te estará observando.
+                </p>
+                <div class="reg-hero-badge">
+                    ✅ Aprobado por la FIAC · Vigente para el Mundial 2026
+                </div>
             </div>
-            <div class="header-actions">
-                <button class="btn-logout" onclick="history.back()">Volver</button>
-            </div>
+            <div class="reg-hero-deco">📋</div>
         </div>
-    </header>
+    </div>
 
-    <section class="hero-hero-reglamento">
-        <div class="hero-overlay"></div>
-        <div class="hero-content"><br>
-            <div class="hero-badge"></div>
-            <h1 class="hero-title">Reglamento</h1>
-            <p class="hero-subtitle"></p>
-        </div>
-    </section>
 
-    <main class="container">
-        <section class="content-section">
-            <h2 class="section-title-main">
-                <span class="section-icon">🌐</span>
-                Asociacion de Profesionales de Arbitros de Quinielas
-            </h2>
-            <div class="highlight-box">
-                <div class="highlight-title">Aprobado por la Federación Internacional de Acertadores de Casualidades (FIAC)</div>
-                <div class="highlight-text">
-                    La APAQ es el ente rector (autoproclamado, pero con mucha autoridad moral) encargado de velar por el orden, la justicia y el drama innecesario en este sistema de predicciones.
+    <!-- ── GRID 3 COLUMNAS ───────────────────────────── -->
+    <div class="reg-grid-bg">
+    <div class="reg-grid">
+
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="reg-col-left">
+
+            <!-- Índice de navegación -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Índice</span>
+                </div>
+                <div class="widget-body" style="padding: 10px 12px;">
+                    <a href="#apaq"      class="reg-nav-link"><i class="bi bi-globe"></i> A.P.A.Q.</a>
+                    <a href="#puntos"    class="reg-nav-link"><i class="bi bi-star"></i> Puntuación</a>
+                    <a href="#reglas"    class="reg-nav-link"><i class="bi bi-list-check"></i> Reglamento</a>
+                    <a href="#var"       class="reg-nav-link"><i class="bi bi-camera-video"></i> Sistema VAR</a>
+                    <a href="#canales"   class="reg-nav-link"><i class="bi bi-chat-dots"></i> Canales Oficiales</a>
                 </div>
             </div>
-        </section>
 
-        <section class="content-section">
-            <h2 class="section-title-main">
-                <span class="section-icon">🎰</span>
-                Sistema de Puntuación
-            </h2>
-            <p class="content-text">
-                Los puntos se otorgan según qué tan precisa sea tu predicción comparada con el resultado real del partido.
-            </p>
-            <div class="highlight-box">
-                <div class="highlight-title">¿Quieres entender el sistema a fondo?</div>
-                <div class="highlight-text">
-                    Visita nuestra página interactiva donde podrás practicar y ver ejemplos en tiempo real
+            <!-- Reglas rápidas -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Reglas clave</span>
                 </div>
-                <a href="sistema.html" class="link-sistema">🎓 Ir al Tutorial Interactivo</a>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2 class="section-title-main">
-                <span class="section-icon">📋</span>
-                Reglamento Oficial
-            </h2>
-            <ul class="rule-list">
-                <li class="rule-item">
-                    <div class="rule-number">1</div>
-                    <div class="rule-content">
-                        <strong>Límite de Predicción:</strong> Podrás hacer tu predicción hasta 10 minutos antes del inicio del partido (sin excepciones).
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">2</div>
-                    <div class="rule-content">
-                        <strong>Una Predicción por Partido:</strong> Solo puedes hacer UNA predicción por partido. Una vez guardada, no podrás modificarla.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">3</div>
-                    <div class="rule-content">
-                        <strong>Marcador Válido:</strong> Los goles predichos deben estar entre 0 y 9 para cada equipo.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">4</div>
-                    <div class="rule-content">
-                        <strong>Cálculo de Puntos:</strong> Los puntos se calculan automáticamente cuando el administrador ingresa el resultado oficial al TERMINAR el partido.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">5</div>
-                    <div class="rule-content">
-                        <strong>Ranking General:</strong> Tu posición se actualiza en tiempo real según tus puntos acumulados.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">6</div>
-                    <div class="rule-content">
-                        <strong>El VAR tiene la ultima decision:</strong> El administrador comunicara, gestionara y resolvera cualquier caso que suceda fuera de los valores pre-establecidos.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">7</div>
-                    <div class="rule-content">
-                        <strong>Caida del servidor:</strong> En caso de caida del servidor, se abrira una recepcion de predicciones a los que no hayan podido darles ingreso, y seguira contando con la regla de 10 min antes del inicio del encuentro.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">8</div>
-                    <div class="rule-content">
-                        <strong>Ligas:</strong> Cada presidente de liga debera atender, administrar y publicar los resultados de su propia liga. Quiniela Mundial 2026 no tiene juridisccion alguna para tratar temas internos de cada liga.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">9</div>
-                    <div class="rule-content">
-                        <strong>No hay reembolso:</strong> Para una mayor confiabilidad en el sistema, nos aseguramos que no exista algun tipo de reembolso si un participante quiere salirse, cada liga tendra sus propias reglas internas, pero esta es una universal.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">10</div>
-                    <div class="rule-content">
-                        <strong>Cuida tu cuenta:</strong> Toda prediccion ingresada sera tomada como valida por el usuario registrado, no se modificara o eliminara registro si un tercero tuvo acceso a tu cuenta, NO COMPARTAS LA CONTRASEÑA CON NADIE.
-                    </div>
-                </li>
-                <li class="rule-item">
-                    <div class="rule-number">11</div>
-                    <div class="rule-content">
-                        <strong>Eleccion del campeon:</strong> Al registrate te pedimos que eligas tu campeon, sera un bono en puntos al final del torneo. Esta eleccion no tiene modificacion alguna durante todo el torneo.
-                    </div>
-                </li>
-            </ul>
-        </section>
-        <section class="content-section">
-            <h2 class="section-title-main">
-                <span class="section-icon">📡</span>
-                Departamento de Tecnología A.P.A.Q.
-            </h2>
-            
-            <h3 class="section-subtitle">🖥️ Sistema VAR: Vidente Administrador en Remoto</h3>
-            <p class="content-text">En nuestro constante afán por modernizar el arte adivinatorio y rodearnos de un aura de tecnología inexistente, presentamos el sistema VAR.</p>
-            <h3 class="section-subtitle">🔍 ¿Qué es el VAR?</h3>
-
-            <p class="content-text">Es la herramienta tecnológica (léase: un pana con dos monitores y mucho café) que permite a la A.P.A.Q. ejercer su labor arbitral con la precisión de un cirujano y la paciencia de un budista.</p>
-            <div class="info-box">
-                <div class="info-title">
-                    <span>👁️</span>
-                    <span>El Rol del Vidente Administrador</span>
-                </div>
-                <div class="info-content">
-                    <strong>La Vigilancia Omnipresente:</strong> Supervisar que no se violen las sagradas normas de la quiniela. Si alguien crea 5 cuentas para acertar un 1-0, el VAR lo verá. Y juzgará. Y seguramente, lo castigará con toda la furia de un ser que vive detrás de una pantalla.
-                    <br><br>
-                    <strong>La Verificación Inapelable:</strong> Ante cualquier duda, el Vidente Administrador revisa las pruebas digitales (capturas de pantalla, metadatos, la mirada fija del usuario a través de la cámara... ok, esto último no, pero sería genial).
-                    <br><br>
-                    <strong>La Comunicación Oficial:</strong> Cuando se toma una decisión (una penalización, una aclaración, o simplemente ganas de molestar), el VAR se convierte en la voz del pueblo... o más bien, en la voz de la A.P.A.Q.
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label">Límite predicción</span><span class="stat-val gold">10 min</span></div>
+                    <div class="stat-row"><span class="stat-label">Pred. por partido</span><span class="stat-val">1</span></div>
+                    <div class="stat-row"><span class="stat-label">Resultado exacto</span><span class="stat-val gold">+9 pts</span></div>
+                    <div class="stat-row"><span class="stat-label">Modificaciones</span><span class="stat-val" style="color:#dc2626">No</span></div>
+                    <div class="stat-row"><span class="stat-label">Reembolso</span><span class="stat-val" style="color:#dc2626">No</span></div>
+                    <div class="stat-row"><span class="stat-label">VAR</span><span class="stat-val green">Activo</span></div>
                 </div>
             </div>
-            
-            <div class="warning-box">
-                <div class="warning-title">
-                    <span>✔️</span>
-                    <span>El VAR tiene acceso TOTAL a:</span>
+
+        </aside>
+
+
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="reg-col-main">
+
+            <!-- Sección 1: APAQ -->
+            <div class="reg-section" id="apaq">
+                <div class="reg-section-header">
+                    <span class="reg-section-icon">🌐</span>
+                    <span class="reg-section-title">Asociación de Profesionales de Árbitros de Quinielas</span>
                 </div>
-                <div class="warning-content">
-                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                        <li>Todas las predicciones de cada usuario.</li>
-                        <li>Los resultados reales de los partidos.</li>
-                        <li>El historial de aciertos y desaciertos (para reírse un rato).</li>
-                        <li>Las horas exactas en que cada predicción fue ingresada.</li>
+                <div class="reg-section-body">
+                    <div class="reg-highlight">
+                        <div class="reg-highlight-title">Aprobado por la Federación Internacional de Acertadores de Casualidades (FIAC)</div>
+                        <p class="reg-highlight-text">La APAQ es el ente rector (autoproclamado, pero con mucha autoridad moral) encargado de velar por el orden, la justicia y el drama innecesario en este sistema de predicciones.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2: Puntuación -->
+            <div class="reg-section" id="puntos">
+                <div class="reg-section-header">
+                    <span class="reg-section-icon">🎰</span>
+                    <span class="reg-section-title">Sistema de Puntuación</span>
+                </div>
+                <div class="reg-section-body">
+                    <p class="reg-text">Los puntos se otorgan según qué tan precisa sea tu predicción comparada con el resultado real del partido.</p>
+                    <div class="reg-highlight">
+                        <div class="reg-highlight-title">¿Quieres entender el sistema a fondo?</div>
+                        <p class="reg-highlight-text">Visita nuestra página interactiva donde podrás practicar y ver ejemplos en tiempo real.</p>
+                        <a href="sistema.html" class="reg-highlight-btn">🎓 Ir al Tutorial Interactivo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3: Reglamento -->
+            <div class="reg-section" id="reglas">
+                <div class="reg-section-header">
+                    <span class="reg-section-icon">📋</span>
+                    <span class="reg-section-title">Reglamento Oficial</span>
+                </div>
+                <div class="reg-section-body">
+                    <ul class="reg-rule-list">
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">1</div>
+                            <div class="reg-rule-content"><strong>Límite de Predicción:</strong> Podrás hacer tu predicción hasta 10 minutos antes del inicio del partido (sin excepciones).</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">2</div>
+                            <div class="reg-rule-content"><strong>Una Predicción por Partido:</strong> Solo puedes hacer UNA predicción por partido. Una vez guardada, no podrás modificarla.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">3</div>
+                            <div class="reg-rule-content"><strong>Marcador Válido:</strong> Los goles predichos deben estar entre 0 y 9 para cada equipo.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">4</div>
+                            <div class="reg-rule-content"><strong>Cálculo de Puntos:</strong> Los puntos se calculan automáticamente cuando el administrador ingresa el resultado oficial al terminar el partido.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">5</div>
+                            <div class="reg-rule-content"><strong>Ranking General:</strong> Tu posición se actualiza en tiempo real según tus puntos acumulados.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">6</div>
+                            <div class="reg-rule-content"><strong>El VAR tiene la última decisión:</strong> El administrador comunicará, gestionará y resolverá cualquier caso que suceda fuera de los valores pre-establecidos.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">7</div>
+                            <div class="reg-rule-content"><strong>Caída del servidor:</strong> En caso de caída del servidor, se abrirá una recepción de predicciones y seguirá contando con la regla de 10 min antes del inicio del encuentro.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">8</div>
+                            <div class="reg-rule-content"><strong>Ligas:</strong> Cada presidente de liga deberá atender, administrar y publicar los resultados de su propia liga. Quiniela Mundial 2026 no tiene jurisdicción para tratar temas internos de cada liga.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">9</div>
+                            <div class="reg-rule-content"><strong>No hay reembolso:</strong> Para mayor confiabilidad en el sistema, no existe ningún tipo de reembolso si un participante quiere salirse. Cada liga tendrá sus propias reglas internas.</div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">10</div>
+                            <div class="reg-rule-content"><strong>Cuida tu cuenta:</strong> Toda predicción ingresada será tomada como válida por el usuario registrado. No se modificará o eliminará un registro si un tercero tuvo acceso a tu cuenta. <strong>NO COMPARTAS TU CONTRASEÑA CON NADIE.</strong></div>
+                        </li>
+                        <li class="reg-rule-item">
+                            <div class="reg-rule-num">11</div>
+                            <div class="reg-rule-content"><strong>Elección del campeón:</strong> Al registrarte te pedimos que elijas tu campeón — será un bono en puntos al final del torneo. Esta elección no tiene modificación alguna durante todo el torneo.</div>
+                        </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="cool-box">
-                <div class="cool-title">
-                    <span>❌</span>
-                    <span>El VAR NO puede:</span>
+            <!-- Sección 4: VAR -->
+            <div class="reg-section" id="var">
+                <div class="reg-section-header">
+                    <span class="reg-section-icon">📡</span>
+                    <span class="reg-section-title">Departamento de Tecnología A.P.A.Q. — Sistema VAR</span>
                 </div>
-                <div class="warning-content">
-                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                        <li>Modificar las predicciones de los usuarios (ni aunque el usuario le suplique de rodillas).</li>
-                        <li>Alterar resultados reales ya ingresados (por más que duela ese 2-2 en el último minuto).</li>
-                        <li>Favorecer a ningún participante.</li>
-                        <li>Ingresar prediciones de otros usuarios, solo aplica para CAIDAS DEL SERVIDOR (que se comunicara todo por canales oficiales)</li>
-                    </ul>
-                </div>
-            </div>
-            <section class="content-section">
-            <h2 class="section-title-main">
-                <span class="section-icon">📢</span>
-                Canales Oficiales
-            </h2>
-            <p class="content-text">Para mantener la transparencia (y alimentar el drama), el Vidente Arbitral emitirá sus veredictos y comunicados a través de los siguientes canales oficiales:</p>
-            <div class="term-item">
-                <div class="term-title">📧 Canal de Whatsapp:</div>
-                <div class="term-content">
-                El canal público oficial de la quiniela donde se publicaran noticias, tablas de posiciones y novedades (buenas y malas), sentando precedente y recordando quién manda aquí.
-                </div>
-            </div>
-            
-            <div class="term-item">
-                <div class="term-title">🗣️ Grupos de Whatsapp:</div>
-                <div class="term-content">
-                    Cada liga contara con un grupo coordinado con su presidente de liga donde cada uno esta preparado para anteder dudas y solucion a problemas simples (se me olvido la clave), por lo cual no estara el administrador ahi (tiene poco espacio en la memoria del tlf) y los presidentes de cada liga contactaran al administrador en caso tal de ser necesario. 
-                </div>
-            </div>
-            
-            <div class="term-item">
-                <div class="term-title">📱 Whatsapp directo:</div>
-                <div class="term-content">
-                    Casos extremos como caidas del servidor pueden contactar directamente al administrador, todos los casos seran publicos en el canal de whatsapp.
-                </div>
-            </div>
-        </section>
-    </main>
+                <div class="reg-section-body">
+                    <p class="reg-text">En nuestro constante afán por modernizar el arte adivinatorio, presentamos el sistema <strong>VAR: Vidente Administrador en Remoto</strong>.</p>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4 class="footer-title">Quiniela Mundial 2026</h4>
-                <p class="footer-text">La mejor forma de vivir el Mundial</p>
+                    <p class="reg-text">Es la herramienta tecnológica (léase: un pana con dos monitores y mucho café) que permite a la A.P.A.Q. ejercer su labor arbitral con la precisión de un cirujano y la paciencia de un budista.</p>
+
+                    <div class="reg-info-box">
+                        <div class="reg-info-title"><span>👁️</span> El Rol del Vidente Administrador</div>
+                        <div class="reg-info-content">
+                            <strong>La Vigilancia Omnipresente:</strong> Supervisar que no se violen las sagradas normas. Si alguien crea 5 cuentas para acertar un 1-0, el VAR lo verá. Y juzgará.<br><br>
+                            <strong>La Verificación Inapelable:</strong> Ante cualquier duda, el Vidente Administrador revisa las pruebas digitales (capturas de pantalla, metadatos).<br><br>
+                            <strong>La Comunicación Oficial:</strong> Cuando se toma una decisión, el VAR se convierte en la voz de la A.P.A.Q.
+                        </div>
+                    </div>
+
+                    <div class="reg-warning-box">
+                        <div class="reg-warning-title"><span>✔️</span> El VAR tiene acceso TOTAL a:</div>
+                        <div class="reg-warning-content">
+                            <ul class="reg-list">
+                                <li>Todas las predicciones de cada usuario.</li>
+                                <li>Los resultados reales de los partidos.</li>
+                                <li>El historial de aciertos y desaciertos (para reírse un rato).</li>
+                                <li>Las horas exactas en que cada predicción fue ingresada.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="reg-cool-box">
+                        <div class="reg-cool-title"><span>❌</span> El VAR NO puede:</div>
+                        <div class="reg-cool-content">
+                            <ul class="reg-list">
+                                <li>Modificar las predicciones de los usuarios (ni aunque el usuario le suplique de rodillas).</li>
+                                <li>Alterar resultados reales ya ingresados (por más que duela ese 2-2 en el último minuto).</li>
+                                <li>Favorecer a ningún participante.</li>
+                                <li>Ingresar predicciones de otros usuarios, solo aplica para caídas del servidor (que se comunicará por canales oficiales).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="footer-section">
-                <h4 class="footer-title">Enlaces</h4>
-                <a href="reglamento.html" class="footer-link">Reglamento</a>
-                <a href="terminos.html" class="footer-link">Términos y Condiciones</a>
-                <a href="sistema.html" class="footer-link">Sistema de puntuacion</a>
+
+            <!-- Sección 5: Canales -->
+            <div class="reg-section" id="canales">
+                <div class="reg-section-header">
+                    <span class="reg-section-icon">📢</span>
+                    <span class="reg-section-title">Canales Oficiales</span>
+                </div>
+                <div class="reg-section-body">
+                    <p class="reg-text">Para mantener la transparencia (y alimentar el drama), el Vidente Arbitral emitirá sus veredictos a través de los siguientes canales:</p>
+
+                    <div class="reg-term-item">
+                        <div class="reg-term-title">📧 Canal de WhatsApp</div>
+                        <div class="reg-term-content">El canal público oficial de la quiniela donde se publicarán noticias, tablas de posiciones y novedades (buenas y malas), sentando precedente y recordando quién manda aquí.</div>
+                    </div>
+
+                    <div class="reg-term-item">
+                        <div class="reg-term-title">🗣️ Grupos de WhatsApp</div>
+                        <div class="reg-term-content">Cada liga contará con un grupo coordinado con su presidente de liga preparado para atender dudas y solución a problemas simples. Los presidentes de cada liga contactarán al administrador en caso de ser necesario.</div>
+                    </div>
+
+                    <div class="reg-term-item">
+                        <div class="reg-term-title">📱 WhatsApp Directo</div>
+                        <div class="reg-term-content">Casos extremos como caídas del servidor pueden contactar directamente al administrador. Todos los casos serán públicos en el canal de WhatsApp.</div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="footer-section">
-                <h4 class="footer-title">Mundial 2026</h4>
-                <p class="footer-text">🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</p>
+
+        </main>
+
+
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="reg-col-right">
+
+            <!-- CTA: Sistema de puntos -->
+            <div class="widget widget-cta-dark">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Tutorial</span>
+                </div>
+                <div class="widget-body">
+                    <p class="cta-text">Aprende cómo se calculan los puntos con ejemplos interactivos.</p>
+                    <a href="sistema.html" class="cta-btn">Ver Sistema de Puntos</a>
+                </div>
             </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>©2026 Droueria Carrisan. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+
+            <!-- Widget: Puntuación rápida -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Puntuación</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label">Resultado exacto</span><span class="stat-val gold">+9</span></div>
+                    <div class="stat-row"><span class="stat-label">Ganador + marcador</span><span class="stat-val gold">+7</span></div>
+                    <div class="stat-row"><span class="stat-label">Ganador o empate</span><span class="stat-val gold">+5</span></div>
+                    <div class="stat-row"><span class="stat-label">Solo marcador</span><span class="stat-val gold">+2</span></div>
+                    <div class="stat-row"><span class="stat-label">Predicción incorrecta</span><span class="stat-val" style="color:#dc2626">0</span></div>
+                </div>
+            </div>
+
+            <!-- CTA: Predicciones -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">¿Listo?</span>
+                </div>
+                <div class="widget-body">
+                    <p style="font-size:13px;color:#555;line-height:1.5;margin-bottom:12px;">Ya leíste las reglas — ahora a predecir.</p>
+                    <a href="predicciones.html" style="display:block;text-align:center;padding:10px;background:#0a0a0a;color:#fff;font-size:13px;font-weight:800;border-radius:8px;text-decoration:none;">Hacer Predicciones</a>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════
+         PEGA TU FOOTER AQUÍ
+         ═══════════════════════════════ -->
+
+
+    <!-- ═══════════════════════════════
+         PEGA TU NAVBAR MÓVIL AQUÍ
+         ═══════════════════════════════ -->
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
 </body>
 </html>
