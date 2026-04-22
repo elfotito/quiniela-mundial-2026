@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ===============================================
 
 async function verificarLogin() {
-
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
         return;
@@ -30,27 +29,25 @@ async function verificarLogin() {
 
     const usuario = auth.getUser();
     usuarioId = parseInt(usuario.id);
+    
+    document.querySelectorAll('.user-name-display').forEach(el => {
+        el.textContent = usuario.nombre;
+    });
+    
+    const emoji = obtenerCampeon(usuario.campeon_elegido);
+    document.querySelectorAll('.user-emoji-display').forEach(el => {
+        el.textContent = emoji;
+    });
 
-    // Mostrar nombre de usuario
-    const userNameEl = document.getElementById('userName');
-    if (userNameEl) userNameEl.textContent = usuario.nombre;
-
-    // Mostrar campeón elegido
-    const userCampeon = document.getElementById('userCampeon');
-    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
-
-    // Mostrar botón admin si corresponde
+    // Mostrar botones admin si corresponde
     if (usuario.isAdmin) {
-        const adminBtn = document.getElementById('adminBtn');
-        if (adminBtn) {
-            adminBtn.style.display = 'flex';
-            adminBtn.onclick = () => window.location.href = 'admin.html';
-        }
-        const adminNotiBtn = document.getElementById('adminNoti');
-        if (adminNotiBtn) {
-            adminNotiBtn.style.display = 'flex';
-            adminNotiBtn.onclick = () => window.location.href = 'noticias.html';
-        }
+        document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+            btn.style.display = 'flex';
+            const target = btn.dataset.target;
+            if (target) {
+                btn.onclick = () => window.location.href = target;
+            }
+        });
     }
 }
 

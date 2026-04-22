@@ -148,6 +148,17 @@
         .user-pill .greeting  { color: rgba(255,255,255,0.5); font-weight: 600; }
         .user-pill .user-name { color: #fff; font-weight: 800; letter-spacing: 0.5px; }
 
+        .user-pill-mobile {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.05);
+            padding: 5px 14px;
+            font-size: 0.8rem;
+        }
+        .user-pill-mobile .greeting  { color: rgba(255,255,255,0.5); font-weight: 300; }
+        .user-pill-mobile .user-name { color: #fff; font-weight: 600; letter-spacing: 0.5px; }
+
         .btn-admin-custom {
             background: #f1c40f;
             border: none;
@@ -269,14 +280,13 @@
         <div class="right-section">
             <div class="user-pill">
                 <span class="greeting">Bienvenido,</span>
-                <span class="user-icon" id="userCampeon">👤</span>
-                <span class="user-name" id="userName">Tito</span>
+                <span class="user-emoji-display">👤</span>
+                <span class="user-name-display">Tito</span>
             </div>
-            
-            <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
+            <button class="btn-admin-display" data-target="admin.html">
                 <i class="fas fa-tools"></i>
             </button>
-            <button class="btn-admin-noticias" id="adminNoti" title="Panel Noticias">
+            <button class="btn-noticias-display" data-target="noticias.html">
                 <i class="fas fa-tools"></i>
             </button>
             <button class="btn-logout-elegant" onclick="logout()">
@@ -293,20 +303,20 @@
     </div>
     <div class="user-pill-mobile">
                 <span class="greeting">Bienvenido,</span>
-                <span class="user-icon" id="userCampeon">👤</span>
-                <span class="user-name" id="userName">Usuario</span>
+                <span class="user-emoji-display">👤</span>
+                <span class="user-name-display">Usuario</span>
     </div>
-            <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
+            <button class="btn-admin-display" data-target="admin.html">
                 <i class="fas fa-tools"></i>
             </button>
-            <button class="btn-admin-noticias" id="adminNoti" title="Panel Noticias">
+            <button class="btn-noticias-display" data-target="noticias.html">
                 <i class="fas fa-tools"></i>
             </button>
 </header>
- 
+
 <!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
 <div class="mobile-menu-overlay" id="mobileMenu">
- 
+
     <!-- Cabecera del menú -->
     <div class="mmo-header">
         <span class="mmo-title">Menú</span>
