@@ -236,8 +236,15 @@ function crearCardPartido(partido) {
                         <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
                         </div>
                     </div>
-                    <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0" readonly>
-                </div>
+                    <input type="number" 
+                            class="mc-goal-input" 
+                            id="local_${partido.id}" 
+                            min="0" max="9" 
+                            value="0"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
+                    </div>
 
                 <div class="mc-team-row">
                     <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
@@ -248,8 +255,15 @@ function crearCardPartido(partido) {
                         <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
                         </div>
                     </div>
-                    <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0" readonly>
-                </div>
+                    <input type="number" 
+                            class="mc-goal-input" 
+                            id="visitante_${partido.id}" 
+                            min="0" max="9" 
+                            value="0"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
+                    </div>
 
             </div>
 
@@ -374,7 +388,7 @@ async function enviarPrediccion(partidoId) {
     }
 
     try {
-        const btnPredict = card.querySelector('.btn-predict');
+        const btnPredict = card.querySelector('.mc-btn-predict');
         btnPredict.disabled = true;
         btnPredict.textContent = 'Guardando...';
 
