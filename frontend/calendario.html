@@ -4,350 +4,543 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario - Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
+
     <style>
-        .hero-calendario {
-            height: 250px;
-            background: linear-gradient(135deg, var(--fifa-dark-blue), var(--fifa-blue));
+    .cal-hero {
+        background: #000;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 3px solid var(--fifa-gold, #FFD700);
+    }
+ 
+    /* Patrón de líneas de campo */
+    .cal-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(
+                0deg,
+                rgba(255,255,255,0.018) 0px,
+                rgba(255,255,255,0.018) 1px,
+                transparent 1px,
+                transparent 48px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                rgba(255,255,255,0.018) 0px,
+                rgba(255,255,255,0.018) 1px,
+                transparent 1px,
+                transparent 48px
+            );
+        pointer-events: none;
+    }
+ 
+    .cal-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+    }
+ 
+    .cal-hero-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+    .cal-hero-eyebrow-line {
+        width: 32px; height: 2px;
+        background: var(--fifa-gold, #FFD700);
+    }
+    .cal-hero-eyebrow span {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--fifa-gold, #FFD700);
+    }
+ 
+    .cal-hero-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 900;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: -2px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+    .cal-hero-title em {
+        font-style: normal;
+        color: var(--fifa-gold, #FFD700);
+    }
+ 
+    .cal-hero-sub {
+        font-size: 14px;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.6;
+        max-width: 480px;
+    }
+ 
+    /* Stats en el hero */
+    .cal-hero-stats {
+        display: flex;
+        gap: 0;
+        margin-top: 28px;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        width: fit-content;
+    }
+    .cal-hero-stat {
+        padding: 14px 24px;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+    }
+    .cal-hero-stat:last-child { border-right: none; }
+    .cal-hero-stat-val {
+        font-size: 24px;
+        font-weight: 900;
+        color: #fff;
+        line-height: 1;
+        display: block;
+    }
+    .cal-hero-stat-val.gold { color: var(--fifa-gold, #FFD700); }
+    .cal-hero-stat-lbl {
+        font-size: 10px;
+        color: rgba(255,255,255,0.4);
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 4px;
+    }
+ 
+    /* Balón decorativo */
+    .cal-hero-deco {
+        font-size: 110px;
+        opacity: 0.05;
+        line-height: 1;
+        user-select: none;
+        animation: cal-spin 25s linear infinite;
+        flex-shrink: 0;
+    }
+    @keyframes cal-spin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+    }
+ 
+    @media (max-width: 700px) {
+        .cal-hero-inner { grid-template-columns: 1fr; padding: 32px 16px 28px; }
+        .cal-hero-deco  { display: none; }
+        .cal-hero-stats { flex-wrap: wrap; }
+    }
+ 
+    /* ── GRID ─────────────────────────────────────────── */
+    .cal-grid-bg { background: #f4f4f4; }
+ 
+    .cal-grid {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 28px 16px 48px;
+        display: grid;
+        grid-template-columns: 240px 1fr 240px;
+        grid-template-areas: "izquierda centro derecha";
+        gap: 24px;
+        align-items: start;
+    }
+ 
+    .cal-col-left  { grid-area: izquierda; display: flex; flex-direction: column; gap: 16px; position: sticky; top: 110px; }
+    .cal-col-main  { grid-area: centro;    display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .cal-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 16px; position: sticky; top: 110px; }
+ 
+    /* ── WIDGET BASE ──────────────────────────────────── */
+    .widget {
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border: 1px solid #eee;
+    }
+    .widget-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .widget-bar { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
+    .widget-title { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
+    .widget-link  { font-size: 11px; color: #0066CC; text-decoration: none; font-weight: 600; }
+    .widget-body  { padding: 14px 16px; }
+ 
+    /* ── DATE SCROLLER ────────────────────────────────── */
+    .date-scroller-container {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+ 
+    .scroller-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+    .scroller-header-title {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #0a0a0a;
+    }
+ 
+    /* Live toggle */
+    .live-toggle {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: #f5f5f5;
+        border: 1px solid #eee;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 12px;
+        font-weight: 700;
+        color: #999;
+    }
+    .live-toggle.active {
+        background: #e8f5e9;
+        border-color: #22c55e;
+        color: #16a34a;
+    }
+    .live-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: #ccc;
+        flex-shrink: 0;
+    }
+    .live-toggle.active .live-dot {
+        background: #22c55e;
+        animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+        0%,100% { opacity: 1; }
+        50%      { opacity: 0.4; }
+    }
+    .live-count {
+        background: #ef4444;
+        color: #fff;
+        padding: 1px 7px;
+        border-radius: 10px;
+        font-size: 10px;
+        font-weight: 800;
+    }
+ 
+    /* Scroller de fechas */
+    .date-scroller { position: relative; }
+ 
+    .scroller-nav {
+        position: absolute;
+        top: 50%; transform: translateY(-50%);
+        z-index: 10;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        width: 32px; height: 32px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        color: #555;
+        transition: all 0.2s;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .scroller-nav:hover { background: #0066CC; color: #fff; border-color: #0066CC; }
+    .scroller-nav.left  { left: 0; }
+    .scroller-nav.right { right: 0; }
+ 
+    .dates-track {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        padding: 4px 36px;
+        scrollbar-width: none;
+    }
+    .dates-track::-webkit-scrollbar { display: none; }
+ 
+    .date-item {
+        flex: 0 0 auto;
+        width: 64px;
+        padding: 10px 4px;
+        background: #f5f5f5;
+        border: 1.5px solid transparent;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .date-item:hover   { background: #e8e8e8; }
+    .date-item.active  { background: #0a0a0a; border-color: #0a0a0a; }
+    .date-item.today   { border-color: var(--fifa-gold, #FFD700); }
+ 
+    .date-day-name {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #999;
+        margin-bottom: 4px;
+    }
+    .date-item.active .date-day-name { color: rgba(255,255,255,0.5); }
+ 
+    .date-day-number {
+        font-size: 20px;
+        font-weight: 900;
+        color: #1a1a1a;
+        line-height: 1;
+        margin-bottom: 3px;
+    }
+    .date-item.active .date-day-number { color: var(--fifa-gold, #FFD700); }
+ 
+    .date-month {
+        font-size: 9px;
+        color: #aaa;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .date-item.active .date-month { color: rgba(255,255,255,0.4); }
+ 
+    .date-match-count {
+        margin-top: 6px;
+        padding: 2px 4px;
+        background: rgba(255,215,0,0.2);
+        border-radius: 4px;
+        font-size: 9px;
+        color: #BA7517;
+        font-weight: 700;
+    }
+    .date-item.active .date-match-count {
+        background: rgba(255,215,0,0.15);
+        color: var(--fifa-gold, #FFD700);
+    }
+ 
+    /* ── MATCHES CONTAINER ────────────────────────────── */
+    .matches-container { min-height: 300px; }
+ 
+    .day-section { margin-bottom: 0; }
+ 
+    .day-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #fff;
+        border-radius: 12px 12px 0 0;
+        border: 1px solid #eee;
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+    .day-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: #0a0a0a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .day-match-count {
+        font-size: 11px;
+        color: #aaa;
+        font-weight: 600;
+    }
+ 
+    .matches-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border: 1px solid #eee;
+        border-radius: 0 0 12px 12px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        background: #fff;
+    }
+ 
+    /* ── MATCH CARD FIFA ──────────────────────────────── */
+    .match-card-fifa {
+        display: grid;
+        grid-template-columns: 70px 1fr 130px 1fr 90px;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 16px;
+        border-bottom: 1px solid #f5f5f5;
+        transition: background 0.15s;
+        background: #fff;
+    }
+    .match-card-fifa:last-child { border-bottom: none; }
+    .match-card-fifa:hover { background: #fafafa; }
+ 
+    .match-time { text-align: center; }
+    .match-hour {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1a1a1a;
+        display: block;
+    }
+    .match-phase {
+        font-size: 10px;
+        color: #aaa;
+        margin-top: 2px;
+        display: block;
+        font-weight: 600;
+    }
+ 
+    .match-team {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .match-team.away { flex-direction: row-reverse; }
+ 
+    .team-flag-fifa { font-size: 24px; line-height: 1; }
+    .team-name-fifa { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+ 
+    .match-score { text-align: center; }
+    .score-display-fifa {
+        font-size: 22px;
+        font-weight: 900;
+        color: #1a1a1a;
+        display: block;
+        letter-spacing: -0.5px;
+    }
+    .score-vs {
+        font-size: 14px;
+        color: #ccc;
+        font-weight: 700;
+        display: block;
+    }
+ 
+    .match-status { text-align: center; }
+    .status-badge-fifa {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+    .status-badge-fifa.live {
+        background: #e8f5e9;
+        color: #16a34a;
+        border: 1px solid #22c55e;
+        animation: pulse-dot 2s infinite;
+    }
+    .status-badge-fifa.finished {
+        background: #EBF3FF;
+        color: #0C447C;
+    }
+    .status-badge-fifa.pending {
+        background: #FAEEDA;
+        color: #BA7517;
+    }
+ 
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #eee;
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.3; display: block; }
+    .empty-state p { font-size: 13px; color: #aaa; margin: 0; }
+ 
+    /* ── WIDGET: FILTRO POR FASE ──────────────────────── */
+    .fase-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 9px 12px;
+        background: none;
+        border: none;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #555;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.15s, color 0.15s;
+        margin-bottom: 2px;
+    }
+    .fase-btn:hover  { background: #f5f5f5; }
+    .fase-btn.active { background: #EBF3FF; color: #0066CC; }
+    .fase-btn i      { font-size: 13px; width: 16px; text-align: center; opacity: 0.6; }
+ 
+    /* ── WIDGET: STATS RÁPIDAS ────────────────────────── */
+    .cal-stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    .cal-stat-row:last-child { border-bottom: none; }
+    .cal-stat-label { font-size: 12px; color: #555; }
+    .cal-stat-val   { font-size: 14px; font-weight: 800; color: #0a0a0a; }
+    .cal-stat-val.blue { color: #0066CC; }
+    .cal-stat-val.gold { color: #BA7517; }
+    .cal-stat-val.green { color: #16a34a; }
+ 
+    /* ── WIDGET CTA ───────────────────────────────────── */
+    .widget-cta-dark { background: #0a0a0a !important; border-color: #222 !important; }
+    .widget-cta-dark .widget-header { border-bottom-color: #222; }
+    .widget-cta-dark .widget-title  { color: #fff; }
+    .cta-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 14px; }
+    .cta-btn  {
+        display: block; text-align: center; padding: 11px;
+        background: var(--fifa-gold, #FFD700); color: #000;
+        font-size: 13px; font-weight: 800; border-radius: 8px;
+        text-decoration: none; transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #e6c200; }
+ 
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+        .cal-grid {
+            grid-template-columns: 1fr 220px;
+            grid-template-areas: "centro derecha" "izquierda izquierda";
         }
-        
-        /* DATE SCROLLER - Estilo FIFA */
-        .date-scroller-container {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            position: relative;
+        .cal-col-left { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    }
+    @media (max-width: 700px) {
+        .cal-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
         }
-        
-        .scroller-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .live-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .live-toggle.active {
-            background: rgba(76, 175, 80, 0.2);
-            border-color: var(--success);
-        }
-        
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--text-gray);
-            border-radius: 50%;
-        }
-        
-        .live-toggle.active .live-dot {
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .live-label {
-            font-weight: 600;
-            color: var(--text-gray);
-        }
-        
-        .live-toggle.active .live-label {
-            color: var(--success);
-        }
-        
-        .live-count {
-            background: var(--error);
-            color: white;
-            padding: 0.15rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-        
-        .date-scroller {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .scroller-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 10;
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .scroller-nav:hover {
-            background: var(--fifa-blue);
-            border-color: var(--fifa-blue);
-        }
-        
-        .scroller-nav.left {
-            left: 5px;
-        }
-        
-        .scroller-nav.right {
-            right: 5px;
-        }
-        
-        .dates-track {
-            display: flex;
-            gap: 0.75rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 0.5rem 0;
-            scrollbar-width: none;
-        }
-        
-        .dates-track::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .date-item {
-            flex: 0 0 auto;
-            width: 80px;
-            padding: 1rem 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .date-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .date-item.active {
-            background: var(--fifa-blue);
-            border-color: var(--fifa-blue);
-        }
-        
-        .date-item.today {
-            border-color: var(--fifa-gold);
-        }
-        
-        .date-day-name {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 0.25rem;
-        }
-        
-        .date-day-number {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-white);
-            margin-bottom: 0.25rem;
-        }
-        
-        .date-item.active .date-day-number {
-            color: var(--fifa-gold);
-        }
-        
-        .date-month {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-        }
-        
-        .date-match-count {
-            margin-top: 0.5rem;
-            padding: 0.25rem;
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 4px;
-            font-size: 0.7rem;
-            color: var(--fifa-gold);
-            font-weight: 600;
-        }
-        
-        /* MATCHES CONTAINER */
-        .matches-container {
-            min-height: 400px;
-        }
-        
-        .day-section {
-            margin-bottom: 2rem;
-        }
-        
-        .day-header {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .day-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--fifa-gold);
-        }
-        
-        .day-match-count {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-        }
-        
-        .matches-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
+        .cal-col-left, .cal-col-right { position: static; }
+ 
         .match-card-fifa {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
-            display: grid;
-            grid-template-columns: 80px 1fr 120px 1fr 100px;
-            gap: 1.5rem;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .match-card-fifa:hover {
-            border-color: var(--fifa-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.15);
-        }
-        
-        .match-time {
+            grid-template-columns: 1fr;
+            gap: 10px;
             text-align: center;
         }
-        
-        .match-hour {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-white);
-        }
-        
-        .match-phase {
-            font-size: 0.75rem;
-            color: var(--text-gray);
-            margin-top: 0.25rem;
-        }
-        
-        .match-team {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .match-team.away {
-            flex-direction: row-reverse;
-        }
-        
-        .team-flag-fifa {
-            font-size: 2rem;
-        }
-        
-        .team-name-fifa {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        
-        .match-score {
-            text-align: center;
-        }
-        
-        .score-display-fifa {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-        }
-        
-        .score-vs {
-            color: var(--text-gray);
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .match-status {
-            text-align: center;
-        }
-        
-        .status-badge-fifa {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-        
-        .status-badge-fifa.live {
-            background: rgba(76, 175, 80, 0.2);
-            color: var(--success);
-            border: 1px solid var(--success);
-            animation: pulse 2s infinite;
-        }
-        
-        .status-badge-fifa.finished {
-            background: rgba(33, 150, 243, 0.2);
-            color: #2196F3;
-        }
-        
-        .status-badge-fifa.pending {
-            background: rgba(255, 152, 0, 0.2);
-            color: #FF9800;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-        
-        .empty-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .match-card-fifa {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                text-align: center;
-            }
-            
-            .match-team,
-            .match-team.away {
-                justify-content: center;
-                flex-direction: row;
-            }
-            
-            .date-item {
-                width: 70px;
-            }
-        }
+        .match-team, .match-team.away { justify-content: center; flex-direction: row; }
+        .match-status { display: flex; justify-content: center; }
+    }
+
     </style>
 </head>
 <body>
@@ -403,48 +596,186 @@
         <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
     </nav>
     
-    <!-- HERO -->
-    <section class="hero-hero-calendario">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Calendario</h1>
-        </div>
-    </section>
-    
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-container">
-        
-        <!-- DATE SCROLLER -->
-        <div class="date-scroller-container">
-            <div class="scroller-header">
-                <h3 style="color: var(--text-white); font-size: 1.1rem; margin: 0;">Selecciona una fecha</h3>
-                
-                <div class="live-toggle" id="liveToggle">
-                    <div class="live-dot"></div>
-                    <span class="live-label">En Vivo</span>
-                    <span class="live-count" id="liveCount" style="display: none;">0</span>
+    <div class="cal-hero">
+        <div class="cal-hero-inner">
+            <div>
+                <div class="cal-hero-eyebrow">
+                    <div class="cal-hero-eyebrow-line"></div>
+                    <span>FIFA World Cup 2026™</span>
+                </div>
+ 
+                <h1 class="cal-hero-title">
+                    Calen<em>dario</em>
+                </h1>
+ 
+                <p class="cal-hero-sub">
+                    Todos los partidos del Mundial 2026.
+                    Filtra por fecha o fase y sigue cada resultado en tiempo real.
+                </p>
+ 
+                <div class="cal-hero-stats">
+                    <div class="cal-hero-stat">
+                        <span class="cal-hero-stat-val" id="heroTotalPartidos">104</span>
+                        <span class="cal-hero-stat-lbl">Partidos</span>
+                    </div>
+                    <div class="cal-hero-stat">
+                        <span class="cal-hero-stat-val gold" id="heroPartidosHoy">—</span>
+                        <span class="cal-hero-stat-lbl">Hoy</span>
+                    </div>
+                    <div class="cal-hero-stat">
+                        <span class="cal-hero-stat-val" id="heroEnVivo" style="color:#22c55e">—</span>
+                        <span class="cal-hero-stat-lbl">En vivo</span>
+                    </div>
                 </div>
             </div>
-            
-            <div class="date-scroller">
-                <div class="scroller-nav left" id="scrollLeft">◀</div>
-                <div class="scroller-nav right" id="scrollRight">▶</div>
-                
-                <div class="dates-track" id="datesTrack">
-                    <!-- Las fechas se generarán dinámicamente -->
+ 
+            <div class="cal-hero-deco">📅</div>
+        </div>
+    </div>
+ 
+ 
+    <!-- ── GRID 3 COLUMNAS ───────────────────────────── -->
+    <div class="cal-grid-bg">
+    <div class="cal-grid">
+ 
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="cal-col-left">
+ 
+            <!-- Widget: Filtrar por fase -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Fase</span>
+                </div>
+                <div class="widget-body" style="padding: 10px 12px;">
+                    <button class="fase-btn active" data-fase="todos">
+                        <i class="bi bi-grid"></i> Todos
+                    </button>
+                    <button class="fase-btn" data-fase="grupos">
+                        <i class="bi bi-people"></i> Fase de Grupos
+                    </button>
+                    <button class="fase-btn" data-fase="16vos">
+                        <i class="bi bi-diagram-3"></i> 16avos de Final
+                    </button>
+                    <button class="fase-btn" data-fase="8vos">
+                        <i class="bi bi-diagram-2"></i> Octavos de Final
+                    </button>
+                    <button class="fase-btn" data-fase="4tos">
+                        <i class="bi bi-trophy"></i> Cuartos de Final
+                    </button>
+                    <button class="fase-btn" data-fase="Semifinal">
+                        <i class="bi bi-star"></i> Semifinales
+                    </button>
+                    <button class="fase-btn" data-fase="Final">
+                        <i class="bi bi-star-fill"></i> Final
+                    </button>
                 </div>
             </div>
-        </div>
-        
-        <!-- MATCHES CONTAINER -->
-        <div class="matches-container" id="matchesContainer">
-            <div class="loading" style="text-align: center; padding: 3rem; color: var(--text-gray);">
-                <div class="loading-spinner"></div>
-                <p style="margin-top: 1rem;">Cargando partidos...</p>
+ 
+            <!-- Widget: Resumen -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="cal-stat-row">
+                        <span class="cal-stat-label">Jugados</span>
+                        <span class="cal-stat-val blue" id="statJugados">0</span>
+                    </div>
+                    <div class="cal-stat-row">
+                        <span class="cal-stat-label">Pendientes</span>
+                        <span class="cal-stat-val gold" id="statPendientes">0</span>
+                    </div>
+                    <div class="cal-stat-row">
+                        <span class="cal-stat-label">En vivo</span>
+                        <span class="cal-stat-val green" id="statEnVivo">0</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        
-    </main>
+ 
+        </aside>
+ 
+ 
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="cal-col-main">
+ 
+            <!-- Date Scroller -->
+            <div class="date-scroller-container">
+                <div class="scroller-header">
+                    <span class="scroller-header-title">Selecciona una fecha</span>
+                    <div class="live-toggle" id="liveToggle">
+                        <div class="live-dot"></div>
+                        <span>En Vivo</span>
+                        <span class="live-count" id="liveCount" style="display:none">0</span>
+                    </div>
+                </div>
+ 
+                <div class="date-scroller">
+                    <div class="scroller-nav left"  id="scrollLeft">‹</div>
+                    <div class="scroller-nav right" id="scrollRight">›</div>
+                    <div class="dates-track" id="datesTrack"></div>
+                </div>
+            </div>
+ 
+            <!-- Matches Container -->
+            <div class="matches-container" id="matchesContainer">
+                <div class="empty-state">
+                    <span class="empty-icon">📅</span>
+                    <p>Cargando partidos...</p>
+                </div>
+            </div>
+ 
+        </main>
+ 
+ 
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="cal-col-right">
+ 
+            <!-- Widget CTA: Predicciones -->
+            <div class="widget widget-cta-dark">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">¿Ya predijiste?</span>
+                </div>
+                <div class="widget-body">
+                    <p class="cta-text">Ingresa tus predicciones antes del pitazo inicial y acumula puntos.</p>
+                    <a href="predicciones.html" class="cta-btn">Hacer Predicciones</a>
+                </div>
+            </div>
+ 
+            <!-- Widget: Últimos Resultados -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Últimos Resultados</span>
+                </div>
+                <div id="ultimosResultados" style="padding: 4px 0;">
+                    <div style="text-align:center;padding:20px;font-size:12px;color:#aaa;">
+                        ⏳ El torneo aún no ha comenzado
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Widget: Próximos -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Próximos Partidos</span>
+                    <a href="predicciones.html" class="widget-link">Predecir →</a>
+                </div>
+                <div class="widget-body">
+                    <div id="proximosPartidosWidget">
+                        <div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">Cargando...</div>
+                    </div>
+                </div>
+            </div>
+ 
+        </aside>
+ 
+    </div>
+    </div>
+
     
     <!-- FOOTER -->
     <footer class="footer">
