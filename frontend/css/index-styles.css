@@ -2074,11 +2074,12 @@ body {
  
 /* ── MENU OVERLAY ──────────────────────────────────────────── */
 .mobile-menu-overlay {
+    display: none;
     position: fixed;
     bottom: 64px; left: 0;
     width: 100%;
     height: calc(100% - 56px - 64px);
-    background: #0a0a0a;
+    background: #000000;
     z-index: 1050;
     overflow-y: auto;
     transform: translateY(100%);
@@ -2337,5 +2338,8 @@ body {
         text-transform: lowercase;
         color: white;
         opacity: 0.8;
+    }
+    .mobile-menu-overlay {
+        display: flex;
     }
 }
