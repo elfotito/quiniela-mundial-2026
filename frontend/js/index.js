@@ -29,7 +29,7 @@ async function verificarLogin() {
 
     const usuario = auth.getUser();
     usuarioId = parseInt(usuario.id);
-    
+
     document.querySelectorAll('.user-name-display').forEach(el => {
         el.textContent = usuario.nombre;
     });
@@ -39,14 +39,16 @@ async function verificarLogin() {
         el.textContent = emoji;
     });
 
-    // Mostrar botones admin si corresponde
     if (usuario.isAdmin) {
-        document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+    
+        document.querySelectorAll('.btn-admin-display').forEach(btn => {
             btn.style.display = 'flex';
-            const target = btn.dataset.target;
-            if (target) {
-                btn.onclick = () => window.location.href = target;
-            }
+            btn.onclick = () => window.location.href = 'admin.html';
+        });
+        
+        document.querySelectorAll('.btn-noticias-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'noticias.html';
         });
     }
 }

@@ -2313,6 +2313,7 @@ body {
     }
 
     .countdown-timer {
+        margin-top: 5px;
         display: flex;
         align-items: center;
         gap: 12px;

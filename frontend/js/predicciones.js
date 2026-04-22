@@ -193,8 +193,6 @@ function renderizarPartidos() {
     container.innerHTML = partidosFiltrados.map(partido => crearCardPartido(partido)).join('');
 }
 
-// ─── REEMPLAZA crearCardPartido en predicciones.js ───────
-
 function crearCardPartido(partido) {
     const fecha = new Date(partido.fecha);
 
@@ -223,39 +221,37 @@ function crearCardPartido(partido) {
                 <span class="mc-date">${fechaCorta}</span>
             </div>
 
-            <!-- CUERPO: equipos izq | inputs centro | hora der -->
+            <!-- CUERPO -->
             <div class="mc-body">
 
-                <!-- Columna izquierda: equipos -->
-                <div class="mc-teams">
+                <!-- Equipos + inputs (izquierda) -->
+                <div class="mc-teams-inputs">
+
                     <div class="mc-team-row">
                         <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
                         <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
+                        <input type="number"
+                               class="mc-goal-input"
+                               id="local_${partido.id}"
+                               min="0" max="9"
+                               placeholder="0"
+                               onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
                     </div>
+
                     <div class="mc-team-row">
                         <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
                         <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
+                        <input type="number"
+                               class="mc-goal-input"
+                               id="visitante_${partido.id}"
+                               min="0" max="9"
+                               placeholder="0"
+                               onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
                     </div>
+
                 </div>
 
-                <!-- Columna centro: inputs -->
-                <div class="mc-inputs">
-                    <input type="number"
-                           class="mc-goal-input"
-                           id="local_${partido.id}"
-                           min="0" max="9"
-                           placeholder="0"
-                           onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-                    <span class="mc-input-sep">⋮</span>
-                    <input type="number"
-                           class="mc-goal-input"
-                           id="visitante_${partido.id}"
-                           min="0" max="9"
-                           placeholder="0"
-                           onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-                </div>
-
-                <!-- Columna derecha: hora -->
+                <!-- Hora (derecha) -->
                 <div class="mc-hora-col">
                     <span class="mc-hora">${hora}</span>
                 </div>
@@ -270,155 +266,6 @@ function crearCardPartido(partido) {
         </div>
     `;
 }
-
-
-/* =====================================================
-   CSS — pega al final de predicciones-styles.css
-   ===================================================== */
-
-/*
-.match-card {
-    background: #fff;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    overflow: hidden;
-    transition: box-shadow 0.2s;
-}
-.match-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-.match-card.removing {
-    opacity: 0;
-    transform: translateX(20px);
-    transition: all 0.3s ease;
-}
-
-.mc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 12px 16px 10px;
-    border-bottom: 1px solid #f0f0f0;
-}
-.mc-competition {
-    font-size: 13px;
-    font-weight: 700;
-    color: #1a1a1a;
-}
-.mc-subtitle {
-    font-size: 12px;
-    color: #0066CC;
-    margin-top: 2px;
-}
-.mc-date {
-    font-size: 12px;
-    color: #999;
-    font-weight: 600;
-    white-space: nowrap;
-    margin-left: 12px;
-    flex-shrink: 0;
-}
-
-.mc-body {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    padding: 16px 16px 12px;
-    gap: 16px;
-}
-
-.mc-teams {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.mc-team-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.mc-flag { font-size: 28px; line-height: 1; }
-.mc-name {
-    font-size: 13px;
-    font-weight: 800;
-    color: #1a1a1a;
-    letter-spacing: 0.3px;
-}
-
-.mc-inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
-.mc-goal-input {
-    width: 48px;
-    height: 48px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 800;
-    color: #1a1a1a;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 8px;
-    background: #fafafa;
-    -moz-appearance: textfield;
-    appearance: textfield;
-    transition: border-color 0.2s, background 0.2s;
-    padding: 0;
-}
-.mc-goal-input::-webkit-inner-spin-button,
-.mc-goal-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.mc-goal-input:focus {
-    outline: none;
-    border-color: #0066CC;
-    background: #EBF3FF;
-}
-.mc-input-sep {
-    font-size: 14px;
-    color: #ccc;
-    line-height: 1;
-}
-
-.mc-hora-col {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 64px;
-}
-.mc-hora {
-    font-size: 28px;
-    font-weight: 800;
-    color: #1a1a1a;
-    letter-spacing: -1px;
-    line-height: 1;
-}
-
-.mc-btn-predict {
-    display: block;
-    width: calc(100% - 32px);
-    margin: 0 16px 14px;
-    padding: 12px;
-    background: #0066CC;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    letter-spacing: 0.3px;
-    transition: background 0.2s, transform 0.1s;
-}
-.mc-btn-predict:hover   { background: #0052a3; }
-.mc-btn-predict:active  { transform: scale(0.98); }
-.mc-btn-predict:disabled { background: #ccc; cursor: not-allowed; }
-
-@media (max-width: 400px) {
-    .mc-flag  { font-size: 22px; }
-    .mc-name  { font-size: 12px; }
-    .mc-hora  { font-size: 22px; }
-    .mc-goal-input { width: 40px; height: 40px; font-size: 16px; }
-}
-*/
 
 function renderizarPredicciones() {
     const container = document.getElementById('completedList');

@@ -746,95 +746,123 @@
         background: #f4f4f4;
     }
 
- 
+ /* =====================================================
+   MATCH CARD v3 — alineado con inputs + grid desktop
+   Reemplaza el CSS anterior de match cards en
+   predicciones-styles.css
+   ===================================================== */
+
+/* ── GRID DE CARDS (desktop 3 cols, tablet 2, móvil 1) */
+#matchesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    #matchesGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+    #matchesGrid { grid-template-columns: 1fr; }
+}
+
+/* ── CARD BASE ─────────────────────────────────────── */
 .match-card {
     background: #fff;
     border-radius: 12px;
-    margin-bottom: 10px;
     border: 1px solid #e8e8e8;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     overflow: hidden;
     transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
 }
 .match-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 .match-card.removing {
     opacity: 0;
-    transform: translateX(20px);
+    transform: scale(0.96);
     transition: all 0.3s ease;
 }
- 
+
 /* ── CABECERA ──────────────────────────────────────── */
 .mc-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 12px 16px 10px;
+    padding: 11px 14px 9px;
     border-bottom: 1px solid #f0f0f0;
 }
 .mc-competition {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #1a1a1a;
 }
 .mc-subtitle {
-    font-size: 12px;
+    font-size: 11px;
     color: #0066CC;
     margin-top: 2px;
 }
 .mc-date {
-    font-size: 12px;
+    font-size: 11px;
     color: #999;
     font-weight: 600;
     white-space: nowrap;
-    margin-left: 12px;
+    margin-left: 8px;
     flex-shrink: 0;
 }
- 
+
 /* ── CUERPO ────────────────────────────────────────── */
 .mc-body {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
+    display: flex;
     align-items: center;
-    padding: 16px 16px 12px;
-    gap: 16px;
+    justify-content: space-between;
+    padding: 14px 14px 10px;
+    gap: 12px;
+    flex: 1;
 }
- 
-/* Equipos (izquierda) */
-.mc-teams {
+
+/* Equipos + inputs */
+.mc-teams-inputs {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px;   /* espacio entre los dos equipos */
+    flex: 1;
+    min-width: 0;
 }
+
 .mc-team-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
-.mc-flag { font-size: 28px; line-height: 1; }
+
+.mc-flag { font-size: 24px; line-height: 1; flex-shrink: 0; }
+
 .mc-name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     color: #1a1a1a;
     letter-spacing: 0.3px;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
- 
-/* Inputs (centro) */
-.mc-inputs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-}
+
+/* Input alineado a la derecha de cada equipo */
 .mc-goal-input {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     text-align: center;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
     color: #1a1a1a;
     border: 1.5px solid #e0e0e0;
     border-radius: 8px;
     background: #fafafa;
+    flex-shrink: 0;
     -moz-appearance: textfield;
     appearance: textfield;
     transition: border-color 0.2s, background 0.2s;
@@ -847,36 +875,32 @@
     border-color: #0066CC;
     background: #EBF3FF;
 }
-.mc-input-sep {
-    font-size: 14px;
-    color: #ccc;
-    line-height: 1;
-}
- 
+
 /* Hora (derecha) */
 .mc-hora-col {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    min-width: 64px;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 56px;
 }
 .mc-hora {
-    font-size: 28px;
-    font-weight: 800;
+    font-size: 24px;
+    font-weight: 900;
     color: #1a1a1a;
     letter-spacing: -1px;
     line-height: 1;
 }
- 
+
 /* ── BOTÓN ─────────────────────────────────────────── */
 .mc-btn-predict {
     display: block;
-    width: calc(100% - 32px);
-    margin: 0 16px 14px;
-    padding: 12px;
+    width: calc(100% - 28px);
+    margin: 0 14px 12px;
+    padding: 11px;
     background: #0066CC;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     border: none;
     border-radius: 8px;
@@ -887,11 +911,3 @@
 .mc-btn-predict:hover   { background: #0052a3; }
 .mc-btn-predict:active  { transform: scale(0.98); }
 .mc-btn-predict:disabled { background: #ccc; cursor: not-allowed; }
- 
-/* ── RESPONSIVE ────────────────────────────────────── */
-@media (max-width: 400px) {
-    .mc-flag  { font-size: 22px; }
-    .mc-name  { font-size: 12px; }
-    .mc-hora  { font-size: 22px; }
-    .mc-goal-input { width: 40px; height: 40px; font-size: 16px; }
-}
