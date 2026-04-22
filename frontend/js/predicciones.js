@@ -235,6 +235,7 @@ function crearCardPartido(partido) {
                         <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', 1)" tabindex="-1">▲</button>
                         <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
                         </div>
+                    </div>
                     <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0" readonly>
                 </div>
 
@@ -245,6 +246,7 @@ function crearCardPartido(partido) {
                         <div class="mc-spin-arrows">
                         <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', 1)" tabindex="-1">▲</button>
                         <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
+                        </div>
                     </div>
                     <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0" readonly>
                 </div>
