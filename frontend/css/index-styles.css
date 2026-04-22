@@ -938,12 +938,11 @@ body {
     /* duración se asigna desde JS */
 }
 .news-hero {
-    margin-bottom: 0 !important; /* Elimina espacio debajo del carrusel */
+    margin-bottom: 0 !important;
 }
 
 .countdown-wrapper {
-    margin-top: 0 !important; /* Elimina espacio arriba del contador */
-    /* Si tienes algún padding-top excesivo aquí, redúcelo también */
+    margin-top: 0 !important;
 }
 /* ================================================
    RESPONSIVE — TABLET (641px – 900px)
@@ -2279,7 +2278,6 @@ body {
 }
  
  
-/* ── COUNTDOWN MÓVIL FIX ───────────────────────────────────── */
 @media (max-width: 1100px) {
  
     .countdown-wrapper {
@@ -2294,7 +2292,6 @@ body {
         gap: 12px;
     }
  
-    /* Ocultar label de texto, solo mostrar logo */
     .countdown-label div { display: none; }
     .countdown-label {
         flex-direction: row;
@@ -2302,9 +2299,9 @@ body {
         flex-shrink: 0;
     }
  
-    /* Logo/trofeo del countdown */
     .countdown-label img,
     .countdown-label .trophy-icon {
+        align-items: center;
         width: 36px;
         height: 36px;
         object-fit: contain;
@@ -2315,7 +2312,7 @@ body {
         display: flex;
         gap: 0;
         flex: 1;
-        justify-content: flex-end;
+        justify-content: center;
     }
  
     .time-box {
