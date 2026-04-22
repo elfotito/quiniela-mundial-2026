@@ -2279,55 +2279,61 @@ body {
  
  
 @media (max-width: 1100px) {
- 
     .countdown-wrapper {
         background: var(--fifablue, #314fff);
     }
- 
+
     .countdown-container {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        /* Cambiamos space-between por center para juntar los elementos al medio */
+        justify-content: center; 
+        gap: 20px; /* Espacio entre el logo y el contador */
         padding: 10px 16px;
         min-height: 60px;
     }
- 
-    .countdown-label div { display: none; }
+
     .countdown-label {
+        display: flex; /* Agregado: necesario para que flex-direction y align-items funcionen */
+        align-items: center;
         flex-direction: row;
         gap: 0;
         flex-shrink: 0;
     }
- 
+
+    .countdown-label div { 
+        display: none; 
+    }
+
     .countdown-label img,
     .countdown-label .trophy-icon {
-        align-items: center;
-        width: 36px;
-        height: 36px;
+        width: auto; 
+        height: 50px; /* Ajusta este valor si lo quieres más grande o pequeño */
         object-fit: contain;
     }
- 
+
     /* Timer compacto */
     .countdown-timer {
-        display: center;
-        gap: 0;
+        display: flex; /* Corregido: antes decía "center" */
+        gap: 8px; /* Un pequeño espacio extra entre los bloques de tiempo */
         justify-content: center;
         align-items: center;
     }
- 
+
     .time-box {
         min-width: 0;
-        padding: 0 6px;
+        padding: 0 4px;
         text-align: center;
     }
- 
+
     .time-value {
         font-size: 1.8rem;
         font-weight: 900;
         line-height: 1;
         display: block;
+        color: #ffffff; /* Aseguramos que el texto sea blanco */
     }
- 
+
     .time-label {
         font-size: 0.65rem;
         font-weight: 700;
@@ -2336,8 +2342,7 @@ body {
         padding-top: 2px;
         display: block;
         opacity: 0.75;
+        color: #ffffff;
     }
- 
-    /* Ocultar botón "Ver Partidos" en móvil */
-    .btn-view-matches { display: none; }
+
 }
