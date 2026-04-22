@@ -12,7 +12,6 @@ let usuarioId = null;
 document.addEventListener('DOMContentLoaded', async () => {
     await verificarLogin();      
     await cargarDatos();         
-    configurarMenuMobile();
     iniciarCountdown();
     inicializarCarrusel();
     iniciarTicker();
