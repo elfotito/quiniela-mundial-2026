@@ -905,10 +905,16 @@
 /* REEMPLAZA .mc-score-spinner */
 .mc-score-spinner {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;  /* ahora es fila: flechas | número */
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     flex-shrink: 0;
+}
+
+.mc-spin-arrows {
+    display: flex;
+    flex-direction: column;  /* flechas apiladas verticalmente */
+    gap: 2px;
 }
 
 .mc-spin-btn {
