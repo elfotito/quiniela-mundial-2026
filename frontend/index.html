@@ -288,17 +288,25 @@
 </header>
 
     <header class="mobile-top-bar" id="mobileTopBar">
-    <button class="mtb-icon-btn" id="mobileSearchBtn" aria-label="Buscar">
-        <i class="fas fa-search"></i>
-    </button>
- 
     <div class="mtb-logo">
         <img src="img/logoblancomenu.png" alt="Quiniela 2026">
     </div>
- 
-    <button class="mtb-icon-btn" id="mobileUserBtn" aria-label="Mi cuenta">
-        <i class="far fa-user"></i>
-    </button>
+    <div class="user-pill">
+                <span class="greeting">Bienvenido,</span>
+                <span class="user-icon" id="userCampeon">👤</span>
+                <span class="user-name" id="userName">Tito</span>
+            </div>
+            
+            <button class="btn-admin-custom" id="adminBtn" title="Panel Admin">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-admin-noticias" id="adminNoti" title="Panel Noticias">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-logout-elegant" onclick="logout()">
+                <span>SALIR</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
 </header>
  
 <!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
