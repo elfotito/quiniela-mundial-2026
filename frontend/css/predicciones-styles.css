@@ -831,7 +831,7 @@
 
 .mc-name {
     font-size: 10px;
-    font-weight: 400;
+    font-weight: 600;
     color: #000000;
     letter-spacing: 0.5px;
     flex: 1;
@@ -843,12 +843,12 @@
 
 /* Input alineado a la derecha de cada equipo */
 .mc-goal-input {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     font-size: 17px;
     font-weight: 800;
-    color: #1a1a1a;
+    color: #000000;
     border: 1.5px solid #e0e0e0;
     background: #fafafa;
     flex-shrink: 0;
@@ -875,9 +875,9 @@
 }
 .mc-hora {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 600;
     color: #000000;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
     line-height: 1;
 }
 

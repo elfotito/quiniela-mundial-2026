@@ -227,29 +227,27 @@ function crearCardPartido(partido) {
                 <!-- Equipos + inputs (izquierda) -->
                 <div class="mc-teams-inputs">
 
-                    <div class="mc-team-row">
-                        <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
-                        <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
-                        <input type="number"
-                               class="mc-goal-input"
-                               id="local_${partido.id}"
-                               min="0" max="9"
-                               placeholder="0"
-                               onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
+                <div class="mc-team-row">
+                    <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
+                    <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
+                    <div class="mc-score-spinner">
+                        <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', 1)" tabindex="-1">▲</button>
+                        <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0" readonly>
+                        <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
                     </div>
-
-                    <div class="mc-team-row">
-                        <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
-                        <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
-                        <input type="number"
-                               class="mc-goal-input"
-                               id="visitante_${partido.id}"
-                               min="0" max="9"
-                               placeholder="0"
-                               onkeypress="if(event.key==='Enter') enviarPrediccion(${partido.id})">
-                    </div>
-
                 </div>
+
+                <div class="mc-team-row">
+                    <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
+                    <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
+                    <div class="mc-score-spinner">
+                        <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', 1)" tabindex="-1">▲</button>
+                        <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0" readonly>
+                        <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
+                    </div>
+                </div>
+
+            </div>
 
                 <!-- Hora (derecha) -->
                 <div class="mc-hora-col">
@@ -266,6 +264,15 @@ function crearCardPartido(partido) {
         </div>
     `;
 }
+
+function cambiarGol(inputId, delta) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    let val = parseInt(input.value) || 0;
+    val = Math.min(9, Math.max(0, val + delta));
+    input.value = val;
+}
+window.cambiarGol = cambiarGol;
 
 function renderizarPredicciones() {
     const container = document.getElementById('completedList');
