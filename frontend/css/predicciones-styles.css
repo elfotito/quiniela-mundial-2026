@@ -1007,7 +1007,7 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 20px;
     flex: 1;
     min-width: 0;
 }
