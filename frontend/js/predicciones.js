@@ -353,23 +353,13 @@ function crearCardPrediccion(prediccion) {
     let puntajeBadge = '';
     if (!esPendiente) {
         const pts = prediccion.puntos_obtenidos;
-        let badgeColor = '#EBF3FF'; let textColor = '#0C447C';
-        if (pts >= 9)      { badgeColor = '#D1F2EB'; textColor = '#085041'; }
-        else if (pts >= 7) { badgeColor = '#EAF3DE'; textColor = '#27500A'; }
-        else if (pts >= 5) { badgeColor = '#FAEEDA'; textColor = '#633806'; }
-        else if (pts > 0)  { badgeColor = '#FFF3CD'; textColor = '#856404'; }
-        else               { badgeColor = '#f5f5f5'; textColor = '#888';    }
+        let badgeClass = 'pts-0';
+        if (pts >= 9)      badgeClass = 'pts-9';
+        else if (pts >= 7) badgeClass = 'pts-7';
+        else if (pts >= 5) badgeClass = 'pts-5';
+        else if (pts > 0)  badgeClass = 'pts-2';
  
-        puntajeBadge = `<span style="
-            display:inline-block;
-            background:${badgeColor};
-            color:${textColor};
-            font-size:13px;
-            font-weight:900;
-            padding:4px 12px;
-            border-radius:20px;
-            letter-spacing:0.3px;
-        ">${pts > 0 ? '+' : ''}${pts} pts</span>`;
+        puntajeBadge = `<span class="pred-pts-badge ${badgeClass}">${pts > 0 ? '+' : ''}${pts} pts</span>`;
     }
  
     return `
@@ -384,10 +374,10 @@ function crearCardPrediccion(prediccion) {
                 <span class="pred-card-date">${fechaCorta}</span>
             </div>
  
-            <!-- CUERPO: equipos + marcadores -->
+            <!-- CUERPO -->
             <div class="pred-card-body">
  
-                <!-- Equipos (izquierda) -->
+                <!-- Equipos izquierda -->
                 <div class="pred-card-teams">
                     <div class="pred-card-team-row">
                         <span class="pred-card-flag">${obtenerBandera(prediccion.equipo_local)}</span>
@@ -399,40 +389,43 @@ function crearCardPrediccion(prediccion) {
                     </div>
                 </div>
  
-                <!-- Scores (centro-derecha) -->
+                <!-- Marcadores derecha -->
                 <div class="pred-card-scores">
  
                     <!-- Mi predicción -->
-                <div class="pred-card-score-col">
-                    <div class="pred-card-score-label">Mi Prediccion</div>
+                    <div class="pred-card-score-col pred-col-pred">
+                        <div class="pred-card-score-label">Mi predicción</div>
                         <div class="pred-card-result-stack">
-                            <span class="pred-card-result-num">${prediccion.goles_local_pred}</span>
+                            <span class="pred-card-result-num pred">${prediccion.goles_local_pred}</span>
                             <div class="pred-card-result-line"></div>
-                            <span class="pred-card-result-num">${prediccion.goles_visitante_pred}</span>
+                            <span class="pred-card-result-num pred">${prediccion.goles_visitante_pred}</span>
                         </div>
-                    <!-- Separador -->
+                    </div>
+ 
+                    <!-- Separador vertical -->
                     <div class="pred-card-score-divider"></div>
+ 
                     <!-- Resultado real -->
-                    <div class="pred-card-score-col">
-                    <div class="pred-card-score-label">${tieneResultado ? 'FINAL' : 'Resultado'}</div>
-                    ${tieneResultado ? `
-                        <div class="pred-card-result-stack">
-                            <span class="pred-card-result-num">${prediccion.goles_local}</span>
-                            <div class="pred-card-result-line"></div>
-                            <span class="pred-card-result-num">${prediccion.goles_visitante}</span>
-                        </div>
-                    ` : `
-                        <div class="pred-card-score-vals">
-                            <span class="pred-card-score-pending">${esPendiente ? 'Por jugar' : '—'}</span>
-                        </div>
-                    `}
-                </div>
+                    <div class="pred-card-score-col pred-col-real">
+                        <div class="pred-card-score-label">${tieneResultado ? 'Final' : 'Resultado'}</div>
+                        ${tieneResultado ? `
+                            <div class="pred-card-result-stack">
+                                <span class="pred-card-result-num real">${prediccion.goles_local}</span>
+                                <div class="pred-card-result-line real-line"></div>
+                                <span class="pred-card-result-num real">${prediccion.goles_visitante}</span>
+                            </div>
+                        ` : `
+                            <div class="pred-card-pending-text">
+                                ${esPendiente ? 'Por jugar' : '—'}
+                            </div>
+                        `}
+                    </div>
  
                 </div>
  
             </div>
  
-            <!-- FOOTER: status + puntos -->
+            <!-- FOOTER -->
             <div class="pred-card-footer">
                 <span class="pred-card-status ${esPendiente ? 'pendiente' : 'finalizado'}">
                     ${esPendiente ? '⏳ Pendiente' : '✅ Finalizado'}
@@ -443,6 +436,7 @@ function crearCardPrediccion(prediccion) {
         </div>
     `;
 }
+
 
 
 async function enviarPrediccion(partidoId) {

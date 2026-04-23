@@ -962,6 +962,15 @@
 @media (max-width: 700px) {
     #completedList { grid-template-columns: 1fr; }
 }
+#completedList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+@media (max-width: 700px) {
+    #completedList { grid-template-columns: 1fr; }
+}
  
 .pred-card {
     background: #fff;
@@ -990,7 +999,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 14px 10px;
+    padding: 14px 14px 12px;
     flex: 1;
 }
  
@@ -1006,15 +1015,11 @@
     align-items: center;
     gap: 8px;
 }
-.pred-card-flag { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.pred-card-flag { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .pred-card-name {
-    font-size: 11px;
-    font-weight: 800;
-    color: #1a1a1a;
+    font-size: 11px; font-weight: 800; color: #1a1a1a;
     letter-spacing: 0.3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
  
 .pred-card-scores {
@@ -1023,58 +1028,23 @@
     gap: 10px;
     flex-shrink: 0;
 }
+ 
 .pred-card-score-col {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
+    min-width: 52px;
 }
+ 
 .pred-card-score-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: #bbb;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase;
     white-space: nowrap;
 }
-.pred-card-score-vals {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.pred-card-score-num {
-    font-size: 22px;
-    font-weight: 900;
-    color: #1a1a1a;
-    min-width: 22px;
-    text-align: center;
-    line-height: 1;
-}
-.pred-card-score-num.real { color: #0066CC; }
-.pred-card-score-sep      { font-size: 14px; color: #ccc; font-weight: 700; }
-.pred-card-score-pending  { font-size: 11px; color: #bbb; font-weight: 600; white-space: nowrap; }
+.pred-col-pred .pred-card-score-label { color: #0066CC; }
+.pred-col-real .pred-card-score-label { color: #16a34a; }
  
-.pred-card-score-divider {
-    width: 1px;
-    height: 40px;
-    background: #f0f0f0;
-    flex-shrink: 0;
-}
- 
-.pred-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px 12px;
-    border-top: 1px solid #f5f5f5;
-}
-.pred-card-status {
-    font-size: 11px;
-    font-weight: 700;
-}
-.pred-card-status.pendiente  { color: #BA7517; }
-.pred-card-status.finalizado { color: #16a34a; }
-
 .pred-card-result-stack {
     display: flex;
     flex-direction: column;
@@ -1082,16 +1052,51 @@
     gap: 0;
 }
 .pred-card-result-num {
-    font-size: 24px;
-    font-weight: 900;
-    color: #0066CC;
-    line-height: 1.2;
-    min-width: 28px;
-    text-align: center;
+    font-size: 22px; font-weight: 900; line-height: 1.2;
+    min-width: 24px; text-align: center;
 }
+.pred-card-result-num.pred { color: #0066CC; }
+.pred-card-result-num.real { color: #16a34a; }
+ 
 .pred-card-result-line {
-    width: 28px;
-    height: 2px;
-    background: #e0e0e0;
-    margin: 2px 0;
+    width: 24px; height: 2px;
+    background: #e0e0e0; margin: 2px 0;
 }
+.pred-card-result-line.real-line { background: #bbf7d0; }
+ 
+.pred-card-score-divider {
+    width: 1px; height: 52px;
+    background: #f0f0f0; flex-shrink: 0;
+}
+ 
+.pred-card-pending-text {
+    font-size: 10px; color: #bbb; font-weight: 600;
+    white-space: nowrap; padding-top: 8px;
+}
+ 
+.pred-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px 11px;
+    border-top: 1px solid #f5f5f5;
+    background: #fafafa;
+}
+.pred-card-status {
+    font-size: 11px; font-weight: 700;
+}
+.pred-card-status.pendiente  { color: #BA7517; }
+.pred-card-status.finalizado { color: #16a34a; }
+ 
+.pred-pts-badge {
+    display: inline-block;
+    font-size: 12px; font-weight: 900;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 0.3px;
+}
+.pred-pts-badge.pts-9 { background: #D1F2EB; color: #085041; }
+.pred-pts-badge.pts-7 { background: #EAF3DE; color: #27500A; }
+.pred-pts-badge.pts-5 { background: #FAEEDA; color: #633806; }
+.pred-pts-badge.pts-2 { background: #EBF3FF; color: #0C447C; }
+.pred-pts-badge.pts-0 { background: #f5f5f5; color: #888;    }
+ 
