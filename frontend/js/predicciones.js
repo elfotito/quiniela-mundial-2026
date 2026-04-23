@@ -345,7 +345,6 @@ function crearCardPrediccion(prediccion) {
  
     const estadio = prediccion.estadio ? ` · ${prediccion.estadio}` : '';
  
-    // Resultado real (solo si el partido finalizó)
     const tieneResultado = esFinalizado &&
         prediccion.goles_local !== null &&
         prediccion.goles_visitante !== null;
@@ -404,18 +403,15 @@ function crearCardPrediccion(prediccion) {
                 <div class="pred-card-scores">
  
                     <!-- Mi predicción -->
-                    <div class="pred-card-score-col">
-                        <div class="pred-card-score-label">Mi predicción</div>
-                        <div class="pred-card-score-vals">
-                            <span class="pred-card-score-num">${prediccion.goles_local_pred}</span>
-                            <span class="pred-card-score-sep">—</span>
-                            <span class="pred-card-score-num">${prediccion.goles_visitante_pred}</span>
+                <div class="pred-card-score-col">
+                    <div class="pred-card-score-label">Mi Prediccion</div>
+                        <div class="pred-card-result-stack">
+                            <span class="pred-card-result-num">${prediccion.goles_local_pred}</span>
+                            <div class="pred-card-result-line"></div>
+                            <span class="pred-card-result-num">${prediccion.goles_visitante_pred}</span>
                         </div>
-                    </div>
- 
                     <!-- Separador -->
                     <div class="pred-card-score-divider"></div>
- 
                     <!-- Resultado real -->
                     <div class="pred-card-score-col">
                     <div class="pred-card-score-label">${tieneResultado ? 'FINAL' : 'Resultado'}</div>
