@@ -1021,7 +1021,6 @@ body {
 /* ─── WIDGET PLACEHOLDER (para construir componentes encima) */
 .widget {
     background: #ffffff;
-    border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
@@ -2394,6 +2393,7 @@ body {
 
 .ppm-card {
     border-bottom: 1px solid #f0f0f0;
+    padding: 10px 0;
 }
 .ppm-card:last-child { border-bottom: none; }
  

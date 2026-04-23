@@ -209,7 +209,7 @@ async function cargarProximosPartidos() {
             return `
             <div class="ppm-card">
                 <div class="ppm-header">
-                    <span class="ppm-fase">First Stage · ${p.fase}</span>
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
                     <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
                 <div class="ppm-body">
