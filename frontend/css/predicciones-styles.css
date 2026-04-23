@@ -1006,7 +1006,7 @@
 .pred-card-teams {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 32px;
     flex: 1;
     min-width: 0;
 }
@@ -1017,8 +1017,8 @@
 }
 .pred-card-flag { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .pred-card-name {
-    font-size: 11px; font-weight: 800; color: #1a1a1a;
-    letter-spacing: 0.3px;
+    font-size: 12px; font-weight: 600; color: #000000;
+    letter-spacing: -0.5px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
  
