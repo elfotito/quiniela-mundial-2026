@@ -1723,93 +1723,92 @@ body {
 }
 /* ─── STATS BAR ─────────────────────────────────────────── */
 
-.stats-bar-wrapper {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 16px;
+:root {
+    --stats-bg: #000000;
+    --stats-accent: #ffcc00; /* Color dorado para resaltar */
+    --stats-text: #ffffff;
+    --stats-border: rgba(255, 255, 255, 0.2);
 }
- 
+
+.stats-bar-wrapper {
+    background-color: var(--stats-bg);
+    padding: 20px;
+    font-family: 'Arial Narrow', sans-serif; /* Busca una fuente condensada */
+}
+
 .quick-stats {
     display: grid;
+    /* Crea 4 columnas iguales en desktop */
     grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    overflow: hidden;
-    margin: 24px 0 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid var(--stats-border);
 }
- 
+
 .stat-card {
-    background: #111111;
-    padding: 18px 20px;
+    padding: 25px 15px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    align-items: center;
+    text-align: center;
     position: relative;
-    border-right: 1px solid #222222;
+    /* Línea divisoria a la derecha */
+    border-right: 1px solid var(--stats-border);
 }
-.stat-card:last-child { border-right: none; }
- 
-/* Línea de color arriba */
-.stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
+
+/* Quitar la línea al último elemento */
+.stat-card:last-child {
+    border-right: none;
 }
-.stat-card.pred::before { background: #0066CC; }
-.stat-card.pts::before  { background: #FFD700; }
-.stat-card.pos::before  { background: #22c55e; }
-.stat-card.ef::before   { background: #f97316; }
- 
-/* Icono */
+
 .stat-icon {
-    font-size: 18px;
-    margin-bottom: 6px;
-    line-height: 1;
+    color: var(--stats-accent);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
-.stat-card.pred .stat-icon { color: #0066CC; }
-.stat-card.pts  .stat-icon { color: #FFD700; }
-.stat-card.pos  .stat-icon { color: #22c55e; }
-.stat-card.ef   .stat-icon { color: #f97316; }
- 
+
 .stat-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
+    color: var(--stats-text);
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.35);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    opacity: 0.8;
 }
+
 .stat-value {
-    font-size: 28px;
-    font-weight: 800;
-    line-height: 1.1;
-    color: #ffffff;
-    letter-spacing: -0.5px;
+    color: var(--stats-text);
+    font-size: 3rem; /* Números gigantes como en la imagen */
+    font-weight: 900;
+    line-height: 1;
+    margin: 10px 0;
 }
-.stat-card.pts .stat-value { color: #FFD700; }
- 
+
 .stat-sub {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--stats-accent);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 600;
 }
- 
-/* ─── RESPONSIVE ────────────────────────────────────────── */
-@media (max-width: 600px) {
+
+/* --- RESPONSIVO PARA MÓVIL --- */
+@media (max-width: 768px) {
     .quick-stats {
+        /* En móvil pasamos a 2 columnas y 2 filas */
         grid-template-columns: repeat(2, 1fr);
-        border-radius: 12px;
     }
-    /* Borde inferior en las dos cards de arriba */
-    .stat-card.pred,
-    .stat-card.pts {
-        border-bottom: 1px solid #222222;
+    
+    .stat-card:nth-child(2) {
+        border-right: none; /* Quita borde a la derecha del segundo item */
     }
-    /* Restaurar borde derecho en la segunda card de cada fila */
-    .stat-card.pred { border-right: 1px solid #222222; }
-    .stat-card.pos  { border-right: 1px solid #222222; }
-    .stat-card.pts,
-    .stat-card.ef   { border-right: none; }
- 
-    .stat-value { font-size: 24px; }
+    
+    .stat-card:nth-child(1), .stat-card:nth-child(2) {
+        border-bottom: 1px solid var(--stats-border); /* Línea horizontal media */
+    }
+
+    .stat-value {
+        font-size: 2.2rem; /* Un poco más pequeño en móvil */
+    }
 }
 
 /* ─── TABLA DE LIGA ─────────────────────────────────────── */
