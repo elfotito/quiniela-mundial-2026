@@ -1739,7 +1739,7 @@ body {
  
 /* ── CARD BASE ──────────────────────────────────────── */
 .stat-card {
-    background: #111;
+    background: #000000;
     padding: 20px 22px 18px;
     display: flex;
     flex-direction: column;
@@ -1751,7 +1751,7 @@ body {
     transition: background 0.25s ease;
 }
 .stat-card:last-child { border-right: none; }
-.stat-card:hover { background: #161616; }
+.stat-card:hover { background: #000000; }
  
 /* Línea de acento superior */
 .stat-card::before {
@@ -2390,4 +2390,64 @@ body {
     transform: translateY(0);
     display: flex;
     }
+}
+
+.ppm-card {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 10px 0;
+}
+.ppm-card:last-child { border-bottom: none; }
+ 
+.ppm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.ppm-fase  { font-size: 11px; font-weight: 700; color: #0066CC; }
+.ppm-fecha { font-size: 11px; color: #aaa; font-weight: 600; }
+ 
+.ppm-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+ 
+.ppm-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+.ppm-team-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ppm-flag { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.ppm-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+ 
+.ppm-hora-col {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    min-width: 48px;
+}
+.ppm-hora {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+    line-height: 1;
 }
