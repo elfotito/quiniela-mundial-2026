@@ -1004,6 +1004,7 @@
 }
  
 .pred-card-teams {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     gap: 28px;
