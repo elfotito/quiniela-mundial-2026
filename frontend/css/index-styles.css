@@ -1049,7 +1049,6 @@ body {
     width: 3px;
     height: 16px;
     background: var(--fifa-gold, #FFD700);
-    border-radius: 2px;
     flex-shrink: 0;
 }
  
@@ -1418,7 +1417,6 @@ body {
 .widget {
     background: #ffffff;
     border: 1px solid #eeeeee;
-    border-radius: 14px;
     overflow: hidden;
 }
  
@@ -1433,7 +1431,6 @@ body {
     width: 3px;
     height: 14px;
     background: var(--fifa-gold, #FFD700);
-    border-radius: 0;
     flex-shrink: 0;
 }
 .widget-header-title {
@@ -1484,7 +1481,6 @@ body {
  
 .widget-highlight {
     background: #EBF3FF;
-    border-radius: 10px;
     padding: 12px 14px;
     border-left: 3px solid var(--fifa-blue, #0066CC);
     margin-top: 12px;
@@ -2427,10 +2423,10 @@ body {
 }
 .ppm-flag { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .ppm-name {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
     color: #000000;
-    letter-spacing: 0.3px;
+    letter-spacing: -0.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
