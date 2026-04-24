@@ -2459,8 +2459,8 @@ body {
     align-items: center;
 }
 .ppm-result-num {
-    font-size: 15px;
-    font-weight: 900;
+    font-size: 16px;
+    font-weight: 700;
     color: #0066CC;
     line-height: 1.2;
     min-width: 20px;
