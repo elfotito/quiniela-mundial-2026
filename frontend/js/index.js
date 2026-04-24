@@ -408,7 +408,7 @@ async function cargarUltimosResultados() {
             <div class="ppm-card">
                 <div class="ppm-header">
                     <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
-                    <span class="ppm-fecha">${fechaCorta}</span>
+                    <div class="ppm-result-label">FINAL</div>
                 </div>
                 <div class="ppm-body">
                     <div class="ppm-teams">
@@ -428,7 +428,6 @@ async function cargarUltimosResultados() {
                             <div class="ppm-result-line"></div>
                             <span class="ppm-result-num">${p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—'}</span>
                         </div>
-                        <div class="ppm-result-label">FINAL</div>
                     </div>
                 </div>
             </div>`;
