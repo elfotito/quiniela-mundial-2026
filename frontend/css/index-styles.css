@@ -1735,7 +1735,7 @@ body {
 /* ── CARD BASE ──────────────────────────────────────── */
 .stat-card {
     background: #000000;
-    padding: 20px 22px 18px;
+    padding: 0px 0px 0px;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -1774,7 +1774,7 @@ body {
     transition: transform 0.25s ease;
     display: block;
 }
-.stat-card:hover .stat-value { transform: translateY(-2px); }
+.stat-card:hover .stat-value { transform: translateY(2px); }
 .stat-card.pts .stat-value { color: #FFD700; }
 .stat-card.ef  .stat-value { color: #22c55e; }
  
