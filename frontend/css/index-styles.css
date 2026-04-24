@@ -695,7 +695,6 @@ body {
         margin: 0;
     }
     
-    /* 3. Ocultamos el div que contiene el h2 y el p (el título y la fecha) */
     .countdown-label div {
         display: none;
     }
@@ -2393,7 +2392,7 @@ body {
     margin-bottom: 8px;
 }
 .ppm-fase  { font-size: 11px; font-weight: 700; color: #0066CC; }
-.ppm-fecha { font-size: 11px; color: #aaa; font-weight: 600; }
+.ppm-fecha { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 1px; }
  
 .ppm-body {
     display: flex;
