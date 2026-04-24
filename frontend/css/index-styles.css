@@ -2460,7 +2460,7 @@ body {
     align-items: center;
 }
 .ppm-result-num {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: #0066CC;
     line-height: 1.2;
@@ -2471,7 +2471,7 @@ body {
     width: 24px;
     height: 2px;
     background: #e0e0e0;
-    margin: 2px 0;
+    margin: 1px 0;
 }
 .pred-card-result-stack {
     display: flex;
