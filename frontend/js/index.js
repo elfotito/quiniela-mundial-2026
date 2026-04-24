@@ -422,12 +422,12 @@ async function cargarUltimosResultados() {
                         </div>
                     </div>
                     <div class="ppm-result-col">
+                    <div class="ppm-result-label">FINAL</div>
                         <div class="ppm-result-stack">
                             <span class="ppm-result-num">${p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : '—'}</span>
                             <div class="ppm-result-line"></div>
                             <span class="ppm-result-num">${p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—'}</span>
                         </div>
-                        <div class="ppm-result-label">FINAL</div>
                     </div>
                 </div>
             </div>`;

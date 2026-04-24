@@ -2491,3 +2491,26 @@ body {
     background: #e0e0e0; margin: 2px 0;
 }
 .pred-card-result-line.real-line { background: #bbf7d0; }
+
+.enlace-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.15s, color 0.15s;
+}
+.enlace-item:last-child { border-bottom: none; }
+.enlace-item:hover { background: #f5f5f5; color: #0066CC; }
+.enlace-item i {
+    width: 16px;
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    transition: color 0.15s;
+}
+.enlace-item:hover i { color: #0066CC; }
