@@ -412,6 +412,7 @@ async function cargarUltimosResultados() {
                 </div>
                 <div class="ppm-body">
                     <div class="ppm-teams">
+                    <div class="ppm-result-label"></div>
                         <div class="ppm-team-row">
                             <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
                             <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
