@@ -88,8 +88,10 @@
     --bg-black: #000000;
     --bg-dark-blue: #020b28; 
     --nav-bottom-bg: #0a1532;
-    --text-white: #ffffff;
-    --text-gray: #b3b3b3;
+    --dark-bg: #0a0a0a;
+    --dark-card: #1a1a1a;
+    --border-color: #2a2a2a;
+    --text-muted: #888888;
     --font-main: 'Yolk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -1127,15 +1129,6 @@ body {
     /* =============================================
        VARIABLES & RESET
     ============================================= */
-    :root {
-      --fifa-blue: #0066CC;
-      --fifa-gold: #FFD700;
-      --dark-bg: #0a0a0a;
-      --dark-card: #1a1a1a;
-      --border-color: #2a2a2a;
-      --text-muted: #888888;
-      --text-white: #ffffff;
-    }
  
     *, *::before, *::after {
       box-sizing: border-box;
@@ -1760,7 +1753,7 @@ body {
 .stat-card:hover::before { transform: scaleX(1); }
 .stat-card.pos::before { background: #3CAC3B; }
 .stat-card.pts::before { background: #ffd830; }
-.stat-card.pred::before { background: #6101eb; }
+.stat-card.pred::before { background: #7952B3; }
 .stat-card.ef::before  { background: #cb2126; }
  
 /* Número grande — sube levemente al hover */
@@ -1785,7 +1778,7 @@ body {
     transition: transform 0.25s ease, opacity 0.25s ease;
     opacity: 0.5;
 }
-.stat-card.pos  .stat-icon { color: #3CAC3B; }
+.stat-card.pos  .stat-icon { color: #9ee53d; }
 .stat-card.pts  .stat-icon { color: #ffd830; }
 .stat-card.pred .stat-icon { color: #6101eb; }
 .stat-card.ef   .stat-icon { color: #cb2126; }
