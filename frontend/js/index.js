@@ -400,7 +400,7 @@ async function cargarUltimosResultados() {
         }
 
     container.innerHTML = partidos.map(p => {
-        const fecha = new Date(p.fecha_hora);
+        const fecha = new Date(p.fecha);
         const fechaCorta = fecha.toLocaleDateString('es-ES', {
             day: '2-digit', month: '2-digit', year: 'numeric'
         });
