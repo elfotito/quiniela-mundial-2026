@@ -408,7 +408,7 @@ async function cargarUltimosResultados() {
             <div class="ppm-card">
                 <div class="ppm-header">
                     <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
-                    <div class="ppm-fecha">FINAL</div>
+                    <div class="ppm-fecha">Finalizado</div>
                 </div>
                 <div class="ppm-body">
                     <div class="ppm-teams">
