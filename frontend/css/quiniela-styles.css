@@ -1212,68 +1212,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* ===================================
-   FOOTER
-   ================================== */
-.footer {
-    background-color: var(--dark-card);
-    border-top: 1px solid var(--border-color);
-    padding: 2rem 0;
-    margin-top: 4rem;
-}
-
-.footer .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    text-align: center;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-}
-
-.footer-links a {
-    color: var(--text-gray);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-links a:hover {
-    color: var(--fifa-gold);
-}
-
-.footer p {
-    color: var(--text-gray);
-    font-size: 0.9rem;
-}
-
-/* ===================================
-   LOADING STATE
-   ================================== */
-.loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 4px solid var(--border-color);
-    border-top-color: var(--fifa-blue);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
 
 /* ===================================
    RESPONSIVE DESIGN
