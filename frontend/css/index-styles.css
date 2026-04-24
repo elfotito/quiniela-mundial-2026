@@ -2398,7 +2398,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 4px;
 }
  
 .ppm-teams {
@@ -2459,11 +2459,11 @@ body {
     align-items: center;
 }
 .ppm-result-num {
-    font-size: 22px;
+    font-size: 15px;
     font-weight: 900;
     color: #0066CC;
     line-height: 1.2;
-    min-width: 24px;
+    min-width: 20px;
     text-align: center;
 }
 .ppm-result-line {
