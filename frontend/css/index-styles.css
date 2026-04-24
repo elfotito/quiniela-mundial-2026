@@ -56,9 +56,7 @@
     font-weight: 900;
     font-display: swap;
 }
-/* ===============================================
-   INDEX - ESTILO FIFA WORLD CUP 2026
-   =============================================== */
+
 :root {
     --black-color: #151515;
     --dark-gray-color: #232323;
@@ -1625,10 +1623,10 @@ body {
     flex-shrink: 0;
 }
 .rank-avatar {
-    width: 30px;
-    height: 30px;
+    width: 20;
+    height: 20;
     border-radius: 50%;
-    background: #EBF3FF;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1734,6 +1732,7 @@ body {
  
 /* ── CARD BASE ──────────────────────────────────────── */
 .stat-card {
+    margin-top: 36px;
     background: #000000;
     padding: 10px 20px 10px;
     display: flex;
@@ -1759,10 +1758,10 @@ body {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .stat-card:hover::before { transform: scaleX(1); }
-.stat-card.pos::before { background: #FFD700; }
-.stat-card.pts::before { background: #FFD700; }
-.stat-card.pred::before { background: #0066CC; }
-.stat-card.ef::before  { background: #22c55e; }
+.stat-card.pos::before { background: #3CAC3B; }
+.stat-card.pts::before { background: #ffd830; }
+.stat-card.pred::before { background: #6101eb; }
+.stat-card.ef::before  { background: #cb2126; }
  
 /* Número grande — sube levemente al hover */
 .stat-value {
@@ -1775,8 +1774,8 @@ body {
     display: block;
 }
 .stat-card:hover .stat-value { transform: translateY(-2px); }
-.stat-card.pts .stat-value { color: #FFD700; }
-.stat-card.ef  .stat-value { color: #22c55e; }
+.stat-card.pts .stat-value { color: #ffd830; }
+.stat-card.ef  .stat-value { color: #cb2126; }
  
 /* Icono */
 .stat-icon {
@@ -1786,10 +1785,10 @@ body {
     transition: transform 0.25s ease, opacity 0.25s ease;
     opacity: 0.5;
 }
-.stat-card.pos  .stat-icon { color: #FFD700; }
-.stat-card.pts  .stat-icon { color: #FFD700; }
-.stat-card.pred .stat-icon { color: #4da6ff; }
-.stat-card.ef   .stat-icon { color: #22c55e; }
+.stat-card.pos  .stat-icon { color: #3CAC3B; }
+.stat-card.pts  .stat-icon { color: #ffd830; }
+.stat-card.pred .stat-icon { color: #6101eb; }
+.stat-card.ef   .stat-icon { color: #cb2126; }
 .stat-card:hover .stat-icon { opacity: 1; transform: scale(1.15); transform: translateX(5px) }
  
 /* Label */
@@ -2446,3 +2445,22 @@ body {
     letter-spacing: -1px;
     line-height: 1;
 }
+
+.pred-card-result-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.pred-card-result-num {
+    font-size: 22px; font-weight: 700; line-height: 1.2;
+    min-width: 24px; text-align: center;
+}
+
+.pred-card-result-num.real { color: #000000; }
+ 
+.pred-card-result-line {
+    width: 24px; height: 2px;
+    background: #e0e0e0; margin: 2px 0;
+}
+.pred-card-result-line.real-line { background: #bbf7d0; }

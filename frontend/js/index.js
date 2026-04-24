@@ -269,7 +269,7 @@ async function cargarRankingTop5() {
             return `
             <div class="rank-row">
                 ${posicion}
-                <div class="rank-avatar">${iniciales}</div>
+                <div class="rank-avatar"><span class="user-emoji-display" id="mobileUserCampeon">👤</span></div>
                 <span class="rank-name">${user.nombre}</span>
                 <span class="rank-pts">${user.puntos_totales}<span>pts</span></span>
             </div>`;
@@ -400,15 +400,28 @@ async function cargarUltimosResultados() {
         }
  
         container.innerHTML = partidos.map(partido => `
-            <div class="result-row">
-                <div class="result-meta">
-                    <span class="result-fase">${partido.fase}</span>
-                    <span class="result-badge">Finalizado</span>
+
+            <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
-                <div class="result-teams">
-                    <span class="result-team">${obtenerBandera(partido.equipo_local)} ${partido.equipo_local}</span>
-                    <span class="result-score">${partido.goles_local} – ${partido.goles_visitante}</span>
-                    <span class="result-team right">${partido.equipo_visitante} ${obtenerBandera(partido.equipo_visitante)}</span>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="pred-card-result-stack">
+                        <span class="pred-card-result-num real">${partido.goles_local}</span>
+                            <div class="pred-card-result-line real-line"></div>
+                        <span class="pred-card-result-num real">${partido.goles_visitante}</span>
+                    </div>
                 </div>
             </div>`
         ).join('');
@@ -623,8 +636,14 @@ function iniciarTicker() {
       var noticias = [
         {
           "date": "Febrero 2026",
+          "prefix": "📅 Seleccion:",
+          "heading": "Cuerpo Tecnico: Hemos tomado la difícil decisión de priorizar la comodidad del hogar",
+          "url": "noticia1.html"
+        },
+        {
+          "date": "Abril 2026",
           "prefix": "📅 Mundial:",
-          "heading": "Todos los partidos estan disponible en el calendario.",
+          "heading": "Todos los partidos estan disponible en el calendario",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/calendario.html"
         },
         {
@@ -636,17 +655,23 @@ function iniciarTicker() {
         {
           "date": "Abril 2026",
           "prefix": "👨‍💼 Ligas:",
-          "heading": "Vicente es el nuevo presidente de la liga Montesushi.",
-          "url": "https://"
-        }
+          "heading": "Vicente es el nuevo presidente de la liga Montesushi",
+          "url": ""
+        },
+        {
+          "date": "Abril 2026",
+          "prefix": "👨‍💼 Ligas:",
+          "heading": "Victor es el nuevo presidente de la liga Los Carrisan",
+          "url": ""
+        },
       ];
  
       $("#newsTicker3").easyNewsTicker({
         "animation": {
-          "effect":   "slide-horizontal",
-          "easing":   "easeInOutExpo",
-          "duration": 1600,        
-          "delay": 4000        
+            "effect":   "slide-horizontal",
+            "easing":   "easeInOutExpo",
+            "duration": 1600,        
+            "delay": 4000        
         },
         "label": {
             "enable": true,
@@ -657,7 +682,10 @@ function iniciarTicker() {
             "fontSize":   32,            
             "fontWeight": "700"
         },
-        "data": noticias
+        "data": noticias,
+        "news": {
+            "background": "#ffffff"
+        },
       });
  
     };
