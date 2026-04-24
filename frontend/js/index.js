@@ -388,49 +388,57 @@ function formatearFechaNoticia(iso) {
 async function cargarUltimosResultados() {
     const container = document.getElementById('ultimosResultados');
     if (!container) return;
- 
+
     try {
         const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
         if (!response.ok) throw new Error('Error cargando resultados');
         const partidos = await response.json();
- 
+
         if (!partidos.length) {
-            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay resultados aún</div>';
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">⏳ El torneo aún no ha comenzado</div>';
             return;
         }
- 
-        container.innerHTML = partidos.map(partido => `
 
+    container.innerHTML = partidos.map(p => {
+        const fecha = new Date(p.fecha_hora);
+        const fechaCorta = fecha.toLocaleDateString('es-ES', {
+            day: '2-digit', month: '2-digit', year: 'numeric'
+        });
+        return `
             <div class="ppm-card">
                 <div class="ppm-header">
-                    <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
+                    <span class="ppm-fase">First Stage · ${p.fase}</span>
                     <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
                 <div class="ppm-body">
                     <div class="ppm-teams">
                         <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(partido.equipo_local)}</span>
-                            <span class="ppm-name">${partido.equipo_local.toUpperCase()}</span>
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
                         </div>
                         <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(partido.equipo_visitante)}</span>
-                            <span class="ppm-name">${partido.equipo_visitante.toUpperCase()}</span>
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
                         </div>
                     </div>
-                    <div class="pred-card-result-stack">
-                        <span class="pred-card-result-num real">${partido.goles_local}</span>
-                            <div class="pred-card-result-line real-line"></div>
-                        <span class="pred-card-result-num real">${partido.goles_visitante}</span>
+                    <div class="ppm-result-col">
+                        <div class="ppm-result-label">FINAL</div>
+                        <div class="ppm-result-stack">
+                            <span class="ppm-result-num">${p.goles_local_real ?? '—'}</span>
+                            <div class="ppm-result-line"></div>
+                            <span class="ppm-result-num">${p.goles_visitante_real ?? '—'}</span>
+                        </div>
                     </div>
                 </div>
-            </div>`
-        ).join('');
- 
+            </div>`;
+        }).join('');
+
     } catch (error) {
         console.error('Error cargando resultados:', error);
         container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
+
 async function cargarLigaRankingWidget() {
     const container = document.getElementById('ligaRankingWidget');
     const ligaNombre = document.getElementById('ligaWidgetNombre');
