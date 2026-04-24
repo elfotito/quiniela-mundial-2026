@@ -219,7 +219,6 @@ body {
     background-blend-mode: overlay;
 }
 
-/* Versión responsive */
 @media (max-width: 768px) {
     .hero-hero-terminos {
         height: 400px; /* Altura reducida en móviles */
@@ -736,11 +735,8 @@ body {
 }
 }
 
-
 /* ================================================
-   CARRUSEL HERO — ESTILO FIFA
-   Bloque único y definitivo. Reemplaza TODAS las
-   secciones del carrusel que hay en tu CSS actual.
+   CARRUSEL HERO 
    ================================================ */
 
 /* --- Wrapper --- */
@@ -2062,7 +2058,11 @@ body {
     /* ── Efecto SLIDE HORIZONTAL (el único que usamos) ── */
     .ent_wrapper.slide-horizontal-effect .ent_news_container { display: flex; }
     .ent_wrapper.slide-horizontal-effect .ent_news_container .ent_news { flex: 1 0 100%; }
-
+@media (max-width: 768px) {
+    .ent_wrapper .ent_label {
+        display: none;
+    }
+}
     /* ── TOP BAR ──────────────────────────────────────────────── */
 .mobile-top-bar {
     display: none;
