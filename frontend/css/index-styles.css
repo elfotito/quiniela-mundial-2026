@@ -1026,6 +1026,11 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
 }
+.widget-enlaces {
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
  
 /* Header de cada widget — reutilizable */
 .widget-header {
@@ -1958,7 +1963,6 @@ body {
  
     .ent_wrapper * { box-sizing: border-box; }
  
-    /* Label (etiqueta izquierda) */
     .ent_wrapper .ent_label {
       position: relative;
       width: auto;
@@ -1969,7 +1973,6 @@ body {
     }
     .ent_wrapper .ent_label span { display: block; }
  
-    /* Área de noticias */
     .ent_wrapper .ent_news_wrapper {
       position: relative;
       flex: 1 1 auto;
@@ -2019,7 +2022,6 @@ body {
       text-decoration: underline;
     }
  
-    /* Navegación (flechas prev/next) */
     .ent_wrapper .ent_navigation {
       position: relative;
       height: 100%;
@@ -2306,6 +2308,7 @@ body {
  
 /* ── MOSTRAR EN MÓVIL ──────────────────────────────────────── */
 @media (max-width: 1100px) {
+    .widget-enlaces    { display: none; }
     .mobile-top-bar    { display: flex; }
     .mobile-bottom-nav { display: flex; }
     .desktop-header    { display: none !important; }

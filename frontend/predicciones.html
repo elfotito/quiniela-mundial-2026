@@ -9,56 +9,163 @@
     <link rel="stylesheet" href="css/index-styles.css">
     <link rel="stylesheet" href="css/predicciones-styles.css">
 <body>
-    <header class="header">
-    <div class="header-container">
-        <!-- Logo -->
-        <div class="header-logo">
-            <a href="index.html"><div class="logo-icon">
-                <img src="img/logomenu.png" alt="logomenu">
+    <header class="desktop-header">
+    <div class="top-tier">
+        <div class="fw-black">FIFA WORLD CUP 2026™</div>
+        <div class="top-tier-links">
+            <a href="reglamento.html">REGLAMENTO</a>
+            <a href="sistema.html">SISTEMA DE PUNTOS</a>
+            <a href="terminos.html">TERMINOS Y CONDICIONES</a>
+            <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F">CANAL OFICIAL</a>
+            <a href="#">QUINIELA GATES</a>
+        </div>
+    </div>
+    <div class="main-tier">
+        <div class="brand-wrapper">
+            <div class="logo-container">
+                <img src="img/logomenu.png" alt="FIFA Logo">
             </div>
             <div class="logo-text">
-                <img src="img/logoblancomenu.png" alt="logomenu">
-            </div></a>
-        </div>
-        
-        <!-- Navegación Desktop -->
-        <nav class="nav-desktop">
-            <a href="index.html" class="nav-link">Inicio</a>
-            <a href="quiniela.html" class="nav-link">Mi Quiniela</a>
-            <a href="predicciones.html" class="nav-link active">Predicciones</a>
-            <a href="ranking.html" class="nav-link">Ranking</a>
-            <a href="calendario.html" class="nav-link">Calendario</a>
-            <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
-        </nav>
-        
-        <!-- Usuario y Admin -->
-        <div class="header-actions">
-            <div class="user-info">
-                <span class="user-icon" id="userCampeon">👤</span>
-                <span class="user-name" id="userName">Usuario</span>
+                <img src="img/logoblancomenu.png" alt="Quiniela 2026">
             </div>
-            <button class="btn-admin" id="adminBtn" style="display: none;">
-                <span class="btn-icon">🛠️</span>
-            </button>
-            <button class="btn-logout" onclick="logout()">Salir</button>
         </div>
-        
-        <!-- Menú móvil -->
-        <button class="btn-menu-mobile" id="btnMenuMobile">
-            <span class="menu-icon"></span>
-        </button>
+
+        <nav class="main-nav-links">
+            <a href="index.html">INICIO</a>
+            <a href="predicciones.html">PREDICCIONES</a>
+            <a href="quiniela.html">QUINIELA</a>
+            <a href="ranking.html">RANKING</a>
+            <a href="mrchip.html">MR CHIP</a>
+            <a href="calendario.html">CALENDARIO</a>
+            <a href="#">HISTORIA</a>
+        </nav>
+
+        <div class="right-section">
+            <div class="user-pill">
+                <span class="greeting">Bienvenido,</span>
+                <span class="user-emoji-display">👤</span>
+                <span class="user-name-display">Tito</span>
+            </div>
+            <button class="btn-admin-display" data-target="admin.html">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-noticias-display" data-target="noticias.html">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-logout-elegant" onclick="logout()">
+                <span>SALIR</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
     </div>
 </header>
-    
-    <!-- Navegación Móvil -->
-    <nav class="nav-mobile" id="navMobile">
-        <a href="index.html" class="nav-mobile-link">Inicio</a>
-        <a href="quiniela.html" class="nav-mobile-link">Mi Quiniela</a>
-        <a href="predicciones.html" class="nav-mobile-link active">Predicciones</a>
-        <a href="ranking.html" class="nav-mobile-link">Ranking</a>
-        <a href="calendario.html" class="nav-mobile-link">Calendario</a>
-        <a href="mrchip.html" class="nav-link">Mr. CHIP</a>
-    </nav>
+
+<header class="mobile-top-bar" id="mobileTopBar">
+    <div class="mtb-logo">
+        <img src="img/logoblancomenu.png" alt="Quiniela 2026">
+    </div>
+
+    <div class="user-pill-mobile">
+        <span class="user-emoji-display" id="mobileUserCampeon">👤</span>
+        <div class="user-info">
+            <span class="greeting">Bienvenido,</span>
+            <span class="user-name-display" id="mobileUserName">Usuario</span>
+        </div>
+    </div>
+    <button class="btn-admin-display" id="mobileAdminBtn" title="Panel Admin">
+        <i class="fas fa-tools"></i>
+    </button>
+    <button class="btn-noticias-display" id="mobileAdminNoti" title="Panel Noticias">
+        <i class="fas fa-newspaper"></i>
+    </button>
+</header>
+<!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+
+    <div class="mmo-header">
+        <span class="mmo-title">Menú</span>
+        <button class="mmo-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+ 
+    <div class="mmo-section">
+        <a href="index.html"         class="mmo-link mmo-link-main">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="predicciones.html"  class="mmo-link mmo-link-main">
+            <i class="fas fa-crosshairs"></i>
+            <span>Predicciones</span>
+        </a>
+        <a href="quiniela.html"      class="mmo-link mmo-link-main">
+            <i class="fa fa-file-text"></i>
+            <span>Mi Quiniela</span>
+        </a>
+        <a href="ranking.html"       class="mmo-link mmo-link-main">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking</span>
+        </a>
+        <a href="calendario.html"    class="mmo-link mmo-link-main">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendario</span>
+        </a>
+        <a href="mrchip.html"        class="mmo-link mmo-link-main">
+            <i class="fas fa-robot"></i>
+            <span>Mr. CHIP</span>
+        </a>
+    </div>
+ 
+    <!-- Divisor -->
+    <div class="mmo-divider"></div>
+ 
+    <!-- Links secundarios -->
+    <div class="mmo-section">
+        <a href="sistema.html"       class="mmo-link mmo-link-sec">Sistema de Puntos</a>
+        <a href="reglamento.html"    class="mmo-link mmo-link-sec">Reglamento</a>
+        <a href="terminos.html"      class="mmo-link mmo-link-sec">Términos y Condiciones</a>
+    </div>
+ 
+    <!-- Botón de salir -->
+    <div class="mmo-footer">
+        <button class="mmo-logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Cerrar sesión
+        </button>
+    </div>
+ 
+</div>
+<div class="mmo-backdrop" id="mmoBackdrop"></div>
+ 
+<!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+ 
+    <a href="index.html" class="mbn-item active">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </a>
+ 
+    <a href="predicciones.html" class="mbn-item">
+        <i class="fas fa-crosshairs"></i>
+        <span>Predecir</span>
+    </a>
+
+    <button class="mbn-item" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+        <span>Menú</span>
+    </button>
+
+    <a href="quiniela.html" class="mbn-item">
+        <i class="fa fa-file-text"></i>
+        <span>Mi Quiniela</span>
+    </a>
+
+    <a href="ranking.html" class="mbn-item">
+        <i class="fas fa-trophy"></i>
+        <span>Ranking</span>
+    </a>
+ 
+</nav>
     
     <div class="pred-hero">
         <div class="pred-hero-inner">
@@ -310,20 +417,94 @@
  
     </div>
     </div>
-    <!-- fin pred-grid -->
- 
- 
-    <!-- ═══════════════════════════════
-         PEGA TU FOOTER AQUÍ
-         ═══════════════════════════════ -->
- 
- 
-    <!-- ═══════════════════════════════
-         PEGA TU NAVBAR MÓVIL AQUÍ
-         ═══════════════════════════════ -->
- 
- 
-    <!-- SCRIPTS — mismo orden que tenías -->
+        <footer class="footer">
+        
+        <!-- BARRA SUPERIOR -->
+        <div class="footer-top-bar">
+        
+            <!-- Logo de tu app -->
+            <div class="footer-logo"><img src="img/logoblancomenu.png" alt="Quiniela 2026"></div>
+        
+            <!-- Redes Sociales — usa iconos SVG, Font Awesome, o texto -->
+            <div class="sponsor-logo">
+            <span class="logo-placeholder"><a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank"><img src="img/canal.png" alt="canal"></a></span>
+            </div>
+        
+            <!-- Texto opcional al centro/derecha -->
+            <div class="footer-tagline">Copa Mundial FIFA 2026™ <br> 🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</div>
+        
+        </div>
+        <!-- /BARRA SUPERIOR -->
+        
+        <!-- SPONSORS / PATROCINADORES -->
+        <div class="footer-sponsors">
+        
+            <!-- GRUPO 1: Patrocinadores principales -->
+            <div class="sponsor-group">
+            <div class="sponsor-group-title">Patrocinador Oficial</div>
+            <div class="sponsor-logos">
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/dcarrisan" target="_blank"><img src="img/dcarrisan.png" alt="drogueria"></a></span>
+                </div>
+            </div>
+            </div>
+            <!-- GRUPO 2: Colaboradores -->
+            <div class="sponsor-group">
+            <div class="sponsor-group-title">Aliados</div>
+            <div class="sponsor-logos">
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/unicardio.ha" target="_blank"><img src="img/unicardio.png" alt="unidad"></a></span>
+                </div>
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/deliverysorpresa" target="_blank"><img src="img/deliverysorpresa.png" alt="delivery"></a></span>
+                </div>
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://wa.link/d41v78" target="_blank"><img src="img/celina.png" alt="laboratorio"></a></span>
+                </div>
+            </div>
+            </div>
+            <!-- /GRUPO 2 -->
+        
+            <!-- GRUPO 3: Aliados -->
+            <div class="sponsor-group">
+    <div class="sponsor-group-title">Colaboradores</div>
+    <div class="sponsor-logos">
+        <div class="sponsor-logo">
+            <div class="sponsor-wrap" id="sponsorEasterEgg">
+                <span class="logo-placeholder">
+                    <img
+                        src="img/viktor.png"
+                        alt="viktor"
+                        id="sponsorLogo"
+                        class="easter-logo"
+                        draggable="false"
+                    >
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="meme-bubble" id="memeBubble">
+    <div class="meme-bubble-tail"></div>
+    <img id="memeGif" src="" alt="">
+</div>
+        </div>
+        <!-- BARRA INFERIOR -->
+        <div class="footer-bottom-bar">
+        
+            <!-- Links legales -->
+            <nav class="footer-legal-links">
+            <a href="reglamento.html">Reglamento</a>
+            <a href="terminos.html">Términos</a>
+            <a href="https://wa.link/d9pve4">Contactar al Admin</a>
+            </nav>
+        
+            <!-- Copyright -->
+            <div class="footer-copyright">
+             Quiniela Mundial 2026 © · Todos los derechos reservados.
+            </div>
+        </div>
+        </footer>
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/predicciones.js"></script>
