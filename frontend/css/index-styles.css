@@ -2407,6 +2407,7 @@ body {
     gap: 8px;
     flex: 1;
     min-width: 0;
+    max-width: calc(100% - 60px);
 }
 .ppm-team-row {
     display: flex;
