@@ -443,90 +443,6 @@ function crearCardPrediccion(prediccion) {
 }
 
 async function enviarPrediccion(partidoId) {
-    console.log('1️⃣ Inicia enviarPrediccion');
-    
-    const inputLocal     = document.getElementById(`local_${partidoId}`);
-    const inputVisitante = document.getElementById(`visitante_${partidoId}`);
-    const card           = document.getElementById(`card-${partidoId}`);
-
-    const golesLocal     = inputLocal.value;
-    const golesVisitante = inputVisitante.value;
-
-    if (golesLocal === '' || golesVisitante === '') {
-        mostrarToast('⚠️ Debes ingresar ambos resultados', 'warning');
-        return;
-    }
-
-    const local    = parseInt(golesLocal);
-    const visitante = parseInt(golesVisitante);
-
-    if (local < 0 || local > 9 || visitante < 0 || visitante > 9) {
-        mostrarToast('⚠️ Los goles deben estar entre 0 y 9', 'warning');
-        return;
-    }
-
-    try {
-        const btnPredict = card.querySelector('.mc-btn-predict');
-        btnPredict.disabled = true;
-        btnPredict.textContent = 'Guardando...';
-
-        console.log('2️⃣ Antes del fetch');
-        const response = await fetch(`${CONFIG.API_URL}/predicciones`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                usuario_id: parseInt(usuario.id),
-                partido_id: partidoId,
-                goles_local: local,
-                goles_visitante: visitante
-            })
-        });
-
-        console.log('3️⃣ Respuesta recibida:', response.status);
-        const data = await response.json();
-        console.log('4️⃣ Datos:', data);
-        
-        if (!response.ok) throw new Error(data.error || 'Error guardando predicción');
-
-        console.log('5️⃣ Antes de mostrar toast');
-
-        // MOSTRAR TOAST INMEDIATAMENTE
-        mostrarToast(`✅ Predicción guardada: ${local} - ${visitante}`, 'success');
-        console.log('6️⃣ Después de mostrar toast');
-
-        const partido = partidosPendientes.find(p => p.id === partidoId);
-        prediccionesRealizadas.push({
-            partido_id: partidoId,
-            equipo_local: partido.equipo_local,
-            equipo_visitante: partido.equipo_visitante,
-            fase: partido.fase,
-            fecha: partido.fecha,
-            goles_local_pred: local,
-            goles_visitante_pred: visitante,
-            puntos_obtenidos: null
-        });
-
-        partidosPendientes = partidosPendientes.filter(p => p.id !== partidoId);
-        card.classList.add('removing');
-
-        setTimeout(() => {
-            renderizarPartidos();
-            renderizarPredicciones();
-        }, 400);
-
-    } catch (error) {
-        console.error('7️⃣ ERROR:', error);
-        mostrarToast(`❌ ${error.message}`, 'error');
-        const btnPredict = card.querySelector('.mc-btn-predict');
-        if (btnPredict) {
-            btnPredict.disabled = false;
-            btnPredict.textContent = 'Guardar Predicción';
-        }
-    }
-}
-window.enviarPrediccion = enviarPrediccion;
-
-/*- async function enviarPrediccion(partidoId) {
     const inputLocal     = document.getElementById(`local_${partidoId}`);
     const inputVisitante = document.getElementById(`visitante_${partidoId}`);
     const card           = document.getElementById(`card-${partidoId}`);
@@ -598,7 +514,7 @@ window.enviarPrediccion = enviarPrediccion;
         }
     }
 }
-window.enviarPrediccion = enviarPrediccion; -*/
+window.enviarPrediccion = enviarPrediccion;
 
 // ── TOAST ─────────────────────────────────────────────
 function mostrarToast(mensaje, tipo = 'success') {
