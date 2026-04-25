@@ -527,7 +527,7 @@ function mostrarToast(mensaje, tipo = 'success') {
 
     desc.textContent = mensaje;
     
-    let icono = "⚽"; // Default para tu proyecto
+    let icono = "⚽";
     if (tipo === 'error')   icono = "❌";
     if (tipo === 'warning') icono = "⚠️";
     
