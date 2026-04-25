@@ -1093,50 +1093,66 @@
 .pred-pts-badge.pts-0 { background: #f5f5f5; color: #888;    }
 
 /* ── TOAST ─────────────────────────────────────────── */
-.toast {
+#toast {
+    visibility: hidden;
+    max-width: 50px;
+    height: 50px;
+    margin: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 25px; /* Más redondeado para un look moderno */
     position: fixed;
-    top: 24px;
-    right: 24px;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    border-radius: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    color: #1a1a1a;
-    background: #fff;
-    border: 1px solid #e8e8e8;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-    opacity: 0;
-    transform: translateX(40px);
-    pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    max-width: 380px;
+    z-index: 10000; /* Por encima de todo */
+    left: 0; right: 0;
+    bottom: 30px;
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.toast::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    border-radius: 10px 10px 0 0;
+#toast #img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    padding-top: 14px;
+    box-sizing: border-box;
+    background-color: #111;
+    color: #fff;
+    font-size: 20px;
 }
 
-.toast.show {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
+#toast #desc {
+    color: #fff;
+    padding: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
 }
 
-.toast.success::before { background: #10b981; }
-.toast.error::before   { background: #ef4444; }
-.toast.warning::before { background: #FFD700; }
+/* Colores dinámicos */
+#toast.success #img { background-color: #10b981; }
+#toast.error #img { background-color: #ef4444; }
+#toast.warning #img { background-color: #f59e0b; }
 
-.toast.success { border-top: none; padding-top: 17px; }
-.toast.error   { border-top: none; padding-top: 17px; }
-.toast.warning { border-top: none; padding-top: 17px; }
+/* Animación ajustada */
+#toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+}
+/* Colores para el cuadro del icono */
+#toast.success #img { background-color: #10b981; }
+#toast.error #img   { background-color: #ef4444; }
+#toast.warning #img { background-color: #f59e0b; }
+
+/* Opcional: Borde sutil para el cuerpo del toast */
+#toast.success { border: 1px solid #10b981; }
+#toast.error   { border: 1px solid #ef4444; }
+#toast.warning { border: 1px solid #f59e0b; }
+
+@keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+@keyframes expand { from { min-width: 50px } to { min-width: 350px } }
+@keyframes stay { from { min-width: 350px } to { min-width: 350px } }
+@keyframes shrink { from { min-width: 350px; } to { min-width: 50px; } }
+@keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
