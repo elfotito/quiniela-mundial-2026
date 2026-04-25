@@ -399,6 +399,7 @@ function crearCardPrediccion(prediccion) {
             </div>
             <div class="pred-card-body">
                 <div class="pred-card-teams">
+                <div class="pred-card-score-label"></div>
                     <div class="pred-card-team-row">
                         <span class="pred-card-flag">${obtenerBandera(prediccion.equipo_local)}</span>
                         <span class="pred-card-name">${prediccion.equipo_local.toUpperCase()}</span>
