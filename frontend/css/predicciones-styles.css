@@ -1096,22 +1096,24 @@
 /* ── TOAST MINIMALISTA (ESTILO REFERENCIA) ─────────────────── */
 #toast {
     visibility: hidden;
-    min-width: 350px;
+    width: fit-content; 
+    min-width: 280px; 
+    max-width: 450px;
     height: 50px;
-    background-color: #333; /* Color de fondo oscuro sólido */
+    background-color: #333;
     color: #fff;
-    text-align: left; /* Alinear el texto a la izquierda */
-    border-radius: 2px; /* Bordes ligeramente redondeados, como en la referencia */
+    text-align: left; 
     position: fixed;
     z-index: 10000;
-    left: 0; right: 0; /* Centrar horizontalmente */
+    left: 50%;
+    transform: translateX(-50%); 
     margin: auto;
-    bottom: 30px; /* Posición desde abajo */
+    bottom: 30px; 
     font-size: 17px;
     white-space: nowrap;
     overflow: hidden;
-    display: flex; /* Usar flexbox para alinear icono y texto */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra suave */
+    display: flex; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
 }
 
 /* Sección del icono */
@@ -1122,14 +1124,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #111; /* Color de fondo oscuro para el icono */
+    background-color: #111; 
     color: #fff;
     font-size: 20px;
 }
 
 /* Sección del texto */
 #toast #desc {
-    flex: 1; /* Ocupar el espacio restante */
+    flex: 1; 
     color: #fff;
     padding: 0 16px;
     height: 100%;
@@ -1154,8 +1156,14 @@
 }
 
 @-webkit-keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
-@keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+@keyframes fadein {
+    from { bottom: 0; opacity: 0; transform: translateX(-50%); }
+    to { bottom: 30px; opacity: 1; transform: translateX(-50%); }
+}
 @-webkit-keyframes stay { from { min-width: 350px } to { min-width: 350px } }
 @keyframes stay { from { min-width: 350px } to { min-width: 350px } }
 @-webkit-keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
-@keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
+@keyframes fadeout {
+    from { bottom: 30px; opacity: 1; transform: translateX(-50%); }
+    to { bottom: 60px; opacity: 0; transform: translateX(-50%); }
+}
