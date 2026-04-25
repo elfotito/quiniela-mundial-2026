@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const user = auth.getUser();
     document.querySelector('.user-name-display').textContent = user.nombre;
-    document.querySelector('.user-emoji-display').textContent = obtenerCampeon(user.campeon_elegido);
 
     await cargarDatos();
 });
