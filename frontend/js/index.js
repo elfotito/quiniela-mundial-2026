@@ -165,8 +165,8 @@ async function cargarEstadisticas() {
         const stats = await response.json();
  
         const total      = stats.total_predicciones || 0;
-        const aciertos   = stats.aciertos || 0;
-        const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+        const aciertos    = stats.aciertos || 0;
+        const efectividad = stats.efectividad || 0;
  
         document.getElementById('statPredicciones').textContent = total;
         document.getElementById('statPuntos').textContent       = stats.puntos_totales || 0;
