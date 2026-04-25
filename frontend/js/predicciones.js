@@ -529,9 +529,9 @@ function mostrarToast(mensaje, tipo = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast-item ${tipo}`;
 
-    let icono = '<i class="bi bi-check-circle-fill"></i>';
-    if (tipo === 'error')   icono = '<i class="bi bi-x-circle-fill"></i>';
-    if (tipo === 'warning') icono = '<i class="bi bi-exclamation-triangle-fill"></i>';
+    let icono = '<i class="bi bi-check2"></i>';
+    if (tipo === 'error')   icono = '<i class="bi bi-x-lg"></i>';
+    if (tipo === 'warning') icono = '<i class="bi bi-exclamation-triangle"></i>';
 
     toast.innerHTML = `
         <div class="toast-icon">${icono}</div>
@@ -545,7 +545,7 @@ function mostrarToast(mensaje, tipo = 'success') {
 
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 500); // Esperar que termine fadeout
+        setTimeout(() => toast.remove(), 500);
     }, 4000);
 
     const toasts = container.querySelectorAll('.toast-item');
