@@ -496,10 +496,11 @@ async function enviarPrediccion(partidoId) {
         partidosPendientes = partidosPendientes.filter(p => p.id !== partidoId);
         card.classList.add('removing');
 
+        mostrarToast(`✅ Predicción guardada: ${local} - ${visitante}`, 'success');
+        
         setTimeout(() => {
             renderizarPartidos();
             renderizarPredicciones();
-            mostrarToast(`✅ Predicción guardada: ${local} - ${visitante}`, 'success');
         }, 400);
 
     } catch (error) {
