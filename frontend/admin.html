@@ -308,18 +308,42 @@
     </style>
 </head>
 <body>
-    <header class="header">
-    <div class="header-container">
-            <div class="header-actions">
-                <div class="user-info">
-                    <span class="user-icon">👑</span>
-                    <span class="user-name" id="userName">Admin</span>
-                </div>
-                <button class="btn-logout" onclick="window.location.href='index.html'">Volver</button>
-            </div>
+    <div class="top-tier">
+        <div class="fw-black">FIFA WORLD CUP 2026™</div>
+        <div class="top-tier-links">
+            <a href="index.html">INICIO</a>
+            <a href="">PANEL ADMIN</a>
+            <a href="noticias.html">PANEL NOTICIAS</a>
         </div>
-    </header>
+    </div>
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
     
+        <a href="index.html" class="mbn-item">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+    
+        <a href="" class="mbn-item active">
+            <i class="fas fa-crosshairs"></i>
+            <span>Admin</span>
+        </a>
+
+        <button class="mbn-item" id="menuToggleBtn">
+            <i class="fas fa-bars"></i>
+            <span>Menú</span>
+        </button>
+
+        <a href="noticias.html" class="mbn-item">
+            <i class="fa fa-file-text"></i>
+            <span>Noticias</span>
+        </a>
+
+        <a href="ranking.html" class="mbn-item">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking</span>
+        </a>
+    
+    </nav>
     <section class="hero hero-admin">
         <div class="hero-overlay"></div>
         <div class="hero-content">
