@@ -518,28 +518,42 @@ window.enviarPrediccion = enviarPrediccion;
 
 // ── TOAST ─────────────────────────────────────────────
 function mostrarToast(mensaje, tipo = 'success') {
-    const toast = document.getElementById("toast");
-    const desc = document.getElementById("desc");
-    const img = document.getElementById("img");
+    const container = document.getElementById('toast-container');
+    
+    if (!container) {
+        console.error('❌ No se encontró #toast-container en el HTML');
+        return;
+    }
 
-    if (toast._timeout) clearTimeout(toast._timeout);
+    // Crear toast
+    const toast = document.createElement('div');
+    toast.className = `toast-item ${tipo}`;
 
-    toast.classList.remove("show", "success", "error", "warning");
+    let icono = '<i class="bi bi-check-circle-fill"></i>';
+    if (tipo === 'error')   icono = '<i class="bi bi-x-circle-fill"></i>';
+    if (tipo === 'warning') icono = '<i class="bi bi-exclamation-triangle-fill"></i>';
+
+    toast.innerHTML = `
+        <div class="toast-icon">${icono}</div>
+        <div class="toast-desc">${mensaje}</div>
+    `;
+
+    container.appendChild(toast);
+
     void toast.offsetWidth;
+    toast.classList.add('show');
 
-    desc.textContent = mensaje;
-    
-    let icono = "\uF272";
-    if (tipo === 'error')   icono = "❌";
-    if (tipo === 'warning') icono = "⚠️";
-    
-    img.textContent = icono;
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 500); // Esperar que termine fadeout
+    }, 4000);
 
-    toast.classList.add("show", tipo);
-
-    toast._timeout = setTimeout(() => {
-        toast.classList.remove("show", "success", "error", "warning");
-    }, 5000);
+    const toasts = container.querySelectorAll('.toast-item');
+    if (toasts.length > 3) {
+        const oldest = toasts[0];
+        oldest.classList.remove('show');
+        setTimeout(() => oldest.remove(), 500);
+    }
 }
 
 function obtenerBandera(nombre) {

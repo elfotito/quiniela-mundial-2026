@@ -1093,70 +1093,74 @@
 .pred-pts-badge.pts-0 { background: #f5f5f5; color: #888;    }
 
 /* ── TOAST ─────────────────── */
-#toast {
+
+#toast-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column-reverse; /* El más nuevo abajo */
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast-item {
     visibility: hidden;
     opacity: 0;
-    width: fit-content; 
-    min-width: 280px; 
+    width: fit-content;
+    min-width: 280px;
     max-width: 450px;
     height: 50px;
     background-color: #333;
     color: #fff;
-    text-align: left; 
-    position: fixed;
-    z-index: 10000;
-    left: 50%;
-    transform: translateX(-50%); 
-    bottom: 30px; 
-    font-size: 17px;
-    white-space: nowrap;
-    overflow: hidden;
-    display: flex; 
+    display: flex;
+    align-items: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: visibility 0s 0.5s; /* Oculta visibility justo después del fadeout */
+    transition: visibility 0s 0.5s;
+    pointer-events: auto;
 }
 
-#toast.show {
+.toast-item.show {
     visibility: visible;
     opacity: 1;
-    animation: toastFadein 0.5s ease forwards, toastFadeout 0.5s ease 4.5s forwards;
+    animation: toastFadein 0.5s ease forwards, toastFadeout 0.5s ease 3.5s forwards;
     transition: visibility 0s 0s;
 }
 
-#toast #img {
+.toast-item .toast-icon {
     width: 50px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #111; 
+    background-color: #111;
     color: #fff;
     font-size: 20px;
     flex-shrink: 0;
 }
 
-#toast #desc {
-    flex: 1; 
+.toast-item .toast-desc {
+    flex: 1;
     color: #fff;
     padding: 0 16px;
-    height: 100%;
-    display: flex;
-    align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 14px;
 }
 
-#toast.success #img { background-color: #10b981; }
-#toast.error #img   { background-color: #ef4444; }
-#toast.warning #img { background-color: #f59e0b; }
+.toast-item.success .toast-icon { background-color: #10b981; }
+.toast-item.error .toast-icon   { background-color: #ef4444; }
+.toast-item.warning .toast-icon { background-color: #f59e0b; }
 
 @keyframes toastFadein {
-    from { bottom: 0; opacity: 0; }
-    to   { bottom: 30px; opacity: 1; }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes toastFadeout {
-    from { bottom: 30px; opacity: 1; }
-    to   { bottom: 60px; opacity: 0; }
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-20px); }
 }
