@@ -451,7 +451,7 @@ async function enviarPrediccion(partidoId) {
     const golesVisitante = inputVisitante.value;
 
     if (golesLocal === '' || golesVisitante === '') {
-        mostrarToast('⚠️ Debes ingresar ambos resultados', 'warning');
+        mostrarToast('Debes ingresar ambos resultados', 'warning');
         return;
     }
 
@@ -459,7 +459,7 @@ async function enviarPrediccion(partidoId) {
     const visitante = parseInt(golesVisitante);
 
     if (local < 0 || local > 9 || visitante < 0 || visitante > 9) {
-        mostrarToast('⚠️ Los goles deben estar entre 0 y 9', 'warning');
+        mostrarToast('Los goles deben estar entre 0 y 9', 'warning');
         return;
     }
 
@@ -497,7 +497,7 @@ async function enviarPrediccion(partidoId) {
         partidosPendientes = partidosPendientes.filter(p => p.id !== partidoId);
         card.classList.add('removing');
 
-        mostrarToast(`✅ Predicción guardada: ${local} - ${visitante}`, 'success');
+        mostrarToast(`Predicción registrada: ${local} - ${visitante}`, 'success');
 
         setTimeout(() => {
             renderizarPartidos();
@@ -505,8 +505,8 @@ async function enviarPrediccion(partidoId) {
         }, 400);
 
     } catch (error) {
-        console.error('❌ Error:', error);
-        mostrarToast(`❌ ${error.message}`, 'error');
+        console.error('Error:', error);
+        mostrarToast(`${error.message}`, 'error');
         const btnPredict = card.querySelector('.mc-btn-predict');
         if (btnPredict) {
             btnPredict.disabled = false;
