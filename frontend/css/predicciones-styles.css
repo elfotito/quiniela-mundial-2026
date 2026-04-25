@@ -1092,10 +1092,10 @@
 .pred-pts-badge.pts-2 { background: #EBF3FF; color: #0C447C; }
 .pred-pts-badge.pts-0 { background: #f5f5f5; color: #888;    }
 
-/* ── TOAST ─────────────────────────────────────────── */
-/* ── TOAST MINIMALISTA (ESTILO REFERENCIA) ─────────────────── */
+/* ── TOAST ─────────────────── */
 #toast {
     visibility: hidden;
+    opacity: 0;
     width: fit-content; 
     min-width: 280px; 
     max-width: 450px;
@@ -1107,31 +1107,34 @@
     z-index: 10000;
     left: 50%;
     transform: translateX(-50%); 
-    margin: auto;
     bottom: 30px; 
     font-size: 17px;
     white-space: nowrap;
     overflow: hidden;
     display: flex; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    opacity: 0;
-    transition: none;
+    transition: visibility 0s 0.5s; /* Oculta visibility justo después del fadeout */
 }
 
-/* Sección del icono */
+#toast.show {
+    visibility: visible;
+    opacity: 1;
+    animation: toastFadein 0.5s ease forwards, toastFadeout 0.5s ease 4.5s forwards;
+    transition: visibility 0s 0s;
+}
+
 #toast #img {
     width: 50px;
     height: 100%;
-    float: left;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #111; 
     color: #fff;
     font-size: 20px;
+    flex-shrink: 0;
 }
 
-/* Sección del texto */
 #toast #desc {
     flex: 1; 
     color: #fff;
@@ -1139,33 +1142,21 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     overflow: hidden;
-    text-overflow: ellipsis; /* Cortar texto largo */
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-/* Animaciones y Clases dinámicas */
-#toast.success #img { background-color: #10b981; } /* Color de éxito (opcional, si quieres usarlo) */
-#toast.error #img   { background-color: #ef4444; } /* Color de error (opcional) */
-#toast.warning #img { background-color: #f59e0b; } /* Color de advertencia (opcional) */
+#toast.success #img { background-color: #10b981; }
+#toast.error #img   { background-color: #ef4444; }
+#toast.warning #img { background-color: #f59e0b; }
 
-/* Animaciones */
-#toast.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, stay 3s 1s, fadeout 0.5s 4s;
-    animation: fadein 0.5s, stay 3s 1s, fadeout 0.5s 4s;
+@keyframes toastFadein {
+    from { bottom: 0; opacity: 0; }
+    to   { bottom: 30px; opacity: 1; }
 }
 
-@-webkit-keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
-@keyframes fadein {
-    from { bottom: 0; opacity: 0; transform: translateX(-50%); }
-    to { bottom: 30px; opacity: 1; transform: translateX(-50%); }
-}
-@-webkit-keyframes stay { from { min-width: 280px } to { min-width: 280px } }
-@keyframes stay { from { min-width: 280px } to { min-width: 280px } }
-@-webkit-keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
-@keyframes fadeout {
-    from { bottom: 30px; opacity: 1; transform: translateX(-50%); }
-    to { bottom: 60px; opacity: 0; transform: translateX(-50%); }
+@keyframes toastFadeout {
+    from { bottom: 30px; opacity: 1; }
+    to   { bottom: 60px; opacity: 0; }
 }

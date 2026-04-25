@@ -522,8 +522,10 @@ function mostrarToast(mensaje, tipo = 'success') {
     const desc = document.getElementById("desc");
     const img = document.getElementById("img");
 
-    toast.className = ""; 
-    void toast.offsetWidth; 
+    if (toast._timeout) clearTimeout(toast._timeout);
+
+    toast.classList.remove("show", "success", "error", "warning");
+    void toast.offsetWidth;
 
     desc.textContent = mensaje;
     
@@ -531,12 +533,12 @@ function mostrarToast(mensaje, tipo = 'success') {
     if (tipo === 'error')   icono = "❌";
     if (tipo === 'warning') icono = "⚠️";
     
-    img.innerHTML = icono;
+    img.textContent = icono;
 
-    if (toast._timeout) clearTimeout(toast._timeout);
-    
+    toast.classList.add("show", tipo);
+
     toast._timeout = setTimeout(() => {
-        toast.className = "";
+        toast.classList.remove("show", "success", "error", "warning");
     }, 5000);
 }
 
