@@ -1095,28 +1095,25 @@
 /* ── TOAST ─────────────────────────────────────────── */
 .toast {
     position: fixed;
-    bottom: 32px;
+    bottom: 40px;
     left: 50%;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) translateY(10px);
     z-index: 9999;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 24px;
-    border-radius: 16px;
-    font-size: 14px;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.3px;
-    color: #fff;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
-                0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    letter-spacing: 0.2px;
+    color: #1a1a1a;
+    background: #f4f4f4;
+    box-shadow: 8px 8px 16px #d9d9d9, 
+                -8px -8px 16px #ffffff;
     opacity: 0;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s ease;
     max-width: 90vw;
 }
 
@@ -1127,23 +1124,22 @@
 }
 
 .toast.success {
-    border-left: 3px solid #10b981;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
-                0 1px 0 rgba(255, 255, 255, 0.1) inset,
-                0 0 20px rgba(16, 185, 129, 0.2);
+    background: #ecfdf5;
+    box-shadow: 8px 8px 16px #c6d9d0, 
+                -8px -8px 16px #ffffff;
+    color: #065f46;
 }
 
 .toast.error {
-    border-left: 3px solid #ef4444;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
-                0 1px 0 rgba(255, 255, 255, 0.1) inset,
-                0 0 20px rgba(239, 68, 68, 0.2);
+    background: #fef2f2;
+    box-shadow: 8px 8px 16px #d9cccc, 
+                -8px -8px 16px #ffffff;
+    color: #7f1d1d;
 }
 
 .toast.warning {
-    border-left: 3px solid #FFD700;
-    color: #FFD700;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
-                0 1px 0 rgba(255, 255, 255, 0.1) inset,
-                0 0 20px rgba(255, 215, 0, 0.15);
+    background: #fffbeb;
+    box-shadow: 8px 8px 16px #d9d3c2, 
+                -8px -8px 16px #ffffff;
+    color: #78350f;
 }
