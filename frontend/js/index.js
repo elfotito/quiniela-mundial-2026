@@ -175,7 +175,6 @@ async function cargarEstadisticas() {
  
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
-        // Si falla la carga, deja los guiones que ya tiene el HTML por defecto
     }
 }
 

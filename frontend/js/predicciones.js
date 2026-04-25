@@ -1,21 +1,20 @@
 // ===============================================
-// PREDICCIONES.JS - SIN LÍMITE DE TIEMPO (TESTING)
+// PREDICCIONES.JS
 // ===============================================
-
+const API_URL = CONFIG.API_URL;
 let usuario = null;
 let partidosPendientes = [];
 let prediccionesRealizadas = [];
 let filtroFase = 'grupos';
 let ordenamiento = 'fechacercana';
-let filtroFaseCompleted = 'grupos';        // ← NUEVA
-let ordenamientoCompleted = 'fechacercana';    // ← NUEVA
+let filtroFaseCompleted = 'grupos';        
+let ordenamientoCompleted = 'fechacercana'; 
 
 document.addEventListener('DOMContentLoaded', async () => {
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
         return;
     }
-
     usuario = auth.getUser();
     configurarUI();
     configurarEventos();
@@ -50,6 +49,42 @@ function configurarUI() {
     if (btnMenuMobile && navMobile) {
         btnMenuMobile.addEventListener('click', () => {
             navMobile.classList.toggle('active');
+        });
+    }
+}
+
+// ===============================================
+// VERIFICAR LOGIN
+// ===============================================
+
+async function verificarLogin() {
+    if (!auth.isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const usuario = auth.getUser();
+    usuarioId = parseInt(usuario.id);
+
+    document.querySelectorAll('.user-name-display').forEach(el => {
+        el.textContent = usuario.nombre;
+    });
+    
+    const emoji = obtenerCampeon(usuario.campeon_elegido);
+    document.querySelectorAll('.user-emoji-display').forEach(el => {
+        el.textContent = emoji;
+    });
+
+    if (usuario.isAdmin) {
+    
+        document.querySelectorAll('.btn-admin-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'admin.html';
+        });
+        
+        document.querySelectorAll('.btn-noticias-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'noticias.html';
         });
     }
 }
@@ -540,6 +575,31 @@ function mostrarToast(mensaje, tipo = 'success') {
             document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
         });
     });
+
+// ===============================================
+// ESTADÍSTICAS DEL USUARIO
+// ===============================================
+
+async function cargarEstadisticas() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
+        if (!response.ok) throw new Error('Error cargando estadísticas');
+        const stats = await response.json();
+ 
+        const total      = stats.total_predicciones || 0;
+        const aciertos   = stats.aciertos || 0;
+        const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+ 
+        document.getElementById('statPredicciones').textContent = total;
+        document.getElementById('statPuntos').textContent       = stats.puntos_totales || 0;
+        document.getElementById('statPosicion').textContent     = stats.posicion_ranking || '—';
+        document.getElementById('statEfectividad').textContent  = `${efectividad}%`;
+ 
+    } catch (error) {
+        console.error('Error cargando estadísticas:', error);
+    }
+}
+
 
     async function cargarProximosPartidos() {
     const container = document.getElementById('proximosPartidosWidget');
