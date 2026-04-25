@@ -1093,66 +1093,69 @@
 .pred-pts-badge.pts-0 { background: #f5f5f5; color: #888;    }
 
 /* ── TOAST ─────────────────────────────────────────── */
+/* ── TOAST MINIMALISTA (ESTILO REFERENCIA) ─────────────────── */
 #toast {
     visibility: hidden;
-    max-width: 50px;
+    min-width: 350px;
     height: 50px;
-    margin: auto;
-    background-color: #333;
+    background-color: #333; /* Color de fondo oscuro sólido */
     color: #fff;
-    text-align: center;
-    border-radius: 25px; /* Más redondeado para un look moderno */
+    text-align: left; /* Alinear el texto a la izquierda */
+    border-radius: 2px; /* Bordes ligeramente redondeados, como en la referencia */
     position: fixed;
-    z-index: 10000; /* Por encima de todo */
-    left: 0; right: 0;
-    bottom: 30px;
+    z-index: 10000;
+    left: 0; right: 0; /* Centrar horizontalmente */
+    margin: auto;
+    bottom: 30px; /* Posición desde abajo */
     font-size: 17px;
     white-space: nowrap;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex; /* Usar flexbox para alinear icono y texto */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Sombra suave */
 }
 
+/* Sección del icono */
 #toast #img {
     width: 50px;
-    height: 50px;
+    height: 100%;
     float: left;
-    padding-top: 14px;
-    box-sizing: border-box;
-    background-color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111; /* Color de fondo oscuro para el icono */
     color: #fff;
     font-size: 20px;
 }
 
+/* Sección del texto */
 #toast #desc {
+    flex: 1; /* Ocupar el espacio restante */
     color: #fff;
-    padding: 16px;
+    padding: 0 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     overflow: hidden;
+    text-overflow: ellipsis; /* Cortar texto largo */
     white-space: nowrap;
-    text-align: left;
 }
 
-/* Colores dinámicos */
-#toast.success #img { background-color: #10b981; }
-#toast.error #img { background-color: #ef4444; }
-#toast.warning #img { background-color: #f59e0b; }
+/* Animaciones y Clases dinámicas */
+#toast.success #img { background-color: #10b981; } /* Color de éxito (opcional, si quieres usarlo) */
+#toast.error #img   { background-color: #ef4444; } /* Color de error (opcional) */
+#toast.warning #img { background-color: #f59e0b; } /* Color de advertencia (opcional) */
 
-/* Animación ajustada */
+/* Animaciones */
 #toast.show {
     visibility: visible;
-    animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
+    -webkit-animation: fadein 0.5s, stay 3s 1s, fadeout 0.5s 4s;
+    animation: fadein 0.5s, stay 3s 1s, fadeout 0.5s 4s;
 }
-/* Colores para el cuadro del icono */
-#toast.success #img { background-color: #10b981; }
-#toast.error #img   { background-color: #ef4444; }
-#toast.warning #img { background-color: #f59e0b; }
 
-/* Opcional: Borde sutil para el cuerpo del toast */
-#toast.success { border: 1px solid #10b981; }
-#toast.error   { border: 1px solid #ef4444; }
-#toast.warning { border: 1px solid #f59e0b; }
-
+@-webkit-keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
 @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
-@keyframes expand { from { min-width: 50px } to { min-width: 350px } }
+@-webkit-keyframes stay { from { min-width: 350px } to { min-width: 350px } }
 @keyframes stay { from { min-width: 350px } to { min-width: 350px } }
-@keyframes shrink { from { min-width: 350px; } to { min-width: 50px; } }
+@-webkit-keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
 @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 60px; opacity: 0; } }
