@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
+    <link rel="stylesheet" href="css/ranking-styles.css">
+
     <style>
         /* RANKING ESPECÍFICO */
         .hero-hero-ranking {
@@ -579,113 +583,183 @@
  
 </nav>
     
-    <!-- HERO SECTION -->
-    <section class="hero-hero-ranking">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">Ranking</h1>
-        </div>
-    </section>
-    
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-container">
-        
-        <div class="ranking-layout">
-            
-            <!-- SIDEBAR FILTROS -->
-            <aside class="filters-sidebar">
-                <h3 class="sidebar-title">
-                    <span>🔍</span>
-                    Filtros
-                </h3>
-                
-                <div class="filter-group">
-                    <label class="filter-label">🏅 Liga</label>
-                    <select class="filter-select" id="ligaFilter">
-                        <option value="">Todas las ligas</option>
-                    </select>
+    <div class="rnk-hero">
+        <div class="rnk-hero-inner">
+            <div>
+                <div class="rnk-eyebrow">
+                    <div class="rnk-eyebrow-line"></div>
+                    <span>Quiniela Mundial 2026</span>
                 </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">👤 Buscar usuario</label>
-                    <input 
-                        type="text" 
-                        class="filter-input" 
-                        id="searchInput" 
-                        placeholder="Nombre..."
-                    >
+                <h1 class="rnk-title">Tabla de<br><em>Posiciones</em></h1>
+                <p class="rnk-sub">Compara tu rendimiento con el resto de participantes. Filtra por liga y busca a tus rivales.</p>
+                <div class="rnk-hero-pills">
+                    <span class="rnk-pill">🥇 Top 3 en el podio</span>
+                    <span class="rnk-pill">🏅 Filtro por liga</span>
+                    <span class="rnk-pill">🔍 Búsqueda de usuario</span>
                 </div>
-                
-                <div class="participants-badge">
-                    <span class="participants-count" id="participantsCount">0</span>
-                    <span class="participants-label">Participantes</span>
-                </div>
-                
-                <button class="btn-share" onclick="compartirRanking()">
-                    <span>📸</span>
-                    Compartir Ranking
-                </button>
-            </aside>
-            
-            <!-- CONTENIDO PRINCIPAL -->
-            <div class="ranking-content">
-                
-                <!-- PODIO TOP 3 -->
-                <section class="podium-section">
-                    <h2 class="card-title" style="font-size: 1.5rem; font-weight: 900; color: var(--fifa-gold); margin-bottom: 1rem;">
-                        🏆 Podio
-                    </h2>
-                    <div id="podiumSection">
-                        <div style="text-align: center; padding: 2rem; color: var(--text-gray);">
-                            Cargando podio...
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- TABLA DE RANKING -->
-                <section class="table-section">
-                    <div class="table-header">
-                        <h2 class="table-title">📊 Tabla Completa</h2>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="ranking-table">
-                            <thead>
-                                <tr>
-                                    <th class="td-pos">Pos</th>
-                                    <th>Usuario</th>
-                                    <th>Liga</th>
-                                    <th style="text-align: center;">Grupos</th>
-                                    <th style="text-align: center;">16avos</th>
-                                    <th style="text-align: center;">8vos</th>
-                                    <th style="text-align: center;">4tos</th>
-                                    <th style="text-align: center;">Semis</th>
-                                    <th style="text-align: center;">3er</th>
-                                    <th style="text-align: center;">Final</th>
-                                    <th style="text-align: center;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="rankingTableBody">
-                                <tr>
-                                    <td colspan="11" style="text-align: center; padding: 3rem; color: var(--text-gray);">
-                                        Cargando ranking...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="empty-state" id="emptyState" style="display: none;">
-                        <div class="empty-icon">🔍</div>
-                        <h3>No se encontraron resultados</h3>
-                        <p>Intenta con otros filtros</p>
-                    </div>
-                </section>
-                
             </div>
+            <div class="rnk-hero-deco">🏆</div>
         </div>
-        
-    </main>
+    </div>
+ 
+ 
+    <!-- ── GRID ──────────────────────────────────────── -->
+    <div class="rnk-grid-bg">
+    <div class="rnk-grid">
+ 
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="rnk-col-left">
+ 
+            <!-- Filtros -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Filtros</span>
+                </div>
+                <div class="widget-body">
+                    <div class="rnk-filter-group">
+                        <label class="rnk-filter-label">Liga</label>
+                        <select class="rnk-filter-select" id="ligaFilter">
+                            <option value="">Todas las ligas</option>
+                        </select>
+                    </div>
+                    <div class="rnk-filter-group">
+                        <label class="rnk-filter-label">Buscar usuario</label>
+                        <input type="text" class="rnk-filter-input" id="searchInput" placeholder="Nombre...">
+                    </div>
+                    <div class="participants-badge">
+                        <span class="participants-count" id="participantsCount">0</span>
+                        <span class="participants-label">Participantes</span>
+                    </div>
+                    <button class="btn-share" onclick="compartirRanking()">
+                        <i class="bi bi-share"></i> Compartir Ranking
+                    </button>
+                </div>
+            </div>
+ 
+            <!-- Puntuación rápida -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Puntuación</span>
+                    <a href="sistema.html" class="widget-link">Ver →</a>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label-w">Exacto</span><span class="stat-val-w gold">+9</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Ganador + marcador</span><span class="stat-val-w gold">+7</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Solo ganador</span><span class="stat-val-w gold">+5</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Solo marcador</span><span class="stat-val-w gold">+2</span></div>
+                </div>
+            </div>
+ 
+        </aside>
+ 
+ 
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="rnk-col-main">
+ 
+            <!-- Podio Top 3 -->
+            <div class="podium-section">
+                <div class="podium-header">
+                    <div class="widget-bar"></div>
+                    <span class="podium-header-title">🏆 Podio</span>
+                </div>
+                <div id="podiumSection">
+                    <div style="text-align:center;padding:32px;font-size:12px;color:#aaa;">Cargando podio...</div>
+                </div>
+            </div>
+ 
+            <!-- Tabla completa -->
+            <div class="table-section">
+                <div class="table-header">
+                    <div class="widget-bar"></div>
+                    <span class="table-title">Tabla Completa</span>
+                </div>
+ 
+                <div class="table-responsive">
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th class="td-pos">Pos</th>
+                                <th>Usuario</th>
+                                <th>Liga</th>
+                                <th class="center">Grupos</th>
+                                <th class="center">16avos</th>
+                                <th class="center">8vos</th>
+                                <th class="center">4tos</th>
+                                <th class="center">Semis</th>
+                                <th class="center">3er</th>
+                                <th class="center">Final</th>
+                                <th class="center">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingTableBody">
+                            <tr>
+                                <td colspan="11" style="text-align:center;padding:32px;color:#aaa;font-size:13px;">
+                                    Cargando ranking...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+ 
+                <div class="empty-state" id="emptyState" style="display:none;">
+                    <span class="empty-icon">🔍</span>
+                    <h3>No se encontraron resultados</h3>
+                    <p>Intenta con otros filtros</p>
+                </div>
+            </div>
+ 
+        </main>
+ 
+ 
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="rnk-col-right">
+ 
+            <!-- CTA -->
+            <div class="widget widget-cta-dark">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">¿Ya predijiste?</span>
+                </div>
+                <div class="widget-body">
+                    <p class="cta-text">Ingresa tus predicciones y sube posiciones en el ranking.</p>
+                    <a href="predicciones.html" class="cta-btn">Hacer Predicciones</a>
+                </div>
+            </div>
+ 
+            <!-- Mi posición -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Mi Posición</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label-w">Posición</span><span class="stat-val-w blue" id="miPosicion">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Puntos</span><span class="stat-val-w gold" id="misPuntos">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Efectividad</span><span class="stat-val-w" id="miEfectividad">—</span></div>
+                </div>
+            </div>
+ 
+            <!-- Páginas -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Navegar</span>
+                </div>
+                <div class="widget-body" style="padding:10px 12px">
+                    <a href="index.html"        class="nav-link-w"><i class="bi bi-house"></i> Inicio</a>
+                    <a href="predicciones.html" class="nav-link-w"><i class="bi bi-crosshair"></i> Predicciones</a>
+                    <a href="quiniela.html"     class="nav-link-w"><i class="bi bi-file-text"></i> Mi Quiniela</a>
+                    <a href="calendario.html"   class="nav-link-w"><i class="bi bi-calendar3"></i> Calendario</a>
+                </div>
+            </div>
+ 
+        </aside>
+ 
+    </div>
+    </div>
+
     
         <footer class="footer">
         
@@ -775,9 +849,22 @@
             </div>
         </div>
         </footer>
-    <script src="js/navbar.js"></script>
-    <script src="js/config.js"></script>
+        <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ranking.js"></script>
+    <script>
+    // Conectar mi posición al widget lateral
+    // ranking.js ya escribe en el DOM — observamos los cambios
+    document.addEventListener('DOMContentLoaded', () => {
+        // Intentar leer stats del usuario logueado desde localStorage
+        const pts = localStorage.getItem('quiniela_puntos');
+        const pos = localStorage.getItem('quiniela_posicion');
+        const ef  = localStorage.getItem('quiniela_efectividad');
+        if (pts) document.getElementById('misPuntos').textContent    = pts;
+        if (pos) document.getElementById('miPosicion').textContent   = pos + '°';
+        if (ef)  document.getElementById('miEfectividad').textContent = ef + '%';
+    });
+    </script>
+ 
 </body>
 </html>
