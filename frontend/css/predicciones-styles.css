@@ -1151,9 +1151,9 @@
     font-size: 14px;
 }
 
-.toast-item.success .toast-icon { background-color: #9ee53d; }
+.toast-item.success .toast-icon { background-color: #389e36; }
 .toast-item.error .toast-icon   { background-color: #cb2126; }
-.toast-item.warning .toast-icon { background-color: #FFC107; }
+.toast-item.warning .toast-icon { background-color: #f1c40f; }
 
 @keyframes toastFadein {
     from { opacity: 0; transform: translateY(20px); }
