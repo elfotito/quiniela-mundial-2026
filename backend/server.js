@@ -501,8 +501,18 @@ app.get('/api/ranking', async (req, res) => {
                 ROUND(
                     CASE 
                         WHEN COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) > 0 
-                        THEN (COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0)::numeric / 
-                              COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)::numeric * 100)
+                        THEN (
+                            SUM(
+                                CASE 
+                                    WHEN p.puntos_obtenidos = 0 THEN 0
+                                    WHEN p.puntos_obtenidos = 2 THEN 22.22
+                                    WHEN p.puntos_obtenidos = 5 THEN 55.55
+                                    WHEN p.puntos_obtenidos = 7 THEN 77.77
+                                    WHEN p.puntos_obtenidos = 9 THEN 100
+                                    ELSE 0
+                                END
+                            ) / COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)
+                        )
                         ELSE 0 
                     END, 
                 1) as efectividad
@@ -658,14 +668,27 @@ app.get('/api/estadisticas/usuario/:id', async (req, res) => {
             )
             SELECT 
                 us.*,
-                COALESCE(ur.posicion, 0) as posicion_ranking,
-                ROUND(
-                    CASE 
-                        WHEN us.total_predicciones > 0 
-                        THEN (us.aciertos::numeric / us.total_predicciones::numeric * 100)
-                        ELSE 0 
-                    END, 
-                1) as efectividad
+                    COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
+                    COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) as total_predicciones,
+                    COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0) as aciertos,
+                    ROUND(
+                        CASE 
+                            WHEN COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) > 0 
+                            THEN (
+                                SUM(
+                                    CASE 
+                                        WHEN p.puntos_obtenidos = 0 THEN 0
+                                        WHEN p.puntos_obtenidos = 2 THEN 22.22
+                                        WHEN p.puntos_obtenidos = 5 THEN 55.55
+                                        WHEN p.puntos_obtenidos = 7 THEN 77.77
+                                        WHEN p.puntos_obtenidos = 9 THEN 100
+                                        ELSE 0
+                                    END
+                                ) / COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)
+                            )
+                            ELSE 0 
+                        END, 
+                    1) as efectividad
             FROM user_stats us
             LEFT JOIN user_rank ur ON ur.id = $1
         `;
@@ -908,8 +931,18 @@ app.get('/api/ranking/liga/:ligaId', async (req, res) => {
                 ROUND(
                     CASE 
                         WHEN COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) > 0 
-                        THEN (COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0)::numeric / 
-                              COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)::numeric * 100)
+                        THEN (
+                            SUM(
+                                CASE 
+                                    WHEN p.puntos_obtenidos = 0 THEN 0
+                                    WHEN p.puntos_obtenidos = 2 THEN 22.22
+                                    WHEN p.puntos_obtenidos = 5 THEN 55.55
+                                    WHEN p.puntos_obtenidos = 7 THEN 77.77
+                                    WHEN p.puntos_obtenidos = 9 THEN 100
+                                    ELSE 0
+                                END
+                            ) / COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)
+                        )
                         ELSE 0 
                     END, 
                 1) as efectividad
