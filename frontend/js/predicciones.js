@@ -522,28 +522,22 @@ function mostrarToast(mensaje, tipo = 'success') {
     const desc = document.getElementById("desc");
     const img = document.getElementById("img");
 
-    // 1. Reiniciar el estado por si hay uno activo
     toast.className = ""; 
-    void toast.offsetWidth; // Truco para reiniciar animaciones CSS
+    void toast.offsetWidth; 
 
-    // 2. Configurar el contenido
     desc.textContent = mensaje;
     
-    // 3. Iconos rápidos (puedes usar emojis o Bootstrap Icons)
-    let icono = "⚽"; // Default para tu proyecto de fútbol
+    let icono = "⚽"; // Default para tu proyecto
     if (tipo === 'error')   icono = "❌";
     if (tipo === 'warning') icono = "⚠️";
     
     img.innerHTML = icono;
 
-    // 4. Aplicar clases: 'show' activa la animación y 'tipo' da el color
     toast.className = `show ${tipo}`;
 
-    // 5. Limpiar la clase después de que termine TODA la animación (5s)
-    // Esto permite que se pueda volver a usar después
     setTimeout(() => {
         toast.className = toast.className.replace("show", "");
-    }, 5000);
+    }, 5000); // 5 segundos de duración total
 }
 
 function obtenerBandera(nombre) {
