@@ -172,7 +172,7 @@ async function cargarEstadisticas() {
 
         const total       = stats.total_predicciones || 0;
         const aciertos    = stats.aciertos || 0;
-        const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+        const efectividad = stats.efectividad || 0;
         const puntos      = stats.puntos_totales || 0;
         const posicion    = stats.posicion_ranking || '—';
 
@@ -186,7 +186,7 @@ async function cargarEstadisticas() {
         set('resumenTotal',      total);
         set('resumenPuntos',     puntos);
         set('resumenPosicion',   posicion);
-        set('resumenEfectividad',`${efectividad}%`);
+        set('resumenEfectividad',`${efectividad}%`)
 
         set('heroPuntos',        puntos);
         set('heroPosicion',      posicion + '°');
