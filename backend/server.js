@@ -642,6 +642,7 @@ app.get('/api/ranking/detallado', async (req, res) => {
 // ===============================================
 
 // GET /api/estadisticas/usuario/:id
+// GET /api/estadisticas/usuario/:id
 app.get('/api/estadisticas/usuario/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -649,25 +650,6 @@ app.get('/api/estadisticas/usuario/:id', async (req, res) => {
         const query = `
             WITH user_stats AS (
                 SELECT 
-                    COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
-                    COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) as total_predicciones,
-                    COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0) as aciertos
-                FROM predicciones p
-                WHERE p.usuario_id = $1
-            ),
-            user_rank AS (
-                SELECT 
-                    u.id,
-                    ROW_NUMBER() OVER (
-                        ORDER BY COALESCE(SUM(p.puntos_obtenidos), 0) DESC
-                    ) as posicion
-                FROM usuarios u
-                LEFT JOIN predicciones p ON u.id = p.usuario_id
-                WHERE u.esta_activo = true
-                GROUP BY u.id
-            )
-            SELECT 
-                us.*,
                     COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
                     COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) as total_predicciones,
                     COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0) as aciertos,
@@ -684,13 +666,34 @@ app.get('/api/estadisticas/usuario/:id', async (req, res) => {
                                         WHEN p.puntos_obtenidos = 9 THEN 100
                                         ELSE 0
                                     END
-                                ) / COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)
+                                )::numeric / COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL)
                             )
                             ELSE 0 
                         END, 
                     1) as efectividad
+                FROM predicciones p
+                WHERE p.usuario_id = $1
+            ),
+            user_rank AS (
+                SELECT 
+                    u.id,
+                    ROW_NUMBER() OVER (
+                        ORDER BY COALESCE(SUM(p.puntos_obtenidos), 0) DESC
+                    ) as posicion
+                FROM usuarios u
+                LEFT JOIN predicciones p ON u.id = p.usuario_id
+                WHERE u.esta_activo = true
+                GROUP BY u.id
+            )
+            SELECT 
+                us.puntos_totales,
+                us.total_predicciones,
+                us.aciertos,
+                us.efectividad,
+                COALESCE(ur.posicion, 0) as posicion_ranking
             FROM user_stats us
-            LEFT JOIN user_rank ur ON ur.id = $1
+            CROSS JOIN user_rank ur
+            WHERE ur.id = $1
         `;
 
         const result = await pool.query(query, [id]);
