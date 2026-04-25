@@ -533,11 +533,11 @@ function mostrarToast(mensaje, tipo = 'success') {
     
     img.innerHTML = icono;
 
-    toast.className = `show ${tipo}`;
-
-    setTimeout(() => {
-        toast.className = toast.className.replace("show", "");
-    }, 5000); // 5 segundos de duración total
+    if (toast._timeout) clearTimeout(toast._timeout);
+    
+    toast._timeout = setTimeout(() => {
+        toast.className = "";
+    }, 5000);
 }
 
 function obtenerBandera(nombre) {
