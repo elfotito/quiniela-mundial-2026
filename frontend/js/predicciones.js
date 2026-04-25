@@ -497,7 +497,7 @@ async function enviarPrediccion(partidoId) {
         partidosPendientes = partidosPendientes.filter(p => p.id !== partidoId);
         card.classList.add('removing');
 
-        mostrarToast(`Predicción registrada: ${local} - ${visitante}`, 'success');
+        mostrarToast(`Predicción registrada:${partido.equipo_local} ${local} - ${visitante} ${partido.equipo_visitante}`, 'success');
 
         setTimeout(() => {
             renderizarPartidos();
