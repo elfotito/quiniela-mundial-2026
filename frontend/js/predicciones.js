@@ -173,16 +173,28 @@ async function cargarEstadisticas() {
         const total       = stats.total_predicciones || 0;
         const aciertos    = stats.aciertos || 0;
         const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+        const puntos      = stats.puntos_totales || 0;
+        const posicion    = stats.posicion_ranking || '—';
 
         const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
         set('statPredicciones',  total);
-        set('statPuntos',        stats.puntos_totales || 0);
-        set('statPosicion',      stats.posicion_ranking || '—');
+        set('statPuntos',        puntos);
+        set('statPosicion',      posicion);
         set('statEfectividad',   `${efectividad}%`);
+        
         set('resumenTotal',      total);
-        set('resumenPuntos',     stats.puntos_totales || 0);
-        set('resumenPosicion',   stats.posicion_ranking || '—');
+        set('resumenPuntos',     puntos);
+        set('resumenPosicion',   posicion);
         set('resumenEfectividad',`${efectividad}%`);
+
+        set('heroPuntos',        puntos);
+        set('heroPosicion',      posicion + '°');
+        set('heroTotalPartidos', total);
+
+        localStorage.setItem('quiniela_puntos', puntos);
+        localStorage.setItem('quiniela_posicion', posicion);
+        localStorage.setItem('quiniela_predicciones', total);
 
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
