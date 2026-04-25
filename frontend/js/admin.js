@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const user = auth.getUser();
-    document.getElementById('userName').textContent = user.nombre;
+    document.getElementById('user-name-display').textContent = user.nombre;
 
     await cargarDatos();
 });
