@@ -679,7 +679,9 @@
         color: #0a0a0a;
     }
     .resumen-val.blue { color: #0066CC; }
-    .resumen-val.gold { color: #BA7517; }
+    .resumen-val.gold { color: #FFD700; }
+    .resumen-val.red { color: #cb2126; }
+    .resumen-val.purple { color: #7044a0; }
  
     /* ── WIDGET CTA ───────────────────────────────────── */
     .widget-cta-dark {

@@ -17,17 +17,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     usuario = auth.getUser();
-    usuarioId = parseInt(usuario.id); // FIX 3: asignar aquí
+    usuarioId = parseInt(usuario.id); 
 
     configurarUI();
     configurarEventos();
-    configurarTabs(); // FIX 5: mover lógica de tabs aquí
-    cargarStatsHero(); // FIX 5: mover localStorage aquí
+    configurarTabs(); 
+    cargarStatsHero(); 
     await cargarDatos();
 });
-
-// FIX 1: código del menú móvil ahora dentro de configurarUI()
-// ya no está suelto fuera de función
 
 function configurarUI() {
     const userCampeon = document.getElementById('userCampeon');
@@ -36,7 +33,6 @@ function configurarUI() {
     const userNameElement = document.getElementById('userName');
     if (userNameElement) userNameElement.textContent = usuario.nombre || usuario.codigo;
 
-    // user-emoji-display (fix para header)
     document.querySelectorAll('.user-emoji-display').forEach(el => {
         el.textContent = obtenerCampeon(usuario.campeon_elegido);
     });
@@ -63,7 +59,6 @@ function configurarUI() {
         }
     });
 
-    // FIX 1: menú móvil dentro de configurarUI
     const btnMenu = document.getElementById('btnMenuMobile');
     const navMobile = document.getElementById('navMobile');
     if (btnMenu && navMobile) {
@@ -71,7 +66,6 @@ function configurarUI() {
     }
 }
 
-// FIX 5: Tabs y stats hero en funciones propias
 function configurarTabs() {
     document.querySelectorAll('.pred-tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -127,7 +121,6 @@ function cambiarTab(tabName) {
     if (activeTab) activeTab.classList.add('active');
 }
 
-// FIX 4: cargarEstadisticas y cargarProximosPartidos incluidos en cargarDatos
 async function cargarDatos() {
     try {
         await cargarPredicciones();
@@ -171,7 +164,6 @@ async function cargarPredicciones() {
     }
 }
 
-// FIX 3: usuarioId ya es global, esta función funciona correctamente
 async function cargarEstadisticas() {
     try {
         const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
@@ -501,7 +493,6 @@ async function enviarPrediccion(partidoId) {
     } catch (error) {
         console.error('❌ Error:', error);
         mostrarToast(`❌ ${error.message}`, 'error');
-        // FIX 2: clase correcta
         const btnPredict = card.querySelector('.mc-btn-predict');
         if (btnPredict) {
             btnPredict.disabled = false;
@@ -531,7 +522,6 @@ function mostrarToast(mensaje, tipo = 'success') {
     }, 3000);
 }
 
-// ── HELPERS ───────────────────────────────────────────
 function obtenerBandera(nombre) {
     const banderas = {
         'México': '🇲🇽', 'EE.UU.': '🇺🇸', 'USA': '🇺🇸', 'Canadá': '🇨🇦',
