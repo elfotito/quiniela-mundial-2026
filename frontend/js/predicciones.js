@@ -392,8 +392,8 @@ function crearCardPrediccion(prediccion) {
         <div class="pred-card">
             <div class="pred-card-header">
                 <div>
-                    <div class="pred-card-competition">FIFA World Cup 2026™</div>
-                    <div class="pred-card-subtitle">First Stage · ${prediccion.fase}${estadio}</div>
+                    <div class="pred-card-competition">Copa Mundial FIFA 2026™</div>
+                    <div class="pred-card-subtitle">Fase de Grupos · ${prediccion.fase}${estadio}</div>
                 </div>
                 <span class="pred-card-date">${fechaCorta}</span>
             </div>
@@ -497,7 +497,7 @@ async function enviarPrediccion(partidoId) {
         card.classList.add('removing');
 
         mostrarToast(`✅ Predicción guardada: ${local} - ${visitante}`, 'success');
-        
+
         setTimeout(() => {
             renderizarPartidos();
             renderizarPredicciones();
