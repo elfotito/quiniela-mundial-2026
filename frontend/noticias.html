@@ -594,11 +594,11 @@
 <script>
     // ─── AUTH GUARD ──────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', async () => {
-        /*const isAdmin = localStorage.getItem('quiniela_isAdmin');
+        const isAdmin = localStorage.getItem('quiniela_isAdmin');
         if (!isAdmin || isAdmin === 'false') {
             window.location.href = 'index.html';
             return;
-        }*/
+        }
         await cargarEquipos();
         await cargarNoticias();
     });
