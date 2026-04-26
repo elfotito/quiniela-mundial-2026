@@ -1,7 +1,3 @@
-// ============================================
-// NOTICIAS.JS - Script para páginas de noticias
-// Funciones: 1) Compartir  2) Próximos Partidos
-// ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Página de noticia cargada');
