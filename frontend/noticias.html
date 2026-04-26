@@ -510,11 +510,21 @@
 
         <div class="form-group">
             <label>Título</label>
+            <div class="input-with-emoji">
+    <input type="text" id="titulo" placeholder="Ej: Brasil golea...">
+    <button class="emoji-picker-btn" id="btnEmojiTitulo">😊</button>
+</div>
+<emoji-picker id="pickerTitulo" style="display: none; position: absolute; z-index:1000;"></emoji-picker>
             <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="200">
         </div>
 
         <div class="form-group" id="resenaGroup">
             <label>Reseña breve</label>
+            <div class="input-with-emoji">
+    <input type="text" id="titulo" placeholder="Ej: Brasil golea...">
+    <button class="emoji-picker-btn" id="btnEmojiTitulo">😊</button>
+</div>
+<emoji-picker id="pickerTitulo" style="display: none; position: absolute; z-index:1000;"></emoji-picker>
             <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..."></textarea>
         </div>
     </div>
@@ -615,7 +625,16 @@
         await cargarEquipos();
         await cargarNoticias();
     });
+document.getElementById('btnEmojiTitulo').addEventListener('click', () => {
+    const picker = document.getElementById('pickerTitulo');
+    picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+});
 
+document.getElementById('pickerTitulo').addEventListener('emoji-click', event => {
+    const input = document.getElementById('titulo');
+    input.value += event.detail.unicode; // Simplemente lo añade
+    document.getElementById('pickerTitulo').style.display = 'none';
+});
     // ─── TIPO DE PLANTILLA ───────────────────────────────────
     let tipoActual = 'hero';
 
@@ -871,6 +890,6 @@ async function guardarNoticia(event) {
         setTimeout(() => t.classList.remove('show'), 3000);
     }
 </script>
-
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
 </body>
 </html>
