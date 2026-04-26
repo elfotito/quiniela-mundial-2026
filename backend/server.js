@@ -3,6 +3,13 @@
 // ===============================================
 
 require('dotenv').config();
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutos
+    max: 10,
+    message: { error: '¡A los vestidores! Analiza tu táctica (y tu contraseña), nos vemos en 15 minutos para seguir jugando' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -10,9 +17,7 @@ const { Pool } = require('pg');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ===============================================
-// CONEXIÓN A POSTGRESQL
-// ===============================================
+
 const poolConfig = process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
