@@ -217,7 +217,9 @@ function cerrarModal() {
 
 async function cargarUsuarios() {
     try {
-        const res = await fetch(`${CONFIG.API_URL}/admin/usuarios`);
+        const res = await fetch(`${CONFIG.API_URL}/admin/usuarios`, {
+            headers: auth.getAuthHeaders()
+        });
         const data = await res.json();
         usuarios = data.usuarios;
         
@@ -242,7 +244,6 @@ function mostrarUsuarios() {
         <tr>
             <td>${u.id}</td>
             <td>${u.nombre}</td>
-            <td><code>${u.codigo_acceso}</code></td>
             <td><strong>${u.puntos_totales}</strong></td>
             <td>
                 <span style="color:${u.esta_activo ? 'var(--success)' : 'var(--error)'}">
@@ -333,7 +334,8 @@ async function eliminarPrediccion(predId) {
     
     try {
         const res = await fetch(`${CONFIG.API_URL}/admin/predicciones/${predId}`, {
-            method: 'DELETE'
+        method: 'DELETE',
+        headers: auth.getAuthHeaders()
         });
         
         if (!res.ok) throw new Error('Error');
