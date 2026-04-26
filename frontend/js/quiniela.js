@@ -877,49 +877,42 @@ async function cargarLogros() {
     });
     
 container.innerHTML = logrosOrdenados.map(l => {
-    // Determinar qué mostrar en la imagen
-    const imagenHTML = l.desbloqueado 
-        ? `<img src="${l.imagen}" alt="${l.titulo}" class="achievement-image" />`
-        : '<div class="mystery-placeholder">?</div>';
-    
-    // Determinar qué mostrar en la descripción
-    const descripcionHTML = l.desbloqueado 
+    const imagenHTML = l.desbloqueado
+        ? `<img src="${l.imagen}" alt="${l.titulo}" class="achievement-image"
+               onerror="this.style.display='none'">`
+        : `<div class="mystery-placeholder">?</div>`;
+ 
+    const descripcionHTML = l.desbloqueado
         ? `<p class="achievement-description">${l.descripcion}</p>`
-        : '<p class="achievement-description mystery-text">???</p>';
-    
+        : `<p class="achievement-description mystery-text">???</p>`;
+ 
     return `
-        <div class="achievement-card ${l.desbloqueado ? 'unlocked' : 'locked'} rarity-${l.rareza}">
-            <div class="achievement-image-container">
-                ${imagenHTML}
-                ${!l.desbloqueado ? '<div class="achievement-lock-overlay">🔒</div>' : ''}
-                <div class="rarity-badge">${l.rareza.toUpperCase()}</div>
-            </div>
-            <div class="achievement-content">
-                <h3 class="achievement-title">${l.titulo}</h3>
-                ${descripcionHTML}
-            </div>
+    <div class="achievement-card ${l.desbloqueado ? 'unlocked' : 'locked'} rarity-${l.rareza}">
+ 
+        <span class="rarity-badge">${l.rareza}</span>
+ 
+        <div class="achievement-image-wrap">
+            <div class="achievement-ring"></div>
+            ${imagenHTML}
+            ${!l.desbloqueado ? '<div class="achievement-lock-overlay">🔒</div>' : ''}
         </div>
-    `;
+ 
+        <h3 class="achievement-title">${l.desbloqueado ? l.titulo : '???'}</h3>
+        ${descripcionHTML}
+ 
+    </div>`;
 }).join('');
-    
-    
-    // Actualizar contador
-    const totalDesbloqueados = logros.filter(l => l.desbloqueado).length;
-    const total = logros.length;
-    const counterElement = document.getElementById('achievementsCount');
-    if (counterElement) {
-        counterElement.textContent = `${totalDesbloqueados}/${total}`;
-    }
-}
 
-function scrollAchievements(direction) {
-    const container = document.getElementById('achievementsGrid');
-    const scrollAmount = 250; // Ajusta según el ancho de tus cards
-    
-    if (direction === 'left') {
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+
+    const desbloqueadosCount = logrosOrdenados.filter(l => l.desbloqueado).length;
+    const contadorEl = document.getElementById('achievementsCount');
+    if (contadorEl) contadorEl.textContent = `${desbloqueadosCount}/${logrosOrdenados.length}`;
+
+
+function scrollAchievements(dir) {
+    const track = document.getElementById('achievementsGrid');
+    if (!track) return;
+    track.scrollBy({ left: dir === 'right' ? 280 : -280, behavior: 'smooth' });
     }
 }
 
