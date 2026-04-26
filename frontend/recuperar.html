@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Clave - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="css/login-styles.css">
+    <link rel="stylesheet" href="css/registro-extra.css">
+</head>
+<body>
+    <div class="split-container">
+
+        <!-- LADO IZQUIERDO -->
+        <div class="split-left">
+            <br><br><br><br>
+            <div class="brand-logo">
+                <img src="img/logoblanco.png" alt="logologin" class="logo-login">
+            </div>
+            <br>
+            <div class="hero-content">
+                <h2 class="hero-title">El Mundial al alcance de tus manos.</h2>
+                <p class="hero-description">
+                    Compite con tus amigos y vive la emoción del Mundial <br>USA • México • Canadá 2026.
+                </p>
+                <div class="hero-flags">🇺🇸 🇲🇽 🇨🇦</div>
+            </div>
+            <div class="hero-footer">
+                <p>©2026 Drogueria Carrisan, C.A. Todos los derechos reservados.</p>
+            </div>
+        </div>
+
+        <!-- LADO DERECHO -->
+        <div class="split-right">
+            <div class="form-container">
+
+                <div class="form-header">
+                    <h2 class="form-title">Recuperar Clave</h2>
+                    <p class="form-subtitle">
+                        Ingresa tu teléfono registrado y tu nueva clave.<br><br>
+                        <strong>Solo puedes hacerlo si el administrador activó el permiso.</strong><br><br>
+                        Si no lo has solicitado, contáctanos por 
+                        <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank">WhatsApp</a>.
+                    </p>
+                </div>
+
+                <!-- Mensajes -->
+                <div class="message error-message" id="errorMessage" style="display: none;">
+                    <span class="message-icon">⚠️</span>
+                    <span class="message-text"></span>
+                </div>
+
+                <div class="message success-message" id="successMessage" style="display: none;">
+                    <span class="message-icon">✅</span>
+                    <span class="message-text"></span>
+                </div>
+
+                <!-- Formulario -->
+                <form id="recuperarForm" class="login-form">
+
+                    <!-- Teléfono -->
+                    <div class="form-group">
+                        <label for="telefonoInput" class="form-label">Teléfono Registrado</label>
+                        <input 
+                            type="tel" 
+                            id="telefonoInput" 
+                            class="form-input"
+                            placeholder="+58 414 123 4567"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <!-- Nueva clave -->
+                    <div class="form-group">
+                        <label for="claveInput" class="form-label">Nueva Clave</label>
+                        <input 
+                            type="text" 
+                            id="claveInput" 
+                            class="form-input"
+                            placeholder="Mínimo 6 caracteres (letras y números)"
+                            autocomplete="off"
+                            required
+                            minlength="6"
+                            maxlength="20"
+                        >
+                        <small class="form-hint" id="claveHint">
+                            Debe contener al menos una letra y un número
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <span class="btn-text">Cambiar Clave</span>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <a href="login.html" class="footer-link-blue">← Volver al login</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script>
+        // Convertir a mayúsculas y validar en tiempo real
+        document.getElementById('claveInput').addEventListener('input', function(e) {
+            e.target.value = e.target.value.toUpperCase();
+
+            const clave = e.target.value;
+            const hint = document.getElementById('claveHint');
+
+            const tieneLetras = /[A-Z]/.test(clave);
+            const tieneNumeros = /[0-9]/.test(clave);
+            const longitudOk = clave.length >= 6;
+
+            if (clave.length === 0) {
+                hint.textContent = 'Debe contener al menos una letra y un número';
+                hint.className = 'form-hint';
+            } else if (!tieneLetras || !tieneNumeros) {
+                hint.textContent = '❌ Debe tener al menos una letra y un número';
+                hint.className = 'form-hint error';
+            } else if (!longitudOk) {
+                hint.textContent = `⚠️ Mínimo 6 caracteres (tienes ${clave.length})`;
+                hint.className = 'form-hint warning';
+            } else {
+                hint.textContent = '✅ Clave válida';
+                hint.className = 'form-hint success';
+            }
+        });
+
+        // Submit
+        document.getElementById('recuperarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            const telefono = document.getElementById('telefonoInput').value.trim();
+            const nueva_clave = document.getElementById('claveInput').value.trim();
+
+            if (!telefono || !nueva_clave) {
+                mostrarError('Completa todos los campos');
+                return;
+            }
+
+            // Loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Actualizando...</span>';
+
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/recuperar-clave`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ telefono, nueva_clave })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Error al cambiar clave');
+                }
+
+                mostrarExito('¡Clave actualizada! Redirigiendo al login...');
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+
+            } catch (error) {
+                mostrarError(error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-text">Cambiar Clave</span>';
+            }
+        });
+
+        function mostrarError(mensaje) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.querySelector('.message-text').textContent = mensaje;
+            errorEl.style.display = 'flex';
+            document.getElementById('successMessage').style.display = 'none';
+            errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function mostrarExito(mensaje) {
+            const successEl = document.getElementById('successMessage');
+            successEl.querySelector('.message-text').textContent = mensaje;
+            successEl.style.display = 'flex';
+            document.getElementById('recuperarForm').style.display = 'none';
+            successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
