@@ -168,11 +168,22 @@ app.post('/api/login', loginLimiter, async (req, res) => {
         }
 
         if (!usuarioEncontrado) {
+            // Registrar intento fallido
+            const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+            await pool.query(
+                `INSERT INTO login_intentos (ip, exitoso) VALUES ($1, false)`,
+                [ip]
+            );
             return res.status(401).json({ error: 'Código incorrecto o usuario inactivo' });
         }
 
         console.log(`✅ Login: ${usuarioEncontrado.nombre}`);
-
+        
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        await pool.query(
+            `INSERT INTO login_intentos (ip, exitoso) VALUES ($1, true)`,
+            [ip]
+        );
         res.json({
             success: true,
             usuario: {
@@ -186,38 +197,6 @@ app.post('/api/login', loginLimiter, async (req, res) => {
 
     } catch (error) {
         console.error('❌ Error en login:', error);
-        res.status(500).json({ error: 'Error del servidor' });
-    }
-});
-
-// GET /api/usuarios/:codigo
-app.get('/api/usuarios/:codigo', async (req, res) => {
-    try {
-        const { codigo } = req.params;
-        
-        const query = `
-            SELECT 
-                id, 
-                nombre_publico as nombre,
-                codigo_acceso, 
-                total_predicciones,
-                esta_activo, 
-                email,
-                fecha_registro, 
-                ultima_prediccion
-            FROM usuarios 
-            WHERE codigo_acceso = $1
-        `;
-        
-        const result = await pool.query(query, [codigo.toUpperCase()]);
-        
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-        
-        res.json(result.rows[0]);
-    } catch (error) {
-        console.error('Error en login:', error);
         res.status(500).json({ error: 'Error del servidor' });
     }
 });
