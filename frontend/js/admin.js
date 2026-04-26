@@ -162,7 +162,7 @@ async function guardarResultado() {
     try {
         const res = await fetch(`${CONFIG.API_URL}/admin/partidos/${partidoActual.id}/resultado`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: auth.getAuthHeaders(),
             body: JSON.stringify({
                 goles_local: golesLocal,
                 goles_visitante: golesVisitante
@@ -187,7 +187,7 @@ async function anularResultado(partidoId) {
     try {
         const res = await fetch(`${CONFIG.API_URL}/admin/partidos/${partidoId}/resultado`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: auth.getAuthHeaders(),
             body: JSON.stringify({
                 goles_local: null,
                 goles_visitante: null,
@@ -265,7 +265,7 @@ async function toggleUsuario(userId, activo) {
     try {
         const res = await fetch(`${CONFIG.API_URL}/usuarios/${userId}/estado`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: auth.getAuthHeaders(),
             body: JSON.stringify({ activo })
         });
         

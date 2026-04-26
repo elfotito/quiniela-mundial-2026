@@ -70,40 +70,64 @@ app.use(cors({
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-codigo-acceso']
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-codigo-acceso', 'x-usuario-id']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 // ===============================================
 // 🛡️ MIDDLEWARE DE SEGURIDAD - CABECERAS HTTP
 // ===============================================
 app.use((req, res, next) => {
-    // 1. Forzar HTTPS por 1 año (previene ataques de downgrade)
     res.setHeader(
         'Strict-Transport-Security',
         'max-age=31536000; includeSubDomains; preload'
     );
     
-    // 2. Prevenir MIME type sniffing
     res.setHeader('X-Content-Type-Options', 'nosniff');
     
-    // 3. Prevenir clickjacking
     res.setHeader('X-Frame-Options', 'DENY');
-    
-    // 4. Controlar información del Referer
+
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     
-    // 5. Restringir APIs del navegador
     res.setHeader(
         'Permissions-Policy',
         'camera=(), microphone=(), geolocation=(), interest-cohort=()'
     );
     
-    // 6. OCULTAR información del servidor
     res.removeHeader('X-Powered-By');
     
     next();
 });
+// ===============================================
+// 🛡️ MIDDLEWARE - VERIFICAR ADMIN
+// ===============================================
+const verificarAdmin = async (req, res, next) => {
+    try {
+        const usuarioId = req.headers['x-usuario-id'];
+
+        if (!usuarioId) {
+            return res.status(401).json({ error: 'No autorizado' });
+        }
+
+        const result = await pool.query(
+            `SELECT id FROM usuarios 
+             WHERE id = $1 
+             AND isadmin = true 
+             AND esta_activo = true`,
+            [usuarioId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(403).json({ error: 'Acceso denegado' });
+        }
+
+        next();
+    } catch (error) {
+        console.error('❌ Error verificando admin:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+};
 // ===============================================
 // RUTAS DE AUTENTICACIÓN
 // ===============================================
@@ -286,7 +310,7 @@ app.get('/api/partidos/:id', async (req, res) => {
 // ===============================================
 
 // PUT /api/admin/partidos/:id/resultado
-app.put('/api/admin/partidos/:id/resultado', async (req, res) => {
+app.put('/api/admin/partidos/:id/resultado', verificarAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { goles_local, goles_visitante, anular } = req.body;
@@ -363,7 +387,7 @@ app.put('/api/admin/partidos/:id/resultado', async (req, res) => {
 });
 
 // GET /api/admin/usuarios
-app.get('/api/admin/usuarios', async (req, res) => {
+app.get('/api/admin/usuarios', verificarAdmin, async (req, res) => {
     try {
         const query = `
             SELECT 
@@ -1236,7 +1260,7 @@ app.get('/api/mrchip/proximo-partido', async (req, res) => {
 // ===============================================
 
 // PATCH /api/usuarios/:id/estado - Activar/Desactivar usuario
-app.patch('/api/usuarios/:id/estado', async (req, res) => {
+app.patch('/api/usuarios/:id/estado', verificarAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { activo } = req.body;
@@ -1270,7 +1294,7 @@ app.patch('/api/usuarios/:id/estado', async (req, res) => {
 // ─── GET /api/noticias ───────────────────────────────────
 // Retorna noticias activas ordenadas por fecha desc
 // Público — no requiere auth
-app.get('/api/noticias', async (req, res) => {
+app.get('/api/noticias', verificarAdmin, async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
 
@@ -1297,7 +1321,7 @@ app.get('/api/noticias', async (req, res) => {
 // ─── POST /api/noticias ──────────────────────────────────
 // Crea una noticia nueva
 // Solo admin — verifica isAdmin en la sesión/token
-app.post('/api/noticias', async (req, res) => {
+app.post('/api/noticias', verificarAdmin, async (req, res) => {
     try {
         const {
             tipo,
@@ -1347,7 +1371,7 @@ app.post('/api/noticias', async (req, res) => {
 
 // Elimina (desactiva) una noticia por ID
 // Solo admin
-app.delete('/api/noticias/:id', async (req, res) => {
+app.delete('/api/noticias/:id', verificarAdmin, async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -1432,7 +1456,7 @@ app.post('/api/recuperar-clave', async (req, res) => {
 });
 
 // PATCH /api/admin/usuarios/:id/permitir-reset
-app.patch('/api/admin/usuarios/:id/permitir-reset', async (req, res) => {
+app.patch('/api/admin/usuarios/:id/permitir-reset', verificarAdmin, async (req, res) => {
     try {
         const { id } = req.params;
 

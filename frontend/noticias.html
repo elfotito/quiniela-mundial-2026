@@ -737,9 +737,9 @@ async function guardarNoticia(event) {
         const response = await fetch(`${CONFIG.API_URL}/noticias`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
+                    'Content-Type': 'application/json',
+                    'x-usuario-id': localStorage.getItem('quiniela_id')
+                    },
         });
 
         const data = await response.json();
@@ -811,7 +811,7 @@ async function guardarNoticia(event) {
         try {
             await fetch(`${CONFIG.API_URL}/noticias/${id}`, {
                 method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('quiniela_token') || ''}` }
+                headers: { 'x-usuario-id': localStorage.getItem('quiniela_id') }
             });
             showToast('Noticia eliminada', 'success');
             await cargarNoticias();

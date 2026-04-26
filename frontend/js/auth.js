@@ -22,6 +22,13 @@ const AuthManager = {
         };
     },
 
+    getAuthHeaders() {
+    return {
+        'Content-Type': 'application/json',
+        'x-usuario-id': localStorage.getItem('quiniela_id')
+    };
+    },
+    
     setUser(usuario) {
         localStorage.setItem('quiniela_id',      usuario.id);
         localStorage.setItem('quiniela_usuario',  usuario.codigo);
