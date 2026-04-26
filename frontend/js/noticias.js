@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     inicializarCompartir();
-    cargarProximosPartidos();
 });
 
 // ============================================
@@ -67,95 +66,6 @@ function copiarFallback(texto) {
     document.body.removeChild(input);
 }
 
-// ============================================
-// 2️⃣ PRÓXIMOS PARTIDOS
-// ============================================
-async function cargarProximosPartidos() {
-    console.log('⚽ Cargando próximos partidos...');
-    
-    // Buscar el widget de "Últimas Noticias"
-    const widgets = document.querySelectorAll('.widget');
-    let widgetPartidos = null;
-    
-    widgets.forEach(widget => {
-        const titulo = widget.querySelector('.widget-title');
-        if (titulo && titulo.textContent.includes('Últimas Noticias')) {
-            widgetPartidos = widget;
-        }
-    });
-    
-    if (!widgetPartidos) {
-        console.warn('No se encontró widget de últimas noticias');
-        return;
-    }
-    
-    // Cambiar título
-    const titulo = widgetPartidos.querySelector('.widget-title');
-    titulo.innerHTML = '⚽ Próximos Partidos';
-    
-    const contenedor = widgetPartidos.querySelector('.widget-content');
-    
-    // Mostrar loading
-    contenedor.innerHTML = `
-        <div style="text-align: center; padding: 2rem; color: #666;">
-            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚽</div>
-            <div>Cargando partidos...</div>
-        </div>
-    `;
-    
-    try {
-        // Llamar al API (IGUAL QUE INDEX.JS)
-        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=3`);
-        
-        if (!response.ok) {
-            throw new Error('Error cargando partidos');
-        }
-        
-        const partidos = await response.json();
-        
-        if (partidos.length === 0) {
-            contenedor.innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: #666;">
-                    No hay partidos pendientes
-                </div>
-            `;
-            return;
-        }
-        
-        // Renderizar partidos (MISMO ESTILO QUE INDEX.JS)
-        contenedor.innerHTML = partidos.map(partido => {
-            const fecha = new Date(partido.fecha_hora);
-            const tiempoRestante = calcularTiempo(fecha);
-            
-            return `
-                <div style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <span style="font-size: 0.85rem; color: #a0a0a0;">${partido.fase}</span>
-                        <span style="font-size: 0.85rem; color: #a0a0a0;">${fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                        <strong style="color: white; font-size: 0.95rem;">${partido.equipo_local}</strong>
-                        <span style="color: #FFD700; font-weight: 700;">VS</span>
-                        <strong style="color: white; font-size: 0.95rem;">${partido.equipo_visitante}</strong>
-                    </div>
-                    <div style="text-align: center; padding: 0.5rem; background: rgba(0, 102, 204, 0.1); border-radius: 6px; font-size: 0.85rem; color: #0066CC; font-weight: 600;">
-                        ⏰ ${tiempoRestante}
-                    </div>
-                </div>
-            `;
-        }).join('');
-        
-        console.log(`✅ ${partidos.length} partidos cargados`);
-        
-    } catch (error) {
-        console.error('Error cargando partidos:', error);
-        contenedor.innerHTML = `
-            <div style="text-align: center; padding: 2rem; color: #ff4444;">
-                Error al cargar partidos
-            </div>
-        `;
-    }
-}
 
 // ============================================
 // UTILIDADES
