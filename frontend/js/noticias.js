@@ -1,15 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Página de noticia cargada');
-    
-    // Diagnóstico
-    const widgets = document.querySelectorAll('.widget');
-    console.log('📦 Widgets encontrados:', widgets.length);
-    widgets.forEach((w, i) => {
-        const titulo = w.querySelector('.widget-title');
-        console.log(`  Widget ${i}:`, titulo ? titulo.textContent : 'SIN TÍTULO');
-    });
-    
     inicializarCompartir();
 });
 
