@@ -244,6 +244,7 @@ function mostrarUsuarios() {
         <tr>
             <td>${u.id}</td>
             <td>${u.nombre}</td>
+            <td><code>${u.telefono}</code></td>
             <td><strong>${u.puntos_totales}</strong></td>
             <td>
                 <span style="color:${u.esta_activo ? 'var(--success)' : 'var(--error)'}">
