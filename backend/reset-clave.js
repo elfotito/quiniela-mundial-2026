@@ -2,11 +2,21 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const { Pool } = require('pg');
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    family: 4
-});
+const pool = new Pool(
+    process.env.DATABASE_URL
+    ? {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+        family: 4
+    }
+    : {
+        user: process.env.DB_USER || 'postgres',
+        host: process.env.DB_HOST || 'localhost',
+        database: process.env.DB_NAME || 'postgres',
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT || 5432,
+    }
+);
 
 async function resetClave(usuarioId, nuevaClave) {
     const hash = await bcrypt.hash(nuevaClave.toUpperCase(), 10);
