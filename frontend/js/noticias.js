@@ -1,3 +1,6 @@
+console.log('🔥 noticias.js ejecutándose');
+console.log('📦 CONFIG:', window.CONFIG);
+console.log('📦 auth:', window.auth);
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Página de noticia cargada');
