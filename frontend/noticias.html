@@ -680,7 +680,6 @@
         }
     }
 
-    // ─── GUARDAR NOTICIA ────────────────────────────────────
 // ─── GUARDAR NOTICIA ────────────────────────────────────
 async function guardarNoticia(event) {
     event.preventDefault();
@@ -752,6 +751,7 @@ async function guardarNoticia(event) {
                     'Content-Type': 'application/json',
                     'x-usuario-id': localStorage.getItem('quiniela_id')
                     },
+            body: JSON.stringify(formData)
         });
 
         const data = await response.json();
