@@ -1279,7 +1279,7 @@ app.patch('/api/usuarios/:id/estado', verificarAdmin, async (req, res) => {
 // ─── GET /api/noticias ───────────────────────────────────
 // Retorna noticias activas ordenadas por fecha desc
 // Público — no requiere auth
-app.get('/api/noticias', verificarAdmin, async (req, res) => {
+app.get('/api/noticias', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
 
