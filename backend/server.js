@@ -3,6 +3,11 @@
 // ===============================================
 
 require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+const rateLimit = require('express-rate-limit')
+const bcrypt = require('bcrypt');
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
     max: 10,
@@ -17,11 +22,6 @@ const registroLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false
 });
-const express = require('express');
-const cors = require('cors');
-const { Pool } = require('pg');
-const rateLimit = require('express-rate-limit')
-const bcrypt = require('bcrypt');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -30,7 +30,7 @@ const poolConfig = process.env.DATABASE_URL
     ? {
         connectionString: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false },
-        family: 4  // ← fuerza IPv4
+        family: 4 
       }
     : {
         user: process.env.DB_USER || 'postgres',
