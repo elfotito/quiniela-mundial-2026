@@ -18,6 +18,7 @@ const registroLimiter = rateLimit({
     legacyHeaders: false
 });
 const express = require('express');
+const bcrypt = require('bcrypt');
 const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
@@ -849,7 +850,7 @@ app.post('/api/registro', registroLimiter, async (req, res) => {
                 error: 'El equipo seleccionado no es válido' 
             });
         }
-
+        const codigoHash = await bcrypt.hash(codigo_acceso.toUpperCase(), 10);
         const insertUserQuery = `
             INSERT INTO usuarios (
                 codigo_acceso,
@@ -864,7 +865,7 @@ app.post('/api/registro', registroLimiter, async (req, res) => {
         `;
 
         const userResult = await client.query(insertUserQuery, [
-            codigo_acceso.toUpperCase(),
+            codigoHash,
             nombre_publico,
             telefono,
             campeon_elegido
