@@ -147,54 +147,70 @@ async function cargarLigasUsuarios() {
 function mostrarPodio(ranking) {
     const podiumSection = document.getElementById('podiumSection');
     if (!podiumSection) return;
-    
+ 
     if (ranking.length === 0) {
-        podiumSection.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">No hay participantes</p>';
+        podiumSection.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">No hay participantes</p>';
         return;
     }
-    
     if (ranking.length < 3) {
-        podiumSection.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">Aún no hay suficientes participantes</p>';
+        podiumSection.innerHTML = '<p style="text-align:center;color:#aaa;padding:2rem;">Aún no hay suficientes participantes</p>';
         return;
     }
-    
+ 
     const top3 = ranking.slice(0, 3);
-    const medallas = ['🥈', '🥇', '🥉'];
+ 
+    // Imágenes por posición real (ajusta si quieres otras)
     const images = [
-    'img/baggio.jpg',   // 2do lugar (posición visual izquierda)
-    'img/messi.png',   // 1er lugar (posición visual centro)
-    'img/turquia.jpg'    // 3er lugar (posición visual derecha)
+        'img/baggio.jpg',  // 1er lugar
+        'img/messi.png',   // 2do lugar
+        'img/turquia.jpg'  // 3er lugar
     ];
-    const posiciones = [1, 0, 2]; // Orden visual: 2do, 1ro, 3ro
-    const clases = ['second', 'first', 'third'];
-    
-    const podiumHTML = `
-        <div class="podium-container">
-            ${posiciones.map((index, displayIndex) => {
-                const user = top3[index];
-                if (!user) return '';
-                
-                return `
-                    <div class="podium-place ${clases[displayIndex]}">
-                        <div class="podium-image">
-                            <img src="${images[displayIndex]}" alt="podio" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+ 
+    // Coronas / medallas
+    const coronas = ['👑', '🥈', '🥉'];
+ 
+    // Orden visual: 2do izquierda | 1ro centro | 3ro derecha
+    const ordenVisual = [
+        { real: 1, clase: 'second', corona: '🥈', img: images[1] },
+        { real: 0, clase: 'first',  corona: '👑',  img: images[0] },
+        { real: 2, clase: 'third',  corona: '🥉', img: images[2] }
+    ];
+ 
+    const posNumeros = { first: '1', second: '2', third: '3' };
+ 
+    podiumSection.innerHTML = `
+        <div class="podium-arena">
+            <div class="podium-players">
+                ${ordenVisual.map(({ real, clase, corona, img }) => {
+                    const user = top3[real];
+                    if (!user) return '';
+                    const nombre = user.nombre_publico || user.nombre || 'Usuario';
+                    const liga   = `${obtenerIconoLigaPrincipal(user.ligas)} ${obtenerLigaPrincipal(user.ligas)}`;
+                    const pts    = user.puntos_totales || 0;
+ 
+                    return `
+                    <div class="podium-player ${clase}">
+                        <div class="podium-avatar-wrap">
+                            <span class="podium-crown">${corona}</span>
+                            <img class="podium-avatar" src="${img}" alt="${nombre}"
+                                onerror="this.src='img/logomenu.png'">
                         </div>
-                        <div class="podium-medal">${medallas[displayIndex]}</div>
-                        <div class="podium-name">${user.nombre_publico || user.nombre || 'Usuario'}</div>
-                        <div class="podium-liga">
-                            ${obtenerIconoLigaPrincipal(user.ligas)}
-                            ${obtenerLigaPrincipal(user.ligas)}
+                        <div class="podium-info">
+                            <span class="podium-player-name">${nombre}</span>
+                            <span class="podium-player-liga">${liga}</span>
                         </div>
-                        <div class="podium-points">${user.puntos_totales || 0}</div>
-                        <div class="podium-label">Puntos</div>
-                    </div>
-                `;
-            }).join('')}
+                        <div class="podium-base">
+                            <span class="podium-pos-num">${posNumeros[clase]}</span>
+                            <span class="podium-pts-val">${pts}</span>
+                            <span class="podium-pts-label">puntos</span>
+                        </div>
+                    </div>`;
+                }).join('')}
+            </div>
         </div>
     `;
-    
-    podiumSection.innerHTML = podiumHTML;
 }
+
 
 // ===============================================
 // MOSTRAR TABLA DE RANKING

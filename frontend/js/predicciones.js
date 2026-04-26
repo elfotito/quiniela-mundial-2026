@@ -3,7 +3,7 @@
 // ===============================================
 const API_URL = CONFIG.API_URL;
 let usuario = null;
-let usuarioId = null; // FIX 3: declarar globalmente
+let usuarioId = null;
 let partidosPendientes = [];
 let prediccionesRealizadas = [];
 let filtroFase = 'grupos';

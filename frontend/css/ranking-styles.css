@@ -309,129 +309,175 @@ body {
     padding: 3rem 2rem;
 }
 
-/* ===============================================
-   PODIO TOP 3
-   =============================================== */
-
+/* ── CONTENEDOR GENERAL ───────────────────────────── */
 .podium-section {
-    margin-bottom: 3rem;
-    min-height: 300px;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    border: 1px solid #eee;
+}
+.podium-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f0f0;
 }
-
-.podium-loading {
-    text-align: center;
+.podium-header-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #0a0a0a;
 }
-
-.podium-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-    align-items: flex-end;
-    max-width: 900px;
-    margin: 0 auto;
-    animation: fadeInUp 0.8s ease-out;
-}
-
-.podium-place {
-    background: var(--dark-card);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    transition: all 0.3s ease;
+ 
+/* ── ARENA — fondo del podio ──────────────────────── */
+.podium-arena {
+    background: linear-gradient(180deg, #0a0a0a 0%, #111 60%, #1a1a1a 100%);
+    padding: 32px 24px 0;
     position: relative;
     overflow: hidden;
 }
-
-.podium-place::before {
+ 
+/* Rayos de luz decorativos detrás del 1ro */
+.podium-arena::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--fifa-blue);
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(ellipse at center, rgba(255,215,0,.12) 0%, transparent 70%);
+    pointer-events: none;
 }
-
-/* Orden de posiciones (2do, 1ro, 3ro) */
-.podium-place:nth-child(1) {
-    order: 2; /* Segundo lugar (centro-izquierda) */
-    transform: translateY(30px);
+ 
+/* ── GRID DE JUGADORES ────────────────────────────── */
+.podium-players {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    align-items: flex-end;
+    position: relative;
+    z-index: 2;
 }
-
-.podium-place:nth-child(2) {
-    order: 1; /* Primer lugar (centro) */
-    transform: translateY(0);
-}
-
-.podium-place:nth-child(3) {
-    order: 3; /* Tercer lugar (centro-derecha) */
-    transform: translateY(60px);
-}
-
-/* Colores de borde para cada lugar */
-.podium-place:nth-child(1)::before {
-    background: linear-gradient(90deg, var(--silver), #fff);
-}
-
-.podium-place:nth-child(2)::before {
-    background: linear-gradient(90deg, var(--gold), #fff);
-}
-
-.podium-place:nth-child(3)::before {
-    background: linear-gradient(90deg, var(--bronze), #fff);
-}
-
-.podium-place:hover {
-    transform: translateY(-5px) !important;
-    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.2);
-}
-
-.podium-medal {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-.podium-user {
+ 
+/* ── JUGADOR ──────────────────────────────────────── */
+.podium-player {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+ 
+/* Avatar */
+.podium-avatar-wrap {
+    position: relative;
+    margin-bottom: 10px;
+}
+.podium-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 3px solid transparent;
+}
+.podium-player.first  .podium-avatar { width: 80px; height: 80px; border-color: #FFD700; box-shadow: 0 0 0 4px rgba(255,215,0,.2); }
+.podium-player.second .podium-avatar { width: 64px; height: 64px; border-color: #C0C0C0; }
+.podium-player.third  .podium-avatar { width: 64px; height: 64px; border-color: #CD7F32; }
+ 
+/* Corona / medalla flotante sobre el avatar */
+.podium-crown {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.5));
+}
+.podium-player.first  .podium-crown { font-size: 24px; top: -18px; }
+ 
+/* Info del jugador */
+.podium-info { text-align: center; margin-bottom: 8px; }
+.podium-player-name {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    display: block;
+    margin-bottom: 2px;
+}
+.podium-player.first .podium-player-name { font-size: 14px; max-width: 120px; }
+ 
+.podium-player-liga {
+    font-size: 10px;
+    color: rgba(255,255,255,.4);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    display: block;
+}
+ 
+/* ── BASE DEL PODIO (plataforma de altura) ────────── */
+.podium-base {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
+    border-radius: 10px 10px 0 0;
+    padding: 14px 8px 18px;
+    position: relative;
 }
-
-.podium-flag {
-    font-size: 1.5rem;
-}
-
-.podium-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-white);
-}
-
-.podium-liga {
-    font-size: 0.85rem;
-    color: var(--text-gray);
-    margin-bottom: 1rem;
-}
-
-.podium-points {
-    font-size: 2.5rem;
+ 
+.podium-player.first  .podium-base { background: linear-gradient(180deg,#2a2200,#1a1500); border:1px solid rgba(255,215,0,.3); border-bottom:none; min-height: 100px; }
+.podium-player.second .podium-base { background: linear-gradient(180deg,#1e1e1e,#141414); border:1px solid rgba(192,192,192,.2); border-bottom:none; min-height: 72px; }
+.podium-player.third  .podium-base { background: linear-gradient(180deg,#1e1a14,#141210); border:1px solid rgba(205,127,50,.2); border-bottom:none; min-height: 56px; }
+ 
+/* Número de posición en la base */
+.podium-pos-num {
+    font-size: 28px;
     font-weight: 900;
-    color: var(--fifa-gold);
-    margin-bottom: 0.25rem;
+    line-height: 1;
+    margin-bottom: 4px;
 }
-
-.podium-label {
-    font-size: 0.85rem;
-    color: var(--text-gray);
-    text-transform: uppercase;
+.podium-player.first  .podium-pos-num { font-size: 36px; color: #FFD700; }
+.podium-player.second .podium-pos-num { color: #C0C0C0; }
+.podium-player.third  .podium-pos-num { color: #CD7F32; }
+ 
+/* Puntos */
+.podium-pts-val {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    display: block;
+    line-height: 1;
+}
+.podium-player.first .podium-pts-val { font-size: 18px; }
+ 
+.podium-pts-label {
+    font-size: 9px;
+    font-weight: 700;
     letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    margin-top: 2px;
+    display: block;
+}
+ 
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 480px) {
+    .podium-player.first  .podium-avatar { width: 64px; height: 64px; }
+    .podium-player.second .podium-avatar,
+    .podium-player.third  .podium-avatar { width: 50px; height: 50px; }
+    .podium-player-name { max-width: 70px; font-size: 11px; }
+    .podium-player.first .podium-player-name { max-width: 90px; font-size: 12px; }
+    .podium-arena { padding: 24px 12px 0; }
 }
 
 /* ===============================================
@@ -848,85 +894,6 @@ body {
             font-size: 3rem;
         }
         
-        /* Podio Top 3 */
-        .podium-section {
-            margin-bottom: 3rem;
-        }
-        
-        .podium-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-            align-items: end;
-        }
-        
-        .podium-place {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .podium-place:nth-child(1) { /* Segundo lugar */
-            order: 1;
-            margin-top: 2rem;
-        }
-        
-        .podium-place:nth-child(2) { /* Primer lugar */
-            order: 2;
-            border-color: var(--fifa-gold);
-            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.3);
-        }
-        
-        .podium-place:nth-child(3) { /* Tercer lugar */
-            order: 3;
-            margin-top: 4rem;
-        }
-        
-        .podium-medal {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-        }
-        
-        .podium-user {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .podium-flag {
-            font-size: 2rem;
-        }
-        
-        .podium-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        
-        .podium-liga {
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        
-        .podium-points {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-            margin-bottom: 0.25rem;
-        }
-        
-        .podium-label {
-            color: var(--text-gray);
-            font-size: 0.85rem;
-        }
         
         /* Filtros */
         .filters-section {
@@ -1190,26 +1157,6 @@ body {
             color: var(--text-gray);
         }
         
-        /* Loading spinner */
-        .podium-loading,
-        .loading-spinner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 3rem;
-        }
-        
-        .loading-spinner::before {
-            content: '';
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--fifa-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
@@ -1227,17 +1174,7 @@ body {
         }
         
         @media (max-width: 768px) {
-            .podium-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
             
-            .podium-place:nth-child(1),
-            .podium-place:nth-child(2),
-            .podium-place:nth-child(3) {
-                order: initial;
-                margin-top: 0;
-            }
             
             .ranking-table {
                 font-size: 0.85rem;
@@ -1277,9 +1214,6 @@ body {
    =============================================== */
 
 @media (max-width: 1024px) {
-    .podium-container {
-        gap: 1rem;
-    }
     
     .filters-container {
         grid-template-columns: 1fr;
@@ -1316,18 +1250,6 @@ body {
         font-size: 1rem;
     }
     
-    .podium-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .podium-place:nth-child(1),
-    .podium-place:nth-child(2),
-    .podium-place:nth-child(3) {
-        order: initial;
-        transform: translateY(0) !important;
-    }
-    
     .header-container {
         padding: 1rem;
     }
@@ -1361,18 +1283,6 @@ body {
     
     .user-name {
         display: none;
-    }
-    
-    .podium-medal {
-        font-size: 3rem;
-    }
-    
-    .podium-name {
-        font-size: 1rem;
-    }
-    
-    .podium-points {
-        font-size: 2rem;
     }
     
     .ranking-table th,
@@ -1447,11 +1357,6 @@ body {
     .btn-share { width:100%; padding:10px; background:#0a0a0a; border:none; border-radius:8px; color:#fff; font-size:12px; font-weight:800; cursor:pointer; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:8px; transition:background .2s; }
     .btn-share:hover { background:#222; }
  
-    /* ── PODIO ────────────────────────────────────────── */
-    .podium-section { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
-    .podium-header  { padding:16px 20px 14px; border-bottom:1px solid #f0f0f0; display:flex; align-items:center; gap:8px; }
-    .podium-header-title { font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#0a0a0a; flex:1; }
- 
     #podiumSection { padding:20px; }
  
     .podium-container {
@@ -1461,46 +1366,6 @@ body {
         align-items:end;
     }
  
-    .podium-place {
-        background:#fafafa;
-        border:1.5px solid #eee;
-        border-radius:12px;
-        padding:16px 12px 14px;
-        text-align:center;
-        position:relative;
-        overflow:hidden;
-        transition:transform .2s, box-shadow .2s;
-    }
-    .podium-place:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,.1); }
- 
-    .podium-place.first  { border-color:#FFD700; background:linear-gradient(135deg,#FFFBEA,#fff); }
-    .podium-place.second { border-color:#C0C0C0; }
-    .podium-place.third  { border-color:#CD7F32; }
- 
-    /* Barra de color top */
-    .podium-place::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
-    .podium-place.first::before  { background:#FFD700; }
-    .podium-place.second::before { background:#C0C0C0; }
-    .podium-place.third::before  { background:#CD7F32; }
- 
-    /* 1ro más alto */
-    .podium-place.first  { padding-top:22px; }
- 
-    .podium-image { width:60px; height:60px; border-radius:50%; overflow:hidden; margin:0 auto 10px; border:2px solid #eee; }
-    .podium-place.first  .podium-image { width:72px; height:72px; border-color:#FFD700; }
-    .podium-place.second .podium-image { border-color:#C0C0C0; }
-    .podium-place.third  .podium-image { border-color:#CD7F32; }
-    .podium-image img { width:100%; height:100%; object-fit:cover; }
- 
-    .podium-medal { font-size:22px; line-height:1; margin-bottom:6px; display:block; }
-    .podium-name  { font-size:13px; font-weight:800; color:#0a0a0a; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .podium-place.first .podium-name { font-size:15px; }
- 
-    .podium-liga  { font-size:10px; color:#999; margin-bottom:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
- 
-    .podium-points { font-size:22px; font-weight:900; color:#0a0a0a; line-height:1; }
-    .podium-place.first .podium-points { font-size:28px; color:#BA7517; }
-    .podium-label { font-size:9px; color:#aaa; font-weight:700; letter-spacing:.8px; text-transform:uppercase; margin-top:2px; }
  
     /* ── TABLA DE RANKING ─────────────────────────────── */
     .table-section { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
