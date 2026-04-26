@@ -1345,7 +1345,6 @@ app.post('/api/noticias', async (req, res) => {
     }
 });
 
-// ─── DELETE /api/noticias/:id ────────────────────────────
 // Elimina (desactiva) una noticia por ID
 // Solo admin
 app.delete('/api/noticias/:id', async (req, res) => {
@@ -1372,6 +1371,94 @@ app.delete('/api/noticias/:id', async (req, res) => {
     }
 });
 
+// POST /api/recuperar-clave
+app.post('/api/recuperar-clave', async (req, res) => {
+    try {
+        const { telefono, nueva_clave } = req.body;
+
+        if (!telefono || !nueva_clave) {
+            return res.status(400).json({ error: 'Teléfono y nueva clave son requeridos' });
+        }
+
+        
+        const tieneLetras = /[a-zA-Z]/.test(nueva_clave);
+        const tieneNumeros = /[0-9]/.test(nueva_clave);
+
+        if (!tieneLetras || !tieneNumeros || nueva_clave.length < 6) {
+            return res.status(400).json({ 
+                error: 'La clave debe tener mínimo 6 caracteres, al menos una letra y un número' 
+            });
+        }
+
+        const result = await pool.query(`
+            SELECT id, nombre_publico, puede_resetear
+            FROM usuarios
+            WHERE telefono = $1
+            AND esta_activo = true
+        `, [telefono]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Teléfono no encontrado' });
+        }
+
+        const usuario = result.rows[0];
+
+        if (!usuario.puede_resetear) {
+            return res.status(403).json({ 
+                error: 'No tienes permiso para cambiar tu clave. Contacta al administrador.' 
+            });
+        }
+
+        const hash = await bcrypt.hash(nueva_clave.toUpperCase(), 10);
+
+        await pool.query(`
+            UPDATE usuarios 
+            SET codigo_acceso = $1,
+                puede_resetear = FALSE
+            WHERE id = $2
+        `, [hash, usuario.id]);
+
+        console.log(`✅ Clave reseteada para: ${usuario.nombre_publico}`);
+
+        res.json({ 
+            success: true, 
+            mensaje: 'Clave actualizada correctamente. Ya puedes iniciar sesión.' 
+        });
+
+    } catch (error) {
+        console.error('❌ Error en recuperar-clave:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+// PATCH /api/admin/usuarios/:id/permitir-reset
+app.patch('/api/admin/usuarios/:id/permitir-reset', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await pool.query(`
+            UPDATE usuarios
+            SET puede_resetear = TRUE
+            WHERE id = $1
+            RETURNING nombre_publico, telefono
+        `, [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        console.log(`✅ Reset permitido para: ${result.rows[0].nombre_publico}`);
+
+        res.json({ 
+            success: true,
+            mensaje: `Reset activado para ${result.rows[0].nombre_publico}`
+        });
+
+    } catch (error) {
+        console.error('❌ Error activando reset:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
 // ===============================================
 // INICIAR SERVIDOR
 // ===============================================
