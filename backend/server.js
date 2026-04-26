@@ -117,38 +117,46 @@ app.post('/api/login', loginLimiter, async (req, res) => {
             return res.status(400).json({ error: 'Código requerido' });
         }
 
-        const query = `
+        // Traer todos los usuarios activos
+        const result = await pool.query(`
             SELECT 
                 id,
                 nombre_publico AS nombre,
-                codigo_acceso AS codigo,
-                email,
+                codigo_acceso,
                 isadmin AS "isAdmin",
                 esta_activo,
                 campeon_elegido
             FROM usuarios 
-            WHERE UPPER(codigo_acceso) = UPPER($1)
-            AND esta_activo = true
-        `;
+            WHERE esta_activo = true
+        `);
 
-        const result = await pool.query(query, [codigo]);
+        // Buscar cuál usuario tiene el hash que coincide
+        let usuarioEncontrado = null;
+        for (const usuario of result.rows) {
+            const coincide = await bcrypt.compare(
+                codigo.toUpperCase(), 
+                usuario.codigo_acceso
+            );
+            if (coincide) {
+                usuarioEncontrado = usuario;
+                break;
+            }
+        }
 
-        if (result.rows.length === 0) {
+        if (!usuarioEncontrado) {
             return res.status(401).json({ error: 'Código incorrecto o usuario inactivo' });
         }
 
-        const usuario = result.rows[0];
-        console.log(`✅ Login: ${usuario.nombre} | Admin: ${usuario.isAdmin}`);
+        console.log(`✅ Login: ${usuarioEncontrado.nombre}`);
 
         res.json({
             success: true,
             usuario: {
-                id: usuario.id,
-                nombre: usuario.nombre,
-                codigo: usuario.codigo,
-                email: usuario.email,
-                campeon_elegido: usuario.campeon_elegido,
-                isAdmin: usuario.isAdmin
+                id: usuarioEncontrado.id,
+                nombre: usuarioEncontrado.nombre,
+                codigo: codigo.toUpperCase(),
+                campeon_elegido: usuarioEncontrado.campeon_elegido,
+                isAdmin: usuarioEncontrado.isAdmin
             }
         });
 
