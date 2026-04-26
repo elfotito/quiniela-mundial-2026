@@ -13,14 +13,13 @@ const loginLimiter = rateLimit({
 const registroLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hora
     max: 5,
-    message: { error: 'Demasiados registros. Espera una hora.' },
+    message: { error: '¡Hay fila en el ingreso al estadio! Tómate una hora para buscar estacionamiento y las primeras cervezas' },
     standardHeaders: true,
     legacyHeaders: false
 });
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
