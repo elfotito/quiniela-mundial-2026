@@ -1,9 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-    inicializarCompartir();
-});
-
-// ============================================
+// ===========================================
 // 1️⃣ FUNCIÓN COMPARTIR (Copiar enlace)
 // ============================================
 function inicializarCompartir() {
