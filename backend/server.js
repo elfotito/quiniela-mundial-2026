@@ -18,9 +18,10 @@ const registroLimiter = rateLimit({
     legacyHeaders: false
 });
 const express = require('express');
-const bcrypt = require('bcrypt');
 const cors = require('cors');
 const { Pool } = require('pg');
+const rateLimit = require('express-rate-limit')
+const bcrypt = require('bcrypt');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
