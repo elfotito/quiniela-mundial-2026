@@ -10,6 +10,13 @@ const loginLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false
 });
+const registroLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hora
+    max: 5,
+    message: { error: 'Demasiados registros. Espera una hora.' },
+    standardHeaders: true,
+    legacyHeaders: false
+});
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
@@ -101,7 +108,7 @@ app.use((req, res, next) => {
 // ===============================================
 
 // POST /api/login
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', loginLimiter, async (req, res) => {
     try {
         const { codigo } = req.body;
 
@@ -774,7 +781,7 @@ app.get('/api/equipos', async (req, res) => {
 // ===============================================
 
 // POST /api/registro
-app.post('/api/registro', async (req, res) => {
+app.post('/api/registro', registroLimiter, async (req, res) => {
     const client = await pool.connect();
     
     try {
