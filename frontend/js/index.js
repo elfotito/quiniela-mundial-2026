@@ -286,7 +286,7 @@ async function cargarNoticiasIndex() {
 
     try {
         const res = await fetch(`${CONFIG.API_URL}/noticias?limit=8`);
-        if (!res.ok) throw new Error('Error cargando noticias');
+        if (!res.ok) throw new Error(`Error ${res.status}: ${await res.text()}`);
         const noticias = await res.json();
 
         if (!noticias.length) {
