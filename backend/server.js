@@ -178,7 +178,7 @@ app.post('/api/login', loginLimiter, async (req, res) => {
         }
 
         console.log(`✅ Login: ${usuarioEncontrado.nombre}`);
-        
+
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         await pool.query(
             `INSERT INTO login_intentos (ip, exitoso) VALUES ($1, true)`,
@@ -1439,35 +1439,60 @@ app.post('/api/recuperar-clave', async (req, res) => {
         res.status(500).json({ error: 'Error del servidor' });
     }
 });
+    // GET /api/admin/logs/login
+    app.get('/api/admin/logs/login', verificarAdmin, async (req, res) => {
+        try {
+            const result = await pool.query(`
+                SELECT 
+                    ip,
+                    COUNT(*) FILTER (WHERE exitoso = false) as intentos_fallidos,
+                    COUNT(*) FILTER (WHERE exitoso = true) as logins_exitosos,
+                    MAX(fecha) as ultimo_intento
+                FROM login_intentos
+                WHERE fecha > NOW() - INTERVAL '24 hours'
+                GROUP BY ip
+                ORDER BY intentos_fallidos DESC
+                LIMIT 50
+            `);
 
-// PATCH /api/admin/usuarios/:id/permitir-reset
-app.patch('/api/admin/usuarios/:id/permitir-reset', verificarAdmin, async (req, res) => {
-    try {
-        const { id } = req.params;
+            res.json({
+                periodo: 'Últimas 24 horas',
+                registros: result.rows
+            });
 
-        const result = await pool.query(`
-            UPDATE usuarios
-            SET puede_resetear = TRUE
-            WHERE id = $1
-            RETURNING nombre_publico, telefono
-        `, [id]);
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
+        } catch (error) {
+            console.error('❌ Error obteniendo logs:', error);
+            res.status(500).json({ error: 'Error del servidor' });
         }
+    });
+    // PATCH /api/admin/usuarios/:id/permitir-reset
+    app.patch('/api/admin/usuarios/:id/permitir-reset', verificarAdmin, async (req, res) => {
+        try {
+            const { id } = req.params;
 
-        console.log(`✅ Reset permitido para: ${result.rows[0].nombre_publico}`);
+            const result = await pool.query(`
+                UPDATE usuarios
+                SET puede_resetear = TRUE
+                WHERE id = $1
+                RETURNING nombre_publico, telefono
+            `, [id]);
 
-        res.json({ 
-            success: true,
-            mensaje: `Reset activado para ${result.rows[0].nombre_publico}`
-        });
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: 'Usuario no encontrado' });
+            }
 
-    } catch (error) {
-        console.error('❌ Error activando reset:', error);
-        res.status(500).json({ error: 'Error del servidor' });
-    }
-});
+            console.log(`✅ Reset permitido para: ${result.rows[0].nombre_publico}`);
+
+            res.json({ 
+                success: true,
+                mensaje: `Reset activado para ${result.rows[0].nombre_publico}`
+            });
+
+        } catch (error) {
+            console.error('❌ Error activando reset:', error);
+            res.status(500).json({ error: 'Error del servidor' });
+        }
+    });
 // ===============================================
 // INICIAR SERVIDOR
 // ===============================================

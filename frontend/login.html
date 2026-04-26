@@ -145,6 +145,7 @@
                 // Login exitoso
                 console.log('data.usuario:', data.usuario);
                 auth.setUser(data.usuario);
+                auth.registrarActividad();
                 
                 mostrarExito('¡Bienvenido! Redirigiendo...');
                 

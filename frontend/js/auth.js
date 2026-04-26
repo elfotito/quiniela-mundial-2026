@@ -48,6 +48,11 @@ const AuthManager = {
             window.location.href = 'login.html';
             return false;
         }
+        if (this.sesionExpirada()) {
+            this.logout();
+            return false;
+        }
+        this.registrarActividad();
         return true;
     },
 
@@ -56,13 +61,29 @@ const AuthManager = {
             window.location.href = 'login.html';
             return false;
         }
+        if (this.sesionExpirada()) {
+            this.logout();
+            return false;
+        }
         if (!this.isAdmin()) {
             alert('⛔ Acceso denegado - Solo administradores');
             window.location.href = 'index.html';
             return false;
         }
+        this.registrarActividad();
         return true;
-    }
+    },
+    
+    registrarActividad() {
+        localStorage.setItem('quiniela_ultima_actividad', Date.now());
+    },
+
+    sesionExpirada() {
+        const ultimaActividad = localStorage.getItem('quiniela_ultima_actividad');
+        if (!ultimaActividad) return false;
+        const TREINTA_MINUTOS = 30 * 60 * 1000;
+        return Date.now() - parseInt(ultimaActividad) > TREINTA_MINUTOS;
+    },
 };
 
 window.auth = AuthManager;
