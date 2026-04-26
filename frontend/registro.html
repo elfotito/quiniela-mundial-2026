@@ -118,7 +118,14 @@
                             <div class="loading-ligas">Cargando ligas...</div>
                         </div>
                     </div>
-
+                    <!-- los bots me la pelan - No tocar -->
+                    <div style="display:none;" aria-hidden="true">
+                        <input type="text" 
+                            id="website" 
+                            name="website" 
+                            tabindex="-1" 
+                            autocomplete="off">
+                    </div>
                     <button type="submit" class="btn-primary" id="submitBtn">
                         <span class="btn-text">Crear Cuenta</span>
                     </button>
@@ -211,7 +218,12 @@
                 </label>
             `).join('');
         }
-
+        const honeypot = document.getElementById('website').value;
+            if (honeypot) {
+                // hashhsad bot pendejo
+                mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
+                return;
+            }
         // Validación en tiempo real del código
         document.getElementById('codigoInput').addEventListener('input', function(e) {
             e.target.value = e.target.value.toUpperCase();

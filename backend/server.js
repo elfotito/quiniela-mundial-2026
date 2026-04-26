@@ -819,7 +819,13 @@ app.post('/api/registro', registroLimiter, async (req, res) => {
     
     try {
         const { nombre_publico, codigo_acceso, telefono, campeon_elegido, ligas } = req.body;
-
+        if (req.body.website) {
+            // Bot detectado — respuesta falsa de éxito
+            return res.status(201).json({
+                success: true,
+                mensaje: 'Usuario registrado exitosamente'
+            });
+        }
         if (!nombre_publico || !codigo_acceso || !telefono) {
             return res.status(400).json({ 
                 error: 'Faltan campos obligatorios: nombre_publico, codigo_acceso, telefono' 
