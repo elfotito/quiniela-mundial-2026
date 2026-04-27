@@ -2834,9 +2834,9 @@ body {
     /* ── WRAPPER ──────────────────────────────────────── */
 .uib-wrapper {
     max-width: 1280px;
-    margin: 0 auto;
+    margin-top: 30px;
     padding: 0 16px;
-    background: #111;
+    background: #ffffff;
 }
 
 /* ── FILA PRINCIPAL ───────────────────────────────── */
@@ -2891,7 +2891,7 @@ body {
 .uib-name {
     font-size: 17px;
     font-weight: 900;
-    color: #fff;
+    color: #000000;
     letter-spacing: -0.3px;
     line-height: 1;
 }
@@ -2951,7 +2951,7 @@ body {
 .uib-stat-val {
     font-size: 22px;
     font-weight: 900;
-    color: #fff;
+    color: #000000;
     line-height: 1;
     letter-spacing: -0.5px;
 }

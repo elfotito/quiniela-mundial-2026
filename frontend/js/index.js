@@ -60,7 +60,6 @@ async function verificarLogin() {
 
 async function cargarDatos() {
     await Promise.all([
-        cargarEstadisticas(),
         cargarProximosPartidos(),
         cargarUltimosResultados(),
         cargarRankingTop5(),
@@ -155,29 +154,6 @@ function inicializarCarrusel() {
     }
 }
 
-// ===============================================
-// ESTADÍSTICAS DEL USUARIO
-// ===============================================
-
-async function cargarEstadisticas() {
-    try {
-        const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
-        if (!response.ok) throw new Error('Error cargando estadísticas');
-        const stats = await response.json();
- 
-        const total      = stats.total_predicciones || 0;
-        const aciertos    = stats.aciertos || 0;
-        const efectividad = stats.efectividad || 0;
- 
-        document.getElementById('statPredicciones').textContent = total;
-        document.getElementById('statPuntos').textContent       = stats.puntos_totales || 0;
-        document.getElementById('statPosicion').textContent     = stats.posicion_ranking || '—';
-        document.getElementById('statEfectividad').textContent  = `${efectividad}%`;
- 
-    } catch (error) {
-        console.error('Error cargando estadísticas:', error);
-    }
-}
 
 // ===============================================
 // PRÓXIMOS PARTIDOS
