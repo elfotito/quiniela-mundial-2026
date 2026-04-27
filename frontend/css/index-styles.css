@@ -2925,7 +2925,7 @@ body {
 .uib-vdivider {
     width: 1px;
     height: 64px;
-    background: #222;
+    background: #ccc;
     flex-shrink: 0;
 }
 
