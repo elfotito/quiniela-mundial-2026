@@ -67,7 +67,7 @@ app.use(cors({
         'http://localhost:5500',
         'http://127.0.0.1:5500',
         'https://quiniela-mundial-2026-omega.vercel.app',
-        'https://www.quinielacarrisan.com.ve'
+        'https://quinielacarrisan.com.ve'
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
