@@ -811,6 +811,7 @@ body {
 
 /* --- Barra de navegación inferior --- */
 .news-nav {
+    padding: 30px 40px 40px;
     background: #000000;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -820,7 +821,7 @@ body {
 }
 
 .nav-item {
-    padding: 30px 40px 40px;
+    padding: 0 12.5px 0;
     cursor: pointer;
     position: relative;
     transition: background 0.15s;
