@@ -2110,6 +2110,10 @@ body {
     .ent_wrapper .ent_label {
         display: none;
     }
+    .ent_wrapper .ent_news_wrapper {
+        display: none;
+    
+    }
 }
     /* ── TOP BAR ──────────────────────────────────────────────── */
 .mobile-top-bar {
