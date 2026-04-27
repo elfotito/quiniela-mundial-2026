@@ -116,7 +116,6 @@ function inicializarCarrusel() {
     function goTo(idx) {
         clearTimeout(timer);
 
-        // Resetear barra anterior
         if (progs[activeIdx]) {
             progs[activeIdx].style.transition = 'none';
             progs[activeIdx].style.width = '0%';
@@ -126,7 +125,6 @@ function inicializarCarrusel() {
         activeIdx = idx;
         navItems[activeIdx]?.classList.add('active');
 
-        // Animar barra del slide activo
         const fill = progs[activeIdx];
         if (fill) {
             requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -135,7 +133,6 @@ function inicializarCarrusel() {
             }));
         }
 
-        // Programar siguiente slide automático
         timer = setTimeout(() => {
             const next = (activeIdx + 1) % navItems.length;
             swiper.slideTo(next);
@@ -143,12 +140,10 @@ function inicializarCarrusel() {
         }, DURATION);
     }
 
-    // ✅ Iniciar el carrusel automáticamente después de que Swiper esté listo
     swiper.on('init', () => {
         goTo(0);
     });
 
-    // Si Swiper ya se inicializó antes de registrar el evento, lo forzamos
     if (swiper.initialized) {
         goTo(0);
     }
