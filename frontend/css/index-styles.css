@@ -822,8 +822,6 @@ body {
 .nav-item {
     padding: 30px 40px 40px;
     cursor: pointer;
-    border-right: 1px solid rgba(255,255,255,0.08);
-    border-right: 1px solid rgba(255,255,255,0.08);
     position: relative;
     transition: background 0.15s;
     user-select: none;
