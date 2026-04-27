@@ -2904,7 +2904,7 @@ body {
 .uib-liga-badge {
     font-size: 11px;
     color: rgba(255,255,255,.4);
-    font-weight: 600;
+    font-weight: 400;
 }
 .uib-pos-badge {
     display: inline-flex;
@@ -2961,7 +2961,7 @@ body {
 
 .uib-stat-lbl {
     font-size: 9px;
-    font-weight: 400;
+    font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #000000;
@@ -3031,14 +3031,14 @@ body {
 }
 .uib-bar-title {
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #000000;
 }
 .uib-bar-val {
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 800;
     color: #000000;
 }
 .uib-bar-track {
@@ -3053,7 +3053,7 @@ body {
     transition: width 1.2s cubic-bezier(.4,0,.2,1);
 }
 .uib-bar-fill.gold  { background: linear-gradient(90deg, #FFD700, #f59e0b); }
-.uib-bar-fill.white { background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.6)); }
+.uib-bar-fill.white { background: linear-gradient(90deg, #3CAC3B, rgba(60, 255, 0, 0.6)); }
 
 /* ── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 1024px) {
