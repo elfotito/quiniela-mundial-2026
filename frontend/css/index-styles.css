@@ -950,7 +950,8 @@ body {
    ================================================ */
 @media (min-width: 641px) and (max-width: 900px) {
     .slide-inner          { grid-template-columns: 50% 50%; height: 400px; }
-
+    .slide-title          { font-size: 22px; }
+    .slide-desc           { -webkit-line-clamp: 2; }
     .slide-next-preview   { width: 90px; }
 }
 
@@ -968,8 +969,8 @@ body {
     .slide-img            { order: -1; height: 260px; }
 
     .slide-text           { padding: 1.25rem 1.25rem 1.5rem; justify-content: flex-start; height: auto; }
-    .slide-title          { -webkit-line-clamp: 4; }
-        /* reseña oculta en móvil  */
+    .slide-title          { font-size: 20px; -webkit-line-clamp: 4; }
+    .slide-desc           { display: none; }        /* reseña oculta en móvil  */
     .slide-next-preview   { display: none; }        /* preview oculto en móvil */
     .slide-btn {    background: #fff; /* Fondo blanco */    color: #000;      /* Texto negro */    border: none;    padding: 14px 28px; /* Un poco más grande */    font-weight: 600;    font-size: 14px;}.slide-btn:hover {    background: #f0f0f0;    color: #000;}
     /* Barra de nav: 2 columnas en móvil */
