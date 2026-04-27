@@ -624,25 +624,21 @@ function iniciarTicker() {
           "url": "noticia1.html"
         },
         {
-          "date": "Abril 2026",
           "prefix": "📅 Mundial:",
           "heading": "Todos los partidos estan disponible en el calendario",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/calendario.html"
         },
         {
-          "date": "Abril 2026",
           "prefix": "🎯 Quiniela:",
           "heading": "¡Registra tus predicciones antes del inicio del mundial!",
           "url": "https://quiniela-mundial-2026-omega.vercel.app/predicciones.html"
         },
         {
-          "date": "Abril 2026",
           "prefix": "👨‍💼 Ligas:",
           "heading": "Vicente es el nuevo presidente de la liga Montesushi",
           "url": ""
         },
         {
-          "date": "Abril 2026",
           "prefix": "👨‍💼 Ligas:",
           "heading": "Victor es el nuevo presidente de la liga Los Carrisan",
           "url": ""
@@ -658,7 +654,7 @@ function iniciarTicker() {
         },
         "label": {
             "enable": true,
-            "text":   "QMTV",
+            "text":   "QM26",
             "background": "#cb2126",
             "color": "#ffffff",
             "fontFamily": "Yolk",      

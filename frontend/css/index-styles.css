@@ -57,6 +57,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'SportsNight';
+    src: url('../fonts/SportsNight.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+
 :root {
     --black-color: #151515;
     --dark-gray-color: #232323;
