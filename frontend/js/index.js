@@ -658,9 +658,9 @@ function iniciarTicker() {
             "background": "#cb2126",
             "color": "#ffffff",
             "fontFamily": "SportsNight",      
-            "fontSize":   36,            
+            "fontSize":   38,            
             "fontWeight": "700",
-            "letter-spacing": "-0.5px"
+            "letter-spacing": "-1px"
         },
         "data": noticias,
         "news": {
