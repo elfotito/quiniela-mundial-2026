@@ -2834,6 +2834,7 @@ body {
     /* ── WRAPPER ──────────────────────────────────────── */
 .uib-wrapper {
     max-width: 1280px;
+    margin: 0 auto;
     margin-top: 30px;
     padding: 0 16px;
     background: #ffffff;
