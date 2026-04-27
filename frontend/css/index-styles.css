@@ -787,6 +787,7 @@ body {
     color: black;
     font-size: 14px;
     text-decoration: none;
+    width: fit-content;
 }
 .slide-btn:hover           { background: #dad4d4;}
 
