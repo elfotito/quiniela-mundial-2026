@@ -619,7 +619,6 @@ function iniciarEasterEgg() {
 function iniciarTicker() {
       var noticias = [
         {
-          "date": "Febrero 2026",
           "prefix": "📅 Seleccion:",
           "heading": "Cuerpo Tecnico: Hemos tomado la difícil decisión de priorizar la comodidad del hogar",
           "url": "noticia1.html"
