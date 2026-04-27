@@ -958,28 +958,7 @@ body {
 /* ================================================
    RESPONSIVE — MÓVIL (≤ 640px)
    ================================================ */
-@media (max-width: 640px) {
-    .slide-inner {
-        grid-template-columns: 1fr;
-        grid-template-rows: 260px auto;
-        height: auto;
-    }
-
-    /* Imagen arriba en móvil */
-    .slide-img            { order: -1; height: 260px; }
-
-    .slide-text           { padding: 1.25rem 1.25rem 1.5rem; justify-content: flex-start; height: auto; }
-    .slide-title          { font-size: 20px; -webkit-line-clamp: 4; }
-    .slide-desc           { display: none; }        /* reseña oculta en móvil  */
-    .slide-next-preview   { display: none; }        /* preview oculto en móvil */
-    .slide-btn {    background: #fff; /* Fondo blanco */    color: #000;      /* Texto negro */    border: none;    padding: 14px 28px; /* Un poco más grande */    font-weight: 600;    font-size: 14px;}.slide-btn:hover {    background: #f0f0f0;    color: #000;}
-    /* Barra de nav: 2 columnas en móvil */
-    .news-nav                       { grid-template-columns: repeat(2, 1fr); }
-    .nav-item:nth-child(2)          { border-right: none; }
-    .nav-item:nth-child(3),
-    .nav-item:nth-child(4)          { border-top: 1px solid rgba(255,255,255,0.08); }
-    .nav-item:nth-child(4)          { border-right: none; }
-}
+@media (max-width: 640px) {    .slide-inner {        grid-template-columns: 1fr;        grid-template-rows: 260px auto;        height: auto;    }    /* Imagen arriba en móvil */    .slide-img            { order: -1; height: 260px; }    .slide-text           {         padding: 1.25rem 1.25rem 1.5rem;         justify-content: flex-start;         height: auto;         gap: 0;                        /* ← elimina espacios entre hijos */    }    .slide-title          {         font-size: 20px;         -webkit-line-clamp: 4;        margin-bottom: 0.75rem;        /* ← espacio controlado tras título */    }    .slide-desc           {         display: none;                 /* reseña oculta en móvil */    }    .slide-next-preview   { display: none; }    .slide-btn {        background: #fff;        color: #000;        border: none;        padding: 14px 28px;        font-weight: 600;        font-size: 14px;        margin-top: 0;                 /* ← pegado al título */        align-self: flex-start;        /* ← que no se estire */    }    .slide-btn:hover {        background: #f0f0f0;        color: #000;    }    /* Barra de nav: 2 columnas en móvil */    .news-nav                       { grid-template-columns: repeat(2, 1fr); }    .nav-item:nth-child(2)          { border-right: none; }    .nav-item:nth-child(3),    .nav-item:nth-child(4)          { border-top: 1px solid rgba(255,255,255,0.08); }    .nav-item:nth-child(4)          { border-right: none; }}
 /* ─── GRID WRAPPER ──────────────────────────────────────── */
 .dashboard-grid {
     max-width: 1280px;
