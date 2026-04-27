@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     inicializarCarrusel();
     iniciarTicker();
     iniciarEasterEgg();
+    initUserBanner();
 });
 // ===============================================
 // VERIFICAR LOGIN
@@ -697,6 +698,143 @@ function iniciarTicker() {
  
     };
 
+let uibDonutChart = null;
+const TOTAL_PARTIDOS_MUNDIAL = 104;
+
+async function initUserBanner() {
+    const usuario = auth.getUser ? auth.getUser() : null;
+    if (!usuario) return;
+
+    // ── Nombre y campeón ─────────────────────────────
+    const nombre = usuario.nombre_publico || usuario.nombre || usuario.codigo || 'Usuario';
+    document.getElementById('uibNombre').textContent = nombre;
+
+    const campeonBandera = typeof obtenerBandera === 'function'
+        ? obtenerBandera(usuario.campeon_elegido) : '🏳️';
+    document.getElementById('uibCampeon').textContent = campeonBandera;
+
+    // ── Liga ─────────────────────────────────────────
+    try {
+        const resLiga = await fetch(`${CONFIG.API_URL}/usuarios/${usuario.id}/ligas`);
+        const ligas = await resLiga.json();
+        document.getElementById('uibLiga').textContent =
+            ligas.length ? `${ligas[0].icono || '🏅'} ${ligas[0].nombre}` : '—';
+    } catch { document.getElementById('uibLiga').textContent = '—'; }
+
+    // ── Estadísticas del endpoint ─────────────────────
+    try {
+        const resStats = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuario.id}`);
+        const stats = await resStats.json();
+
+        const pts    = stats.puntos_totales       || 0;
+        const total  = parseInt(stats.total_predicciones) || 0;
+        const aciert = parseInt(stats.aciertos)    || 0;
+        const efect  = parseFloat(stats.efectividad) || 0;
+        const pos    = stats.posicion_ranking       || '—';
+
+        document.getElementById('uibPuntos').textContent       = pts;
+        document.getElementById('uibPredicciones').textContent  = total;
+        document.getElementById('uibAciertos').textContent      = aciert;
+        document.getElementById('uibEfectividad').textContent   = `${efect}%`;
+        document.getElementById('uibPosicion').innerHTML =
+            `<i class="bi bi-trophy-fill"></i> #${pos}`;
+
+        // Barras
+        const pctProgreso   = Math.round((total / TOTAL_PARTIDOS_MUNDIAL) * 100);
+        const maxPosible    = total * 9;
+        const pctRendimiento = maxPosible > 0 ? Math.round((pts / maxPosible) * 100) : 0;
+
+        setTimeout(() => {
+            const bP = document.getElementById('uibBarProgreso');
+            const bR = document.getElementById('uibBarRendimiento');
+            if (bP) bP.style.width = pctProgreso + '%';
+            if (bR) bR.style.width = pctRendimiento + '%';
+            document.getElementById('uibProgresoVal').textContent =
+                `${total} / ${TOTAL_PARTIDOS_MUNDIAL} partidos`;
+            document.getElementById('uibRendimientoVal').textContent =
+                `${pts} / ${maxPosible} pts`;
+        }, 150);
+
+        // Sincronizar IDs originales si existen en la página
+        const sync = { statPosicion: pos, statPuntos: pts, statPredicciones: total, statEfectividad: `${efect}%` };
+        Object.entries(sync).forEach(([id, val]) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
+        });
+
+    } catch (err) {
+        console.error('Error stats banner:', err);
+    }
+
+    // ── Predicciones para el donut ────────────────────
+    // Cargamos las predicciones evaluadas para el desglose
+    try {
+        const resPred = await fetch(`${CONFIG.API_URL}/predicciones/${usuario.id}`);
+        const predicciones = await resPred.json();
+
+        const evaluadas = predicciones.filter(p => p.puntos_obtenidos !== null);
+        const exactos     = evaluadas.filter(p => p.puntos_obtenidos === 9).length;
+        const ganMar      = evaluadas.filter(p => p.puntos_obtenidos === 7).length;
+        const ganador     = evaluadas.filter(p => p.puntos_obtenidos === 5).length;
+        const marcador    = evaluadas.filter(p => p.puntos_obtenidos === 2).length;
+        const fallados    = evaluadas.filter(p => p.puntos_obtenidos === 0).length;
+
+        // Leyenda
+        document.getElementById('uibLegExacto').textContent = exactos;
+        document.getElementById('uibLegGanMar').textContent = ganMar;
+        document.getElementById('uibLegGan').textContent    = ganador;
+        document.getElementById('uibLegMar').textContent    = marcador;
+        document.getElementById('uibLegFall').textContent   = fallados;
+
+        // Donut
+        renderUibDonut(exactos, ganMar, ganador, marcador, fallados);
+
+    } catch (err) {
+        console.error('Error predicciones donut:', err);
+        renderUibDonut(0, 0, 0, 0, 1); // vacío
+    }
+}
+
+function renderUibDonut(exactos, ganMar, ganador, marcador, fallados) {
+    const canvas = document.getElementById('uibDonutChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    if (uibDonutChart) { uibDonutChart.destroy(); }
+
+    const total = exactos + ganMar + ganador + marcador + fallados;
+    const data  = total > 0
+        ? [exactos, ganMar, ganador, marcador, fallados]
+        : [0, 0, 0, 0, 1]; // placeholder vacío
+
+    uibDonutChart = new Chart(canvas, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data,
+                backgroundColor: [
+                    '#22c55e',  // exacto +9
+                    '#FFD700',  // ganador+marcador +7
+                    '#a855f7',  // ganador +5
+                    '#3b82f6',  // marcador +2
+                    total > 0 ? '#ef4444' : '#2a2a2a'  // fallados / vacío
+                ],
+                borderWidth: 0,
+                borderRadius: 3,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            cutout: '65%',
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            animation: {
+                duration: 900,
+                easing: 'easeInOutQuart'
+            }
+        }
+    });
+}
 // ===============================================
 // LOGOUT
 // ===============================================

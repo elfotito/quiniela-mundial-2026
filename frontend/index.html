@@ -322,41 +322,118 @@
   </nav>
 </section>
 <!-- STAS RAPIDAS PA PENDEJOS-->
-<div class="stats-bar-wrapper">
-    <section class="quick-stats">
- 
-        <div class="stat-card pos">
-            <i class="bi bi-trophy-fill stat-icon"></i>
-            <span class="stat-label">Posición</span>
-            <div class="stat-value" id="statPosicion">—</div>
-            <span class="stat-sub">en el ranking general</span>
+<div class="uib-wrapper">
+    <div class="uib">
+
+        <!-- ── IZQUIERDA: Donut + Perfil ─────────────── -->
+        <div class="uib-left">
+            <div class="uib-donut-wrap">
+                <canvas id="uibDonutChart"></canvas>
+                <div class="uib-donut-center">
+                    <span class="uib-donut-emoji" id="uibCampeon">🏳️</span>
+                </div>
+            </div>
+            <div class="uib-profile-info">
+                <div class="uib-name" id="uibNombre">—</div>
+                <div class="uib-sub-row">
+                    <span class="uib-liga-badge" id="uibLiga">—</span>
+                </div>
+                <span class="uib-pos-badge" id="uibPosicion">
+                    <i class="bi bi-trophy-fill"></i> #—
+                </span>
+            </div>
         </div>
- 
-        <div class="stat-card pts">
-            <i class="bi bi-star-fill stat-icon"></i>
-            <span class="stat-label">Puntos</span>
-            <div class="stat-value" id="statPuntos">—</div>
-            <span class="stat-sub">acumulados</span>
+
+        <!-- ── DIVIDER ────────────────────────────────── -->
+        <div class="uib-vdivider"></div>
+
+        <!-- ── CENTRO: Stats rápidas ─────────────────── -->
+        <div class="uib-stats">
+
+            <div class="uib-stat-item">
+                <span class="uib-stat-val" id="uibPuntos">—</span>
+                <span class="uib-stat-lbl">Puntos</span>
+            </div>
+
+            <div class="uib-stat-item">
+                <span class="uib-stat-val gold" id="uibEfectividad">—</span>
+                <span class="uib-stat-lbl">Efectividad</span>
+            </div>
+
+            <div class="uib-stat-item">
+                <span class="uib-stat-val" id="uibPredicciones">—</span>
+                <span class="uib-stat-lbl">Predicciones</span>
+            </div>
+
+            <div class="uib-stat-item">
+                <span class="uib-stat-val green" id="uibAciertos">—</span>
+                <span class="uib-stat-lbl">Aciertos</span>
+            </div>
+
         </div>
- 
-        <div class="stat-card pred">
-            <i class="bi bi-calendar-check stat-icon"></i>
-            <span class="stat-label">Partidos</span>
-            <div class="stat-value" id="statPredicciones">—</div>
-            <span class="stat-sub">jugados</span>
+
+        <!-- ── DIVIDER ────────────────────────────────── -->
+        <div class="uib-vdivider"></div>
+
+        <!-- ── DERECHA: Mini leyenda donut + barras ───── -->
+        <div class="uib-right">
+
+            <!-- Leyenda del donut -->
+            <div class="uib-legend">
+                <div class="uib-legend-item">
+                    <span class="uib-legend-dot" style="background:#22c55e"></span>
+                    <span class="uib-legend-lbl">Exacto +9</span>
+                    <span class="uib-legend-val" id="uibLegExacto">0</span>
+                </div>
+                <div class="uib-legend-item">
+                    <span class="uib-legend-dot" style="background:#FFD700"></span>
+                    <span class="uib-legend-lbl">Gan.+Marc. +7</span>
+                    <span class="uib-legend-val" id="uibLegGanMar">0</span>
+                </div>
+                <div class="uib-legend-item">
+                    <span class="uib-legend-dot" style="background:#a855f7"></span>
+                    <span class="uib-legend-lbl">Ganador +5</span>
+                    <span class="uib-legend-val" id="uibLegGan">0</span>
+                </div>
+                <div class="uib-legend-item">
+                    <span class="uib-legend-dot" style="background:#3b82f6"></span>
+                    <span class="uib-legend-lbl">Marcador +2</span>
+                    <span class="uib-legend-val" id="uibLegMar">0</span>
+                </div>
+                <div class="uib-legend-item">
+                    <span class="uib-legend-dot" style="background:#ef4444"></span>
+                    <span class="uib-legend-lbl">Sin puntos</span>
+                    <span class="uib-legend-val" id="uibLegFall">0</span>
+                </div>
+            </div>
+
         </div>
- 
-        <div class="stat-card ef">
-            <i class="bi bi-bullseye stat-icon"></i>
-            <span class="stat-label">Efectividad</span>
-            <div class="stat-value" id="statEfectividad">—</div>
-            <span class="stat-sub">de aciertos</span>
+
+    </div>
+
+    <!-- ── BARRA INFERIOR ─────────────────────────────── -->
+    <div class="uib-bottom">
+        <div class="uib-bar-block">
+            <div class="uib-bar-header">
+                <span class="uib-bar-title">Progreso del torneo</span>
+                <span class="uib-bar-val" id="uibProgresoVal">0 / 104 partidos</span>
+            </div>
+            <div class="uib-bar-track">
+                <div class="uib-bar-fill gold" id="uibBarProgreso" style="width:0%"></div>
+            </div>
         </div>
- 
-    </section>
-</div>
- 
-    </section>
+        <div class="uib-bar-sep"></div>
+        <div class="uib-bar-block">
+            <div class="uib-bar-header">
+                <span class="uib-bar-title">Rendimiento (pts obtenidos vs máximo posible)</span>
+                <span class="uib-bar-val" id="uibRendimientoVal">0 / 0 pts</span>
+            </div>
+            <div class="uib-bar-track">
+                <div class="uib-bar-fill white" id="uibBarRendimiento" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <!-- NEWS TICKER MANOO -->
 <div class="ticker-wrapper">
