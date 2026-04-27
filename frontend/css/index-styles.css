@@ -2891,9 +2891,9 @@ body {
 }
 .uib-name {
     font-size: 17px;
-    font-weight: 900;
+    font-weight: 700;
     color: #000000;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.5px;
     line-height: 1;
 }
 .uib-sub-row {
@@ -2912,7 +2912,7 @@ body {
     gap: 4px;
     background: rgba(255,215,0,.1);
     border: 1px solid rgba(255,215,0,.2);
-    color: #FFD700;
+    color: #e7c500;
     font-size: 11px;
     font-weight: 800;
     padding: 2px 9px;
@@ -2964,7 +2964,7 @@ body {
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(255,255,255,.3);
+    color: rgba(0, 0, 0, 0.3);
 }
 
 /* ── DERECHA: LEYENDA ─────────────────────────────── */
@@ -2990,7 +2990,7 @@ body {
 }
 .uib-legend-lbl {
     font-size: 10px;
-    color: rgba(255,255,255,.4);
+    color: rgba(0, 0, 0, 0.4);
     font-weight: 600;
     flex: 1;
     white-space: nowrap;
@@ -2998,7 +2998,7 @@ body {
 .uib-legend-val {
     font-size: 11px;
     font-weight: 800;
-    color: rgba(255,255,255,.7);
+    color: rgba(0, 0, 0, 0.7);
     min-width: 20px;
     text-align: right;
 }
