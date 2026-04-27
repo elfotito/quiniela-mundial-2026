@@ -657,7 +657,7 @@ function iniciarTicker() {
             "text":   "QM26",
             "background": "#cb2126",
             "color": "#ffffff",
-            "fontFamily": "Yolk",      
+            "fontFamily": "SportsNight",      
             "fontSize":   32,            
             "fontWeight": "700"
         },

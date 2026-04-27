@@ -3080,3 +3080,24 @@ body {
     .uib-bar-sep { display: none; }
     .uib-bar-block { width: 100%; }
 }
+
+/* Sobrescribir los estilos dinámicos del ticker para usar SportsNight */
+#newsTicker3 .ent_label span {
+    font-family: 'SportsNight', sans-serif !important;
+    font-weight: 700 !important;
+    /* Asegurarse de que el tamaño sea el correcto para la fuente personalizada */
+    font-size: 32px !important;
+    /* Si la fuente se ve cortada, ajustar estos valores */
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    letter-spacing: 1px !important;
+}
+
+/* Asegurar que el contenedor del label tenga altura suficiente */
+#newsTicker3 .ent_label {
+    padding: 15px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+}
