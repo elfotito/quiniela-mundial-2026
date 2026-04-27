@@ -830,7 +830,7 @@ body {
 .nav-item:hover           { background: rgba(255,255,255,0.04); }
 
 .nav-cat {
-    font-size: 14px;
+    font-size: 11px;
     color: rgba(255,255,255,0.38);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -838,7 +838,7 @@ body {
 }
 
 .nav-title {
-    font-size: 18px;
+    font-size: 14px;
     color: rgba(255,255,255,0.7);
     line-height: 1.4;
     display: -webkit-box;
