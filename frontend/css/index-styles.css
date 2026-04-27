@@ -827,8 +827,10 @@ body {
     user-select: none;
 }
 .nav-item:last-child      { border-right: none; }
-.nav-item:hover           { text-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 255, 255, 0.5); }
-
+.nav-item:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 1),
+                 0 0 2px rgba(255, 255, 255, 1);
+}
 .nav-cat {
     font-size: 16px;
     color: rgba(255,255,255,0.38);
