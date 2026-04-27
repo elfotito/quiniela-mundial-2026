@@ -827,16 +827,15 @@ body {
     user-select: none;
 }
 .nav-item:last-child      { border-right: none; }
-.nav-item:hover           { background: rgba(255,255,255,0.04); }
+.nav-item:hover           { text-shadow: 0 0 25px rgba(255, 255, 255, 1), 0 0 50px rgba(255, 255, 255, 0.5); }
 
 .nav-cat {
-    font-size: 14px;
+    font-size: 16px;
     color: rgba(255,255,255,0.38);
-    letter-spacing: -0.5px;
 }
 
 .nav-title {
-    font-size: 17px;
+    font-size: 18px;
     color: white;
     line-height: 1.2;
     letter-spacing: -0.5px;
