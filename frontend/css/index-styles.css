@@ -807,34 +807,6 @@ body {
     display: block;
 }
 
-/* --- Preview "Siguiente" (solo desktop) --- */
-.slide-next-preview {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 120px;
-    background: rgba(0,0,0,0.82);
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1.5rem 0.875rem;
-    gap: 10px;
-    border-left: 1px solid rgba(255,255,255,0.1);
-}
-.next-label        { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
-.next-thumb        { width: 100%; height: 64px; object-fit: cover; border-radius: 4px; opacity: 0.75; }
-.next-title-preview {
-    font-size: 11px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
 /* --- Barra de navegación inferior --- */
 .news-nav {
     background: #000000;
