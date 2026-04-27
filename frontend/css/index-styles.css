@@ -739,7 +739,7 @@ body {
 }
 
 .slide-category {
-    font-size: 15px;
+    font-size: 17px;
     font-family: "Yolk";
     font-weight: 300;
     color: #fff;
@@ -749,7 +749,7 @@ body {
 }
 
 .slide-title {
-    font-size: 42px;
+    font-size: 44px;
     font-family: "Yolk";
     font-weight: 600;
     line-height: 1.1;
@@ -764,7 +764,7 @@ body {
 
 /* Reseña — visible solo en desktop */
 .slide-desc {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     letter-spacing: -1px ;
     line-height: 1.4;
