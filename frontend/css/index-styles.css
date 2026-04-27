@@ -3053,7 +3053,7 @@ body {
     transition: width 1.2s cubic-bezier(.4,0,.2,1);
 }
 .uib-bar-fill.gold  { background: linear-gradient(90deg, #FFD700, #f59e0b); }
-.uib-bar-fill.white { background: linear-gradient(90deg, #000000, rgba(255,255,255,.6)); }
+.uib-bar-fill.white { background: linear-gradient(90deg, #22c55e, rgba(255,255,255,.6)); }
 
 /* ── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 1024px) {
