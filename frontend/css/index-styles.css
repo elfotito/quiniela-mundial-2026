@@ -1989,7 +1989,7 @@ body {
 
     #newsTicker3 {
     width: 100%;
-    max-width: 1249px;
+    max-width: 1250px;
     color: #ffffff;
     position: relative;
     z-index: 1;
@@ -2833,7 +2833,7 @@ body {
 
     /* ── WRAPPER ──────────────────────────────────────── */
 .uib-wrapper {
-    max-width: 1280px;
+    max-width: 1250px;
     margin: 0 auto;
     margin-top: 30px;
     padding: 0 16px;
@@ -3053,7 +3053,7 @@ body {
     transition: width 1.2s cubic-bezier(.4,0,.2,1);
 }
 .uib-bar-fill.gold  { background: linear-gradient(90deg, #FFD700, #f59e0b); }
-.uib-bar-fill.white { background: linear-gradient(90deg, #fff, rgba(255,255,255,.6)); }
+.uib-bar-fill.white { background: linear-gradient(90deg, #000000, rgba(255,255,255,.6)); }
 
 /* ── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 1024px) {
