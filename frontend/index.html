@@ -356,11 +356,6 @@
             </div>
 
             <div class="uib-stat-item">
-                <span class="uib-stat-val" id="uibEfectividad">—</span>
-                <span class="uib-stat-lbl">Efectividad</span>
-            </div>
-
-            <div class="uib-stat-item">
                 <span class="uib-stat-val green" id="uibAciertos">—</span>
                 <span class="uib-stat-lbl">Aciertos</span>
             </div>
@@ -368,6 +363,11 @@
             <div class="uib-stat-item">
                 <span class="uib-stat-val" id="uibPredicciones">—</span>
                 <span class="uib-stat-lbl">Predicciones</span>
+            </div>
+
+            <div class="uib-stat-item">
+                <span class="uib-stat-val" id="uibEfectividad">—</span>
+                <span class="uib-stat-lbl">Efectividad</span>
             </div>
         </div>
 
@@ -412,6 +412,15 @@
 
     <!-- ── BARRA INFERIOR ─────────────────────────────── -->
     <div class="uib-bottom">
+        <div class="uib-bar-sep"></div>
+        <div class="uib-bar-block">
+            <div class="uib-bar-header">
+                <span class="uib-bar-title">Rendimiento en el torneo</span>
+                <span class="uib-bar-val" id="uibRendimientoVal">0 / 0 pts</span>
+            </div>
+            <div class="uib-bar-track">
+                <div class="uib-bar-fill white" id="uibBarRendimiento" style="width:0%"></div>
+            </div>
         <div class="uib-bar-block">
             <div class="uib-bar-header">
                 <span class="uib-bar-title">Progreso del torneo</span>
@@ -421,15 +430,6 @@
                 <div class="uib-bar-fill gold" id="uibBarProgreso" style="width:0%"></div>
             </div>
         </div>
-        <div class="uib-bar-sep"></div>
-        <div class="uib-bar-block">
-            <div class="uib-bar-header">
-                <span class="uib-bar-title">Rendimiento (pts obtenidos vs máximo posible)</span>
-                <span class="uib-bar-val" id="uibRendimientoVal">0 / 0 pts</span>
-            </div>
-            <div class="uib-bar-track">
-                <div class="uib-bar-fill white" id="uibBarRendimiento" style="width:0%"></div>
-            </div>
         </div>
     </div>
 
