@@ -709,7 +709,7 @@ async function initUserBanner() {
         document.getElementById('uibAciertos').textContent      = aciert;
         document.getElementById('uibEfectividad').textContent   = `${efect}%`;
         document.getElementById('uibPosicion').innerHTML =
-            `<i class="bi bi-trophy-fill"></i> #${pos}`;
+            `<i class="bi bi-trophy-fill"></i> ${pos}° lugar`;
 
         // Barras
         const pctProgreso   = Math.round((total / TOTAL_PARTIDOS_MUNDIAL) * 100);
