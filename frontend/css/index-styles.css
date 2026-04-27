@@ -785,8 +785,9 @@ body {
     border-radius: 50px; 
     background: white;
     color: black;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
+    letter-spacing: -0.5px;
     text-decoration: none;
     width: fit-content;
 }
@@ -819,7 +820,7 @@ body {
 }
 
 .nav-item {
-    padding: 1rem 1.25rem;
+    padding: 30px 40px 40px;
     cursor: pointer;
     border-right: 1px solid rgba(255,255,255,0.08);
     border-right: 1px solid rgba(255,255,255,0.08);
@@ -831,7 +832,7 @@ body {
 .nav-item:hover           { background: rgba(255,255,255,0.04); }
 
 .nav-cat {
-    font-size: 10px;
+    font-size: 14px;
     color: rgba(255,255,255,0.38);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -839,7 +840,7 @@ body {
 }
 
 .nav-title {
-    font-size: 12px;
+    font-size: 18px;
     color: rgba(255,255,255,0.7);
     line-height: 1.4;
     display: -webkit-box;
