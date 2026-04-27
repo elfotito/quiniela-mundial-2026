@@ -780,7 +780,7 @@ body {
 }
 
 .slide-category {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 400;
     color: #fff;
     text-transform: capitalize;
@@ -789,10 +789,10 @@ body {
 }
 
 .slide-title {
-    font-size: 3.8rem;
+    font-size: 3.5rem;
     font-weight: 600;
     line-height: 1.1;
-    letter-spacing: -1px ;
+    letter-spacing: -0.8px ;
     color: #fff ;
     margin-bottom: 1rem ;
     display: -webkit-box;
@@ -803,7 +803,7 @@ body {
 
 /* Reseña — visible solo en desktop */
 .slide-desc {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-weight: 400;
     letter-spacing: -1px ;
     line-height: 1;
