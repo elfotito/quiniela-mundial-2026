@@ -781,7 +781,7 @@ body {
 }
 
 .slide-category {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     font-weight: 400;
     color: #fff;
     text-transform: capitalize;
@@ -827,7 +827,7 @@ body {
     padding: 11px 24px;
     border-radius: 50px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 700;
     cursor: pointer;
     width: fit-content;
     text-decoration: none;
@@ -951,7 +951,7 @@ body {
 @media (min-width: 641px) and (max-width: 900px) {
     .slide-inner          { grid-template-columns: 50% 50%; height: 400px; }
     .slide-title          { font-size: 22px; }
-    .slide-desc           { -webkit-line-clamp: 2; }
+    .slide-desc           { display: none; }
     .slide-next-preview   { width: 90px; }
 }
 
