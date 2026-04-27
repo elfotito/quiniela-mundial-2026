@@ -719,7 +719,6 @@ body {
     display: grid;
     grid-template-columns: 55% 45%;
     align-items: stretch;   
-    height: 500px;
     position: relative;
 }
 
@@ -820,20 +819,29 @@ body {
 }
 
 .nav-item {
-    padding: 0 12.5px 0;
+    /* 1. AGREGADO: 15px de padding superior para dejar espacio a la barra de progreso */
+    padding: 15px 12.5px 0;
     cursor: pointer;
     position: relative;
     transition: background 0.15s;
     user-select: none;
 }
-.nav-item:last-child      { border-right: none; }
+.nav-item:last-child { border-right: none; }
 .nav-item:hover {
     text-shadow: 0 0 8px rgba(255, 255, 255, 1),
                  0 0 2px rgba(255, 255, 255, 1);
 }
+
+/* 2. AGREGADO: Reset de márgenes para que los párrafos no rompan el layout */
+.nav-item p {
+    margin: 0;
+}
+
 .nav-cat {
     font-size: 16px;
     color: rgba(255,255,255,0.38);
+    /* AGREGADO: Espaciado controlado entre la categoría y el título */
+    margin-bottom: 6px; 
 }
 
 .nav-title {
@@ -851,7 +859,8 @@ body {
 /* Barra de progreso */
 .nav-progress-track {
     position: absolute;
-    bottom: 0;
+    /* 3. CORREGIDO: Cambiado de bottom: 0 a top: 0 */
+    top: 0; 
     left: 0;
     width: 100%;
     height: 2px;
@@ -922,26 +931,6 @@ body {
     .nav-item:nth-child(4)          { border-right: none; }
 }
 
-@media (max-width: 640px) {
-    /* ... (tus otras reglas para móvil) ... */
-
-    .slide-inner {
-        /* ... (tus otras reglas) ... */
-        min-height: auto;           /* 🆕 Anula la altura mínima forzada en desktop */
-    }
-
-    .slide-text {
-        /* ... (tus otras reglas) ... */
-        justify-content: flex-start; /* 🆕 Anula el centrado vertical para pegar todo arriba */
-    }
-
-    .slide-btn {
-        /* ... (tus otras reglas) ... */
-        margin-top: 1rem;           /* 🆕 Cambia 'auto' por un espacio pequeño y fijo */
-    }
-
-    /* ... (resto de reglas) ... */
-}
 /* ─── GRID WRAPPER ──────────────────────────────────────── */
 .dashboard-grid {
     max-width: 1280px;
