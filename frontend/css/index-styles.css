@@ -2942,8 +2942,8 @@ body {
     flex-direction: column;
     gap: 2px;
     padding: 8px 14px;
-    border-right: 1px solid #1e1e1e;
-    border-bottom: 1px solid #1e1e1e;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 .uib-stat-item:nth-child(2)  { border-right: none; }
 .uib-stat-item:nth-child(3)  { border-bottom: none; }
