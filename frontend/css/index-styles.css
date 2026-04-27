@@ -739,7 +739,7 @@ body {
 }
 
 .slide-category {
-    font-size: 14px;
+    font-size: 15px;
     font-family: "Yolk";
     font-weight: 300;
     color: #fff;
@@ -749,7 +749,7 @@ body {
 }
 
 .slide-title {
-    font-size: 32px;
+    font-size: 42px;
     font-family: "Yolk";
     font-weight: 600;
     line-height: 1.1;
@@ -764,7 +764,7 @@ body {
 
 /* Reseña — visible solo en desktop */
 .slide-desc {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: -1px ;
     line-height: 1.4;
@@ -778,19 +778,18 @@ body {
 }
 
 .slide-btn {
-        display: inline-block;
-        margin-top: 25px;
-        padding: 10px 24px;
-        border: 1px solid white;
-        border-radius: 50px;
-        background: transparent;
-        color: white;
-        font-size: 13px;
-        text-decoration: none;
+    display: inline-flex; 
+    align-items: center;
+    gap: 8px;
+    padding: 8px 25px;
+    border-radius: 50px; 
+    background: white;
+    color: black;
+    font-size: 14px;
+    text-decoration: none;
+    width: auto;
 }
-.slide-btn:hover           { background: #fff; color: #000; }
-.slide-btn svg             { width: 14px; height: 14px; stroke: currentColor; fill: none; transition: transform 0.2s; }
-.slide-btn:hover svg       { transform: translateX(3px); }
+.slide-btn:hover           { background: #dad4d4;}
 
 /* --- Columna imagen (derecha) --- */
 .slide-img {
