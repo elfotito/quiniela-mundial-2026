@@ -2275,7 +2275,7 @@ body {
     .mobile-top-bar    { display: flex; }
     .mobile-bottom-nav { display: flex; }
     .desktop-header    { display: none !important; }
-    body { padding-top: 56px !important; padding-bottom: 64px !important; }
+    body { padding-top: 56px !important; padding-bottom: 63px !important; }
 }
  
  
@@ -2286,7 +2286,6 @@ body {
     }
 
     .countdown-container {
-        margin-top: 5px;
         display: flex;
         align-items: center; 
         justify-content: space-between; 
