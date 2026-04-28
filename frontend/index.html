@@ -379,38 +379,50 @@
         <div class="uib-vdivider"></div>
 
         <!-- ── DERECHA: Mini leyenda donut + barras ───── -->
-        <div class="uib-right">
-
-            <!-- Leyenda del donut -->
-            <div class="uib-legend">
-                <div class="uib-legend-item">
-                    <span class="uib-legend-dot" style="background:#22c55e"></span>
-                    <span class="uib-legend-lbl">Exacto +9</span>
-                    <span class="uib-legend-val" id="uibLegExacto">0</span>
-                </div>
-                <div class="uib-legend-item">
-                    <span class="uib-legend-dot" style="background:#FFD700"></span>
-                    <span class="uib-legend-lbl">Gan.+Marc. +7</span>
-                    <span class="uib-legend-val" id="uibLegGanMar">0</span>
-                </div>
-                <div class="uib-legend-item">
-                    <span class="uib-legend-dot" style="background:#a855f7"></span>
-                    <span class="uib-legend-lbl">Ganador +5</span>
-                    <span class="uib-legend-val" id="uibLegGan">0</span>
-                </div>
-                <div class="uib-legend-item">
-                    <span class="uib-legend-dot" style="background:#3b82f6"></span>
-                    <span class="uib-legend-lbl">Marcador +2</span>
-                    <span class="uib-legend-val" id="uibLegMar">0</span>
-                </div>
-                <div class="uib-legend-item">
-                    <span class="uib-legend-dot" style="background:#ef4444"></span>
-                    <span class="uib-legend-lbl">Sin puntos</span>
-                    <span class="uib-legend-val" id="uibLegFall">0</span>
-                </div>
+                <div class="uib-breakdown">
+            <div class="uib-bd-title">Desglose</div>
+            <div class="uib-bd-row">
+                <span class="uib-bd-dot" style="background:#22c55e"></span>
+                <span class="uib-bd-lbl">Exacto</span>
+                <span class="uib-bd-count" id="bdExacto">0</span>
+                <span class="uib-bd-pts" id="bdExactoPts">0 pts</span>
             </div>
-
+            <div class="uib-bd-row">
+                <span class="uib-bd-dot" style="background:#FFD700"></span>
+                <span class="uib-bd-lbl">Gan.+Marc.</span>
+                <span class="uib-bd-count" id="bdGanMar">0</span>
+                <span class="uib-bd-pts" id="bdGanMarPts">0 pts</span>
+            </div>
+            <div class="uib-bd-row">
+                <span class="uib-bd-dot" style="background:#a855f7"></span>
+                <span class="uib-bd-lbl">Ganador</span>
+                <span class="uib-bd-count" id="bdGan">0</span>
+                <span class="uib-bd-pts" id="bdGanPts">0 pts</span>
+            </div>
+            <div class="uib-bd-row">
+                <span class="uib-bd-dot" style="background:#3b82f6"></span>
+                <span class="uib-bd-lbl">Marcador</span>
+                <span class="uib-bd-count" id="bdMar">0</span>
+                <span class="uib-bd-pts" id="bdMarPts">0 pts</span>
+            </div>
+            <div class="uib-bd-row uib-bd-total">
+                <span class="uib-bd-dot" style="background:transparent"></span>
+                <span class="uib-bd-lbl" style="color:rgba(255,255,255,.5);font-weight:800">Total</span>
+                <span class="uib-bd-count"></span>
+                <span class="uib-bd-pts" id="bdTotal" style="color:#FFD700;font-weight:900">0 pts</span>
+            </div>
         </div>
+ 
+        <div class="uib-vdivider"></div>
+ 
+        <!-- GRÁFICO EVOLUCIÓN -->
+        <div class="uib-chart-col">
+            <div class="uib-chart-label">Evolución pts / partido</div>
+            <div class="uib-chart-wrap">
+                <canvas id="uibEvoChart"></canvas>
+            </div>
+        </div>
+
 
     </div>
 

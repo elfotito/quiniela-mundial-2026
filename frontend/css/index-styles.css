@@ -118,7 +118,6 @@
             overflow-x: hidden;
         }
         
-
         ul {
             list-style: none;
         }
@@ -127,7 +126,6 @@
             text-decoration: none;
             color: inherit;
         }
-
 
 /* ===============================================
    RESET Y BASE
@@ -2864,41 +2862,60 @@ body {
     color: #000000;
 }
 
-/* ── DERECHA: LEYENDA ─────────────────────────────── */
-.uib-right {
-    flex: 1;
-    padding: 12px 20px;
-    min-width: 0;
+uib-breakdown {
+    display: flex; flex-direction: column;
+    gap: 3px; padding: 10px 16px; flex-shrink: 0;
+    min-width: 175px;
 }
-.uib-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.uib-bd-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,.3);
+    margin-bottom: 3px;
 }
-.uib-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
+.uib-bd-row {
+    display: flex; align-items: center; gap: 6px;
 }
-.uib-legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
+.uib-bd-total {
+    border-top: 1px solid #222;
+    margin-top: 3px; padding-top: 4px;
 }
-.uib-legend-lbl {
-    font-size: 10px;
-    color: #000000;
-    font-weight: 600;
-    flex: 1;
-    white-space: nowrap;
+.uib-bd-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%; flex-shrink: 0;
 }
-.uib-legend-val {
-    font-size: 11px;
-    font-weight: 600;
-    color: #000000;
-    min-width: 20px;
-    text-align: right;
+.uib-bd-lbl {
+    font-size: 10px; color: rgba(255,255,255,.35);
+    font-weight: 600; flex: 1; white-space: nowrap;
 }
+.uib-bd-count {
+    font-size: 10px; font-weight: 800;
+    color: rgba(255,255,255,.5);
+    min-width: 16px; text-align: center;
+}
+.uib-bd-pts {
+    font-size: 10px; font-weight: 800;
+    color: rgba(255,255,255,.6);
+    min-width: 34px; text-align: right;
+}
+ 
+/* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
+.uib-chart-col {
+    flex: 1; display: flex; flex-direction: column;
+    gap: 4px; padding: 10px 16px 10px 12px;
+    min-width: 140px;
+}
+.uib-chart-label {
+    font-size: 9px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,.3);
+}
+.uib-chart-wrap {
+    flex: 1; position: relative; height: 62px;
+}
+.uib-chart-wrap canvas {
+    position: absolute; inset: 0;
+    width: 100% !important; height: 100% !important;
+}
+
 
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {

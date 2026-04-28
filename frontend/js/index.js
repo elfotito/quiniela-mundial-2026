@@ -77,6 +77,63 @@ if (btn && menu) {
         btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
     });
 }
+let uibEvoChart = null;
+
+function renderUibEvo(evaluadas) {
+    const canvas = document.getElementById('uibEvoChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    if (uibEvoChart) { uibEvoChart.destroy(); }
+
+    const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+
+    uibEvoChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: datos,
+                borderColor: '#FFD700',
+                backgroundColor: 'rgba(255,215,0,0.07)',
+                borderWidth: 2, fill: true, tension: 0.3,
+                pointRadius: datos.length <= 12 ? 3 : 0,
+                pointHoverRadius: 5,
+                pointBackgroundColor: '#FFD700',
+                pointBorderColor: '#111', pointBorderWidth: 1.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: { label: ctx => `Partido ${ctx.parsed.x}: ${ctx.parsed.y} pts` },
+                    backgroundColor: '#1a1a1a', titleColor: '#aaa',
+                    bodyColor: '#FFD700', borderColor: '#333', borderWidth: 1
+                }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    ticks: { color: 'rgba(255,255,255,.2)', maxTicksLimit: 5, font: { size: 8 } },
+                    grid: { color: 'rgba(255,255,255,.04)' },
+                    border: { display: false }
+                },
+                y: {
+                    min: 0, max: 9,
+                    ticks: {
+                        color: 'rgba(255,255,255,.2)', font: { size: 8 },
+                        callback: v => [0,2,5,7,9].includes(v) ? v : ''
+                    },
+                    grid: {
+                        color: ctx => [0,2,5,7,9].includes(ctx.tick.value)
+                            ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,.02)'
+                    },
+                    border: { display: false }
+                }
+            }
+        }
+    });
+}
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
@@ -755,6 +812,11 @@ async function initUserBanner() {
 
         // Donut
         renderUibDonut(exactos, ganMar, ganador, marcador, fallados);
+        const evaluadas = predicciones
+    .filter(p => p.puntos_obtenidos !== null)
+    .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
+
+renderUibEvo(evaluadas);
 
     } catch (err) {
         console.error('Error predicciones donut:', err);
