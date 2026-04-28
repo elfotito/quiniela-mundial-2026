@@ -117,6 +117,9 @@
             padding-top: var(--header-h) !important;
             overflow-x: hidden;
         }
+        @media (max-width: 1100px) {
+            body { padding-top: 40px !important; }
+        }
 
         ul {
             list-style: none;
@@ -2258,7 +2261,7 @@ body {
     .mobile-top-bar    { display: flex; }
     .mobile-bottom-nav { display: flex; }
     .desktop-header    { display: none !important; }
-    body { padding-top: 50px !important; padding-bottom: 60px !important; }
+    body { padding-top: 56px !important; padding-bottom: 64px !important; }
 }
  
  
