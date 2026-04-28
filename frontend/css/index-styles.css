@@ -637,6 +637,53 @@ body {
     margin-bottom: 2rem;
 }
 
+@media (max-width: 768px) {
+    .countdown-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .countdown-label {
+        flex-direction: row;
+        margin: 0;
+    }
+    
+    .countdown-label div {
+        display: none;
+    }
+    
+    .countdown-timer {
+        gap: 2px; 
+        margin: 0;
+    }
+    
+    .time-value {
+        font-size: 2rem; 
+        font-weight: 700;
+        line-height: 1; 
+    }
+
+    .time-label {
+        font-size: 0.85rem;
+        padding-top: 0;
+        font-weight: 500;
+    }
+    
+    .time-label {
+        font-size: 0.8rem; 
+        padding-top: 2px;
+    }
+    .time-box {
+        min-width: 38px;
+        padding: 0;
+        text-align: center;
+}
+}
 
 /* ================================================
    CARRUSEL HERO 
