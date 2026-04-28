@@ -2089,3 +2089,141 @@ body {
         .qui-col-left,.qui-col-right { position:static; }
         .charts-row { grid-template-columns:1fr; }
     }
+
+    predictions-list {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.pi-row {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background .15s;
+    min-height: 52px;
+}
+.pi-row:last-child { border-bottom: none; }
+.pi-row:hover { background: #fafafa; }
+
+.pi-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 10px 12px;
+    gap: 1px;
+}
+.pi-date-day { font-size: 15px; font-weight: 900; color: #1a1a1a; line-height: 1; }
+.pi-date-mon { font-size: 8px;  font-weight: 700; color: #aaa; letter-spacing: .5px; }
+
+.pi-match {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+}
+
+.pi-team {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity .2s;
+}
+.pi-team-right {
+    justify-content: flex-end;
+}
+.pi-team.pi-team-loser {
+    opacity: .35;
+}
+
+.pi-flag  { font-size: 18px; line-height: 1; flex-shrink: 0; }
+.pi-name  { font-size: 12px; font-weight: 700; color: #1a1a1a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+.pi-arrow { font-size: 9px; color: #0066CC; flex-shrink: 0; }
+
+.pi-score-real {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 48px;
+}
+.pi-score-num {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1a1a1a;
+    min-width: 14px;
+    text-align: center;
+    line-height: 1;
+}
+.pi-score-num.winner { color: #0a0a0a; }
+.pi-score-num.loser  { color: #ccc;    }
+.pi-score-sep {
+    font-size: 12px;
+    color: #ddd;
+    font-weight: 400;
+}
+.pi-score-hora {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.pi-vsep {
+    width: 1px;
+    height: 32px;
+    background: #f0f0f0;
+    flex-shrink: 0;
+}
+
+.pi-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px 8px 12px;
+    min-width: 72px;
+}
+.pi-pred-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.pi-pred-lbl {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: #bbb;
+}
+.pi-pred-val {
+    font-size: 12px;
+    font-weight: 800;
+    color: #555;
+}
+
+.pi-pts-badge {
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.pi-badge-9       { background: #D1F2EB; color: #085041; }
+.pi-badge-7       { background: #EAF3DE; color: #27500A; }
+.pi-badge-5       { background: #FAEEDA; color: #633806; }
+.pi-badge-2       { background: #EBF3FF; color: #0C447C; }
+.pi-badge-0       { background: #FEF2F2; color: #dc2626; }
+.pi-badge-pending { background: #f5f5f5; color: #aaa;    }
+
+@media (max-width: 500px) {
+    .pi-row { grid-template-columns: 36px 1fr auto; }
+    .pi-vsep, .pi-pred-row { display: none; }
+    .pi-side { padding: 8px 10px; }
+    .pi-name { max-width: 60px; font-size: 11px; }
+}

@@ -194,94 +194,97 @@ function mostrarPrediccionesFiltradas() {
     container.innerHTML = prediccionesFiltradas.map(p => crearItemPrediccion(p)).join('');
 }
 
+
 function crearItemPrediccion(prediccion) {
     const fechaPartido = new Date(prediccion.fecha_partido || prediccion.fecha);
     const dia = fechaPartido.getDate();
-    const mes = fechaPartido.toLocaleDateString('es', { month: 'short' });
-    
+    const mes = fechaPartido.toLocaleDateString('es', { month: 'short' }).toUpperCase();
+
     const isPending = prediccion.puntos_obtenidos === null;
-    
-    // Detectar nombres de campos del resultado real
-    const golesLocalReal = prediccion.goles_local_real ?? prediccion.goles_local ?? null;
+
+    const golesLocalReal     = prediccion.goles_local_real     ?? prediccion.goles_local     ?? null;
     const golesVisitanteReal = prediccion.goles_visitante_real ?? prediccion.goles_visitante ?? null;
-    const tieneResultadoReal = golesLocalReal !== null && golesLocalReal !== undefined;
-    
-    let statusClass = 'pendiente';
-    let statusText = 'Pendiente';
-    let puntos = '-';
-    
-    if (!isPending) {
-        if (prediccion.puntos_obtenidos === 9) {
-            statusClass = 'exacto';
-            statusText = '🔮 GENIO';
-        } else if (prediccion.puntos_obtenidos >= 5) {
-            statusClass = 'parcial';
-            statusText = prediccion.puntos_obtenidos === 7 ? '🔥 CRACK' : '🎉 IDOLO';
-        } else if (prediccion.puntos_obtenidos === 2) {
-            statusClass = 'parcial';
-            statusText = '👻 FANTASMA';
-        } else {
-            statusClass = 'fallado';
-            statusText = '🥶 ¿FRIO?';
-        }
-        puntos = prediccion.puntos_obtenidos;
+    const tieneResultado     = golesLocalReal !== null && golesLocalReal !== undefined;
+
+    // ── Determinar ganador ──────────────────────────
+    let localGana = false, visitanteGana = false, esEmpate = false;
+    if (tieneResultado) {
+        if      (golesLocalReal > golesVisitanteReal)  localGana     = true;
+        else if (golesVisitanteReal > golesLocalReal)  visitanteGana = true;
+        else                                           esEmpate      = true;
     }
-    
+
+    // ── Badge de puntos ─────────────────────────────
+    let badgeClass = 'pi-badge-pending';
+    let badgeText  = 'Pendiente';
+    let ptsDisplay = '—';
+
+    if (!isPending) {
+        const pts = prediccion.puntos_obtenidos;
+        ptsDisplay = `+${pts}`;
+        if      (pts === 9) { badgeClass = 'pi-badge-9'; badgeText = '🔮 GENIO';    }
+        else if (pts === 7) { badgeClass = 'pi-badge-7'; badgeText = '🔥 CRACK';    }
+        else if (pts === 5) { badgeClass = 'pi-badge-5'; badgeText = '🎉 ÍDOLO';    }
+        else if (pts === 2) { badgeClass = 'pi-badge-2'; badgeText = '👻 FANTASMA'; }
+        else                { badgeClass = 'pi-badge-0'; badgeText = '🥶 ¿FRÍO?';  ptsDisplay = '0'; }
+    }
+
+    // ── Clases de opacidad por resultado ───────────
+    const claseLocal     = tieneResultado ? (visitanteGana ? 'pi-team-loser' : '') : '';
+    const claseVisitante = tieneResultado ? (localGana     ? 'pi-team-loser' : '') : '';
+
     return `
-        <div class="prediction-item ${statusClass}">
-            <!-- FECHA -->
-            <div class="prediction-date">
-                <div class="prediction-day">${dia}</div>
-                <div class="prediction-month">${mes.toUpperCase()}</div>
+    <div class="pi-row">
+
+        <!-- Fecha -->
+        <div class="pi-date">
+            <span class="pi-date-day">${dia}</span>
+            <span class="pi-date-mon">${mes}</span>
+        </div>
+
+        <!-- Equipos + marcadores -->
+        <div class="pi-match">
+
+            <!-- Local -->
+            <div class="pi-team ${claseLocal}">
+                <span class="pi-flag">${obtenerBandera(prediccion.equipo_local)}</span>
+                <span class="pi-name">${prediccion.equipo_local}</span>
+                ${localGana ? '<span class="pi-arrow">◀️</span>' : ''}
             </div>
-            
-            <!-- EQUIPOS -->
-            <div class="prediction-match">
-                <div class="prediction-team">
-                    <span class="team-flag">${obtenerBandera(prediccion.equipo_local)}</span>
-                    <span class="team-name">${prediccion.equipo_local}</span>
-                </div>
-                <span class="match-vs">VS</span>
-                <div class="prediction-team team-visit">
-                    <span class="team-flag">${obtenerBandera(prediccion.equipo_visitante)}</span>
-                    <span class="team-name">${prediccion.equipo_visitante}</span>
-                </div>
-            </div>
-            
-            <!-- RESULTADO REAL (IZQUIERDA) -->
-            <div class="real-score-column">
-                <div class="real-score-label">⚽ Resultado</div>
-                ${tieneResultadoReal ? `
-                    <div class="real-score-display">
-                        <span class="real-score-number">${golesLocalReal}</span>
-                        <span class="real-score-separator">-</span>
-                        <span class="real-score-number">${golesVisitanteReal}</span>
-                    </div>
+
+            <!-- Marcador real -->
+            <div class="pi-score-real">
+                ${tieneResultado ? `
+                    <span class="pi-score-num ${localGana ? 'winner' : visitanteGana ? 'loser' : ''}">${golesLocalReal}</span>
+                    <span class="pi-score-sep">|</span>
+                    <span class="pi-score-num ${visitanteGana ? 'winner' : localGana ? 'loser' : ''}">${golesVisitanteReal}</span>
                 ` : `
-                    <div class="real-score-display">
-                        <span style="color: var(--text-gray); font-size: 0.9rem;">Pendiente</span>
-                    </div>
+                    <span class="pi-score-hora">${fechaPartido.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' })}</span>
                 `}
             </div>
-            
-            <!-- TU PREDICCIÓN (DERECHA) -->
-            <div class="prediction-score-column">
-                <div class="prediction-score-label">🎯 Tu predicción</div>
-                <div class="prediction-score-display">
-                    <span class="prediction-score-number">${prediccion.goles_local_pred}</span>
-                    <span class="prediction-score-separator">-</span>
-                    <span class="prediction-score-number">${prediccion.goles_visitante_pred}</span>
-                </div>
+
+            <!-- Visitante -->
+            <div class="pi-team pi-team-right ${claseVisitante}">
+                ${visitanteGana ? '<span class="pi-arrow">▶️</span>' : ''}
+                <span class="pi-name">${prediccion.equipo_visitante}</span>
+                <span class="pi-flag">${obtenerBandera(prediccion.equipo_visitante)}</span>
             </div>
-            
-            <!-- PUNTOS -->
-            <div class="prediction-result">
-                <span class="result-badge ${statusClass}">${statusText}</span>
-                <div class="result-points">${isPending ? '-' : '+' + puntos}</div>
-                <div class="result-label">pts</div>
-            </div>
+
         </div>
-    `;
+
+        <!-- Separador vertical -->
+        <div class="pi-vsep"></div>
+
+        <!-- Columna lateral: predicción + puntos -->
+        <div class="pi-side">
+            <div class="pi-pred-row">
+                <span class="pi-pred-lbl">Pred.</span>
+                <span class="pi-pred-val">${prediccion.goles_local_pred} – ${prediccion.goles_visitante_pred}</span>
+            </div>
+            <span class="pi-pts-badge ${badgeClass}">${ptsDisplay}</span>
+        </div>
+
+    </div>`;
 }
 
 // Nueva función: Calcular desglose de puntos
