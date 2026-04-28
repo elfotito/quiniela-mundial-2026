@@ -756,12 +756,16 @@ async function initUserBanner() {
         const efect  = parseFloat(stats.efectividad) || 0;
         const pos    = stats.posicion_ranking       || '—';
 
-        document.getElementById('uibPuntos').textContent       = pts;
-        document.getElementById('uibPredicciones').textContent  = total;
-        document.getElementById('uibAciertos').textContent      = aciert;
-        document.getElementById('uibEfectividad').textContent   = `${efect}%`;
-        document.getElementById('uibPosicion').innerHTML =
-            `<i class="bi bi-trophy-fill"></i> ${pos}° lugar`;
+        const s = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+s('bdExacto',    exactos);
+s('bdGanMar',    ganMar);
+s('bdGan',       ganador);
+s('bdMar',       marcador);
+s('bdExactoPts', `${exactos  * 9} pts`);
+s('bdGanMarPts', `${ganMar   * 7} pts`);
+s('bdGanPts',    `${ganador  * 5} pts`);
+s('bdMarPts',    `${marcador * 2} pts`);
+s('bdTotal',     `${exactos*9 + ganMar*7 + ganador*5 + marcador*2} pts`);
 
         // Barras
         const pctProgreso   = Math.round((total / TOTAL_PARTIDOS_MUNDIAL) * 100);
