@@ -2310,8 +2310,6 @@ body {
     }
 
     .countdown-timer {
-        margin-right: 5px;
-        margin-top: 6px;
         display: flex;
         align-items: center;
         gap: 12px;
