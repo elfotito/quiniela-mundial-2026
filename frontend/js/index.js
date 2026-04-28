@@ -812,11 +812,11 @@ async function initUserBanner() {
 
         // Donut
         renderUibDonut(exactos, ganMar, ganador, marcador, fallados);
-        const evaluadas = predicciones
+        const evaluadasEvo = predicciones
     .filter(p => p.puntos_obtenidos !== null)
     .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
 
-renderUibEvo(evaluadas);
+renderUibEvo(evaluadasEvo);
 
     } catch (err) {
         console.error('Error predicciones donut:', err);
