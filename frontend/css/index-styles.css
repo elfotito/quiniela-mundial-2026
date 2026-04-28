@@ -2040,8 +2040,8 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
  
 .mtb-icon-btn {
