@@ -943,7 +943,7 @@ body {
 .nav-item:nth-child(3),
 .nav-item:nth-child(4)          { border-top: 1px solid rgba(255,255,255,0.08); }
 .nav-item:nth-child(4)          { border-right: none; }
-
+}
 /* ─── GRID WRAPPER ──────────────────────────────────────── */
 .dashboard-grid {
     max-width: 1280px;
@@ -3038,5 +3038,4 @@ uib-breakdown {
     top: 0; left: 0;
     width: 100% !important;
     height: 100% !important;
-}
 }
