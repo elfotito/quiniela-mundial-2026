@@ -821,7 +821,7 @@ s('bdTotal',     `${exactos*9 + ganMar*7 + ganador*5 + marcador*2} pts`);
     .filter(p => p.puntos_obtenidos !== null)
     .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
 
-renderUibEvo(evaluadasEvo);
+setTimeout(() => renderUibEvo(evaluadasEvo), 200);
 
     } catch (err) {
         console.error('Error predicciones donut:', err);
