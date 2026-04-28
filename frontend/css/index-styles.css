@@ -3008,3 +3008,16 @@ uib-breakdown {
     display: flex !important;
     align-items: center !important;
 }
+
+.uib-chart-wrap {
+    position: relative;
+    height: 62px;
+    width: 100%;
+    min-width: 120px;
+}
+.uib-chart-wrap canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
