@@ -117,9 +117,7 @@
             padding-top: var(--header-h) !important;
             overflow-x: hidden;
         }
-        @media (max-width: 1100px) {
-            body { padding-top: 40px !important; }
-        }
+        
 
         ul {
             list-style: none;
