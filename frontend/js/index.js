@@ -72,6 +72,7 @@ async function cargarDatos() {
 }
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
+    console.log('renderUibEvo called, evaluadas:', evaluadas, 'canvas:', canvas);
     if (!canvas || typeof Chart === 'undefined') return;
     
     // Destruir chart anterior de forma segura
@@ -80,6 +81,7 @@ function renderUibEvo(evaluadas) {
     }
 
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+    console.log('Chart datos:', datos);
 
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -816,6 +818,7 @@ s('bdTotal',     `${exactos*9 + ganMar*7 + ganador*5 + marcador*2} pts`);
     .filter(p => p.puntos_obtenidos !== null)
     .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
 
+console.log('evaluadasEvo antes de renderizar:', evaluadasEvo);
 setTimeout(() => renderUibEvo(evaluadasEvo), 200);
 
     } catch (err) {
