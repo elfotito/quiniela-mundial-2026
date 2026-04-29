@@ -2032,10 +2032,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 52px;
+    height: 56px;          /* Tu medida exacta */
     padding: 0 16px;
-    background-color: #f5f5f5; /* Fondo claro de tu barra */
-    overflow: hidden; /* Evita que los bordes se desborden */
+    background-color: #f5f5f5;
+    overflow: hidden;      /* Recorta cualquier exceso */
     box-sizing: border-box;
 }
 
@@ -2043,35 +2043,30 @@ body {
 .mobile-top-bar::before {
     content: '';
     position: absolute;
-    bottom: 0;          /* Anclado a la esquina inferior-izquierda */
+    bottom: 0;
     left: 0;
     width: 0;
     height: 0;
-    border-bottom: 52px solid rgba(0, 0, 0, 0.15); /* Negro grisáceo con opacidad */
-    border-right: 250px solid transparent;          /* Controla el ángulo (ajústalo si cambia el ancho) */
+    /* Altura exacta de la barra (56px) y ancho igual (56px) para 45° */
+    border-bottom: 56px solid rgba(0, 0, 0, 0.15);
+    border-right: 56px solid transparent;
     z-index: 1;
-    pointer-events: none; /* No interfiere con los clics */
+    pointer-events: none;
 }
 
 /* === DIAGONAL DELANTERA (NEGRA SÓLIDA) === */
 .mobile-top-bar::after {
     content: '';
     position: absolute;
-    bottom: 0;          /* Anclado a la esquina inferior-izquierda */
+    bottom: 0;
     left: 0;
     width: 0;
     height: 0;
-    border-bottom: 52px solid #000;           /* Negro sólido */
-    border-right: 200px solid transparent;    /* Un poco menos ancha que la gris */
+    /* Misma altura (56px) pero un poco menos de ancho (40px) para que se vea más corta */
+    border-bottom: 56px solid #000;
+    border-right: 40px solid transparent;
     z-index: 2;
     pointer-events: none;
-}
-
-/* === ELEMENTOS DE CONTENIDO (por encima de las diagonales) === */
-.mobile-top-bar .logo-link,
-.mobile-top-bar .user-icon-btn {
-    position: relative;
-    z-index: 3; /* Asegura que logo e icono estén sobre las líneas */
 }
 
 .mtb-logo,
