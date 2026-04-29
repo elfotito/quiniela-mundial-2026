@@ -82,6 +82,7 @@ function renderUibEvo(evaluadas) {
 
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
     console.log('Chart datos:', datos);
+    console.log('Primer dato:', datos[0], 'Último:', datos[datos.length - 1]);
 
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -130,6 +131,7 @@ function renderUibEvo(evaluadas) {
             }
         }
     });
+    console.log('Chart creado:', uibEvoChart);
 }
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
