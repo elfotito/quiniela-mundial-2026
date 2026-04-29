@@ -67,22 +67,21 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
-const btn = document.getElementById('menuToggle');
-const menu = document.getElementById('mobileMenu');
-const btnClose = document.getElementById('mobileMenuClose');
-
 if (btn && menu) {
     function closeMenu() {
         menu.classList.remove('show');
         btn.querySelector('i').className = 'fas fa-bars';
+        console.log('closeMenu ejecutado');
     }
 
     function openMenu() {
         menu.classList.add('show');
         btn.querySelector('i').className = 'fas fa-times';
+        console.log('openMenu ejecutado');
     }
 
     btn.addEventListener('click', () => {
+        console.log('btn clicked, tiene show:', menu.classList.contains('show'));
         menu.classList.contains('show') ? closeMenu() : openMenu();
     });
 
