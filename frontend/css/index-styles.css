@@ -2049,18 +2049,18 @@ body {
     width: 12px;
     height: 100%;
     background: #444;
-    clip-path: polygon(30% 0, 100% 0, 60% 100%, 0 100%);
+    clip-path: polygon(40% 0, 100% 0, 60% 100%, 0 100%);
     z-index: 0;
 }
 .mobile-top-bar::after {
     content: '';
     position: absolute;
     top: 0;
-    left: 48%;            
+    left: 47%;            
     width: 12px;
     height: 100%;
     background: #333;    
-    clip-path: polygon(30% 0, 100% 0, 60% 100%, 0 100%);
+    clip-path: polygon(40% 0, 100% 0, 60% 100%, 0 100%);
     z-index: 1;
 }
 .logo-bg {
