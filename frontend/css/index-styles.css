@@ -2049,15 +2049,6 @@
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
     z-index: 1;
 }
-.logo-bg {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    background: #fa0101;
-    z-index: 0;
-}
 
 .user-bg {
     position: absolute;
@@ -2065,7 +2056,7 @@
     right: 0;
     width: 48%;
     height: 100%;
-    background: #bdbcbc;
+    background: #ffd930d3;
     z-index: 1;
 }
 .mtb-logo,
