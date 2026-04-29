@@ -2040,7 +2040,15 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     overflow: hidden;
 }
-
+.user-pill-mobile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 0;
+}
 .mobile-top-bar::before {
     content: '';
     position: absolute;
