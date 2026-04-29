@@ -2049,7 +2049,7 @@ body {
     width: 12px;
     height: 100%;
     background: #444;
-    clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
+    clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%);
     z-index: 0;
 }
 .mobile-top-bar::after {
@@ -2060,7 +2060,7 @@ body {
     width: 12px;
     height: 100%;
     background: #333;    
-    clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
+    clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 0% 100%);
     z-index: 1;
 }
 .logo-bg {
@@ -2079,7 +2079,7 @@ body {
     right: 0;
     width: 50%;
     height: 100%;
-    background: #ffffff;
+    background: #444;
     z-index: 1;
 }
 .mtb-logo,
