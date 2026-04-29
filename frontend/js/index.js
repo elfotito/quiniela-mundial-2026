@@ -67,6 +67,10 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
+const btn = document.getElementById('menuToggle');
+const menu = document.getElementById('mobileMenu');
+const btnClose = document.getElementById('mobileMenuClose');
+
 if (btn && menu) {
     function closeMenu() {
         menu.classList.remove('show');
