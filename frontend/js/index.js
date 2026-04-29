@@ -67,33 +67,6 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
-const btn = document.getElementById('menuToggleBtn');
-const menu = document.getElementById('mobileMenu');
-const btnClose = document.getElementById('mobileMenuClose');
-
-if (btn && menu) {
-    function closeMenu() {
-        menu.classList.remove('show');
-        btn.querySelector('i').className = 'fas fa-bars';
-    }
-
-    function openMenu() {
-        menu.classList.add('show');
-        btn.querySelector('i').className = 'fas fa-times';
-    }
-
-    btn.addEventListener('click', () => {
-        menu.classList.contains('show') ? closeMenu() : openMenu();
-    });
-
-    if (btnClose) {
-        btnClose.addEventListener('click', closeMenu);
-    }
-}
-btn.addEventListener('click', () => {
-    console.log('tiene show:', menu.classList.contains('show'));
-    menu.classList.contains('show') ? closeMenu() : openMenu();
-});
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
     if (!canvas || typeof Chart === 'undefined') return;
@@ -1006,7 +979,9 @@ function obtenerCampeon(codigo) {
         document.body.style.overflow = '';
     }
  
-    if (menuBtn)  menuBtn.addEventListener('click', openMenu);
+    if (menuBtn) menuBtn.addEventListener('click', () => {
+    menu.classList.contains('show') ? closeMenu() : openMenu();
+    });
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     if (backdrop) backdrop.addEventListener('click', closeMenu);
  
