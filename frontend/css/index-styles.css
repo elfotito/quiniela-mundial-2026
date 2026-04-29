@@ -812,10 +812,6 @@
     user-select: none;
 }
 .nav-item:last-child { border-right: none; }
-.nav-item:hover {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 1),
-                 0 0 2px rgba(255, 255, 255, 1);
-}
 
 /* 2. AGREGADO: Reset de márgenes para que los párrafos no rompan el layout */
 .nav-item p {

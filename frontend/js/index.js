@@ -71,24 +71,24 @@ const btn = document.getElementById('menuToggle');
 const menu = document.getElementById('mobileMenu');
 const btnClose = document.getElementById('mobileMenuClose');
 
-function closeMenu() {
-    menu.classList.remove('show');
-    btn.querySelector('i').className = 'fas fa-bars';
-}
-
-function openMenu() {
-    menu.classList.add('show');
-    btn.querySelector('i').className = 'fas fa-times';
-}
-
 if (btn && menu) {
+    function closeMenu() {
+        menu.classList.remove('show');
+        btn.querySelector('i').className = 'fas fa-bars';
+    }
+
+    function openMenu() {
+        menu.classList.add('show');
+        btn.querySelector('i').className = 'fas fa-times';
+    }
+
     btn.addEventListener('click', () => {
         menu.classList.contains('show') ? closeMenu() : openMenu();
     });
-}
 
-if (btnClose) {
-    btnClose.addEventListener('click', closeMenu);
+    if (btnClose) {
+        btnClose.addEventListener('click', closeMenu);
+    }
 }
 
 function renderUibEvo(evaluadas) {
