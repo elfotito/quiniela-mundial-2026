@@ -2045,10 +2045,10 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    left: 0; 
-    width: 182px;
+    left: 48%; 
+    width: 12px;
     height: 100%;
-    background: #eb5858;
+    background: #444;
     clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
     z-index: 0;
 }
@@ -2057,7 +2057,7 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    left: 183px;            
+    left: 50%;            
     width: 12px;
     height: 100%;
     background: #333;    
