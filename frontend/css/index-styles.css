@@ -2026,41 +2026,52 @@ body {
     }
 }
     /* ── TOP BAR ──────────────────────────────────────────────── */
+/* === TOP BAR PRINCIPAL === */
 .mobile-top-bar {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 56px;
-    background: #1d1d1d;
-    z-index: 1100;
+    position: relative;
+    display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 52px;
     padding: 0 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    overflow: hidden;
+    background-color: #f5f5f5; /* Fondo claro de tu barra */
+    overflow: hidden; /* Evita que los bordes se desborden */
+    box-sizing: border-box;
 }
 
+/* === DIAGONAL TRASERA (GRIS/DIFUMINADA) === */
 .mobile-top-bar::before {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 48%;
-    height: 100%;
-    background: #000;
-    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
-    z-index: 0;
+    bottom: 0;          /* Anclado a la esquina inferior-izquierda */
+    left: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 52px solid rgba(0, 0, 0, 0.15); /* Negro grisáceo con opacidad */
+    border-right: 250px solid transparent;          /* Controla el ángulo (ajústalo si cambia el ancho) */
+    z-index: 1;
+    pointer-events: none; /* No interfiere con los clics */
 }
 
+/* === DIAGONAL DELANTERA (NEGRA SÓLIDA) === */
 .mobile-top-bar::after {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 38%;
-    height: 100%;
-    background: #2a2a2a;
-    clip-path: polygon(0 0, 78% 0, 88% 100%, 0 100%);
-    z-index: 0;
+    bottom: 0;          /* Anclado a la esquina inferior-izquierda */
+    left: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 52px solid #000;           /* Negro sólido */
+    border-right: 200px solid transparent;    /* Un poco menos ancha que la gris */
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* === ELEMENTOS DE CONTENIDO (por encima de las diagonales) === */
+.mobile-top-bar .logo-link,
+.mobile-top-bar .user-icon-btn {
+    position: relative;
+    z-index: 3; /* Asegura que logo e icono estén sobre las líneas */
 }
 
 .mtb-logo,
