@@ -5,9 +5,8 @@
 const API_URL = CONFIG.API_URL;
 let usuarioId = null;
 
-// Instancias globales de Chart.js
+// Instancia global de Chart.js para el gráfico de evolución
 let uibEvoChart = null;
-let uibDonutChart = null;
 
 // ===============================================
 // INICIALIZACIÓN
