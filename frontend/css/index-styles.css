@@ -2044,30 +2044,25 @@ body {
 .mobile-top-bar::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 12px;
-    width: 80px;          /* Más ancha = menos inclinada */
-    height: 56px;
-    background: transparent;
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
-    border-left: 2px solid rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    pointer-events: none;
+    top: 0;
+    left: 36%; 
+    width: 12px;
+    height: 100%;
+    background: #444;
+    clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
+    z-index: 0;
 }
 
-/* === DIAGONAL NEGRA (DELANTE) === */
 .mobile-top-bar::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 80px;
-    height: 56px;
-    background: transparent;
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
-    border-left: 3px solid #000;
-    z-index: 2;
-    pointer-events: none;
+    top: 0;
+    left: 38%;            
+    width: 12px;
+    height: 100%;
+    background: #333;    
+    clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
+    z-index: 0;
 }
 
 .mtb-logo,
