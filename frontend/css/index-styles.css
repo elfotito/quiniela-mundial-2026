@@ -2053,8 +2053,8 @@ body {
     transform-origin: top left;
     z-index: 0;
 }
-.mobile-top-bar-logo,
-.mobile-top-bar-user {
+.mtb-logo,
+.user-pill-mobile {
     position: relative;
     z-index: 1;
 }
