@@ -2047,8 +2047,8 @@ body {
     top: 0; left: 0;
     width: 48%;
     height: 100%;
-    background: #000;
-    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+    background: #acabab;
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
     z-index: 0;
 }
 
