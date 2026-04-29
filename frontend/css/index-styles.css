@@ -2854,7 +2854,7 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    color: #eeff07;
+    color: #8a8a8a;
     font-size: 11px;
     font-weight: 400;
     width: fit-content;
@@ -2914,14 +2914,14 @@
 }
 .uib-bd-title {
     font-size: 9px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: rgba(255,255,255,.3);
+    text-transform: uppercase; color: #000000;
     margin-bottom: 3px;
 }
 .uib-bd-row {
     display: flex; align-items: center; gap: 6px;
 }
 .uib-bd-total {
-    border-top: 1px solid #222;
+    border-top: 1px solid #ccc;
     margin-top: 3px; padding-top: 4px;
 }
 .uib-bd-dot {
