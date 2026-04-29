@@ -2048,9 +2048,9 @@ body {
     left: 45%; 
     width: 50px;
     height: 100%;
-    background: #444;
+    background: #000000;
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
-    z-index: 0;
+    z-index: 2;
 }
 .mobile-top-bar::after {
     content: '';
@@ -2059,7 +2059,7 @@ body {
     left: 47%;            
     width: 50px;
     height: 100%;
-    background: #333;    
+    background: #474747;    
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
     z-index: 1;
 }
