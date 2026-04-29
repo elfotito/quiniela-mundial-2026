@@ -2032,7 +2032,7 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 56px;
-    background: #1a1a1a;
+    background: #000000;
     z-index: 1100;
     align-items: center;
     justify-content: space-between;
@@ -2045,10 +2045,21 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0;
-    width: 48%;          
+    width: 48%;
     height: 100%;
     background: #000;
     clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+    z-index: 0;
+}
+
+.mobile-top-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 38%;           
+    height: 100%;
+    background: #df1212;
+    clip-path: polygon(0 0, 78% 0, 88% 100%, 0 100%);
     z-index: 0;
 }
 
