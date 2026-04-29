@@ -2032,7 +2032,7 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 56px;
-    background: #1a1a1a;       
+    background: #1a1a1a;
     z-index: 1100;
     align-items: center;
     justify-content: space-between;
@@ -2041,22 +2041,29 @@ body {
     overflow: hidden;
 }
 
-/* Banda diagonal que cubre el lado del logo */
 .mobile-top-bar::before {
     content: '';
     position: absolute;
-    top: 0; left: -10px;
-    width: 55%;
+    top: 0; left: 0;
+    width: 48%;          
     height: 100%;
     background: #000;
-    transform: skewX(-8deg);
-    transform-origin: top left;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
     z-index: 0;
 }
+
 .mtb-logo,
-.user-pill-mobile {
+.user-pill-mobile,
+.btn-admin-display,
+.btn-noticias-display {
     position: relative;
     z-index: 1;
+}
+
+/* Logo */
+.mtb-logo img {
+    height: 32px;
+    width: auto;
 }
 .mtb-icon-btn {
     background: none;
