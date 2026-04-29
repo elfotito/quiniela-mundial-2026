@@ -69,15 +69,27 @@ async function cargarDatos() {
 }
 const btn = document.getElementById('menuToggle');
 const menu = document.getElementById('mobileMenu');
+const btnClose = document.getElementById('mobileMenuClose');
+
+function closeMenu() {
+    menu.classList.remove('show');
+    btn.querySelector('i').className = 'fas fa-bars';
+}
+
+function openMenu() {
+    menu.classList.add('show');
+    btn.querySelector('i').className = 'fas fa-times';
+}
+
 if (btn && menu) {
-    let isOpen = false;
     btn.addEventListener('click', () => {
-        isOpen = !isOpen;
-        menu.classList.toggle('show');
-        btn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+        menu.classList.contains('show') ? closeMenu() : openMenu();
     });
 }
-let uibEvoChart = null;
+
+if (btnClose) {
+    btnClose.addEventListener('click', closeMenu);
+}
 
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
