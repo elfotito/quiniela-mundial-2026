@@ -90,7 +90,10 @@ if (btn && menu) {
         btnClose.addEventListener('click', closeMenu);
     }
 }
-
+btn.addEventListener('click', () => {
+    console.log('tiene show:', menu.classList.contains('show'));
+    menu.classList.contains('show') ? closeMenu() : openMenu();
+});
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
     if (!canvas || typeof Chart === 'undefined') return;
