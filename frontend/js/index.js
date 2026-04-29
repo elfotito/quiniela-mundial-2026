@@ -5,6 +5,10 @@
 const API_URL = CONFIG.API_URL;
 let usuarioId = null;
 
+// Instancias globales de Chart.js
+let uibEvoChart = null;
+let uibDonutChart = null;
+
 // ===============================================
 // INICIALIZACIÓN
 // ===============================================
@@ -70,7 +74,11 @@ async function cargarDatos() {
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
     if (!canvas || typeof Chart === 'undefined') return;
-    if (uibEvoChart) { uibEvoChart.destroy(); }
+    
+    // Destruir chart anterior de forma segura
+    if (uibEvoChart instanceof Chart) { 
+        uibEvoChart.destroy(); 
+    }
 
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
 
@@ -820,7 +828,11 @@ setTimeout(() => renderUibEvo(evaluadasEvo), 200);
 function renderUibDonut(exactos, ganMar, ganador, marcador, fallados) {
     const canvas = document.getElementById('uibDonutChart');
     if (!canvas || typeof Chart === 'undefined') return;
-    if (uibDonutChart) { uibDonutChart.destroy(); }
+    
+    // Destruir chart anterior de forma segura
+    if (uibDonutChart instanceof Chart) { 
+        uibDonutChart.destroy(); 
+    }
 
     const total = exactos + ganMar + ganador + marcador + fallados;
     const data  = total > 0
