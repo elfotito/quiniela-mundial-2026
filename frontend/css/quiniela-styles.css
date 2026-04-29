@@ -2099,12 +2099,11 @@ body {
 }
 
 .pi-row {
-    display: grid;
-    grid-template-columns: 40px 1fr auto auto;
+    display: flex;
     align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background .15s;
-    min-height: 52px;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 .pi-row:last-child { border-bottom: none; }
 .pi-row:hover { background: #fafafa; }
@@ -2121,24 +2120,24 @@ body {
 .pi-date-mon { font-size: 8px;  font-weight: 700; color: #aaa; letter-spacing: .5px; }
 
 .pi-match {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
+    flex: 1;
     gap: 8px;
-    padding: 10px 12px;
 }
 
 .pi-team {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: opacity .2s;
+    flex: 1;
 }
 .pi-team-right {
-    justify-content: flex-end;
+    flex-direction: row-reverse; /* bandera queda a la derecha */
+    justify-content: flex-start;
 }
 .pi-team.pi-team-loser {
-    opacity: .35;
+    opacity: 0.4;
 }
 
 .pi-flag  { font-size: 18px; line-height: 1; flex-shrink: 0; }
@@ -2148,24 +2147,30 @@ body {
 .pi-score-real {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 4px;
-    min-width: 48px;
+    min-width: 60px;
+    justify-content: center;
 }
 .pi-score-num {
-    font-size: 16px;
-    font-weight: 900;
-    color: #1a1a1a;
-    min-width: 14px;
-    text-align: center;
-    line-height: 1;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--fifa-gold);
 }
 .pi-score-num.winner { color: #0a0a0a; }
-.pi-score-num.loser  { color: #ccc;    }
-.pi-score-sep {
-    font-size: 12px;
-    color: #ddd;
+.pi-score-num.loser {
+    color: #888;
     font-weight: 400;
+}
+.pi-score-sep {
+    color: #555;
+    font-size: 1rem;
+}
+.pi-winner-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fifa-gold);
+    flex-shrink: 0;
 }
 .pi-score-hora {
     font-size: 13px;
@@ -2176,8 +2181,8 @@ body {
 
 .pi-vsep {
     width: 1px;
-    height: 32px;
-    background: #f0f0f0;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
     flex-shrink: 0;
 }
 
@@ -2186,8 +2191,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    padding: 8px 14px 8px 12px;
-    min-width: 72px;
+    min-width: 80px;
 }
 .pi-pred-row {
     display: flex;
@@ -2195,16 +2199,16 @@ body {
     gap: 4px;
 }
 .pi-pred-lbl {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: .8px;
+    font-size: 0.6rem;
+    color: #888;
     text-transform: uppercase;
-    color: #bbb;
+    letter-spacing: 0.5px;
 }
+
 .pi-pred-val {
-    font-size: 12px;
-    font-weight: 800;
-    color: #555;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ccc;
 }
 
 .pi-pts-badge {
