@@ -2045,12 +2045,23 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    left: 48%; 
+    left: 45%; 
     width: 12px;
     height: 100%;
     background: #444;
-    clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
+    clip-path: polygon(30% 0, 100% 0, 60% 100%, 0 100%);
     z-index: 0;
+}
+.mobile-top-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 48%;            
+    width: 12px;
+    height: 100%;
+    background: #333;    
+    clip-path: polygon(30% 0, 100% 0, 60% 100%, 0 100%);
+    z-index: 1;
 }
 .logo-bg {
     position: absolute;
@@ -2061,17 +2072,7 @@ body {
     background: #fa0101;
     z-index: 0;
 }
-.mobile-top-bar::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;            
-    width: 12px;
-    height: 100%;
-    background: #333;    
-    clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
-    z-index: 0;
-}
+
 .user-bg {
     position: absolute;
     top: 0;
@@ -2079,14 +2080,14 @@ body {
     width: 50%;
     height: 100%;
     background: #ffffff;
-    z-index: 0;
+    z-index: 1;
 }
 .mtb-logo,
 .user-pill-mobile,
 .btn-admin-display,
 .btn-noticias-display {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 /* Logo */
