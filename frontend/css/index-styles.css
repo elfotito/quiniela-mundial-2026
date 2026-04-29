@@ -2079,7 +2079,7 @@ body {
     right: 0;
     width: 48%;
     height: 100%;
-    background: #ffffff;
+    background: #8a8a8a;
     z-index: 1;
 }
 .mtb-logo,
@@ -2089,12 +2089,15 @@ body {
     position: relative;
     z-index: 2;
 }
-
+.btn-admin-display, .btn-noticias-display {
+    width: 30px;
+    height: 30px;
+}
 /* Logo */
 .mtb-logo img {
     height: 32px;
     width: auto;
-    padding-left: 5px;
+    padding-left: 20px;
 }
 .mtb-icon-btn {
     background: none;
