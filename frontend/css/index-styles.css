@@ -2082,7 +2082,6 @@ body {
 .mtb-icon-btn:hover { background: rgba(255,255,255,0.08); }
  
 .mtb-logo {
-    padding-top: 15px;
     height: 28px;
     display: flex;
     align-items: center;
@@ -2571,6 +2570,7 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
+            padding-top: 12px;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
             padding-bottom: 12px;
