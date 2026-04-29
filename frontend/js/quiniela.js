@@ -249,14 +249,14 @@ function crearItemPrediccion(prediccion) {
             <div class="pi-team ${claseLocal}">
                 <span class="pi-flag">${obtenerBandera(prediccion.equipo_local)}</span>
                 <span class="pi-name">${prediccion.equipo_local}</span>
-                ${localGana ? '<span class="pi-arrow">◀️</span>' : ''}
+                ${localGana ? '<span class="pi-winner-dot"></span>' : ''}
             </div>
 
             <!-- Marcador real -->
             <div class="pi-score-real">
                 ${tieneResultado ? `
                     <span class="pi-score-num ${localGana ? 'winner' : visitanteGana ? 'loser' : ''}">${golesLocalReal}</span>
-                    <span class="pi-score-sep">|</span>
+                    <span class="pi-score-sep">–</span>
                     <span class="pi-score-num ${visitanteGana ? 'winner' : localGana ? 'loser' : ''}">${golesVisitanteReal}</span>
                 ` : `
                     <span class="pi-score-hora">${fechaPartido.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' })}</span>
@@ -265,7 +265,7 @@ function crearItemPrediccion(prediccion) {
 
             <!-- Visitante -->
             <div class="pi-team pi-team-right ${claseVisitante}">
-                ${visitanteGana ? '<span class="pi-arrow">▶️</span>' : ''}
+                ${visitanteGana ? '<span class="pi-winner-dot"></span>' : ''}
                 <span class="pi-name">${prediccion.equipo_visitante}</span>
                 <span class="pi-flag">${obtenerBandera(prediccion.equipo_visitante)}</span>
             </div>
@@ -278,7 +278,7 @@ function crearItemPrediccion(prediccion) {
         <!-- Columna lateral: predicción + puntos -->
         <div class="pi-side">
             <div class="pi-pred-row">
-                <span class="pi-pred-lbl">Pred.</span>
+                <span class="pi-pred-lbl">PRED.</span>
                 <span class="pi-pred-val">${prediccion.goles_local_pred} – ${prediccion.goles_visitante_pred}</span>
             </div>
             <span class="pi-pts-badge ${badgeClass}">${ptsDisplay}</span>
