@@ -2032,41 +2032,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 56px;          /* Tu medida exacta */
+    height: 56px;          
     padding: 0 16px;
     background-color: #f5f5f5;
-    overflow: hidden;      /* Recorta cualquier exceso */
+    overflow: hidden;     
     box-sizing: border-box;
 }
 
-/* === DIAGONAL TRASERA (GRIS/DIFUMINADA) === */
 .mobile-top-bar::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    /* Altura exacta de la barra (56px) y ancho igual (56px) para 45° */
-    border-bottom: 56px solid rgba(0, 0, 0, 0.15);
-    border-right: 56px solid transparent;
-    z-index: 1;
-    pointer-events: none;
+    top: 0; left: 0;
+    width: 48%;
+    height: 100%;
+    background: #000;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+    z-index: 0;
 }
 
-/* === DIAGONAL DELANTERA (NEGRA SÓLIDA) === */
+
 .mobile-top-bar::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    /* Misma altura (56px) pero un poco menos de ancho (40px) para que se vea más corta */
-    border-bottom: 56px solid #000;
-    border-right: 40px solid transparent;
-    z-index: 2;
-    pointer-events: none;
+    top: 0; left: 0;
+    width: 38%;         
+    height: 100%;
+    background: #2a2a2a;
+    clip-path: polygon(0 0, 78% 0, 88% 100%, 0 100%);
+    z-index: 0;
 }
 
 .mtb-logo,
