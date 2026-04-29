@@ -895,7 +895,7 @@
         padding: 1.25rem 1.25rem 1.5rem; 
         justify-content: flex-start; 
         height: auto; 
-        gap: 0;                        /* ← elimina espacios entre hijos */
+        gap: 0;
     }
     .slide-title          { 
         font-size: 20px; 
@@ -903,7 +903,7 @@
         margin-bottom: 0.75rem;        /* ← espacio controlado tras título */
     }
     .slide-desc           { 
-        display: none;                 /* reseña oculta en móvil */
+        display: none;                 
     }
     .slide-next-preview   { display: none; }
 
@@ -918,7 +918,7 @@
     gap: 0;
 }
 .nav-item {
-    padding: 12px 10px 0;
+    padding: 12px 10px 12px;
 }
 .nav-cat {
     font-size: 11px;
@@ -2045,7 +2045,7 @@
     left: 48%;            
     width: 50px;
     height: 100%;
-    background: #ffffff;    
+    background: #8a8a8a;    
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
     z-index: 1;
 }
@@ -2776,7 +2776,7 @@
     @media (max-width: 640px) {
         .slide-inner { height: auto !important; }
         .slide-img   { height: 260px !important; }
-        .slide-text  { height: auto; }
+        .slide-text  { height: auto; min-height: unset; }
     }
 
     /* ── WRAPPER ──────────────────────────────────────── */
