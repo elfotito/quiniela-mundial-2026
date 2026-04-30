@@ -129,14 +129,14 @@ function renderUibEvo(evaluadas) {
                 },
                 y: {
                     min: 0, 
-                    max: 5,  // Cambié de 9 a 5 (máximo de puntos)
+                    max: 9,
                     ticks: {
                         color: '#666666', 
                         font: { size: 9, weight: 600 },
-                        callback: v => [0, 1, 2, 3, 4, 5].includes(v) ? v : ''
+                        callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
                     },
                     grid: {
-                        color: ctx => [0, 1, 2, 3, 4, 5].includes(ctx.tick.value)
+                        color: ctx => [0, 2, 5, 7, 9].includes(ctx.tick.value)
                             ? '#dddddd' : '#f5f5f5'
                     },
                     border: { display: false }
