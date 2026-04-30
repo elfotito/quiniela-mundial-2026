@@ -72,12 +72,16 @@ async function cargarDatos() {
 }
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
+    console.log('🔍 Canvas móvil:', {
+        exists: !!canvas,
+        offsetHeight: canvas?.offsetHeight,
+        offsetWidth: canvas?.offsetWidth,
+        parentHeight: canvas?.parentElement?.offsetHeight,
+        datosLength: evaluadas?.length
+    });
+    
     if (!canvas || typeof Chart === 'undefined') return;
     
-    // Destruir chart anterior de forma segura
-    if (uibEvoChart instanceof Chart) { 
-        uibEvoChart.destroy(); 
-    }
 
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
 
