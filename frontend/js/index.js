@@ -780,12 +780,8 @@ async function initUserBanner() {
         const pctRendimiento = maxPosible > 0 ? Math.round((pts / maxPosible) * 100) : 0;
 
         setTimeout(() => {
-            const bP = document.getElementById('uibBarProgreso');
             const bR = document.getElementById('uibBarRendimiento');
-            if (bP) bP.style.width = pctProgreso + '%';
             if (bR) bR.style.width = pctRendimiento + '%';
-            document.getElementById('uibProgresoVal').textContent =
-                `${total} / ${TOTAL_PARTIDOS_MUNDIAL} partidos`;
             document.getElementById('uibRendimientoVal').textContent =
                 `${pts} / ${maxPosible} pts`;
         }, 150);
