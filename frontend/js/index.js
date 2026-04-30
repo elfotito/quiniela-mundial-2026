@@ -84,9 +84,9 @@ function renderUibEvo(evaluadas) {
     
     if (!canvas || typeof Chart === 'undefined') return;
     
-
+    // X: número de partido (1, 2, 3...), Y: puntos obtenidos (0-5)
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
-
+    
     uibEvoChart = new Chart(canvas, {
         type: 'line',
         data: {
@@ -94,11 +94,14 @@ function renderUibEvo(evaluadas) {
                 data: datos,
                 borderColor: '#0066cc',
                 backgroundColor: 'rgba(0, 102, 204, 0.08)',
-                borderWidth: 2.5, fill: true, tension: 0.3,
+                borderWidth: 2.5, 
+                fill: true, 
+                tension: 0.3,
                 pointRadius: datos.length <= 12 ? 4 : 0,
                 pointHoverRadius: 6,
                 pointBackgroundColor: '#0066cc',
-                pointBorderColor: '#ffffff', pointBorderWidth: 2
+                pointBorderColor: '#ffffff', 
+                pointBorderWidth: 2
             }]
         },
         options: {
@@ -108,25 +111,34 @@ function renderUibEvo(evaluadas) {
                 legend: { display: false },
                 tooltip: {
                     callbacks: { label: ctx => `Partido ${ctx.parsed.x}: ${ctx.parsed.y} pts` },
-                    backgroundColor: '#1a1a1a', titleColor: '#aaa',
-                    bodyColor: '#0066cc', borderColor: '#333', borderWidth: 1
+                    backgroundColor: '#1a1a1a', 
+                    titleColor: '#aaa',
+                    bodyColor: '#0066cc', 
+                    borderColor: '#333', 
+                    borderWidth: 1
                 }
             },
             scales: {
                 x: {
                     type: 'linear',
-                    ticks: { color: '#666666', maxTicksLimit: 5, font: { size: 9, weight: 600 } },
+                    ticks: { 
+                        color: '#666666', 
+                        maxTicksLimit: 5, 
+                        font: { size: 9, weight: 600 } 
+                    },
                     grid: { color: '#eeeeee' },
                     border: { display: false }
                 },
                 y: {
-                    min: 0, max: 9,
+                    min: 0, 
+                    max: 5,  // Cambié de 9 a 5 (máximo de puntos)
                     ticks: {
-                        color: '#666666', font: { size: 9, weight: 600 },
-                        callback: v => [0,2,5,7,9].includes(v) ? v : ''
+                        color: '#666666', 
+                        font: { size: 9, weight: 600 },
+                        callback: v => [0, 1, 2, 3, 4, 5].includes(v) ? v : ''
                     },
                     grid: {
-                        color: ctx => [0,2,5,7,9].includes(ctx.tick.value)
+                        color: ctx => [0, 1, 2, 3, 4, 5].includes(ctx.tick.value)
                             ? '#dddddd' : '#f5f5f5'
                     },
                     border: { display: false }
@@ -543,9 +555,9 @@ async function cargarLigaRankingWidget() {
                     <th class="left">#</th>
                     <th class="left">Jugador</th>
                     <th title="Resultado exacto (+9)">+9</th>
-                    <th title="Ganador y diferencia (+7)">+7</th>
-                    <th title="Solo el ganador (+5)">+5</th>
-                    <th title="Empate correcto (+2)">+2</th>
+                    <th title="Ganador y Marcador (+7)">+7</th>
+                    <th title="Ganador o Empate (+5)">+5</th>
+                    <th title="Marcador (+2)">+2</th>
                     <th title="Puntos totales">P</th>
                 </tr>
             </thead>
@@ -831,50 +843,53 @@ setTimeout(() => renderUibEvo(evaluadasEvo), 200);
     }
 }
 
-function renderUibDonut(exactos, ganMar, ganador, marcador, fallados) {
-    const canvas = document.getElementById('uibDonutChart');
-    if (!canvas || typeof Chart === 'undefined') return;
-    
-    // Destruir chart anterior de forma segura
-    if (uibDonutChart instanceof Chart) { 
-        uibDonutChart.destroy(); 
-    }
-
-    const total = exactos + ganMar + ganador + marcador + fallados;
-    const data  = total > 0
-        ? [exactos, ganMar, ganador, marcador, fallados]
-        : [0, 0, 0, 0, 1]; // placeholder vacío
-
-    uibDonutChart = new Chart(canvas, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data,
-                backgroundColor: [
-                    '#22c55e',  // exacto +9
-                    '#FFD700',  // ganador+marcador +7
-                    '#a855f7',  // ganador +5
-                    '#3b82f6',  // marcador +2
-                    total > 0 ? '#ef4444' : '#2a2a2a'  // fallados / vacío
-                ],
-                borderWidth: 0,
-                borderRadius: 3,
-                hoverOffset: 4
-            }]
+uibDonutChart = new Chart(canvas, {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data,
+            backgroundColor: [
+                '#22c55e',  // exacto +9
+                '#FFD700',  // ganador+marcador +7
+                '#a855f7',  // ganador +5
+                '#3b82f6',  // marcador +2
+                total > 0 ? '#ef4444' : '#2a2a2a'  // fallados / vacío
+            ],
+            borderWidth: 0,
+            borderRadius: 3,
+            hoverOffset: 4
+        }]
+    },
+    options: {
+        cutout: '65%',
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
         },
-        options: {
-            cutout: '65%',
-            plugins: {
-                legend: { display: false },
-                tooltip: { enabled: false }
-            },
-            animation: {
-                duration: 900,
-                easing: 'easeInOutQuart'
-            }
+        animation: {
+            duration: 900,
+            easing: 'easeInOutQuart'
         }
-    });
-}
+    }
+});
+
+// Evento click para mostrar información
+canvas.addEventListener('click', (event) => {
+    const canvasPosition = Chart.helpers.getRelativePosition(event, uibDonutChart);
+    const dataX = uibDonutChart.scales.x;
+    const dataY = uibDonutChart.scales.y;
+    const dataIndex = uibDonutChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)[0]?.index;
+
+    if (dataIndex !== undefined) {
+        const labels = ['Exacto (+9)', 'Ganador+Marcador (+7)', 'Ganador (+5)', 'Marcador (+2)', 'Fallados'];
+        const valores = data;
+        
+        console.log(`📊 ${labels[dataIndex]}: ${valores[dataIndex]} predicciones`);
+        
+        // Opcional: mostrar un alert bonito
+        // alert(`${labels[dataIndex]}\n${valores[dataIndex]} predicciones`);
+    }
+});
 // ===============================================
 // LOGOUT
 // ===============================================
