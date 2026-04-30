@@ -6,126 +6,139 @@
     <title>Términos y Condiciones - Quiniela Mundial 2026</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/index-styles.css">
+    <!-- <link rel="stylesheet" href="css/index-styles.css"> -->
 
     <style>
-            /* ── HERO ─────────────────────────────────────────── */
-    .ter-hero { background:#000; position:relative; overflow:hidden; border-bottom:3px solid var(--fifa-gold,#FFD700); }
-    .ter-hero::before {
-        content:''; position:absolute; inset:0;
-        background:
-            repeating-linear-gradient(90deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 60px),
-            repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 60px);
-        pointer-events:none;
-    }
-    .ter-hero-inner { max-width:1280px; margin:0 auto; padding:48px 24px 40px; position:relative; z-index:2; display:grid; grid-template-columns:1fr auto; align-items:center; gap:32px; }
-    .ter-eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
-    .ter-eyebrow-line { width:32px; height:2px; background:var(--fifa-gold,#FFD700); }
-    .ter-eyebrow span { font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--fifa-gold,#FFD700); }
-    .ter-title { font-size:clamp(30px,4.5vw,62px); font-weight:900; color:#fff; line-height:1; letter-spacing:-2px; text-transform:uppercase; margin-bottom:14px; }
-    .ter-title em { font-style:normal; color:var(--fifa-gold,#FFD700); }
-    .ter-sub { font-size:14px; color:rgba(255,255,255,.5); line-height:1.6; max-width:480px; }
-    .ter-badge { display:inline-flex; align-items:center; gap:8px; margin-top:22px; padding:8px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:8px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); }
-    .ter-deco { font-size:110px; opacity:.05; line-height:1; user-select:none; flex-shrink:0; }
-    @media(max-width:700px){ .ter-hero-inner{grid-template-columns:1fr;padding:32px 16px 28px;} .ter-deco{display:none;} }
+        /* ── VARIABLES BASE (copia de tu index-styles) ──── */
+        :root {
+            --fifa-blue: #003DA5;
+            --fifa-gold: #FFD700;
+            --dark-bg: #0a0a0a;
+            --dark-card: #161616;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: #f4f4f4; }
 
-    /* ── GRID ─────────────────────────────────────────── */
-    .ter-grid-bg { background:#f4f4f4; }
-    .ter-grid { max-width:1280px; margin:0 auto; padding:28px 16px 48px; display:grid; grid-template-columns:220px 1fr 220px; grid-template-areas:"izquierda centro derecha"; gap:24px; align-items:start; }
-    .ter-col-left  { grid-area:izquierda; display:flex; flex-direction:column; gap:14px; position:sticky; top:110px; }
-    .ter-col-main  { grid-area:centro;    display:flex; flex-direction:column; gap:20px; min-width:0; }
-    .ter-col-right { grid-area:derecha;   display:flex; flex-direction:column; gap:14px; position:sticky; top:110px; }
+        /* ── HERO ─────────────────────────────────────────── */
+        .ter-hero { background:#000; position:relative; overflow:hidden; border-bottom:3px solid var(--fifa-gold,#FFD700); }
+        .ter-hero::before {
+            content:''; position:absolute; inset:0;
+            background:
+                repeating-linear-gradient(90deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 60px),
+                repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 60px);
+            pointer-events:none;
+        }
+        .ter-hero-inner { max-width:1280px; margin:0 auto; padding:48px 24px 40px; position:relative; z-index:2; display:grid; grid-template-columns:1fr auto; align-items:center; gap:32px; }
+        .ter-eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+        .ter-eyebrow-line { width:32px; height:2px; background:var(--fifa-gold,#FFD700); }
+        .ter-eyebrow span { font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--fifa-gold,#FFD700); }
+        .ter-title { font-size:clamp(30px,4.5vw,62px); font-weight:900; color:#fff; line-height:1; letter-spacing:-2px; text-transform:uppercase; margin-bottom:14px; }
+        .ter-title em { font-style:normal; color:var(--fifa-gold,#FFD700); }
+        .ter-sub { font-size:14px; color:rgba(255,255,255,.5); line-height:1.6; max-width:480px; }
+        .ter-badge { display:inline-flex; align-items:center; gap:8px; margin-top:22px; padding:8px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:8px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); }
+        .ter-deco { font-size:110px; opacity:.05; line-height:1; user-select:none; flex-shrink:0; }
+        @media(max-width:700px){ .ter-hero-inner{grid-template-columns:1fr;padding:32px 16px 28px;} .ter-deco{display:none;} }
 
-    /* ── WIDGET BASE ──────────────────────────────────── */
-    .widget { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
-    .widget-header { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid #f0f0f0; }
-    .widget-bar   { width:3px; height:14px; background:var(--fifa-gold,#FFD700); border-radius:0; flex-shrink:0; }
-    .widget-title { font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#0a0a0a; flex:1; margin:0; }
-    .widget-link  { font-size:11px; color:#0066CC; text-decoration:none; font-weight:600; }
-    .widget-body  { padding:14px 16px; }
+        /* ── GRID ─────────────────────────────────────────── */
+        .ter-grid-bg { background:#f4f4f4; }
+        .ter-grid { max-width:1280px; margin:0 auto; padding:28px 16px 48px; display:grid; grid-template-columns:220px 1fr 220px; grid-template-areas:"izquierda centro derecha"; gap:24px; align-items:start; }
+        .ter-col-left  { grid-area:izquierda; display:flex; flex-direction:column; gap:14px; position:sticky; top:110px; }
+        .ter-col-main  { grid-area:centro;    display:flex; flex-direction:column; gap:20px; min-width:0; }
+        .ter-col-right { grid-area:derecha;   display:flex; flex-direction:column; gap:14px; position:sticky; top:110px; }
 
-    /* ── SECCIÓN CARD ─────────────────────────────────── */
-    .ter-section { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
-    .ter-section-header { padding:18px 24px 16px; border-bottom:1px solid #f0f0f0; display:flex; align-items:center; gap:12px; }
-    .ter-section-icon  { font-size:22px; line-height:1; }
-    .ter-section-title { font-size:16px; font-weight:800; color:#0a0a0a; letter-spacing:-.3px; }
-    .ter-section-body  { padding:20px 24px 24px; }
+        /* ── WIDGET BASE ──────────────────────────────────── */
+        .widget { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
+        .widget-header { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid #f0f0f0; }
+        .widget-bar   { width:3px; height:14px; background:var(--fifa-gold,#FFD700); border-radius:0; flex-shrink:0; }
+        .widget-title { font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#0a0a0a; flex:1; margin:0; }
+        .widget-link  { font-size:11px; color:#0066CC; text-decoration:none; font-weight:600; }
+        .widget-body  { padding:14px 16px; }
 
-    .ter-text { font-size:14px; color:#444; line-height:1.8; margin-bottom:14px; }
-    .ter-text:last-child { margin-bottom:0; }
+        /* ── SECCIÓN CARD ─────────────────────────────────── */
+        .ter-section { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
+        .ter-section-header { padding:18px 24px 16px; border-bottom:1px solid #f0f0f0; display:flex; align-items:center; gap:12px; }
+        .ter-section-icon  { font-size:22px; line-height:1; }
+        .ter-section-title { font-size:16px; font-weight:800; color:#0a0a0a; letter-spacing:-.3px; }
+        .ter-section-body  { padding:20px 24px 24px; }
 
-    .ter-subtitle { font-size:14px; font-weight:800; color:#0a0a0a; margin:20px 0 10px; padding-left:12px; border-left:3px solid var(--fifa-gold,#FFD700); }
+        .ter-text { font-size:14px; color:#444; line-height:1.8; margin-bottom:14px; }
+        .ter-text:last-child { margin-bottom:0; }
 
-    /* Term items */
-    .ter-item { padding:14px 16px; margin-bottom:10px; background:#fafafa; border-radius:10px; border-left:3px solid #0066CC; transition:background .15s,transform .15s; }
-    .ter-item:hover { background:#f0f0f0; transform:translateX(4px); }
-    .ter-item:last-child { margin-bottom:0; }
-    .ter-item-title { font-size:13px; font-weight:800; color:#BA7517; margin-bottom:6px; }
-    .ter-item-content { font-size:13px; color:#555; line-height:1.6; }
-    .ter-item-content strong { color:#0a0a0a; }
+        .ter-subtitle { font-size:14px; font-weight:800; color:#0a0a0a; margin:20px 0 10px; padding-left:12px; border-left:3px solid var(--fifa-gold,#FFD700); }
 
-    /* Highlight box */
-    .ter-highlight { background:#FAFAF0; border:1.5px solid var(--fifa-gold,#FFD700); border-radius:10px; padding:18px 20px; margin:16px 0; text-align:center; }
-    .ter-highlight-title { font-size:14px; font-weight:800; color:#BA7517; margin-bottom:8px; }
-    .ter-highlight-text  { font-size:13px; color:#555; line-height:1.6; }
+        /* Term items */
+        .ter-item { padding:14px 16px; margin-bottom:10px; background:#fafafa; border-radius:10px; border-left:3px solid #0066CC; transition:background .15s,transform .15s; }
+        .ter-item:hover { background:#f0f0f0; transform:translateX(4px); }
+        .ter-item:last-child { margin-bottom:0; }
+        .ter-item-title { font-size:13px; font-weight:800; color:#BA7517; margin-bottom:6px; }
+        .ter-item-content { font-size:13px; color:#555; line-height:1.6; }
+        .ter-item-content strong { color:#0a0a0a; }
 
-    /* Info box azul */
-    .ter-info { background:#EBF3FF; border-left:4px solid #0066CC; border-radius:0 8px 8px 0; padding:16px 18px; margin:14px 0; }
-    .ter-info-title   { font-size:13px; font-weight:800; color:#0C447C; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-    .ter-info-content { font-size:13px; color:#185FA5; line-height:1.7; }
-    .ter-info-content strong { color:#0C447C; }
+        /* Highlight box */
+        .ter-highlight { background:#FAFAF0; border:1.5px solid var(--fifa-gold,#FFD700); border-radius:10px; padding:18px 20px; margin:16px 0; text-align:center; }
+        .ter-highlight-title { font-size:14px; font-weight:800; color:#BA7517; margin-bottom:8px; }
+        .ter-highlight-text  { font-size:13px; color:#555; line-height:1.6; }
 
-    /* Warning box rojo */
-    .ter-warning { background:#FEF2F2; border:1.5px solid #ef4444; border-radius:10px; padding:16px 18px; margin:14px 0; }
-    .ter-warning-title   { font-size:13px; font-weight:800; color:#dc2626; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-    .ter-warning-content { font-size:13px; color:#7f1d1d; line-height:1.7; }
+        /* Info box azul */
+        .ter-info { background:#EBF3FF; border-left:4px solid #0066CC; border-radius:0 8px 8px 0; padding:16px 18px; margin:14px 0; }
+        .ter-info-title   { font-size:13px; font-weight:800; color:#0C447C; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+        .ter-info-content { font-size:13px; color:#185FA5; line-height:1.7; }
+        .ter-info-content strong { color:#0C447C; }
 
-    /* Lista numerada */
-    .ter-numbered { counter-reset:ter-c; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
-    .ter-numbered li { counter-increment:ter-c; position:relative; padding:12px 14px 12px 52px; background:#fafafa; border-radius:10px; font-size:13px; color:#333; line-height:1.6; }
-    .ter-numbered li::before { content:counter(ter-c); position:absolute; left:12px; top:50%; transform:translateY(-50%); width:28px; height:28px; background:var(--fifa-gold,#FFD700); color:#000; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; }
-    .ter-numbered li strong { color:#0a0a0a; }
+        /* Warning box rojo */
+        .ter-warning { background:#FEF2F2; border:1.5px solid #ef4444; border-radius:10px; padding:16px 18px; margin:14px 0; }
+        .ter-warning-title   { font-size:13px; font-weight:800; color:#dc2626; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+        .ter-warning-content { font-size:13px; color:#7f1d1d; line-height:1.7; }
 
-    /* Reg-list genérica */
-    .ter-list { list-style:none; padding:0; margin:8px 0 0; display:flex; flex-direction:column; gap:5px; }
-    .ter-list li { font-size:13px; color:inherit; line-height:1.5; padding-left:14px; position:relative; }
-    .ter-list li::before { content:'→'; position:absolute; left:0; font-weight:700; font-size:11px; }
+        /* Lista numerada */
+        .ter-numbered { counter-reset:ter-c; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+        .ter-numbered li { counter-increment:ter-c; position:relative; padding:12px 14px 12px 52px; background:#fafafa; border-radius:10px; font-size:13px; color:#333; line-height:1.6; }
+        .ter-numbered li::before { content:counter(ter-c); position:absolute; left:12px; top:50%; transform:translateY(-50%); width:28px; height:28px; background:var(--fifa-gold,#FFD700); color:#000; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; }
+        .ter-numbered li strong { color:#0a0a0a; }
 
-    /* Nav lateral */
-    .ter-nav-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; color:#555; text-decoration:none; transition:background .15s; margin-bottom:2px; }
-    .ter-nav-link:hover { background:#f0f0f0; color:#0a0a0a; }
-    .ter-nav-link i { font-size:12px; width:14px; text-align:center; opacity:.5; }
+        /* Reg-list genérica */
+        .ter-list { list-style:none; padding:0; margin:8px 0 0; display:flex; flex-direction:column; gap:5px; }
+        .ter-list li { font-size:13px; color:inherit; line-height:1.5; padding-left:14px; position:relative; }
+        .ter-list li::before { content:'→'; position:absolute; left:0; font-weight:700; font-size:11px; }
 
-    /* CTA widget */
-    .widget-cta-dark { background:#0a0a0a !important; border-color:#222 !important; }
-    .widget-cta-dark .widget-header { border-bottom-color:#222; }
-    .widget-cta-dark .widget-title  { color:#fff; }
-    .cta-text { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; margin-bottom:14px; }
-    .cta-btn  { display:block; text-align:center; padding:11px; background:var(--fifa-gold,#FFD700); color:#000; font-size:13px; font-weight:800; border-radius:8px; text-decoration:none; transition:background .2s; }
-    .cta-btn:hover { background:#e6c200; }
+        /* Nav lateral */
+        .ter-nav-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; color:#555; text-decoration:none; transition:background .15s; margin-bottom:2px; }
+        .ter-nav-link:hover { background:#f0f0f0; color:#0a0a0a; }
+        .ter-nav-link i { font-size:12px; width:14px; text-align:center; opacity:.5; }
 
-    /* Stat rows */
-    .stat-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid #f5f5f5; }
-    .stat-row:last-child { border-bottom:none; }
-    .stat-label { font-size:12px; color:#555; }
-    .stat-val   { font-size:12px; font-weight:800; }
-    .stat-val.ok  { color:#16a34a; }
-    .stat-val.no  { color:#dc2626; }
-    .stat-val.neu { color:#0066CC; }
+        /* CTA widget */
+        .widget-cta-dark { background:#0a0a0a !important; border-color:#222 !important; }
+        .widget-cta-dark .widget-header { border-bottom-color:#222; }
+        .widget-cta-dark .widget-title  { color:#fff; }
+        .cta-text { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; margin-bottom:14px; }
+        .cta-btn  { display:block; text-align:center; padding:11px; background:var(--fifa-gold,#FFD700); color:#000; font-size:13px; font-weight:800; border-radius:8px; text-decoration:none; transition:background .2s; }
+        .cta-btn:hover { background:#e6c200; }
 
-    /* Last updated */
-    .ter-last-updated { text-align:center; font-size:11px; color:#aaa; padding:16px; border-top:1px solid #eee; background:#fff; border-radius:0 0 14px 14px; margin-top:-1px; }
+        /* Stat rows */
+        .stat-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid #f5f5f5; }
+        .stat-row:last-child { border-bottom:none; }
+        .stat-label { font-size:12px; color:#555; }
+        .stat-val   { font-size:12px; font-weight:800; }
+        .stat-val.ok  { color:#16a34a; }
+        .stat-val.no  { color:#dc2626; }
+        .stat-val.neu { color:#0066CC; }
 
-    /* ── RESPONSIVE ───────────────────────────────────── */
-    @media(max-width:1024px){
-        .ter-grid { grid-template-columns:1fr 200px; grid-template-areas:"centro derecha" "izquierda izquierda"; }
-        .ter-col-left { position:static; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    }
-    @media(max-width:700px){
-        .ter-grid { grid-template-columns:1fr; grid-template-areas:"centro" "derecha" "izquierda"; padding:16px 12px 40px; }
-        .ter-col-left,.ter-col-right { position:static; }
-        .ter-section-body { padding:16px 16px 20px; }
-    }
+        /* Last updated */
+        .ter-last-updated { text-align:center; font-size:11px; color:#aaa; padding:16px; border-top:1px solid #eee; background:#fff; border-radius:0 0 14px 14px; margin-top:-1px; }
+
+        /* Numeración de artículos */
+        .ter-article-num { display:inline-block; background:var(--fifa-gold,#FFD700); color:#000; font-size:10px; font-weight:900; padding:2px 7px; border-radius:4px; margin-right:8px; letter-spacing:1px; vertical-align:middle; }
+
+        /* ── RESPONSIVE ───────────────────────────────────── */
+        @media(max-width:1024px){
+            .ter-grid { grid-template-columns:1fr 200px; grid-template-areas:"centro derecha" "izquierda izquierda"; }
+            .ter-col-left { position:static; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        }
+        @media(max-width:700px){
+            .ter-grid { grid-template-columns:1fr; grid-template-areas:"centro" "derecha" "izquierda"; padding:16px 12px 40px; }
+            .ter-col-left,.ter-col-right { position:static; }
+            .ter-section-body { padding:16px 16px 20px; }
+        }
     </style>
 </head>
 
@@ -133,23 +146,21 @@
 
     <!-- PEGA TU HEADER AQUÍ -->
 
-
     <!-- ── HERO ──────────────────────────────────────── -->
     <div class="ter-hero">
         <div class="ter-hero-inner">
             <div>
                 <div class="ter-eyebrow">
                     <div class="ter-eyebrow-line"></div>
-                    <span>Quiniela Mundial 2026</span>
+                    <span>Quiniela Mundial 2026 · Droguería Carrisan</span>
                 </div>
                 <h1 class="ter-title">Términos y<br><em>Condiciones</em></h1>
-                <p class="ter-sub">Las reglas del juego que aceptas al registrarte. Léelas con calma — son más amenas de lo que parecen.</p>
+                <p class="ter-sub">Documento de uso, privacidad y reglas de participación. Al registrarte confirmas que los has leído y aceptado en su totalidad.</p>
                 <div class="ter-badge">📋 Última actualización: Febrero 2026 · Versión 1.0</div>
             </div>
             <div class="ter-deco">⚖️</div>
         </div>
     </div>
-
 
     <!-- ── GRID ──────────────────────────────────────── -->
     <div class="ter-grid-bg">
@@ -164,13 +175,18 @@
                     <span class="widget-title">Índice</span>
                 </div>
                 <div class="widget-body" style="padding:10px 12px">
-                    <a href="#aceptacion"    class="ter-nav-link"><i class="bi bi-check-circle"></i> Aceptación</a>
-                    <a href="#uso"           class="ter-nav-link"><i class="bi bi-laptop"></i> Uso de la plataforma</a>
-                    <a href="#casos"         class="ter-nav-link"><i class="bi bi-exclamation-triangle"></i> Casos extremos</a>
-                    <a href="#prohibiciones" class="ter-nav-link"><i class="bi bi-slash-circle"></i> Conductas prohibidas</a>
-                    <a href="#privacidad"    class="ter-nav-link"><i class="bi bi-lock"></i> Privacidad</a>
-                    <a href="#modificaciones"class="ter-nav-link"><i class="bi bi-pencil"></i> Modificaciones</a>
-                    <a href="#juego"         class="ter-nav-link"><i class="bi bi-controller"></i> Juego responsable</a>
+                    <a href="#art1"  class="ter-nav-link"><i class="bi bi-check-circle"></i> 1. Aceptación</a>
+                    <a href="#art2"  class="ter-nav-link"><i class="bi bi-info-circle"></i> 2. Naturaleza</a>
+                    <a href="#art3"  class="ter-nav-link"><i class="bi bi-person-badge"></i> 3. Elegibilidad</a>
+                    <a href="#art4"  class="ter-nav-link"><i class="bi bi-laptop"></i> 4. Registro</a>
+                    <a href="#art5"  class="ter-nav-link"><i class="bi bi-controller"></i> 5. Mecánica</a>
+                    <a href="#art6"  class="ter-nav-link"><i class="bi bi-slash-circle"></i> 6. Conductas</a>
+                    <a href="#art7"  class="ter-nav-link"><i class="bi bi-exclamation-triangle"></i> 7. Excepciones</a>
+                    <a href="#art8"  class="ter-nav-link"><i class="bi bi-lock"></i> 8. Privacidad</a>
+                    <a href="#art9"  class="ter-nav-link"><i class="bi bi-shield-check"></i> 9. Responsabilidad</a>
+                    <a href="#art10" class="ter-nav-link"><i class="bi bi-c-circle"></i> 10. Propiedad Int.</a>
+                    <a href="#art11" class="ter-nav-link"><i class="bi bi-pencil"></i> 11. Modificaciones</a>
+                    <a href="#art12" class="ter-nav-link"><i class="bi bi-geo-alt"></i> 12. Jurisdicción</a>
                 </div>
             </div>
 
@@ -184,6 +200,7 @@
                     <div class="stat-row"><span class="stat-label">Cuentas por persona</span><span class="stat-val neu">1</span></div>
                     <div class="stat-row"><span class="stat-label">Predicciones editables</span><span class="stat-val no">No</span></div>
                     <div class="stat-row"><span class="stat-label">Datos a terceros</span><span class="stat-val no">No</span></div>
+                    <div class="stat-row"><span class="stat-label">Menores de edad</span><span class="stat-val no">No</span></div>
                     <div class="stat-row"><span class="stat-label">VAR activo</span><span class="stat-val ok">Sí</span></div>
                     <div class="stat-row"><span class="stat-label">Reembolsos</span><span class="stat-val no">No</span></div>
                 </div>
@@ -195,199 +212,328 @@
         <!-- ══ COLUMNA PRINCIPAL ══ -->
         <main class="ter-col-main">
 
-            <!-- Aceptación -->
-            <div class="ter-section" id="aceptacion">
+            <!-- ART. 1 · ACEPTACIÓN -->
+            <div class="ter-section" id="art1">
                 <div class="ter-section-header">
                     <span class="ter-section-icon">✅</span>
-                    <span class="ter-section-title">Aceptación de Términos</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 1</span> Aceptación de Términos</span>
                 </div>
                 <div class="ter-section-body">
-                    <p class="ter-text">Al registrarte y participar en la Quiniela Mundial 2026, aceptas automáticamente estos términos y condiciones. Si no estás de acuerdo con alguna cláusula, te recomendamos comunicarte primero con el administrador antes de registrarte.</p>
+                    <p class="ter-text">Al completar el proceso de registro en la plataforma <strong>Quiniela Mundial 2026</strong>, el usuario declara haber leído, comprendido y aceptado en su totalidad el presente documento de Términos y Condiciones. Esta aceptación constituye un acuerdo vinculante entre el usuario y los administradores de la plataforma.</p>
+                    <p class="ter-text">Si el usuario no está de acuerdo con alguna de las cláusulas aquí establecidas, deberá abstenerse de registrarse y/o utilizar la plataforma. El uso continuado de la plataforma tras cualquier modificación de estos términos implicará la aceptación de las nuevas condiciones.</p>
                     <div class="ter-highlight">
-                        <div class="ter-highlight-title">⚖️ Compromiso Legal</div>
-                        <p class="ter-highlight-text">Esta quiniela es un juego recreativo <strong>SIN fines de lucro</strong>. Cada liga tiene sus premios o apuestas internas que el administrador del sistema no estará involucrado.</p>
+                        <div class="ter-highlight-title">📌 Consentimiento Expreso</div>
+                        <p class="ter-highlight-text">Al marcar la casilla <em>"He leído y acepto los Términos y Condiciones"</em> durante el registro, el usuario otorga su <strong>consentimiento expreso e informado</strong> a todas las disposiciones de este documento, incluyendo el tratamiento de sus datos personales según lo indicado en el Artículo 8.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Uso de la plataforma -->
-            <div class="ter-section" id="uso">
+            <!-- ART. 2 · NATURALEZA DE LA PLATAFORMA -->
+            <div class="ter-section" id="art2">
                 <div class="ter-section-header">
-                    <span class="ter-section-icon">🖥️</span>
-                    <span class="ter-section-title">Uso de la Plataforma</span>
+                    <span class="ter-section-icon">⚽</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 2</span> Naturaleza de la Plataforma</span>
                 </div>
                 <div class="ter-section-body">
+                    <p class="ter-text">La <strong>Quiniela Mundial 2026</strong> es una plataforma de entretenimiento recreativo organizada por <strong>Droguería Carrisan</strong>, orientada exclusivamente a la predicción de resultados del Mundial de Fútbol FIFA 2026. La plataforma opera bajo las siguientes características:</p>
+
+                    <ul class="ter-numbered">
+                        <li><strong>Sin fines de lucro:</strong> La plataforma no tiene como objetivo la generación de beneficios económicos por parte de sus administradores.</li>
+                        <li><strong>Gestión interna de premios:</strong> Cualquier premio, apuesta o incentivo económico entre participantes es gestionado de manera independiente dentro de cada liga privada, siendo responsabilidad exclusiva de los miembros de dicha liga. Los administradores del sistema no intervienen ni se responsabilizan de tales acuerdos.</li>
+                        <li><strong>Sin vínculo oficial:</strong> Esta plataforma no tiene afiliación, patrocinio ni relación oficial con la FIFA, sus organizaciones asociadas, ni con ningún equipo o federación participante en el Mundial 2026.</li>
+                        <li><strong>Carácter recreativo:</strong> La participación es voluntaria y los resultados de la quiniela no tienen validez legal, deportiva ni económica más allá del contexto interno de la plataforma.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ART. 3 · ELEGIBILIDAD -->
+            <div class="ter-section" id="art3">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">👤</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 3</span> Elegibilidad y Requisitos de Participación</span>
+                </div>
+                <div class="ter-section-body">
+                    <div class="ter-warning">
+                        <div class="ter-warning-title"><span>🔞</span> Restricción de Edad</div>
+                        <div class="ter-warning-content">La participación en esta plataforma está <strong>estrictamente restringida a personas mayores de 18 años</strong>. Al registrarte, declaras y garantizas que eres mayor de edad. Si se detecta que un usuario es menor de edad, su cuenta será eliminada de forma inmediata y permanente sin necesidad de previo aviso.</div>
+                    </div>
+
+                    <div class="ter-subtitle">Requisitos adicionales</div>
                     <div class="ter-item">
-                        <div class="ter-item-title">🔐 Cuenta Personal</div>
-                        <div class="ter-item-content">Cada participante es responsable de mantener la confidencialidad de su código de acceso. No compartas tu código con terceros. Cualquier actividad realizada con tu cuenta será considerada como realizada por ti.</div>
+                        <div class="ter-item-title">✔️ Invitación válida</div>
+                        <div class="ter-item-content">El acceso a la plataforma se realiza mediante un código de invitación o registro aprobado por el administrador. No está abierta al público general.</div>
                     </div>
                     <div class="ter-item">
-                        <div class="ter-item-title">👤 Una Cuenta por Persona</div>
-                        <div class="ter-item-content">Está prohibido crear múltiples cuentas. Si detectamos cuentas duplicadas del mismo usuario, todas serán eliminadas sin previo aviso.</div>
+                        <div class="ter-item-title">✔️ Información veraz</div>
+                        <div class="ter-item-content">El usuario se compromete a proporcionar información verdadera, precisa y actualizada durante el registro. El uso de datos falsos, alias engañosos o información de terceros sin consentimiento es causa de eliminación inmediata.</div>
                     </div>
                     <div class="ter-item">
-                        <div class="ter-item-title">📱 Datos Personales</div>
-                        <div class="ter-item-content">Los datos que proporciones (nombre público, teléfono) serán utilizados únicamente para fines de la quiniela. No compartiremos tu información con terceros.</div>
+                        <div class="ter-item-title">✔️ Una cuenta por persona</div>
+                        <div class="ter-item-content">Cada persona física solo puede tener <strong>una (1) cuenta activa</strong>. La detección de cuentas duplicadas resultará en la eliminación de todas las cuentas vinculadas al mismo usuario, sin posibilidad de recuperación.</div>
                     </div>
                     <div class="ter-item">
-                        <div class="ter-item-title">⏰ Predicciones</div>
-                        <div class="ter-item-content">Las predicciones deben realizarse <strong>ANTES del límite establecido</strong> (10 minutos antes del partido). Una vez guardada, tu predicción NO puede ser modificada o eliminada.</div>
+                        <div class="ter-item-title">✔️ Capacidad legal</div>
+                        <div class="ter-item-content">El usuario declara tener plena capacidad legal para celebrar acuerdos vinculantes y no estar sujeto a ninguna restricción legal que le impida participar en plataformas de entretenimiento.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Casos extremos -->
-            <div class="ter-section" id="casos">
+            <!-- ART. 4 · REGISTRO Y CUENTA -->
+            <div class="ter-section" id="art4">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">🔐</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 4</span> Registro, Cuenta y Seguridad</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">El usuario es el único y exclusivo responsable de toda actividad que se realice mediante su cuenta, incluyendo el uso de su código de acceso alfanumérico.</p>
+
+                    <div class="ter-item">
+                        <div class="ter-item-title">🔑 Código de Acceso</div>
+                        <div class="ter-item-content">El código de acceso es de uso personal e intransferible. <strong>Queda expresamente prohibido compartirlo</strong> con terceros. Cualquier predicción o acción realizada con tu código de acceso, independientemente de quién la ejecute físicamente, será considerada como realizada por el titular de la cuenta.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">📱 Número de Teléfono como Identificador</div>
+                        <div class="ter-item-content">El número de teléfono proporcionado en el registro actúa como identificador único del participante. Debes asegurarte de que el número ingresado te pertenece y es válido.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">🚨 Acceso No Autorizado</div>
+                        <div class="ter-item-content">Si sospechas que tu cuenta fue accedida sin tu consentimiento, debes notificarlo al administrador <strong>de forma inmediata</strong>. El administrador podrá bloquear la cuenta y revisar el historial de actividad. La resolución del caso será determinada discrecionalmente por el administrador, cuya decisión tendrá carácter definitivo.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">🗑️ Eliminación de Cuenta</div>
+                        <div class="ter-item-content">Los administradores se reservan el derecho de suspender o eliminar cualquier cuenta que infrinja estos términos, sin previo aviso y sin obligación de restitución de ningún tipo. El usuario puede solicitar la eliminación voluntaria de su cuenta contactando al administrador.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ART. 5 · MECÁNICA DEL JUEGO -->
+            <div class="ter-section" id="art5">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">🎮</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 5</span> Mecánica del Juego y Predicciones</span>
+                </div>
+                <div class="ter-section-body">
+
+                    <div class="ter-subtitle">⏱️ Límite de Predicción</div>
+                    <p class="ter-text">Las predicciones deben ser registradas en la plataforma <strong>antes del límite establecido</strong>, que corresponde a los <strong>10 minutos previos al inicio oficial del partido</strong>, según el horario publicado por la organización del Mundial FIFA 2026. Predicciones fuera de este plazo no serán aceptadas bajo ninguna circunstancia.</p>
+
+                    <div class="ter-warning">
+                        <div class="ter-warning-title"><span>🚫</span> Irrevocabilidad de las Predicciones</div>
+                        <div class="ter-warning-content">Una vez que una predicción ha sido <strong>guardada y confirmada</strong> en el sistema, esta es <strong>definitiva e irrevocable</strong>. No existe posibilidad de modificación, corrección ni eliminación por parte del usuario bajo ninguna circunstancia. Se recomienda verificar cuidadosamente cada predicción antes de confirmarla.</div>
+                    </div>
+
+                    <div class="ter-subtitle">📊 Sistema de Puntuación</div>
+                    <div class="ter-info">
+                        <div class="ter-info-title"><span>ℹ️</span> VAR — Verificación y Ajuste de Resultados</div>
+                        <div class="ter-info-content">
+                            El sistema cuenta con un mecanismo de <strong>revisión de resultados (VAR)</strong> que permite a los administradores corregir puntajes en caso de error en el ingreso de resultados. Todos los cambios quedan registrados. El puntaje publicado en la tabla de clasificación en todo momento se considera el <strong>oficial y definitivo</strong> hasta nueva modificación por parte del administrador.
+                        </div>
+                    </div>
+
+                    <div class="ter-subtitle">🏆 Predicción del Campeón</div>
+                    <p class="ter-text">Cada participante puede registrar una predicción del campeón del torneo antes del inicio de la fase de grupos. Esta predicción tiene sus propias reglas de puntuación definidas por el administrador y también es <strong>irrevocable</strong> una vez confirmada.</p>
+
+                    <div class="ter-subtitle">❌ Partidos Cancelados o Suspendidos</div>
+                    <div class="ter-info">
+                        <div class="ter-info-title"><span>📋</span> Protocolo Oficial FIFA</div>
+                        <div class="ter-info-content">
+                            <strong>Cancelado antes de comenzar:</strong> Las predicciones serán anuladas y no otorgarán puntos.<br><br>
+                            <strong>Suspendido durante el partido:</strong> Si el partido se reanuda dentro del mismo día calendario, las predicciones originales seguirán siendo válidas. Si se reprograma para otra fecha, las predicciones serán anuladas.<br><br>
+                            <strong>Suspendido permanentemente:</strong> Las predicciones serán anuladas sin otorgar puntos. El administrador publicará el criterio aplicado para cada caso.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ART. 6 · CONDUCTAS PROHIBIDAS -->
+            <div class="ter-section" id="art6">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">🚫</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 6</span> Conductas Prohibidas</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">Las siguientes conductas constituyen violaciones graves a estos términos y serán sancionadas con la <strong>suspensión o eliminación permanente</strong> de la cuenta, sin perjuicio de cualquier acción adicional que corresponda:</p>
+
+                    <ul class="ter-numbered">
+                        <li><strong>Creación de cuentas múltiples</strong> con el fin de acumular predicciones o manipular el ranking.</li>
+                        <li><strong>Manipulación o alteración</strong> de los datos de predicción, resultados o puntajes mediante medios técnicos o fraudulentos.</li>
+                        <li><strong>Suplantación de identidad</strong> de otro participante o uso no autorizado de datos de terceros.</li>
+                        <li><strong>Interferencia con el sistema</strong>: intentar hackear, inyectar código malicioso, realizar ataques de denegación de servicio u otras acciones que comprometan la seguridad o disponibilidad de la plataforma.</li>
+                        <li><strong>Uso de bots, scripts automatizados</strong> o cualquier herramienta que permita ingresar predicciones de forma no humana o en condiciones de ventaja injusta.</li>
+                        <li><strong>Compartir el código de acceso</strong> de forma intencional con el objetivo de que un tercero realice predicciones en nombre del titular.</li>
+                        <li><strong>Conducta ofensiva o intimidatoria</strong> hacia otros participantes o administradores en cualquier canal de comunicación relacionado con la plataforma.</li>
+                    </ul>
+
+                    <div class="ter-warning">
+                        <div class="ter-warning-title"><span>⚖️</span> Potestad Sancionadora</div>
+                        <div class="ter-warning-content">Los administradores tienen la potestad exclusiva de determinar si una conducta constituye una infracción y de aplicar la sanción correspondiente. Esta decisión no requiere justificación pública y es definitiva e inapelable dentro de la plataforma.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ART. 7 · EXCEPCIONES Y CASOS EXTREMOS -->
+            <div class="ter-section" id="art7">
                 <div class="ter-section-header">
                     <span class="ter-section-icon">⚠️</span>
-                    <span class="ter-section-title">Casos Extremos y Excepciones</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 7</span> Excepciones y Casos de Fuerza Mayor</span>
                 </div>
                 <div class="ter-section-body">
 
                     <div class="ter-subtitle">🖥️ Caída del Servidor</div>
                     <div class="ter-info">
-                        <div class="ter-info-title"><span>💡</span> ¿Qué pasa si el servidor se cae?</div>
+                        <div class="ter-info-title"><span>💡</span> Protocolo de Indisponibilidad</div>
                         <div class="ter-info-content">
-                            <strong>Antes del partido:</strong> Si el servidor está inactivo y el administrador publicó que está caído el sistema, contacta al administrador inmediatamente. Se evaluará caso por caso si es posible registrar tu predicción.<br><br>
-                            <strong>Durante el partido:</strong> Si el servidor cae mientras se está jugando un partido, las predicciones ya registradas seguirán siendo válidas.<br><br>
-                            <strong>Después del partido:</strong> Si el servidor se cae después del partido y antes de ingresar resultados, los puntos se calcularán normalmente una vez restaurado el servicio.
+                            <strong>Antes del partido:</strong> Si el servidor está inactivo, el administrador publicará un aviso oficial. En ese caso, el usuario podrá contactar al administrador para registrar su predicción de forma alternativa, sujeto a evaluación individual.<br><br>
+                            <strong>Durante el partido:</strong> Las predicciones ya registradas mantienen su validez. No se aceptarán nuevas predicciones para el partido en cuestión.<br><br>
+                            <strong>Después del partido:</strong> Los puntajes se calcularán automáticamente una vez restaurado el servicio, sin afectar las predicciones ya registradas.
                         </div>
                     </div>
                     <div class="ter-warning">
-                        <div class="ter-warning-title"><span>🚨</span> Sin Responsabilidad Técnica</div>
+                        <div class="ter-warning-title"><span>🚨</span> Exención de Responsabilidad Técnica</div>
                         <div class="ter-warning-content">
-                            Los administradores NO son responsables por pérdidas de predicciones debido a:
+                            La plataforma <strong>no garantiza disponibilidad ininterrumpida</strong> del servicio. Los administradores no serán responsables por pérdidas de predicciones derivadas de:
                             <ul class="ter-list" style="margin-top:8px">
-                                <li>Problemas de conexión a internet del usuario</li>
+                                <li>Problemas de conectividad del usuario</li>
                                 <li>Fallos del navegador o dispositivo del usuario</li>
-                                <li>Caídas del servidor fuera de nuestro control</li>
-                                <li>Mantenimiento programado (se notificará con anticipación)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="ter-subtitle">🔓 Acceso Indebido a tu Cuenta</div>
-                    <div class="ter-item">
-                        <div class="ter-item-title">🛡️ Responsabilidad del Usuario</div>
-                        <div class="ter-item-content">Eres el único responsable de proteger tu código de acceso. Si alguien más accede a tu cuenta porque compartiste tu código, las predicciones realizadas serán válidas.</div>
-                    </div>
-                    <div class="ter-item">
-                        <div class="ter-item-title">⚡ Acceso No Autorizado (Hackeo)</div>
-                        <div class="ter-item-content">
-                            Si sospechas que alguien accedió a tu cuenta sin tu permiso:
-                            <ol style="margin-top:8px;padding-left:18px;font-size:13px;color:#555;line-height:1.7">
-                                <li>Contacta al administrador de inmediato</li>
-                                <li>Proporciona evidencia (capturas de pantalla, predicciones registradas)</li>
-                                <li>El administrador investigará y tomará medidas según corresponda</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div class="ter-warning">
-                        <div class="ter-warning-title"><span>⚖️</span> Decisión Final</div>
-                        <div class="ter-warning-content">En casos de disputa por acceso no autorizado, la decisión final la tomará el administrador después de revisar la evidencia disponible. Esta decisión es inapelable.</div>
-                    </div>
-
-                    <div class="ter-subtitle">❌ Partidos Cancelados o Suspendidos</div>
-                    <div class="ter-info">
-                        <div class="ter-info-title"><span>📋</span> Protocolo Oficial</div>
-                        <div class="ter-info-content">
-                            <strong>Si un partido es cancelado antes de comenzar:</strong> Todas las predicciones serán anuladas automáticamente y no otorgarán puntos.<br><br>
-                            <strong>Si un partido es suspendido durante el juego:</strong> Se esperará la decisión oficial de la FIFA. Si se reprograma desde el minuto 0, se permitirán nuevas predicciones. Si continúa desde donde se quedó, las predicciones originales seguirán vigentes.<br><br>
-                            <strong>Si hay controversia en el resultado:</strong> Se tomará como válido el resultado oficial reconocido por la FIFA.
-                        </div>
-                    </div>
-
-                    <div class="ter-subtitle">🔄 Errores del Administrador</div>
-                    <ol class="ter-numbered">
-                        <li><strong>Error al ingresar resultados:</strong> Si el administrador ingresa un resultado incorrecto, se corregirá y los puntos se recalcularán automáticamente.</li>
-                        <li><strong>Error en el sistema de puntos:</strong> Si detectas un error en el cálculo de tus puntos, repórtalo al administrador con evidencia (capturas de pantalla).</li>
-                        <li><strong>Pérdida de datos:</strong> En caso de pérdida catastrófica de datos, se intentará restaurar desde el último backup disponible. No hay garantía de recuperación total.</li>
-                    </ol>
-                </div>
-            </div>
-
-            <!-- Conductas prohibidas -->
-            <div class="ter-section" id="prohibiciones">
-                <div class="ter-section-header">
-                    <span class="ter-section-icon">🚫</span>
-                    <span class="ter-section-title">Conductas Prohibidas</span>
-                </div>
-                <div class="ter-section-body">
-                    <p class="ter-text">Las siguientes acciones están estrictamente prohibidas y resultarán en descalificación inmediata:</p>
-                    <div class="ter-item" style="border-left-color:#ef4444">
-                        <div class="ter-item-title">💻 Manipulación del Sistema</div>
-                        <div class="ter-item-content">Intentar acceder, modificar o manipular el código fuente, la base de datos o cualquier componente técnico de la plataforma.</div>
-                    </div>
-                    <div class="ter-item" style="border-left-color:#ef4444">
-                        <div class="ter-item-title">🕵️ Explotación de Vulnerabilidades</div>
-                        <div class="ter-item-content">Aprovechar bugs o fallos del sistema para obtener ventajas (ej: hacer predicciones después del inicio del partido).</div>
-                    </div>
-                    <div class="ter-item" style="border-left-color:#ef4444">
-                        <div class="ter-item-title">🤖 Automatización</div>
-                        <div class="ter-item-content">Usar bots, scripts o cualquier herramienta automatizada para realizar predicciones.</div>
-                    </div>
-                    <div class="ter-warning">
-                        <div class="ter-warning-title"><span>⚡</span> Consecuencias</div>
-                        <div class="ter-warning-content">
-                            Cualquier violación resultará en:
-                            <ul class="ter-list" style="margin-top:8px">
-                                <li>Eliminación inmediata de la cuenta</li>
-                                <li>Anulación de todas tus predicciones y puntos</li>
-                                <li>Prohibición permanente de participar en futuras ediciones</li>
+                                <li>Interrupciones del servicio de hosting fuera de nuestro control</li>
+                                <li>Mantenimiento programado (se notificará con anticipación razonable)</li>
+                                <li>Causas de fuerza mayor (desastres naturales, fallos de infraestructura regional, etc.)</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Privacidad -->
-            <div class="ter-section" id="privacidad">
+            <!-- ART. 8 · PRIVACIDAD Y DATOS -->
+            <div class="ter-section" id="art8">
                 <div class="ter-section-header">
                     <span class="ter-section-icon">🔒</span>
-                    <span class="ter-section-title">Privacidad y Protección de Datos</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 8</span> Privacidad y Tratamiento de Datos Personales</span>
                 </div>
                 <div class="ter-section-body">
-                    <div class="ter-item">
-                        <div class="ter-item-title">📊 Datos Recopilados</div>
-                        <div class="ter-item-content">Recopilamos únicamente: nombre público, código de acceso, número de teléfono, elección de campeón y tus predicciones.</div>
-                    </div>
-                    <div class="ter-item">
-                        <div class="ter-item-title">👁️ Visibilidad</div>
-                        <div class="ter-item-content">Tu nombre público y puntos son <strong>VISIBLES</strong> para todos los participantes en el ranking. Tu teléfono es <strong>PRIVADO</strong> y solo visible para administradores.</div>
-                    </div>
-                    <div class="ter-item">
-                        <div class="ter-item-title">🗑️ Eliminación de Cuenta</div>
-                        <div class="ter-item-content">Puedes solicitar la eliminación de tu cuenta contactando al administrador. Tus predicciones históricas permanecerán en el sistema pero tu información personal será eliminada. Cada liga tendrá sus normas para aprobar la eliminación de una cuenta.</div>
-                    </div>
-                </div>
-            </div>
+                    <p class="ter-text">La plataforma recopila y trata datos personales de los usuarios de conformidad con los principios de <strong>licitud, lealtad, transparencia, minimización y confidencialidad</strong>. Al registrarte, consientes expresamente el tratamiento de tus datos según lo descrito en este artículo.</p>
 
-            <!-- Modificaciones -->
-            <div class="ter-section" id="modificaciones">
-                <div class="ter-section-header">
-                    <span class="ter-section-icon">📝</span>
-                    <span class="ter-section-title">Modificaciones a los Términos</span>
-                </div>
-                <div class="ter-section-body">
-                    <p class="ter-text">Los administradores se reservan el derecho de modificar estos términos y condiciones en cualquier momento. Los cambios significativos serán notificados a través de la plataforma antes de su implementación.</p>
-                    <p class="ter-text"><strong>Al continuar usando la plataforma después de una modificación, aceptas automáticamente los nuevos términos.</strong></p>
-                </div>
-            </div>
+                    <div class="ter-subtitle">📂 Datos Recopilados</div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">Datos de Registro</div>
+                        <div class="ter-item-content">Nombre público (usuario), número de teléfono y código de acceso alfanumérico.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">Datos de Uso</div>
+                        <div class="ter-item-content">Predicciones realizadas, puntajes obtenidos, historial de acceso a la plataforma y actividad dentro de la misma.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">Datos Técnicos</div>
+                        <div class="ter-item-content">Información del navegador, dispositivo y dirección IP, recopilada automáticamente para garantizar la seguridad y el correcto funcionamiento de la plataforma.</div>
+                    </div>
 
-            <!-- Juego responsable -->
-            <div class="ter-section" id="juego">
-                <div class="ter-section-header">
-                    <span class="ter-section-icon">🎮</span>
-                    <span class="ter-section-title">Juego Responsable</span>
-                </div>
-                <div class="ter-section-body">
-                    <p class="ter-text">Recuerda que esto es solo un juego. Participa de manera responsable, disfruta del Mundial y respeta a los demás participantes.</p>
+                    <div class="ter-subtitle">🎯 Finalidad del Tratamiento</div>
+                    <p class="ter-text">Los datos personales serán utilizados exclusivamente para:</p>
+                    <ul class="ter-numbered">
+                        <li>Gestionar la participación del usuario en la plataforma de quiniela.</li>
+                        <li>Calcular y publicar el ranking y los puntajes de los participantes.</li>
+                        <li>Comunicar avisos, notificaciones y actualizaciones relacionadas con la quiniela.</li>
+                        <li>Garantizar la seguridad e integridad del sistema.</li>
+                        <li>Cumplir con obligaciones legales en caso de ser requerido por autoridad competente.</li>
+                    </ul>
+
                     <div class="ter-highlight">
-                        <div class="ter-highlight-title">📧 Contacto</div>
-                        <p class="ter-highlight-text">Para consultas, problemas técnicos, reportes de conducta indebida o cualquier otra cuestión relacionada con estos términos, contacta al administrador de la quiniela.</p>
+                        <div class="ter-highlight-title">🚫 No Venta ni Cesión a Terceros</div>
+                        <p class="ter-highlight-text">La plataforma <strong>no vende, alquila ni cede</strong> los datos personales de los usuarios a terceros con fines comerciales. Los datos son tratados exclusivamente por los administradores de la quiniela para las finalidades descritas en este artículo.</p>
+                    </div>
+
+                    <div class="ter-subtitle">👁️ Datos Visibles Públicamente</div>
+                    <div class="ter-info">
+                        <div class="ter-info-title"><span>ℹ️</span> Información en el Ranking</div>
+                        <div class="ter-info-content">El <strong>nombre de usuario (alias público)</strong> y el <strong>puntaje</strong> de cada participante son visibles para todos los usuarios registrados en la plataforma. El número de teléfono <strong>nunca</strong> será visible públicamente. Al registrarte aceptas que tu alias y puntaje sean públicos dentro de la plataforma.</div>
+                    </div>
+
+                    <div class="ter-subtitle">🗑️ Derecho de Cancelación</div>
+                    <p class="ter-text">El usuario puede solicitar la eliminación de su cuenta y datos personales contactando al administrador. La solicitud será procesada dentro de un plazo razonable. Ten en cuenta que el historial de predicciones y puntajes puede mantenerse de forma anonimizada para preservar la integridad estadística del torneo.</p>
+                </div>
+            </div>
+
+            <!-- ART. 9 · LIMITACIÓN DE RESPONSABILIDAD -->
+            <div class="ter-section" id="art9">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">🛡️</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 9</span> Limitación de Responsabilidad</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">En la medida máxima permitida por la ley aplicable, los administradores de la plataforma <strong>no serán responsables</strong> por daños directos, indirectos, incidentales o consecuentes que surjan del uso o la imposibilidad de uso de la plataforma, incluyendo pero no limitado a:</p>
+                    <ul class="ter-numbered">
+                        <li>Pérdida de predicciones por problemas técnicos ajenos a la administración.</li>
+                        <li>Errores en la publicación de resultados de partidos por parte de fuentes externas (FIFA, medios de comunicación).</li>
+                        <li>Disputas económicas entre participantes de una misma liga privada sobre premios o apuestas acordados de forma independiente.</li>
+                        <li>Daños derivados del acceso no autorizado a la cuenta de un usuario por negligencia del propio usuario (compartir código de acceso).</li>
+                        <li>Interrupciones del servicio causadas por proveedores de hosting o infraestructura de terceros.</li>
+                    </ul>
+                    <div class="ter-warning">
+                        <div class="ter-warning-title"><span>⚖️</span> Decisión Administrativa Final</div>
+                        <div class="ter-warning-content">En cualquier controversia relativa al funcionamiento de la plataforma, puntajes, predicciones o sanciones, la <strong>decisión del administrador será definitiva</strong>. No existe mecanismo de apelación formal dentro de la plataforma. Los usuarios que consideren haber sufrido un perjuicio pueden plantear su caso al administrador, quien resolverá a su criterio.</div>
                     </div>
                 </div>
-                <div class="ter-last-updated">Última actualización: Febrero 2026 · Versión 1.0</div>
+            </div>
+
+            <!-- ART. 10 · PROPIEDAD INTELECTUAL -->
+            <div class="ter-section" id="art10">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">©️</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 10</span> Propiedad Intelectual</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">Todo el contenido de la plataforma — incluyendo su diseño, código fuente, imágenes, textos, estructura y funcionalidades — es propiedad de los desarrolladores y administradores de la <strong>Quiniela Mundial 2026</strong> y está protegido por las leyes de propiedad intelectual aplicables.</p>
+                    <div class="ter-item">
+                        <div class="ter-item-title">✔️ Licencia de Uso Limitada</div>
+                        <div class="ter-item-content">Se otorga al usuario una licencia de uso personal, no exclusiva, intransferible y revocable para acceder y utilizar la plataforma con los fines recreativos para los que fue diseñada.</div>
+                    </div>
+                    <div class="ter-item">
+                        <div class="ter-item-title">🚫 Uso No Autorizado</div>
+                        <div class="ter-item-content">Queda <strong>expresamente prohibido</strong> copiar, distribuir, modificar, crear obras derivadas, descompilar o hacer ingeniería inversa de cualquier componente de la plataforma sin autorización escrita de los administradores.</div>
+                    </div>
+                    <div class="ter-info">
+                        <div class="ter-info-title"><span>ℹ️</span> Marcas de Terceros</div>
+                        <div class="ter-info-content">Los logos, escudos, nombres de selecciones nacionales y cualquier elemento visual relacionado con el Mundial FIFA 2026 son propiedad de sus respectivos titulares. Su uso en esta plataforma es meramente referencial, sin implicar afiliación ni endorsement de dichos titulares.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ART. 11 · MODIFICACIONES -->
+            <div class="ter-section" id="art11">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">✏️</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 11</span> Modificaciones de los Términos</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">Los administradores se reservan el derecho de modificar, actualizar o reemplazar estos Términos y Condiciones en cualquier momento, a su entera discreción. Las modificaciones entrarán en vigor <strong>desde el momento de su publicación</strong> en la plataforma.</p>
+                    <p class="ter-text">Se notificará a los usuarios registrados sobre cambios sustanciales a través de los canales de comunicación habituales del grupo (WhatsApp u otros). El uso continuado de la plataforma después de la publicación de cambios constituirá la aceptación de los mismos.</p>
+                    <div class="ter-highlight">
+                        <div class="ter-highlight-title">📋 Versión Vigente</div>
+                        <p class="ter-highlight-text">La versión vigente de estos Términos siempre estará disponible en esta página. La fecha de última actualización se indica en el encabezado del documento. En caso de duda, se puede contactar al administrador para aclaración.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ART. 12 · JURISDICCIÓN -->
+            <div class="ter-section" id="art12">
+                <div class="ter-section-header">
+                    <span class="ter-section-icon">🌍</span>
+                    <span class="ter-section-title"><span class="ter-article-num">ART. 12</span> Jurisdicción y Resolución de Controversias</span>
+                </div>
+                <div class="ter-section-body">
+                    <p class="ter-text">Este documento se rige por las leyes de la República Bolivariana de Venezuela. Cualquier controversia derivada de la participación en la plataforma que no pueda resolverse mediante comunicación directa con el administrador, será sometida a la jurisdicción de los tribunales competentes de Venezuela.</p>
+                    <p class="ter-text">Dado el carácter recreativo y privado de la plataforma, se incentiva a los usuarios a resolver cualquier desacuerdo de forma amistosa y directa con el administrador antes de considerar cualquier vía formal.</p>
+                    <div class="ter-info">
+                        <div class="ter-info-title"><span>📞</span> Canal de Contacto</div>
+                        <div class="ter-info-content">Para cualquier consulta, reclamo o solicitud relacionada con estos Términos y Condiciones, los usuarios deben dirigirse al administrador designado de la plataforma a través del canal de comunicación oficial del grupo.</div>
+                    </div>
+                    <p class="ter-text" style="margin-top:16px;font-size:12px;color:#aaa;">Si alguna disposición de estos Términos es declarada nula o inaplicable por un tribunal competente, el resto de las disposiciones mantendrán su plena vigencia y eficacia.</p>
+                </div>
+            </div>
+
+            <!-- PIE DEL DOCUMENTO -->
+            <div class="ter-last-updated">
+                Documento Versión 1.0 · Última actualización: Febrero 2026 · Quiniela Mundial 2026 — Droguería Carrisan
             </div>
 
         </main>
@@ -399,37 +545,36 @@
             <div class="widget widget-cta-dark">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
-                    <span class="widget-title">¿Dudas?</span>
+                    <span class="widget-title">¿Todo claro?</span>
                 </div>
                 <div class="widget-body">
-                    <p class="cta-text">Si tienes preguntas sobre estos términos, contacta al administrador antes de registrarte.</p>
-                    <a href="reglamento.html" class="cta-btn">Ver Reglamento</a>
+                    <p class="cta-text">Al registrarte confirmas que leíste y aceptas estos términos en su totalidad.</p>
+                    <a href="registro.html" class="cta-btn">Ir al Registro →</a>
                 </div>
             </div>
 
             <div class="widget">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
-                    <span class="widget-title">Lo importante</span>
+                    <span class="widget-title">Contacto Admin</span>
                 </div>
                 <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label">Fines de lucro</span><span class="stat-val no">No</span></div>
-                    <div class="stat-row"><span class="stat-label">1 cuenta por persona</span><span class="stat-val ok">Sí</span></div>
-                    <div class="stat-row"><span class="stat-label">Predicciones editables</span><span class="stat-val no">No</span></div>
-                    <div class="stat-row"><span class="stat-label">Datos a terceros</span><span class="stat-val no">No</span></div>
-                    <div class="stat-row"><span class="stat-label">VAR activo</span><span class="stat-val ok">Sí</span></div>
+                    <p style="font-size:12px;color:#555;line-height:1.5;margin:0 0 10px">¿Tienes dudas sobre alguna cláusula? Consulta al administrador antes de registrarte.</p>
+                    <a href="#" class="cta-btn" style="background:#f0f0f0;color:#333;font-size:12px;padding:9px">📲 Contactar</a>
                 </div>
             </div>
 
             <div class="widget">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
-                    <span class="widget-title">Enlaces</span>
+                    <span class="widget-title">Puntos Clave</span>
                 </div>
-                <div class="widget-body" style="padding:10px 12px">
-                    <a href="reglamento.html" class="ter-nav-link"><i class="bi bi-book"></i> Reglamento</a>
-                    <a href="sistema.html"    class="ter-nav-link"><i class="bi bi-calculator"></i> Sistema de puntos</a>
-                    <a href="predicciones.html" class="ter-nav-link"><i class="bi bi-crosshairs"></i> Predicciones</a>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label">Solo +18 años</span><span class="stat-val no">Obligatorio</span></div>
+                    <div class="stat-row"><span class="stat-label">Datos protegidos</span><span class="stat-val ok">Sí</span></div>
+                    <div class="stat-row"><span class="stat-label">Predicción editable</span><span class="stat-val no">No</span></div>
+                    <div class="stat-row"><span class="stat-label">Alias público</span><span class="stat-val neu">Visible</span></div>
+                    <div class="stat-row"><span class="stat-label">Teléfono público</span><span class="stat-val no">No</span></div>
                 </div>
             </div>
 
@@ -437,12 +582,6 @@
 
     </div>
     </div>
-
-    <!-- PEGA TU FOOTER AQUÍ -->
-    <!-- PEGA TU NAVBAR MÓVIL AQUÍ -->
-
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
 
 </body>
 </html>
