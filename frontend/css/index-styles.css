@@ -3026,12 +3026,23 @@
         gap: 0;
         min-height: auto;
     }
-    .uib-left { 
-        grid-column: auto;
-        border-bottom: 1px solid #ddd;
-        flex-direction: column;
-        text-align: center;
+    .uib-left {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        text-align: left;
     }
+
+    .uib-donut-wrap {
+        flex-shrink: 0;
+    }
+    
+    .uib-profile-info {
+        flex: 1;
+        gap: 6px;
+    }
+
     .uib-vdivider { display: none; }
     .uib-stats { 
         padding: 12px;
