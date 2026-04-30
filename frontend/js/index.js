@@ -71,11 +71,6 @@ async function cargarDatos() {
     ]);
 }
 
-// Carga vConsole en la página actual
-var script = document.createElement('script');
-script.src = 'https://unpkg.com/vconsole@latest/dist/vconsole.min.js';
-document.head.appendChild(script);
-script.onload = function() { new VConsole(); };
 
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
