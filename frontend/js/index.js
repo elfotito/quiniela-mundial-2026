@@ -891,7 +891,7 @@ canvas.addEventListener('click', (event) => {
         const valores = data;
         const pts = [9, 7, 5, 2, 0];
         
-        const mensaje = `${labels[dataIndex]}: ${valores[dataIndex]} predicciones (${valores[dataIndex] * pts[dataIndex]} pts)`;
+        const mensaje = `${valores[dataIndex]} aciertos de ${labels[dataIndex]}: (${valores[dataIndex] * pts[dataIndex]} pts)`;
         console.log('📊', mensaje);
 
         // Burbuja de tooltip
@@ -901,8 +901,8 @@ canvas.addEventListener('click', (event) => {
             tooltip.id = 'donutTooltip';
             tooltip.style.cssText = `
                 position: fixed;
-                background: #1a1a1a;
-                color: #0066cc;
+                background: #ccc;
+                color: #000;
                 padding: 8px 12px;
                 border-radius: 6px;
                 font-size: 13px;
