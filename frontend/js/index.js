@@ -83,19 +83,22 @@ function renderUibEvo(evaluadas) {
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
     console.log('Chart datos:', datos);
     console.log('Primer dato:', datos[0], 'Último:', datos[datos.length - 1]);
+    console.log('Canvas rect:', canvas.getBoundingClientRect());
+    console.log('Canvas offsetWidth:', canvas.offsetWidth, 'offsetHeight:', canvas.offsetHeight);
+    console.log('Canvas parent:', canvas.parentElement);
 
     uibEvoChart = new Chart(canvas, {
         type: 'line',
         data: {
             datasets: [{
                 data: datos,
-                borderColor: '#FFD700',
-                backgroundColor: '#000',
-                borderWidth: 2, fill: true, tension: 0.3,
-                pointRadius: datos.length <= 12 ? 3 : 0,
-                pointHoverRadius: 5,
-                pointBackgroundColor: '#FFD700',
-                pointBorderColor: '#111', pointBorderWidth: 1.5
+                borderColor: '#0066cc',
+                backgroundColor: 'rgba(0, 102, 204, 0.08)',
+                borderWidth: 2.5, fill: true, tension: 0.3,
+                pointRadius: datos.length <= 12 ? 4 : 0,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#0066cc',
+                pointBorderColor: '#ffffff', pointBorderWidth: 2
             }]
         },
         options: {
@@ -106,25 +109,25 @@ function renderUibEvo(evaluadas) {
                 tooltip: {
                     callbacks: { label: ctx => `Partido ${ctx.parsed.x}: ${ctx.parsed.y} pts` },
                     backgroundColor: '#1a1a1a', titleColor: '#aaa',
-                    bodyColor: '#FFD700', borderColor: '#333', borderWidth: 1
+                    bodyColor: '#0066cc', borderColor: '#333', borderWidth: 1
                 }
             },
             scales: {
                 x: {
                     type: 'linear',
-                    ticks: { color: 'rgba(255,255,255,.2)', maxTicksLimit: 5, font: { size: 8 } },
-                    grid: { color: 'rgba(255,255,255,.04)' },
+                    ticks: { color: '#666666', maxTicksLimit: 5, font: { size: 9, weight: 600 } },
+                    grid: { color: '#eeeeee' },
                     border: { display: false }
                 },
                 y: {
                     min: 0, max: 9,
                     ticks: {
-                        color: 'rgba(255,255,255,.2)', font: { size: 8 },
+                        color: '#666666', font: { size: 9, weight: 600 },
                         callback: v => [0,2,5,7,9].includes(v) ? v : ''
                     },
                     grid: {
                         color: ctx => [0,2,5,7,9].includes(ctx.tick.value)
-                            ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,.02)'
+                            ? '#dddddd' : '#f5f5f5'
                     },
                     border: { display: false }
                 }
