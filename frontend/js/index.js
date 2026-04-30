@@ -72,7 +72,6 @@ async function cargarDatos() {
 }
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
-    console.log('renderUibEvo called, evaluadas:', evaluadas, 'canvas:', canvas);
     if (!canvas || typeof Chart === 'undefined') return;
     
     // Destruir chart anterior de forma segura
@@ -81,11 +80,6 @@ function renderUibEvo(evaluadas) {
     }
 
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
-    console.log('Chart datos:', datos);
-    console.log('Primer dato:', datos[0], 'Último:', datos[datos.length - 1]);
-    console.log('Canvas rect:', canvas.getBoundingClientRect());
-    console.log('Canvas offsetWidth:', canvas.offsetWidth, 'offsetHeight:', canvas.offsetHeight);
-    console.log('Canvas parent:', canvas.parentElement);
 
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -134,7 +128,6 @@ function renderUibEvo(evaluadas) {
             }
         }
     });
-    console.log('Chart creado:', uibEvoChart);
 }
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)

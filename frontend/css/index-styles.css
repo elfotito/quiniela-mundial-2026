@@ -3020,70 +3020,49 @@
 }
 @media (max-width: 700px) {
     .uib {
-        display: grid;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        min-height: auto;
+    }
+    .uib-left { 
+        grid-column: auto;
+        border-bottom: 1px solid #ddd;
+        flex-direction: column;
+        text-align: center;
+    }
+    .uib-vdivider { display: none; }
+    .uib-stats { 
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
         grid-template-columns: 1fr 1fr;
     }
-    .uib-left { grid-column: 1 / -1; border-bottom: 1px solid #1e1e1e; }
-    .uib-vdivider { display: none; }
-    .uib-stats { padding: 10px; }
+    .uib-breakdown { 
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+        min-width: unset;
+    }
+    .uib-chart-col {
+        width: 100%;
+        min-width: unset;
+        padding: 12px;
+        height: auto;
+    }
+    .uib-chart-wrap {
+        height: 250px;
+    }
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
     .uib-bar-block { width: 100%; }
 }
-/* ── RESPONSIVE MÓVIL ───────────────────────────────── */
-@media (max-width: 768px) {
-    .uib {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-    }
-    
-    .uib-left {
-        flex-direction: column;
-        text-align: center;
-        padding: 16px;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .uib-vdivider {
-        display: none;
-    }
-    
-    .uib-stats {
-        grid-template-columns: 1fr 1fr;
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
-        width: 100%;
-    }
-    
-    .uib-breakdown {
-        min-width: unset;
-        width: 100%;
-        padding: 12px;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .uib-chart-col {
-        min-width: unset;
-        width: 100%;
-        padding: 12px;
-        height: auto;
-    }
-    
-    .uib-chart-wrap {
-        height: 200px;
-    }
-}
 
 @media (max-width: 480px) {
-    .uib-stats {
-        grid-template-columns: 1fr;
-    }
-    
     .uib-chart-wrap {
-        height: 160px;
+        height: 220px;
     }
 }
 
