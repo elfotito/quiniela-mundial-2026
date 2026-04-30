@@ -2954,7 +2954,7 @@
     text-transform: uppercase; color: #054c3f;
 }
 .uib-chart-wrap {
-    flex: 1; position: relative; height: 62px;
+    flex: 1; position: relative; height: 280px;
 }
 .uib-chart-wrap canvas {
     position: absolute; inset: 0;
