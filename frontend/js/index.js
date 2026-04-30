@@ -70,8 +70,6 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
-
-
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
     console.log('🔍 Canvas móvil:', {
@@ -830,12 +828,13 @@ s('bdTotal',     `${exactos*9 + ganMar*7 + ganador*5 + marcador*2} pts`);
 
         // Donut
         renderUibDonut(exactos, ganMar, ganador, marcador, fallados);
+        
         const evaluadasEvo = predicciones
-    .filter(p => p.puntos_obtenidos !== null)
-    .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
+            .filter(p => p.puntos_obtenidos !== null)
+            .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha));
 
-console.log('evaluadasEvo antes de renderizar:', evaluadasEvo);
-setTimeout(() => renderUibEvo(evaluadasEvo), 200);
+        console.log('evaluadasEvo antes de renderizar:', evaluadasEvo);
+        setTimeout(() => renderUibEvo(evaluadasEvo), 200);
 
     } catch (err) {
         console.error('Error predicciones donut:', err);
@@ -843,53 +842,64 @@ setTimeout(() => renderUibEvo(evaluadasEvo), 200);
     }
 }
 
-uibDonutChart = new Chart(canvas, {
-    type: 'doughnut',
-    data: {
-        datasets: [{
-            data,
-            backgroundColor: [
-                '#22c55e',  // exacto +9
-                '#FFD700',  // ganador+marcador +7
-                '#a855f7',  // ganador +5
-                '#3b82f6',  // marcador +2
-                total > 0 ? '#ef4444' : '#2a2a2a'  // fallados / vacío
-            ],
-            borderWidth: 0,
-            borderRadius: 3,
-            hoverOffset: 4
-        }]
-    },
-    options: {
-        cutout: '65%',
-        plugins: {
-            legend: { display: false },
-            tooltip: { enabled: false }
+function renderUibDonut(exactos, ganMar, ganador, marcador, fallados) {
+    const canvas = document.getElementById('uibDonutChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    
+    // Destruir chart anterior de forma segura
+    if (uibDonutChart instanceof Chart) { 
+        uibDonutChart.destroy(); 
+    }
+
+    const total = exactos + ganMar + ganador + marcador + fallados;
+    const data  = total > 0
+        ? [exactos, ganMar, ganador, marcador, fallados]
+        : [0, 0, 0, 0, 1]; // placeholder vacío
+
+    uibDonutChart = new Chart(canvas, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data,
+                backgroundColor: [
+                    '#22c55e',  // exacto +9
+                    '#FFD700',  // ganador+marcador +7
+                    '#a855f7',  // ganador +5
+                    '#3b82f6',  // marcador +2
+                    total > 0 ? '#ef4444' : '#2a2a2a'  // fallados / vacío
+                ],
+                borderWidth: 0,
+                borderRadius: 3,
+                hoverOffset: 4
+            }]
         },
-        animation: {
-            duration: 900,
-            easing: 'easeInOutQuart'
+        options: {
+            cutout: '65%',
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            animation: {
+                duration: 900,
+                easing: 'easeInOutQuart'
+            }
         }
-    }
-});
+    });
 
-// Evento click para mostrar información
-canvas.addEventListener('click', (event) => {
-    const canvasPosition = Chart.helpers.getRelativePosition(event, uibDonutChart);
-    const dataX = uibDonutChart.scales.x;
-    const dataY = uibDonutChart.scales.y;
-    const dataIndex = uibDonutChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)[0]?.index;
+    // Evento click para mostrar información
+    canvas.addEventListener('click', (event) => {
+        const dataIndex = uibDonutChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)[0]?.index;
 
-    if (dataIndex !== undefined) {
-        const labels = ['Exacto (+9)', 'Ganador+Marcador (+7)', 'Ganador (+5)', 'Marcador (+2)', 'Fallados'];
-        const valores = data;
-        
-        console.log(`📊 ${labels[dataIndex]}: ${valores[dataIndex]} predicciones`);
-        
-        // Opcional: mostrar un alert bonito
-        // alert(`${labels[dataIndex]}\n${valores[dataIndex]} predicciones`);
-    }
-});
+        if (dataIndex !== undefined) {
+            const labels = ['Exacto (+9)', 'Ganador+Marcador (+7)', 'Ganador (+5)', 'Marcador (+2)', 'Fallados'];
+            const valores = data;
+            const pts = [9, 7, 5, 2, 0];
+            
+            const mensaje = `${labels[dataIndex]}: ${valores[dataIndex]} predicciones (${valores[dataIndex] * pts[dataIndex]} pts)`;
+            console.log('📊', mensaje);
+        }
+    });
+}
 // ===============================================
 // LOGOUT
 // ===============================================
