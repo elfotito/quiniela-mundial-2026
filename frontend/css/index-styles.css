@@ -2944,16 +2944,23 @@
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
 .uib-chart-col {
-    flex: 1; display: flex; flex-direction: column;
-    gap: 4px; padding: 10px 16px 10px 12px;
+    flex: 1; 
+    display: flex; 
+    flex-direction: column;
+    gap: 4px; 
+    padding: 10px 16px 10px 12px;
     min-width: 140px;
+    height: 100%;
 }
 .uib-chart-label {
     font-size: 9px; font-weight: 700; letter-spacing: 1px;
     text-transform: uppercase; color: #054c3f;
 }
 .uib-chart-wrap {
-    flex: 1; position: relative; height: 280px;
+    flex: 1;
+    position: relative;
+    height: auto;
+    min-height: 350px;
 }
 .uib-chart-wrap canvas {
     position: absolute; inset: 0;
@@ -2964,16 +2971,19 @@
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {
     display: flex;
+    flex-direction: column;
     gap: 0;
     border-top: 1px solid #ccc;
     padding: 10px 24px;
-    align-items: center;
+    align-items: stretch;
+    width: 100%;
 }
 .uib-bar-block {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 100%;
 }
 .uib-bar-block:nth-child(3) {
     display: none;

@@ -891,7 +891,7 @@ canvas.addEventListener('click', (event) => {
         const valores = data;
         const pts = [9, 7, 5, 2, 0];
         
-        const mensaje = `${valores[dataIndex]} aciertos de ${labels[dataIndex]}: (${valores[dataIndex] * pts[dataIndex]} pts)`;
+        const mensaje = `${valores[dataIndex]} aciertos de ${labels[dataIndex]} = ${valores[dataIndex] * pts[dataIndex]} pts ganados`;
         console.log('📊', mensaje);
 
         // Burbuja de tooltip
