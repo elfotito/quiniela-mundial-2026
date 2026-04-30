@@ -744,9 +744,9 @@ async function initUserBanner() {
     const nombre = usuario.nombre_publico || usuario.nombre || usuario.codigo || 'Usuario';
     document.getElementById('uibNombre').textContent = nombre;
 
-    const campeonBandera = typeof obtenerBandera === 'function'
-        ? obtenerBandera(usuario.campeon_elegido) : '🏳️';
-    document.getElementById('uibCampeon').textContent = campeonBandera;
+    const campeonEmoji = typeof obtenerCampeon === 'function'
+        ? obtenerCampeon(usuario.campeon_elegido) : '🏳️';
+    document.getElementById('uibCampeon').textContent = campeonEmoji;
 
     // ── Liga ─────────────────────────────────────────
     try {
