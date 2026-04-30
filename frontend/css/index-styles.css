@@ -2975,12 +2975,11 @@
     flex-direction: column;
     gap: 5px;
 }
+.uib-bar-block:nth-child(3) {
+    display: none;
+}
 .uib-bar-sep {
-    width: 1px;
-    height: 32px;
-    background: #ccc;
-    margin: 0 24px;
-    flex-shrink: 0;
+    display: none;
 }
 .uib-bar-header {
     display: flex;
