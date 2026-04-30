@@ -90,7 +90,7 @@ function renderUibEvo(evaluadas) {
             datasets: [{
                 data: datos,
                 borderColor: '#FFD700',
-                backgroundColor: 'rgba(255,215,0,0.07)',
+                backgroundColor: '#000',
                 borderWidth: 2, fill: true, tension: 0.3,
                 pointRadius: datos.length <= 12 ? 3 : 0,
                 pointHoverRadius: 5,
