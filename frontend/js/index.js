@@ -887,18 +887,50 @@ function renderUibDonut(exactos, ganMar, ganador, marcador, fallados) {
     });
 
     // Evento click para mostrar información
-    canvas.addEventListener('click', (event) => {
-        const dataIndex = uibDonutChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)[0]?.index;
+canvas.addEventListener('click', (event) => {
+    const dataIndex = uibDonutChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)[0]?.index;
 
-        if (dataIndex !== undefined) {
-            const labels = ['Exacto (+9)', 'Ganador+Marcador (+7)', 'Ganador (+5)', 'Marcador (+2)', 'Fallados'];
-            const valores = data;
-            const pts = [9, 7, 5, 2, 0];
-            
-            const mensaje = `${labels[dataIndex]}: ${valores[dataIndex]} predicciones (${valores[dataIndex] * pts[dataIndex]} pts)`;
-            console.log('📊', mensaje);
+    if (dataIndex !== undefined) {
+        const labels = ['Exacto (+9)', 'Ganador+Marcador (+7)', 'Ganador (+5)', 'Marcador (+2)', 'Fallados'];
+        const valores = data;
+        const pts = [9, 7, 5, 2, 0];
+        
+        const mensaje = `${labels[dataIndex]}: ${valores[dataIndex]} predicciones (${valores[dataIndex] * pts[dataIndex]} pts)`;
+        console.log('📊', mensaje);
+
+        // Burbuja de tooltip
+        let tooltip = document.getElementById('donutTooltip');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'donutTooltip';
+            tooltip.style.cssText = `
+                position: fixed;
+                background: #1a1a1a;
+                color: #0066cc;
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 13px;
+                font-weight: 600;
+                border: 1px solid #333;
+                z-index: 9999;
+                pointer-events: none;
+            `;
+            document.body.appendChild(tooltip);
         }
-    });
+        
+        tooltip.textContent = mensaje;
+        const rect = canvas.getBoundingClientRect();
+        tooltip.style.left = (rect.left + event.clientX - rect.left) + 'px';
+        tooltip.style.top = (rect.top + event.clientY - rect.top - 40) + 'px';
+        
+        // Desaparecer después de 3 segundos
+        clearTimeout(tooltip.hideTimer);
+        tooltip.style.opacity = '1';
+        tooltip.hideTimer = setTimeout(() => {
+            tooltip.style.opacity = '0';
+        }, 3000);
+    }
+});
 }
 // ===============================================
 // LOGOUT
