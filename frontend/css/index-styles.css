@@ -3069,6 +3069,10 @@
     .uib > .uib-chart-col > .uib-chart-wrap {
         height: 250px !important;
     }
+    .uib-chart-wrap {
+        height: 250px !important;
+        position: relative;
+    }
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
@@ -3078,7 +3082,12 @@
     }
     
 }
-
+@media (max-width: 480px) {
+    .uib-chart-wrap {
+        height: 220px !important;
+        position: relative;
+    }
+}
 
 #newsTicker3 .ent_label span {
     font-family: 'SportsNight', sans-serif !important;

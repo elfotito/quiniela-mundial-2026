@@ -731,7 +731,7 @@ function iniciarTicker() {
             "fontFamily": "SportsNight",      
             "fontSize":   38,            
             "fontWeight": "700",
-            "letter-spacing": "-1px"
+            "letter-spacing": "-2px"
         },
         "data": noticias,
         "news": {
