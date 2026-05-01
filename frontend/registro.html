@@ -100,6 +100,9 @@
                             required
                             maxlength="20"
                         >
+                        <small class="form-hint" id="codigoHint">
+                            IMPORTANTE para identificarte en el sistema
+                        </small>
                     </div>
 
                     <!-- Selección de Campeón -->
@@ -243,7 +246,45 @@
                 hint.className = 'form-hint success';
             }
         });
+        
+        // la webonada del telefono que debe dar igual
+        document.addEventListener('DOMContentLoaded', () => {
+        const telefonoInput = document.getElementById('telefonoInput');
+        
+        // Formato automático
+        telefonoInput.addEventListener('input', function(e) {
+            const cursorPos = this.selectionStart;
+            
+            let valor = this.value.replace(/[^\d+]/g, '');
+            
+            if (valor.length > 0 && !valor.startsWith('+')) {
+                valor = '+' + valor.replace(/\+/g, '');
+            }
+            
+            valor = '+' + valor.slice(1).replace(/\+/g, '');
 
+            if (valor.length > 14) {
+                valor = valor.slice(0, 14);
+            }
+            
+            this.value = valor;
+
+            const hint = document.getElementById('telefonoHint');
+            if (valor.length >= 8 && /^\+\d{6,13}$/.test(valor)) {
+                hint.innerHTML = '✅ Formato válido';
+                hint.className = 'form-hint success';
+                this.style.borderColor = '#4caf50';
+            } else if (valor.length > 0) {
+                hint.innerHTML = '⚠️ Ejemplo: +584145949532 (código país + número)';
+                hint.className = 'form-hint warning';
+                this.style.borderColor = '#ff9800';
+            } else {
+                hint.innerHTML = 'IMPORTANTE para identificarte en el sistema';
+                hint.className = 'form-hint';
+                this.style.borderColor = '';
+            }
+        });
+    });
         // Manejar envío del formulario
         document.getElementById('registroForm').addEventListener('submit', async function(e) {
             e.preventDefault();
