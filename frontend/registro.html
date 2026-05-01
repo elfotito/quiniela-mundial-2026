@@ -246,7 +246,7 @@
                 hint.className = 'form-hint success';
             }
         });
-        
+
         // la webonada del telefono que debe dar igual
         document.addEventListener('DOMContentLoaded', () => {
         const telefonoInput = document.getElementById('telefonoInput');
@@ -283,6 +283,16 @@
                 hint.className = 'form-hint';
                 this.style.borderColor = '';
             }
+        const formulario = document.getElementById('registroForm');
+        formulario.addEventListener('submit', function(e) {
+        const telefono = telefonoInput.value;
+        if (!/^\+\d{6,13}$/.test(telefono)) {
+            e.preventDefault();
+            mostrarError('Teléfono inválido. Usa formato: +584145949532');
+            telefonoInput.focus();
+            return false;
+                }
+            });
         });
     });
         // Manejar envío del formulario
