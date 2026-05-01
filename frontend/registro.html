@@ -37,10 +37,11 @@
                 
                 <div class="form-header">
                     <h2 class="form-title">Crear Cuenta</h2>
-                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026</p>
+                    <p class="form-label">Únete a la Quiniela Mundial 2026:</p>
                     
                     <div class="info-section">
-                        <div class="info-section-title">Costos de Mantenimiento</div>
+                        <div class="info-section-title">Forma parte de este increible juego</div>
+                        <p class="form-label">Costos de Subscripcion:</p>
                         <ul class="info-list">
                             <li>2$ Registro de usuario</li>
                             <li>3$ Creación de liga</li>
@@ -293,11 +294,11 @@
             this.value = valor;
 
             const hint = document.getElementById('telefonoHint');
-            if (valor.length >= 11 && /^\+\d{11,13}$/.test(valor)) {
+            if (valor.length >= 12 && /^\+\d{11,13}$/.test(valor)) {
                 hint.innerHTML = '✅ Formato válido';
                 hint.className = 'form-hint success';
                 this.style.borderColor = '#4caf50';
-            } else if (valor.length < 11) {
+            } else if (valor.length < 12) {
                 hint.innerHTML = '⚠️ Ejemplo: +584145949532 (código país + número)';
                 hint.className = 'form-hint warning';
                 this.style.borderColor = '#ff9800';
