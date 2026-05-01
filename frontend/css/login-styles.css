@@ -1,7 +1,67 @@
-/* ===============================================
-   LOGIN SPLIT-SCREEN - ESTILO FIFA
-   Mundial 2026 USA/MEX/CAN
-   =============================================== */
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-thin.woff') format('woff');
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-light.woff') format('woff');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-light-italic.woff') format('woff'); 
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-medium-italic.woff') format('woff'); 
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-semibold.woff') format('woff');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-bold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-bold-italic.woff') format('woff'); 
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Yolk';
+    src: url('../fonts/yolk-black.woff') format('woff');
+    font-weight: 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SportsNight';
+    src: url('../fonts/SportsNight.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
 
 :root {
     --primary-blue: #304fff;
@@ -26,7 +86,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:'Yolk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     height: 100vh;
     overflow: hidden;
 }
@@ -186,9 +246,8 @@ body {
 
 /* Sección de costos e información */
 .info-section {
-    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    background: linear-gradient(145deg, #111111 0%, #3e3f3f 100%);
     padding: 1.5rem;
-    border-radius: 20px;
     margin-bottom: 1.5rem;
     color: white;
     position: relative;
@@ -196,11 +255,11 @@ body {
 
 .info-section-title {
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 700;
     text-align: center;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(255,255,255,0.2);
+    border-bottom: 0px solid rgba(255,255,255,0.2);
 }
 
 .pricing-cards {
@@ -213,7 +272,6 @@ body {
     flex: 1;
     background: rgba(255,255,255,0.1);
     padding: 1rem;
-    border-radius: 12px;
     text-align: center;
     transition: transform 0.3s ease;
 }
