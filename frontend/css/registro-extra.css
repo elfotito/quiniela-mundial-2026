@@ -590,3 +590,12 @@
 .terminos-group.error .checkbox-text {
     color: #ff4444;
 }
+
+.mobile-index-widget {
+    display: none;
+}
+@media(max-width:700px) {
+    .mobile-index-widget {
+        display: block;
+    }
+}
