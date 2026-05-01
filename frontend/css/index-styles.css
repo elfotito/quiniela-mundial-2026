@@ -909,11 +909,11 @@
 
     .news-nav {
     grid-template-columns: repeat(2, 1fr);
-    padding: 16px 16px 20px;
+    padding: 16px 16px 0px;
     gap: 0;
 }
 .nav-item {
-    padding: 12px 10px 12px;
+    padding: 12px 10px 22px;
 }
 .nav-cat {
     font-size: 11px;
@@ -3067,10 +3067,11 @@
         width: 100%;
         min-width: unset;
         padding: 12px;
-        height: auto;
+        height: 280px !important;
     }
+    
     .uib-chart-wrap {
-        height: 250px;
+        height: 250px !important;
     }
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
