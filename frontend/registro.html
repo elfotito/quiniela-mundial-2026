@@ -37,12 +37,18 @@
                 
                 <div class="form-header">
                     <h2 class="form-title">Crear Cuenta</h2>
-                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026<br><br>
-                    Costos de mantenimiento:<br>
-                    - 2$ Registro de usuario<br>
-                    - 3$ Creacion de liga<br>
-                    <br>Unete a nuestro <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank" title="Enlace directo al canal de whatsapp de la quiniela">canal de whatsapp</a> <br>para más información.</p>
-                    </p>
+                    <p class="form-subtitle">Únete a la Quiniela Mundial 2026</p>
+                    
+                    <div class="info-section">
+                        <div class="info-section-title">Costos de Mantenimiento</div>
+                        <ul class="info-list">
+                            <li>2$ Registro de usuario</li>
+                            <li>3$ Creación de liga</li>
+                        </ul>
+                        <div class="info-contact">
+                            Únete a nuestro <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank" title="Enlace directo al canal de whatsapp de la quiniela">canal de WhatsApp</a> para más información.
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Mensajes -->
@@ -117,7 +123,23 @@
                     <!-- Selección de Ligas -->
                     <div class="form-group">
                         <label class="form-label">Selecciona tu Liga:</label>
-                        <p class="form-hint">Compite con tus amigos en la liga que fuiste invitado.<br> <br><strong>Si tu liga no ha sido creada</strong>, puedes entrar en la GENERAL <br>y se te reasignara una vez se cree la liga.<br> <br>Puedes unirte a varias ligas pero solo el presidente de cada liga aprobara cada integrante. <br><br></p>
+                        
+                        <!-- Card de información mejorado -->
+                        <div class="liga-info-card">
+                            <h3 class="liga-info-title">Información importante sobre ligas</h3>
+                            <ul class="liga-info-list">
+                                <li class="liga-info-item">
+                                    Compite con tus amigos en la liga que fuiste invitado.
+                                </li>
+                                <li class="liga-info-item">
+                                    <span class="liga-info-highlight">Si tu liga no ha sido creada</span>, puedes entrar en la GENERAL y serás reasignado una vez se cree la liga.
+                                </li>
+                                <li class="liga-info-item">
+                                    Puedes unirte a varias ligas, pero solo el presidente de cada liga aprobará cada integrante.
+                                </li>
+                            </ul>
+                        </div>
+                        
                         <div class="ligas-grid" id="ligasContainer">
                             <div class="loading-ligas">Cargando ligas...</div>
                         </div>
@@ -287,7 +309,7 @@
         const formulario = document.getElementById('registroForm');
         formulario.addEventListener('submit', function(e) {
         const telefono = telefonoInput.value;
-        if (!/^\+\d{11,13}$/.test(telefono)) {
+        if (!/^\+\d{6,13}$/.test(telefono)) {
             e.preventDefault();
             mostrarError('Teléfono inválido. Usa formato: +584145949532');
             telefonoInput.focus();
