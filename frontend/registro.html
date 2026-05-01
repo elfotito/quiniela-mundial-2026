@@ -85,7 +85,7 @@
                             required
                             maxlength="20"
                         >
-                        <small class="form-hint">
+                        <small class="form-nombre">
                             Nombre con el que apareceras en el ranking (Público)
                         </small>
                     </div>
@@ -202,6 +202,41 @@
             ]);
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+    // Seleccionar todos los campos requeridos
+    const inputsRequeridos = document.querySelectorAll('[required]');
+    
+    inputsRequeridos.forEach(input => {
+        // Personalizar mensaje para cada tipo de campo
+        input.addEventListener('invalid', function(e) {
+            e.preventDefault(); // Evita el mensaje por defecto
+            
+            if (this.validity.valueMissing) {
+                if (this.id === 'nombreInput') {
+                    this.setCustomValidity('🎭 Si quieres te ponemos "el sin nombre"');
+                } 
+                else if (this.id === 'codigoInput') {
+                    this.setCustomValidity('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
+                }
+                else if (this.id === 'telefonoInput') {
+                    this.setCustomValidity('📱 El mas misterioso que no quiere dar su numero');
+                }
+                else if (this.id === 'terminosCheckbox') {
+                    this.setCustomValidity('😉 Hagamos como que si leiste los terminos y condiciones');
+                }
+                else {
+                    this.setCustomValidity('⚠️ Este campo es obligatorio, ¡no lo olvides!');
+                }
+            }
+            
+            this.reportValidity();
+        });
+        
+        input.addEventListener('input', function() {
+            this.setCustomValidity('');
+        });
+    });
+});
         async function cargarLigas() {
             try {
                 const response = await fetch(`${CONFIG.API_URL}/ligas`);
