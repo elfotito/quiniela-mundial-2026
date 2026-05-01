@@ -2895,8 +2895,8 @@
     line-height: 1;
     letter-spacing: -0.5px;
 }
-.uib-stat-val.gold  { color: #FFD700; }
-.uib-stat-val.green { color: #22c55e; }
+.uib-stat-val.gold  { color: #FFC107; }
+.uib-stat-val.green { color: #3cac3b; }
 
 .uib-stat-lbl {
     font-size: 9px;
@@ -3010,7 +3010,7 @@
     transition: width 1.2s cubic-bezier(.4,0,.2,1);
 }
 .uib-bar-fill.gold  { background: linear-gradient(90deg, #FFD700, #f59e0b); }
-.uib-bar-fill.white { background: linear-gradient(90deg, #3CAC3B, rgba(60, 255, 0, 0.6)); }
+.uib-bar-fill.white { background: linear-gradient(90deg, #3cac3b, rgba(60, 255, 0, 0.6)); }
 
 /* ── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 1024px) {
