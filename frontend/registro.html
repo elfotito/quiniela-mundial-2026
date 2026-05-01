@@ -90,7 +90,7 @@
                         </small>
                     </div>
 
-                    <!-- Código de Acceso -->
+                    <!-- Yo esa clave no la veo ni a palo -->
                     <div class="form-group">
                         <label for="codigoInput" class="form-label">Código de Acceso</label>
                         <input 
@@ -107,7 +107,7 @@
                         </small>
                     </div>
 
-                    <!-- Teléfono -->
+                    <!-- puro guatsak -->
                     <div class="form-group">
                         <label for="telefonoInput" class="form-label">Teléfono</label>
                         <input 
@@ -135,7 +135,7 @@
                         </small>
                     </div>
 
-                    <!-- Selección de Ligas -->
+                    <!-- ligas el mas webon despues le toca ordenar a todo el mundo -->
                     <div class="form-group">
                         <div class="liga-info-card">
                             <h3 class="liga-info-title">Información acerca de las ligas</h3>
@@ -155,6 +155,15 @@
                         <div class="ligas-grid" id="ligasContainer">
                             <div class="loading-ligas">Cargando ligas...</div>
                         </div>
+                    </div>
+                    <div class="form-group terminos-group">
+                    <div class="form-group terminos-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="terminosCheckbox" class="checkbox-input" required>
+                        <span class="checkbox-custom"></span>
+                        <span class="checkbox-text">
+                            He leido los <a href="terminos.html" target="_blank" class="terminos-link">Términos y Condiciones</a> ☝️🤓
+                    </label>
                     </div>
                     <!-- los bots me la pelan - No tocar -->
                     <div style="display:none;" aria-hidden="true">
@@ -310,7 +319,7 @@
                 hint.className = 'form-hint success';
                 this.style.borderColor = '#4caf50';
             } else if (valor.length < 12) {
-                hint.innerHTML = '⚠️ Ejemplo: +584145949532 (código país + número)';
+                hint.innerHTML = '⚠️ Ejemplo: +584149876543 (código país + número)';
                 hint.className = 'form-hint warning';
                 this.style.borderColor = '#ff9800';
             } else {
@@ -357,7 +366,6 @@
             const ligasSeleccionadas = Array.from(
                 document.querySelectorAll('input[name="ligas"]:checked')
             ).map(cb => parseInt(cb.value));
-
             // Validaciones
             if (!nombre || !codigo || !telefono) {
                 mostrarError('Completa todos los campos obligatorios');
@@ -373,7 +381,21 @@
                 mostrarError('Selecciona al menos una liga');
                 return;
             }
-
+            const terminosCheckbox = document.getElementById('terminosCheckbox');
+            if (!terminosCheckbox.checked) {
+                mostrarError('Hagamos como que si leiste los terminos y condiciones 😉');
+                
+                // Resaltar el checkbox con error
+                const terminosGroup = document.querySelector('.terminos-group');
+                terminosGroup.classList.add('error');
+                
+                // Remover error después de 3 segundos
+                setTimeout(() => {
+                    terminosGroup.classList.remove('error');
+                }, 3000);
+                
+                return;
+            }
             // Loading
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Creando cuenta...</span>';

@@ -499,3 +499,88 @@
         letter-spacing: 0.4rem;
     }
 }
+
+/* Checkbox de términos y condiciones */
+.terminos-group {
+    margin: 1rem 0 1.5rem 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.checkbox-custom {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 0;
+    transition: all 0.2s ease;
+}
+
+.checkbox-custom::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-input:checked + .checkbox-custom {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.checkbox-input:checked + .checkbox-custom::after {
+    display: block;
+}
+
+.checkbox-input:focus + .checkbox-custom {
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.checkbox-text {
+    flex: 1;
+}
+
+.terminos-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.terminos-link:hover {
+    text-decoration: underline;
+}
+
+/* Estado de error para el checkbox */
+.terminos-group.error .checkbox-custom {
+    border-color: #ff4444;
+    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.1);
+}
+
+.terminos-group.error .checkbox-text {
+    color: #ff4444;
+}
