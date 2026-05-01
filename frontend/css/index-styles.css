@@ -2908,7 +2908,7 @@
 
 .uib-breakdown {
     display: flex; flex-direction: column;
-    gap: 3px; padding: 10px 16px; flex-shrink: 0;
+    gap: 4px; padding: 10px 16px; flex-shrink: 0;
     min-width: 175px;
 }
 .uib-bd-title {
@@ -2950,7 +2950,7 @@
 }
 .uib-chart-label {
     font-size: 9px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: #054c3f;
+    text-transform: uppercase; color: #000000;
 }
 .uib-chart-wrap {
     flex: 1; position: relative; height: 280px;
