@@ -204,6 +204,7 @@
                 </label>
             `).join('');
         }
+
         function mostrarEquipos() {
             const container = document.getElementById('equiposContainer');
             
@@ -217,12 +218,6 @@
                 </label>
             `).join('');
         }
-        const honeypot = document.getElementById('website').value;
-            if (honeypot) {
-                // hashhsad bot pendejo
-                mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
-                return;
-            }
         // Validación en tiempo real del código
         document.getElementById('codigoInput').addEventListener('input', function(e) {
             e.target.value = e.target.value.toUpperCase();
@@ -252,6 +247,12 @@
         // Manejar envío del formulario
         document.getElementById('registroForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            const honeypot = document.getElementById('website').value;
+            if (honeypot) {
+                mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
+                return;
+            }
 
             const submitBtn = document.getElementById('submitBtn');
             const errorEl = document.getElementById('errorMessage');
