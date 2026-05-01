@@ -406,13 +406,21 @@
     font-size: 1rem;
     }
     }
+
+    .mobile-index-widget {
+    display: none !important;
+    order: -1;
+    }
+
+@media(max-width:700px) {
+    .mobile-index-widget {
+        display: block;
+    }
+}
     </style>
 </head>
 
 <body>
-
-    <!-- PEGA TU HEADER AQUÍ -->
-
     <!-- ── HERO ──────────────────────────────────────── -->
     <div class="ter-hero">
         <div class="ter-hero-inner">
@@ -519,6 +527,7 @@
 
                     <ul class="ter-numbered">
                         <li><strong>Sin fines de lucro:</strong> La plataforma no tiene como objetivo la generación de beneficios económicos por parte de sus administradores.</li>
+                        <li><strong>Costo de mantenimiento:</strong> Cobramos solo un coste minimo para mantener la pagina en funcionamiento, toda la parte del financiamiento de esta web estara en una pagina dedicada a ello.</li>
                         <li><strong>Gestión interna de premios:</strong> Cualquier premio, apuesta o incentivo económico entre participantes es gestionado de manera independiente dentro de cada liga privada, siendo responsabilidad exclusiva de los miembros de dicha liga. Los administradores del sistema no intervienen ni se responsabilizan de tales acuerdos.</li>
                         <li><strong>Sin vínculo oficial:</strong> Esta plataforma no tiene afiliación, patrocinio ni relación oficial con la FIFA, sus organizaciones asociadas, ni con ningún equipo o federación participante en el Mundial 2026.</li>
                         <li><strong>Carácter recreativo:</strong> La participación es voluntaria y los resultados de la quiniela no tienen validez legal, deportiva ni económica más allá del contexto interno de la plataforma.</li>
