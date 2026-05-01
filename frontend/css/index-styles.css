@@ -2046,7 +2046,7 @@
     right: 0;
     width: 48%;
     height: 100%;
-    background: #edeef0;
+    background: #ffd830;
     z-index: 1;
 }
 .mtb-logo,
@@ -3077,15 +3077,15 @@
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
     .uib-bar-block { width: 100%; }
-    .ent_wrapper .ent_label {
-        display: none;
-    }
     
 }
 @media (max-width: 480px) {
     .uib-chart-wrap {
         height: 220px !important;
         position: relative;
+    }
+    .ent_wrapper .ent_label {
+        display: none;
     }
 }
 
