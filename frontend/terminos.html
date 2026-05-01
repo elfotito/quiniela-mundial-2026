@@ -35,7 +35,7 @@
         .ter-title { font-size:clamp(30px,4.5vw,62px); font-weight:900; color:#fff; line-height:1; letter-spacing:-2px; text-transform:uppercase; margin-bottom:14px; }
         .ter-title em { font-style:normal; color:var(--fifa-gold,#FFD700); }
         .ter-sub { font-size:14px; color:rgba(255,255,255,.5); line-height:1.6; max-width:480px; }
-        .ter-badge { display:inline-flex; align-items:center; gap:8px; margin-top:22px; padding:8px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:8px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); }
+        .ter-badge { display:inline-flex; align-items:center; gap:8px; margin-top:22px; padding:8px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); font-size:12px; font-weight:700; color:rgba(255,255,255,.6); }
         .ter-deco { font-size:110px; opacity:.05; line-height:1; user-select:none; flex-shrink:0; }
         @media(max-width:700px){ .ter-hero-inner{grid-template-columns:1fr;padding:32px 16px 28px;} .ter-deco{display:none;} }
 
@@ -47,7 +47,7 @@
         .ter-col-right { grid-area:derecha;   display:flex; flex-direction:column; gap:14px; position:sticky; top:110px; }
 
         /* ── WIDGET BASE ──────────────────────────────────── */
-        .widget { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
+        .widget { background:#fff; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
         .widget-header { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid #f0f0f0; }
         .widget-bar   { width:3px; height:14px; background:var(--fifa-gold,#FFD700); border-radius:0; flex-shrink:0; }
         .widget-title { font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#0a0a0a; flex:1; margin:0; }
@@ -55,7 +55,7 @@
         .widget-body  { padding:14px 16px; }
 
         /* ── SECCIÓN CARD ─────────────────────────────────── */
-        .ter-section { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
+        .ter-section { background:#fff; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.07); border:1px solid #eee; }
         .ter-section-header { padding:18px 24px 16px; border-bottom:1px solid #f0f0f0; display:flex; align-items:center; gap:12px; }
         .ter-section-icon  { font-size:22px; line-height:1; }
         .ter-section-title { font-size:16px; font-weight:800; color:#0a0a0a; letter-spacing:-.3px; }
@@ -67,7 +67,7 @@
         .ter-subtitle { font-size:14px; font-weight:800; color:#0a0a0a; margin:20px 0 10px; padding-left:12px; border-left:3px solid var(--fifa-gold,#FFD700); }
 
         /* Term items */
-        .ter-item { padding:14px 16px; margin-bottom:10px; background:#fafafa; border-radius:10px; border-left:3px solid #0066CC; transition:background .15s,transform .15s; }
+        .ter-item { padding:14px 16px; margin-bottom:10px; background:#fafafa; border-left:3px solid #0066CC; transition:background .15s,transform .15s; }
         .ter-item:hover { background:#f0f0f0; transform:translateX(4px); }
         .ter-item:last-child { margin-bottom:0; }
         .ter-item-title { font-size:13px; font-weight:800; color:#BA7517; margin-bottom:6px; }
@@ -75,7 +75,7 @@
         .ter-item-content strong { color:#0a0a0a; }
 
         /* Highlight box */
-        .ter-highlight { background:#FAFAF0; border:1.5px solid var(--fifa-gold,#FFD700); border-radius:10px; padding:18px 20px; margin:16px 0; text-align:center; }
+        .ter-highlight { background:#FAFAF0; border:1.5px solid var(--fifa-gold,#FFD700); padding:18px 20px; margin:16px 0; text-align:center; }
         .ter-highlight-title { font-size:14px; font-weight:800; color:#BA7517; margin-bottom:8px; }
         .ter-highlight-text  { font-size:13px; color:#555; line-height:1.6; }
 
@@ -86,13 +86,13 @@
         .ter-info-content strong { color:#0C447C; }
 
         /* Warning box rojo */
-        .ter-warning { background:#FEF2F2; border:1.5px solid #ef4444; border-radius:10px; padding:16px 18px; margin:14px 0; }
+        .ter-warning { background:#FEF2F2; border:1.5px solid #ef4444; padding:16px 18px; margin:14px 0; }
         .ter-warning-title   { font-size:13px; font-weight:800; color:#dc2626; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
         .ter-warning-content { font-size:13px; color:#7f1d1d; line-height:1.7; }
 
         /* Lista numerada */
         .ter-numbered { counter-reset:ter-c; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
-        .ter-numbered li { counter-increment:ter-c; position:relative; padding:12px 14px 12px 52px; background:#fafafa; border-radius:10px; font-size:13px; color:#333; line-height:1.6; }
+        .ter-numbered li { counter-increment:ter-c; position:relative; padding:12px 14px 12px 52px; background:#fafafa; font-size:13px; color:#333; line-height:1.6; }
         .ter-numbered li::before { content:counter(ter-c); position:absolute; left:12px; top:50%; transform:translateY(-50%); width:28px; height:28px; background:var(--fifa-gold,#FFD700); color:#000; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:12px; }
         .ter-numbered li strong { color:#0a0a0a; }
 
@@ -102,7 +102,7 @@
         .ter-list li::before { content:'→'; position:absolute; left:0; font-weight:700; font-size:11px; }
 
         /* Nav lateral */
-        .ter-nav-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; color:#555; text-decoration:none; transition:background .15s; margin-bottom:2px; }
+        .ter-nav-link { display:flex; align-items:center; gap:8px; padding:8px 12px; font-size:12px; font-weight:600; color:#555; text-decoration:none; transition:background .15s; margin-bottom:2px; }
         .ter-nav-link:hover { background:#f0f0f0; color:#0a0a0a; }
         .ter-nav-link i { font-size:12px; width:14px; text-align:center; opacity:.5; }
 
@@ -111,7 +111,7 @@
         .widget-cta-dark .widget-header { border-bottom-color:#222; }
         .widget-cta-dark .widget-title  { color:#fff; }
         .cta-text { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; margin-bottom:14px; }
-        .cta-btn  { display:block; text-align:center; padding:11px; background:var(--fifa-gold,#FFD700); color:#000; font-size:13px; font-weight:800; border-radius:8px; text-decoration:none; transition:background .2s; }
+        .cta-btn  { display:block; text-align:center; padding:11px; background:var(--fifa-gold,#FFD700); color:#000; font-size:13px; font-weight:800; text-decoration:none; transition:background .2s; }
         .cta-btn:hover { background:#e6c200; }
 
         /* Stat rows */
@@ -127,7 +127,7 @@
         .ter-last-updated { text-align:center; font-size:11px; color:#aaa; padding:16px; border-top:1px solid #eee; background:#fff; border-radius:0 0 14px 14px; margin-top:-1px; }
 
         /* Numeración de artículos */
-        .ter-article-num { display:inline-block; background:var(--fifa-gold,#FFD700); color:#000; font-size:10px; font-weight:900; padding:2px 7px; border-radius:4px; margin-right:8px; letter-spacing:1px; vertical-align:middle; }
+        .ter-article-num { display:inline-block; background:var(--fifa-gold,#FFD700); color:#000; font-size:10px; font-weight:900; padding:2px 7px; margin-right:8px; letter-spacing:1px; vertical-align:middle; }
 
         /* ── RESPONSIVE ───────────────────────────────────── */
         @media(max-width:1024px){
