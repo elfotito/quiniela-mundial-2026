@@ -2845,9 +2845,15 @@
     gap: 6px;
 }
 .uib-liga-badge {
+        display: inline-block;
     font-size: 11px;
     color: #000000;
     font-weight: 400;
+}
+.liga-multiple {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
 }
 .uib-pos-badge {
     display: inline-flex;

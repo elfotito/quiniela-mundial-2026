@@ -758,11 +758,19 @@ async function initUserBanner() {
 
     // ── Liga ─────────────────────────────────────────
     try {
-        const resLiga = await fetch(`${CONFIG.API_URL}/usuarios/${usuario.id}/ligas`);
-        const ligas = await resLiga.json();
-        document.getElementById('uibLiga').textContent =
-            ligas.length ? `${ligas[0].icono || '🏅'} ${ligas[0].nombre}` : '—';
-    } catch { document.getElementById('uibLiga').textContent = '—'; }
+    const resLiga = await fetch(`${CONFIG.API_URL}/usuarios/${usuario.id}/ligas`);
+    const ligas = await resLiga.json();
+    
+    if (ligas.length) {
+        // Para espacio reducido, mejor con coma y espacio
+        const textoLigas = ligas.map(liga => `${liga.icono || '🏅'} ${liga.nombre}`).join(', ');
+        document.getElementById('uibLiga').innerHTML = `<span class="liga-multiple">${textoLigas}</span>`;
+    } else {
+        document.getElementById('uibLiga').innerHTML = '—';
+    }
+    } catch { 
+        document.getElementById('uibLiga').innerHTML = '—'; 
+    }
 
     // ── Estadísticas del endpoint ─────────────────────
     try {
