@@ -275,7 +275,7 @@
                 hint.innerHTML = '✅ Formato válido';
                 hint.className = 'form-hint success';
                 this.style.borderColor = '#4caf50';
-            } else if (valor.length === 0) {
+            } else if (valor.length < 8) {
                 hint.innerHTML = '⚠️ Ejemplo: +584145949532 (código país + número)';
                 hint.className = 'form-hint warning';
                 this.style.borderColor = '#ff9800';
