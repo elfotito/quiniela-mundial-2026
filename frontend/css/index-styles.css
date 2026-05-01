@@ -2956,6 +2956,10 @@
 .uib-chart-wrap {
     flex: 1; position: relative; height: 280px;
 }
+.uib-chart-wrap canvas {
+    position: absolute; inset: 0;
+    width: 100% !important; height: 100% !important;
+}
 
 
 /* ── BARRA INFERIOR ───────────────────────────────── */
@@ -3061,6 +3065,9 @@
         height: 280px !important;
     }
     
+    .uib > .uib-chart-col > .uib-chart-wrap {
+        height: 250px !important;
+    }
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
