@@ -259,7 +259,7 @@ body {
     text-align: center;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 0px solid rgba(255,255,255,0.2);
+    border-bottom: 2px solid rgba(255,255,255,0.2);
 }
 
 .pricing-cards {
@@ -298,8 +298,13 @@ body {
     color: #ffd700;
 }
 
-.pricing-card .price-desc {
+.pricing-card {
     font-size: 0.7rem;
+    opacity: 0.7;
+    margin-top: 0.25rem;
+}
+.price-desc {
+    font-size: 0.5rem;
     opacity: 0.7;
     margin-top: 0.25rem;
 }
