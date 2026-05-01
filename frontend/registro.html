@@ -271,16 +271,16 @@
             this.value = valor;
 
             const hint = document.getElementById('telefonoHint');
-            if (valor.length >= 8 && /^\+\d{6,13}$/.test(valor)) {
+            if (valor.length > 8 && /^\+\d{9,13}$/.test(valor)) {
                 hint.innerHTML = '✅ Formato válido';
                 hint.className = 'form-hint success';
                 this.style.borderColor = '#4caf50';
-            } else if (valor.length >= 12) {
+            } else if (valor.length === 0) {
                 hint.innerHTML = '⚠️ Ejemplo: +584145949532 (código país + número)';
                 hint.className = 'form-hint warning';
                 this.style.borderColor = '#ff9800';
             } else {
-                hint.innerHTML = 'IMPORTANTE para identificarte en el sistema';
+                hint.innerHTML = 'Sera tu identificador en el sistema (No sera publico)';
                 hint.className = 'form-hint';
                 this.style.borderColor = '';
             }
