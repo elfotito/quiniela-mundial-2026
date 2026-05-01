@@ -2001,11 +2001,6 @@
     /* ── Efecto SLIDE HORIZONTAL (el único que usamos) ── */
     .ent_wrapper.slide-horizontal-effect .ent_news_container { display: flex; }
     .ent_wrapper.slide-horizontal-effect .ent_news_container .ent_news { flex: 1 0 100%; }
-@media (max-width: 768px) {
-    .ent_wrapper .ent_label {
-        display: none;
-    }
-}
     /* ── TOP BAR ──────────────────────────────────────────────── */
 .mobile-top-bar {
     display: none;
@@ -3070,28 +3065,24 @@
         height: 280px !important;
     }
     
-    .uib-chart-wrap {
+    .uib > .uib-chart-col > .uib-chart-wrap {
         height: 250px !important;
     }
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
     .uib-bar-block { width: 100%; }
-}
-
-@media (max-width: 480px) {
-    .uib-chart-wrap {
-        height: 220px;
+    .ent_wrapper .ent_label {
+        display: none;
     }
+    
 }
 
-/* Sobrescribir los estilos dinámicos del ticker para usar SportsNight */
+
 #newsTicker3 .ent_label span {
     font-family: 'SportsNight', sans-serif !important;
     font-weight: 700 !important;
-    /* Asegurarse de que el tamaño sea el correcto para la fuente personalizada */
     font-size: 32px !important;
-    /* Si la fuente se ve cortada, ajustar estos valores */
     line-height: 1 !important;
     display: flex !important;
     align-items: center !important;
@@ -3099,7 +3090,6 @@
     letter-spacing: 1px !important;
 }
 
-/* Asegurar que el contenedor del label tenga altura suficiente */
 #newsTicker3 .ent_label {
     padding: 15px 20px !important;
     display: flex !important;
