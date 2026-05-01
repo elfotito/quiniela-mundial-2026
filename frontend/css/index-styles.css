@@ -2956,10 +2956,6 @@
 .uib-chart-wrap {
     flex: 1; position: relative; height: 280px;
 }
-.uib-chart-wrap canvas {
-    position: absolute; inset: 0;
-    width: 100% !important; height: 100% !important;
-}
 
 
 /* ── BARRA INFERIOR ───────────────────────────────── */
