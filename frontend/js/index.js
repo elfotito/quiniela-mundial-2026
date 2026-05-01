@@ -763,7 +763,7 @@ async function initUserBanner() {
     
     if (ligas.length) {
         // Para espacio reducido, mejor con coma y espacio
-        const textoLigas = ligas.map(liga => `${liga.icono || '🏅'} ${liga.nombre}`).join(', ');
+        const textoLigas = ligas.map(liga => `${liga.icono || '🏅'} ${liga.nombre}`).join(',<br>');
         document.getElementById('uibLiga').innerHTML = `<span class="liga-multiple">${textoLigas}</span>`;
     } else {
         document.getElementById('uibLiga').innerHTML = '—';
