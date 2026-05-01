@@ -108,11 +108,14 @@ function renderUibEvo(evaluadas) {
             plugins: {
                 legend: { display: false },
                 tooltip: {
-                    callbacks: { label: ctx => `Partido ${ctx.parsed.x}: ${ctx.parsed.y} pts` },
-                    backgroundColor: '#1a1a1a', 
-                    titleColor: '#aaa',
-                    bodyColor: '#0066cc', 
-                    borderColor: '#333', 
+                    callbacks: {
+                        title: ctx => `Partido ${ctx[0].parsed.x}`,
+                        label: ctx => `+${ctx.parsed.y} pts` 
+                    },
+                    backgroundColor: '#ccc', 
+                    titleColor: '#000',
+                    bodyColor: '#3f3f3f', 
+                    borderColor: '#000', 
                     borderWidth: 1
                 }
             },
@@ -122,7 +125,12 @@ function renderUibEvo(evaluadas) {
                     ticks: { 
                         color: '#666666', 
                         maxTicksLimit: 5, 
-                        font: { size: 9, weight: 600 } 
+                        font: { size: 9, weight: 600 },
+                        stepSize: 1,
+                        precision: 0,
+                        callback: function(val) {
+                            return Number.isInteger(val) ? val : '';
+                        }
                     },
                     grid: { color: '#eeeeee' },
                     border: { display: false }
@@ -907,7 +915,7 @@ canvas.addEventListener('click', (event) => {
                 border-radius: 6px;
                 font-size: 13px;
                 font-weight: 600;
-                border: 1px solid #333;
+                border: 1px solid #000;
                 z-index: 9999;
                 pointer-events: none;
             `;
