@@ -61,7 +61,7 @@
                     
                     <!-- Nombre -->
                     <div class="form-group">
-                        <label for="nombreInput" class="form-label">Nombre Público</label>
+                        <label for="nombreInput" class="form-label">Nombre de Usuario</label>
                         <input 
                             type="text" 
                             id="nombreInput" 
@@ -98,10 +98,11 @@
                             class="form-input"
                             placeholder="+584141234567"
                             required
-                            maxlength="20"
+                            maxlength="13"
+                            pattern="\+\d{12}"
                         >
                         <small class="form-hint" id="telefonoHint">
-                            Sera tu identificador en el sistema (No se publicara)
+                            Sera tu identificador en el sistema (No sera publico)
                         </small>
                     </div>
 
