@@ -3125,7 +3125,7 @@
 }
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
-/* Elimina todas las alturas fijas y !important */
+/* ── BASE (desktop por defecto) ────────────────────────────── */
 .uib-chart-col {
     flex: 1;
     display: flex;
@@ -3133,7 +3133,6 @@
     gap: 4px;
     padding: 10px 16px 10px 12px;
     min-width: 140px;
-    /* Sin altura fija */
 }
 
 .uib-chart-label {
@@ -3145,35 +3144,72 @@
 }
 
 .uib-chart-wrap {
-    /* No pongas height fija, deja que el contenido decida */
     position: relative;
     width: 100%;
-    /* Esto es clave: el canvas ocupará el espacio disponible */
-    flex: 1;
-    min-height: 200px; /* Altura mínima para móvil */
+    min-height: 200px; /* Altura pequeña para desktop */
 }
 
 .uib-chart-wrap canvas {
     display: block;
     width: 100% !important;
-    height: auto !important; /* Deja que la altura sea automática */
+    height: auto !important;
 }
 
-/* Desktop */
-@media (min-width: 768px) {
+/* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
+@media (min-width: 1601px) and (max-width: 1870px) {
     .uib-chart-wrap {
-        min-height: 280px;
+        min-height: 200px; /* Sigue siendo pequeño */
     }
 }
 
-/* Móvil pequeño */
-@media (max-width: 480px) {
+/* ── LAPTOP grande / Desktop pequeño (1396px - 1600px) ────────────────────────────── */
+@media (min-width: 1396px) and (max-width: 1600px) {
+    .uib-chart-wrap {
+        min-height: 210px;
+    }
+}
+
+/* ── LAPTOP estándar (1281px - 1395px) ────────────────────────────── */
+@media (min-width: 1281px) and (max-width: 1395px) {
     .uib-chart-wrap {
         min-height: 220px;
     }
 }
 
+/* ── LAPTOP pequeño (1025px - 1280px) ────────────────────────────── */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .uib-chart-wrap {
+        min-height: 240px;
+    }
+}
 
+/* ── TABLET grande / iPad (769px - 1024px) ────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .uib-chart-wrap {
+        min-height: 280px;
+    }
+}
+
+/* ── TABLET pequeña (481px - 768px) ────────────────────────────── */
+@media (min-width: 481px) and (max-width: 768px) {
+    .uib-chart-wrap {
+        min-height: 320px;
+    }
+}
+
+/* ── MÓVIL (hasta 480px) ────────────────────────────── */
+@media (max-width: 480px) {
+    .uib-chart-wrap {
+        min-height: 360px; /* Altura grande para móvil */
+    }
+}
+
+/* ── MÓVIL muy pequeño (hasta 380px) ────────────────────────────── */
+@media (max-width: 380px) {
+    .uib-chart-wrap {
+        min-height: 400px; /* Aún más alto si es necesario */
+    }
+}
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {
     display: flex;
@@ -3284,7 +3320,6 @@
     
 }
 @media (max-width: 480px) {
-
     .ent_wrapper .ent_label {
         display: none;
     }
