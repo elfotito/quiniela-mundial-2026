@@ -3138,15 +3138,15 @@
 }
 
 .uib-chart-wrap {
-    width: 520px;      
-    height: 140px;   
+    width: auto;      
+    height: 120px;   
     position: relative;
 }
 
 .uib-chart-wrap canvas {
     display: block;
     width: auto;
-    height: 140px !important;
+    height: 120px !important;
 }
 @media (max-width: 392px) {
     .uib-chart-col {
