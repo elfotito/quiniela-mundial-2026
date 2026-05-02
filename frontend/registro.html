@@ -156,14 +156,13 @@
                             <div class="loading-ligas">Cargando ligas...</div>
                         </div>
                     </div>
-
                     <div class="form-group terminos-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="terminosCheckbox" class="checkbox-input" required>
-                        <span class="checkbox-custom"></span>
-                        <span class="checkbox-text">
-                            He leido los <a href="terminos.html" target="_blank" class="terminos-link">Términos y Condiciones</a> ☝️🤓
-                    </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terminosCheckbox" class="checkbox-input" required>
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">
+                                He leido los <a href="terminos.html" target="_blank" class="terminos-link">Términos y Condiciones</a> ☝️🤓
+                        </label>
                     </div>
                     <!-- los bots me la pelan - No tocar -->
                     <div style="display:none;" aria-hidden="true">
@@ -202,37 +201,40 @@
             ]);
         });
 
+        // Validación personalizada en tiempo real
         document.addEventListener('DOMContentLoaded', () => {
-    const inputsRequeridos = document.querySelectorAll('[required]');
-    
-    inputsRequeridos.forEach(input => {
-        // Personalizar mensaje para cada tipo de campo
-        input.addEventListener('invalid', function(e) {
-            e.preventDefault();
+            const inputsRequeridos = document.querySelectorAll('[required]');
             
-            if (this.validity.valueMissing) {
-                if (this.id === 'nombreInput') {
-                    this.setCustomValidity('🎭 Si quieres te ponemos "el sin nombre"');
-                } 
-                else if (this.id === 'codigoInput') {
-                    this.setCustomValidity('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
-                }
-                else if (this.id === 'telefonoInput') {
-                    this.setCustomValidity('📱 El mas misterioso que no quiere dar su numero');
-                }
-                else if (this.id === 'terminosCheckbox') {
-                    this.setCustomValidity('😉 Hagamos como que si leiste los terminos y condiciones');
-                }
-                else {
-                    this.setCustomValidity('⚠️ Este campo es obligatorio, ¡no lo olvides!');
-                }
-            }
+            inputsRequeridos.forEach(input => {
+                input.addEventListener('invalid', function(e) {
+                    e.preventDefault();
+                    
+                    if (this.validity.valueMissing) {
+                        if (this.id === 'nombreInput') {
+                            this.setCustomValidity('🎭 Si quieres te ponemos "el sin nombre"');
+                        } 
+                        else if (this.id === 'codigoInput') {
+                            this.setCustomValidity('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
+                        }
+                        else if (this.id === 'telefonoInput') {
+                            this.setCustomValidity('📱 El mas misterioso que no quiere dar su numero');
+                        }
+                        else if (this.id === 'terminosCheckbox') {
+                            this.setCustomValidity('😉 Hagamos como que si leiste los terminos y condiciones');
+                        }
+                        else {
+                            this.setCustomValidity('⚠️ Este campo es obligatorio, ¡no lo olvides!');
+                        }
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    this.setCustomValidity('');
+                });
+            });
         });
-        input.addEventListener('input', function() {
-            this.setCustomValidity('');
-        });
-    });
-});
+
+        // Cargar ligas desde API
         async function cargarLigas() {
             try {
                 const response = await fetch(`${CONFIG.API_URL}/ligas`);
@@ -251,6 +253,7 @@
             }
         }
 
+        // Cargar equipos desde API
         async function cargarEquipos() {
             try {
                 const response = await fetch(`${CONFIG.API_URL}/equipos`);
@@ -269,6 +272,7 @@
             }
         }
 
+        // Renderizar ligas
         function mostrarLigas() {
             const container = document.getElementById('ligasContainer');
             
@@ -283,6 +287,7 @@
             `).join('');
         }
 
+        // Renderizar equipos
         function mostrarEquipos() {
             const container = document.getElementById('equiposContainer');
             
@@ -296,6 +301,7 @@
                 </label>
             `).join('');
         }
+
         // Validación en tiempo real del código
         document.getElementById('codigoInput').addEventListener('input', function(e) {
             e.target.value = e.target.value.toUpperCase();
@@ -323,199 +329,192 @@
         });
 
         // Formato automático del teléfono
-const telefonoInput = document.getElementById('telefonoInput');
-
-telefonoInput.addEventListener('input', function(e) {
-    const cursorPos = this.selectionStart;
-    
-    let valor = this.value.replace(/[^\d+]/g, '');
-    
-    if (valor.length > 0 && !valor.startsWith('+')) {
-        valor = '+' + valor.replace(/\+/g, '');
-    }
-    
-    valor = '+' + valor.slice(1).replace(/\+/g, '');
-
-    if (valor.length > 14) {
-        valor = valor.slice(0, 14);
-    }
-    
-    this.value = valor;
-
-    const hint = document.getElementById('telefonoHint');
-    if (valor.length >= 12 && /^\+\d{11,13}$/.test(valor)) {
-        hint.innerHTML = '✅ Formato válido';
-        hint.className = 'form-hint success';
-        this.style.borderColor = '#4caf50';
-    } else if (valor.length < 12) {
-        hint.innerHTML = '⚠️ Ejemplo: +584149876543 (código país + número)';
-        hint.className = 'form-hint warning';
-        this.style.borderColor = '#ff9800';
-    } else {
-        hint.innerHTML = 'Sera tu identificador en el sistema (No sera publico)';
-        hint.className = 'form-hint';
-        this.style.borderColor = '';
-    }
-});
-
-/// Manejar envío del formulario
-document.getElementById('registroForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const submitBtn = document.getElementById('submitBtn');
-    const errorEl = document.getElementById('errorMessage');
-    const successEl = document.getElementById('successMessage');
-
-    // Limpiar mensajes
-    errorEl.style.display = 'none';
-    successEl.style.display = 'none';
-
-    // Obtener datos
-    const nombre = document.getElementById('nombreInput').value.trim();
-    const codigo = document.getElementById('codigoInput').value.trim().toUpperCase();
-    const telefono = document.getElementById('telefonoInput').value.trim();
-
-    const campeonSeleccionado = document.querySelector('input[name="campeon"]:checked');
-    const ligasSeleccionadas = Array.from(
-        document.querySelectorAll('input[name="ligas"]:checked')
-    ).map(cb => parseInt(cb.value));
-
-    // VALIDACIONES - Aquí muestras tus mensajes personalizados
-    if (!nombre) {
-        mostrarError('🎭 Si quieres te ponemos "el sin nombre"');
-        return;
-    }
-
-    if (!codigo) {
-        mostrarError('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
-        return;
-    }
-
-    if (!telefono) {
-        mostrarError('📱 El mas misterioso que no quiere dar su numero');
-        return;
-    }
-
-    if (!/^\+\d{6,13}$/.test(telefono)) {
-        mostrarError('Teléfono inválido. Usa formato: +584145949532');
-        return;
-    }
-
-    if (!campeonSeleccionado) {
-        mostrarError('Selecciona un equipo campeón');
-        return;
-    }
-
-    if (ligasSeleccionadas.length === 0) {
-        mostrarError('Selecciona al menos una liga');
-        return;
-    }
-
-    const terminosCheckbox = document.getElementById('terminosCheckbox');
-    if (!terminosCheckbox.checked) {
-        mostrarError('😉 Hagamos como que si leiste los terminos y condiciones');
+        const telefonoInput = document.getElementById('telefonoInput');
         
-        // Resaltar el checkbox con error
-        const terminosGroup = document.querySelector('.terminos-group');
-        terminosGroup.classList.add('error');
-        
-        // Remover error después de 3 segundos
-        setTimeout(() => {
-            terminosGroup.classList.remove('error');
-        }, 3000);
-        
-        return;
-    }
+        telefonoInput.addEventListener('input', function(e) {
+            let valor = this.value.replace(/[^\d+]/g, '');
+            
+            if (valor.length > 0 && !valor.startsWith('+')) {
+                valor = '+' + valor.replace(/\+/g, '');
+            }
+            
+            valor = '+' + valor.slice(1).replace(/\+/g, '');
 
-    const honeypot = document.getElementById('website').value;
-    if (honeypot) {
-        mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
-        return;
-    }
-    
-    // Loading
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Creando cuenta...</span>';
+            if (valor.length > 14) {
+                valor = valor.slice(0, 14);
+            }
+            
+            this.value = valor;
 
-    try {
-        const response = await fetch(`${CONFIG.API_URL}/registro`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nombre_publico: nombre,
-                codigo_acceso: codigo,
-                telefono,
-                campeon_elegido: campeonSeleccionado.value,
-                ligas: ligasSeleccionadas
-            })
+            const hint = document.getElementById('telefonoHint');
+            if (valor.length >= 12 && /^\+\d{11,13}$/.test(valor)) {
+                hint.innerHTML = '✅ Formato válido';
+                hint.className = 'form-hint success';
+                this.style.borderColor = '#4caf50';
+            } else if (valor.length < 12) {
+                hint.innerHTML = '⚠️ Ejemplo: +584149876543 (código país + número)';
+                hint.className = 'form-hint warning';
+                this.style.borderColor = '#ff9800';
+            } else {
+                hint.innerHTML = 'Sera tu identificador en el sistema (No sera publico)';
+                hint.className = 'form-hint';
+                this.style.borderColor = '';
+            }
         });
 
-        const data = await response.json();
+        // Manejar envío del formulario
+        document.getElementById('registroForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Submit del formulario disparado');
 
-        if (!response.ok) {
-            throw new Error(data.error || 'Error al crear cuenta');
+            const submitBtn = document.getElementById('submitBtn');
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+
+            // Limpiar mensajes
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+
+            // Obtener datos
+            const nombre = document.getElementById('nombreInput').value.trim();
+            const codigo = document.getElementById('codigoInput').value.trim().toUpperCase();
+            const telefono = document.getElementById('telefonoInput').value.trim();
+
+            const campeonSeleccionado = document.querySelector('input[name="campeon"]:checked');
+            const ligasSeleccionadas = Array.from(
+                document.querySelectorAll('input[name="ligas"]:checked')
+            ).map(cb => parseInt(cb.value));
+
+            // VALIDACIONES
+            if (!nombre) {
+                mostrarError('🎭 Si quieres te ponemos "el sin nombre"');
+                return;
+            }
+
+            if (!codigo) {
+                mostrarError('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
+                return;
+            }
+
+            if (!telefono) {
+                mostrarError('📱 El mas misterioso que no quiere dar su numero');
+                return;
+            }
+
+            if (!/^\+\d{6,13}$/.test(telefono)) {
+                mostrarError('Teléfono inválido. Usa formato: +584145949532');
+                return;
+            }
+
+            if (!campeonSeleccionado) {
+                mostrarError('Selecciona un equipo campeón');
+                return;
+            }
+
+            if (ligasSeleccionadas.length === 0) {
+                mostrarError('Selecciona al menos una liga');
+                return;
+            }
+
+            const terminosCheckbox = document.getElementById('terminosCheckbox');
+            if (!terminosCheckbox.checked) {
+                mostrarError('Hagamos como que si leiste los terminos y condiciones 😉');
+                
+                const terminosGroup = document.querySelector('.terminos-group');
+                terminosGroup.classList.add('error');
+                
+                setTimeout(() => {
+                    terminosGroup.classList.remove('error');
+                }, 3000);
+                
+                return;
+            }
+
+            const honeypot = document.getElementById('website').value;
+            if (honeypot) {
+                mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
+                return;
+            }
+            
+            // Loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="btn-spinner"></span><span class="btn-text">Creando cuenta...</span>';
+
+            try {
+                const response = await fetch(`${CONFIG.API_URL}/registro`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre_publico: nombre,
+                        codigo_acceso: codigo,
+                        telefono,
+                        campeon_elegido: campeonSeleccionado.value,
+                        ligas: ligasSeleccionadas
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Error al crear cuenta');
+                }
+
+                // Éxito
+                const equipoNombre = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.nombre;
+                const equipoBandera = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.bandera_emoji;
+
+                mostrarExito(`¡Cuenta creada! Tu código: ${codigo} | Campeón: ${equipoBandera} ${equipoNombre}`);
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error en registro:', error);
+                mostrarError(error.message);
+
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="btn-text">Crear Cuenta</span>';
+            }
+        });
+
+        function mostrarError(mensaje) {
+            console.log('Mostrando error:', mensaje);
+            const errorEl = document.getElementById('errorMessage');
+            const textEl = errorEl.querySelector('.message-text');
+            
+            if (textEl) {
+                textEl.textContent = mensaje;
+            }
+            
+            errorEl.style.display = 'flex';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            setTimeout(() => {
+                errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
 
-        // Éxito
-        const equipoNombre = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.nombre;
-        const equipoBandera = equiposDisponibles.find(e => e.codigo_fifa === campeonSeleccionado.value)?.bandera_emoji;
-
-        mostrarExito(`¡Cuenta creada! Tu código: ${codigo} | Campeón: ${equipoBandera} ${equipoNombre}`);
-
-        // Redirigir después de 3 segundos
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 3000);
-
-    } catch (error) {
-        console.error('Error en registro:', error);
-        mostrarError(error.message);
-
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span class="btn-text">Crear Cuenta</span>';
-    }
-});
-
-function mostrarError(mensaje) {
-    console.log('Mostrando error:', mensaje); // Para verificar que se ejecuta
-    const errorEl = document.getElementById('errorMessage');
-    const textEl = errorEl.querySelector('.message-text');
-    
-    if (textEl) {
-        textEl.textContent = mensaje;
-    }
-    
-    errorEl.style.display = 'flex';
-    document.getElementById('successMessage').style.display = 'none';
-    
-    // Scroll al mensaje
-    setTimeout(() => {
-        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
-}
-
-function mostrarExito(mensaje) {
-    console.log('Mostrando éxito:', mensaje); // Para verificar que se ejecuta
-    const successEl = document.getElementById('successMessage');
-    const textEl = successEl.querySelector('.message-text');
-    
-    if (textEl) {
-        textEl.textContent = mensaje;
-    }
-    
-    successEl.style.display = 'flex';
-    document.getElementById('errorMessage').style.display = 'none';
-    
-    // Ocultar formulario
-    document.getElementById('registroForm').style.display = 'none';
-    
-    // Scroll al mensaje
-    setTimeout(() => {
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 100);
-}
+        function mostrarExito(mensaje) {
+            console.log('Mostrando éxito:', mensaje);
+            const successEl = document.getElementById('successMessage');
+            const textEl = successEl.querySelector('.message-text');
+            
+            if (textEl) {
+                textEl.textContent = mensaje;
+            }
+            
+            successEl.style.display = 'flex';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            document.getElementById('registroForm').style.display = 'none';
+            
+            setTimeout(() => {
+                successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
     </script>
 </body>
 </html>
