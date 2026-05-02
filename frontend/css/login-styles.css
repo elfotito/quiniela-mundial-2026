@@ -164,6 +164,7 @@ body {
     font-weight: 700;
     line-height: 1.2;
     max-width: 600px;
+    padding-bottom: 0.5rem;
 }
 
 .hero-description {
