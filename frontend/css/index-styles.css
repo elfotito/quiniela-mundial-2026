@@ -3144,14 +3144,14 @@
 
 .uib-chart-wrap {
     position: relative;
-    width: 100%;
+    width: 550px;
     min-height: 140px;
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: auto;
-    height: auto;
+    width: 550px;
+    height: 140px;
 }
 
 /* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
