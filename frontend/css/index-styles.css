@@ -3175,63 +3175,88 @@
         width: 340px;
     }
 }
-/* ── MÓVIL PEQUEÑO (0px - 392px) ── */
-@media (max-width: 392px) {
-    .uib-chart-wrap {
-        width: 340px;
-    }
-    .uib-chart-wrap canvas {
-        width: 340px !important;
-    }
-}
-
-/* ── TRANSICIÓN (393px - 480px) ── */
 @media (min-width: 393px) and (max-width: 480px) {
+    .uib-chart-col {
+        align-items: center;
+    }
+    
     .uib-chart-wrap {
         width: 340px;
+        height: auto;
+        min-height: 80px;
     }
+    
     .uib-chart-wrap canvas {
         width: 340px !important;
+        height: auto !important;
+    }
+    
+    .uib-chart-label {
+        text-align: center;
+        width: 340px;
     }
 }
-
-/* ── TABLET PEQUEÑA (481px - 550px) ── */
 @media (min-width: 481px) and (max-width: 550px) {
-    .uib-chart-wrap {
-        width: 400px;
+    .uib-chart-col {
+        align-items: center;
     }
+    
+    .uib-chart-wrap {
+        width: 420px;
+        height: auto;
+        min-height: 80px;
+    }
+    
     .uib-chart-wrap canvas {
-        width: 400px !important;
+        width: 420px !important;
+        height: auto !important;
+    }
+    
+    .uib-chart-label {
+        text-align: center;
+        width: 420px;
     }
 }
-
-/* ── TABLET (551px - 630px) ── */
 @media (min-width: 551px) and (max-width: 630px) {
-    .uib-chart-wrap {
-        width: 460px;
+    .uib-chart-col {
+        align-items: center;
     }
+    
+    .uib-chart-wrap {
+        width: 480px;
+        height: auto;
+        min-height: 80px;
+    }
+    
     .uib-chart-wrap canvas {
-        width: 460px !important;
+        width: 480px !important;
+        height: auto !important;
+    }
+    
+    .uib-chart-label {
+        text-align: center;
+        width: 480px;
     }
 }
-
-/* ── TABLET GRANDE (631px - 710px) ── */
 @media (min-width: 631px) and (max-width: 710px) {
+    .uib-chart-col {
+        align-items: center;
+    }
+    
     .uib-chart-wrap {
         width: 520px;
+        height: auto;
+        min-height: 80px;
     }
+    
     .uib-chart-wrap canvas {
         width: 520px !important;
+        height: auto !important;
     }
-}
-
-/* ── DESKTOP (711px en adelante) ── */
-@media (min-width: 711px) {
-    .uib-chart-wrap {
-        width: 580px;
-    }
-    .uib-chart-wrap canvas {
-        width: 580px !important;
+    
+    .uib-chart-label {
+        text-align: center;
+        width: 520px;
     }
 }
 /* ── BARRA INFERIOR ───────────────────────────────── */
