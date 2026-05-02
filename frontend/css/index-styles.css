@@ -3152,13 +3152,13 @@
 .uib-chart-wrap canvas {
     display: block;
     width: 100% !important;
-    height: auto !important;
+    height: auto;
 }
 
 /* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
 @media (min-width: 1601px) and (max-width: 1870px) {
     .uib-chart-wrap {
-        min-height: 200px; /* Sigue siendo pequeño */
+        min-height: 200px;
     }
 }
 
@@ -3193,21 +3193,21 @@
 /* ── TABLET pequeña (481px - 768px) ────────────────────────────── */
 @media (min-width: 481px) and (max-width: 768px) {
     .uib-chart-wrap {
-        min-height: 320px;
+        min-height: 330px;
     }
 }
 
 /* ── MÓVIL (hasta 480px) ────────────────────────────── */
 @media (max-width: 480px) {
     .uib-chart-wrap {
-        min-height: 360px; /* Altura grande para móvil */
+        min-height: 330px;
     }
 }
 
 /* ── MÓVIL muy pequeño (hasta 380px) ────────────────────────────── */
 @media (max-width: 380px) {
     .uib-chart-wrap {
-        min-height: 400px; /* Aún más alto si es necesario */
+        min-height: 330px;
     }
 }
 /* ── BARRA INFERIOR ───────────────────────────────── */
