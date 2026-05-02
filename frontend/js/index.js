@@ -8,18 +8,262 @@ let usuarioId = null;
 // Instancia global de Chart.js para el gráfico de evolución
 let uibEvoChart = null;
 
-// ===============================================
-// INICIALIZACIÓN
-// ===============================================
+// ============================================
+// LOADING OVERLAY — datos
+// ============================================
+const LV_ESTADIOS = [
+  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/MetLife_Stadium_2022.jpg/1280px-MetLife_Stadium_2022.jpg", badge:"🏆 Final · Nueva York", fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
+  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Estadio_Azteca_2015.jpg/1280px-Estadio_Azteca_2015.jpg", badge:"⚽ Inauguración · Ciudad de México", fact:"Estadio Azteca — El único con dos inauguraciones mundialistas" },
+  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Dallas_Cowboys_Stadium_-_opening_night.jpg/1280px-Dallas_Cowboys_Stadium_-_opening_night.jpg", badge:"🌟 Dallas · AT&T Stadium", fact:"AT&T Stadium — La pantalla más grande del mundo en un estadio" },
+  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Rose_Bowl_aerial.jpg/1280px-Rose_Bowl_aerial.jpg", badge:"🌹 Los Ángeles · Rose Bowl", fact:"Rose Bowl — Sede de la final del Mundial 1994" },
+];
 
+const LV_ETAPAS = [
+  { hasta:15,  icon:"😴", texto:"Se quedó dormido el admin..." },
+  { hasta:35,  icon:"💻", texto:"Encendiendo la Canaima..." },
+  { hasta:55,  icon:"🌱", texto:"Acomodando el césped del estadio..." },
+  { hasta:75,  icon:"⚽", texto:"Inflando el balón..." },
+  { hasta:90,  icon:"🦺", texto:"Llamando al árbitro..." },
+  { hasta:100, icon:"🏟️", texto:"¡Todo listo! Entrando al estadio..." },
+];
+
+const LV_TIPS = [
+  { icon:"⚽", texto:"El Mundial 2026 es el primero con 48 selecciones." },
+  { icon:"🌍", texto:"Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá." },
+  { icon:"💡", texto:"Predice el resultado exacto y ganas puntos extra en la quiniela." },
+  { icon:"🏆", texto:"El campeón que eliges al inicio vale puntos dobles en la final." },
+  { icon:"📊", texto:"Hay 104 partidos en total. ¡No te quedes sin predecir!" },
+  { icon:"🌟", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
+  { icon:"🇻🇪", texto:"Droguería Carrisan te trae la Quiniela más emocionante del 2026." },
+  { icon:"⚡", texto:"El torneo arranca el 11 de junio de 2026. ¡Marca la fecha!" },
+];
+
+// ============================================
+// LOADING OVERLAY — lógica
+// ============================================
+const LV_REPOSO_MS   = 14 * 60 * 1000; // 14 minutos = umbral de reposo de Render
+const LV_KEY_TIEMPO  = 'lv_ultima_visita';
+
+const lvOverlay  = document.getElementById('loading-overlay');
+const lvFill     = document.getElementById('lvFill');
+const lvPct      = document.getElementById('lvPct');
+const lvStageIcon= document.getElementById('lvStageIcon');
+const lvStageText= document.getElementById('lvStageText');
+const lvStage    = document.getElementById('lvStage');
+const lvStatus   = document.getElementById('lvStatus');
+const lvTip      = document.getElementById('lvTip');
+const lvTipIcon  = document.getElementById('lvTipIcon');
+const lvTipText  = document.getElementById('lvTipText');
+const lvImg      = document.getElementById('lvStadiumImg');
+const lvBadge    = document.getElementById('lvBadge');
+const lvFact     = document.getElementById('lvFact');
+
+let lvProgreso   = 0;
+let lvEtapa      = -1;
+let lvTipIdx     = 0;
+let lvEstIdx     = 0;
+let lvTerminado  = false;
+let lvTipTimer   = null;
+let lvEstTimer   = null;
+
+// ── Detectar si Render puede estar en reposo ──────────
+function lvNecesitaLoading() {
+  const ultima = localStorage.getItem(LV_KEY_TIEMPO);
+  if (!ultima) return true;
+  return (Date.now() - parseInt(ultima)) > LV_REPOSO_MS;
+}
+
+// ── Actualizar timestamp de visita ────────────────────
+function lvRegistrarVisita() {
+  localStorage.setItem(LV_KEY_TIEMPO, Date.now().toString());
+}
+
+// ── Cambiar estadio con fade ──────────────────────────
+function lvCambiarEstadio(idx) {
+  const e = LV_ESTADIOS[idx % LV_ESTADIOS.length];
+  lvImg.style.opacity = '0';
+  setTimeout(() => {
+    lvImg.src        = e.img;
+    lvBadge.textContent = e.badge;
+    lvFact.textContent  = e.fact;
+    lvImg.onload = () => { lvImg.style.opacity = '1'; };
+    if (lvImg.complete) lvImg.style.opacity = '1';
+  }, 400);
+}
+
+// ── Cambiar tip con fade ──────────────────────────────
+function lvCambiarTip(idx) {
+  const t = LV_TIPS[idx % LV_TIPS.length];
+  lvTip.style.opacity   = '0';
+  lvTip.style.transform = 'translateY(6px)';
+  setTimeout(() => {
+    lvTipIcon.textContent = t.icon;
+    lvTipText.textContent = t.texto;
+    lvTip.style.opacity   = '1';
+    lvTip.style.transform = 'translateY(0)';
+  }, 350);
+}
+
+// ── Actualizar etapa de la barra ──────────────────────
+function lvActualizarEtapa(pct) {
+  for (let i = 0; i < LV_ETAPAS.length; i++) {
+    if (pct <= LV_ETAPAS[i].hasta) {
+      if (lvEtapa !== i) {
+        lvEtapa = i;
+        lvStage.style.opacity = '0';
+        setTimeout(() => {
+          lvStageIcon.textContent = LV_ETAPAS[i].icon;
+          lvStageText.textContent = LV_ETAPAS[i].texto;
+          lvStage.style.opacity = '1';
+        }, 200);
+      }
+      break;
+    }
+  }
+}
+
+// ── Avanzar barra suavemente ──────────────────────────
+function lvAvanzar(objetivo, ms = 800) {
+  return new Promise(resolve => {
+    const inicio = lvProgreso;
+    const t0 = performance.now();
+    function step(now) {
+      const t = Math.min((now - t0) / ms, 1);
+      const e = 1 - Math.pow(1 - t, 3); // ease out cubic
+      lvProgreso = inicio + (objetivo - inicio) * e;
+      const pct = Math.round(lvProgreso);
+      lvFill.style.width    = lvProgreso + '%';
+      lvPct.textContent     = pct + '%';
+      lvActualizarEtapa(pct);
+      t < 1 ? requestAnimationFrame(step) : (lvProgreso = objetivo, resolve());
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// ── Cerrar overlay ────────────────────────────────────
+function lvCerrar() {
+  lvTerminado = true;
+  clearInterval(lvTipTimer);
+  clearInterval(lvEstTimer);
+  lvRegistrarVisita();
+
+  lvOverlay.style.opacity = '0';
+  setTimeout(() => {
+    lvOverlay.style.display = 'none';
+  }, 700);
+}
+
+// ── Secuencia con reposo (Render dormido ~60s) ────────
+async function lvSecuenciaLarga() {
+  lvCambiarEstadio(0);
+  lvCambiarTip(0);
+
+  await lvAvanzar(30, 1200);
+  await new Promise(r => setTimeout(r, 900));   // "Canaima arrancando"
+  await lvAvanzar(48, 2000);
+  await new Promise(r => setTimeout(r, 1300));  // frenazo dramático
+  await lvAvanzar(65, 1500);
+
+  lvStatus.textContent = "Despertando al servidor... ☕";
+
+  // A partir de aquí esperamos a que cargarDatos() resuelva
+  // La barra avanza lentamente hasta 90% mientras espera
+  await lvAvanzar(90, 25000); // 25s de avance lento = cubre el minuto de wakeup
+}
+
+// ── Secuencia sin reposo (Render activo, carga rápida) ─
+async function lvSecuenciaCorta() {
+  lvCambiarEstadio(0);
+  lvCambiarTip(0);
+  lvStatus.textContent = "Cargando datos... ⚡";
+  await lvAvanzar(80, 600); // rápido al 80%
+}
+
+// ── MAIN: controla todo el flujo ──────────────────────
+async function lvIniciar(promesaDatos) {
+  const necesitaLoading = lvNecesitaLoading();
+
+  // Si no necesita loading: ocultar overlay de inmediato
+  if (!necesitaLoading) {
+    lvOverlay.style.display = 'none';
+    lvRegistrarVisita();
+    return;
+  }
+
+  // Mostrar overlay con animación de entrada
+  setTimeout(() => {
+    document.querySelector('.lv-wrap').classList.add('lv-visible');
+  }, 50);
+
+  // Rotación de tips y estadios
+  lvTipTimer = setInterval(() => {
+    if (!lvTerminado) { lvTipIdx = (lvTipIdx + 1) % LV_TIPS.length; lvCambiarTip(lvTipIdx); }
+  }, 3000);
+  lvEstTimer = setInterval(() => {
+    if (!lvTerminado) { lvEstIdx = (lvEstIdx + 1) % LV_ESTADIOS.length; lvCambiarEstadio(lvEstIdx); }
+  }, 8000);
+
+  // Decidir secuencia según tiempo de inactividad
+  const ultima = localStorage.getItem(LV_KEY_TIEMPO);
+  const tiempoFuera = ultima ? Date.now() - parseInt(ultima) : Infinity;
+  const enReposo    = tiempoFuera > LV_REPOSO_MS;
+
+  // Arrancar animación de barra (no await — corre en paralelo con los datos)
+  const promesaBarra = enReposo ? lvSecuenciaLarga() : lvSecuenciaCorta();
+
+  // Esperar a que AMBAS terminen: datos listos + barra llegó al punto de espera
+  await promesaDatos;
+
+  // Datos llegaron → completar barra al 100% y cerrar
+  lvStatus.textContent = "¡Todo listo! Entrando al estadio... 🏟️";
+  await lvAvanzar(100, 500);
+  await new Promise(r => setTimeout(r, 400));
+  lvCerrar();
+}
+
+// ============================================
+// INICIALIZACIÓN PRINCIPAL — reemplaza tu DOMContentLoaded
+// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    await verificarLogin();      
-    await cargarDatos();         
-    iniciarCountdown();
-    inicializarCarrusel();
-    iniciarTicker();
-    iniciarEasterEgg();
-    initUserBanner();
+
+  // 1. Verificar login primero (síncrono)
+  if (!auth.isAuthenticated()) {
+    // Sin sesión → cerrar overlay y redirigir
+    lvOverlay.style.display = 'none';
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // 2. Preparar usuario en UI (síncrono, sin fetch)
+  const usuario = auth.getUser();
+  usuarioId = parseInt(usuario.id);
+  document.querySelectorAll('.user-name-display').forEach(el => el.textContent = usuario.nombre);
+  const emoji = obtenerCampeon(usuario.campeon_elegido);
+  document.querySelectorAll('.user-emoji-display').forEach(el => el.textContent = emoji);
+  if (usuario.isAdmin) {
+    document.querySelectorAll('.btn-admin-display').forEach(btn => {
+      btn.style.display = 'flex';
+      btn.onclick = () => window.location.href = 'admin.html';
+    });
+    document.querySelectorAll('.btn-noticias-display').forEach(btn => {
+      btn.style.display = 'flex';
+      btn.onclick = () => window.location.href = 'noticias.html';
+    });
+  }
+
+  // 3. Crear promesa de datos (empieza a correr pero no esperamos aún)
+  const promesaDatos = cargarDatos();
+
+  // 4. Lanzar loading — se cierra solo cuando promesaDatos resuelva
+  await lvIniciar(promesaDatos);
+
+  // 5. El resto arranca cuando todo está listo
+  iniciarCountdown();
+  inicializarCarrusel();
+  iniciarTicker();
+  iniciarEasterEgg();
+  initUserBanner();
 });
 // ===============================================
 // VERIFICAR LOGIN

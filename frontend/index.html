@@ -12,6 +12,72 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body style="background:#edeef0">
+    <div id="loading-overlay">
+
+  <!-- Fondo decorativo -->
+  <div class="lv-bg">
+    <div class="lv-hex"></div>
+    <div class="lv-orb lv-orb1"></div>
+    <div class="lv-orb lv-orb2"></div>
+  </div>
+
+  <!-- Contenido centrado -->
+  <div class="lv-wrap">
+
+    <!-- Logo placeholder -->
+    <div class="lv-logo-box">
+      <!-- ⚙️ Cuando tengas el logo: <img src="assets/img/logo.png"> -->
+      <span class="lv-logo-guide">tu logo aquí</span>
+    </div>
+
+    <!-- Ícono animado -->
+    <div class="lv-icon-wrap">
+      <div class="lv-ring"></div>
+      <div class="lv-ring-inner"></div>
+      <i class="bi bi-trophy-fill lv-icon"></i>
+    </div>
+
+    <p class="lv-subtitle">DROGUERÍA CARRISAN · 2026</p>
+
+    <!-- Imagen estadio -->
+    <div class="lv-stadium">
+      <img id="lvStadiumImg" src="" alt="Estadio" />
+      <div class="lv-stadium-overlay"></div>
+      <div class="lv-stadium-badge" id="lvBadge">🏟️ Sede</div>
+      <div class="lv-stadium-fact"  id="lvFact"></div>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="lv-progress-section">
+      <div class="lv-track">
+        <div class="lv-fill" id="lvFill"></div>
+      </div>
+      <div class="lv-meta">
+        <div class="lv-stage" id="lvStage">
+          <span id="lvStageIcon">😴</span>
+          <span id="lvStageText">Iniciando...</span>
+        </div>
+        <span class="lv-pct" id="lvPct">0%</span>
+      </div>
+    </div>
+
+    <!-- Tip card -->
+    <div class="lv-tip" id="lvTip">
+      <span class="lv-tip-icon" id="lvTipIcon">💡</span>
+      <div>
+        <div class="lv-tip-label">Dato Mundial 2026</div>
+        <div class="lv-tip-text" id="lvTipText">Cargando información del torneo...</div>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="lv-status">
+      <span class="lv-dot"></span>
+      <span id="lvStatus">Conectando con el servidor...</span>
+    </div>
+
+  </div>
+</div>
 <header class="desktop-header">
     <div class="top-tier">
         <div class="fw-black">FIFA WORLD CUP 2026™</div>
