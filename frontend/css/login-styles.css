@@ -577,7 +577,7 @@ body {
 
 /* Reemplaza SOLO el bloque @media (max-width: 768px) que tienes */
 
-@media (max-width: 768px) {
+@media (min-width: 601px) and (max-width: 768px) {
     body {
         overflow: auto;
     }
