@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     const usuario = auth.getUser();
-    document.getElementById('userName').textContent = usuario.nombre || usuario.codigo;
-    document.getElementById('userCampeon').textContent = obtenerCampeon(usuario.campeon_elegido);
+    document.getElementById('user-name-display').textContent = usuario.nombre || usuario.codigo;
+    document.getElementById('mobileUserName').textContent = usuario.nombre || usuario.codigo;
     // Botón admin
     const adminBtn = document.getElementById('adminBtn');
     if (adminBtn && auth.isAdmin()) {

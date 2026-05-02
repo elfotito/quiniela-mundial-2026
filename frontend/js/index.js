@@ -22,7 +22,7 @@ const LV_ETAPAS = [
   { hasta:35,  icon:"💻", texto:"Encendiendo la Canaima..." },
   { hasta:55,  icon:"🌱", texto:"Acomodando el césped del estadio..." },
   { hasta:75,  icon:"⚽", texto:"Inflando el balón..." },
-  { hasta:90,  icon:"🦺", texto:"Llamando al árbitro..." },
+  { hasta:90,  icon:"🥅", texto:"Verificando la malla del arco... " },
   { hasta:100, icon:"🏟️", texto:"¡Todo listo! Entrando al estadio..." },
 ];
 
