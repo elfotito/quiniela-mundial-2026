@@ -3145,7 +3145,7 @@
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 100%;
+    width: 520px;
     height: 120px !important;
 }
 @media (max-width: 392px) {
