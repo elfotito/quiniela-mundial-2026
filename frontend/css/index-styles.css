@@ -2216,7 +2216,7 @@
     left: 48%;            
     width: 50px;
     height: 100%;
-    background: #000000;    
+    background: #8a8a8a;    
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
     z-index: 1;
 }
@@ -2227,7 +2227,7 @@
     right: 0;
     width: 48%;
     height: 100%;
-    background: #000000;
+    background: #ccc;
     z-index: 1;
 }
 .mtb-logo,
@@ -3125,8 +3125,7 @@
 }
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
-
-/* ── GRÁFICO EVOLUCIÓN (DESKTOP) ── */
+/* ── GRÁFICO EVOLUCIÓN (DESKTOP ONLY) ── */
 .uib-chart-col {
     display: flex;
     flex-direction: column;
@@ -3143,30 +3142,17 @@
 }
 
 .uib-chart-wrap {
-    width: 520px;      /* ← Tamaño visual original */
-    height: 120px;     /* ← Tamaño visual original */
+    width: 520px;      /* Ancho fijo */
+    height: 120px;     /* Alto fijo */
     position: relative;
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 520px !important;   /* ← Se muestra a 520px */
-    height: 120px !important;  /* ← Se muestra a 120px */
+    width: 520px !important;
+    height: 120px !important;
 }
 
-/* ── MÓVIL ── */
-@media (max-width: 392px) {
-    .uib-chart-wrap {
-        width: 340px;
-        height: auto;
-        min-height: 80px;
-    }
-    
-    .uib-chart-wrap canvas {
-        width: 340px !important;
-        height: auto !important;
-    }
-}
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {
     display: flex;
