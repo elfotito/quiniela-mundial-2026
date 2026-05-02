@@ -358,23 +358,9 @@ telefonoInput.addEventListener('input', function(e) {
     }
 });
 
-// Manejar envío del formulario
+/// Manejar envío del formulario
 document.getElementById('registroForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-
-    // Validar teléfono antes de enviar
-    const telefono = telefonoInput.value;
-    if (!/^\+\d{6,13}$/.test(telefono)) {
-        mostrarError('Teléfono inválido. Usa formato: +584145949532');
-        telefonoInput.focus();
-        return false;
-    }
-
-    const honeypot = document.getElementById('website').value;
-    if (honeypot) {
-        mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
-        return;
-    }
 
     const submitBtn = document.getElementById('submitBtn');
     const errorEl = document.getElementById('errorMessage');
@@ -387,15 +373,31 @@ document.getElementById('registroForm').addEventListener('submit', async functio
     // Obtener datos
     const nombre = document.getElementById('nombreInput').value.trim();
     const codigo = document.getElementById('codigoInput').value.trim().toUpperCase();
+    const telefono = document.getElementById('telefonoInput').value.trim();
 
     const campeonSeleccionado = document.querySelector('input[name="campeon"]:checked');
     const ligasSeleccionadas = Array.from(
         document.querySelectorAll('input[name="ligas"]:checked')
     ).map(cb => parseInt(cb.value));
-    
-    // Validaciones
-    if (!nombre || !codigo || !telefono) {
-        mostrarError('Completa todos los campos obligatorios');
+
+    // VALIDACIONES - Aquí muestras tus mensajes personalizados
+    if (!nombre) {
+        mostrarError('🎭 Si quieres te ponemos "el sin nombre"');
+        return;
+    }
+
+    if (!codigo) {
+        mostrarError('🙏 Si se te olvido crear tu clave, imagino que se te olvidara despues cual es');
+        return;
+    }
+
+    if (!telefono) {
+        mostrarError('📱 El mas misterioso que no quiere dar su numero');
+        return;
+    }
+
+    if (!/^\+\d{6,13}$/.test(telefono)) {
+        mostrarError('Teléfono inválido. Usa formato: +584145949532');
         return;
     }
 
@@ -408,10 +410,10 @@ document.getElementById('registroForm').addEventListener('submit', async functio
         mostrarError('Selecciona al menos una liga');
         return;
     }
-    
+
     const terminosCheckbox = document.getElementById('terminosCheckbox');
     if (!terminosCheckbox.checked) {
-        mostrarError('Hagamos como que si leiste los terminos y condiciones 😉');
+        mostrarError('😉 Hagamos como que si leiste los terminos y condiciones');
         
         // Resaltar el checkbox con error
         const terminosGroup = document.querySelector('.terminos-group');
@@ -422,6 +424,12 @@ document.getElementById('registroForm').addEventListener('submit', async functio
             terminosGroup.classList.remove('error');
         }, 3000);
         
+        return;
+    }
+
+    const honeypot = document.getElementById('website').value;
+    if (honeypot) {
+        mostrarExito('¡Cuenta creada! Tu código: ' + codigo);
         return;
     }
     
