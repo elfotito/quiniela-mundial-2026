@@ -203,13 +203,12 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-    // Seleccionar todos los campos requeridos
     const inputsRequeridos = document.querySelectorAll('[required]');
     
     inputsRequeridos.forEach(input => {
         // Personalizar mensaje para cada tipo de campo
         input.addEventListener('invalid', function(e) {
-            e.preventDefault(); // Evita el mensaje por defecto
+            e.preventDefault();
             
             if (this.validity.valueMissing) {
                 if (this.id === 'nombreInput') {
@@ -228,10 +227,7 @@
                     this.setCustomValidity('⚠️ Este campo es obligatorio, ¡no lo olvides!');
                 }
             }
-            
-            this.reportValidity();
         });
-        
         input.addEventListener('input', function() {
             this.setCustomValidity('');
         });
