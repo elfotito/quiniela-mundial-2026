@@ -3188,6 +3188,16 @@
 /* ── TRANSICIÓN (393px - 480px) ── */
 @media (min-width: 393px) and (max-width: 480px) {
     .uib-chart-wrap {
+        width: 340px;
+    }
+    .uib-chart-wrap canvas {
+        width: 340px !important;
+    }
+}
+
+/* ── TABLET PEQUEÑA (481px - 550px) ── */
+@media (min-width: 481px) and (max-width: 550px) {
+    .uib-chart-wrap {
         width: 400px;
     }
     .uib-chart-wrap canvas {
@@ -3195,45 +3205,33 @@
     }
 }
 
-/* ── TABLET PEQUEÑA (481px - 550px) ── */
-@media (min-width: 481px) and (max-width: 550px) {
-    .uib-chart-wrap {
-        width: 480px;
-    }
-    .uib-chart-wrap canvas {
-        width: 480px !important;
-    }
-}
-
 /* ── TABLET (551px - 630px) ── */
 @media (min-width: 551px) and (max-width: 630px) {
     .uib-chart-wrap {
-        width: 560px;
+        width: 460px;
     }
     .uib-chart-wrap canvas {
-        width: 560px !important;
+        width: 460px !important;
     }
 }
 
 /* ── TABLET GRANDE (631px - 710px) ── */
 @media (min-width: 631px) and (max-width: 710px) {
     .uib-chart-wrap {
-        width: 640px;
+        width: 520px;
     }
     .uib-chart-wrap canvas {
-        width: 640px !important;
+        width: 520px !important;
     }
 }
 
 /* ── DESKTOP (711px en adelante) ── */
 @media (min-width: 711px) {
     .uib-chart-wrap {
-        width: 710px;
-        height: 160px;
+        width: 580px;
     }
     .uib-chart-wrap canvas {
-        width: 710px !important;
-        height: 160px !important;
+        width: 580px !important;
     }
 }
 /* ── BARRA INFERIOR ───────────────────────────────── */
