@@ -1,23 +1,27 @@
 /* ===============================================
-   MR. CHIP - ANÁLISIS DE PREDICCIONES
-   Nota: Los selectores ::-webkit-scrollbar solo funcionan en Chrome/Safari
+   MR. CHIP - ANÁLISIS DE PREDICCIONES v2.0
+   Modern Design + Smooth Animations + Responsive
    =============================================== */
 
 :root {
     --fifa-blue: #0066CC;
-    --fifa-dark-blue: #003d7a;
+    --fifa-blue-light: #1a7fd1;
     --fifa-gold: #FFD700;
+    --fifa-gold-dark: #d4a000;
     --dark-bg: #0a0a0a;
     --dark-card: #1a1a1a;
+    --dark-card-alt: #242424;
     --border-color: #333333;
+    --border-light: #444444;
     --success: #00D084;
+    --success-light: #20d096;
     --warning: #FFB800;
+    --warning-light: #ffc433;
     --error: #FF4444;
+    --error-light: #ff6b6b;
+    --text-muted: #a0a0a0;
+    --text-light: #e0e0e0;
 }
-
-/* ===============================================
-   CONTAINER Y LAYOUT BASE
-   =============================================== */
 
 .container {
     max-width: 1400px;
@@ -25,12 +29,9 @@
     padding: 2rem;
 }
 
-/* ===============================================
-   PAGE HEADER
-   =============================================== */
-
+/* PAGE HEADER */
 .page-header {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .chip-header {
@@ -41,38 +42,43 @@
 
 .chip-icon {
     font-size: 3rem;
-    animation: pulse 2s ease-in-out infinite;
+    animation: bounce 2s ease-in-out infinite;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.1); }
 }
 
 .page-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--fifa-gold), var(--fifa-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .page-header p {
-    color: #a0a0a0;
+    color: var(--text-muted);
     font-size: 1rem;
+    letter-spacing: 0.5px;
 }
 
-/* ===============================================
-   SELECTOR DE PARTIDO
-   =============================================== */
-
+/* MATCH SELECTOR */
 .match-selector {
     background: var(--dark-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    border: 2px solid var(--border-light);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.match-selector:hover {
+    border-color: var(--fifa-blue);
+    box-shadow: 0 6px 24px rgba(0, 102, 204, 0.15);
 }
 
 .selector-label {
@@ -80,9 +86,11 @@
     align-items: center;
     gap: 0.75rem;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--fifa-gold);
     margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .selector-icon {
@@ -91,36 +99,35 @@
 
 .partido-select {
     width: 100%;
-    padding: 0.875rem;
+    padding: 1rem;
     background: var(--dark-bg);
     border: 2px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     color: white;
     font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .partido-select:hover {
-    border-color: var(--fifa-blue);
+    border-color: var(--fifa-blue-light);
+    background: #0f0f0f;
 }
 
 .partido-select:focus {
     outline: none;
     border-color: var(--fifa-gold);
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.1);
 }
 
-/* ===============================================
-   LOADING STATE
-   =============================================== */
-
+/* LOADING STATE */
 .loading-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     gap: 1.5rem;
 }
 
@@ -137,17 +144,26 @@
     to { transform: rotate(360deg); }
 }
 
-/* ===============================================
-   VS CARD - TAMAÑO REDUCIDO
-   =============================================== */
-
+/* VS CARD */
 .vs-card {
-    background: linear-gradient(135deg, var(--dark-card) 0%, #1a1a2e 100%);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, var(--dark-card) 0%, #1a1a2e 50%, #0f1419 100%);
+    border: 2px solid var(--border-light);
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 215, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.vs-card:hover {
+    border-color: var(--fifa-gold);
+    box-shadow: 
+        0 12px 48px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(255, 215, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Match Info */
@@ -155,65 +171,78 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .match-date {
     font-size: 0.95rem;
-    color: #a0a0a0;
-    font-weight: 500;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .match-phase {
-    padding: 0.4rem 0.875rem;
-    background: rgba(0, 102, 204, 0.2);
-    border: 1px solid var(--fifa-blue);
-    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 102, 204, 0.05));
+    border: 1.5px solid var(--fifa-blue);
+    border-radius: 24px;
     font-size: 0.85rem;
     color: var(--fifa-blue);
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.match-phase:hover {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.3), rgba(0, 102, 204, 0.1));
+    border-color: var(--fifa-gold);
 }
 
 .status-badge {
-    padding: 0.4rem 0.875rem;
-    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    border-radius: 24px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .status-badge.pending {
-    background: rgba(255, 184, 0, 0.2);
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.2), rgba(255, 184, 0, 0.05));
     color: var(--warning);
-    border: 1px solid var(--warning);
+    border: 1.5px solid var(--warning);
 }
 
 .status-badge.live {
-    background: rgba(255, 68, 68, 0.2);
-    color: var(--error);
-    border: 1px solid var(--error);
-    animation: blink 1.5s ease-in-out infinite;
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.1));
+    color: var(--error-light);
+    border: 1.5px solid var(--error-light);
+    animation: pulse-live 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-live {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
 .status-badge.finished {
-    background: rgba(0, 208, 132, 0.2);
+    background: linear-gradient(135deg, rgba(0, 208, 132, 0.2), rgba(0, 208, 132, 0.05));
     color: var(--success);
-    border: 1px solid var(--success);
+    border: 1.5px solid var(--success);
 }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* VS Section - REDUCIDO */
+/* VS Section */
 .vs-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 0;
-    gap: 1.5rem;
+    padding: 2rem 0;
+    gap: 2rem;
 }
 
 .team {
@@ -221,50 +250,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.team:hover {
+    transform: scale(1.05);
 }
 
 .team-flag {
-    font-size: 3rem;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    font-size: 4rem;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
+    transition: all 0.3s ease;
+}
+
+.team:hover .team-flag {
+    transform: scale(1.15) rotateZ(5deg);
+    filter: drop-shadow(0 8px 24px rgba(255, 215, 0, 0.3));
 }
 
 .team-name {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 900;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: center;
     color: white;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .team-score {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 900;
     color: var(--fifa-gold);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    text-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.6),
+        0 0 60px rgba(255, 215, 0, 0.3);
+    letter-spacing: 1px;
 }
 
 .vs-divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.02));
+    border-radius: 50%;
+    border: 2px dashed var(--border-light);
 }
 
 .vs-text {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    color: #666;
-    letter-spacing: 3px;
+    color: var(--fifa-gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
 }
 
 /* Stats Summary */
 .stats-summary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
     border-top: 1px solid var(--border-color);
 }
 
@@ -272,70 +322,100 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 215, 0, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    border-color: var(--fifa-gold);
+    background: rgba(255, 215, 0, 0.05);
 }
 
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 900;
     color: var(--fifa-gold);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .stat-label {
-    font-size: 0.85rem;
-    color: #a0a0a0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
     text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* ===============================================
-   PREDICTIONS GRID
-   =============================================== */
-
+/* PREDICTIONS GRID */
 .predictions-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
 .prediction-column {
     background: var(--dark-card);
     border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
+.prediction-column:hover {
+    border-color: var(--border-light);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
 
 /* Column Headers */
 .column-header {
-    padding: 1.25rem;
+    padding: 1.75rem;
     text-align: center;
     border-bottom: 2px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
 .column-local .column-header {
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.2) 0%, rgba(0, 102, 204, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.3) 0%, rgba(0, 102, 204, 0.1) 100%);
+    border-bottom-color: var(--fifa-blue);
 }
 
 .column-empate .column-header {
-    background: linear-gradient(135deg, rgba(255, 184, 0, 0.2) 0%, rgba(255, 184, 0, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.3) 0%, rgba(255, 184, 0, 0.1) 100%);
+    border-bottom-color: var(--warning);
 }
 
 .column-visitante .column-header {
-    background: linear-gradient(135deg, rgba(255, 68, 68, 0.2) 0%, rgba(255, 68, 68, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3) 0%, rgba(255, 68, 68, 0.1) 100%);
+    border-bottom-color: var(--error);
 }
 
 .column-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.prediction-column:hover .column-icon {
+    transform: scale(1.15);
 }
 
 .column-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 900;
-    margin-bottom: 0.25rem;
-    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
 .column-local .column-title {
@@ -352,43 +432,56 @@
 
 .column-subtitle {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--text-muted);
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .column-count {
     display: inline-block;
-    padding: 0.35rem 0.875rem;
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 20px;
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+    border: 2px solid var(--fifa-gold);
+    border-radius: 24px;
     color: var(--fifa-gold);
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.column-count:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
 }
 
 /* Users List */
 .users-list {
-    padding: 1rem;
-    max-height: 400px;
+    padding: 1.25rem;
+    flex: 1;
     overflow-y: auto;
+    max-height: 500px;
 }
 
-/* Scrollbar personalizado (solo Chrome/Safari) */
-@supports selector(::-webkit-scrollbar) {
-    .users-list::-webkit-scrollbar {
-        width: 6px;
-    }
+.users-list::-webkit-scrollbar {
+    width: 8px;
+}
 
-    .users-list::-webkit-scrollbar-track {
-        background: var(--dark-bg);
-    }
+.users-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
 
-    .users-list::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: 3px;
-    }
+.users-list::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.users-list::-webkit-scrollbar-thumb:hover {
+    background: var(--fifa-gold);
 }
 
 .empty-column {
@@ -403,251 +496,415 @@
 .user-card {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    padding: 0.875rem;
+    gap: 1rem;
+    padding: 1rem;
     background: var(--dark-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 0.875rem;
     transition: all 0.3s ease;
+    animation: slideInLeft 0.4s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .user-card:hover {
-    border-color: var(--fifa-blue);
+    border-color: var(--fifa-gold);
+    background: var(--dark-card-alt);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.15);
 }
 
 .user-avatar {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 1.8rem;
     flex-shrink: 0;
     clip-path: circle(50%);
-    background: var(--dark-bg);     
-    padding-bottom: 4px;
-    padding-left: 0px;  
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(255, 215, 0, 0.1));
+    border: 1px solid var(--border-light);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.user-card:hover .user-avatar {
+    transform: scale(1.15) rotate(5deg);
+    border-color: var(--fifa-gold);
 }
 
 .user-info {
     flex: 1;
+    min-width: 0;
 }
 
-.user-name, .user-icon {
-    font-weight: 400;
+.user-name {
+    font-weight: 600;
     color: white;
     margin-bottom: 0.25rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
 .user-prediction {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--fifa-gold);
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
 .user-points {
-    padding: 0.35rem 0.7rem;
-    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 800;
     white-space: nowrap;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.user-card:hover .user-points {
+    transform: scale(1.1);
 }
 
 .points-perfect {
-    background: rgba(0, 208, 132, 0.2);
+    background: linear-gradient(135deg, rgba(0, 208, 132, 0.3), rgba(0, 208, 132, 0.1));
     color: var(--success);
     border: 1px solid var(--success);
+    box-shadow: 0 0 12px rgba(0, 208, 132, 0.3);
 }
 
 .points-good {
-    background: rgba(0, 102, 204, 0.2);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.3), rgba(0, 102, 204, 0.1));
     color: var(--fifa-blue);
     border: 1px solid var(--fifa-blue);
+    box-shadow: 0 0 12px rgba(0, 102, 204, 0.2);
 }
 
 .points-partial {
-    background: rgba(255, 184, 0, 0.2);
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.3), rgba(255, 184, 0, 0.1));
     color: var(--warning);
     border: 1px solid var(--warning);
+    box-shadow: 0 0 12px rgba(255, 184, 0, 0.2);
 }
 
 .points-none {
-    background: rgba(255, 68, 68, 0.2);
-    color: var(--error);
-    border: 1px solid var(--error);
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.1));
+    color: var(--error-light);
+    border: 1px solid var(--error-light);
+    box-shadow: 0 0 12px rgba(255, 68, 68, 0.2);
 }
 
-/* ===============================================
-   SIN PREDICCIÓN SECTION
-   =============================================== */
-
+/* SIN PREDICCIÓN SECTION */
 .sin-prediccion-section {
-    background: var(--dark-card);
-    border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.05), rgba(255, 184, 0, 0.02));
+    border: 2px dashed var(--warning);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    transition: all 0.3s ease;
+}
+
+.sin-prediccion-section:hover {
+    border-color: var(--fifa-gold);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.03));
 }
 
 .section-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .section-icon {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
 }
 
 .section-header h3 {
-    font-size: 1.1rem;
-    color: #a0a0a0;
+    font-size: 1.2rem;
+    color: var(--warning);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .users-sin-prediccion {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .user-sin-pred {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 0.875rem;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
     background: var(--dark-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    font-size: 0.85rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 24px;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .user-sin-pred:hover {
     border-color: var(--fifa-gold);
+    background: var(--dark-card);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.1);
 }
 
 .user-avatar-small {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
 }
 
 .user-name-small {
-    color: #a0a0a0;
+    color: var(--text-light);
+    font-weight: 600;
 }
 
-/* ===============================================
-   EMPTY STATE
-   =============================================== */
-
+/* EMPTY STATE */
 .empty-state {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem 2rem;
-    background: var(--dark-card);
-    border: 2px dashed var(--border-color);
-    border-radius: 12px;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.02), rgba(0, 102, 204, 0.02));
+    border: 2px dashed var(--border-light);
+    border-radius: 16px;
     text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .empty-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .empty-state h3 {
-    font-size: 1.3rem;
-    color: #666;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--fifa-gold);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
 }
 
 .empty-state p {
-    color: #888;
-    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-size: 1rem;
 }
 
-/* ===============================================
-   RESPONSIVE
-   =============================================== */
-
-@media (max-width: 1024px) {
+/* RESPONSIVE */
+@media (max-width: 1200px) {
     .predictions-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
     
     .vs-section {
         flex-direction: column;
-        padding: 1.25rem 0;
+        padding: 1.5rem 0;
+        gap: 1rem;
     }
     
     .team-flag {
-        font-size: 2.5rem;
+        font-size: 3.5rem;
     }
     
     .team-name {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
     }
 }
 
 @media (max-width: 768px) {
     .container {
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .predictions-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .vs-card {
-        padding: 1.25rem;
+        padding: 1.75rem 1.25rem;
+        margin-bottom: 2rem;
     }
-    
+
     .match-info {
         flex-direction: column;
         align-items: flex-start;
+        gap: 1rem;
     }
-    
+
     .team-flag {
-        font-size: 2.5rem;
+        font-size: 2.75rem;
     }
-    
+
     .team-name {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
-    
+
     .team-score {
-        font-size: 1.75rem;
+        font-size: 2rem;
     }
-    
+
+    .vs-divider {
+        width: 80px;
+        height: 80px;
+    }
+
+    .vs-text {
+        font-size: 1.5rem;
+    }
+
     .stats-summary {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .stat-item {
+        padding: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .users-list {
+        max-height: 400px;
+    }
+
+    .user-card {
+        padding: 0.875rem;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 1.5rem;
     }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
     .chip-icon {
         font-size: 2.5rem;
     }
-    
+
+    .page-header h1 {
+        font-size: 1.8rem;
+    }
+
     .match-selector {
         padding: 1.25rem;
     }
-    
+
     .vs-card {
-        padding: 1rem;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
     }
-    
+
     .team-flag {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
-    
+
     .team-name {
         font-size: 1rem;
     }
-    
+
     .team-score {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
+    }
+
+    .vs-section {
+        padding: 1rem 0;
+        gap: 0.75rem;
+    }
+
+    .vs-divider {
+        width: 60px;
+        height: 60px;
+    }
+
+    .vs-text {
+        font-size: 1.3rem;
+    }
+
+    .stats-summary {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .column-header {
+        padding: 1.25rem;
+    }
+
+    .column-icon {
+        font-size: 2rem;
+    }
+
+    .column-title {
+        font-size: 0.95rem;
+    }
+
+    .users-list {
+        padding: 0.875rem;
+        max-height: 350px;
+    }
+
+    .user-card {
+        padding: 0.75rem;
+        margin-bottom: 0.625rem;
+    }
+
+    .users-sin-prediccion {
+        gap: 0.75rem;
+    }
+
+    .user-sin-pred {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
     }
 }
