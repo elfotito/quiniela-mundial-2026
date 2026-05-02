@@ -315,17 +315,15 @@ async function cargarDatos() {
 }
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
-    console.log('🔍 Canvas móvil:', {
-        exists: !!canvas,
-        offsetHeight: canvas?.offsetHeight,
-        offsetWidth: canvas?.offsetWidth,
-        parentHeight: canvas?.parentElement?.offsetHeight,
-        datosLength: evaluadas?.length
-    });
     
     if (!canvas || typeof Chart === 'undefined') return;
     
-    // X: número de partido (1, 2, 3...), Y: puntos obtenidos (0-5)
+    // Destruir gráfico anterior si existe
+    if (uibEvoChart) {
+        uibEvoChart.destroy();
+    }
+    
+    // Datos: número de partido vs puntos obtenidos
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
     
     uibEvoChart = new Chart(canvas, {
@@ -335,40 +333,40 @@ function renderUibEvo(evaluadas) {
                 data: datos,
                 borderColor: '#0066cc',
                 backgroundColor: 'rgba(0, 102, 204, 0.08)',
-                borderWidth: 2.5, 
-                fill: true, 
+                borderWidth: 2,
+                fill: true,
                 tension: 0.3,
-                pointRadius: datos.length <= 12 ? 4 : 0,
-                pointHoverRadius: 6,
+                pointRadius: datos.length <= 12 ? 2.5 : 0,  // Puntos más pequeños para 120px
+                pointHoverRadius: 4,
                 pointBackgroundColor: '#0066cc',
-                pointBorderColor: '#ffffff', 
-                pointBorderWidth: 2
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 1.5
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            responsive: false,           // ← No responsive, tamaño fijo
+            maintainAspectRatio: false,  // ← Control manual
             plugins: {
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
                         title: ctx => `Partido ${ctx[0].parsed.x}`,
-                        label: ctx => `+${ctx.parsed.y} pts` 
+                        label: ctx => `${ctx.parsed.y} pts`
                     },
-                    backgroundColor: '#ccc', 
+                    backgroundColor: '#ccc',
                     titleColor: '#000',
-                    bodyColor: '#3f3f3f', 
-                    borderColor: '#000', 
+                    bodyColor: '#3f3f3f',
+                    borderColor: '#000',
                     borderWidth: 1
                 }
             },
             scales: {
                 x: {
                     type: 'linear',
-                    ticks: { 
-                        color: '#666666', 
-                        maxTicksLimit: 5, 
-                        font: { size: 9, weight: 600 },
+                    ticks: {
+                        color: '#666666',
+                        maxTicksLimit: 5,
+                        font: { size: 8, weight: 600 },  // Fuente más pequeña
                         stepSize: 1,
                         precision: 0,
                         callback: function(val) {
@@ -379,11 +377,11 @@ function renderUibEvo(evaluadas) {
                     border: { display: false }
                 },
                 y: {
-                    min: 0, 
+                    min: 0,
                     max: 9,
                     ticks: {
-                        color: '#666666', 
-                        font: { size: 9, weight: 600 },
+                        color: '#666666',
+                        font: { size: 8, weight: 600 },  // Fuente más pequeña
                         callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
                     },
                     grid: {

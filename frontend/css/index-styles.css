@@ -3125,13 +3125,12 @@
 }
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
+
 .uib-chart-col {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 4px;
     padding: 10px 16px 10px 12px;
-    min-width: 140px;
 }
 
 .uib-chart-label {
@@ -3143,86 +3142,17 @@
 }
 
 .uib-chart-wrap {
+    width: 520px;      
+    height: 120px;     
     position: relative;
-    width: 100%;
-    min-height: 120px;
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 500px !important;
+    width: 520px !important;
     height: 120px !important;
 }
 
-/* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
-@media (min-width: 1601px) and (max-width: 1870px) {
-    .uib-chart-wrap {
-        min-height: 140px;
-    }
-}
-
-/* ── LAPTOP grande / Desktop pequeño (1396px - 1600px) ────────────────────────────── */
-@media (min-width: 1396px) and (max-width: 1600px) {
-    .uib-chart-wrap {
-        min-height: 210px;
-    }
-}
-
-/* ── LAPTOP estándar (1281px - 1395px) ────────────────────────────── */
-@media (min-width: 1281px) and (max-width: 1395px) {
-    .uib-chart-wrap {
-        min-height: 220px;
-    }
-}
-
-/* ── LAPTOP pequeño (1025px - 1280px) ────────────────────────────── */
-@media (min-width: 1025px) and (max-width: 1280px) {
-    .uib-chart-wrap {
-        min-height: 240px;
-    }
-}
-
-/* ── TABLET grande / iPad (769px - 1024px) ────────────────────────────── */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .uib-chart-wrap {
-        min-height: 280px;
-    }
-}
-@media (min-width: 769px) {
-    .uib-chart-col {
-        align-items: center;
-    }
-    
-    .uib-chart-wrap {
-        max-width: 500px;
-        width: 100%;
-    }
-    
-    .uib-chart-label {
-        text-align: center;
-        max-width: 500px;
-    }
-}
-/* ── TABLET pequeña (481px - 768px) ────────────────────────────── */
-@media (min-width: 481px) and (max-width: 768px) {
-    .uib-chart-wrap {
-        min-height: 280px;
-    }
-}
-
-/* ── MÓVIL (hasta 480px) ────────────────────────────── */
-@media (max-width: 480px) {
-    .uib-chart-wrap {
-        min-height: 280px;
-    }
-}
-
-/* ── MÓVIL muy pequeño (hasta 380px) ────────────────────────────── */
-@media (max-width: 380px) {
-    .uib-chart-wrap {
-        min-height: 280px;
-    }
-}
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {
     display: flex;
@@ -3319,13 +3249,6 @@
         width: 100%;
         min-width: unset;
     }
-    .uib-chart-col {
-        width: 100%;
-        min-width: unset;
-        padding: 12px;
-        height: 280px !important;
-    }
-    
     .uib-right { padding: 10px 12px; }
     .uib-bottom { flex-direction: column; gap: 10px; }
     .uib-bar-sep { display: none; }
