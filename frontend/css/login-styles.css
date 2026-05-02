@@ -172,7 +172,7 @@ body {
     line-height: 1.6;
     opacity: 0.95;
     max-width: 500px;
-    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
 }
 
 .hero-flags {
@@ -657,14 +657,37 @@ body {
 }
 
 @media (max-width: 480px) {
-    .split-left {
+    .split-left { 
         flex: 0 0 250px;
         min-height: 250px;
         max-height: 250px;
-        justify-content: flex-end;    
-        align-items: flex-start;
+        justify-content: flex-end;  
+        align-items: flex-start;    
+        padding: 1rem;               
     }
-
+    
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;                   
+        align-items: flex-start;     
+    }
+    
+    .hero-title {
+        margin: 0;
+        font-size: 1.2rem;           
+    }
+    
+    .hero-description {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+    
+    .hero-flags {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+    
     .logo-login {
         width: 150px;
         margin-top: 5px;
