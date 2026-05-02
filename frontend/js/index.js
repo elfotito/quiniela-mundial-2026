@@ -323,9 +323,17 @@ function renderUibEvo(evaluadas) {
     }
     
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
-    
-    // Detectar si es móvil (ancho <= 392px)
     const isMobile = window.innerWidth <= 392;
+    
+    // === CLAVE: Para desktop, renderizar a alta resolución ===
+    if (!isMobile) {
+        // El canvas se va a mostrar a 520x120 (CSS)
+        // Pero renderizamos a 1040x240 (doble resolución)
+        canvas.width = 1040;   // Resolución real (doble)
+        canvas.height = 240;   // Resolución real (doble)
+        canvas.style.width = '520px';   // Tamaño visual
+        canvas.style.height = '120px';  // Tamaño visual
+    }
     
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -334,32 +342,26 @@ function renderUibEvo(evaluadas) {
                 data: datos,
                 borderColor: '#0066cc',
                 backgroundColor: 'rgba(0, 102, 204, 0.08)',
-                borderWidth: isMobile ? 2 : 2,
+                borderWidth: 2,
                 fill: true,
                 tension: 0.3,
-                pointRadius: datos.length <= 12 ? (isMobile ? 3 : 2.5) : 0,
-                pointHoverRadius: isMobile ? 5 : 4,
+                pointRadius: datos.length <= 12 ? (isMobile ? 3 : 3) : 0,
+                pointHoverRadius: 5,
                 pointBackgroundColor: '#0066cc',
                 pointBorderColor: '#ffffff',
-                pointBorderWidth: isMobile ? 1.5 : 1.5
+                pointBorderWidth: 2
             }]
         },
         options: {
-            responsive: false,  // Falso en ambos para control exacto
+            responsive: false,
             maintainAspectRatio: false,
-            devicePixelRatio: 2,
             plugins: {
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
                         title: ctx => `Partido ${ctx[0].parsed.x}`,
                         label: ctx => `${ctx.parsed.y} pts`
-                    },
-                    backgroundColor: '#ccc',
-                    titleColor: '#000',
-                    bodyColor: '#3f3f3f',
-                    borderColor: '#000',
-                    borderWidth: 1
+                    }
                 }
             },
             scales: {
@@ -368,12 +370,10 @@ function renderUibEvo(evaluadas) {
                     ticks: {
                         color: '#666666',
                         maxTicksLimit: isMobile ? 4 : 5,
-                        font: { size: isMobile ? 8 : 8, weight: 600 },
+                        font: { size: isMobile ? 8 : 10, weight: 600 },
                         stepSize: 1,
                         precision: 0,
-                        callback: function(val) {
-                            return Number.isInteger(val) ? val : '';
-                        }
+                        callback: (val) => Number.isInteger(val) ? val : ''
                     },
                     grid: { color: '#eeeeee' },
                     border: { display: false }
@@ -383,11 +383,11 @@ function renderUibEvo(evaluadas) {
                     max: 9,
                     ticks: {
                         color: '#666666',
-                        font: { size: isMobile ? 8 : 8, weight: 600 },
-                        callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
+                        font: { size: isMobile ? 8 : 10, weight: 600 },
+                        callback: (v) => [0, 2, 5, 7, 9].includes(v) ? v : ''
                     },
                     grid: {
-                        color: ctx => [0, 2, 5, 7, 9].includes(ctx.tick.value)
+                        color: (ctx) => [0, 2, 5, 7, 9].includes(ctx.tick.value)
                             ? '#dddddd' : '#f5f5f5'
                     },
                     border: { display: false }
