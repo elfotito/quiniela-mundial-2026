@@ -913,7 +913,7 @@
 }
 
 .slide-title {
-    font-size: 38px;
+    font-size: 36px;
     font-family: "Yolk";
     font-weight: 600;
     line-height: 1.1;
@@ -3138,14 +3138,14 @@
 }
 
 .uib-chart-wrap {
-    width: auto;      
+    width: 100%;      
     height: 120px;   
     position: relative;
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: auto;
+    width: 100%;
     height: 120px !important;
 }
 @media (max-width: 392px) {
