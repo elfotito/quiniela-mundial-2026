@@ -106,14 +106,12 @@ body {
 
 .split-left {
     flex: 1;
-    background: linear-gradient(270deg, rgba(255, 255, 255, 0.164), #000000f5),
+    background: linear-gradient(270deg,rgba(255, 255, 255, 0.164) , #000000f5),
                 url('../img/fondologin.png') center/cover;
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;    
-    align-items: flex-start;     
-    gap: 1rem;     
+    justify-content: space-between;
     padding: 3rem;
     color: var(--text-light);
     position: relative;
@@ -681,6 +679,9 @@ body {
         flex: 0 0 250px;
         min-height: 250px;
         max-height: 250px;
+        justify-content: flex-end;    
+        align-items: flex-start;      
+        padding: 1rem;
     }
 
     .logo-login {
