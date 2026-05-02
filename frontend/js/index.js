@@ -313,20 +313,39 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
+let uibEvoChart = null; // variable global para poder destruir/crear
+
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
-    console.log('🔍 Canvas móvil:', {
-        exists: !!canvas,
-        offsetHeight: canvas?.offsetHeight,
-        offsetWidth: canvas?.offsetWidth,
-        parentHeight: canvas?.parentElement?.offsetHeight,
-        datosLength: evaluadas?.length
-    });
     
     if (!canvas || typeof Chart === 'undefined') return;
     
+    // Destruir gráfico anterior si existe
+    if (uibEvoChart) {
+        uibEvoChart.destroy();
+        uibEvoChart = null;
+    }
+    
     // X: número de partido (1, 2, 3...), Y: puntos obtenidos (0-5)
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+    
+    // Detectar tamaño de pantalla para ajustar puntos
+    const isMobile = window.innerWidth <= 480;
+    const isTablet = window.innerWidth > 480 && window.innerWidth <= 768;
+    
+    // Configurar tamaños de puntos según dispositivo
+    let pointRadius = 3;
+    if (datos.length <= 12) {
+        if (isMobile) pointRadius = 2.5;
+        else if (isTablet) pointRadius = 3;
+        else pointRadius = 4;
+    } else {
+        pointRadius = 0;
+    }
+    
+    // Configurar tamaño de fuente según dispositivo
+    const fontSize = isMobile ? 7 : 9;
+    const labelStep = isMobile ? 4 : 1;
     
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -338,7 +357,7 @@ function renderUibEvo(evaluadas) {
                 borderWidth: 2.5, 
                 fill: true, 
                 tension: 0.3,
-                pointRadius: datos.length <= 12 ? 4 : 0,
+                pointRadius: pointRadius,
                 pointHoverRadius: 6,
                 pointBackgroundColor: '#0066cc',
                 pointBorderColor: '#ffffff', 
@@ -347,13 +366,13 @@ function renderUibEvo(evaluadas) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true, // CAMBIADO a true para mejor responsive
             plugins: {
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
                         title: ctx => `Partido ${ctx[0].parsed.x}`,
-                        label: ctx => `+${ctx.parsed.y} pts` 
+                        label: ctx => `${ctx.parsed.y} pts`
                     },
                     backgroundColor: '#ccc', 
                     titleColor: '#000',
@@ -367,11 +386,13 @@ function renderUibEvo(evaluadas) {
                     type: 'linear',
                     ticks: { 
                         color: '#666666', 
-                        maxTicksLimit: 5, 
-                        font: { size: 9, weight: 600 },
+                        maxTicksLimit: isMobile ? 4 : 6,
+                        font: { size: fontSize, weight: 600 },
                         stepSize: 1,
                         precision: 0,
                         callback: function(val) {
+                            // En móvil mostrar menos etiquetas
+                            if (isMobile && val % 2 !== 0 && datos.length > 8) return '';
                             return Number.isInteger(val) ? val : '';
                         }
                     },
@@ -383,12 +404,20 @@ function renderUibEvo(evaluadas) {
                     max: 9,
                     ticks: {
                         color: '#666666', 
-                        font: { size: 9, weight: 600 },
-                        callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
+                        font: { size: fontSize, weight: 600 },
+                        stepSize: isMobile ? 2 : 1,
+                        callback: function(v) {
+                            if (isMobile) {
+                                return [0, 2, 5, 7, 9].includes(v) ? v : '';
+                            }
+                            return v;
+                        }
                     },
                     grid: {
-                        color: ctx => [0, 2, 5, 7, 9].includes(ctx.tick.value)
-                            ? '#dddddd' : '#f5f5f5'
+                        color: function(ctx) {
+                            const val = ctx.tick.value;
+                            return [0, 2, 5, 7, 9].includes(val) ? '#dddddd' : '#f5f5f5';
+                        }
                     },
                     border: { display: false }
                 }
@@ -396,6 +425,18 @@ function renderUibEvo(evaluadas) {
         }
     });
 }
+
+// Escuchar cambios de orientación/resize
+let resizeTimeout;
+window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+        // Volver a renderizar si los datos existen
+        if (window.datosEvaluadasActuales) {
+            renderUibEvo(window.datosEvaluadasActuales);
+        }
+    }, 250);
+});
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
