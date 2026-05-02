@@ -3150,8 +3150,8 @@
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 100% !important;
-    height: auto !important;
+    width: 500px !important;
+    height: 120px !important;
 }
 
 /* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
