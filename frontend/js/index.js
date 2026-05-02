@@ -409,6 +409,15 @@ function renderUibEvo(evaluadas) {
             }
         }
     });
+    setTimeout(() => {
+        canvas.style.height = `${alturaDeseada}px`;
+        if (wrap) {
+            wrap.style.height = `${alturaDeseada}px`;
+        }
+        if (uibEvoChart) {
+            uibEvoChart.resize(); // Forzar redibujado
+        }
+    }, 10);
 }
 // ===============================================
 // CARRUSEL DE NOTICIAS (SWIPER)
