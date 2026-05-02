@@ -30,10 +30,10 @@ const LV_TIPS = [
   { icon:"⚽", texto:"El Mundial 2026 es el primero con 48 selecciones." },
   { icon:"🌍", texto:"Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá." },
   { icon:"💡", texto:"En los Mundiales, cerca del 30% de los partidos terminan en empate, 1-1 es el marcador más probable" },
-  { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts" },
-  { icon:"📊", texto:"Hay 104 partidos en total. ¡Ponte al dia con tus predicciones!" },
+  { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
+  { icon:"📊", texto:"Hay 104 partidos en total. ¡Ponte al dia con tus predicciones!." },
   { icon:"🌟", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
-  { icon:"🇻🇪", texto:"En Droguería Carrisan te venden los toallines para que te seques la lagrimas luego de ese penal al ultimo minuto" },
+  { icon:"🇻🇪", texto:"En Droguería Carrisan te venden los toallines para que te seques la lagrimas luego de ese penal al ultimo minuto." },
   { icon:"⚡", texto:"El torneo arranca el 11 de junio de 2026. ¡Marca la fecha!" },
 ];
 
