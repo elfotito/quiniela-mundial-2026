@@ -318,13 +318,14 @@ function renderUibEvo(evaluadas) {
     
     if (!canvas || typeof Chart === 'undefined') return;
     
-    // Destruir gráfico anterior si existe
     if (uibEvoChart) {
         uibEvoChart.destroy();
     }
     
-    // Datos: número de partido vs puntos obtenidos
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+    
+    // Detectar si es móvil (ancho <= 392px)
+    const isMobile = window.innerWidth <= 392;
     
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -333,19 +334,19 @@ function renderUibEvo(evaluadas) {
                 data: datos,
                 borderColor: '#0066cc',
                 backgroundColor: 'rgba(0, 102, 204, 0.08)',
-                borderWidth: 2,
+                borderWidth: isMobile ? 2 : 2,
                 fill: true,
                 tension: 0.3,
-                pointRadius: datos.length <= 12 ? 2.5 : 0,  // Puntos más pequeños para 120px
-                pointHoverRadius: 4,
+                pointRadius: datos.length <= 12 ? (isMobile ? 3 : 2.5) : 0,
+                pointHoverRadius: isMobile ? 5 : 4,
                 pointBackgroundColor: '#0066cc',
                 pointBorderColor: '#ffffff',
-                pointBorderWidth: 1.5
+                pointBorderWidth: isMobile ? 1.5 : 1.5
             }]
         },
         options: {
-            responsive: false,           // ← No responsive, tamaño fijo
-            maintainAspectRatio: false,  // ← Control manual
+            responsive: false,  // Falso en ambos para control exacto
+            maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -365,8 +366,8 @@ function renderUibEvo(evaluadas) {
                     type: 'linear',
                     ticks: {
                         color: '#666666',
-                        maxTicksLimit: 5,
-                        font: { size: 8, weight: 600 },  // Fuente más pequeña
+                        maxTicksLimit: isMobile ? 4 : 5,
+                        font: { size: isMobile ? 8 : 8, weight: 600 },
                         stepSize: 1,
                         precision: 0,
                         callback: function(val) {
@@ -381,7 +382,7 @@ function renderUibEvo(evaluadas) {
                     max: 9,
                     ticks: {
                         color: '#666666',
-                        font: { size: 8, weight: 600 },  // Fuente más pequeña
+                        font: { size: isMobile ? 8 : 8, weight: 600 },
                         callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
                     },
                     grid: {
