@@ -479,18 +479,32 @@ document.getElementById('registroForm').addEventListener('submit', async functio
 });
 
 function mostrarError(mensaje) {
+    console.log('Mostrando error:', mensaje); // Para verificar que se ejecuta
     const errorEl = document.getElementById('errorMessage');
-    errorEl.querySelector('.message-text').textContent = mensaje;
+    const textEl = errorEl.querySelector('.message-text');
+    
+    if (textEl) {
+        textEl.textContent = mensaje;
+    }
+    
     errorEl.style.display = 'flex';
     document.getElementById('successMessage').style.display = 'none';
     
     // Scroll al mensaje
-    errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
 }
 
 function mostrarExito(mensaje) {
+    console.log('Mostrando éxito:', mensaje); // Para verificar que se ejecuta
     const successEl = document.getElementById('successMessage');
-    successEl.querySelector('.message-text').textContent = mensaje;
+    const textEl = successEl.querySelector('.message-text');
+    
+    if (textEl) {
+        textEl.textContent = mensaje;
+    }
+    
     successEl.style.display = 'flex';
     document.getElementById('errorMessage').style.display = 'none';
     
@@ -498,7 +512,9 @@ function mostrarExito(mensaje) {
     document.getElementById('registroForm').style.display = 'none';
     
     // Scroll al mensaje
-    successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
 }
     </script>
 </body>
