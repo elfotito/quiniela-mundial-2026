@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('user-name-display').textContent = usuario.nombre || usuario.codigo;
     document.getElementById('mobileUserName').textContent = usuario.nombre || usuario.codigo;
     // Botón admin
-    const adminBtn = document.getElementById('adminBtn');
+    const adminBtn = document.getElementById('btn-admin-display');
     if (adminBtn && auth.isAdmin()) {
         adminBtn.style.display = 'flex';
         adminBtn.onclick = () => window.location.href = 'admin.html';
