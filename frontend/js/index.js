@@ -313,7 +313,6 @@ async function cargarDatos() {
         cargarNoticiasIndex()
     ]);
 }
-let uibEvoChart = null; // variable global para poder destruir/crear
 
 function renderUibEvo(evaluadas) {
     const canvas = document.getElementById('uibEvoChart');
