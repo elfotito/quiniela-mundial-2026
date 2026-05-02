@@ -913,7 +913,7 @@
 }
 
 .slide-title {
-    font-size: 44px;
+    font-size: 40px;
     font-family: "Yolk";
     font-weight: 600;
     line-height: 1.1;
@@ -1040,9 +1040,7 @@
 .countdown-wrapper {
     margin-top: 0 !important;
 }
-/* ================================================
-   RESPONSIVE — TABLET (641px – 900px)
-   ================================================ */
+
 @media (min-width: 641px) and (max-width: 900px) {
     .slide-inner          { grid-template-columns: 50% 50%; height: 400px; }
     .slide-title          { font-size: 22px; }
@@ -1050,9 +1048,6 @@
     .slide-next-preview   { width: 90px; }
 }
 
-/* ================================================
-   RESPONSIVE — MÓVIL (≤ 640px)
-   ================================================ */
 @media (max-width: 640px) {
 
 .slide-text .slide-btn {
