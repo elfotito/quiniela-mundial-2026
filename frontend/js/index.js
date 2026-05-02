@@ -8,14 +8,13 @@ let usuarioId = null;
 // Instancia global de Chart.js para el gráfico de evolución
 let uibEvoChart = null;
 
-// ============================================
-// LOADING OVERLAY — datos
-// ============================================
+// ===============================================
+
 const LV_ESTADIOS = [
-  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/MetLife_Stadium_2022.jpg/1280px-MetLife_Stadium_2022.jpg", badge:"🏆 Final · Nueva York", fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
-  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Estadio_Azteca_2015.jpg/1280px-Estadio_Azteca_2015.jpg", badge:"⚽ Inauguración · Ciudad de México", fact:"Estadio Azteca — El único con dos inauguraciones mundialistas" },
-  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Dallas_Cowboys_Stadium_-_opening_night.jpg/1280px-Dallas_Cowboys_Stadium_-_opening_night.jpg", badge:"🌟 Dallas · AT&T Stadium", fact:"AT&T Stadium — La pantalla más grande del mundo en un estadio" },
-  { img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Rose_Bowl_aerial.jpg/1280px-Rose_Bowl_aerial.jpg", badge:"🌹 Los Ángeles · Rose Bowl", fact:"Rose Bowl — Sede de la final del Mundial 1994" },
+  { img:"https://i.ibb.co/WN8rGNtr/Metlife-stadium-Aerial-view.jpg", badge:"🏆 Final · Nueva York", fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
+  { img:"https://i.ibb.co/BHr1PZPk/AZTECA.jpg", badge:"⚽ Inauguración · Ciudad de México", fact:"Estadio Azteca — El único con dos inauguraciones mundialistas" },
+  { img:"https://i.ibb.co/HL8gzc8R/ATT-Stadium-AP.jpg", badge:"🌟 Dallas · AT&T Stadium", fact:"AT&T Stadium — La pantalla más grande del mundo en un estadio" },
+  { img:"https://i.ibb.co/0jJtK9zq/una-vista-dallalto-del-rose-bowl-stadium-di-pasadena-77xtyf1lmfjf106jhptoygoxr.jpg", badge:"🌹 Los Ángeles · Rose Bowl", fact:"Rose Bowl — Sede de la final del Mundial 1994" },
 ];
 
 const LV_ETAPAS = [
@@ -30,11 +29,11 @@ const LV_ETAPAS = [
 const LV_TIPS = [
   { icon:"⚽", texto:"El Mundial 2026 es el primero con 48 selecciones." },
   { icon:"🌍", texto:"Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá." },
-  { icon:"💡", texto:"Predice el resultado exacto y ganas puntos extra en la quiniela." },
-  { icon:"🏆", texto:"El campeón que eliges al inicio vale puntos dobles en la final." },
-  { icon:"📊", texto:"Hay 104 partidos en total. ¡No te quedes sin predecir!" },
+  { icon:"💡", texto:"En los Mundiales, cerca del 30% de los partidos terminan en empate, 1-1 es el marcador más probable" },
+  { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts" },
+  { icon:"📊", texto:"Hay 104 partidos en total. ¡Ponte al dia con tus predicciones!" },
   { icon:"🌟", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
-  { icon:"🇻🇪", texto:"Droguería Carrisan te trae la Quiniela más emocionante del 2026." },
+  { icon:"🇻🇪", texto:"En Droguería Carrisan te venden los toallines para que te seques la lagrimas luego de ese penal al ultimo minuto" },
   { icon:"⚡", texto:"El torneo arranca el 11 de junio de 2026. ¡Marca la fecha!" },
 ];
 
