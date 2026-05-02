@@ -347,6 +347,7 @@ function renderUibEvo(evaluadas) {
         options: {
             responsive: false,  // Falso en ambos para control exacto
             maintainAspectRatio: false,
+            devicePixelRatio: 2,
             plugins: {
                 legend: { display: false },
                 tooltip: {
