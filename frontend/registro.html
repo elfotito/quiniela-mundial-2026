@@ -62,12 +62,12 @@
                 
                 <!-- Mensajes -->
                 <div class="message error-message" id="errorMessage" style="display: none;">
-                    <span class="message-icon">⚠️</span>
+                    
                     <span class="message-text"></span>
                 </div>
 
                 <div class="message success-message" id="successMessage" style="display: none;">
-                    <span class="message-icon">✅</span>
+                
                     <span class="message-text"></span>
                 </div>
                 
@@ -366,7 +366,7 @@
             console.log('Submit del formulario disparado');
 
             const submitBtn = document.getElementById('submitBtn');
-            const errorEl = document.getElementById('errorMessage');
+            
             const successEl = document.getElementById('successMessage');
 
             // Limpiar mensajes
@@ -400,23 +400,23 @@
             }
 
             if (!/^\+\d{6,13}$/.test(telefono)) {
-                mostrarError('Teléfono inválido. Usa formato: +584145949532');
+                mostrarError('❌ Teléfono inválido. Usa formato: +584141234567');
                 return;
             }
 
             if (!campeonSeleccionado) {
-                mostrarError('Selecciona un equipo campeón');
+                mostrarError('🔮 ¡Sin miedo! Elige tu campeón');
                 return;
             }
 
             if (ligasSeleccionadas.length === 0) {
-                mostrarError('Selecciona al menos una liga');
+                mostrarError('🤷‍♂️ Si no tienes liga entra en GENERAL, luego veo donde te pongo');
                 return;
             }
 
             const terminosCheckbox = document.getElementById('terminosCheckbox');
             if (!terminosCheckbox.checked) {
-                mostrarError('Hagamos como que si leiste los terminos y condiciones 😉');
+                mostrarError('😉 Hagamos como que si leiste los terminos y condiciones');
                 
                 const terminosGroup = document.querySelector('.terminos-group');
                 terminosGroup.classList.add('error');
@@ -480,7 +480,7 @@
 
         function mostrarError(mensaje) {
             console.log('Mostrando error:', mensaje);
-            const errorEl = document.getElementById('errorMessage');
+            
             const textEl = errorEl.querySelector('.message-text');
             
             if (textEl) {
@@ -505,7 +505,7 @@
             }
             
             successEl.style.display = 'flex';
-            document.getElementById('errorMessage').style.display = 'none';
+            
             
             document.getElementById('registroForm').style.display = 'none';
             
