@@ -3145,7 +3145,7 @@
 .uib-chart-wrap {
     position: relative;
     width: 100%;
-    min-height: 140px; /* ← CAMBIADO a 140px para desktop */
+    min-height: 120px;
 }
 
 .uib-chart-wrap canvas {
@@ -3188,7 +3188,21 @@
         min-height: 280px;
     }
 }
-
+@media (min-width: 769px) {
+    .uib-chart-col {
+        align-items: center;
+    }
+    
+    .uib-chart-wrap {
+        max-width: 500px;
+        width: 100%;
+    }
+    
+    .uib-chart-label {
+        text-align: center;
+        max-width: 500px;
+    }
+}
 /* ── TABLET pequeña (481px - 768px) ────────────────────────────── */
 @media (min-width: 481px) and (max-width: 768px) {
     .uib-chart-wrap {
