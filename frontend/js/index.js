@@ -324,9 +324,23 @@ function renderUibEvo(evaluadas) {
     });
     
     if (!canvas || typeof Chart === 'undefined') return;
+        if (uibEvoChart) {
+        uibEvoChart.destroy();
+    }
     
-    // X: número de partido (1, 2, 3...), Y: puntos obtenidos (0-5)
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+    
+    // Detectar si es desktop o móvil
+    const isDesktop = window.innerWidth > 768;
+    const alturaDeseada = isDesktop ? 140 : 360;
+    
+    // Forzar altura en el contenedor y canvas
+    const wrap = canvas.closest('.uib-chart-wrap');
+    if (wrap) {
+        wrap.style.minHeight = `${alturaDeseada}px`;
+        wrap.style.height = `${alturaDeseada}px`;
+    }
+    canvas.style.height = `${alturaDeseada}px`;
     
     uibEvoChart = new Chart(canvas, {
         type: 'line',

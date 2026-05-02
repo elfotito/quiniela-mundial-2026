@@ -3125,13 +3125,13 @@
 }
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
-/* ── BASE (desktop por defecto) ────────────────────────────── */
 .uib-chart-col {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 4px;
     padding: 10px 16px 10px 12px;
+    min-width: 140px;
 }
 
 .uib-chart-label {
@@ -3145,13 +3145,13 @@
 .uib-chart-wrap {
     position: relative;
     width: 100%;
-    height: 140px;
+    min-height: 140px; /* ← CAMBIADO a 140px para desktop */
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 100%;
-    height: 140px;
+    width: 100% !important;
+    height: auto !important;
 }
 
 /* ── TU DESKTOP (1601px - 1870px) ────────────────────────────── */
