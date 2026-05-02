@@ -675,6 +675,7 @@ body {
 
 @media (max-width: 480px) {
     .split-left {
+        gap: 5px;
         flex: 0 0 250px;
         min-height: 250px;
         max-height: 250px;
