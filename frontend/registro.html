@@ -62,12 +62,12 @@
                 
                 <!-- Mensajes -->
                 <div class="message error-message" id="errorMessage" style="display: none;">
-                    
+                    <span class="message-icon">🗣️</span>
                     <span class="message-text"></span>
                 </div>
 
                 <div class="message success-message" id="successMessage" style="display: none;">
-                
+                    <span class="message-icon">✅</span>
                     <span class="message-text"></span>
                 </div>
                 
@@ -366,7 +366,7 @@
             console.log('Submit del formulario disparado');
 
             const submitBtn = document.getElementById('submitBtn');
-            
+            const errorEl = document.getElementById('errorMessage');
             const successEl = document.getElementById('successMessage');
 
             // Limpiar mensajes
@@ -480,7 +480,7 @@
 
         function mostrarError(mensaje) {
             console.log('Mostrando error:', mensaje);
-            
+            const errorEl = document.getElementById('errorMessage');
             const textEl = errorEl.querySelector('.message-text');
             
             if (textEl) {
@@ -505,7 +505,7 @@
             }
             
             successEl.style.display = 'flex';
-            
+            document.getElementById('errorMessage').style.display = 'none';
             
             document.getElementById('registroForm').style.display = 'none';
             
