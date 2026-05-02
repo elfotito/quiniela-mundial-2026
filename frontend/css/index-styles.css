@@ -3126,7 +3126,6 @@
  
 /* ── GRÁFICO EVOLUCIÓN ────────────────────────────── */
 /* ── GRÁFICO EVOLUCIÓN (DESKTOP ONLY) ── */
-/* ── GRÁFICO EVOLUCIÓN (DESKTOP ONLY) ── */
 .uib-chart-col {
     display: flex;
     flex-direction: column;
@@ -3152,19 +3151,6 @@
     display: block;
     width: 520px !important;
     height: 120px !important;
-}
-/* Móvil: ancho completo */
-@media (max-width: 768px) {
-    .uib-chart-wrap {
-        width: 100%;
-        height: auto;
-        min-height: 250px;
-    }
-    
-    .uib-chart-wrap canvas {
-        width: 100% !important;
-        height: auto !important;
-    }
 }
 /* ── BARRA INFERIOR ───────────────────────────────── */
 .uib-bottom {
