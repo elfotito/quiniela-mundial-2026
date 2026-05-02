@@ -72,7 +72,7 @@
                 </div>
                 
                 <!-- Formulario -->
-                <form id="registroForm" class="login-form">
+                <form id="registroForm" class="login-form" novalidate>
                     
                     <!-- Nombre -->
                     <div class="form-group">
@@ -115,9 +115,7 @@
                             id="telefonoInput" 
                             class="form-input"
                             placeholder="+584141234567"
-                            required
                             maxlength="13"
-                            pattern="\+\d{12}"
                         >
                         <small class="form-hint" id="telefonoHint">
                             Sera tu identificador en el sistema (No sera público)
