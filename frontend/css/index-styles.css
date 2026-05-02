@@ -3153,6 +3153,10 @@
     height: 120px !important;
 }
 @media (max-width: 392px) {
+    .uib-chart-col {
+        align-items: center; /* Centra el gráfico */
+    }
+    
     .uib-chart-wrap {
         width: 340px;
         height: auto;
@@ -3162,6 +3166,11 @@
     .uib-chart-wrap canvas {
         width: 340px !important;
         height: auto !important;
+    }
+    
+    .uib-chart-label {
+        text-align: center;
+        width: 340px;
     }
 }
 /* ── BARRA INFERIOR ───────────────────────────────── */
