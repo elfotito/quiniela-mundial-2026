@@ -319,13 +319,14 @@ function renderUibEvo(evaluadas) {
     
     if (!canvas || typeof Chart === 'undefined') return;
     
-    // Destruir gráfico anterior si existe
     if (uibEvoChart) {
         uibEvoChart.destroy();
     }
     
-    // Datos: número de partido vs puntos obtenidos
     const datos = evaluadas.map((p, i) => ({ x: i + 1, y: p.puntos_obtenidos }));
+    
+    // Detectar si es móvil
+    const isMobile = window.innerWidth <= 768;
     
     uibEvoChart = new Chart(canvas, {
         type: 'line',
@@ -334,31 +335,26 @@ function renderUibEvo(evaluadas) {
                 data: datos,
                 borderColor: '#0066cc',
                 backgroundColor: 'rgba(0, 102, 204, 0.08)',
-                borderWidth: 2,
+                borderWidth: isMobile ? 2.5 : 2,
                 fill: true,
                 tension: 0.3,
-                pointRadius: datos.length <= 12 ? 2.5 : 0,  // Puntos más pequeños para 120px
-                pointHoverRadius: 4,
+                pointRadius: datos.length <= 12 ? (isMobile ? 4 : 2.5) : 0,
+                pointHoverRadius: isMobile ? 6 : 4,
                 pointBackgroundColor: '#0066cc',
                 pointBorderColor: '#ffffff',
-                pointBorderWidth: 1.5
+                pointBorderWidth: isMobile ? 2 : 1.5
             }]
         },
         options: {
-            responsive: false,           // ← No responsive, tamaño fijo
-            maintainAspectRatio: false,  // ← Control manual
+            responsive: true,
+            maintainAspectRatio: isMobile,
             plugins: {
                 legend: { display: false },
                 tooltip: {
                     callbacks: {
                         title: ctx => `Partido ${ctx[0].parsed.x}`,
                         label: ctx => `${ctx.parsed.y} pts`
-                    },
-                    backgroundColor: '#ccc',
-                    titleColor: '#000',
-                    bodyColor: '#3f3f3f',
-                    borderColor: '#000',
-                    borderWidth: 1
+                    }
                 }
             },
             scales: {
@@ -366,13 +362,11 @@ function renderUibEvo(evaluadas) {
                     type: 'linear',
                     ticks: {
                         color: '#666666',
-                        maxTicksLimit: 5,
-                        font: { size: 8, weight: 600 },  // Fuente más pequeña
+                        maxTicksLimit: isMobile ? 4 : 5,
+                        font: { size: isMobile ? 9 : 8, weight: 600 },
                         stepSize: 1,
                         precision: 0,
-                        callback: function(val) {
-                            return Number.isInteger(val) ? val : '';
-                        }
+                        callback: (val) => Number.isInteger(val) ? val : ''
                     },
                     grid: { color: '#eeeeee' },
                     border: { display: false }
@@ -382,11 +376,11 @@ function renderUibEvo(evaluadas) {
                     max: 9,
                     ticks: {
                         color: '#666666',
-                        font: { size: 8, weight: 600 },  // Fuente más pequeña
-                        callback: v => [0, 2, 5, 7, 9].includes(v) ? v : ''
+                        font: { size: isMobile ? 9 : 8, weight: 600 },
+                        callback: (v) => [0, 2, 5, 7, 9].includes(v) ? v : ''
                     },
                     grid: {
-                        color: ctx => [0, 2, 5, 7, 9].includes(ctx.tick.value)
+                        color: (ctx) => [0, 2, 5, 7, 9].includes(ctx.tick.value)
                             ? '#dddddd' : '#f5f5f5'
                     },
                     border: { display: false }
