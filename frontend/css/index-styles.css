@@ -3132,7 +3132,6 @@
     flex-direction: column;
     gap: 4px;
     padding: 10px 16px 10px 12px;
-    min-width: 140px;
 }
 
 .uib-chart-label {
@@ -3146,7 +3145,7 @@
 .uib-chart-wrap {
     position: relative;
     width: 100%;
-    min-height: 200px; /* Altura pequeña para desktop */
+    min-height: 140px;
 }
 
 .uib-chart-wrap canvas {
