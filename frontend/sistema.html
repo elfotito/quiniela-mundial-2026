@@ -303,7 +303,11 @@
         .calc-quick-grid  { grid-template-columns: 1fr; }
     }
     @media (max-width: 1024px) {
-        .indice .resumen {
+        .indice {
+    display: none;
+    order: -1;
+    }
+    .resumen {
     display: none;
     order: -1;
     }
@@ -433,13 +437,13 @@
                         <!-- Equipos demo -->
                         <div class="calc-teams">
                             <div class="calc-team">
-                                <span class="calc-team-flag">🇲🇽</span>
-                                <span class="calc-team-name">México</span>
+                                <span class="calc-team-flag">🇮🇹</span>
+                                <span class="calc-team-name">Italia</span>
                             </div>
                             <div class="calc-vs">VS</div>
                             <div class="calc-team">
-                                <span class="calc-team-flag">🇧🇷</span>
-                                <span class="calc-team-name">Brasil</span>
+                                <span class="calc-team-flag">🇻🇪</span>
+                                <span class="calc-team-name">Venezuela</span>
                             </div>
                         </div>
 
@@ -545,7 +549,7 @@
                 </div>
                 <div class="widget-body">
                     <p class="cta-text">Ya entiendes el sistema. Ahora ve a predecir y acumula puntos.</p>
-                    <a href="index.html" class="cta-btn">Iniciar sesión</a>
+                    <a href="login.html" class="cta-btn">Iniciar sesión</a>
                 </div>
             </div>
 
