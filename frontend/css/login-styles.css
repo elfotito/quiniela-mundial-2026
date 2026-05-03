@@ -748,18 +748,19 @@ body {
 }
 
 /* ===============================================
-   FIX CARRUSEL PARA MÓVILES -
+RESPONSIVE
    =============================================== */
 
-/* Ajustes específicos para tablets y móviles */
 @media (max-width: 768px) {
-    /* Contenedor principal del carrusel */
+
+    .hide-mobile {
+        display: none;
+    }
     .hero-carousel {
         padding: 1rem;
         min-height: auto;
     }
     
-    /* Ajuste crítico: altura automática en móviles */
     .carousel-main {
         height: auto !important;
         min-height: 400px;
@@ -863,7 +864,6 @@ body {
     }
 }
 
-/* Ajustes para móviles muy pequeños (menos de 480px) */
 @media (max-width: 480px) {
     .hero-carousel {
         padding: 0.75rem;
