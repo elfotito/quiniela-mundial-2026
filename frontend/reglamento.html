@@ -326,7 +326,12 @@
         .reg-col-left, .reg-col-right { position: static; }
         .reg-section-body { padding: 16px 16px 20px; }
     }
-    @media(min-width:600px) {
+    .mobile-index-widget {
+    display: none;
+    order: -1;
+    }
+
+@media(max-width:700px) {
     .mobile-index-widget {
         display: block;
     }
@@ -334,10 +339,6 @@
     display: none;
     }
 }
-    .mobile-index-widget {
-    display: none;
-    order: -1;
-    }
     </style>
 </head>
 
@@ -390,7 +391,7 @@
             </div>
 
             <!-- Reglas rápidas -->
-            <div class="widget" style="display:none;order:-1;">
+            <div class="widget">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
                     <span class="widget-title">TL;DR</span>
