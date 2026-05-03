@@ -1279,24 +1279,10 @@ function obtenerCampeon(codigo) {
 // ===============================================
 // TOASTTTT
 // ===============================================
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('a[data-construccion]').forEach(enlace => {
-    enlace.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
-        icon: '🏗️',
-        duracion: 4000
-      });
-    });
-  });
-});
-
 function mostrarToast(mensaje, opciones = {}) {
   const {
     icon = '🔧',
-    duracion = 4000,
-    tipo = 'trabajo'
+    duracion = 4000
   } = opciones;
  
   const container = document.getElementById('toast-container');
@@ -1325,12 +1311,25 @@ function mostrarToast(mensaje, opciones = {}) {
     cerrar();
   });
  
-  toast.addEventListener('click', (e) => {
-    if (e.target.className !== 'toast-close') cerrar();
-  });
+  toast.addEventListener('click', cerrar);
  
   setTimeout(cerrar, duracion);
 }
+
+// ── Attach listeners cuando el DOM está listo ──
+setTimeout(() => {
+  document.querySelectorAll('a[data-construccion]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Toast disparado desde:', enlace.textContent);
+      mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+        icon: '🏗️',
+        duracion: 4000
+      });
+    });
+  });
+}, 500);
 
 // ===============================================
 // MENÚ MÓVIL
