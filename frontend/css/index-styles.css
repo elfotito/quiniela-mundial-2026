@@ -3468,7 +3468,7 @@
 @media (max-width: 780px) {
   #toast-container {
     top: 70px;
-    max-width: 85%;
+    max-width: 100%;
   }
   .toast-construccion {
     font-size: 1rem;
@@ -3482,7 +3482,7 @@
   }
   .toast-construccion {
     font-size: 0.85rem;
-    padding: 12px 14px;
+    padding: 10px 12px;
   }
 }
 
