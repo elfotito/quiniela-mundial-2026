@@ -373,10 +373,55 @@
       font-size: 0.72rem;
       color: var(--text-muted);
     }
- 
+ /* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;  /* Cuadrado con esquinas ligeramente redondeadas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: #333333;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top:active {
+    transform: translateY(0);
+}
+
+
     /* =============================================
        RESPONSIVE
     ============================================= */
+    @media (min-width: 1025px) {
+    .back-to-top {
+        display: none !important;
+      }
+    }
     @media (max-width: 768px) {
     .footer-top-bar,
     .footer-bottom-bar {
@@ -854,23 +899,27 @@
                 </div>
             </div>
 
-            <div class="widget">
+            <div class="widget desktop-widget-index">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
-                    <span class="widget-title">Puntos Clave</span>
+                    <span class="widget-title">enlances</span>
                 </div>
-                <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label">Solo +18 años</span><span class="stat-val no">Obligatorio</span></div>
-                    <div class="stat-row"><span class="stat-label">Datos protegidos</span><span class="stat-val ok">Sí</span></div>
-                    <div class="stat-row"><span class="stat-label">Predicción editable</span><span class="stat-val no">No</span></div>
-                    <div class="stat-row"><span class="stat-label">Alias público</span><span class="stat-val neu">Visible</span></div>
-                    <div class="stat-row"><span class="stat-label">Teléfono público</span><span class="stat-val no">No</span></div>
+                <div class="widget-body" style="padding:10px 12px">
+                    <a href="javascript:history.back()"  class="ter-nav-link"><i class="bi bi-arrow-left-short"></i>Ir a la pagina anterior</a>
+                    <a href="#art2"  class="ter-nav-link"><i class="bi bi-person-fill"></i>Inicio de sesion</a>
+                    <a href="#art3"  class="ter-nav-link"><i class="bi bi-person-fill-add"></i>Registrar Usuario</a>
+                    <a href="#art4"  class="ter-nav-link"><i class="bi bi-key"></i>Cambio de Clave</a>
+                    <a href="#art5"  class="ter-nav-link"><i class="bi bi-journal-bookmark-fill"></i>Reglamento</a>
+                    <a href="#art6"  class="ter-nav-link"><i class="bi bi-calculator-fill"></i>Sistema de puntos</a>
                 </div>
             </div>
 
         </aside>
 
     </div>
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+    <i class="bi bi-arrow-up"></i>
+    </button>
     </div>
         <!-- FOOTER -->
         <footer class="footer">
@@ -961,5 +1010,24 @@
             </div>
         </div>
         </footer>
+    <script>
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
