@@ -134,7 +134,7 @@
 
     /* ── CALCULADORA ──────────────────────────────────── */
     .calc-wrap {
-        background: #0a0a0a;
+        background: #000000;
         padding: 24px;
         border: 1px solid #1a1a1a;
     }
@@ -266,7 +266,7 @@
 
     .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
     .stat-row:last-child { border-bottom: none; }
-    .stat-label { font-size: 12px; color: #555; }
+    .pts-label { font-size: 12px; color: #555; }
     .stat-val   { font-size: 13px; font-weight: 800; }
     .stat-val.p9  { color: #085041; }
     .stat-val.p7  { color: #27500A; }
@@ -302,17 +302,16 @@
         .sis-section-body { padding: 16px 16px 20px; }
         .calc-quick-grid  { grid-template-columns: 1fr; }
     }
+    @media (max-width: 1024px) {
+        .indice {
+    display: none;
+    order: -1;
+    }
+        }
     </style>
 </head>
 
-<body>
-
-    <!-- ═══════════════════════════════
-         PEGA TU HEADER AQUÍ
-         ═══════════════════════════════ -->
-
-
-    <!-- ── HERO ──────────────────────────────────────── -->
+<body class="scroll-habilitado">
     <div class="sis-hero">
         <div class="sis-hero-inner">
             <div>
@@ -342,7 +341,7 @@
         <aside class="sis-col-left">
 
             <!-- Índice -->
-            <div class="widget">
+            <div class="widget indice">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
                     <span class="widget-title">Índice</span>
@@ -361,11 +360,11 @@
                     <span class="widget-title">Resumen</span>
                 </div>
                 <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label">Resultado exacto</span><span class="stat-val p9">+9 pts</span></div>
-                    <div class="stat-row"><span class="stat-label">Ganador + marcador</span><span class="stat-val p7">+7 pts</span></div>
-                    <div class="stat-row"><span class="stat-label">Solo ganador</span><span class="stat-val p5">+5 pts</span></div>
-                    <div class="stat-row"><span class="stat-label">Solo marcador</span><span class="stat-val p2">+2 pts</span></div>
-                    <div class="stat-row"><span class="stat-label">Sin acierto</span><span class="stat-val p0">0 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Resultado exacto</span><span class="stat-val p9">+9 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Ganador + marcador</span><span class="stat-val p7">+7 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Solo ganador</span><span class="stat-val p5">+5 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Solo marcador</span><span class="stat-val p2">+2 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Sin acierto</span><span class="stat-val p0">0 pts</span></div>
                 </div>
             </div>
 
@@ -449,9 +448,9 @@
                         <div class="calc-inputs-section">
                             <div class="calc-inputs-label">Tu predicción</div>
                             <div class="calc-inputs-row">
-                                <input type="number" id="predLocal"     class="calc-input" min="0" max="9" value="2">
+                                <input type="number" id="predLocal"     class="calc-input" min="0" max="9" value="2" maxlength="1">
                                 <span class="calc-input-sep">—</span>
-                                <input type="number" id="predVisitante" class="calc-input" min="0" max="9" value="1">
+                                <input type="number" id="predVisitante" class="calc-input" min="0" max="9" value="1" maxlength="1">
                             </div>
                         </div>
 
@@ -461,9 +460,9 @@
                         <div class="calc-inputs-section">
                             <div class="calc-inputs-label">Resultado real</div>
                             <div class="calc-inputs-row">
-                                <input type="number" id="realLocal"     class="calc-input real" min="0" max="9" value="2">
+                                <input type="number" id="realLocal"     class="calc-input real" min="0" max="9" value="2" maxlength="1">
                                 <span class="calc-input-sep">—</span>
-                                <input type="number" id="realVisitante" class="calc-input real" min="0" max="9" value="1">
+                                <input type="number" id="realVisitante" class="calc-input real" min="0" max="9" value="1" maxlength="1">
                             </div>
                         </div>
 
@@ -547,37 +546,35 @@
                 </div>
                 <div class="widget-body">
                     <p class="cta-text">Ya entiendes el sistema. Ahora ve a predecir y acumula puntos.</p>
-                    <a href="predicciones.html" class="cta-btn">Hacer Predicciones</a>
+                    <a href="index.html" class="cta-btn">Iniciar sesión</a>
                 </div>
             </div>
 
-            <!-- CTA: Reglamento -->
             <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Reglamento</span>
-                    <a href="reglamento.html" class="widget-link">Ver →</a>
-                </div>
-                <div class="widget-body">
-                    <p style="font-size:12px;color:#555;line-height:1.5;">Conoce todas las reglas del juego, el sistema VAR y los canales oficiales.</p>
-                </div>
+        <div class="widget-header">
+            <div class="widget-header-bar"></div>
+            <span class="widget-header-title">Reglamento</span>
+        </div>
+        <div class="widget-body">
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Límite de ingreso de predicción:<br> <strong>10 min antes de cada partido</strong></span>
             </div>
-
-            <!-- Puntuación rápida -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Puntos</span>
-                </div>
-                <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label">Resultado exacto</span><span class="stat-val p9">+9</span></div>
-                    <div class="stat-row"><span class="stat-label">Ganador + marcador</span><span class="stat-val p7">+7</span></div>
-                    <div class="stat-row"><span class="stat-label">Solo ganador</span><span class="stat-val p5">+5</span></div>
-                    <div class="stat-row"><span class="stat-label">Solo marcador</span><span class="stat-val p2">+2</span></div>
-                    <div class="stat-row"><span class="stat-label">Sin acierto</span><span class="stat-val p0">0</span></div>
-                </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Cantidad de predicciones por partido:<br><strong>1 predicción por partido</strong></span>
             </div>
-
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text"><strong>Prohibida</strong> la modificacion de predicciones luego de su ingreso</span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Toda decision del VAR es <strong>inapelable</strong></span>
+            </div>
+            <a href="reglamento.html" class="btn-widget-full">Ver reglamento completo</a>
+        </div>
+    </div>
         </aside>
 
     </div>
