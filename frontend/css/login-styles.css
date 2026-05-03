@@ -603,8 +603,6 @@ body {
     }
 }
 
-/* Reemplaza SOLO el bloque @media (max-width: 768px) que tienes */
-
 @media (min-width: 601px) and (max-width: 768px) {
     body {
         overflow: auto;
@@ -651,12 +649,8 @@ body {
 
     .hero-title {
         font-size: 1.25rem;
-        margin-bottom: 0;
-        line-height: 1.2;
-    }
-
-    .hero-description {
-        display: none;
+        padding-bottom: 0rem;
+        margin-bottom: 0rem;
     }
 
     .hero-flags {
@@ -691,7 +685,7 @@ body {
         max-height: 250px;
         justify-content: flex-end;  
         align-items: flex-start;    
-        padding: 1rem 1rem 0 1rem;  /* ← Agregado punto y coma */             
+        padding: 1rem 1rem 0 1rem;             
     }
     
     .hero-content {
