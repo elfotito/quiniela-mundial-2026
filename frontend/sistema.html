@@ -9,7 +9,24 @@
     <link rel="stylesheet" href="css/index-styles.css">
 
     <style>
-
+        :root {
+            --fifa-blue: #003DA5;
+            --fifa-gold: #FFD700;
+            --dark-bg: #0a0a0a;
+            --dark-card: #161616;
+            --border-color: #808080;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { margin: 0; font-family:'Yolk', 'Segoe UI', system-ui, sans-serif; color:#000; background: #f4f4f4; }
+        body {
+            font-family: 'Yolk'; 
+            color: #8a8a8a;
+        }
+        body.scroll-habilitado {
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        }
+        
     /* ── HERO ─────────────────────────────────────────── */
     .sis-hero {
         background: #000;
@@ -45,7 +62,6 @@
         padding: 7px 14px;
         background: rgba(255,255,255,0.06);
         border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 20px;
         font-size: 12px; font-weight: 700; color: #fff;
     }
     .sis-hero-pill .pill-pts { color: var(--fifa-gold, #FFD700); font-size: 15px; font-weight: 900; }
@@ -70,7 +86,7 @@
     .sis-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
 
     /* ── WIDGET BASE ──────────────────────────────────── */
-    .widget { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .widget { background: #fff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
     .widget-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
     .widget-bar    { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
     .widget-title  { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
@@ -79,7 +95,7 @@
 
     /* ── SECCIÓN CARD ─────────────────────────────────── */
     .sis-section {
-        background: #fff; border-radius: 14px;
+        background: #fff;
         overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee;
     }
     .sis-section-header {
@@ -106,7 +122,7 @@
     .pts-num {
         font-size: 24px; font-weight: 900;
         display: inline-block; min-width: 40px; text-align: center;
-        padding: 4px 10px; border-radius: 8px;
+        padding: 4px 10px;
     }
     .pts-num.p9  { background: #D1F2EB; color: #085041; }
     .pts-num.p7  { background: #EAF3DE; color: #27500A; }
@@ -119,7 +135,6 @@
     /* ── CALCULADORA ──────────────────────────────────── */
     .calc-wrap {
         background: #0a0a0a;
-        border-radius: 12px;
         padding: 24px;
         border: 1px solid #1a1a1a;
     }
@@ -155,7 +170,7 @@
         padding: 14px 8px;
         font-size: 28px; font-weight: 900; text-align: center;
         background: #1a1a1a; border: 1.5px solid #2a2a2a;
-        border-radius: 10px; color: var(--fifa-gold, #FFD700);
+        color: var(--fifa-gold, #FFD700);
         -moz-appearance: textfield; appearance: textfield;
         transition: border-color 0.2s;
     }
@@ -171,7 +186,7 @@
         width: 100%;
         padding: 14px;
         background: var(--fifa-gold, #FFD700);
-        border: none; border-radius: 10px;
+        border: none;
         color: #000; font-size: 14px; font-weight: 900;
         cursor: pointer; letter-spacing: 0.5px;
         transition: background 0.2s, transform 0.1s;
@@ -184,7 +199,6 @@
     .calc-result {
         background: rgba(0,102,204,0.12);
         border: 1.5px solid #0066CC;
-        border-radius: 10px;
         padding: 20px;
         text-align: center;
         display: none;
@@ -206,7 +220,7 @@
     .calc-result-exp {
         font-size: 13px; color: rgba(255,255,255,0.5);
         background: rgba(255,255,255,0.04);
-        padding: 10px 14px; border-radius: 8px;
+        padding: 10px 14px;
         line-height: 1.5;
     }
 
@@ -224,7 +238,7 @@
         padding: 9px 10px;
         background: rgba(255,255,255,0.04);
         border: 1px solid #1a1a1a;
-        border-radius: 8px; color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.5);
         font-size: 11px; font-weight: 600;
         cursor: pointer; text-align: center;
         transition: background 0.15s, border-color 0.15s;
@@ -234,7 +248,7 @@
     /* ── EJEMPLOS ─────────────────────────────────────── */
     .example-item {
         padding: 14px 16px; margin-bottom: 10px;
-        background: #fafafa; border-radius: 10px;
+        background: #fafafa;
         border-left: 3px solid #22c55e;
     }
     .example-item:last-child { margin-bottom: 0; }
@@ -247,7 +261,7 @@
     .widget-cta-dark .widget-header { border-bottom-color: #222; }
     .widget-cta-dark .widget-title  { color: #fff; }
     .cta-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 14px; }
-    .cta-btn  { display: block; text-align: center; padding: 11px; background: var(--fifa-gold, #FFD700); color: #000; font-size: 13px; font-weight: 800; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+    .cta-btn  { display: block; text-align: center; padding: 11px; background: var(--fifa-gold, #FFD700); color: #000; font-size: 13px; font-weight: 800; text-decoration: none; transition: background 0.2s; }
     .cta-btn:hover { background: #e6c200; }
 
     .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
@@ -262,7 +276,7 @@
 
     .nav-link-sis {
         display: flex; align-items: center; gap: 8px;
-        padding: 8px 12px; border-radius: 8px;
+        padding: 8px 12px;
         font-size: 12px; font-weight: 600; color: #555;
         text-decoration: none; transition: background 0.15s;
         margin-bottom: 2px;
@@ -311,8 +325,8 @@
                 <div class="sis-hero-pills">
                     <span class="sis-hero-pill"><span class="pill-pts">+9</span> Exacto</span>
                     <span class="sis-hero-pill"><span class="pill-pts">+7</span> Ganador + marcador</span>
-                    <span class="sis-hero-pill"><span class="pill-pts">+5</span> Ganador</span>
-                    <span class="sis-hero-pill"><span class="pill-pts">+2</span> Marcador</span>
+                    <span class="sis-hero-pill"><span class="pill-pts">+5</span> Ganador o empate</span>
+                    <span class="sis-hero-pill"><span class="pill-pts">+2</span> Solo Marcador</span>
                 </div>
             </div>
             <div class="sis-hero-deco">🧮</div>
@@ -568,19 +582,6 @@
 
     </div>
     </div>
-
-
-    <!-- ═══════════════════════════════
-         PEGA TU FOOTER AQUÍ
-         ═══════════════════════════════ -->
-
-
-    <!-- ═══════════════════════════════
-         PEGA TU NAVBAR MÓVIL AQUÍ
-         ═══════════════════════════════ -->
-
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
     <script>
     function calcularPuntos() {
         const predLocal     = parseInt(document.getElementById('predLocal').value)     || 0;
