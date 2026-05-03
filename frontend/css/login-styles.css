@@ -558,7 +558,6 @@ body {
         background-attachment: scroll;
     }
 
-    /* Logo estático arriba, no absolute */
     .logo-login {
         position: static;
         width: 200px;
@@ -605,6 +604,7 @@ body {
         .hide-mobile {
         display: none;
         }
+
     body {
         overflow: auto;
     }
@@ -651,7 +651,7 @@ body {
     .hero-title {
         font-size: 1.25rem;
         padding-bottom: 0rem;
-        margin-bottom: 0rem;
+        margin-bottom: 0;
     }
 
     .hero-flags {
@@ -680,6 +680,9 @@ body {
 }
 
 @media (max-width: 600px) {
+            .hide-mobile {
+        display: none;
+        }
     .split-left { 
         flex: 0 0 250px;
         min-height: 250px;
@@ -697,7 +700,6 @@ body {
     }
     
     .hero-title {
-        margin: 0;
         font-size: 1.2rem;
         padding-bottom: 0rem;
         margin-bottom: 0rem;           
