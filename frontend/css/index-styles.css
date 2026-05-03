@@ -3468,6 +3468,7 @@
 @media (max-width: 780px) {
   #toast-container {
     top: 70px;
+    width: calc(100% - 24px);
     max-width: 100%;
   }
   .toast-construccion {
