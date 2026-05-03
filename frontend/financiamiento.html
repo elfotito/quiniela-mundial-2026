@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financiamiento - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/index-styles.css">
+
+    <style>
+    /* ── HERO ─────────────────────────────────────────── */
+    .fin-hero {
+        background: #000;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 3px solid var(--fifa-gold, #FFD700);
+    }
+    .fin-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px),
+            repeating-linear-gradient(0deg,  rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px);
+        pointer-events: none;
+    }
+    .fin-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+    }
+    .fin-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .fin-eyebrow-line { width: 32px; height: 2px; background: var(--fifa-gold, #FFD700); }
+    .fin-eyebrow span {
+        font-size: 11px; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--fifa-gold, #FFD700);
+    }
+    .fin-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 900; color: #fff; line-height: 1;
+        letter-spacing: -2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .fin-title em { font-style: normal; color: var(--fifa-gold, #FFD700); }
+    .fin-sub {
+        font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 480px;
+    }
+    .fin-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 24px; padding: 10px 18px;
+        background: rgba(255,215,0,0.08);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 8px;
+        font-size: 12px; font-weight: 700; color: var(--fifa-gold, #FFD700);
+        letter-spacing: 0.5px;
+    }
+    .fin-deco {
+        font-size: 110px; opacity: 0.05; line-height: 1;
+        user-select: none; flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+        .fin-hero-inner { grid-template-columns: 1fr; padding: 32px 16px 28px; }
+        .fin-deco  { display: none; }
+    }
+
+    /* ── GRID ─────────────────────────────────────────── */
+    .fin-grid-bg { background: #f4f4f4; }
+    .fin-grid {
+        max-width: 1280px; margin: 0 auto;
+        padding: 28px 16px 48px;
+        display: grid;
+        grid-template-columns: 220px 1fr 220px;
+        grid-template-areas: "izquierda centro derecha";
+        gap: 24px; align-items: start;
+    }
+    .fin-col-left  { grid-area: izquierda; display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+    .fin-col-main  { grid-area: centro;    display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+    .fin-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+
+    /* ── WIDGET BASE ──────────────────────────────────── */
+    .widget { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .widget-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+    .widget-bar    { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
+    .widget-title  { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
+    .widget-body   { padding: 14px 16px; }
+
+    /* ── SECCIONES ────────────────────────────────────── */
+    .fin-section {
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border: 1px solid #eee;
+    }
+    .fin-section-header {
+        padding: 18px 24px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex; align-items: center; gap: 12px;
+    }
+    .fin-section-icon { font-size: 22px; line-height: 1; }
+    .fin-section-title {
+        font-size: 16px; font-weight: 800; color: #0a0a0a;
+        letter-spacing: -0.3px;
+    }
+    .fin-section-body { padding: 20px 24px 24px; }
+
+    .fin-text {
+        font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px;
+    }
+    .fin-text:last-child { margin-bottom: 0; }
+
+    /* ── GRÁFICO DE BARRAS ────────────────────────────── */
+    .chart-container {
+        background: #fafafa;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 16px 0;
+    }
+    .chart-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    .chart-row:last-child { margin-bottom: 0; }
+    .chart-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #555;
+        min-width: 80px;
+        text-align: right;
+    }
+    .chart-bar-wrapper {
+        flex: 1;
+        background: #e0e0e0;
+        border-radius: 6px;
+        height: 32px;
+        position: relative;
+        overflow: hidden;
+    }
+    .chart-bar {
+        height: 100%;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: #fff;
+        transition: width 0.5s ease;
+    }
+    .chart-bar.income { background: linear-gradient(90deg, #16a34a, #22c55e); }
+    .chart-bar.expense { background: linear-gradient(90deg, #dc2626, #ef4444); }
+    .chart-bar.profit { background: linear-gradient(90deg, #0066CC, #3b82f6); }
+
+    /* ── CALCULADORA EDITABLE ─────────────────────────── */
+    .calc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 16px 0;
+    }
+    .calc-item {
+        background: #fafafa;
+        border-radius: 10px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--fifa-gold, #FFD700);
+    }
+    .calc-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+    }
+    .calc-value {
+        font-size: 20px;
+        font-weight: 900;
+        color: #0a0a0a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .calc-input {
+        font-size: 20px;
+        font-weight: 900;
+        color: #0a0a0a;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 6px 10px;
+        width: 100%;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .calc-input:focus {
+        border-color: var(--fifa-gold, #FFD700);
+    }
+    .calc-edit-btn {
+        display: none;
+        background: var(--fifa-gold, #FFD700);
+        color: #000;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .calc-edit-btn:hover {
+        background: #e6c200;
+    }
+    .calc-edit-btn.active {
+        display: inline-block;
+    }
+
+    /* ── HIGHLIGHT BOX ────────────────────────────────── */
+    .fin-highlight {
+        background: #FAFAF0;
+        border: 1.5px solid var(--fifa-gold, #FFD700);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin: 16px 0;
+        text-align: center;
+    }
+    .fin-highlight-title {
+        font-size: 14px; font-weight: 800; color: #BA7517;
+        margin-bottom: 8px; letter-spacing: 0.3px;
+    }
+    .fin-highlight-text { font-size: 13px; color: #555; line-height: 1.6; }
+
+    /* ── INFO BOX ─────────────────────────────────────── */
+    .fin-info-box {
+        background: #EBF3FF;
+        border-left: 4px solid #0066CC;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 18px;
+        margin: 16px 0;
+    }
+    .fin-info-title {
+        font-size: 13px; font-weight: 800; color: #0C447C;
+        margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .fin-info-content { font-size: 13px; color: #185FA5; line-height: 1.7; }
+
+    /* ── STAT ROWS ────────────────────────────────────── */
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { font-size: 12px; color: #555; }
+    .stat-val   { font-size: 13px; font-weight: 800; color: #0a0a0a; }
+    .stat-val.green { color: #16a34a; }
+    .stat-val.red { color: #dc2626; }
+    .stat-val.gold { color: #BA7517; }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+        .fin-grid {
+            grid-template-columns: 1fr 200px;
+            grid-template-areas: "centro derecha" "izquierda izquierda";
+        }
+        .fin-col-left { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+    @media (max-width: 700px) {
+        .fin-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
+        }
+        .fin-col-left, .fin-col-right { position: static; }
+        .fin-section-body { padding: 16px 16px 20px; }
+        .calc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Índice móvil */
+    .mobile-index-widget {
+        display: none !important;
+        order: -1;
+    }
+    @media(max-width:1024px) {
+        .mobile-index-widget {
+            display: block !important;
+        }
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- PEGA TU HEADER AQUÍ -->
+
+    <!-- ── HERO ──────────────────────────────────────── -->
+    <div class="fin-hero">
+        <div class="fin-hero-inner">
+            <div>
+                <div class="fin-eyebrow">
+                    <div class="fin-eyebrow-line"></div>
+                    <span>Quiniela Mundial 2026 · Droguería Carrisan</span>
+                </div>
+                <h1 class="fin-title">Financia<em>miento</em></h1>
+                <p class="fin-sub">
+                    Transparencia total sobre cómo se financia esta plataforma. Cada Bs. cuenta y aquí te mostramos exactamente a dónde van.
+                </p>
+                <div class="fin-badge">
+                    💰 Actualizado en tiempo real · Sin fines de lucro
+                </div>
+            </div>
+            <div class="fin-deco">💸</div>
+        </div>
+    </div>
+
+    <!-- ── GRID ──────────────────────────────────────── -->
+    <div class="fin-grid-bg">
+    <div class="fin-grid">
+
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="fin-col-left">
+
+            <!-- Resumen rápido -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row">
+                        <span class="stat-label">Usuarios</span>
+                        <span class="stat-val" id="summary-users">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Ingresos</span>
+                        <span class="stat-val green" id="summary-income">Bs. 0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Gastos</span>
+                        <span class="stat-val red" id="summary-expenses">Bs. 0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Balance</span>
+                        <span class="stat-val gold" id="summary-profit">Bs. 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Última actualización -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Estado</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row">
+                        <span class="stat-label">Última actualización</span>
+                        <span class="stat-val" style="font-size:11px;color:#16a34a;" id="last-update">Hoy</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Hosting</span>
+                        <span class="stat-val green">Activo</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Base de datos</span>
+                        <span class="stat-val green">Activo</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="fin-col-main">
+
+            <!-- ÍNDICE MÓVIL -->
+            <div class="widget mobile-index-widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Navegación</span>
+                </div>
+                <div class="widget-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:4px;">
+                    <a href="#calculadora" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;border-radius:6px;transition:background .15s;">📊 Calculadora</a>
+                    <a href="#grafico" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;border-radius:6px;transition:background .15s;">📈 Gráfico</a>
+                    <a href="#desglose" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;border-radius:6px;transition:background .15s;">💵 Desglose</a>
+                </div>
+            </div>
+
+            <!-- Intro -->
+            <div class="fin-section">
+                <div class="fin-section-header">
+                    <span class="fin-section-icon">🤝</span>
+                    <span class="fin-section-title">Compromiso de Transparencia</span>
+                </div>
+                <div class="fin-section-body">
+                    <p class="fin-text">Esta plataforma <strong>NO tiene fines de lucro</strong>. Cada bolívar que ingresa se destina exclusivamente a cubrir los costos operativos: hosting, base de datos y mantenimiento técnico. Cualquier excedente se reinvierte en mejorar la experiencia de todos los participantes.</p>
+                    <div class="fin-highlight">
+                        <div class="fin-highlight-title">💡 Filosofía de la Quiniela</div>
+                        <p class="fin-highlight-text">El objetivo es crear una experiencia divertida, justa y sostenible para disfrutar el Mundial 2026 entre amigos. El dinero recaudado es para mantener viva la plataforma — nada más, nada menos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculadora -->
+            <div class="fin-section" id="calculadora">
+                <div class="fin-section-header">
+                    <span class="fin-section-icon">🧮</span>
+                    <span class="fin-section-title">Calculadora Financiera</span>
+                    <button class="calc-edit-btn" id="btn-edit-mode" style="margin-left:auto;">✏️ Editar</button>
+                    <button class="calc-edit-btn" id="btn-save-mode" style="margin-left:auto;display:none;background:#16a34a;">💾 Guardar</button>
+                </div>
+                <div class="fin-section-body">
+                    <p class="fin-text">Estos son los valores actuales del sistema. <span id="admin-notice" style="display:none;color:#BA7517;font-weight:700;">Como administrador, puedes editarlos.</span></p>
+
+                    <div class="calc-grid">
+                        <!-- Número de usuarios -->
+                        <div class="calc-item">
+                            <div class="calc-label">👥 Usuarios Registrados</div>
+                            <div class="calc-value">
+                                <span id="display-users">50</span>
+                                <input type="number" id="input-users" class="calc-input" value="50" style="display:none;">
+                            </div>
+                        </div>
+
+                        <!-- Precio por usuario -->
+                        <div class="calc-item">
+                            <div class="calc-label">💵 Precio por Usuario</div>
+                            <div class="calc-value">
+                                <span id="display-price">Bs. 10</span>
+                                <input type="number" id="input-price" class="calc-input" value="10" style="display:none;" placeholder="Bs.">
+                            </div>
+                        </div>
+
+                        <!-- Ingresos totales (calculado) -->
+                        <div class="calc-item">
+                            <div class="calc-label">💰 Ingresos Totales</div>
+                            <div class="calc-value">
+                                <span id="display-income" style="color:#16a34a;">Bs. 500</span>
+                            </div>
+                        </div>
+
+                        <!-- Gastos de hosting -->
+                        <div class="calc-item">
+                            <div class="calc-label">🌐 Hosting + DB</div>
+                            <div class="calc-value">
+                                <span id="display-hosting">Bs. 200</span>
+                                <input type="number" id="input-hosting" class="calc-input" value="200" style="display:none;">
+                            </div>
+                        </div>
+
+                        <!-- Gastos adicionales -->
+                        <div class="calc-item">
+                            <div class="calc-label">🛠️ Otros Gastos</div>
+                            <div class="calc-value">
+                                <span id="display-other">Bs. 50</span>
+                                <input type="number" id="input-other" class="calc-input" value="50" style="display:none;">
+                            </div>
+                        </div>
+
+                        <!-- Gastos totales (calculado) -->
+                        <div class="calc-item">
+                            <div class="calc-label">📉 Gastos Totales</div>
+                            <div class="calc-value">
+                                <span id="display-expenses" style="color:#dc2626;">Bs. 250</span>
+                            </div>
+                        </div>
+
+                        <!-- Balance final (calculado) -->
+                        <div class="calc-item" style="grid-column: 1 / -1; border-left-color: #0066CC;">
+                            <div class="calc-label">⚖️ Balance Final</div>
+                            <div class="calc-value">
+                                <span id="display-profit" style="color:#0066CC;font-size:24px;">Bs. 250</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fin-info-box">
+                        <div class="fin-info-title"><span>ℹ️</span> Cálculo automático</div>
+                        <div class="fin-info-content">
+                            <strong>Ingresos:</strong> Usuarios × Precio por usuario<br>
+                            <strong>Gastos:</strong> Hosting + Otros gastos<br>
+                            <strong>Balance:</strong> Ingresos − Gastos
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico -->
+            <div class="fin-section" id="grafico">
+                <div class="fin-section-header">
+                    <span class="fin-section-icon">📊</span>
+                    <span class="fin-section-title">Visualización Gráfica</span>
+                </div>
+                <div class="fin-section-body">
+                    <div class="chart-container">
+                        <div class="chart-row">
+                            <div class="chart-label">Ingresos</div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar income" id="bar-income" style="width: 100%;">
+                                    Bs. 500
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-row">
+                            <div class="chart-label">Gastos</div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar expense" id="bar-expenses" style="width: 50%;">
+                                    Bs. 250
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-row">
+                            <div class="chart-label">Balance</div>
+                            <div class="chart-bar-wrapper">
+                                <div class="chart-bar profit" id="bar-profit" style="width: 50%;">
+                                    Bs. 250
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose de gastos -->
+            <div class="fin-section" id="desglose">
+                <div class="fin-section-header">
+                    <span class="fin-section-icon">📋</span>
+                    <span class="fin-section-title">Desglose de Gastos Mensuales</span>
+                </div>
+                <div class="fin-section-body">
+                    <p class="fin-text">Estos son los gastos operativos estimados para mantener la plataforma activa durante todo el Mundial 2026:</p>
+
+                    <div class="stat-row" style="padding:10px 0;">
+                        <span class="stat-label">🌐 Hosting Web (Vercel/Render)</span>
+                        <span class="stat-val">Bs. 120/mes</span>
+                    </div>
+                    <div class="stat-row" style="padding:10px 0;">
+                        <span class="stat-label">💾 Base de Datos (Supabase)</span>
+                        <span class="stat-val">Bs. 80/mes</span>
+                    </div>
+                    <div class="stat-row" style="padding:10px 0;">
+                        <span class="stat-label">🔧 Mantenimiento Técnico</span>
+                        <span class="stat-val">Bs. 50/mes</span>
+                    </div>
+                    <div class="stat-row" style="padding:10px 0;border-top:2px solid #f0f0f0;">
+                        <span class="stat-label" style="font-weight:800;">Total Mensual</span>
+                        <span class="stat-val gold" style="font-size:15px;">Bs. 250/mes</span>
+                    </div>
+
+                    <div class="fin-info-box" style="margin-top:16px;">
+                        <div class="fin-info-title"><span>📅</span> Duración del Mundial</div>
+                        <div class="fin-info-content">El Mundial 2026 dura aproximadamente <strong>1 mes</strong> (junio-julio). Los costos se calculan para cubrir ese período más un mes adicional de margen para imprevistos.</div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="fin-col-right">
+
+            <!-- Widget publicidad aleatoria -->
+            <div class="widget-ad-random">
+                <img id="ad-image" src="" alt="Publicidad" style="width:100%;height:auto;border-radius:12px;display:block;">
+            </div>
+
+            <!-- CTA Admin -->
+            <div class="widget" id="admin-widget" style="display:none;">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Panel Admin</span>
+                </div>
+                <div class="widget-body">
+                    <p style="font-size:12px;color:#555;line-height:1.5;margin-bottom:10px;">Tienes permisos de administrador. Puedes editar los valores de la calculadora.</p>
+                    <button onclick="toggleEditMode()" style="width:100%;padding:9px;background:#BA7517;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:800;cursor:pointer;">✏️ Activar Edición</button>
+                </div>
+            </div>
+
+            <!-- Info pública -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Compromiso</span>
+                </div>
+                <div class="widget-body">
+                    <p style="font-size:12px;color:#555;line-height:1.6;">Esta página se actualiza manualmente por el administrador. Cualquier cambio en costos o ingresos se reflejará aquí con total transparencia.</p>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+    </div>
+
+    <!-- PEGA TU FOOTER AQUÍ -->
+    <!-- PEGA TU NAVBAR MÓVIL AQUÍ -->
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+    // ═══════════════════════════════════════════════════════
+    // FINANCIAMIENTO - CALCULADORA CON EDICIÓN ADMIN
+    // ═══════════════════════════════════════════════════════
+
+    // Variables globales
+    let editMode = false;
+    let isAdmin = false;
+
+    // Valores por defecto (se pueden cargar desde localStorage o API)
+    let data = {
+        users: 50,
+        price: 10,
+        hosting: 200,
+        other: 50
+    };
+
+    // ─── INICIALIZACIÓN ────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verificar si el usuario es admin (usando auth.js)
+        checkAdminStatus();
+        
+        // Cargar datos guardados
+        loadData();
+        
+        // Calcular y renderizar
+        calculate();
+        
+        // Setup publicidad aleatoria
+        setupRandomAd();
+        
+        // Setup botones de edición
+        setupEditButtons();
+    });
+
+    // ─── VERIFICAR SI ES ADMIN ─────────────────────────────
+    function checkAdminStatus() {
+        // Verificar localStorage (ajusta según tu auth.js)
+        const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+        isAdmin = usuario.rol === 'admin' || usuario.es_admin === true;
+        
+        if (isAdmin) {
+            document.getElementById('admin-widget').style.display = 'block';
+            document.getElementById('admin-notice').style.display = 'inline';
+            document.getElementById('btn-edit-mode').classList.add('active');
+        }
+    }
+
+    // ─── CARGAR DATOS ──────────────────────────────────────
+    function loadData() {
+        const saved = localStorage.getItem('financiamiento_data');
+        if (saved) {
+            data = JSON.parse(saved);
+        }
+        
+        // Actualizar inputs y displays
+        document.getElementById('input-users').value = data.users;
+        document.getElementById('input-price').value = data.price;
+        document.getElementById('input-hosting').value = data.hosting;
+        document.getElementById('input-other').value = data.other;
+    }
+
+    // ─── GUARDAR DATOS ─────────────────────────────────────
+    function saveData() {
+        localStorage.setItem('financiamiento_data', JSON.stringify(data));
+        
+        // Actualizar timestamp
+        const now = new Date().toLocaleDateString('es-VE', { 
+            day: 'numeric', 
+            month: 'short', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+        document.getElementById('last-update').textContent = now;
+    }
+
+    // ─── CALCULAR VALORES ──────────────────────────────────
+    function calculate() {
+        const income = data.users * data.price;
+        const expenses = data.hosting + data.other;
+        const profit = income - expenses;
+
+        // Actualizar displays
+        document.getElementById('display-users').textContent = data.users;
+        document.getElementById('display-price').textContent = `Bs. ${data.price}`;
+        document.getElementById('display-income').textContent = `Bs. ${income}`;
+        document.getElementById('display-hosting').textContent = `Bs. ${data.hosting}`;
+        document.getElementById('display-other').textContent = `Bs. ${data.other}`;
+        document.getElementById('display-expenses').textContent = `Bs. ${expenses}`;
+        document.getElementById('display-profit').textContent = `Bs. ${profit}`;
+
+        // Actualizar resumen sidebar
+        document.getElementById('summary-users').textContent = data.users;
+        document.getElementById('summary-income').textContent = `Bs. ${income}`;
+        document.getElementById('summary-expenses').textContent = `Bs. ${expenses}`;
+        document.getElementById('summary-profit').textContent = `Bs. ${profit}`;
+
+        // Actualizar gráfico
+        updateChart(income, expenses, profit);
+    }
+
+    // ─── ACTUALIZAR GRÁFICO ────────────────────────────────
+    function updateChart(income, expenses, profit) {
+        const maxValue = Math.max(income, expenses, Math.abs(profit));
+        
+        const barIncome = document.getElementById('bar-income');
+        const barExpenses = document.getElementById('bar-expenses');
+        const barProfit = document.getElementById('bar-profit');
+
+        barIncome.style.width = '100%';
+        barIncome.textContent = `Bs. ${income}`;
+
+        barExpenses.style.width = `${(expenses / maxValue) * 100}%`;
+        barExpenses.textContent = `Bs. ${expenses}`;
+
+        const profitPercent = profit > 0 ? (profit / maxValue) * 100 : 0;
+        barProfit.style.width = `${profitPercent}%`;
+        barProfit.textContent = `Bs. ${profit}`;
+        
+        // Cambiar color si es negativo
+        if (profit < 0) {
+            barProfit.classList.remove('profit');
+            barProfit.classList.add('expense');
+        } else {
+            barProfit.classList.remove('expense');
+            barProfit.classList.add('profit');
+        }
+    }
+
+    // ─── SETUP BOTONES DE EDICIÓN ──────────────────────────
+    function setupEditButtons() {
+        document.getElementById('btn-edit-mode').addEventListener('click', function() {
+            if (!isAdmin) return;
+            toggleEditMode();
+        });
+
+        document.getElementById('btn-save-mode').addEventListener('click', function() {
+            if (!isAdmin) return;
+            saveChanges();
+        });
+    }
+
+    // ─── TOGGLE MODO EDICIÓN ───────────────────────────────
+    function toggleEditMode() {
+        if (!isAdmin) {
+            alert('No tienes permisos de administrador.');
+            return;
+        }
+
+        editMode = !editMode;
+
+        // Mostrar/ocultar inputs
+        const fields = ['users', 'price', 'hosting', 'other'];
+        fields.forEach(field => {
+            const display = document.getElementById(`display-${field}`);
+            const input = document.getElementById(`input-${field}`);
+            
+            if (editMode) {
+                display.style.display = 'none';
+                input.style.display = 'block';
+            } else {
+                display.style.display = 'block';
+                input.style.display = 'none';
+            }
+        });
+
+        // Toggle botones
+        document.getElementById('btn-edit-mode').style.display = editMode ? 'none' : 'inline-block';
+        document.getElementById('btn-save-mode').style.display = editMode ? 'inline-block' : 'none';
+    }
+
+    // ─── GUARDAR CAMBIOS ───────────────────────────────────
+    function saveChanges() {
+        // Leer valores de los inputs
+        data.users = parseInt(document.getElementById('input-users').value) || 0;
+        data.price = parseFloat(document.getElementById('input-price').value) || 0;
+        data.hosting = parseFloat(document.getElementById('input-hosting').value) || 0;
+        data.other = parseFloat(document.getElementById('input-other').value) || 0;
+
+        // Guardar en localStorage
+        saveData();
+
+        // Recalcular
+        calculate();
+
+        // Salir del modo edición
+        toggleEditMode();
+
+        // Feedback visual
+        alert('✅ Cambios guardados correctamente');
+    }
+
+    // ─── PUBLICIDAD ALEATORIA ──────────────────────────────
+    function setupRandomAd() {
+        const ads = [
+            'https://i.ibb.co/ejemplo1/imagen1.jpg',
+            'https://i.ibb.co/ejemplo2/imagen2.png',
+            'https://i.ibb.co/ejemplo3/imagen3.jpg',
+            // Agrega tus URLs de imgbb aquí
+        ];
+        
+        if (ads.length > 0 && ads[0] !== 'https://i.ibb.co/ejemplo1/imagen1.jpg') {
+            const randomAd = ads[Math.floor(Math.random() * ads.length)];
+            const adImage = document.getElementById('ad-image');
+            if (adImage) {
+                adImage.src = randomAd;
+            }
+        } else {
+            // Si no hay ads configuradas, ocultar el widget
+            const adWidget = document.querySelector('.widget-ad-random');
+            if (adWidget) adWidget.style.display = 'none';
+        }
+    }
+
+    </script>
+
+    <style>
+    /* Widget publicidad sin bordes */
+    .widget-ad-random {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 14px;
+        max-width: 220px;
+    }
+    .widget-ad-random img {
+        cursor: pointer;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+    .widget-ad-random img:hover {
+        transform: scale(1.02);
+        opacity: 0.95;
+    }
+    </style>
+
+</body>
+</html>

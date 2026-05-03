@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia - Quiniela Mundial 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/index-styles.css">
+
+    <style>
+    /* ── HERO ─────────────────────────────────────────── */
+    .hist-hero {
+        background: #000;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 3px solid var(--fifa-gold, #FFD700);
+    }
+    .hist-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px),
+            repeating-linear-gradient(0deg,  rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px);
+        pointer-events: none;
+    }
+    .hist-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+    }
+    .hist-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .hist-eyebrow-line { width: 32px; height: 2px; background: var(--fifa-gold, #FFD700); }
+    .hist-eyebrow span {
+        font-size: 11px; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--fifa-gold, #FFD700);
+    }
+    .hist-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 900; color: #fff; line-height: 1;
+        letter-spacing: -2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hist-title em { font-style: normal; color: var(--fifa-gold, #FFD700); }
+    .hist-sub {
+        font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 520px;
+    }
+    .hist-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 24px; padding: 10px 18px;
+        background: rgba(255,215,0,0.08);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 8px;
+        font-size: 12px; font-weight: 700; color: var(--fifa-gold, #FFD700);
+        letter-spacing: 0.5px;
+    }
+    .hist-deco {
+        font-size: 110px; opacity: 0.05; line-height: 1;
+        user-select: none; flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+        .hist-hero-inner { grid-template-columns: 1fr; padding: 32px 16px 28px; }
+        .hist-deco  { display: none; }
+    }
+
+    /* ── GRID ─────────────────────────────────────────── */
+    .hist-grid-bg { background: #f4f4f4; }
+    .hist-grid {
+        max-width: 1280px; margin: 0 auto;
+        padding: 28px 16px 48px;
+        display: grid;
+        grid-template-columns: 220px 1fr 220px;
+        grid-template-areas: "izquierda centro derecha";
+        gap: 24px; align-items: start;
+    }
+    .hist-col-left  { grid-area: izquierda; display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+    .hist-col-main  { grid-area: centro;    display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+    .hist-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
+
+    /* ── WIDGET BASE ──────────────────────────────────── */
+    .widget { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .widget-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+    .widget-bar    { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
+    .widget-title  { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
+    .widget-body   { padding: 14px 16px; }
+
+    /* ── SECCIONES ────────────────────────────────────── */
+    .hist-section {
+        background: #fff;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border: 1px solid #eee;
+    }
+    .hist-section-header {
+        padding: 18px 24px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex; align-items: center; gap: 12px;
+    }
+    .hist-section-icon { font-size: 22px; line-height: 1; }
+    .hist-section-title {
+        font-size: 16px; font-weight: 800; color: #0a0a0a;
+        letter-spacing: -0.3px;
+    }
+    .hist-section-body { padding: 20px 24px 24px; }
+
+    .hist-text {
+        font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px;
+    }
+    .hist-text:last-child { margin-bottom: 0; }
+
+    /* ── TIMELINE ─────────────────────────────────────── */
+    .timeline {
+        position: relative;
+        padding-left: 40px;
+        margin: 24px 0;
+    }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 14px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, var(--fifa-gold, #FFD700) 0%, #e0e0e0 100%);
+        border-radius: 2px;
+    }
+    .timeline-item {
+        position: relative;
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .timeline-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    .timeline-dot {
+        position: absolute;
+        left: -33px;
+        top: 6px;
+        width: 18px;
+        height: 18px;
+        background: var(--fifa-gold, #FFD700);
+        border: 3px solid #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px #f4f4f4;
+        z-index: 2;
+    }
+    .timeline-year {
+        font-size: 24px;
+        font-weight: 900;
+        color: var(--fifa-gold, #FFD700);
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .timeline-badge {
+        font-size: 10px;
+        font-weight: 800;
+        padding: 3px 8px;
+        background: rgba(186, 117, 23, 0.1);
+        color: #BA7517;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .timeline-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #0a0a0a;
+        margin-bottom: 10px;
+        line-height: 1.3;
+    }
+    .timeline-desc {
+        font-size: 13px;
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 14px;
+    }
+    .timeline-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-top: 12px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .timeline-image:hover {
+        transform: scale(1.02);
+    }
+    .timeline-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid #f0f0f0;
+    }
+    .timeline-stat {
+        background: #fafafa;
+        padding: 10px 12px;
+        border-radius: 8px;
+        text-align: center;
+    }
+    .timeline-stat-value {
+        font-size: 18px;
+        font-weight: 900;
+        color: var(--fifa-gold, #BA7517);
+        display: block;
+        margin-bottom: 4px;
+    }
+    .timeline-stat-label {
+        font-size: 10px;
+        color: #888;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    /* ── HIGHLIGHT BOX ────────────────────────────────── */
+    .hist-highlight {
+        background: #FAFAF0;
+        border: 1.5px solid var(--fifa-gold, #FFD700);
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    .hist-highlight-title {
+        font-size: 16px; font-weight: 800; color: #BA7517;
+        margin-bottom: 10px; letter-spacing: 0.3px;
+    }
+    .hist-highlight-text { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 16px; }
+    .hist-highlight-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: var(--fifa-gold, #FFD700);
+        color: #000;
+        font-size: 13px;
+        font-weight: 800;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.2s;
+    }
+    .hist-highlight-btn:hover {
+        background: #e6c200;
+    }
+
+    /* ── STAT ROWS ────────────────────────────────────── */
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f5f5f5; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { font-size: 12px; color: #555; }
+    .stat-val   { font-size: 13px; font-weight: 800; color: #0a0a0a; }
+    .stat-val.gold { color: #BA7517; }
+
+    /* ── HALL OF FAME ─────────────────────────────────── */
+    .hall-of-fame {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 14px;
+        margin: 16px 0;
+    }
+    .hall-card {
+        background: linear-gradient(135deg, #fafafa 0%, #fff 100%);
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 16px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hall-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .hall-trophy {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+    .hall-year {
+        font-size: 12px;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+    }
+    .hall-winner {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0a0a0a;
+        margin-bottom: 4px;
+    }
+    .hall-points {
+        font-size: 11px;
+        color: #BA7517;
+        font-weight: 700;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+        .hist-grid {
+            grid-template-columns: 1fr 200px;
+            grid-template-areas: "centro derecha" "izquierda izquierda";
+        }
+        .hist-col-left { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    }
+    @media (max-width: 700px) {
+        .hist-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
+        }
+        .hist-col-left, .hist-col-right { position: static; }
+        .hist-section-body { padding: 16px 16px 20px; }
+        .timeline { padding-left: 30px; }
+        .timeline::before { left: 10px; }
+        .timeline-dot { left: -26px; }
+    }
+
+    /* Índice móvil */
+    .mobile-index-widget {
+        display: none !important;
+        order: -1;
+    }
+    @media(max-width:1024px) {
+        .mobile-index-widget {
+            display: block !important;
+        }
+    }
+
+    /* Widget publicidad */
+    .widget-ad-random {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: 14px;
+        max-width: 220px;
+    }
+    .widget-ad-random img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        display: block;
+        cursor: pointer;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+    .widget-ad-random img:hover {
+        transform: scale(1.02);
+        opacity: 0.95;
+    }
+    </style>
+</head>
+
+<body>
+
+    <!-- PEGA TU HEADER AQUÍ -->
+
+    <!-- ── HERO ──────────────────────────────────────── -->
+    <div class="hist-hero">
+        <div class="hist-hero-inner">
+            <div>
+                <div class="hist-eyebrow">
+                    <div class="hist-eyebrow-line"></div>
+                    <span>Quiniela Mundial 2026 · Droguería Carrisan</span>
+                </div>
+                <h1 class="hist-title">Nues<em>tra</em> Historia</h1>
+                <p class="hist-sub">
+                    Desde 2010, cada cuatro años escribimos una nueva página de esta tradición.
+                    Predicciones épicas, desaciertos legendarios y campeones inolvidables.
+                    Esta es la historia de nuestra quiniela.
+                </p>
+                <div class="hist-badge">
+                    🏆 16 años de tradición · 5 torneos · Infinitas anécdotas
+                </div>
+            </div>
+            <div class="hist-deco">📜</div>
+        </div>
+    </div>
+
+    <!-- ── GRID ──────────────────────────────────────── -->
+    <div class="hist-grid-bg">
+    <div class="hist-grid">
+
+        <!-- ══ COLUMNA IZQUIERDA ══ -->
+        <aside class="hist-col-left">
+
+            <!-- Índice rápido -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Torneos</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row">
+                        <span class="stat-label">🇿🇦 Sudáfrica 2010</span>
+                        <span class="stat-val gold">✓</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🇧🇷 Brasil 2014</span>
+                        <span class="stat-val gold">✓</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🇷🇺 Rusia 2018</span>
+                        <span class="stat-val gold">✓</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">🇶🇦 Qatar 2022</span>
+                        <span class="stat-val gold">✓</span>
+                    </div>
+                    <div class="stat-row" style="border-top:2px solid #f0f0f0;padding-top:10px;margin-top:6px;">
+                        <span class="stat-label">🇺🇸🇨🇦🇲🇽 Mundial 2026</span>
+                        <span class="stat-val" style="color:#0066CC;">En curso</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas generales -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Todo el tiempo</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row">
+                        <span class="stat-label">Participantes totales</span>
+                        <span class="stat-val gold">~200</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Partidos predichos</span>
+                        <span class="stat-val gold">+1500</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Años activa</span>
+                        <span class="stat-val gold">16</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Campeones</span>
+                        <span class="stat-val gold">4</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- ══ COLUMNA PRINCIPAL ══ -->
+        <main class="hist-col-main">
+
+            <!-- ÍNDICE MÓVIL -->
+            <div class="widget mobile-index-widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Navegación</span>
+                </div>
+                <div class="widget-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:4px;">
+                    <a href="#origen" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;">🌟 El Origen</a>
+                    <a href="#timeline" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;">⏳ Cronología</a>
+                    <a href="#hall" style="font-size:12px;font-weight:600;color:#555;text-decoration:none;padding:6px 8px;">🏆 Salón de la Fama</a>
+                </div>
+            </div>
+
+            <!-- El Origen -->
+            <div class="hist-section" id="origen">
+                <div class="hist-section-header">
+                    <span class="hist-section-icon">🌟</span>
+                    <span class="hist-section-title">El Origen de Todo</span>
+                </div>
+                <div class="hist-section-body">
+                    <p class="hist-text">Corría el año <strong>2010</strong> cuando un grupo de amigos, empleados y clientes de <strong>Droguería Carrisan</strong> decidió que ver el Mundial no era suficiente — había que <em>jugársela</em>. Sin apps, sin plataformas digitales, solo papel, lápiz y una fe ciega en que España iba a ganar.</p>
+                    
+                    <p class="hist-text">Lo que comenzó como una apuesta informal entre conocidos se transformó en una tradición que ha sobrevivido cuatro mundiales, decenas de participantes, mil desaciertos y algunos resultados exactos que todavía se discuten en las reuniones familiares.</p>
+
+                    <p class="hist-text">Desde entonces, cada cuatro años la quiniela regresa. Con más participantes, más tecnología y la misma pasión de siempre. Esta página existe para que recordemos de dónde venimos — y para que los nuevos sepan en qué se están metiendo.</p>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="hist-section" id="timeline">
+                <div class="hist-section-header">
+                    <span class="hist-section-icon">⏳</span>
+                    <span class="hist-section-title">Cronología de Torneos</span>
+                </div>
+                <div class="hist-section-body">
+
+                    <div class="timeline">
+
+                        <!-- 2010 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">
+                                2010
+                                <span class="timeline-badge">Sudáfrica</span>
+                            </div>
+                            <h3 class="timeline-title">🇿🇦 El Comienzo de una Tradición</h3>
+                            <p class="timeline-desc">
+                                Todo empezó aquí. <strong>España</strong> ganó su primer Mundial con gol de Iniesta en el minuto 116, y nuestra quiniela dio sus primeros pasos. Participaron apenas 15 personas, las predicciones se hacían en papel y los resultados se anunciaban por llamadas telefónicas. Un caos hermoso que sentó las bases de lo que vendría después.
+                            </p>
+                            <img class="timeline-image" src="https://via.placeholder.com/600x300/FFD700/000000?text=Sudáfrica+2010" alt="Mundial 2010">
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">15</span>
+                                    <span class="timeline-stat-label">Participantes</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">España 🇪🇸</span>
+                                    <span class="timeline-stat-label">Campeón FIFA</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Carlos M.</span>
+                                    <span class="timeline-stat-label">Ganador</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2014 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">
+                                2014
+                                <span class="timeline-badge">Brasil</span>
+                            </div>
+                            <h3 class="timeline-title">🇧🇷 La Expansión Digital</h3>
+                            <p class="timeline-desc">
+                                El Mundial en Brasil trajo consigo la primera versión digital de la quiniela — una hoja de Excel compartida por email que todos odiábamos pero que nadie sabía reemplazar. <strong>Alemania</strong> destrozó a Brasil 7-1 en semifinales, y la mitad de los participantes perdió todas sus predicciones de fase final. La quiniela creció a 28 participantes.
+                            </p>
+                            <img class="timeline-image" src="https://via.placeholder.com/600x300/009739/FFFFFF?text=Brasil+2014" alt="Mundial 2014">
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">28</span>
+                                    <span class="timeline-stat-label">Participantes</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Alemania 🇩🇪</span>
+                                    <span class="timeline-stat-label">Campeón FIFA</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Ana R.</span>
+                                    <span class="timeline-stat-label">Ganadora</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2018 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">
+                                2018
+                                <span class="timeline-badge">Rusia</span>
+                            </div>
+                            <h3 class="timeline-title">🇷🇺 La Era WhatsApp</h3>
+                            <p class="timeline-desc">
+                                Rusia 2018 marcó el salto definitivo: grupos de WhatsApp, memes en tiempo real y predicciones que se compartían en stories de Instagram. <strong>Francia</strong> se coronó campeón con Mbappé como figura emergente. La quiniela alcanzó 42 participantes — el doble que cuatro años antes. Se empezó a hablar en serio de "hacer una app de verdad".
+                            </p>
+                            <img class="timeline-image" src="https://via.placeholder.com/600x300/0055A4/FFFFFF?text=Rusia+2018" alt="Mundial 2018">
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">42</span>
+                                    <span class="timeline-stat-label">Participantes</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Francia 🇫🇷</span>
+                                    <span class="timeline-stat-label">Campeón FIFA</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Luis G.</span>
+                                    <span class="timeline-stat-label">Ganador</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2022 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">
+                                2022
+                                <span class="timeline-badge">Qatar</span>
+                            </div>
+                            <h3 class="timeline-title">🇶🇦 El Mundial del Desierto</h3>
+                            <p class="timeline-desc">
+                                El primer Mundial en noviembre-diciembre. <strong>Argentina</strong> finalmente le dio a Messi la Copa del Mundo que tanto esperaba, en una final épica contra Francia que terminó en penales. La quiniela rompió récord con 55 participantes y se implementó por primera vez un sistema de puntos digital (todavía en Excel, pero más bonito). Se plantó la semilla para lo que vendría en 2026.
+                            </p>
+                            <img class="timeline-image" src="https://via.placeholder.com/600x300/800020/FFFFFF?text=Qatar+2022" alt="Mundial 2022">
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">55</span>
+                                    <span class="timeline-stat-label">Participantes</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">Argentina 🇦🇷</span>
+                                    <span class="timeline-stat-label">Campeón FIFA</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">María V.</span>
+                                    <span class="timeline-stat-label">Ganadora</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2026 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot" style="background:#0066CC;"></div>
+                            <div class="timeline-year" style="color:#0066CC;">
+                                2026
+                                <span class="timeline-badge" style="background:rgba(0,102,204,0.1);color:#0066CC;">En curso</span>
+                            </div>
+                            <h3 class="timeline-title">🇺🇸🇨🇦🇲🇽 La Plataforma Definitiva</h3>
+                            <p class="timeline-desc">
+                                El Mundial se expande a <strong>48 selecciones</strong> y tres países anfitriones. Nosotros también nos expandimos: esta vez con una <strong>plataforma web completa</strong>, sistema de puntos automático, ranking en vivo, ligas privadas y todo lo que soñamos en 2018. El primer Mundial donde puedes predecir desde tu celular sin mandar capturas por WhatsApp. Bienvenido al futuro de nuestra tradición.
+                            </p>
+                            <img class="timeline-image" src="https://via.placeholder.com/600x300/0066CC/FFFFFF?text=Mundial+2026+-+TU+HISTORIA" alt="Mundial 2026">
+                            <div class="timeline-stats">
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">50+</span>
+                                    <span class="timeline-stat-label">Participantes</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">???</span>
+                                    <span class="timeline-stat-label">Campeón FIFA</span>
+                                </div>
+                                <div class="timeline-stat">
+                                    <span class="timeline-stat-value">¿Tú?</span>
+                                    <span class="timeline-stat-label">Ganador</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Hall of Fame -->
+            <div class="hist-section" id="hall">
+                <div class="hist-section-header">
+                    <span class="hist-section-icon">🏆</span>
+                    <span class="hist-section-title">Salón de la Fama</span>
+                </div>
+                <div class="hist-section-body">
+                    <p class="hist-text">Los campeones que escribieron su nombre en la historia de la quiniela. Cuatro torneos, cuatro leyendas.</p>
+                    
+                    <div class="hall-of-fame">
+                        <div class="hall-card">
+                            <div class="hall-trophy">🥇</div>
+                            <div class="hall-year">Sudáfrica 2010</div>
+                            <div class="hall-winner">Carlos M.</div>
+                            <div class="hall-points">127 puntos</div>
+                        </div>
+                        <div class="hall-card">
+                            <div class="hall-trophy">🥇</div>
+                            <div class="hall-year">Brasil 2014</div>
+                            <div class="hall-winner">Ana R.</div>
+                            <div class="hall-points">142 puntos</div>
+                        </div>
+                        <div class="hall-card">
+                            <div class="hall-trophy">🥇</div>
+                            <div class="hall-year">Rusia 2018</div>
+                            <div class="hall-winner">Luis G.</div>
+                            <div class="hall-points">156 puntos</div>
+                        </div>
+                        <div class="hall-card">
+                            <div class="hall-trophy">🥇</div>
+                            <div class="hall-year">Qatar 2022</div>
+                            <div class="hall-winner">María V.</div>
+                            <div class="hall-points">168 puntos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Final -->
+            <div class="hist-highlight">
+                <div class="hist-highlight-title">⚡ ¿Serás el próximo en hacer historia?</div>
+                <p class="hist-highlight-text">
+                    Llevamos 16 años escribiendo esta historia juntos. Cuatro mundiales, cuatro campeones, cientos de participantes y miles de predicciones. Ahora es tu turno de dejar tu marca en la quinta edición de esta tradición.
+                </p>
+                <a href="registro.html" class="hist-highlight-btn">📝 Registrarme Ahora →</a>
+            </div>
+
+        </main>
+
+        <!-- ══ COLUMNA DERECHA ══ -->
+        <aside class="hist-col-right">
+
+            <!-- Widget publicidad aleatoria -->
+            <div class="widget-ad-random">
+                <img id="ad-image" src="" alt="Publicidad" style="width:100%;height:auto;border-radius:12px;display:block;">
+            </div>
+
+            <!-- Curiosidades -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Sabías que...</span>
+                </div>
+                <div class="widget-body" style="font-size:12px;color:#555;line-height:1.6;">
+                    <p style="margin:0 0 10px;">📊 En 2014, solo el 8% de los participantes acertó el resultado de la final.</p>
+                    <p style="margin:0 0 10px;">🎯 El marcador más predicho históricamente es el 2-1.</p>
+                    <p style="margin:0 0 10px;">🏆 Nadie ha ganado dos veces... todavía.</p>
+                    <p style="margin:0;">⚽ Se han predicho más de 1500 partidos en total.</p>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="widget" style="background:#0a0a0a;border-color:#222;">
+                <div class="widget-header" style="border-bottom-color:#222;">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title" style="color:#fff;">Únete a la historia</span>
+                </div>
+                <div class="widget-body">
+                    <p style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:12px;">El Mundial 2026 será el más grande de todos. No te quedes fuera.</p>
+                    <a href="registro.html" style="display:block;text-align:center;padding:10px;background:var(--fifa-gold,#FFD700);color:#000;font-size:12px;font-weight:800;border-radius:6px;text-decoration:none;">Registrarme →</a>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+    </div>
+
+    <!-- PEGA TU FOOTER AQUÍ -->
+    <!-- PEGA TU NAVBAR MÓVIL AQUÍ -->
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+    // Publicidad aleatoria
+    (function(){
+        const ads = [
+            'https://i.ibb.co/ejemplo1/imagen1.jpg',
+            'https://i.ibb.co/ejemplo2/imagen2.png',
+            'https://i.ibb.co/ejemplo3/imagen3.jpg',
+            // Agrega tus URLs de imgbb aquí
+        ];
+        
+        if (ads.length > 0 && ads[0] !== 'https://i.ibb.co/ejemplo1/imagen1.jpg') {
+            const randomAd = ads[Math.floor(Math.random() * ads.length)];
+            const adImage = document.getElementById('ad-image');
+            if (adImage) {
+                adImage.src = randomAd;
+            }
+        } else {
+            const adWidget = document.querySelector('.widget-ad-random');
+            if (adWidget) adWidget.style.display = 'none';
+        }
+    })();
+    </script>
+
+</body>
+</html>
