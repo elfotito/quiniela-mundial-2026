@@ -1279,15 +1279,17 @@ function obtenerCampeon(codigo) {
 // ===============================================
 // TOASTTTT
 // ===============================================
-document.addEventListener('click', (e) => {
-  const enlace = e.target.closest('a[data-construccion]');
-  if (enlace) {
-    e.preventDefault();
-    mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
-      icon: '🏗️',
-      duracion: 4000
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[data-construccion]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+        icon: '🏗️',
+        duracion: 4000
+      });
     });
-  }
+  });
 });
 
 function mostrarToast(mensaje, opciones = {}) {
@@ -1298,6 +1300,10 @@ function mostrarToast(mensaje, opciones = {}) {
   } = opciones;
  
   const container = document.getElementById('toast-container');
+  if (!container) {
+    console.error('Toast container no encontrado');
+    return;
+  }
  
   const toast = document.createElement('div');
   toast.className = 'toast';
@@ -1314,15 +1320,15 @@ function mostrarToast(mensaje, opciones = {}) {
     setTimeout(() => toast.remove(), 400);
   };
  
-  // Click en la X
-  toast.querySelector('.toast-close').addEventListener('click', cerrar);
+  toast.querySelector('.toast-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    cerrar();
+  });
  
-  // Click en el toast también lo cierra
   toast.addEventListener('click', (e) => {
     if (e.target.className !== 'toast-close') cerrar();
   });
  
-  // Auto-cierre
   setTimeout(cerrar, duracion);
 }
 
