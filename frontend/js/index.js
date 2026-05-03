@@ -1279,6 +1279,10 @@ function obtenerCampeon(codigo) {
 // ===============================================
 // TOASTTTT
 // ===============================================
+// ===============================================
+// TOAST — Manejador de notificaciones
+// ===============================================
+
 function mostrarToast(mensaje, opciones = {}) {
   const {
     icon = '🔧',
@@ -1292,7 +1296,7 @@ function mostrarToast(mensaje, opciones = {}) {
   }
  
   const toast = document.createElement('div');
-  toast.className = 'toast-construccion';
+  toast.className = 'toast';
   toast.innerHTML = `
     <span class="toast-icon">${icon}</span>
     <div class="toast-text">${mensaje}</div>
@@ -1316,19 +1320,68 @@ function mostrarToast(mensaje, opciones = {}) {
   setTimeout(cerrar, duracion);
 }
 
-// ── Attach listeners cuando el DOM está listo ──
+// ── Listeners para diferentes tipos de notificaciones ──
 setTimeout(() => {
+  // Construcción
   document.querySelectorAll('a[data-construccion]').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log('Toast disparado desde:', enlace.textContent);
       mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
         icon: '🏗️',
         duracion: 4000
       });
     });
   });
+
+  // Proximamente
+  document.querySelectorAll('a[data-proximamente], button[data-proximamente]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función llegará muy pronto 🚀', {
+        icon: '⏳',
+        duracion: 4000
+      });
+    });
+  });
+
+  // En mantenimiento
+  document.querySelectorAll('a[data-mantenimiento]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos en mantenimiento, intenta más tarde ⚙️', {
+        icon: '🔧',
+        duracion: 4000
+      });
+    });
+  });
+
+  // Premium (acceso restringido)
+  document.querySelectorAll('a[data-premium]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función es solo para miembros premium 👑', {
+        icon: '💎',
+        duracion: 4000
+      });
+    });
+  });
+
+  // No disponible en móvil
+  document.querySelectorAll('a[data-desktop-only]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función solo está disponible en desktop 💻', {
+        icon: '📱',
+        duracion: 4000
+      });
+    });
+  });
+
 }, 500);
 
 // ===============================================
