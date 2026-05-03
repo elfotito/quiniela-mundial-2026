@@ -326,12 +326,6 @@
         .reg-col-left, .reg-col-right { position: static; }
         .reg-section-body { padding: 16px 16px 20px; }
     }
-    @media (max-width: 768px) {
-        .mobile-index-widget {
-    display: none;
-    order: -1;
-    }
-    }
     @media(max-width:700px) {
     .mobile-index-widget {
         display: block;
@@ -340,6 +334,10 @@
     display: none;
     }
 }
+        .mobile-index-widget {
+    display: none;
+    order: -1;
+    }
     </style>
 </head>
 
@@ -814,13 +812,6 @@
                 behavior: 'smooth'
             });
         });
-        (function(){
-            var el = document.querySelector('.mobile-index-widget');
-            if(!el) return;
-            function check(){ el.style.display = window.innerWidth <= 1024 ? 'block' : 'none'; }
-            check();
-            window.addEventListener('resize', check);
-        })();
     </script>
 
     <script src="js/config.js"></script>
