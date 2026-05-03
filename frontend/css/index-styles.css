@@ -3394,10 +3394,9 @@
 }
  
 .toast-construccion {
-  background: linear-gradient(135deg, #1a1a1a 0%, #222222 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
   border: 1px solid rgba(245,197,24,0.15);
   border-left: 3px solid #f5c518;
-  border-radius: 10px;
   padding: 14px 18px;
   color: #ffffff;
   font-size: 0.9rem;
