@@ -170,18 +170,40 @@
 .lv-wrap.lv-visible {
   opacity: 1; transform: translateY(0);
 }
-
 /* Logo */
 .lv-logo-box {
-  width: 220px; height: 62px;
-  border: 2px dashed rgba(245,197,24,0.25);
+  width: 220px;
+  height: 62px;
+  border: 2px dashed rgba(245, 197, 24, 0.25);
   border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 18px;
+  padding: 0 10px; /* Espacio interno */
+  background: rgba(0, 0, 0, 0.3); /* Fondo opcional */
 }
-.lv-logo-box img { max-width:auto; max-height:62px; object-fit:contain; display:none; }
-.lv-logo-guide { font-size:0.65rem; color:rgba(245,197,24,0.3); letter-spacing:2px; text-transform:uppercase; }
 
+.lv-logo-box img {
+  max-width: 100%;      /* ← Cambiado de "auto" */
+  max-height: 100%;     /* ← Cambiado de 62px fijo */
+  width: auto;
+  height: auto;
+  object-fit: contain;  /* Mantiene proporción */
+  display: block;       /* ← Cambiado de "none" */
+}
+
+/* Si quieres logos con diferentes tamaños */
+.lv-logo-small img {
+  max-height: 40px;
+}
+
+.lv-logo-guide { 
+  font-size: 0.65rem; 
+  color: rgba(245, 197, 24, 0.3); 
+  letter-spacing: 2px; 
+  text-transform: uppercase;
+}
 /* Ícono */
 .lv-icon-wrap {
   position: relative; width:68px; height:68px;
@@ -2211,7 +2233,7 @@
     left: 48%;            
     width: 50px;
     height: 100%;
-    background: #8a8a8a;    
+    background: #000000;    
     clip-path: polygon(45% 0, 100% 0, 55% 100%, 0 100%);
     z-index: 1;
 }
@@ -2222,7 +2244,7 @@
     right: 0;
     width: 48%;
     height: 100%;
-    background: #ccc;
+    background: #000000;
     z-index: 1;
 }
 .mtb-logo,
@@ -3138,14 +3160,14 @@
 }
 
 .uib-chart-wrap {
-    width: 100%;      
+    width: auto;      
     height: 120px;   
     position: relative;
 }
 
 .uib-chart-wrap canvas {
     display: block;
-    width: 520px;
+    width: auto;
     height: 120px !important;
 }
 @media (max-width: 392px) {
