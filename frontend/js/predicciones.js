@@ -629,7 +629,7 @@ function mostrarToast(mensaje, opciones = {}) {
   }
  
   const toast = document.createElement('div');
-  toast.className = 'toast';
+  toast.className = 'toast-construccion';
   toast.innerHTML = `
     <span class="toast-icon">${icon}</span>
     <div class="toast-text">${mensaje}</div>
