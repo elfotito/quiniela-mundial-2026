@@ -126,7 +126,38 @@
                 hint.className = 'form-hint success';
             }
         });
+        const telefonoInput = document.getElementById('telefonoInput');
 
+        telefonoInput.addEventListener('input', function(e) {
+            let valor = this.value.replace(/[^\d+]/g, '');
+            
+            if (valor.length > 0 && !valor.startsWith('+')) {
+                valor = '+' + valor.replace(/\+/g, '');
+            }
+            
+            valor = '+' + valor.slice(1).replace(/\+/g, '');
+
+            if (valor.length > 14) {
+                valor = valor.slice(0, 14);
+            }
+            
+            this.value = valor;
+
+            const hint = document.getElementById('telefonoHint');
+            if (valor.length >= 12 && /^\+\d{11,13}$/.test(valor)) {
+                hint.innerHTML = '✅ Formato válido';
+                hint.className = 'form-hint success';
+                this.style.borderColor = '#4caf50';
+            } else if (valor.length < 12) {
+                hint.innerHTML = '⚠️ Ejemplo: +584149876543 (código país + número)';
+                hint.className = 'form-hint warning';
+                this.style.borderColor = '#ff9800';
+            } else {
+                hint.innerHTML = 'Será tu identificador en el sistema (No será público)';
+                hint.className = 'form-hint';
+                this.style.borderColor = '';
+            }
+        });
         // Submit
         document.getElementById('recuperarForm').addEventListener('submit', async function(e) {
             e.preventDefault();
