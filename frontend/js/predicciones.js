@@ -580,9 +580,9 @@ function mostrarError(containerId, mensaje) {
 function mostrarToast(mensaje, opciones = {}) {
   const {
     icon = '🔧',
-    tipo = 'info',      // 'info', 'success', 'error', 'warning'
+    tipo = 'info',
     duracion = 4000,
-    usarIconosBootstrap = false  // true si quieres usar bi-icons
+    usarIconosBootstrap = false
   } = opciones;
 
   const container = document.getElementById('toast-container');
@@ -592,7 +592,7 @@ function mostrarToast(mensaje, opciones = {}) {
   }
 
   const toast = document.createElement('div');
-  toast.className = `toast toast-${tipo}`;
+  toast.className = `toast-construccion toast-${tipo}`;
 
   // Determinar ícono
   let iconoHTML = icon;

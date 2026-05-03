@@ -1030,3 +1030,18 @@
         order: -1; 
     }
 }
+.toast-success {
+  border-left-color: #2ecc71;
+}
+
+.toast-error {
+  border-left-color: #e74c3c;
+}
+
+.toast-warning {
+  border-left-color: #f39c12;
+}
+
+.toast-info {
+  border-left-color: #f5c518;
+}
