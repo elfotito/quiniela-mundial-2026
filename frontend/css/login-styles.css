@@ -111,8 +111,9 @@ body {
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 3rem;
+    justify-content: center;
+    padding: 4rem 3rem;
+    gap: 3rem;
     color: var(--text-light);
     position: relative;
     overflow: hidden;
@@ -139,20 +140,18 @@ body {
 
 /* Logo superior */
 .brand-logo {
-    animation: fadeInDown 0.8s ease-out;
-    position: relative; /* o quita esto si no lo necesitas */
+    animation: fadeInDown 0.8s ease-out; 
     display: block;
-    text-align: left; /* Alinea el contenido a la izquierda */
-    
+    text-align: left; 
+    margin-bottom: 1rem;
 }
 .logo-login {
-    width: 350px; /* Ajusta este valor al tamaño que quieras */
+    width: 350px; 
     height: auto;
-    display: block; /* Asegura que se comporte como bloque */
-    margin: 0; /* Elimina cualquier margen */
-    position: absolute; /* Si necesitas posicionarlo exactamente */
-    top: 20px; /* Distancia desde arriba (ajusta) */
-    left: 20px; /* Distancia desde izquierda (ajusta) */
+    display: block; 
+    margin: 0; 
+    top: 20px; 
+    left: 20px; 
 }
 
 .hero-content {
@@ -518,7 +517,36 @@ body {
         transform: translateX(0);
     }
 }
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 /* ===============================================
    TABLET / IPAD - Dos columnas mejoradas
    =============================================== */
