@@ -3464,13 +3464,23 @@
 .toast-close:hover {
   color: #f5c518;
 }
- 
+
+@media (max-width: 780px) {
+  #toast-container {
+    top: 70px;
+    max-width: 85%;
+  }
+  .toast-construccion {
+    font-size: 1rem;
+    padding: 12px 14px;
+  }
+}
 @media (max-width: 480px) {
   #toast-container {
     top: 70px;
     max-width: 85%;
   }
-  .toast {
+  .toast-construccion {
     font-size: 0.85rem;
     padding: 12px 14px;
   }
