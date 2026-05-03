@@ -577,13 +577,22 @@ function mostrarError(containerId, mensaje) {
 // TOASTTTT
 // ===============================================
 
-function mostrarToast(mensaje, opciones = {}) {
-  const {
-    icon = '🔧',
-    tipo = 'info',
-    duracion = 4000,
-    usarIconosBootstrap = false
-  } = opciones;
+function mostrarToast(mensaje, opcionesOTipo = {}) {
+  let icon = '🔧';
+  let duracion = 4000;
+  let tipo = null;
+  let usarBootstrapIcons = false;
+
+  // Detectar si viene como string (tipo) o como objeto (opciones)
+  if (typeof opcionesOTipo === 'string') {
+    // Modo: mostrarToast(mensaje, 'success')
+    tipo = opcionesOTipo;
+    usarBootstrapIcons = true;
+  } else {
+    // Modo: mostrarToast(mensaje, { icon: '🏗️', duracion: 4000 })
+    icon = opcionesOTipo.icon || '🔧';
+    duracion = opcionesOTipo.duracion || 4000;
+  }
 
   const container = document.getElementById('toast-container');
   if (!container) {
@@ -592,32 +601,26 @@ function mostrarToast(mensaje, opciones = {}) {
   }
 
   const toast = document.createElement('div');
-  toast.className = `toast-construccion toast-${tipo}`;
-
-  // Determinar ícono
-  let iconoHTML = icon;
-  if (usarIconosBootstrap) {
+  toast.className = 'toast-construccion';
+  
+  let iconHTML = icon;
+  if (usarBootstrapIcons) {
     let iconClass = 'bi-check2';
     if (tipo === 'error')   iconClass = 'bi-x-lg';
     if (tipo === 'warning') iconClass = 'bi-exclamation-triangle';
-    if (tipo === 'success') iconClass = 'bi-check2';
-    iconoHTML = `<i class="bi ${iconClass}"></i>`;
+    iconHTML = `<i class="bi ${iconClass}"></i>`;
   }
 
   toast.innerHTML = `
-    <span class="toast-icon">${iconoHTML}</span>
+    <span class="toast-icon">${iconHTML}</span>
     <div class="toast-text">${mensaje}</div>
     <span class="toast-close">✕</span>
   `;
 
   container.appendChild(toast);
 
-  // Trigger animación
-  void toast.offsetWidth;
-  toast.classList.add('show');
-
   const cerrar = () => {
-    toast.classList.remove('show');
+    toast.classList.add('exit');
     setTimeout(() => toast.remove(), 400);
   };
 
@@ -628,14 +631,13 @@ function mostrarToast(mensaje, opciones = {}) {
 
   toast.addEventListener('click', cerrar);
 
-  // Auto-cierre
   setTimeout(cerrar, duracion);
 
-  // Limitar a 3 toasts máximo
-  const toasts = container.querySelectorAll('.toast');
+  // Limitar a 3 toasts
+  const toasts = container.querySelectorAll('.toast-construccion');
   if (toasts.length > 3) {
     const oldest = toasts[0];
-    oldest.classList.remove('show');
+    oldest.classList.add('exit');
     setTimeout(() => oldest.remove(), 400);
   }
 }
