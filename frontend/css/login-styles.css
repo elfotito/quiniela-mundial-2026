@@ -703,12 +703,16 @@ body {
     
     .hero-title {
         margin: 0;
-        font-size: 1.2rem;           
+        font-size: 1.2rem;
+        padding-bottom: 0rem;
+        margin-bottom: 0rem;           
     }
     
     .hero-description {
         margin: 0;
         font-size: 0.9rem;
+        padding-bottom: 0rem;
+        margin-bottom: 0rem;
     }
     
     .hero-flags {
@@ -724,10 +728,7 @@ body {
     .logodrogueria {
         width: 115px;
     }
-    
-    /* Eliminé las reglas duplicadas de .hero-title y .hero-flags */
-    
-    /* IMPORTANTE: Ajustes para que no se monte la columna derecha */
+
     .split-right {
         flex: 1;
         padding: 1.5rem;
@@ -740,7 +741,6 @@ body {
         width: 100%;
     }
     
-    /* Asegura que el contenedor split no tenga problemas */
     .split-container {
         flex-direction: column;
         min-height: 100vh;
