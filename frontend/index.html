@@ -10,6 +10,100 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <style>
+    /* CSS del TOAST aquí */
+    #toast-container {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 8888;
+      pointer-events: none;
+      max-width: 90%;
+    }
+    
+    .toast {
+      background: linear-gradient(135deg, #1a1a1a 0%, #222222 100%);
+      border: 1px solid rgba(245,197,24,0.15);
+      border-left: 3px solid #f5c518;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-family: 'Barlow', sans-serif;
+      line-height: 1.5;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,197,24,0.1);
+      
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      
+      margin-bottom: 10px;
+      pointer-events: auto;
+      cursor: pointer;
+      
+      opacity: 0;
+      transform: translateY(-16px);
+      animation: toastEnter 0.5s ease forwards;
+    }
+    
+    @keyframes toastEnter {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .toast.exit {
+      animation: toastExit 0.4s ease forwards;
+    }
+    
+    @keyframes toastExit {
+      to {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+    }
+    
+    .toast-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      animation: toastIconPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes toastIconPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.05); }
+    }
+    
+    .toast-text {
+      flex: 1;
+    }
+    
+    .toast-close {
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #888;
+      flex-shrink: 0;
+      transition: color 0.2s ease;
+      user-select: none;
+    }
+    
+    .toast-close:hover {
+      color: #f5c518;
+    }
+    
+    @media (max-width: 480px) {
+      #toast-container {
+        top: 70px;
+        max-width: 85%;
+      }
+      .toast {
+        font-size: 0.85rem;
+        padding: 12px 14px;
+      }
+    }
+  </style>
 </head>
 <body style="background:#edeef0">
     <div id="loading-overlay">
