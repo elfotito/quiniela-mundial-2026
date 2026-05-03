@@ -1279,6 +1279,16 @@ function obtenerCampeon(codigo) {
 // ===============================================
 // TOASTTTT
 // ===============================================
+document.addEventListener('click', (e) => {
+  const enlace = e.target.closest('a[data-construccion]');
+  if (enlace) {
+    e.preventDefault();
+    mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+      icon: '🏗️',
+      duracion: 4000
+    });
+  }
+});
 
 function mostrarToast(mensaje, opciones = {}) {
   const {
