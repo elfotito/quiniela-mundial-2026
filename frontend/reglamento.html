@@ -94,6 +94,11 @@
         grid-template-areas: "izquierda centro derecha";
         gap: 24px; align-items: start;
     }
+    /* Nav lateral */
+    .ter-nav-link { display:flex; align-items:center; gap:8px; padding:8px 12px; font-size:12px; font-weight:600; color:#555; text-decoration:none; transition:background .15s; margin-bottom:2px; }
+    .ter-nav-link:hover { background:#f0f0f0; color:#0a0a0a; }
+    .ter-nav-link i { font-size:12px; width:14px; text-align:center; opacity:.5; }
+    
     .reg-col-left  { grid-area: izquierda; display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
     .reg-col-main  { grid-area: centro;    display: flex; flex-direction: column; gap: 20px; min-width: 0; }
     .reg-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
