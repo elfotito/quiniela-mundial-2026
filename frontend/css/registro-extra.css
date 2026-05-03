@@ -362,12 +362,10 @@
 
     .hero-title {
         font-size: 2rem;
-        margin-bottom: 1rem;
     }
 
     .hero-description {
         font-size: 0.95rem;
-        margin-bottom: 1.5rem;
     }
 
     .hero-flags {
@@ -384,7 +382,6 @@
     }
 }
 
-/* Reemplaza SOLO el bloque @media (max-width: 768px) que tienes */
 
 @media (min-width: 769px) and (max-width: 1024px) {
     body {
