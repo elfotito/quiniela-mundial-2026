@@ -114,7 +114,6 @@
 
         body {
             padding-top: var(--header-h) !important;
-            overflow-x: hidden;
         }
         
         ul {
