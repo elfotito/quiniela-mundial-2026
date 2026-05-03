@@ -1276,6 +1276,55 @@ function obtenerCampeon(codigo) {
     };
     return campeon[codigo] || '🏴';
 }
+// ===============================================
+// TOASTTTT
+// ===============================================
+
+function mostrarToast(mensaje, opciones = {}) {
+  const {
+    icon = '🔧',
+    duracion = 4000,
+    tipo = 'trabajo'
+  } = opciones;
+ 
+  const container = document.getElementById('toast-container');
+ 
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <span class="toast-icon">${icon}</span>
+    <div class="toast-text">${mensaje}</div>
+    <span class="toast-close">✕</span>
+  `;
+ 
+  container.appendChild(toast);
+ 
+  const cerrar = () => {
+    toast.classList.add('exit');
+    setTimeout(() => toast.remove(), 400);
+  };
+ 
+  // Click en la X
+  toast.querySelector('.toast-close').addEventListener('click', cerrar);
+ 
+  // Click en el toast también lo cierra
+  toast.addEventListener('click', (e) => {
+    if (e.target.className !== 'toast-close') cerrar();
+  });
+ 
+  // Auto-cierre
+  setTimeout(cerrar, duracion);
+}
+document.addEventListener('click', (e) => {
+  const enlace = e.target.closest('a[data-construccion]');
+  if (enlace) {
+    e.preventDefault();
+    mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+      icon: '🏗️',
+      duracion: 4000
+    });
+  }
+});
 
 // ===============================================
 // MENÚ MÓVIL
