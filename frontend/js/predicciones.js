@@ -516,45 +516,6 @@ async function enviarPrediccion(partidoId) {
 }
 window.enviarPrediccion = enviarPrediccion;
 
-// ── TOAST ─────────────────────────────────────────────
-function mostrarToast(mensaje, tipo = 'success') {
-    const container = document.getElementById('toast-container');
-    
-    if (!container) {
-        console.error('❌ No se encontró #toast-container en el HTML');
-        return;
-    }
-
-    // Crear toast
-    const toast = document.createElement('div');
-    toast.className = `toast-item ${tipo}`;
-
-    let icono = '<i class="bi bi-check2"></i>';
-    if (tipo === 'error')   icono = '<i class="bi bi-x-lg"></i>';
-    if (tipo === 'warning') icono = '<i class="bi bi-exclamation-triangle"></i>';
-
-    toast.innerHTML = `
-        <div class="toast-icon">${icono}</div>
-        <div class="toast-desc">${mensaje}</div>
-    `;
-
-    container.appendChild(toast);
-
-    void toast.offsetWidth;
-    toast.classList.add('show');
-
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 500);
-    }, 4000);
-
-    const toasts = container.querySelectorAll('.toast-item');
-    if (toasts.length > 3) {
-        const oldest = toasts[0];
-        oldest.classList.remove('show');
-        setTimeout(() => oldest.remove(), 500);
-    }
-}
 
 function obtenerBandera(nombre) {
     const banderas = {
@@ -619,38 +580,64 @@ function mostrarError(containerId, mensaje) {
 function mostrarToast(mensaje, opciones = {}) {
   const {
     icon = '🔧',
-    duracion = 4000
+    tipo = 'info',      // 'info', 'success', 'error', 'warning'
+    duracion = 4000,
+    usarIconosBootstrap = false  // true si quieres usar bi-icons
   } = opciones;
- 
+
   const container = document.getElementById('toast-container');
   if (!container) {
     console.error('Toast container no encontrado');
     return;
   }
- 
+
   const toast = document.createElement('div');
-  toast.className = 'toast-construccion';
+  toast.className = `toast toast-${tipo}`;
+
+  // Determinar ícono
+  let iconoHTML = icon;
+  if (usarIconosBootstrap) {
+    let iconClass = 'bi-check2';
+    if (tipo === 'error')   iconClass = 'bi-x-lg';
+    if (tipo === 'warning') iconClass = 'bi-exclamation-triangle';
+    if (tipo === 'success') iconClass = 'bi-check2';
+    iconoHTML = `<i class="bi ${iconClass}"></i>`;
+  }
+
   toast.innerHTML = `
-    <span class="toast-icon">${icon}</span>
+    <span class="toast-icon">${iconoHTML}</span>
     <div class="toast-text">${mensaje}</div>
     <span class="toast-close">✕</span>
   `;
- 
+
   container.appendChild(toast);
- 
+
+  // Trigger animación
+  void toast.offsetWidth;
+  toast.classList.add('show');
+
   const cerrar = () => {
-    toast.classList.add('exit');
+    toast.classList.remove('show');
     setTimeout(() => toast.remove(), 400);
   };
- 
+
   toast.querySelector('.toast-close').addEventListener('click', (e) => {
     e.stopPropagation();
     cerrar();
   });
- 
+
   toast.addEventListener('click', cerrar);
- 
+
+  // Auto-cierre
   setTimeout(cerrar, duracion);
+
+  // Limitar a 3 toasts máximo
+  const toasts = container.querySelectorAll('.toast');
+  if (toasts.length > 3) {
+    const oldest = toasts[0];
+    oldest.classList.remove('show');
+    setTimeout(() => oldest.remove(), 400);
+  }
 }
 
 // ── Listeners para diferentes tipos de notificaciones ──
