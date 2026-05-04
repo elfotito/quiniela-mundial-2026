@@ -4,8 +4,6 @@
 
 const API_URL = CONFIG.API_URL;
 let usuarioId = null;
-
-// Instancia global de Chart.js para el gráfico de evolución
 let uibEvoChart = null;
 
 // ===============================================
@@ -1334,7 +1332,6 @@ setTimeout(() => {
     });
   });
 
-  // Proximamente
   document.querySelectorAll('a[data-proximamente], button[data-proximamente]').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1346,7 +1343,6 @@ setTimeout(() => {
     });
   });
 
-  // En mantenimiento
   document.querySelectorAll('a[data-mantenimiento]').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1358,7 +1354,6 @@ setTimeout(() => {
     });
   });
 
-  // Premium (acceso restringido)
   document.querySelectorAll('a[data-premium]').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1370,7 +1365,6 @@ setTimeout(() => {
     });
   });
 
-  // No disponible en móvil
   document.querySelectorAll('a[data-desktop-only]').forEach(enlace => {
     enlace.addEventListener('click', (e) => {
       e.preventDefault();
