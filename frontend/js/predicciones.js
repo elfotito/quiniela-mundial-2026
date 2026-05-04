@@ -179,6 +179,8 @@ async function cargarEstadisticas() {
         const puntos      = stats.puntos_totales || 0;
         const posicion    = stats.posicion_ranking || '—';
         const predLength  = localStorage.getItem('predicciones_length') || total;
+        const partidosRestantes = localStorage.getItem('partidos_restantes') || 0;
+        const partidosPendientes = localStorage.getItem('partidos_pendientes') || 0;
         const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
         set('statPredicciones',  predLength);
@@ -195,6 +197,11 @@ async function cargarEstadisticas() {
         set('heroPuntos',        puntos);
         set('heroPosicion',      posicion + '°');
         set('heroTotalPartidos', total);
+        set('heroTotalRegistradas', predLength);
+
+        set('partidosRestantes', partidosRestantes);  // 72 - pendientes
+        set('partidosPendientes', partidosPendientes); // Pendientes actuales
+        set('partidosCompletados', partidosRestantes); // Ya completados
 
         localStorage.setItem('quiniela_puntos', puntos);
         localStorage.setItem('quiniela_posicion', posicion);
