@@ -3378,7 +3378,7 @@
 
 #toast-container {
   position: fixed;
-  top: 100px;
+  top: 125px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 8888;
@@ -3390,11 +3390,11 @@
 .toast-construccion {
   background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
   border: 1px solid rgba(245,197,24,0.15);
-  border-left: 3px solid #f5c518;
+  border-left: 3px solid #FFC107;
   padding: 14px 18px;
   color: #ffffff;
   font-size: 0.9rem;
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Yolk', sans-serif;
   line-height: 1.5;
   box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,197,24,0.1);
   
@@ -3423,7 +3423,7 @@
 }
 
 .toast-info {
-  border-left-color: #f5c518;
+  border-left-color: #FFC107;
 }
  
 @keyframes toastEnter {
