@@ -152,6 +152,8 @@ async function cargarPartidos() {
 }
 
 async function cargarPredicciones() {
+    const completedList = document.getElementById('completedList');
+    completedList.innerHTML = '<div class="loading-message">Cargando partidos...</div>';
     try {
         const response = await fetch(`${CONFIG.API_URL}/predicciones/${usuario.id}`);
         if (!response.ok) throw new Error('Error cargando predicciones');
