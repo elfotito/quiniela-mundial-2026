@@ -94,13 +94,16 @@ async function cargarEstadisticas() {
         
         const stats = await response.json();
         
-        document.getElementById('statPredicciones').textContent = stats.total_predicciones || 0;
-        document.getElementById('statPuntos').textContent = stats.puntos_totales || 0;
-        document.getElementById('statPosicion').textContent = stats.posicion_ranking || '-';
+        // ✅ Función interna para no repetir
+        function setVal(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
+        }
         
-        // ✅ Lo más simple posible
-        const efecEl = document.getElementById('statEfectividad');
-        if (efecEl) efecEl.textContent = (stats.efectividad || 0) + '%';
+        setVal('statPredicciones', stats.total_predicciones || 0);
+        setVal('statPuntos', stats.puntos_totales || 0);
+        setVal('statPosicion', stats.posicion_ranking || '-');
+        setVal('statEfectividad', (stats.efectividad || 0) + '%');
         
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
