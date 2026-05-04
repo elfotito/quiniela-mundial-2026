@@ -102,7 +102,7 @@ async function cargarEstadisticas() {
         // Calcula efectividad
         const total = stats.total_predicciones || 0;
         const aciertos = stats.aciertos || 0;
-        const efectividad = total > 0 ? Math.round((aciertos / total) * 100) : 0;
+        const efectividad = stats.efectividad || 0;
         document.getElementById('statEfectividad').textContent = `${efectividad}%`;
         
     } catch (error) {
