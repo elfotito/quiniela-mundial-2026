@@ -159,6 +159,7 @@ async function cargarPredicciones() {
         if (!response.ok) throw new Error('Error cargando predicciones');
         prediccionesRealizadas = await response.json();
         console.log(`📋 ${prediccionesRealizadas.length} predicciones realizadas`);
+        localStorage.setItem('predicciones_length', prediccionesRealizadas.length);
         renderizarPredicciones();
     } catch (error) {
         console.error('❌ Error:', error);
@@ -177,15 +178,15 @@ async function cargarEstadisticas() {
         const efectividad = stats.efectividad || 0;
         const puntos      = stats.puntos_totales || 0;
         const posicion    = stats.posicion_ranking || '—';
-
+        const predLength  = localStorage.getItem('predicciones_length') || total;
         const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
-        set('statPredicciones',  total);
+        set('statPredicciones',  predLength);
         set('statPuntos',        puntos);
         set('statPosicion',      posicion);
         set('statEfectividad',   `${efectividad}%`);
         
-        set('resumenTotal',      total);
+        set('resumenTotal',      predLength);
         set('resumenPuntos',     puntos);
         set('resumenPosicion',   posicion);
         set('resumenEfectividad',`${efectividad}%`);
@@ -197,7 +198,7 @@ async function cargarEstadisticas() {
 
         localStorage.setItem('quiniela_puntos', puntos);
         localStorage.setItem('quiniela_posicion', posicion);
-        localStorage.setItem('quiniela_predicciones', total);
+        localStorage.setItem('quiniela_predicciones', predLength);
 
     } catch (error) {
         console.error('Error cargando estadísticas:', error);

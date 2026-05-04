@@ -6,8 +6,8 @@ let usuario = null;
 let estadisticas = null;
 let predicciones = [];
 let ranking = [];
-let filtroFase = 'todas'; // Nueva variable para el filtro de fase
-let filtroActual = 'todas'; // Tu variable existente
+let filtroFase = 'todas'; 
+let filtroActual = 'todas';
 let logrosDesbloqueadosDB = [];
 
 document.addEventListener('DOMContentLoaded', async () => {

@@ -6,11 +6,12 @@
     <title>Mi Quiniela - Mundial 2026</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/index-styles.css">
     <link rel="stylesheet" href="css/quiniela-styles.css">
+    <link rel="stylesheet" href="css/index-styles.css">
 </head>
 
 <body>
+<div id="toast-container"></div>
 <header class="desktop-header">
     <div class="top-tier">
         <div class="fw-black">FIFA WORLD CUP 2026™</div>
@@ -19,7 +20,7 @@
             <a href="sistema.html">SISTEMA DE PUNTOS</a>
             <a href="terminos.html">TERMINOS Y CONDICIONES</a>
             <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F">CANAL OFICIAL</a>
-            <a href="#">QUINIELA GATES</a>
+            <a href="#" data-construccion>QUINIELA GATES</a>
         </div>
     </div>
     <div class="main-tier">
@@ -39,7 +40,7 @@
             <a href="ranking.html">RANKING</a>
             <a href="mrchip.html">MR CHIP</a>
             <a href="calendario.html">CALENDARIO</a>
-            <a href="#">HISTORIA</a>
+            <a href="#" data-construccion="">HISTORIA</a>
         </nav>
 
         <div class="right-section">
@@ -66,12 +67,10 @@
     <div class="mtb-logo">
         <img src="img/logoblancomenu.png" alt="Quiniela 2026">
     </div>
-
+    <span class="user-bg"></span>
     <div class="user-pill-mobile">
-        <span class="user-emoji-display" id="mobileUserCampeon">👤</span>
         <div class="user-info">
-            <span class="greeting">Bienvenido,</span>
-            <span class="user-name-display" id="mobileUserName">Usuario</span>
+            <span class="user-name-display" id="mobileUserName"><i class="fa-regular fa-circle-user"></i>Usuario</span>
         </div>
     </div>
     <button class="btn-admin-display" id="mobileAdminBtn" title="Panel Admin">
@@ -81,7 +80,8 @@
         <i class="fas fa-newspaper"></i>
     </button>
 </header>
-<!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
+
+
 <div class="mobile-menu-overlay" id="mobileMenu">
 
     <div class="mmo-header">
@@ -97,7 +97,7 @@
             <span>Inicio</span>
         </a>
         <a href="predicciones.html"  class="mmo-link mmo-link-main">
-            <i class="fas fa-crosshairs"></i>
+            <i class="fas fa-bullseye"></i>
             <span>Predicciones</span>
         </a>
         <a href="quiniela.html"      class="mmo-link mmo-link-main">
@@ -117,18 +117,15 @@
             <span>Mr. CHIP</span>
         </a>
     </div>
- 
-    <!-- Divisor -->
+
     <div class="mmo-divider"></div>
  
-    <!-- Links secundarios -->
     <div class="mmo-section">
         <a href="sistema.html"       class="mmo-link mmo-link-sec">Sistema de Puntos</a>
         <a href="reglamento.html"    class="mmo-link mmo-link-sec">Reglamento</a>
         <a href="terminos.html"      class="mmo-link mmo-link-sec">Términos y Condiciones</a>
     </div>
  
-    <!-- Botón de salir -->
     <div class="mmo-footer">
         <button class="mmo-logout-btn" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i>
@@ -142,14 +139,14 @@
 <!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
 <nav class="mobile-bottom-nav" id="mobileBottomNav">
  
-    <a href="index.html" class="mbn-item active">
+    <a href="index.html" class="mbn-item">
         <i class="fas fa-home"></i>
         <span>Inicio</span>
     </a>
  
     <a href="predicciones.html" class="mbn-item">
-        <i class="fas fa-crosshairs"></i>
-        <span>Predecir</span>
+        <i class="fas fa-bullseye"></i>
+        <span>Predicciones</span>
     </a>
 
     <button class="mbn-item" id="menuToggleBtn">
@@ -157,7 +154,7 @@
         <span>Menú</span>
     </button>
 
-    <a href="quiniela.html" class="mbn-item">
+    <a href="quiniela.html" class="mbn-item active">
         <i class="fa fa-file-text"></i>
         <span>Mi Quiniela</span>
     </a>
@@ -166,6 +163,8 @@
         <i class="fas fa-trophy"></i>
         <span>Ranking</span>
     </a>
+ 
+</nav>
  
 </nav>
     <!-- ── HERO ──────────────────────────────────────── -->
@@ -181,6 +180,10 @@
 
                 <div class="qui-hero-stats">
                     <div class="qui-hero-stat">
+                        <span class="qui-hero-stat-val" id="statPosicion">—</span>
+                        <span class="qui-hero-stat-lbl">Posición</span>
+                    </div>
+                    <div class="qui-hero-stat">
                         <span class="qui-hero-stat-val" id="statPredicciones">—</span>
                         <span class="qui-hero-stat-lbl">Jugados</span>
                     </div>
@@ -188,17 +191,14 @@
                         <span class="qui-hero-stat-val gold" id="statPuntos">—</span>
                         <span class="qui-hero-stat-lbl">Puntos</span>
                     </div>
-                    <div class="qui-hero-stat">
-                        <span class="qui-hero-stat-val" id="statPosicion">—</span>
-                        <span class="qui-hero-stat-lbl">Posición</span>
-                    </div>
+                    
                     <div class="qui-hero-stat">
                         <span class="qui-hero-stat-val green" id="statEfectividad">—</span>
                         <span class="qui-hero-stat-lbl">Efectividad</span>
                     </div>
                 </div>
             </div>
-            <div class="qui-hero-deco">🏆</div>
+            <div class="qui-hero-deco">📄</div>
         </div>
     </div>
 
@@ -379,6 +379,9 @@
         </aside>
 
     </div>
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+    <i class="bi bi-arrow-up"></i>
+    </button>
     </div>
         <footer class="footer">
         
@@ -433,7 +436,7 @@
     <div class="sponsor-group-title">Colaboradores</div>
     <div class="sponsor-logos">
         <div class="sponsor-logo">
-            <div class="sponsor-wrap" id="sponsorEasterEgg">
+            <div class="sponsor-wrap"><a href="#" data-tip>
                 <span class="logo-placeholder">
                     <img
                         src="img/viktor.png"
@@ -442,7 +445,7 @@
                         class="easter-logo"
                         draggable="false"
                     >
-                </span>
+                </span></a>
             </div>
         </div>
     </div>
