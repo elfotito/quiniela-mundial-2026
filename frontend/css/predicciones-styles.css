@@ -1024,8 +1024,14 @@
     to   { opacity: 0; transform: translateY(-20px); }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 700px) {
     .desktop { 
+        display: none;
+        order: -1; 
+    }
+}
+@media (min-width: 700px) {
+    .mobile { 
         display: none;
         order: -1; 
     }

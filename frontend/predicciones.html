@@ -214,7 +214,7 @@
         <aside class="pred-col-left">
 
             <!-- WIDGET: Sistema de Puntuación -->
-    <div class="widget desktop">
+    <div class="widget mobile">
         <div class="widget-header">
             <div class="widget-header-bar"></div>
             <span class="widget-header-title">Sistema de Puntuación</span>
@@ -279,7 +279,30 @@
  
         <!-- ══ COLUMNA PRINCIPAL ══ -->
         <main class="pred-col-main">
- 
+            <div class="widget desktop">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Mi Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="resumen-row">
+                        <span class="resumen-label">Posición ranking</span>
+                        <span class="resumen-val" id="resumenPosicion">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Predicciones jugadas</span>
+                        <span class="resumen-val" id="resumenTotal">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Puntos acumulados</span>
+                        <span class="resumen-val gold" id="resumenPuntos">—</span>
+                    </div>
+                    <div class="resumen-row">
+                        <span class="resumen-label">Efectividad</span>
+                        <span class="resumen-val" id="resumenEfectividad">—</span>
+                    </div>
+                </div>
+            </div>
             <!-- Tabs -->
             <div class="pred-tabs">
                 <button class="pred-tab-btn active" data-tab="pending">
@@ -369,7 +392,7 @@
         <aside class="pred-col-right">
 
             <!-- Widget: Resumen personal -->
-            <div class="widget">
+            <div class="widget desktop">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
                     <span class="widget-title">Mi Resumen</span>
