@@ -98,11 +98,9 @@ async function cargarEstadisticas() {
         document.getElementById('statPuntos').textContent = stats.puntos_totales || 0;
         document.getElementById('statPosicion').textContent = stats.posicion_ranking || '-';
         
-        // Calcula efectividad
-        const total = stats.total_predicciones || 0;
-        const aciertos = stats.aciertos || 0;
-        const efectividad = stats.efectividad || 0;
-        document.getElementById('statEfectividad').textContent = `${efectividad}%`;
+        // ✅ Lo más simple posible
+        const efecEl = document.getElementById('statEfectividad');
+        if (efecEl) efecEl.textContent = (stats.efectividad || 0) + '%';
         
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
