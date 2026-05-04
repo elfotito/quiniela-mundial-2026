@@ -142,8 +142,8 @@ async function cargarPartidos() {
         partidosPendientes = partidos.filter(partido => {
             return !prediccionesRealizadas.some(p => p.partido_id === partido.id);
         });
-
         console.log(`⚽ ${partidosPendientes.length} partidos disponibles`);
+        localStorage.setItem('partidos_pendientes', partidosPendientes.length);
         renderizarPartidos();
     } catch (error) {
         console.error('❌ Error:', error);
