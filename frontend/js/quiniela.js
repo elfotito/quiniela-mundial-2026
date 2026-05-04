@@ -95,15 +95,29 @@ async function cargarEstadisticas() {
         
         const stats = await response.json();
         
+        // ✅ DEBUG: Ver TODO lo que llega
+        console.log('📊 Stats completos:', stats);
+        console.log('📈 Efectividad:', stats.efectividad);
+        console.log('🔢 Tipo de efectividad:', typeof stats.efectividad);
+        
         document.getElementById('statPredicciones').textContent = stats.total_predicciones || 0;
         document.getElementById('statPuntos').textContent = stats.puntos_totales || 0;
         document.getElementById('statPosicion').textContent = stats.posicion_ranking || '-';
         
-        // Calcula efectividad
-        const total = stats.total_predicciones || 0;
-        const aciertos = stats.aciertos || 0;
-        const efectividad = stats.efectividad || 0;
+        // ✅ Probar diferentes formas de mostrar efectividad
+        const efectividad = stats.efectividad;
+        console.log('💡 Efectividad original:', efectividad);
+        console.log('💡 Efectividad parseada:', parseFloat(efectividad));
+        console.log('💡 Efectividad con || 0:', efectividad || 0);
+        
+        // Opción 1: Directo
         document.getElementById('statEfectividad').textContent = `${efectividad}%`;
+        
+        // Opción 2: Parseado (por si viene como string)
+        // document.getElementById('statEfectividad').textContent = `${parseFloat(efectividad)}%`;
+        
+        // Opción 3: Con fallback
+        // document.getElementById('statEfectividad').textContent = `${efectividad || 0}%`;
         
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
@@ -962,6 +976,23 @@ function obtenerBandera(nombre) {
 };
     return banderas[nombre] || '🏴';
 }
+const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', function() {
+            
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
 
 function logout() {
     if (confirm('¿Estás seguro de que quieres salir?')) {

@@ -811,65 +811,6 @@ const backToTopBtn = document.getElementById('backToTop');
             });
         });
 
-        async function diagnosticarPartidos() {
-    console.log('🔍 INICIANDO DIAGNÓSTICO...\n');
-    
-    try {
-        // 1. Total en BD
-        const res1 = await fetch(`${CONFIG.API_URL}/partidos`);
-        const todos = await res1.json();
-        console.log(`📦 TOTAL partidos en BD: ${todos.length}`);
-        
-        // 2. Por estado
-        const estados = {};
-        todos.forEach(p => estados[p.estado] = (estados[p.estado] || 0) + 1);
-        console.log('📊 PARTIDOS POR ESTADO:');
-        Object.entries(estados).forEach(([estado, cant]) => {
-            console.log(`   - ${estado}: ${cant}`);
-        });
-        
-        // 3. Pendientes
-        const res2 = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente`);
-        const pendientes = await res2.json();
-        console.log(`\n⏳ PENDIENTES: ${pendientes.length}`);
-        
-        // 4. Filtrados por predicciones
-        const noPredichos = pendientes.filter(p => 
-            !prediccionesRealizadas.some(pr => pr.partido_id === p.id)
-        );
-        const yaPredichos = pendientes.filter(p => 
-            prediccionesRealizadas.some(pr => pr.partido_id === p.id)
-        );
-        
-        console.log(`✅ Pendientes SIN predecir: ${noPredichos.length}`);
-        console.log(`⚠️ Pendientes YA predichos: ${yaPredichos.length}`);
-        console.log(`🎯 Total predicciones realizadas: ${prediccionesRealizadas.length}`);
-        
-        // 5. Diferencia
-        const diferencia = todos.length - pendientes.length;
-        console.log(`\n🔍 DIFERENCIA: ${diferencia} partidos no están pendientes`);
-        
-        // 6. Mostrar los no pendientes
-        const noPendientes = todos.filter(p => p.estado !== 'pendiente');
-        console.log('📋 PARTIDOS NO PENDIENTES:');
-        noPendientes.forEach(p => {
-            console.log(`   - ID:${p.id} | Estado:${p.estado} | ${p.equipo_local} vs ${p.equipo_visitante}`);
-        });
-        
-        // 7. Verificar IDs faltantes
-        if (todos.length === 104 && pendientes.length === 102) {
-            console.log('\n🎯 CONCLUSIÓN:');
-            console.log(`   La diferencia de ${diferencia} partidos se debe a que NO están en estado "pendiente"`);
-            console.log('   Verifica el estado de esos partidos en tu BD');
-        }
-        
-    } catch (error) {
-        console.error('❌ Error en diagnóstico:', error);
-    }
-}
-
-// Ejecutar diagnóstico
-diagnosticarPartidos();
 function logout() {
     if (confirm('¿Estás seguro de que quieres salir?')) auth.logout();
 }
