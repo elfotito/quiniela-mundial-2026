@@ -93,9 +93,9 @@ function cargarStatsHero() {
 
     const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
 
-    if (pts)  { set('heroPuntos', pts);    set('resumenPuntos', pts); }
-    if (pos)  { set('heroPosicion', pos + '°'); set('resumenPosicion', pos + '°'); }
-    if (pred) { set('heroTotalPartidos', pred); set('resumenTotal', pred); }
+    if (pts)  { set('heroPuntos', pts);    set('resumenPuntos', pts); set('resumenPuntosD', pts); }
+    if (pos)  { set('heroPosicion', pos + '°'); set('resumenPosicion', pos + '°'); set('resumenPosicionD', pos + '°');}
+    if (pred) { set('heroTotalPartidos', pred); set('resumenTotal', pred); set('resumenTotalD', pred); }
 }
 
 function configurarEventos() {
@@ -186,7 +186,8 @@ async function cargarEstadisticas() {
         set('resumenTotal',      total);
         set('resumenPuntos',     puntos);
         set('resumenPosicion',   posicion);
-        set('resumenEfectividad',`${efectividad}%`)
+        set('resumenEfectividad',`${efectividad}%`);
+        set('resumenEfectividadD',`${efectividad}%`)
 
         set('heroPuntos',        puntos);
         set('heroPosicion',      posicion + '°');
