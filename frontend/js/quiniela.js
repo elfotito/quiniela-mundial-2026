@@ -29,11 +29,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         cargarPredicciones(),
         cargarProximasPredicciones(),
         cargarProximosPartidos(),
-        cargarLogros()
     ]);
 
     inicializarGraficos();
-
+    cargarLogros();
 });
 
 function configurarUI() {
