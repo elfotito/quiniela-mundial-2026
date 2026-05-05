@@ -17,33 +17,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const usuario = auth.getUser();
-    usuarioId = parseInt(usuario.id);
-
-    document.querySelectorAll('.user-name-display').forEach(el => {
-        el.textContent = usuario.nombre;
-    });
-    
-    const emoji = obtenerCampeon(usuario.campeon_elegido);
-    document.querySelectorAll('.user-emoji-display').forEach(el => {
-        el.textContent = emoji;
-    });
-
-    if (usuario.isAdmin) {
-    
-        document.querySelectorAll('.btn-admin-display').forEach(btn => {
-            btn.style.display = 'flex';
-            btn.onclick = () => window.location.href = 'admin.html';
-        });
-        
-        document.querySelectorAll('.btn-noticias-display').forEach(btn => {
-            btn.style.display = 'flex';
-            btn.onclick = () => window.location.href = 'noticias.html';
-        });
-    }
-
     usuario = auth.getUser();
     usuarioId = usuario.id;
+    
+    // Añade esta línea ANTES de configurarUI
+    await verificarLogin();
+    
     configurarUI();
     configurarEventos();
 
@@ -58,7 +37,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     cargarLogros();
 });
 
+async function verificarLogin() {
+    if (!auth.isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+    }
 
+    const usuario = auth.getUser();
+    usuarioId = parseInt(usuario.id);
+
+    document.querySelectorAll('.user-name-display').forEach(el => {
+        el.textContent = usuario.nombre;
+    });
+    
+    const emoji = obtenerCampeon(usuario.campeon_elegido);
+    document.querySelectorAll('.user-emoji-display').forEach(el => {
+        el.textContent = emoji;
+    });
+
+    if (usuario.isAdmin) {
+        // Esperar a que el DOM esté listo para estos elementos
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        document.querySelectorAll('.btn-admin-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'admin.html';
+        });
+        
+        document.querySelectorAll('.btn-noticias-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'noticias.html';
+        });
+    }
+}
+function configurarUI() {
+    const userCampeon = document.getElementById('userCampeon');
+    if (userCampeon) userCampeon.textContent = obtenerCampeon(usuario.campeon_elegido);
+    const userNameElement = document.getElementById('userName');
+    if (userNameElement) {
+        userNameElement.textContent = usuario.nombre || usuario.codigo;
+    }
+
+    const adminBtn = document.getElementById('adminBtn');
+    if (adminBtn && auth.isAdmin()) {
+        adminBtn.style.display = 'flex';
+        adminBtn.onclick = () => window.location.href = 'admin.html';
+    }
+
+    const btnMenuMobile = document.getElementById('btnMenuMobile');
+    const navMobile = document.getElementById('navMobile');
+    
+    if (btnMenuMobile && navMobile) {
+        btnMenuMobile.addEventListener('click', () => {
+            navMobile.classList.toggle('active');
+        });
+    }
+}
 function obtenerCampeon(codigo) {
     const campeon = {
         'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',
