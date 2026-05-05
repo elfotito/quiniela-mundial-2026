@@ -406,7 +406,13 @@ async function cargarProximasPredicciones() {
 
         const partidos = await partidosResponse.json();
         const misPredicciones = prediccionesResponse.ok ? await prediccionesResponse.json() : [];
-
+        const fecha = new Date(p.fecha);
+            const fechaCorta = fecha.toLocaleDateString('es-ES', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit', minute: '2-digit'
+            });
         const partidosSinPrediccion = partidos.filter(partido => {
             return !misPredicciones.some(pred => pred.partido_id === partido.id);
         });
