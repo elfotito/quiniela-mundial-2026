@@ -174,25 +174,24 @@
   width: 220px;
   height: 62px;
   border: 2px dashed rgba(245, 197, 24, 0.25);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 18px;
-  padding: 0 10px; /* Espacio interno */
-  background: rgba(0, 0, 0, 0.3); /* Fondo opcional */
+  padding: 8px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .lv-logo-box img {
-  max-width: 100%;      /* ← Cambiado de "auto" */
-  max-height: 100%;     /* ← Cambiado de 62px fijo */
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
-  object-fit: contain;  /* Mantiene proporción */
-  display: block;       /* ← Cambiado de "none" */
+  object-fit: contain; 
+  display: block;
 }
 
-/* Si quieres logos con diferentes tamaños */
 .lv-logo-small img {
   max-height: 40px;
 }
@@ -203,7 +202,7 @@
   letter-spacing: 2px; 
   text-transform: uppercase;
 }
-/* Ícono */
+
 .lv-icon-wrap {
   position: relative; width:68px; height:68px;
   display:flex; align-items:center; justify-content:center;
