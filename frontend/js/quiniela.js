@@ -638,35 +638,83 @@ function crearGraficoEvolucion() {
         return { x: index + 1, y: pred.puntos_obtenidos };
     });
     
-    new Chart(ctx, {
+    // Calcular estadísticas para el tooltip y promedio
+    const totalPuntos = datos.reduce((sum, d) => sum + d.y, 0);
+    const promedio = datos.length > 0 ? (totalPuntos / datos.length).toFixed(1) : 0;
+    
+    // Destruir gráfico anterior si existe
+    if (window.evolucionChart) {
+        window.evolucionChart.destroy();
+    }
+    
+    window.evolucionChart = new Chart(ctx, {
         type: 'line',
         data: {
             datasets: [{
                 label: 'Puntos por Partido',
                 data: datos,
-                borderColor: 'rgba(255, 215, 0, 1)',
-                backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                borderWidth: 3,
+                borderColor: 'rgba(255, 215, 0, 0.9)',
+                backgroundColor: 'rgba(255, 215, 0, 0.08)',
+                borderWidth: 2.5,
                 fill: true,
-                tension: 0.3,
-                pointRadius: 5,
+                tension: 0.4,
+                pointRadius: 4,
                 pointHoverRadius: 7,
-                pointBackgroundColor: 'rgba(255, 215, 0, 1)',
-                pointBorderColor: '#1a1a1a',
-                pointBorderWidth: 2
+                pointBackgroundColor: '#1a1a1a',
+                pointBorderColor: 'rgba(255, 215, 0, 0.9)',
+                pointBorderWidth: 2.5,
+                pointHoverBackgroundColor: 'rgba(255, 215, 0, 1)',
+                pointHoverBorderColor: '#1a1a1a',
+                pointHoverBorderWidth: 3
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
             plugins: { 
                 legend: { 
-                    labels: { color: '#ffffff' } 
+                    display: false // Ocultamos leyenda para mantener limpieza
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    titleColor: '#f3f4f6',
+                    bodyColor: '#d1d5db',
+                    borderColor: 'rgba(255, 255, 255, 0.08)',
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: false,
+                    titleFont: {
+                        size: 13,
+                        weight: '600',
+                        family: "'Inter', 'Segoe UI', sans-serif"
+                    },
+                    bodyFont: {
+                        size: 12,
+                        weight: '400',
+                        family: "'Inter', 'Segoe UI', sans-serif"
+                    },
                     callbacks: {
+                        title: function(context) {
+                            return `Partido #${context[0].parsed.x}`;
+                        },
                         label: function(context) {
-                            return `Partido ${context.parsed.x}: ${context.parsed.y} puntos`;
+                            const puntos = context.parsed.y;
+                            let tipoPrediccion = '';
+                            
+                            switch(puntos) {
+                                case 9: tipoPrediccion = 'Resultado exacto'; break;
+                                case 7: tipoPrediccion = 'Ganador + marcador'; break;
+                                case 5: tipoPrediccion = 'Ganador o empate'; break;
+                                case 2: tipoPrediccion = 'Solo marcador'; break;
+                                case 0: tipoPrediccion = 'Fallada'; break;
+                            }
+                            
+                            return [`Puntos: ${puntos}`, `Tipo: ${tipoPrediccion}`];
                         }
                     }
                 }
@@ -676,15 +724,31 @@ function crearGraficoEvolucion() {
                     type: 'linear',
                     title: {
                         display: true,
-                        text: 'Partidos Jugados',
-                        color: '#e0e0e0',
-                        font: { size: 13, weight: 'bold' }
+                        text: 'Partidos',
+                        color: '#9ca3af',
+                        font: { 
+                            size: 11, 
+                            weight: '500',
+                            family: "'Inter', 'Segoe UI', sans-serif"
+                        }
                     },
                     ticks: { 
-                        color: '#a0a0a0',
-                        stepSize: 1
+                        color: '#6b7280',
+                        stepSize: 1,
+                        font: {
+                            size: 10,
+                            family: "'Inter', 'Segoe UI', sans-serif"
+                        },
+                        padding: 8
                     }, 
-                    grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    grid: { 
+                        color: 'rgba(255, 255, 255, 0.05)',
+                        drawBorder: false,
+                        lineWidth: 1
+                    },
+                    border: {
+                        display: false
+                    }
                 },
                 y: { 
                     min: 0,
@@ -692,14 +756,22 @@ function crearGraficoEvolucion() {
                     title: {
                         display: true,
                         text: 'Puntos',
-                        color: '#e0e0e0',
-                        font: { size: 13, weight: 'bold' }
+                        color: '#9ca3af',
+                        font: { 
+                            size: 11, 
+                            weight: '500',
+                            family: "'Inter', 'Segoe UI', sans-serif"
+                        }
                     },
                     ticks: { 
-                        color: '#a0a0a0',
+                        color: '#6b7280',
                         stepSize: 1,
+                        font: {
+                            size: 10,
+                            family: "'Inter', 'Segoe UI', sans-serif"
+                        },
+                        padding: 8,
                         callback: function(value) {
-                            // Solo mostrar los valores de puntos posibles
                             if ([0, 2, 5, 7, 9].includes(value)) {
                                 return value;
                             }
@@ -708,12 +780,16 @@ function crearGraficoEvolucion() {
                     }, 
                     grid: { 
                         color: function(context) {
-                            // Resaltar las líneas de puntos posibles
                             if ([0, 2, 5, 7, 9].includes(context.tick.value)) {
-                                return 'rgba(255, 255, 255, 0.2)';
+                                return 'rgba(255, 255, 255, 0.1)';
                             }
-                            return 'rgba(255, 255, 255, 0.05)';
-                        }
+                            return 'rgba(255, 255, 255, 0.03)';
+                        },
+                        drawBorder: false,
+                        lineWidth: 1
+                    },
+                    border: {
+                        display: false
                     }
                 }
             }
