@@ -866,7 +866,6 @@ async function cargarLogros() {
         },
     ];
     
-    // Calcular logro "Coleccionista"
     const desbloqueados = logros.filter(l => l.desbloqueado && l.id !== 'coleccionista').length;
     const coleccionistaIndex = logros.findIndex(l => l.id === 'coleccionista');
     if (coleccionistaIndex !== -1) {
@@ -881,28 +880,37 @@ async function cargarLogros() {
     
 container.innerHTML = logrosOrdenados.map(l => {
     const imagenHTML = l.desbloqueado
-        ? `<img src="${l.imagen}" alt="${l.titulo}" class="achievement-image"
-               onerror="this.style.display='none'">`
+        ? `<img src="${l.imagen}" alt="${l.titulo}" class="achievement-image" onerror="this.style.display='none'">`
         : `<div class="mystery-placeholder">?</div>`;
- 
+
+    const lockOverlay = !l.desbloqueado
+        ? `<div class="achievement-lock-overlay">🔒</div>`
+        : '';
+
+    const tituloHTML = l.desbloqueado
+        ? `<p class="achievement-title">${l.titulo}</p>`
+        : `<p class="achievement-title mystery-text">???</p>`;
+
     const descripcionHTML = l.desbloqueado
         ? `<p class="achievement-description">${l.descripcion}</p>`
-        : `<p class="achievement-description mystery-text">???</p>`;
- 
+        : `<p class="achievement-description mystery-text">??? ??? ???</p>`;
+
     return `
-    <div class="achievement-card ${l.desbloqueado ? 'unlocked' : 'locked'} rarity-${l.rareza}">
- 
-        <span class="rarity-badge">${l.rareza}</span>
- 
+    <div class="achievement-card rarity-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
+         onclick="reproducirSonido('${l.id}'); agregarRipple(this, event)">
+
         <div class="achievement-image-wrap">
-            <div class="achievement-ring"></div>
             ${imagenHTML}
-            ${!l.desbloqueado ? '<div class="achievement-lock-overlay">🔒</div>' : ''}
+            ${lockOverlay}
         </div>
- 
-        <h3 class="achievement-title">${l.desbloqueado ? l.titulo : '???'}</h3>
-        ${descripcionHTML}
- 
+
+        <div class="rarity-badge">${l.rareza.toUpperCase()}</div>
+
+        <div class="card-body">
+            ${tituloHTML}
+            ${descripcionHTML}
+        </div>
+
     </div>`;
 }).join('');
 
@@ -917,6 +925,38 @@ function scrollAchievements(dir) {
     if (!track) return;
     track.scrollBy({ left: dir === 'right' ? 280 : -280, behavior: 'smooth' });
     }
+}
+
+function reproducirSonido(logroId) {
+    // RECUERDAMEEE 🗣️ pa los audios
+    const audio = new Audio(`/audio/logros/${logroId}.mp3`);
+    audio.volume = 0.7;
+    audio.play().catch(() => {
+        // Si no existe el archivo aún, hace un beep mierdero
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = 660;
+            gain.gain.setValueAtTime(0.25, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.5);
+        } catch(e) {}
+    });
+}
+
+function agregarRipple(card, event) {
+    const r = document.createElement('div');
+    r.className = 'card-ripple';
+    const rect = card.getBoundingClientRect();
+    r.style.left = (event.clientX - rect.left - 10) + 'px';
+    r.style.top  = (event.clientY - rect.top  - 10) + 'px';
+    card.appendChild(r);
+    setTimeout(() => r.remove(), 500);
 }
 
 function obtenerBandera(nombre) {
