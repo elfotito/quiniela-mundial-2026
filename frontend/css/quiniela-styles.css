@@ -1302,7 +1302,6 @@ body {
             height: 400px;
         }
         
-        /* Barra de progreso */
         .progress-section {
             background: var(--dark-card);
             border: 1px solid var(--border-color);
