@@ -489,7 +489,7 @@ function crearGraficoEfectividad() {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Exactas (9pts)', 'Ganador + Marcador (7pts)', 'Ganador/Empate (5pts)', 'Solo Marcador (2pts)', 'Falladas (0pts)'],
+            labels: ['Exactas (9pts)', 'Ganador + Marcador (7pts)', 'Ganador o Empate (5pts)', 'Solo Marcador (2pts)', 'Falladas (0pts)'],
             datasets: [{
                 data: [exactas, ganadorymarcador, empateoganador, solomarcador, falladas],
                 backgroundColor: ['rgba(50, 196, 55, 0.8)', 'rgba(255, 215, 0, 0.8)', 'rgba(118, 43, 216, 0.8)', 'rgba(35, 120, 218, 0.8)', 'rgba(244, 67, 54, 0.8)']

@@ -210,26 +210,22 @@
                     <span class="widget-title">Mi Resumen</span>
                 </div>
                 <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label-w">Predicciones</span><span class="stat-val-w blue" id="resPredicciones">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Predicciones Jugadas</span><span class="stat-val-w blue" id="resPredicciones">—</span></div>
                     <div class="stat-row"><span class="stat-label-w">Puntos totales</span><span class="stat-val-w gold" id="resPuntos">—</span></div>
-                    <div class="stat-row"><span class="stat-label-w">Posición ranking</span><span class="stat-val-w" id="resPosicion">—</span></div>
                     <div class="stat-row"><span class="stat-label-w">Efectividad</span><span class="stat-val-w green" id="resEfectividad">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Campeon elegido</span><span class="stat-val-w" id="userCampeon">—</span></div>
                 </div>
             </div>
-
-            <!-- Campeón elegido -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Mi Campeón</span>
-                </div>
-                <div class="campeon-box" id="campeonBox">
-                    <span class="campeon-flag" id="userCampeon">🏳️</span>
-                    <div class="campeon-name" id="campeonNombre">—</div>
-                    <div class="campeon-sub">Tu campeón elegido</div>
-                </div>
+            <!-- El donut lindo y bello -->
+            <div class="chart-widget">
+                    <div class="chart-widget-header">
+                        <div class="widget-bar"></div>
+                        <span class="chart-widget-title">Distribución</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="effectivenessChart"></canvas>
+                    </div>
             </div>
-
 
             <!-- Partidos sin predicción -->
             <div class="widget">
@@ -251,15 +247,6 @@
 
             <!-- Gráficos -->
             <div class="charts-row">
-                <div class="chart-widget">
-                    <div class="chart-widget-header">
-                        <div class="widget-bar"></div>
-                        <span class="chart-widget-title">Distribución</span>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="effectivenessChart"></canvas>
-                    </div>
-                </div>
                 <div class="chart-widget">
                     <div class="chart-widget-header">
                         <div class="widget-bar"></div>
