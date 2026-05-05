@@ -410,18 +410,32 @@ async function cargarProximasPredicciones() {
         const partidosSinPrediccion = partidos.filter(partido => {
             return !misPredicciones.some(pred => pred.partido_id === partido.id);
         });
-
-        console.log('⚡ Partidos sin predicción:', partidosSinPrediccion);
-        
         const container = document.getElementById('upcomingMatches');
         if (partidosSinPrediccion.length === 0) {
             container.innerHTML = '<p style="text-align: center; color: var(--text-gray); padding: 2rem;">¡Ya tienes todas las predicciones al día! 🎉</p>';
         } else {
             container.innerHTML = partidosSinPrediccion.slice(0, 3).map(p => `
-                <div class="match-card">
-                    <div>${obtenerBandera(p.equipo_local)} ${p.equipo_local} vs ${p.equipo_visitante} ${obtenerBandera(p.equipo_visitante)}</div>
-                    <button onclick="window.location.href='predicciones.html'" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: var(--fifa-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">Predecir</button>
+                <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="ppm-hora-col">
+                        <button onclick="window.location.href='predicciones.html'" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: var(--fifa-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">Predecir</button>
+                    </div>
+                </div>
+            </div>
             `).join('');
         }
     } catch (error) {
