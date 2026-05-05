@@ -516,7 +516,7 @@ function crearGraficoEfectividad() {
             cutout: '60%',
             plugins: {
                 legend: {
-                    display: false // Ocultamos la leyenda de Chart.js
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(17, 24, 39, 0.95)',
