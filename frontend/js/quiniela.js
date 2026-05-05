@@ -543,11 +543,11 @@ function crearGraficoEfectividad() {
 
     // Crear leyenda personalizada
     crearLeyendaPersonalizada([
-        { label: 'Exactas', color: 'rgba(50, 196, 55, 0.85)', puntos: `${exactas} pts` },
-        { label: 'Ganador + Marcador', color: 'rgba(255, 215, 0, 0.85)', puntos: `${ganadorymarcador} pts` },
-        { label: 'Ganador o Empate', color: 'rgba(118, 43, 216, 0.85)', puntos: `${empateoganador} pts` },
-        { label: 'Solo Marcador', color: 'rgba(35, 120, 218, 0.85)', puntos: `${solomarcador} pts` },
-        { label: 'Falladas', color: 'rgba(244, 67, 54, 0.85)', puntos: `${falladas} pts` }
+        { label: 'Exactas', color: 'rgba(50, 196, 55, 0.85)', puntos: `${exactas}` },
+        { label: 'Ganador + Marcador', color: 'rgba(255, 215, 0, 0.85)', puntos: `${ganadorymarcador}` },
+        { label: 'Ganador o Empate', color: 'rgba(118, 43, 216, 0.85)', puntos: `${empateoganador}` },
+        { label: 'Solo Marcador', color: 'rgba(35, 120, 218, 0.85)', puntos: `${solomarcador}` },
+        { label: 'Falladas', color: 'rgba(244, 67, 54, 0.85)', puntos: `${falladas}` }
     ]);
 }
 
@@ -602,19 +602,19 @@ function crearLeyendaPersonalizada(items) {
         const label = document.createElement('span');
         label.textContent = item.label;
         label.style.cssText = `
-            color: #9ca3af;
+            color: #000000;
             font-size: 12px;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-family: 'Yolk', 'Segoe UI', sans-serif;
             font-weight: 400;
         `;
         
         const puntos = document.createElement('span');
         puntos.textContent = item.puntos;
         puntos.style.cssText = `
-            color: #6b7280;
+            color: #000000;
             font-size: 12px;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            font-weight: 500;
+            font-family: 'Yolk', 'Segoe UI', sans-serif;
+            font-weight: 900;
             margin-left: auto;
         `;
         
