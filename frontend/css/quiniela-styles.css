@@ -1943,7 +1943,7 @@ body {
     .qui-hero-stat { padding:14px 22px; border-right:1px solid rgba(255,255,255,.1); text-align:center; }
     .qui-hero-stat:last-child { border-right:none; }
     .qui-hero-stat-val { font-size:24px; font-weight:900; color:#fff; line-height:1; display:block; }
-    .qui-hero-stat-val.gold { color:var(--fifa-gold,#FFD700); }
+    .qui-hero-stat-val.gold { color:#FFD700; }
     .qui-hero-stat-val.green { color:#22c55e; }
     .qui-hero-stat-lbl { font-size:10px; color:rgba(255,255,255,.4); font-weight:700; letter-spacing:.8px; text-transform:uppercase; display:block; margin-top:4px; }
     .qui-hero-deco { font-size:110px; opacity:.05; line-height:1; user-select:none; flex-shrink:0; }
