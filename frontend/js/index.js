@@ -220,7 +220,7 @@ async function lvIniciar(promesaDatos) {
 }
 
 // ============================================
-// INICIALIZACIÓN PRINCIPAL — reemplaza tu DOMContentLoaded
+// INICIALIZACIÓN PRINCIPAL 
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -249,19 +249,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // 3. Crear promesa de datos (empieza a correr pero no esperamos aún)
   const promesaDatos = cargarDatos();
 
-  // 4. Lanzar loading — se cierra solo cuando promesaDatos resuelva
   await lvIniciar(promesaDatos);
 
-  // 5. El resto arranca cuando todo está listo
   iniciarCountdown();
   inicializarCarrusel();
   iniciarTicker();
   iniciarEasterEgg();
   initUserBanner();
 });
+
 // ===============================================
 // VERIFICAR LOGIN
 // ===============================================
