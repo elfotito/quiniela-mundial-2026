@@ -1002,6 +1002,215 @@ function obtenerBandera(nombre) {
 };
     return banderas[nombre] || '🏴';
 }
+// ===============================================
+// TOASTTTT
+// ===============================================
+
+function mostrarToast(mensaje, opcionesOTipo = {}) {
+  let icon = '🔧';
+  let duracion = 4000;
+  let tipo = null;
+  let usarBootstrapIcons = false;
+
+  // Detectar si viene como string (tipo) o como objeto (opciones)
+  if (typeof opcionesOTipo === 'string') {
+    // Modo: mostrarToast(mensaje, 'success')
+    tipo = opcionesOTipo;
+    usarBootstrapIcons = true;
+  } else {
+    // Modo: mostrarToast(mensaje, { icon: '🏗️', duracion: 4000 })
+    icon = opcionesOTipo.icon || '🔧';
+    duracion = opcionesOTipo.duracion || 4000;
+  }
+
+  const container = document.getElementById('toast-container');
+  if (!container) {
+    console.error('Toast container no encontrado');
+    return;
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'toast-construccion';
+  
+  let iconHTML = icon;
+  if (usarBootstrapIcons) {
+    let iconClass = 'bi-check2';
+    if (tipo === 'error')   iconClass = 'bi-x-lg';
+    if (tipo === 'warning') iconClass = 'bi-exclamation-triangle';
+    iconHTML = `<i class="bi ${iconClass}"></i>`;
+  }
+
+  toast.innerHTML = `
+    <span class="toast-icon">${iconHTML}</span>
+    <div class="toast-text">${mensaje}</div>
+    <span class="toast-close">✕</span>
+  `;
+
+  container.appendChild(toast);
+
+  const cerrar = () => {
+    toast.classList.add('exit');
+    setTimeout(() => toast.remove(), 400);
+  };
+
+  toast.querySelector('.toast-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    cerrar();
+  });
+
+  toast.addEventListener('click', cerrar);
+
+  setTimeout(cerrar, duracion);
+
+  // Limitar a 3 toasts
+  const toasts = container.querySelectorAll('.toast-construccion');
+  if (toasts.length > 3) {
+    const oldest = toasts[0];
+    oldest.classList.add('exit');
+    setTimeout(() => oldest.remove(), 400);
+  }
+}
+
+// ── Listeners para diferentes tipos de notificaciones ──
+setTimeout(() => {
+  // Construcción
+  document.querySelectorAll('a[data-construccion]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+        icon: '🏗️',
+        duracion: 4000
+      });
+    });
+  });
+
+  // Proximamente
+  document.querySelectorAll('a[data-proximamente], button[data-proximamente]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función llegará muy pronto 🚀', {
+        icon: '⏳',
+        duracion: 4000
+      });
+    });
+  });
+
+  // En mantenimiento
+  document.querySelectorAll('a[data-mantenimiento]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos en mantenimiento, intenta más tarde ⚙️', {
+        icon: '🔧',
+        duracion: 4000
+      });
+    });
+  });
+
+  // Premium (acceso restringido)
+  document.querySelectorAll('a[data-premium]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función es solo para miembros premium 👑', {
+        icon: '💎',
+        duracion: 4000
+      });
+    });
+  });
+
+  // No disponible en móvil
+  document.querySelectorAll('a[data-desktop-only]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función solo está disponible en desktop 💻', {
+        icon: '📱',
+        duracion: 4000
+      });
+    });
+  });
+
+}, 500);
+
+// ===============================================
+// TIPS ALEATORIOS
+// ===============================================
+
+const TIPS_ALEATORIOS = [
+  { icon: '⚽', texto: 'El Mundial 2026 es el primero con 48 selecciones.' },
+  { icon: '🌍', texto: 'Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá.' },
+  { icon: '💡', texto: 'Predice el resultado exacto y ganas puntos extra.' },
+  { icon: '🏆', texto: 'El campeón que eliges al inicio vale puntos dobles.' },
+  { icon: '📊', texto: 'Hay 104 partidos en total en el torneo.' },
+  { icon: '🌟', texto: 'La final se jugará el 19 de julio de 2026 en Nueva York.' },
+  { icon: '🇻🇪', texto: 'Droguería Carrisan trae la Quiniela más emocionante del 2026.' },
+  { icon: '⚡', texto: 'El torneo arranca el 11 de junio de 2026.' },
+  { icon: '🥅', texto: 'Los grupos tienen 3 equipos cada uno — más partidos por equipo.' },
+  { icon: '🎯', texto: 'Cuanto más aciertes, más alto subes en el ranking global.' },
+];
+
+// ── Listener para tips aleatorios ──
+setTimeout(() => {
+  document.querySelectorAll('a[data-tip], button[data-tip]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Seleccionar tip random
+      const tip = TIPS_ALEATORIOS[Math.floor(Math.random() * TIPS_ALEATORIOS.length)];
+      
+      mostrarToast(tip.texto, {
+        icon: tip.icon,
+        duracion: 5000
+      });
+    });
+  });
+}, 500);
+
+// ===============================================
+// MENÚ MÓVIL
+// ===============================================
+(function inicializarMenuMovil() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', inicializarMenuMovil);
+        return;
+    }
+    const menuBtn    = document.getElementById('menuToggleBtn');
+    const menu       = document.getElementById('mobileMenu');
+    const backdrop   = document.getElementById('mmoBackdrop');
+    const closeBtn   = document.getElementById('mobileMenuClose');
+ 
+    function openMenu() {
+        menu.classList.add('show');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+ 
+    function closeMenu() {
+        menu.classList.remove('show');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+ 
+    if (menuBtn) menuBtn.addEventListener('click', () => {
+    menu.classList.contains('show') ? closeMenu() : openMenu();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+ 
+    // Marcar ítem activo según página actual
+    const currentPage = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.mbn-item').forEach(item => {
+        const href = item.getAttribute('href') || '';
+        if (href && href.includes(currentPage)) {
+            item.classList.add('active');
+        }
+    });
+})();
+
 const backToTopBtn = document.getElementById('backToTop');
 
         window.addEventListener('scroll', function() {

@@ -165,8 +165,6 @@
     </a>
  
 </nav>
- 
-</nav>
     <!-- ── HERO ──────────────────────────────────────── -->
     <div class="qui-hero">
         <div class="qui-hero-inner">
@@ -205,6 +203,19 @@
 
         <!-- ══ COLUMNA IZQUIERDA ══ -->
         <aside class="qui-col-left">
+            <!-- Resumen -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Mi Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="stat-label-w">Predicciones</span><span class="stat-val-w blue" id="resPredicciones">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Puntos totales</span><span class="stat-val-w gold" id="resPuntos">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Posición ranking</span><span class="stat-val-w" id="resPosicion">—</span></div>
+                    <div class="stat-row"><span class="stat-label-w">Efectividad</span><span class="stat-val-w green" id="resEfectividad">—</span></div>
+                </div>
+            </div>
 
             <!-- Campeón elegido -->
             <div class="widget">
@@ -219,17 +230,16 @@
                 </div>
             </div>
 
-            <!-- Resumen -->
+
+            <!-- Partidos sin predicción -->
             <div class="widget">
                 <div class="widget-header">
                     <div class="widget-bar"></div>
-                    <span class="widget-title">Mi Resumen</span>
+                    <span class="widget-title">⚠️ Sin Predicción</span>
+                    <a href="predicciones.html" class="widget-link">Predecir →</a>
                 </div>
-                <div class="widget-body">
-                    <div class="stat-row"><span class="stat-label-w">Predicciones</span><span class="stat-val-w blue" id="resPredicciones">—</span></div>
-                    <div class="stat-row"><span class="stat-label-w">Puntos totales</span><span class="stat-val-w gold" id="resPuntos">—</span></div>
-                    <div class="stat-row"><span class="stat-label-w">Posición ranking</span><span class="stat-val-w" id="resPosicion">—</span></div>
-                    <div class="stat-row"><span class="stat-label-w">Efectividad</span><span class="stat-val-w green" id="resEfectividad">—</span></div>
+                <div class="widget-body" id="upcomingMatches">
+                    <div class="qui-loading">Cargando partidos...</div>
                 </div>
             </div>
 
@@ -264,8 +274,7 @@
             <!-- Marico los logros equisde -->
             <div class="logros-widget">
                 <div class="logros-header">
-                    <div class="widget-bar"></div>
-                    <span class="logros-title">🏆 Logros</span>
+                    <span class="logros-title">⬡ Logros</span>
                     <span class="logros-counter" id="achievementsCount">0/0</span>
                 </div>
                 <div class="logros-track-wrap">
@@ -273,20 +282,8 @@
                     <div class="logros-track" id="achievementsGrid"></div>
                     <button class="logros-nav next" onclick="scrollAchievements('right')" aria-label="Siguiente">›</button>
                 </div>
-            </div>
-
-
-            <!-- Partidos sin predicción -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">⚠️ Sin Predicción</span>
-                    <a href="predicciones.html" class="widget-link">Predecir →</a>
                 </div>
-                <div class="widget-body" id="upcomingMatches">
-                    <div class="qui-loading">Cargando partidos...</div>
-                </div>
-            </div>
+
 
             <!-- Historial de predicciones -->
             <div class="qui-filter-section">
@@ -379,7 +376,7 @@
     <i class="bi bi-arrow-up"></i>
     </button>
     </div>
-        <footer class="footer">
+<footer class="footer">
         
         <!-- BARRA SUPERIOR -->
         <div class="footer-top-bar">
@@ -500,10 +497,6 @@
         });
     });
 
-    // Sincronizar stats del hero con los IDs de quiniela.js
-    // quiniela.js ya escribe en #statPredicciones, #statPuntos,
-    // #statPosicion, #statEfectividad — funcionan directo.
-    // También sincronizamos el resumen lateral:
     const observer = new MutationObserver(() => {
         const ids = ['Predicciones','Puntos','Posicion','Efectividad'];
         ids.forEach(id => {
