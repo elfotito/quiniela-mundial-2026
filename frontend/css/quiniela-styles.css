@@ -1293,9 +1293,13 @@ body {
             gap: 0.5rem;
         }
         
-        .chart-container {
+        .chart-container-evo {
             position: relative;
-            height: 300px;
+            height: 180px;
+        }
+        .chart-container-dona {
+            position: relative;
+            height: 400px;
         }
         
         /* Barra de progreso */
