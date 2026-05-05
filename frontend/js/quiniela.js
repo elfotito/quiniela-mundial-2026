@@ -486,96 +486,143 @@ function crearGraficoEfectividad() {
     const solomarcador = predicciones.filter(p => p.puntos_obtenidos === 2).length;
     const falladas = predicciones.filter(p => p.puntos_obtenidos === 0).length;
 
-    new Chart(ctx, {
+    // Destruir gráfico anterior si existe
+    if (window.efectividadChart) {
+        window.efectividadChart.destroy();
+    }
+
+    window.efectividadChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ['Exactas', 'Ganador + Marcador', 'Ganador o Empate', 'Solo Marcador', 'Falladas'],
             datasets: [{
                 data: [exactas, ganadorymarcador, empateoganador, solomarcador, falladas],
                 backgroundColor: [
-                    'rgba(50, 196, 55, 0.9)',
-                    'rgba(255, 215, 0, 0.9)',
-                    'rgba(118, 43, 216, 0.9)',
-                    'rgba(35, 120, 218, 0.9)',
-                    'rgba(244, 67, 54, 0.9)'
+                    'rgba(50, 196, 55, 0.85)',
+                    'rgba(255, 215, 0, 0.85)',
+                    'rgba(118, 43, 216, 0.85)',
+                    'rgba(35, 120, 218, 0.85)',
+                    'rgba(244, 67, 54, 0.85)'
                 ],
-                borderColor: [
-                    'rgba(50, 196, 55, 1)',
-                    'rgba(255, 215, 0, 1)',
-                    'rgba(118, 43, 216, 1)',
-                    'rgba(35, 120, 218, 1)',
-                    'rgba(244, 67, 54, 1)'
-                ],
-                borderWidth: 2,
-                hoverBorderWidth: 3,
-                hoverBorderColor: '#ffffff',
-                borderRadius: 4,
-                spacing: 4
+                borderColor: 'transparent',
+                borderWidth: 0,
+                borderRadius: 3,
+                spacing: 2
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%',
+            cutout: '60%',
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    align: 'center',
-                    labels: {
-                        color: '#e0e0e0',
-                        padding: 20,
-                        font: {
-                            size: 13,
-                            family: "'Segoe UI', Roboto, sans-serif",
-                            weight: '500'
-                        },
-                        usePointStyle: true,
-                        pointStyleWidth: 12,
-                        pointStyleHeight: 12,
-                        boxWidth: 12,
-                        boxHeight: 12,
-                        generateLabels: function(chart) {
-                            const data = chart.data;
-                            return data.labels.map((label, i) => ({
-                                text: `${label} (${data.datasets[0].data[i]} pts)`,
-                                fillStyle: data.datasets[0].backgroundColor[i],
-                                strokeStyle: data.datasets[0].borderColor[i],
-                                lineWidth: 2,
-                                hidden: false,
-                                index: i,
-                                pointStyle: 'circle',
-                                rotation: 0
-                            }));
-                        }
-                    }
+                    display: false // Ocultamos la leyenda de Chart.js
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
-                    titleColor: '#ffffff',
-                    bodyColor: '#e0e0e0',
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    titleColor: '#f3f4f6',
+                    bodyColor: '#d1d5db',
+                    borderColor: 'rgba(255, 255, 255, 0.05)',
                     borderWidth: 1,
-                    padding: 12,
-                    cornerRadius: 8,
+                    padding: 10,
+                    cornerRadius: 6,
                     displayColors: true,
-                    boxPadding: 4,
+                    boxPadding: 3,
                     callbacks: {
                         label: function(context) {
                             const total = context.dataset.data.reduce((a, b) => a + b, 0);
                             const value = context.parsed;
                             const percentage = total > 0 ? ((value * 100) / total).toFixed(1) : 0;
-                            return ` ${context.label}: ${value} (${percentage}%)`;
+                            return ` ${value} predicciones (${percentage}%)`;
                         }
                     }
                 }
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true,
-                duration: 800,
-                easing: 'easeInOutQuart'
             }
         }
+    });
+
+    // Crear leyenda personalizada
+    crearLeyendaPersonalizada([
+        { label: 'Exactas', color: 'rgba(50, 196, 55, 0.85)', puntos: `${exactas} pts` },
+        { label: 'Ganador + Marcador', color: 'rgba(255, 215, 0, 0.85)', puntos: `${ganadorymarcador} pts` },
+        { label: 'Ganador o Empate', color: 'rgba(118, 43, 216, 0.85)', puntos: `${empateoganador} pts` },
+        { label: 'Solo Marcador', color: 'rgba(35, 120, 218, 0.85)', puntos: `${solomarcador} pts` },
+        { label: 'Falladas', color: 'rgba(244, 67, 54, 0.85)', puntos: `${falladas} pts` }
+    ]);
+}
+
+function crearLeyendaPersonalizada(items) {
+    // Buscar o crear el contenedor de la leyenda
+    let legendContainer = document.getElementById('efectividadLegend');
+    if (!legendContainer) {
+        legendContainer = document.createElement('div');
+        legendContainer.id = 'efectividadLegend';
+        legendContainer.style.cssText = `
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 0 10px;
+        `;
+        
+        // Insertar después del canvas
+        const canvas = document.getElementById('effectivenessChart');
+        canvas.parentNode.insertBefore(legendContainer, canvas.nextSibling);
+    }
+    
+    // Limpiar y reconstruir
+    legendContainer.innerHTML = '';
+    
+    items.forEach(item => {
+        const row = document.createElement('div');
+        row.style.cssText = `
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+        `;
+        
+        const leftSide = document.createElement('div');
+        leftSide.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+        
+        const colorBox = document.createElement('span');
+        colorBox.style.cssText = `
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: ${item.color};
+            border-radius: 2px;
+            flex-shrink: 0;
+        `;
+        
+        const label = document.createElement('span');
+        label.textContent = item.label;
+        label.style.cssText = `
+            color: #9ca3af;
+            font-size: 12px;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-weight: 400;
+        `;
+        
+        const puntos = document.createElement('span');
+        puntos.textContent = item.puntos;
+        puntos.style.cssText = `
+            color: #6b7280;
+            font-size: 12px;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-weight: 500;
+            margin-left: auto;
+        `;
+        
+        leftSide.appendChild(colorBox);
+        leftSide.appendChild(label);
+        row.appendChild(leftSide);
+        row.appendChild(puntos);
+        legendContainer.appendChild(row);
     });
 }
 
