@@ -489,29 +489,91 @@ function crearGraficoEfectividad() {
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Exactas (9pts)', 'Ganador + Marcador (7pts)', 'Ganador o Empate (5pts)', 'Solo Marcador (2pts)', 'Falladas (0pts)'],
+            labels: ['Exactas', 'Ganador + Marcador', 'Ganador o Empate', 'Solo Marcador', 'Falladas'],
             datasets: [{
                 data: [exactas, ganadorymarcador, empateoganador, solomarcador, falladas],
-                backgroundColor: ['rgba(50, 196, 55, 0.8)', 'rgba(255, 215, 0, 0.8)', 'rgba(118, 43, 216, 0.8)', 'rgba(35, 120, 218, 0.8)', 'rgba(244, 67, 54, 0.8)']
+                backgroundColor: [
+                    'rgba(50, 196, 55, 0.9)',
+                    'rgba(255, 215, 0, 0.9)',
+                    'rgba(118, 43, 216, 0.9)',
+                    'rgba(35, 120, 218, 0.9)',
+                    'rgba(244, 67, 54, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(50, 196, 55, 1)',
+                    'rgba(255, 215, 0, 1)',
+                    'rgba(118, 43, 216, 1)',
+                    'rgba(35, 120, 218, 1)',
+                    'rgba(244, 67, 54, 1)'
+                ],
+                borderWidth: 2,
+                hoverBorderWidth: 3,
+                hoverBorderColor: '#ffffff',
+                borderRadius: 4,
+                spacing: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            cutout: '65%',
             plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'bottom',
                     align: 'center',
                     labels: {
-                        color: '#a0a0a0',
-                        padding: 15,
+                        color: '#e0e0e0',
+                        padding: 20,
                         font: {
-                            size: 12
+                            size: 13,
+                            family: "'Segoe UI', Roboto, sans-serif",
+                            weight: '500'
                         },
-                        boxWidth: 15,
-                        boxHeight: 15
+                        usePointStyle: true,
+                        pointStyleWidth: 12,
+                        pointStyleHeight: 12,
+                        boxWidth: 12,
+                        boxHeight: 12,
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            return data.labels.map((label, i) => ({
+                                text: `${label} (${data.datasets[0].data[i]} pts)`,
+                                fillStyle: data.datasets[0].backgroundColor[i],
+                                strokeStyle: data.datasets[0].borderColor[i],
+                                lineWidth: 2,
+                                hidden: false,
+                                index: i,
+                                pointStyle: 'circle',
+                                rotation: 0
+                            }));
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#e0e0e0',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: true,
+                    boxPadding: 4,
+                    callbacks: {
+                        label: function(context) {
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const value = context.parsed;
+                            const percentage = total > 0 ? ((value * 100) / total).toFixed(1) : 0;
+                            return ` ${context.label}: ${value} (${percentage}%)`;
+                        }
                     }
                 }
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 800,
+                easing: 'easeInOutQuart'
             }
         }
     });
