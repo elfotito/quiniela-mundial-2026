@@ -6,425 +6,11 @@
     <title>Ranking - Quiniela Mundial 2026</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/index-styles.css">
     <link rel="stylesheet" href="css/ranking-styles.css">
-
-    <style>
-        /* RANKING ESPECÍFICO */
-        .hero-hero-ranking {
-            position: relative;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: url('/frontend/img/ranking.jpg') center/cover;
-            background-blend-mode: overlay;
-        }
-
-        /* Versión responsive */
-        @media (max-width: 768px) {
-            .hero-hero-ranking {
-                height: 400px; /* Altura reducida en móviles */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-hero-ranking {
-                height: 350px;
-            }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, transparent, rgba(10, 10, 10, 0.8));
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-badge {
-            font-size: 2.5rem;
-            letter-spacing: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            /* Para más énfasis, puedes usar múltiples sombras */
-            text-shadow: 
-                2px 2px 4px rgba(0, 0, 0, 0.5),
-                0 0 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .ranking-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        /* SIDEBAR FILTROS */
-        .filters-sidebar {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            height: fit-content;
-            position: sticky;
-            top: 20px;
-        }
-        
-        .sidebar-title {
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .filter-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .filter-label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-white);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .filter-select,
-        .filter-input {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-white);
-            font-size: 0.95rem;
-        }
-        
-        .filter-select:focus,
-        .filter-input:focus {
-            outline: none;
-            border-color: var(--fifa-gold);
-        }
-        
-        .filter-select option {
-            background: var(--dark-card);
-        }
-        
-        .participants-badge {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid var(--fifa-gold);
-            border-radius: 8px;
-            padding: 0.75rem;
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        
-        .participants-count {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-            display: block;
-        }
-        
-        .participants-label {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-top: 0.25rem;
-            display: block;
-        }
-        
-        .btn-share {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--fifa-gold), #ffa500);
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-share:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-        
-        .ranking-content {
-            min-width: 0;
-        }
-        
-        .podium-section {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .podium-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .podium-place {
-            background: rgba(255, 255, 255, 0.03);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .podium-place:hover {
-            border-color: var(--fifa-gold);
-            transform: translateY(-5px);
-        }
-        
-        .podium-place.first {
-            border-color: var(--fifa-gold);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-        }
-        
-        .podium-place.second {
-            border-color: #C0C0C0;
-        }
-        
-        .podium-place.third {
-            border-color: #CD7F32;
-        }
-        
-        .podium-image {
-            width: 100%;
-            height: 180px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            border: 2px dashed var(--border-color);
-        }
-        
-        .podium-medal {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .podium-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-white);
-            margin-bottom: 0.5rem;
-        }
-        
-        .podium-liga {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            margin-bottom: 1rem;
-        }
-        
-        .podium-points {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-            margin-bottom: 0.25rem;
-        }
-        
-        .podium-label {
-            font-size: 0.85rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* TABLA */
-        .table-section {
-            background: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-        }
-        
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .table-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-        }
-        
-        .table-responsive {
-            overflow-x: auto;
-        }
-        
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .ranking-table th,
-        .ranking-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .ranking-table th {
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--fifa-gold);
-            font-weight: 700;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .ranking-table tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-        
-        .ranking-table tr.current-user {
-            background: rgba(255, 215, 0, 0.1);
-            border-left: 4px solid var(--fifa-gold);
-        }
-        
-        .td-pos {
-            font-size: 1.5rem;
-            font-weight: 900;
-            text-align: center;
-        }
-        
-        .user-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .user-flag {
-            font-size: 1.5rem;
-        }
-        
-        .user-nametable {
-            font-weight: 500;
-        }
-        
-        .liga-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.35rem 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            font-size: 0.85rem;
-        }
-        
-        .td-fase {
-            text-align: center;
-            color: var(--text-gray);
-        }
-        
-        .td-fase.has-points {
-            color: var(--text-white);
-            font-weight: 700;
-        }
-        
-        .td-total {
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--fifa-gold);
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-gray);
-        }
-        
-        .empty-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-        
-        /* RESPONSIVE */
-        @media (max-width: 1024px) {
-            .ranking-layout {
-                grid-template-columns: 1fr;
-            }
-            
-            .filters-sidebar {
-                position: static;
-            }
-            
-            .podium-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .table-responsive {
-                font-size: 0.85rem;
-            }
-            
-            .ranking-table th,
-            .ranking-table td {
-                padding: 0.75rem 0.5rem;
-            }
-            
-            .podium-image {
-                height: 120px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/index-styles.css">
 </head>
 <body>
+<div id="toast-container"></div>
 <header class="desktop-header">
     <div class="top-tier">
         <div class="fw-black">FIFA WORLD CUP 2026™</div>
@@ -433,7 +19,7 @@
             <a href="sistema.html">SISTEMA DE PUNTOS</a>
             <a href="terminos.html">TERMINOS Y CONDICIONES</a>
             <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F">CANAL OFICIAL</a>
-            <a href="#">QUINIELA GATES</a>
+            <a href="#" data-construccion>QUINIELA GATES</a>
         </div>
     </div>
     <div class="main-tier">
@@ -453,7 +39,7 @@
             <a href="ranking.html">RANKING</a>
             <a href="mrchip.html">MR CHIP</a>
             <a href="calendario.html">CALENDARIO</a>
-            <a href="#">HISTORIA</a>
+            <a href="#" data-construccion="">HISTORIA</a>
         </nav>
 
         <div class="right-section">
@@ -480,12 +66,10 @@
     <div class="mtb-logo">
         <img src="img/logoblancomenu.png" alt="Quiniela 2026">
     </div>
-
+    <span class="user-bg"></span>
     <div class="user-pill-mobile">
-        <span class="user-emoji-display" id="mobileUserCampeon">👤</span>
         <div class="user-info">
-            <span class="greeting">Bienvenido,</span>
-            <span class="user-name-display" id="mobileUserName">Usuario</span>
+            <span class="user-name-display" id="mobileUserName"><i class="fa-regular fa-circle-user"></i>Usuario</span>
         </div>
     </div>
     <button class="btn-admin-display" id="mobileAdminBtn" title="Panel Admin">
@@ -495,7 +79,8 @@
         <i class="fas fa-newspaper"></i>
     </button>
 </header>
-<!-- ── MENÚ OVERLAY (desliza desde arriba) ───────────────── -->
+
+
 <div class="mobile-menu-overlay" id="mobileMenu">
 
     <div class="mmo-header">
@@ -511,7 +96,7 @@
             <span>Inicio</span>
         </a>
         <a href="predicciones.html"  class="mmo-link mmo-link-main">
-            <i class="fas fa-crosshairs"></i>
+            <i class="fas fa-bullseye"></i>
             <span>Predicciones</span>
         </a>
         <a href="quiniela.html"      class="mmo-link mmo-link-main">
@@ -531,18 +116,15 @@
             <span>Mr. CHIP</span>
         </a>
     </div>
- 
-    <!-- Divisor -->
+
     <div class="mmo-divider"></div>
  
-    <!-- Links secundarios -->
     <div class="mmo-section">
         <a href="sistema.html"       class="mmo-link mmo-link-sec">Sistema de Puntos</a>
         <a href="reglamento.html"    class="mmo-link mmo-link-sec">Reglamento</a>
         <a href="terminos.html"      class="mmo-link mmo-link-sec">Términos y Condiciones</a>
     </div>
  
-    <!-- Botón de salir -->
     <div class="mmo-footer">
         <button class="mmo-logout-btn" onclick="logout()">
             <i class="fas fa-sign-out-alt"></i>
@@ -556,14 +138,14 @@
 <!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
 <nav class="mobile-bottom-nav" id="mobileBottomNav">
  
-    <a href="index.html" class="mbn-item active">
+    <a href="index.html" class="mbn-item">
         <i class="fas fa-home"></i>
         <span>Inicio</span>
     </a>
  
     <a href="predicciones.html" class="mbn-item">
-        <i class="fas fa-crosshairs"></i>
-        <span>Predecir</span>
+        <i class="fas fa-bullseye"></i>
+        <span>Predicciones</span>
     </a>
 
     <button class="mbn-item" id="menuToggleBtn">
@@ -576,7 +158,7 @@
         <span>Mi Quiniela</span>
     </a>
 
-    <a href="ranking.html" class="mbn-item">
+    <a href="ranking.html" class="mbn-item active">
         <i class="fas fa-trophy"></i>
         <span>Ranking</span>
     </a>
@@ -592,16 +174,25 @@
                 </div>
                 <h1 class="rnk-title">Tabla de<br><em>Posiciones</em></h1>
                 <p class="rnk-sub">Compara tu rendimiento con el resto de participantes. Filtra por liga y busca a tus rivales.</p>
-                <div class="rnk-hero-pills">
-                    <span class="rnk-pill">🥇 Top 3 en el podio</span>
-                    <span class="rnk-pill">🏅 Filtro por liga</span>
-                    <span class="rnk-pill">🔍 Búsqueda de usuario</span>
+                <div class="qui-hero-stats">
+                    <div class="qui-hero-stat">
+                        <span class="qui-hero-stat-val" id="statPredicciones">—</span>
+                        <span class="qui-hero-stat-lbl">Jugados</span>
+                    </div>
+                    <div class="qui-hero-stat">
+                        <span class="qui-hero-stat-val gold" id="statPuntos">—</span>
+                        <span class="qui-hero-stat-lbl">Puntos</span>
+                    </div>
+                    
+                    <div class="qui-hero-stat">
+                        <span class="qui-hero-stat-val" id="statPosicion">—</span>
+                        <span class="qui-hero-stat-lbl">Posicion</span>
+                    </div>
                 </div>
             </div>
             <div class="rnk-hero-deco">🏆</div>
         </div>
     </div>
- 
  
     <!-- ── GRID ──────────────────────────────────────── -->
     <div class="rnk-grid-bg">
@@ -759,9 +350,7 @@
  
     </div>
     </div>
-
-    
-        <footer class="footer">
+<footer class="footer">
         
         <!-- BARRA SUPERIOR -->
         <div class="footer-top-bar">
@@ -814,7 +403,7 @@
     <div class="sponsor-group-title">Colaboradores</div>
     <div class="sponsor-logos">
         <div class="sponsor-logo">
-            <div class="sponsor-wrap" id="sponsorEasterEgg">
+            <div class="sponsor-wrap"><a href="#" data-tip>
                 <span class="logo-placeholder">
                     <img
                         src="img/viktor.png"
@@ -823,7 +412,7 @@
                         class="easter-logo"
                         draggable="false"
                     >
-                </span>
+                </span></a>
             </div>
         </div>
     </div>

@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     await Promise.all([
         cargarLigas(),
-        cargarRankingCompleto()
+        cargarRankingCompleto(),
+        cargarEstadisticas()
     ]);
     
     configurarEventos();
@@ -52,6 +53,29 @@ function configurarUI() {
         btnMenuMobile.addEventListener('click', () => {
             navMobile.classList.toggle('active');
         });
+    }
+}
+
+async function cargarEstadisticas() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/estadisticas/usuario/${usuarioId}`);
+        if (!response.ok) throw new Error('Error cargando estadísticas');
+        
+        const stats = await response.json();
+        
+        // ✅ Función interna para no repetir
+        function setVal(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
+        }
+        
+        setVal('statPredicciones', stats.total_predicciones || 0);
+        setVal('statPuntos', stats.puntos_totales || 0);
+        setVal('statPosicion', stats.posicion_ranking || '-');
+        setVal('statEfectividad', (stats.efectividad || 0) + '%');
+        
+    } catch (error) {
+        console.error('Error cargando estadísticas:', error);
     }
 }
 
