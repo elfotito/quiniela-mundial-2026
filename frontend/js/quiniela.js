@@ -478,27 +478,27 @@ async function cargarProximosPartidos() {
             const fecha = new Date(partido.fecha);
             return `
                 <div class="ppm-card">
-                <div class="ppm-header">
-                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
-                    <span class="ppm-fecha">${fechaCorta}</span>
-                </div>
-                <div class="ppm-body">
-                    <div class="ppm-teams">
-                        <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
-                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
-                        </div>
-                        <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
-                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
-                        </div>
-                    </div>
-                    <div class="ppm-hora-col">
-                        <span class="ppm-hora">${hora}</span>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
+                                <div class="ppm-header">
+                                    <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
+                                    <span class="ppm-fecha">${fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}</span>
+                                </div>
+                                <div class="ppm-body">
+                                    <div class="ppm-teams">
+                                        <div class="ppm-team-row">
+                                            <span class="ppm-flag">${obtenerBandera(partido.equipo_local)}</span>
+                                            <span class="ppm-name">${partido.equipo_local}</span>
+                                        </div>
+                                        <div class="ppm-team-row">
+                                            <span class="ppm-flag">${obtenerBandera(partido.equipo_visitante)}</span>
+                                            <span class="ppm-name">${partido.equipo_visitante}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ppm-hora-col">
+                                        <span class="ppm-hora">${hora}</span>
+                                    </div>
+                                </div>
+                            </div>`;
+                        }).join('');
         
     } catch (error) {
         console.error('Error cargando partidos:', error);
