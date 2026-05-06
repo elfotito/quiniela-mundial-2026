@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         cargarPredicciones(),
         cargarProximasPredicciones(),
         cargarProximosPartidos(),
+        cargarRankingTop5(),
     ]);
 
     inicializarGraficos();
