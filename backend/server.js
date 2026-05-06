@@ -565,6 +565,7 @@ app.get('/api/ranking/top', async (req, res) => {
             SELECT 
                 u.id,
                 u.nombre_publico as nombre,
+                u.campeon_elegido,
                 COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 9) as aciertos_9,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 7) as aciertos_7,
