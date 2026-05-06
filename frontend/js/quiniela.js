@@ -1149,11 +1149,8 @@ function buildCard(l) {
     : `<p class="card-desc mystery">• • • • •</p>`;
 
   return `
-  <div class="lcard r-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
-       data-id="${l.id}"
-       onmousemove="tiltCard(event, this)"
-       onmouseleave="resetCard(this)"
-       onclick="clickCard(event, this)">
+    <div class="lcard r-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
+       data-id="${l.id}">
     ${holoEl}
     <div class="lcard-inner">
       <div class="card-art">${artContent}</div>
@@ -1177,6 +1174,21 @@ function renderLogros(logros) {
   const count = logros.filter(l => l.desbloqueado).length;
   document.getElementById('achievementsCount').textContent =
     `${count}/${logros.length}`;
+
+  grid.addEventListener('mousemove', (e) => {
+        const card = e.target.closest('.lcard');
+        if (card) tiltCard(e, card);
+    });
+
+    grid.addEventListener('mouseleave', (e) => {
+        const card = e.target.closest('.lcard');
+        if (card) resetCard(card);
+    }, true); // true = capture phase para que mouseleave funcione en hijos
+
+    grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.lcard');
+        if (card) clickCard(e, card);
+    });
 }
  
 /* ── 3D TILT ─────────────────────────────────────────── */
@@ -1560,5 +1572,5 @@ function logout() {
         auth.logout();
     }
 }
-
+window.scrollAchievements = scrollAchievements;
 window.logout = logout;

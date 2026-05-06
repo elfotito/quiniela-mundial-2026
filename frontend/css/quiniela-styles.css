@@ -209,7 +209,6 @@ body {
 /* ─── TRACK WRAP ─────────────────────────────────────── */
 .logros-track-wrap {
   position: relative;
-  padding: 0 40px;
   background: #080810;
 }
 .logros-nav {
@@ -224,16 +223,15 @@ body {
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   font-size: 17px;
-  color: rgba(255,255,255,0.5);
+  color: rgb(255, 255, 255);
   transition: all .2s;
   line-height: 1;
   backdrop-filter: blur(4px);
 }
 .logros-nav:hover {
-  background: #0066CC;
+  background: #FFD700;
   color: #fff;
-  border-color: #0066CC;
-  box-shadow: 0 0 14px rgba(0,102,204,0.5);
+  box-shadow: 0 0 14px #FFD70080;
 }
 .logros-nav.prev { left: 5px; }
 .logros-nav.next { right: 5px; }
