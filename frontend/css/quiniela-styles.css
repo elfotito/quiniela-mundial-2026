@@ -448,24 +448,25 @@ body {
   padding: 9px 10px 11px;
   background: #eeeded;
   border-top: 1px solid rgba(255,255,255,0.05);
-  min-height: 70px;
+  min-height: 95px;
 }
 .card-title {
   font-family: 'Yolk', serif;
   font-size: 11px;
   font-weight: 600;
   color: #000000;
-  line-height: 1.35;
+  line-height: 1.2;
   margin-bottom: 5px;
   letter-spacing: 0.3px;
 }
 .card-title.mystery { color: rgba(255,255,255,0.15); letter-spacing: 4px; }
 .card-desc {
   font-family: 'Yolk', Georgia, serif;
-  font-size: 10px;
-  line-height: 1.45;
-  color: rgba(41, 41, 41, 0.932);
-  font-style: italic;
+  font-size: 11px;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.89);
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 .card-desc.mystery {
   color: rgba(255,255,255,0.08);
