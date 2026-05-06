@@ -1514,7 +1514,7 @@ async function cargarRankingTop5() {
             return `
             <div class="rank-row">
                 ${posicion}
-                <div class="rank-avatar"><span class="user-emoji-display" id="mobileUserCampeon">👤</span></div>
+                <div class="rank-avatar"><span class="user-emoji-display">${user.campeon_elegido}</span></div>
                 <span class="rank-name">${user.nombre}</span>
                 <span class="rank-pts">${user.puntos_totales}<span>pts</span></span>
             </div>`;
