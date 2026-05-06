@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     usuario = auth.getUser();
     usuarioId = usuario.id;
     
-    // Añade esta línea ANTES de configurarUI
     await verificarLogin();
     
     configurarUI();
