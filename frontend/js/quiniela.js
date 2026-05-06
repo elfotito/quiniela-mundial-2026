@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
     inicializarGraficos();
+    await cargarLogros();
 });
 
 async function verificarLogin() {
@@ -841,7 +842,7 @@ async function cargarLogrosDesbloqueadosDB() {
 }
 async function desbloquearLogroEnBD(logroId) {
     try {
-        const response = await fetch(`/api/usuarios/${usuario.id}/logros`, {
+        const response = await fetch(`${CONFIG.API_URL}/api/usuarios/${usuario.id}/logros`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ logro_id: logroId })
@@ -867,7 +868,18 @@ function verificarLogroPermanente(logroId, condicion) {
     
     return false;
 }
-const LOGROS_DEMO = [
+
+async function cargarLogros() {
+    await cargarLogrosDesbloqueadosDB();
+
+    try {
+        const res = await fetch(`${CONFIG.API_URL}/ranking/top`);
+        if (res.ok) ranking = await res.json();
+    } catch(e) {
+        console.warn('No se pudo cargar ranking para logros:', e);
+    }
+
+const LOGROS = [
         { 
             id: 'primera_prediccion', 
             imagen: 'img/logros/davito.png', 
@@ -1118,22 +1130,24 @@ const RARITY_LABELS = { bronce:'Bronce', plata:'Plata', oro:'Oro', platino:'Plat
 function buildCard(l) {
   const dots = Array(RARITY_DOTS[l.rareza])
     .fill('<div class="rdot"></div>').join('');
- 
+
+  // ✅ Usa imagen si existe, si no muestra el ? de bloqueado
   const artContent = l.desbloqueado
-    ? `<div class="card-emoji">${l.emoji}</div>`
+    ? `<img src="${l.imagen}" alt="${l.titulo}" class="card-img" onerror="this.style.display='none'">`
     : `<div class="card-back-pattern"></div><div class="card-lock-icon">🔒</div>`;
- 
+
   const holoEl = l.rareza === 'platino'
     ? `<div class="card-holo-border"></div>` : '';
- 
+
   const title = l.desbloqueado
     ? `<p class="card-title">${l.titulo}</p>`
     : `<p class="card-title mystery">???</p>`;
- 
+
+  // ✅ descripcion, no desc
   const desc = l.desbloqueado
-    ? `<p class="card-desc">${l.desc}</p>`
+    ? `<p class="card-desc">${l.descripcion}</p>`
     : `<p class="card-desc mystery">• • • • •</p>`;
- 
+
   return `
   <div class="lcard r-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
        data-id="${l.id}"
@@ -1224,9 +1238,9 @@ function scrollAchievements(dir) {
     .scrollBy({ left: dir === 'right' ? 150 : -150, behavior: 'smooth' });
 }
  
-/* ── INIT ────────────────────────────────────────────── */
-renderLogros(LOGROS_DEMO);
 
+    renderLogros(LOGROS);
+}
 function obtenerBandera(nombre) {
     const banderas = {
     // Anfitriones y CONCACAF
