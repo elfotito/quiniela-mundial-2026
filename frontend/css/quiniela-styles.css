@@ -229,7 +229,7 @@ body {
   backdrop-filter: blur(4px);
 }
 .logros-nav:hover {
-  background: #FFD700;
+  background: #ffd900dc;
   color: #fff;
   box-shadow: 0 0 14px #FFD70080;
 }
@@ -237,10 +237,10 @@ body {
 .logros-nav.next { right: 5px; }
 .logros-track {
   display: flex;
-  gap: 14px;
+  gap: 20px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 24px 6px;
+  padding: 30px 20px;
   scrollbar-width: none;
 }
 .logros-track::-webkit-scrollbar { display: none; }
@@ -257,10 +257,10 @@ body {
   will-change: transform;
 }
 .lcard-inner {
-  border-radius: 12px;
+  border-radius: 6px;
   overflow: hidden;
   position: relative;
-  background: #111118;
+  background: #ccc;
   box-shadow:
     0 8px 24px rgba(0,0,0,0.6),
     0 2px 6px rgba(0,0,0,0.4);
@@ -271,7 +271,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 12px;
+  border-radius: 6px;
   opacity: 0;
   transition: opacity 0.3s;
   pointer-events: none;
@@ -360,8 +360,8 @@ body {
 }
  
 .card-img {
-  width: 72px;
-  height: 72px;
+  width: 120px;
+  height: 100px;
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.1);
@@ -453,27 +453,27 @@ body {
   min-height: 70px;
 }
 .card-title {
-  font-family: 'Cinzel', serif;
+  font-family: 'Yolk', serif;
   font-size: 9.5px;
   font-weight: 600;
-  color: #e8e8f0;
+  color: #000000;
   line-height: 1.35;
   margin-bottom: 5px;
   letter-spacing: 0.3px;
 }
 .card-title.mystery { color: rgba(255,255,255,0.15); letter-spacing: 4px; }
 .card-desc {
-  font-family: 'EB Garamond', Georgia, serif;
+  font-family: 'Yolk', Georgia, serif;
   font-size: 9px;
   line-height: 1.45;
-  color: rgba(200,200,220,0.45);
+  color: rgba(41, 41, 41, 0.932);
   font-style: italic;
 }
 .card-desc.mystery {
   color: rgba(255,255,255,0.08);
   letter-spacing: 3px;
   font-style: normal;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: monospace;
 }
  
 /* ─── LOCKED OVERLAY TINT ────────────────────────────── */
