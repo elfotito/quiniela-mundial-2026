@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
     inicializarGraficos();
-    cargarLogros();
 });
 
 async function verificarLogin() {
