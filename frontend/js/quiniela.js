@@ -950,7 +950,7 @@ const LOGROS = [
             titulo: 'Predictor Maestro', 
             descripcion: 'Al terminar el mundial me dedicare a ver la 2da division de Liga FUTVE Apuestas Royal',
             rareza: 'platino',
-            desbloqueado: true 
+            desbloqueado: predicciones.length >= 102 
         },
             { 
             id: 'primer0', 
@@ -1588,5 +1588,5 @@ function logout() {
         auth.logout();
     }
 }
-window.scrollAchievements = scrollAchievements;
+
 window.logout = logout;
