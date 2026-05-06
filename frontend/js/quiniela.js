@@ -477,18 +477,27 @@ async function cargarProximosPartidos() {
         container.innerHTML = partidos.map(partido => {
             const fecha = new Date(partido.fecha);
             return `
-                <div style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <span style="font-size: 0.85rem; color: #a0a0a0;">${partido.fase}</span>
-                        <span style="font-size: 0.85rem; color: #a0a0a0;">${fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}</span>
+                <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
+                </div>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <strong>${obtenerBandera(partido.equipo_local)} ${partido.equipo_local}</strong>
-                        <span style="color: #FFD700;">VS</span>
-                        <strong>${obtenerBandera(partido.equipo_visitante)} ${partido.equipo_visitante}</strong>
+                    <div class="ppm-hora-col">
+                        <span class="ppm-hora">${hora}</span>
                     </div>
                 </div>
-            `;
+            </div>`;
         }).join('');
         
     } catch (error) {
