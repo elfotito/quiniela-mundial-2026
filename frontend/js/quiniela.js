@@ -462,48 +462,55 @@ async function cargarProximasPredicciones() {
     }
 }
 async function cargarProximosPartidos() {
+    const container = document.getElementById('proximosPartidos');
+    if (!container) return;
+ 
     try {
         const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=3`);
         if (!response.ok) throw new Error('Error cargando partidos');
-        
         const partidos = await response.json();
-        const container = document.getElementById('proximosPartidos');
-        
+ 
         if (partidos.length === 0) {
-            container.innerHTML = '<p style="text-align: center; color: #666;">No hay partidos pendientes</p>';
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">✅ ¡Todos los partidos han sido jugados!</div>';
             return;
         }
-        
-        container.innerHTML = partidos.map(partido => {
-            const fecha = new Date(partido.fecha);
+ 
+        container.innerHTML = partidos.map(p => {
+            const fecha = new Date(p.fecha);
+            const fechaCorta = fecha.toLocaleDateString('es-ES', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit', minute: '2-digit'
+            });
+ 
             return `
-                <div class="ppm-card">
-                                <div class="ppm-header">
-                                    <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
-                                    <span class="ppm-fecha">${fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' })}</span>
-                                </div>
-                                <div class="ppm-body">
-                                    <div class="ppm-teams">
-                                        <div class="ppm-team-row">
-                                            <span class="ppm-flag">${obtenerBandera(partido.equipo_local)}</span>
-                                            <span class="ppm-name">${partido.equipo_local}</span>
-                                        </div>
-                                        <div class="ppm-team-row">
-                                            <span class="ppm-flag">${obtenerBandera(partido.equipo_visitante)}</span>
-                                            <span class="ppm-name">${partido.equipo_visitante}</span>
-                                        </div>
-                                    </div>
-                                    <div class="ppm-hora-col">
-                                        <span class="ppm-hora">${hora}</span>
-                                    </div>
-                                </div>
-                            </div>`;
-                        }).join('');
-        
-    } catch (error) {
-        console.error('Error cargando partidos:', error);
-        document.getElementById('proximosPartidos').innerHTML = 
-            '<p style="text-align: center; color: #f44336;">Error cargando partidos</p>';
+            <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
+                </div>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="ppm-hora-col">
+                        <span class="ppm-hora">${hora}</span>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+ 
+    } catch (err) {
+        console.error('Error cargando próximos partidos:', err);
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
 
