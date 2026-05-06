@@ -477,7 +477,7 @@ body {
  
 /* ─── LOCKED OVERLAY TINT ────────────────────────────── */
 .lcard.locked .card-body {
-  background: #080810;
+  background: #000000;
 }
 .lcard.locked .card-rarity-band {
   background: #0d0d14 !important;
