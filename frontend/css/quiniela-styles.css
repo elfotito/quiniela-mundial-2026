@@ -318,14 +318,14 @@ body {
   box-shadow:
     0 12px 32px rgba(0,0,0,0.7),
     0 0 20px rgba(255, 227, 150, 0.35),
-    0 0 40px rgba(163, 146, 100, 0.15);
+    0 0 40px rgba(179, 162, 115, 0.15);
 }
 
 .r-plata:hover .lcard-inner {
   box-shadow:
     0 12px 32px rgba(0,0,0,0.7),
-    0 0 20px rgba(78, 78, 78, 0.35),
-    0 0 40px rgba(201,168,76,0.15);
+    0 0 20px rgba(141, 138, 138, 0.35),
+    0 0 40px rgba(218, 216, 211, 0.15);
 }
 .r-oro:hover .lcard-inner {
   box-shadow:

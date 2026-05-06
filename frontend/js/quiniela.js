@@ -848,7 +848,7 @@ function crearGraficoEvolucion() {
 
 async function cargarLogrosDesbloqueadosDB() {
     try {
-        const response = await fetch(`${CONFIG.API_URL}/api/usuarios/${usuario.id}/logros`);
+        const response = await fetch(`${CONFIG.API_URL}/usuarios/${usuario.id}/logros`);
         const data = await response.json();
         logrosDesbloqueadosDB = data.logros || [];
     } catch (error) {
@@ -858,7 +858,7 @@ async function cargarLogrosDesbloqueadosDB() {
 }
 async function desbloquearLogroEnBD(logroId) {
     try {
-        const response = await fetch(`${CONFIG.API_URL}/api/usuarios/${usuario.id}/logros`, {
+        const response = await fetch(`${CONFIG.API_URL}/usuarios/${usuario.id}/logros`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ logro_id: logroId })
