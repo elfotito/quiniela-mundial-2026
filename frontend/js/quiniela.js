@@ -447,9 +447,8 @@ async function cargarProximasPredicciones() {
                             </div>
                         </div>
                         <div class="ppm-hora-col">
-                            <span class="ppm-hora">${hora}</span>
                             <button onclick="window.location.href='predicciones.html'" 
-                                    style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: var(--fifa-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
+                                    style="margin-top: 0.5rem; padding: 0.5rem 0.5rem; background: var(--fifa-gold); border: none; border-radius: 5px; cursor: pointer; font-weight: 600;">
                                 Predecir
                             </button>
                         </div>
@@ -711,7 +710,7 @@ function crearGraficoEvolucion() {
             },
             plugins: { 
                 legend: { 
-                    display: false // Ocultamos leyenda para mantener limpieza
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(17, 24, 39, 0.95)',
@@ -858,12 +857,10 @@ async function desbloquearLogroEnBD(logroId) {
 }
 
 function verificarLogroPermanente(logroId, condicion) {
-    // Si ya fue desbloqueado antes (guardado en BD)
     if (logrosDesbloqueadosDB.includes(logroId)) {
         return true;
     }
     
-    // Si se cumple la condición ahora, guardarlo en BD
     if (condicion) {
         desbloquearLogroEnBD(logroId);
         return true;
@@ -871,11 +868,7 @@ function verificarLogroPermanente(logroId, condicion) {
     
     return false;
 }
-
-async function cargarLogros() {
-    await cargarLogrosDesbloqueadosDB();
-    const container = document.getElementById('achievementsGrid');
-    const logros = [
+const LOGROS_DEMO = [
         { 
             id: 'primera_prediccion', 
             imagen: 'img/logros/davito.png', 
@@ -1119,99 +1112,121 @@ async function cargarLogros() {
             )
         },
     ];
-    
-    const desbloqueados = logros.filter(l => l.desbloqueado && l.id !== 'coleccionista').length;
-    const coleccionistaIndex = logros.findIndex(l => l.id === 'coleccionista');
-    if (coleccionistaIndex !== -1) {
-        logros[coleccionistaIndex].desbloqueado = desbloqueados >= 10;
-    }
-    
-    // Ordenar: desbloqueados primero
-    const logrosOrdenados = logros.sort((a, b) => {
-        if (a.desbloqueado === b.desbloqueado) return 0;
-        return a.desbloqueado ? -1 : 1;
-    });
-    
-container.innerHTML = logrosOrdenados.map(l => {
-    const imagenHTML = l.desbloqueado
-        ? `<img src="${l.imagen}" alt="${l.titulo}" class="achievement-image" onerror="this.style.display='none'">`
-        : `<div class="mystery-placeholder">?</div>`;
-
-    const lockOverlay = !l.desbloqueado
-        ? `<div class="achievement-lock-overlay">🔒</div>`
-        : '';
-
-    const tituloHTML = l.desbloqueado
-        ? `<p class="achievement-title">${l.titulo}</p>`
-        : `<p class="achievement-title mystery-text">???</p>`;
-
-    const descripcionHTML = l.desbloqueado
-        ? `<p class="achievement-description">${l.descripcion}</p>`
-        : `<p class="achievement-description mystery-text">??? ??? ???</p>`;
-
-    return `
-    <div class="achievement-card rarity-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
-         onclick="reproducirSonido('${l.id}'); agregarRipple(this, event)">
-
-        <div class="achievement-image-wrap">
-            ${imagenHTML}
-            ${lockOverlay}
-        </div>
-
-        <div class="rarity-badge">${l.rareza.toUpperCase()}</div>
-
-        <div class="card-body">
-            ${tituloHTML}
-            ${descripcionHTML}
-        </div>
-
-    </div>`;
-}).join('');
-
-
-    const desbloqueadosCount = logrosOrdenados.filter(l => l.desbloqueado).length;
-    const contadorEl = document.getElementById('achievementsCount');
-    if (contadorEl) contadorEl.textContent = `${desbloqueadosCount}/${logrosOrdenados.length}`;
-
-
-function scrollAchievements(dir) {
-    const track = document.getElementById('achievementsGrid');
-    if (!track) return;
-    track.scrollBy({ left: dir === 'right' ? 280 : -280, behavior: 'smooth' });
-    }
+ 
+const RARITY_DOTS = { bronce:1, plata:2, oro:3, platino:4 };
+const RARITY_LABELS = { bronce:'Bronce', plata:'Plata', oro:'Oro', platino:'Platino' };
+ 
+function buildCard(l) {
+  const dots = Array(RARITY_DOTS[l.rareza])
+    .fill('<div class="rdot"></div>').join('');
+ 
+  const artContent = l.desbloqueado
+    ? `<div class="card-emoji">${l.emoji}</div>`
+    : `<div class="card-back-pattern"></div><div class="card-lock-icon">🔒</div>`;
+ 
+  const holoEl = l.rareza === 'platino'
+    ? `<div class="card-holo-border"></div>` : '';
+ 
+  const title = l.desbloqueado
+    ? `<p class="card-title">${l.titulo}</p>`
+    : `<p class="card-title mystery">???</p>`;
+ 
+  const desc = l.desbloqueado
+    ? `<p class="card-desc">${l.desc}</p>`
+    : `<p class="card-desc mystery">• • • • •</p>`;
+ 
+  return `
+  <div class="lcard r-${l.rareza} ${l.desbloqueado ? 'unlocked' : 'locked'}"
+       data-id="${l.id}"
+       onmousemove="tiltCard(event, this)"
+       onmouseleave="resetCard(this)"
+       onclick="clickCard(event, this)">
+    ${holoEl}
+    <div class="lcard-inner">
+      <div class="card-art">${artContent}</div>
+      <div class="card-rarity-band">
+        <span>${RARITY_LABELS[l.rareza]}</span>
+        <div class="rarity-dots">${dots}</div>
+      </div>
+      <div class="card-body">
+        ${title}
+        ${desc}
+      </div>
+    </div>
+  </div>`;
 }
-
+ 
+function renderLogros(logros) {
+  const grid = document.getElementById('achievementsGrid');
+  const sorted = [...logros].sort((a,b) => b.desbloqueado - a.desbloqueado);
+  grid.innerHTML = sorted.map(buildCard).join('');
+ 
+  const count = logros.filter(l => l.desbloqueado).length;
+  document.getElementById('achievementsCount').textContent =
+    `${count}/${logros.length}`;
+}
+ 
+/* ── 3D TILT ─────────────────────────────────────────── */
+function tiltCard(e, el) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top  + rect.height / 2;
+  const dx = (e.clientX - cx) / (rect.width / 2);
+  const dy = (e.clientY - cy) / (rect.height / 2);
+  el.style.transform =
+    `perspective(600px) rotateY(${dx * 12}deg) rotateX(${-dy * 12}deg) scale(1.06)`;
+  el.style.zIndex = '10';
+}
+function resetCard(el) {
+  el.style.transform = '';
+  el.style.zIndex = '';
+}
+ 
+/* ── CLICK / AUDIO ───────────────────────────────────── */
+function clickCard(e, card) {
+  /* Ripple */
+  const r = document.createElement('div');
+  r.className = 'card-ripple';
+  const rect = card.getBoundingClientRect();
+  r.style.left = (e.clientX - rect.left - 10) + 'px';
+  r.style.top  = (e.clientY - rect.top  - 10) + 'px';
+  card.querySelector('.lcard-inner').appendChild(r);
+  setTimeout(() => r.remove(), 600);
+ 
+  /* Audio */
+  const id = card.dataset.id;
+  reproducirSonido(id);
+}
+ 
 function reproducirSonido(logroId) {
-    // RECUERDAMEEE 🗣️ pa los audios
-    const audio = new Audio(`/audio/logros/${logroId}.mp3`);
-    audio.volume = 0.7;
-    audio.play().catch(() => {
-        // Si no existe el archivo aún, hace un beep mierdero
-        try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'sine';
-            osc.frequency.value = 660;
-            gain.gain.setValueAtTime(0.25, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.5);
-        } catch(e) {}
-    });
+  const audio = new Audio(`/audio/logros/${logroId}.mp3`);
+  audio.volume = 0.7;
+  audio.play().catch(() => {
+    /* Fallback beep Web Audio API */
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = 720;
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.5);
+    } catch(err) {}
+  });
 }
-
-function agregarRipple(card, event) {
-    const r = document.createElement('div');
-    r.className = 'card-ripple';
-    const rect = card.getBoundingClientRect();
-    r.style.left = (event.clientX - rect.left - 10) + 'px';
-    r.style.top  = (event.clientY - rect.top  - 10) + 'px';
-    card.appendChild(r);
-    setTimeout(() => r.remove(), 500);
+ 
+/* ── SCROLL ──────────────────────────────────────────── */
+function scrollAchievements(dir) {
+  document.getElementById('achievementsGrid')
+    .scrollBy({ left: dir === 'right' ? 150 : -150, behavior: 'smooth' });
 }
+ 
+/* ── INIT ────────────────────────────────────────────── */
+renderLogros(LOGROS_DEMO);
 
 function obtenerBandera(nombre) {
     const banderas = {
@@ -1424,6 +1439,50 @@ setTimeout(() => {
   });
 }, 500);
 
+// ─── RANKING TOP 5 ───────────────────────────────────────
+async function cargarRankingTop5() {
+    const container = document.getElementById('rankingTop5');
+    if (!container) return;
+ 
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/ranking/top`);
+        if (!response.ok) throw new Error('Error cargando ranking');
+        const ranking = await response.json();
+ 
+        if (!ranking.length) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">No hay datos aún</div>';
+            return;
+        }
+ 
+        const medallas = ['🥇', '🥈', '🥉'];
+ 
+        container.innerHTML = ranking.map((user, index) => {
+            // Iniciales para el avatar
+            const iniciales = user.nombre
+                .split(' ')
+                .map(n => n[0])
+                .slice(0, 2)
+                .join('')
+                .toUpperCase();
+ 
+            const posicion = index < 3
+                ? `<span class="rank-medal">${medallas[index]}</span>`
+                : `<span class="rank-pos">${index + 1}°</span>`;
+ 
+            return `
+            <div class="rank-row">
+                ${posicion}
+                <div class="rank-avatar"><span class="user-emoji-display" id="mobileUserCampeon">👤</span></div>
+                <span class="rank-name">${user.nombre}</span>
+                <span class="rank-pts">${user.puntos_totales}<span>pts</span></span>
+            </div>`;
+        }).join('');
+ 
+    } catch (error) {
+        console.error('Error cargando ranking:', error);
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
+    }
+}
 // ===============================================
 // MENÚ MÓVIL
 // ===============================================
