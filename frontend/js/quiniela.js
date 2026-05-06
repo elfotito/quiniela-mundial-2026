@@ -1482,7 +1482,7 @@ setTimeout(() => {
 
 // ─── RANKING TOP 5 ───────────────────────────────────────
 async function cargarRankingTop5() {
-    const container = document.getElementById('rankingTop5');
+    const container = document.getElementById('rankingTop5Widget');
     if (!container) return;
  
     try {
