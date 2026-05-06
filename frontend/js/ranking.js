@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     usuario = auth.getUser();
-    console.log('👑 Ranking cargando...');
-    
+    await verificarLogin();
     configurarUI();
     
     await Promise.all([
@@ -26,6 +25,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     configurarEventos();
 });
+
+async function verificarLogin() {
+    if (!auth.isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const usuario = auth.getUser();
+    usuarioId = parseInt(usuario.id);
+
+    document.querySelectorAll('.user-name-display').forEach(el => {
+        el.textContent = usuario.nombre;
+    });
+    
+    const emoji = obtenerCampeon(usuario.campeon_elegido);
+    document.querySelectorAll('.user-emoji-display').forEach(el => {
+        el.textContent = emoji;
+    });
+
+    if (usuario.isAdmin) {
+        // Esperar a que el DOM esté listo para estos elementos
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        document.querySelectorAll('.btn-admin-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'admin.html';
+        });
+        
+        document.querySelectorAll('.btn-noticias-display').forEach(btn => {
+            btn.style.display = 'flex';
+            btn.onclick = () => window.location.href = 'noticias.html';
+        });
+    }
+}
 
 // ===============================================
 // CONFIGURACIÓN UI
