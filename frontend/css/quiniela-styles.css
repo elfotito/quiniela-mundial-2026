@@ -159,9 +159,7 @@ body {
 .logros-widget {
   width: 100%;
   max-width: 780px;
-  background: #0c0c10;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.07);
+  background: #000000;
   overflow: hidden;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.03),
@@ -448,13 +446,13 @@ body {
 /* ─── CARD BODY ──────────────────────────────────────── */
 .card-body {
   padding: 9px 10px 11px;
-  background: #0e0e16;
+  background: #eeeded;
   border-top: 1px solid rgba(255,255,255,0.05);
   min-height: 70px;
 }
 .card-title {
   font-family: 'Yolk', serif;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
   color: #000000;
   line-height: 1.35;
@@ -464,7 +462,7 @@ body {
 .card-title.mystery { color: rgba(255,255,255,0.15); letter-spacing: 4px; }
 .card-desc {
   font-family: 'Yolk', Georgia, serif;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.45;
   color: rgba(41, 41, 41, 0.932);
   font-style: italic;
