@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         cargarLigas(),
         cargarRankingCompleto(),
         cargarEstadisticas(),
-        cargarLigas(),
+        cargarLigasRegistradas(),
     ]);
     
     configurarEventos();
@@ -105,9 +105,11 @@ async function cargarEstadisticas() {
         
         setVal('statPredicciones', stats.total_predicciones || 0);
         setVal('statPuntos', stats.puntos_totales || 0);
+        setVal('statPuntosResumen', stats.puntos_totales || 0);
         setVal('statPosicion', stats.posicion_ranking || '-');
+        setVal('statPosicionResumen', stats.posicion_ranking || '-');
         setVal('statEfectividad', (stats.efectividad || 0) + '%');
-        
+        setVal('statEfectividadResumen', (stats.efectividad || 0) + '%');
     } catch (error) {
         console.error('Error cargando estadísticas:', error);
     }
@@ -454,7 +456,8 @@ function obtenerIconoLigaPrincipal(ligas) {
     
     return liga ? (liga.icono || '🏅') : '🏅';
 }
-async function cargarLigas() {
+
+async function cargarLigasRegistradas() {
     try {
         // Obtener ligas del endpoint
         const response = await fetch(`${API_URL}/api/ligas`);
