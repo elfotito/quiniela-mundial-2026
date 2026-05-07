@@ -1,7 +1,7 @@
 // ===============================================
 // RANKING.JS - CON PODIO DINÁMICO Y COMPARTIR
 // ===============================================
-
+const API_URL = CONFIG.API_URL;
 let usuario = null;
 let rankingCompleto = [];
 let rankingFiltrado = [];
