@@ -531,7 +531,7 @@ function crearTarjetaLiga(liga) {
     `;
     
     tarjeta.addEventListener('click', () => {
-        mostrarToast('Se puede agregar un comentario', {
+        mostrarToast('Esperando a los presidentes para agregar un comentario aqui', {
         icon: '⚽',
         duracion: 4000
       });
