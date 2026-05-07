@@ -632,27 +632,102 @@ function mostrarErrorCarga() {
     }
 }
 
-function mostrarToast(mensaje, tipo) {
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: var(--dark-card);
-        border: 2px solid ${tipo === 'success' ? 'var(--success)' : 'var(--error)'};
-        color: ${tipo === 'success' ? 'var(--success)' : 'var(--error)'};
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        z-index: 10000;
-        animation: slideIn 0.3s ease-out;
-    `;
-    toast.textContent = mensaje;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+function mostrarToast(mensaje, opciones = {}) {
+  const {
+    icon = '🔧',
+    duracion = 4000
+  } = opciones;
+ 
+  const container = document.getElementById('toast-container');
+  if (!container) {
+    console.error('Toast container no encontrado');
+    return;
+  }
+ 
+  const toast = document.createElement('div');
+  toast.className = 'toast-construccion';
+  toast.innerHTML = `
+    <span class="toast-icon">${icon}</span>
+    <div class="toast-text">${mensaje}</div>
+    <span class="toast-close">✕</span>
+  `;
+ 
+  container.appendChild(toast);
+ 
+  const cerrar = () => {
+    toast.classList.add('exit');
+    setTimeout(() => toast.remove(), 400);
+  };
+ 
+  toast.querySelector('.toast-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    cerrar();
+  });
+ 
+  toast.addEventListener('click', cerrar);
+ 
+  setTimeout(cerrar, duracion);
 }
+
+// ── Listeners para diferentes tipos de notificaciones ──
+setTimeout(() => {
+  // Construcción
+  document.querySelectorAll('a[data-construccion]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos trabajando aquí, vuelve más tarde 👷', {
+        icon: '🏗️',
+        duracion: 4000
+      });
+    });
+  });
+
+  document.querySelectorAll('a[data-proximamente], button[data-proximamente]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función llegará muy pronto 🚀', {
+        icon: '⏳',
+        duracion: 4000
+      });
+    });
+  });
+
+  document.querySelectorAll('a[data-mantenimiento]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Estamos en mantenimiento, intenta más tarde ⚙️', {
+        icon: '🔧',
+        duracion: 4000
+      });
+    });
+  });
+
+  document.querySelectorAll('a[data-premium]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función es solo para miembros premium 👑', {
+        icon: '💎',
+        duracion: 4000
+      });
+    });
+  });
+
+  document.querySelectorAll('a[data-desktop-only]').forEach(enlace => {
+    enlace.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      mostrarToast('Esta función solo está disponible en desktop 💻', {
+        icon: '📱',
+        duracion: 4000
+      });
+    });
+  });
+
+}, 500);
 
 function debounce(func, wait) {
     let timeout;
