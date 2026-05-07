@@ -507,7 +507,7 @@ function renderizarLigas(ligas) {
         tarjeta.style.animation = `slideInLiga 0.4s ease-out ${index * 0.1}s both`;
     });
     
-    widgetLiga.appendChild(ligasContainer);
+    widgetLigas.appendChild(ligasContainer);
 }
  
 function crearTarjetaLiga(liga) {
@@ -539,11 +539,11 @@ function crearTarjetaLiga(liga) {
 }
  
 function renderizarLigasVacio() {
-    const widgetLiga = document.querySelector('.widget-ligas');
+    const widgetLigas = document.querySelector('.widget-ligas');
     
-    if (!widgetLiga) return;
+    if (!widgetLigas) return;
     
-    widgetLiga.innerHTML = `
+    widgetLigas.innerHTML = `
         <div class="ligas-vacio">
             <div class="ligas-vacio-icon">⚽</div>
             <p class="ligas-vacio-text">No hay ligas disponibles</p>
@@ -552,11 +552,11 @@ function renderizarLigasVacio() {
 }
  
 function renderizarErrorLigas() {
-    const widgetLiga = document.querySelector('.widget-ligas');
+    const widgetLigas = document.querySelector('.widget-ligas');
     
-    if (!widgetLiga) return;
+    if (!widgetLigas) return;
     
-    widgetLiga.innerHTML = `
+    widgetLigas.innerHTML = `
         <div class="ligas-error">
             <div class="ligas-error-icon">⚠️</div>
             <p class="ligas-error-text">Error cargando ligas</p>
