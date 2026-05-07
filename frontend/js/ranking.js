@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await Promise.all([
         cargarLigas(),
         cargarRankingCompleto(),
-        cargarEstadisticas()
+        cargarEstadisticas(),
+        cargarLigas(),
     ]);
     
     configurarEventos();
@@ -452,6 +453,118 @@ function obtenerIconoLigaPrincipal(ligas) {
     const liga = ligasDisponibles.find(l => l.id === ligaId);
     
     return liga ? (liga.icono || '🏅') : '🏅';
+}
+async function cargarLigas() {
+    try {
+        // Obtener ligas del endpoint
+        const response = await fetch(`${API_URL}/api/ligas`);
+        
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        
+        const ligas = await response.json();
+        
+        // Si no hay ligas, mostrar mensaje
+        if (!ligas || ligas.length === 0) {
+            renderizarLigasVacio();
+            return;
+        }
+        
+        // Renderizar tarjetas de ligas
+        renderizarLigas(ligas);
+        
+    } catch (error) {
+        console.error('❌ Error cargando ligas:', error);
+        renderizarErrorLigas();
+    }
+}
+ 
+function renderizarLigas(ligas) {
+    const widgetLigas = document.querySelector('.widget-ligas');
+    
+    if (!widgetLigas) {
+        console.warn('⚠️ No se encontró .widget-body para ligas');
+        return;
+    }
+    
+    // Limpiar contenido anterior
+    widgetLigas.innerHTML = '';
+    
+    // Crear contenedor de ligas
+    const ligasContainer = document.createElement('div');
+    ligasContainer.className = 'ligas-container';
+    
+    // Renderizar cada liga como tarjeta
+    ligas.forEach((liga, index) => {
+        const tarjeta = crearTarjetaLiga(liga);
+        ligasContainer.appendChild(tarjeta);
+        
+        // Pequeña animación de entrada escalonada
+        tarjeta.style.animation = `slideInLiga 0.4s ease-out ${index * 0.1}s both`;
+    });
+    
+    widgetLiga.appendChild(ligasContainer);
+}
+ 
+function crearTarjetaLiga(liga) {
+    const tarjeta = document.createElement('div');
+    tarjeta.className = 'liga-card';
+    
+    // Color dinámico (usa el color de la liga si existe, sino fallback a FIFA gold)
+    const colorAcento = liga.color || 'var(--fifa-gold)';
+    
+    tarjeta.style.setProperty('--liga-accent', colorAcento);
+    
+    tarjeta.innerHTML = `
+        <div class="liga-card-header">
+            <div class="liga-icon">${liga.icono || '⚽'}</div>
+        </div>
+        <div class="liga-card-content">
+            <h3 class="liga-nombre">${escapeHtml(liga.nombre)}</h3>
+            <p class="liga-descripcion">${escapeHtml(liga.descripcion || '')}</p>
+        </div>
+        <div class="liga-card-accent"></div>
+    `;
+    
+    tarjeta.addEventListener('click', () => {
+        console.log(`👆 Click en liga: ${liga.nombre} (ID: ${liga.id})`);
+        // Aquí puedes agregar navegación o modal si lo necesitas
+    });
+    
+    return tarjeta;
+}
+ 
+function renderizarLigasVacio() {
+    const widgetLiga = document.querySelector('.widget-body');
+    
+    if (!widgetLiga) return;
+    
+    widgetLiga.innerHTML = `
+        <div class="ligas-vacio">
+            <div class="ligas-vacio-icon">⚽</div>
+            <p class="ligas-vacio-text">No hay ligas disponibles</p>
+        </div>
+    `;
+}
+ 
+function renderizarErrorLigas() {
+    const widgetLiga = document.querySelector('.widget-body');
+    
+    if (!widgetLiga) return;
+    
+    widgetLiga.innerHTML = `
+        <div class="ligas-error">
+            <div class="ligas-error-icon">⚠️</div>
+            <p class="ligas-error-text">Error cargando ligas</p>
+        </div>
+    `;
+}
+ 
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function obtenerBandera(codigoEquipo) {
