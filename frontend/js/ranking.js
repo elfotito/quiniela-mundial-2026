@@ -460,7 +460,7 @@ function obtenerIconoLigaPrincipal(ligas) {
 async function cargarLigasRegistradas() {
     try {
         // Obtener ligas del endpoint
-        const response = await fetch(`${API_URL}/api/ligas`);
+        const response = await fetch(`${API_URL}/ligas`);
         
         if (!response.ok) {
             throw new Error(`Error ${response.status}: ${response.statusText}`);
