@@ -484,7 +484,7 @@ function renderizarLigas(ligas) {
     const widgetLigas = document.querySelector('.widget-ligas');
     
     if (!widgetLigas) {
-        console.warn('⚠️ No se encontró .widget-body para ligas');
+        console.warn('⚠️ No se encontró .widget-ligas para ligas');
         return;
     }
     
@@ -536,7 +536,7 @@ function crearTarjetaLiga(liga) {
 }
  
 function renderizarLigasVacio() {
-    const widgetLiga = document.querySelector('.widget-body');
+    const widgetLiga = document.querySelector('.widget-ligas');
     
     if (!widgetLiga) return;
     
@@ -549,7 +549,7 @@ function renderizarLigasVacio() {
 }
  
 function renderizarErrorLigas() {
-    const widgetLiga = document.querySelector('.widget-body');
+    const widgetLiga = document.querySelector('.widget-ligas');
     
     if (!widgetLiga) return;
     
