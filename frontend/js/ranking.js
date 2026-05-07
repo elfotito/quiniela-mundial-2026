@@ -531,7 +531,10 @@ function crearTarjetaLiga(liga) {
     `;
     
     tarjeta.addEventListener('click', () => {
-        console.log(`👆 Click en liga: ${liga.nombre} (ID: ${liga.id})`);
+        mostrarToast('Se puede agregar un comentario', {
+        icon: '⚽',
+        duracion: 4000
+      });
         // Aquí puedes agregar navegación o modal si lo necesitas
     });
     
