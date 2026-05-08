@@ -1309,6 +1309,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 /* ── Tarjeta individual ── */
@@ -1320,13 +1322,12 @@ body {
     align-items: center;
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border: 1px solid #e9ecef;
-    border-radius: 12px;
     padding: 12px 14px;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
-    max-width: 240px;
+    width: 100%;
 }
 
 /* Franja deportiva lateral */
@@ -1369,7 +1370,7 @@ body {
 .liga-nombre {
     font-size: 13px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #000000;
     margin: 0;
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -1381,7 +1382,7 @@ body {
 /* ── Descripción ── */
 .liga-descripcion {
     font-size: 11px;
-    color: #6c757d;
+    color: #000000;
     margin: 0;
     line-height: 1.3;
     display: -webkit-box;
@@ -1472,7 +1473,6 @@ body {
 @media (max-width: 360px) {
     .liga-card {
         padding: 10px;
-        border-radius: 6px;
     }
     
     .liga-card-header {
@@ -1490,36 +1490,6 @@ body {
     
     .liga-descripcion {
         font-size: 10px;
-    }
-}
- 
-/* Modo oscuro (si tu app lo soporta) */
-@media (prefers-color-scheme: dark) {
-    .liga-card {
-        background: #1a1a1a;
-        border-color: #2a2a2a;
-    }
-    
-    .liga-card-header {
-        background: linear-gradient(135deg, 
-            rgba(var(--liga-accent-rgb, 255, 215, 0), 0.12) 0%, 
-            rgba(var(--liga-accent-rgb, 255, 215, 0), 0.06) 100%);
-    }
-    
-    .liga-nombre {
-        color: #ffffff;
-    }
-    
-    .liga-descripcion {
-        color: #aaaaaa;
-    }
-    
-    .ligas-error {
-        background: #2a1a1a;
-    }
-    
-    .ligas-error-text {
-        color: #ff6b6b;
     }
 }
 
