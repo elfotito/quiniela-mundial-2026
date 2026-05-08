@@ -165,7 +165,6 @@
     /* ── WIDGET BASE ──────────────────────────────────── */
     .widget {
         background: #fff;
-        border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border: 1px solid #eee;
@@ -707,7 +706,7 @@
             <div>
                 <div class="cal-hero-eyebrow">
                     <div class="cal-hero-eyebrow-line"></div>
-                    <span>FIFA World Cup 2026™</span>
+                    <span>Quiniela Mundial 2026</span>
                 </div>
  
                 <h1 class="cal-hero-title">
@@ -715,8 +714,7 @@
                 </h1>
  
                 <p class="cal-hero-sub">
-                    Todos los partidos del Mundial 2026.
-                    Filtra por fecha o fase y sigue cada resultado en tiempo real.
+                    Fecha y hora de todos los partidos de la Copa del Mundo 2026.
                 </p>
  
                 <div class="cal-hero-stats">
@@ -747,37 +745,6 @@
         <!-- ══ COLUMNA IZQUIERDA ══ -->
         <aside class="cal-col-left">
  
-            <!-- Widget: Filtrar por fase -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Fase</span>
-                </div>
-                <div class="widget-body" style="padding: 10px 12px;">
-                    <button class="fase-btn active" data-fase="todos">
-                        <i class="bi bi-grid"></i> Todos
-                    </button>
-                    <button class="fase-btn" data-fase="grupos">
-                        <i class="bi bi-people"></i> Fase de Grupos
-                    </button>
-                    <button class="fase-btn" data-fase="16vos">
-                        <i class="bi bi-diagram-3"></i> 16avos de Final
-                    </button>
-                    <button class="fase-btn" data-fase="8vos">
-                        <i class="bi bi-diagram-2"></i> Octavos de Final
-                    </button>
-                    <button class="fase-btn" data-fase="4tos">
-                        <i class="bi bi-trophy"></i> Cuartos de Final
-                    </button>
-                    <button class="fase-btn" data-fase="Semifinal">
-                        <i class="bi bi-star"></i> Semifinales
-                    </button>
-                    <button class="fase-btn" data-fase="Final">
-                        <i class="bi bi-star-fill"></i> Final
-                    </button>
-                </div>
-            </div>
- 
             <!-- Widget: Resumen -->
             <div class="widget">
                 <div class="widget-header">
@@ -796,6 +763,20 @@
                     <div class="cal-stat-row">
                         <span class="cal-stat-label">En vivo</span>
                         <span class="cal-stat-val green" id="statEnVivo">0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- WIDGET: Próximos Partidos -->
+            <div class="widget">
+                <div class="widget-header">
+                    <div class="widget-header-bar"></div>
+                    <span class="widget-header-title">Próximos Partidos</span>
+                </div>
+                <div class="widget-body">
+                    <div id="proximosPartidosWidget">
+                        <div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">
+                            Cargando partidos...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -850,33 +831,20 @@
                 </div>
             </div>
  
-            <!-- Widget: Últimos Resultados -->
+            <!-- WIDGET : Últimos Resultados -->
             <div class="widget">
                 <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Últimos Resultados</span>
-                </div>
-                <div id="ultimosResultados" style="padding: 4px 0;">
-                    <div style="text-align:center;padding:20px;font-size:12px;color:#aaa;">
-                        ⏳ El torneo aún no ha comenzado
-                    </div>
-                </div>
-            </div>
- 
-            <!-- Widget: Próximos -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Próximos Partidos</span>
-                    <a href="predicciones.html" class="widget-link">Predecir →</a>
+                    <div class="widget-header-bar"></div>
+                    <span class="widget-header-title">Últimos Resultados</span>
                 </div>
                 <div class="widget-body">
-                    <div id="proximosPartidosWidget">
-                        <div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">Cargando...</div>
+                <div id="ultimosResultados">
+                    <div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">
+                        Cargando resultados...
                     </div>
                 </div>
+                </div>
             </div>
- 
         </aside>
  
     </div>

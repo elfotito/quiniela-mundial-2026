@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         adminBtn.style.display = 'flex';
         adminBtn.onclick = () => window.location.href = 'admin.html';
     }
-    
+
     await cargarPartidos();
     configurarEventos();
 });
@@ -309,6 +309,112 @@ function actualizarContadorLive() {
     }
 }
 
+async function cargarProximosPartidos() {
+    const container = document.getElementById('proximosPartidosWidget');
+    if (!container) return;
+ 
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=3`);
+        if (!response.ok) throw new Error('Error cargando partidos');
+        const partidos = await response.json();
+ 
+        if (partidos.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">✅ ¡Todos los partidos han sido jugados!</div>';
+            return;
+        }
+ 
+        container.innerHTML = partidos.map(p => {
+            const fecha = new Date(p.fecha);
+            const fechaCorta = fecha.toLocaleDateString('es-ES', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit', minute: '2-digit'
+            });
+ 
+            return `
+            <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
+                </div>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="ppm-hora-col">
+                        <span class="ppm-hora">${hora}</span>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+ 
+    } catch (err) {
+        console.error('Error cargando próximos partidos:', err);
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
+    }
+}
+// ─── ÚLTIMOS RESULTADOS ──────────────────────────────────
+async function cargarUltimosResultados() {
+    const container = document.getElementById('ultimosResultados');
+    if (!container) return;
+
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=3`);
+        if (!response.ok) throw new Error('Error cargando resultados');
+        const partidos = await response.json();
+
+        if (!partidos.length) {
+            container.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:12px;color:#aaa;">⏳ El torneo aún no ha comenzado</div>';
+            return;
+        }
+
+    container.innerHTML = partidos.map(p => {
+        const fecha = new Date(p.fecha);
+        const fechaCorta = fecha.toLocaleDateString('es-ES', {
+            day: '2-digit', month: '2-digit', year: 'numeric'
+        });
+        return `
+            <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <div class="ppm-fecha">Finalizado</div>
+                </div>
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                    <div class="ppm-result-label"></div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="ppm-result-col">
+                        <div class="ppm-result-stack">
+                            <span class="ppm-result-num">${p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : '—'}</span>
+                            <div class="ppm-result-line"></div>
+                            <span class="ppm-result-num">${p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—'}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+    } catch (error) {
+        console.error('Error cargando resultados:', error);
+        container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
+    }
+}
 // ===============================================
 // UTILIDADES
 // ===============================================
