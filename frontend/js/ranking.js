@@ -300,26 +300,26 @@ function mostrarTablaRanking(ranking) {
         const fases = ['grupos', '16avos', '8vos', '4tos', 'semis', 'tercer_puesto', 'final'];
         
         return `
-            <tr class="${claseFila}">
-                <td class="td-pos">${obtenerMedallaPosicion(posicion)}</td>
-                <td>
-                    <div class="user-cell">
-                        <!-- PUEDE SERVIR PARA METER LAS BANDERAS DEL EQUIPO CAMPEON <span class="user-flag">${obtenerBandera(user.campeon_elegido)}</span> -->
-                        <span class="user-nametable">${user.nombre_publico || user.nombre || 'Usuario'}</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="liga-badge">
-                        ${obtenerIconoLigaPrincipal(user.ligas)}
-                    </span>
-                </td>
-                ${fases.map(fase => {
-                    const puntos = user[`puntos_${fase}`] || 0;
-                    return `<td class="td-fase ${puntos > 0 ? 'has-points' : ''}">${puntos}</td>`;
-                }).join('')}
-                <td class="td-total">${user.puntos_totales || 0}</td>
-            </tr>
-        `;
+    <tr class="${claseFila}">
+        <td class="td-pos">${obtenerMedallaPosicion(posicion, ranking.length)}</td>
+        <td>
+            <div class="user-cell">
+                <span class="user-nametable">${user.nombre_publico || user.nombre || 'Usuario'}</span>
+            </div>
+        </td>
+        <td>
+            <span class="liga-badge">
+                ${obtenerIconoLigaPrincipal(user.ligas)}
+            </span>
+        </td>
+        <td class="td-total">${user.puntos_totales || 0}</td>
+        <td class="td-sep"></td>
+        ${fases.map(fase => {
+            const puntos = user[`puntos_${fase}`] || 0;
+            return `<td class="td-fase fase-col ${puntos > 0 ? 'has-points' : ''}">${puntos}</td>`;
+        }).join('')}
+    </tr>
+`;
     }).join('');
 }
 
