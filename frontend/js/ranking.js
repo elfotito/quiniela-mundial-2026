@@ -450,7 +450,7 @@ function obtenerLigaPrincipal(ligas) {
     return liga ? liga.nombre : 'Sin liga';
 }
 
-function obtenerIconosLigas(ligas) {
+function obtenerIconoLigaPrincipal(ligas) {
     if (!ligas || ligas.length === 0) return '🏅';
     
     // Asegurar que sea array
