@@ -13,8 +13,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     const usuario = auth.getUser();
-    document.querySelector('.user-name-display').textContent = usuario.nombre || usuario.codigo;
-    document.getElementById('mobileUserName').textContent = usuario.nombre || usuario.codigo;
+    document.querySelectorAll('.user-name-display').forEach(el => el.textContent = usuario.nombre);
+    const emoji = obtenerCampeon(usuario.campeon_elegido);
+    document.querySelectorAll('.user-emoji-display').forEach(el => el.textContent = emoji);
     // Botón admin
     const adminBtn = document.querySelector('.btn-admin-display');
     if (adminBtn && auth.isAdmin()) {
