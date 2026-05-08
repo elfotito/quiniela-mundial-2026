@@ -594,11 +594,11 @@ body {
     text-transform: uppercase;
     color: #555;
     white-space: nowrap;
-    margin-right: auto;       /* empuja los controles a la derecha */
+    margin: 0 auto;
 }
 .toolbar-count span {
-    color: var(--fifa-gold);
-    font-size: 14px;
+    color: #003d7a;
+    font-size: 16px;
 }
 
 /* Select y input inline dentro de la toolbar */
