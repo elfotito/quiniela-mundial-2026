@@ -599,7 +599,7 @@ body {
 }
 .th-pos   { width: 52px;   text-align: center; }
 .th-user  { min-width: 100px; }
-.th-liga  { min-width: 60px; }
+.th-liga  { min-width: 80px; }
 .th-total {
     width: 90px;
     text-align: center;
@@ -678,9 +678,7 @@ body {
     align-items: center;
     gap: 0.25rem;
     padding: 0.2rem 0.6rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+ 
     font-size: 0.82rem;
     color: var(--text-gray);
 }
