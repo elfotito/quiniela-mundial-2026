@@ -231,25 +231,19 @@
                     <div class="widget-bar"></div>
                     <span class="table-title">Tabla Completa</span>
                 </div>
-                <div class="widget-body">
-                    <div class="rnk-filter-group">
-                        <label class="rnk-filter-label">Liga</label>
-                        <select class="rnk-filter-select" id="ligaFilter">
-                            <option value="">Todas las ligas</option>
-                        </select>
-                    </div>
-                    <div class="rnk-filter-group">
-                        <label class="rnk-filter-label">Buscar usuario</label>
-                        <input type="text" class="rnk-filter-input" id="searchInput" placeholder="Nombre...">
-                    </div>
-                    <div class="participants-badge">
-                        <span class="participants-count" id="participantsCount">0</span>
-                        <span class="participants-label">Participantes</span>
-                    </div>
-                    <button class="btn-share" onclick="compartirRanking()">
-                        <i class="bi bi-share"></i> Compartir Ranking
-                    </button>
-                </div>
+                <div class="table-toolbar">
+        <span class="toolbar-count">
+            <span id="participantsCount2">0</span> participantes
+        </span>
+        <select class="toolbar-select" id="ligaFilter">
+            <option value="">Todas las ligas</option>
+        </select>
+        <input  class="toolbar-input"  id="searchInput"
+                type="text" placeholder="🔍 Buscar usuario...">
+        <button class="btn-share-toolbar" onclick="compartirRanking()">
+            <i class="bi bi-share"></i> Compartir
+        </button>
+    </div>
  
                 <div class="table-responsive">
                     <table class="ranking-table">

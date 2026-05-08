@@ -476,89 +476,192 @@ body {
     .podium-player.first .podium-player-name { max-width: 90px; font-size: 12px; }
     .podium-arena { padding: 24px 12px 0; }
 }
+/* ── FILTROS (widget izquierdo) ───────────────────── */
+.rnk-filter-group { margin-bottom: 14px; }
+.rnk-filter-group:last-child { margin-bottom: 0; }
 
-/* ===============================================
-   FILTROS Y BÚSQUEDA
-   =============================================== */
-
-.filters-section {
-    background: var(--dark-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+.rnk-filter-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #666;
+    display: block;
+    margin-bottom: 6px;
 }
 
-.filters-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr auto;
-    gap: 1.5rem;
-    align-items: end;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.filter-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--text-gray);
-}
-
-.filter-icon {
-    font-size: 1.1rem;
-}
-
-.filter-select,
-.filter-input {
-    padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
+.rnk-filter-select,
+.rnk-filter-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
     border-radius: 8px;
+    font-size: 13px;
     color: var(--text-white);
-    font-size: 0.95rem;
     font-family: inherit;
-    transition: all 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color .2s, background .2s;
 }
-
-.filter-select:hover,
-.filter-input:hover {
-    border-color: var(--fifa-blue);
+.rnk-filter-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+    cursor: pointer;
 }
-
-.filter-select:focus,
-.filter-input:focus {
+.rnk-filter-select option {
+    background: #1a1a1a;
+    color: #fff;
+}
+.rnk-filter-select:focus,
+.rnk-filter-input:focus {
     outline: none;
-    border-color: var(--fifa-gold);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--fifa-blue);
+    background: rgba(0,102,204,0.08);
 }
-
-.filter-select option {
-    background: var(--dark-card);
-    color: var(--text-white);
+.rnk-filter-select:hover,
+.rnk-filter-input:hover {
+    border-color: rgba(255,255,255,0.2);
 }
+.rnk-filter-input::placeholder { color: #444; }
 
+/* Badge participantes */
+.participants-badge {
+    background: rgba(201,168,76,0.06);
+    border: 1.5px solid rgba(201,168,76,0.3);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    margin-top: 14px;
+}
 .participants-count {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--fifa-gold);
+    display: block;
+    line-height: 1;
+}
+.participants-label {
+    font-size: 10px;
+    color: #666;
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+/* Botón compartir */
+.btn-share {
+    width: 100%;
+    padding: 11px;
+    background: linear-gradient(135deg, var(--fifa-blue), #0052a3);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    margin-top: 12px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: rgba(0, 102, 204, 0.15);
-    border: 1px solid var(--fifa-blue);
-    border-radius: 8px;
-    font-weight: 600;
-    color: var(--fifa-blue);
-    white-space: nowrap;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity .2s, transform .1s;
+}
+.btn-share:hover  { opacity: .85; }
+.btn-share:active { transform: scale(.98); }
+
+
+/* ── TABLA: toolbar encima de la tabla ───────────────
+   Fila con badge de resultados + filtros inline       */
+.table-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0 18px;
+    flex-wrap: wrap;
 }
 
-.count-icon {
-    font-size: 1.2rem;
+/* Pill "N resultados" */
+.toolbar-count {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: #555;
+    white-space: nowrap;
+    margin-right: auto;       /* empuja los controles a la derecha */
+}
+.toolbar-count span {
+    color: var(--fifa-gold);
+    font-size: 14px;
+}
+
+/* Select y input inline dentro de la toolbar */
+.toolbar-select,
+.toolbar-input {
+    padding: 7px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-white);
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color .2s;
+    height: 34px;
+}
+.toolbar-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 24px;
+    cursor: pointer;
+    min-width: 130px;
+}
+.toolbar-select option { background: #1a1a1a; color: #fff; }
+.toolbar-input  { min-width: 150px; }
+.toolbar-input::placeholder { color: #444; }
+.toolbar-select:focus,
+.toolbar-input:focus  {
+    outline: none;
+    border-color: var(--fifa-blue);
+    background: rgba(0,102,204,0.08);
+}
+
+/* Botón compartir dentro de la toolbar */
+.btn-share-toolbar {
+    height: 34px;
+    padding: 0 14px;
+    background: linear-gradient(135deg, var(--fifa-blue), #0052a3);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: opacity .2s, transform .1s;
+    flex-shrink: 0;
+}
+.btn-share-toolbar:hover  { opacity: .85; }
+.btn-share-toolbar:active { transform: scale(.98); }
+
+@media (max-width: 768px) {
+    .table-toolbar { gap: 8px; }
+    .toolbar-count { width: 100%; }
+    .toolbar-select,
+    .toolbar-input  { flex: 1; min-width: 0; font-size: 11px; }
+    .btn-share-toolbar { flex-shrink: 0; }
 }
 /* ===============================================
    TABLA DE RANKING
