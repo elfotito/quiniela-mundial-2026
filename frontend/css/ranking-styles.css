@@ -622,7 +622,7 @@ body {
     cursor: pointer;
     min-width: 130px;
 }
-.toolbar-select option { background: #1a1a1a; color: #fff; }
+.toolbar-select option { background: #ffffff; color: #000000; }
 .toolbar-input  { min-width: 150px; }
 .toolbar-input::placeholder { color: #444; }
 .toolbar-select:focus,
