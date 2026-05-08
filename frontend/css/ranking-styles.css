@@ -610,7 +610,7 @@ body {
 .th-fase  { width: 68px; text-align: center; }
 .th-sep   {
     /* separador visual antes del desglose */
-    width: 4px;
+    width: 2px;
     padding: 0;
     background: rgba(255,255,255,0.04);
     border-bottom-color: transparent;
@@ -720,7 +720,7 @@ body {
 /* ── SEPARADOR VISUAL ENTRE TOTAL Y FASES ── */
 td.td-sep {
     padding: 0;
-    width: 4px;
+    width: 2px;
     background: rgba(255,255,255,0.03);
 }
 
@@ -1010,8 +1010,8 @@ td.td-sep {
         }
         
         .th-pos { width: 60px; text-align: center; }
-        .th-user { min-width: 200px; }
-        .th-liga { min-width: 120px; }
+        .th-user { min-width: 100px; }
+        .th-liga { min-width: 60px; }
         .th-fase { width: 70px; text-align: center; }
         .th-total { width: 80px; text-align: center; font-size: 1rem; }
         
