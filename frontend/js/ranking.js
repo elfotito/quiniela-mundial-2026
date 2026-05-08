@@ -313,7 +313,6 @@ function mostrarTablaRanking(ranking) {
             </span>
         </td>
         <td class="td-total">${user.puntos_totales || 0}</td>
-        <td class="td-sep"></td>
         ${fases.map(fase => {
             const puntos = user[`puntos_${fase}`] || 0;
             return `<td class="td-fase fase-col ${puntos > 0 ? 'has-points' : ''}">${puntos}</td>`;
