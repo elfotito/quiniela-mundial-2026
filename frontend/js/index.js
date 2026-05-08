@@ -1275,9 +1275,6 @@ function obtenerCampeon(codigo) {
 // ===============================================
 // TOASTTTT
 // ===============================================
-// ===============================================
-// TOAST — Manejador de notificaciones
-// ===============================================
 
 function mostrarToast(mensaje, opciones = {}) {
   const {

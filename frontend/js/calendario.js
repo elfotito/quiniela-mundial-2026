@@ -71,7 +71,40 @@ async function cargarPartidos() {
         `;
     }
 }
-
+async function cargarStatsPartidos() {
+    try {
+        // 1. Obtener predicciones ya realizadas (finalizadas)
+        const resPred = await fetch(`${CONFIG.API_URL}/predicciones/${usuario.id}`);
+        const predicciones = await resPred.json();
+        const finalizados = predicciones.length;
+        
+        // 2. Obtener partidos pendientes por predecir
+        const resPartidos = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente`);
+        const partidos = await resPartidos.json();
+        const pendientes = partidos.filter(p => 
+            !predicciones.some(pred => pred.partido_id === p.id)
+        ).length;
+        
+        // 3. Guardar en localStorage
+        localStorage.setItem('predicciones_length', finalizados);
+        localStorage.setItem('partidos_pendientes', pendientes);
+        
+        // 4. Actualizar el DOM
+        const set = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
+        };
+        
+        set('statJugados', finalizados);
+        set('statPendientes', pendientes);
+        set('statEnVivo', pendientes); // Total restante = pendientes
+        
+        console.log(`✅ Finalizados: ${finalizados} | Pendientes: ${pendientes}`);
+        
+    } catch (error) {
+        console.error('❌ Error cargando stats de partidos:', error);
+    }
+}
 // ===============================================
 // GENERAR FECHAS DISPONIBLES
 // ===============================================
