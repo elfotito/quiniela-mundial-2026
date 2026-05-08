@@ -450,17 +450,21 @@ function obtenerLigaPrincipal(ligas) {
     return liga ? liga.nombre : 'Sin liga';
 }
 
-function obtenerIconoLigaPrincipal(ligas) {
+function obtenerIconosLigas(ligas) {
     if (!ligas || ligas.length === 0) return '🏅';
     
-    const tieneMultiplesLigas = Array.isArray(ligas) && ligas.length > 1;
+    // Asegurar que sea array
+    const idsLigas = Array.isArray(ligas) ? ligas : [ligas];
     
-    const ligaId = Array.isArray(ligas) ? ligas[0] : ligas;
-    const liga = ligasDisponibles.find(l => l.id === ligaId);
+    // Obtener todas las ligas y sus iconos
+    const iconos = idsLigas
+        .map(id => {
+            const liga = ligasDisponibles.find(l => l.id === id);
+            return liga ? (liga.icono || '🏅') : '🏅';
+        })
+        .join(' ');
     
-    const iconoBase = liga ? (liga.icono || '🏅') : '🏅';
-    
-    return iconoBase + (tieneMultiplesLigas ? ' 🔄' : '');
+    return iconos;
 }
 
 async function cargarLigasRegistradas() {
