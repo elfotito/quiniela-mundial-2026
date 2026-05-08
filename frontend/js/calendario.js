@@ -13,24 +13,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     const usuario = auth.getUser();
-    document.getElementById('user-name-display').textContent = usuario.nombre || usuario.codigo;
+    document.querySelector('.user-name-display').textContent = usuario.nombre || usuario.codigo;
     document.getElementById('mobileUserName').textContent = usuario.nombre || usuario.codigo;
     // Botón admin
-    const adminBtn = document.getElementById('btn-admin-display');
+    const adminBtn = document.querySelector('.btn-admin-display');
     if (adminBtn && auth.isAdmin()) {
         adminBtn.style.display = 'flex';
         adminBtn.onclick = () => window.location.href = 'admin.html';
     }
-
-    // Menú móvil
-    const btnMenuMobile = document.getElementById('btnMenuMobile');
-    const navMobile = document.getElementById('navMobile');
-    if (btnMenuMobile && navMobile) {
-        btnMenuMobile.addEventListener('click', () => {
-            navMobile.classList.toggle('active');
-        });
-    }
-
+    
     await cargarPartidos();
     configurarEventos();
 });
