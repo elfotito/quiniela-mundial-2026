@@ -582,7 +582,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 0 18px;
+    padding: 14px 20px;
     flex-wrap: wrap;
 }
 
@@ -605,12 +605,10 @@ body {
 .toolbar-select,
 .toolbar-input {
     padding: 7px 12px;
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
+    background: rgba(126, 126, 126, 0.04);
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
     font-size: 12px;
-    color: var(--text-white);
-    font-family: inherit;
+    color: #000;
     appearance: none;
     -webkit-appearance: none;
     transition: border-color .2s;
