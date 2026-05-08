@@ -734,7 +734,40 @@ setTimeout(() => {
   });
 
 }, 500);
+// ===============================================
+// TIPS ALEATORIOS
+// ===============================================
 
+const TIPS_ALEATORIOS = [
+  { icon: '⚽', texto: 'El Mundial 2026 es el primero con 48 selecciones.' },
+  { icon: '🌍', texto: 'Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá.' },
+  { icon: '💡', texto: 'Predice el resultado exacto y ganas puntos extra.' },
+  { icon: '🏆', texto: 'El campeón que eliges al inicio vale puntos dobles.' },
+  { icon: '📊', texto: 'Hay 104 partidos en total en el torneo.' },
+  { icon: '🌟', texto: 'La final se jugará el 19 de julio de 2026 en Nueva York.' },
+  { icon: '🇻🇪', texto: 'Droguería Carrisan trae la Quiniela más emocionante del 2026.' },
+  { icon: '⚡', texto: 'El torneo arranca el 11 de junio de 2026.' },
+  { icon: '🥅', texto: 'Los grupos tienen 3 equipos cada uno — más partidos por equipo.' },
+  { icon: '🎯', texto: 'Cuanto más aciertes, más alto subes en el ranking global.' },
+];
+
+// ── Listener para tips aleatorios ──
+setTimeout(() => {
+  document.querySelectorAll('a[data-tip], button[data-tip]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Seleccionar tip random
+      const tip = TIPS_ALEATORIOS[Math.floor(Math.random() * TIPS_ALEATORIOS.length)];
+      
+      mostrarToast(tip.texto, {
+        icon: tip.icon,
+        duracion: 5000
+      });
+    });
+  });
+}, 500);
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
