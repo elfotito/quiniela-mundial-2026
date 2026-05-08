@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     await cargarPartidos();
+    cargarProximosPartidos(),
+    cargarUltimosResultados(),
     configurarEventos();
 });
 
