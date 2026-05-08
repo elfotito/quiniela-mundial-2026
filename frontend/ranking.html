@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/ranking-styles.css">
     <link rel="stylesheet" href="css/index-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div id="toast-container"></div>
@@ -414,7 +415,96 @@
             </div>
         </div>
         </footer>
-        <script src="js/config.js"></script>
+    <div id="share-canvas" style="
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+    width: 1080px;
+    background: #0a0a0a;
+    font-family: Arial, sans-serif;
+    z-index: -1;
+">
+    <!-- HEADER BRANDED -->
+    <div id="share-header" style="
+        background: linear-gradient(135deg, #003d7a 0%, #0066CC 100%);
+        padding: 48px 64px 40px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        border-bottom: 4px solid #C9A84C;
+    ">
+        <div style="font-size: 72px; line-height: 1;">🏆</div>
+        <div>
+            <div style="
+                color: #C9A84C;
+                font-size: 18px;
+                font-weight: 700;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+            ">Copa Mundial FIFA 2026™</div>
+            <div style="
+                color: #ffffff;
+                font-size: 52px;
+                font-weight: 900;
+                line-height: 1;
+                letter-spacing: -1px;
+            ">QUINIELA MUNDIAL</div>
+            <div style="
+                color: rgba(255,255,255,0.7);
+                font-size: 22px;
+                font-weight: 400;
+                margin-top: 6px;
+                letter-spacing: 2px;
+            ">TABLA DE POSICIONES</div>
+        </div>
+    </div>
+
+    <!-- BADGE DE LIGA ACTIVA -->
+    <div id="share-liga-badge" style="
+        background: #111;
+        padding: 20px 64px;
+        border-bottom: 1px solid #222;
+        font-size: 22px;
+        color: #aaa;
+        letter-spacing: 1px;
+    ">
+        <!-- Se llena dinámicamente con JS -->
+    </div>
+
+    <!-- TABLA -->
+    <div style="padding: 32px 64px 40px;">
+        <table id="share-table" style="
+            width: 100%;
+            border-collapse: collapse;
+        ">
+            <thead>
+                <tr style="border-bottom: 2px solid #C9A84C;">
+                    <th style="padding: 16px 12px; color: #C9A84C; font-size: 18px; text-align: center; width: 80px;">POS</th>
+                    <th style="padding: 16px 12px; color: #C9A84C; font-size: 18px; text-align: left;">PARTICIPANTE</th>
+                    <th style="padding: 16px 12px; color: #C9A84C; font-size: 18px; text-align: center; width: 140px;">PUNTOS</th>
+                </tr>
+            </thead>
+            <tbody id="share-tbody">
+                <!-- Se llena dinámicamente con JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="
+        background: #111;
+        border-top: 1px solid #222;
+        padding: 24px 64px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    ">
+        <div style="color: #555; font-size: 18px;">quiniela-mundial-2026.vercel.app</div>
+        <div style="color: #555; font-size: 18px;">🇺🇸 🇲🇽 🇨🇦</div>
+    </div>
+</div>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/ranking.js"></script>
 </body>

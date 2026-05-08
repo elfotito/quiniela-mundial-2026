@@ -6,6 +6,7 @@ let usuario = null;
 let rankingCompleto = [];
 let rankingFiltrado = [];
 let ligasDisponibles = [];
+const TOTAL_PARTICIPANTES_ESPERADOS = 50;
 
 document.addEventListener('DOMContentLoaded', async () => {
     if (!auth.isAuthenticated()) {
@@ -310,7 +311,6 @@ function mostrarTablaRanking(ranking) {
                 <td>
                     <span class="liga-badge">
                         ${obtenerIconoLigaPrincipal(user.ligas)}
-                        ${obtenerLigaPrincipal(user.ligas)}
                     </span>
                 </td>
                 ${fases.map(fase => {
@@ -430,15 +430,17 @@ function configurarEventos() {
 // UTILIDADES
 // ===============================================
 
-function obtenerMedallaPosicion(posicion) {
+function obtenerMedallaPosicion(posicion, totalActual) {
     switch(posicion) {
         case 1: return '🥇';
         case 2: return '🥈';
         case 3: return '🥉';
-        default: return posicion;
+        default:
+            // Penúltimo lugar según los usuarios que hay AHORA en la vista
+            if (totalActual && posicion === totalActual - 1) return '🚑';
+            return posicion;
     }
 }
-
 function obtenerLigaPrincipal(ligas) {
     if (!ligas || ligas.length === 0) return 'Sin liga';
     
@@ -609,6 +611,94 @@ function actualizarContador(cantidad) {
     const counter = document.getElementById('participantsCount');
     if (counter) {
         counter.textContent = cantidad;
+    }
+}
+
+async function compartirRanking() {
+    const datos = rankingFiltrado;
+    if (!datos || datos.length === 0) {
+        alert('No hay datos para compartir.');
+        return;
+    }
+
+    // -- Llenar badge de liga activa --
+    const ligaSelect = document.getElementById('ligaFilter');
+    const ligaNombre = ligaSelect && ligaSelect.selectedIndex > 0
+        ? ligaSelect.options[ligaSelect.selectedIndex].text
+        : 'Todas las Ligas';
+
+    document.getElementById('share-liga-badge').innerHTML =
+        `📊 &nbsp;<strong style="color:#fff;">${ligaNombre}</strong>`;
+
+    // -- Llenar filas de la tabla --
+    const tbody = document.getElementById('share-tbody');
+    const total = datos.length;
+
+    tbody.innerHTML = datos.map((user, index) => {
+        const posicion  = index + 1;
+        const medalla   = obtenerMedallaPosicion(posicion, total);
+        const nombre    = user.nombre_publico || user.nombre || 'Usuario';
+        const puntos    = user.puntos_totales || 0;
+
+        // Alternar fondo de filas
+        const bgFila = index % 2 === 0 ? '#111' : '#0d0d0d';
+
+        // Resaltar top 3
+        const esTop3    = posicion <= 3;
+        const colorPts  = esTop3 ? '#C9A84C' : '#ffffff';
+        const fontPts   = esTop3 ? '700' : '400';
+
+        // Resaltar penúltimo
+        const esPenultimo = posicion === total - 1;
+        const colorNombre = esPenultimo ? '#ff6b6b' : '#ffffff';
+
+        return `
+            <tr style="background: ${bgFila}; border-bottom: 1px solid #1a1a1a;">
+                <td style="padding: 20px 12px; font-size: 28px; text-align: center;">${medalla}</td>
+                <td style="padding: 20px 12px; font-size: 26px; color: ${colorNombre}; font-weight: 500;">${nombre}</td>
+                <td style="padding: 20px 12px; font-size: 28px; text-align: center; color: ${colorPts}; font-weight: ${fontPts};">${puntos}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // -- Capturar con html2canvas --
+    const shareCanvas = document.getElementById('share-canvas');
+    try {
+        const canvas = await html2canvas(shareCanvas, {
+            scale: 1,
+            useCORS: true,
+            backgroundColor: '#0a0a0a',
+            logging: false
+        });
+
+        // Convertir a blob
+        canvas.toBlob(async (blob) => {
+            const archivo = new File([blob], 'quiniela-mundial-2026.png', { type: 'image/png' });
+
+            // Web Share API (móvil) con fallback a descarga (desktop)
+            if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
+                try {
+                    await navigator.share({
+                        files: [archivo],
+                        title: 'Quiniela Mundial 2026',
+                        text: '¡Mira cómo va la tabla! 🏆⚽'
+                    });
+                } catch (err) {
+                    // Usuario canceló el share — no es un error real
+                    if (err.name !== 'AbortError') console.error('Share error:', err);
+                }
+            } else {
+                // Fallback: descarga directa
+                const link = document.createElement('a');
+                link.download = 'quiniela-mundial-2026.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+        }, 'image/png');
+
+    } catch (err) {
+        console.error('Error generando imagen:', err);
+        alert('No se pudo generar la imagen. Intenta de nuevo.');
     }
 }
 
