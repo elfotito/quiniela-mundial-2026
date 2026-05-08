@@ -211,14 +211,6 @@
                     <div class="stat-row"><span class="stat-label-w">Efectividad</span><span class="stat-val-w" id="statEfectividadResumen">—</span></div>
                 </div>
             </div>
-            <!-- Filtros -->
-            <div class="widget">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Filtros</span>
-                </div>
-                
-            </div>
         </aside>
         <!-- ══ COLUMNA PRINCIPAL ══ -->
         <main class="rnk-col-main">
@@ -235,57 +227,60 @@
  
             <!-- Tabla completa -->
             <div class="table-section">
-                <div class="table-header">
-                    <div class="widget-bar"></div>
-                    <span class="table-title">Tabla Completa</span>
-                </div>
-                <div class="widget-body">
-                    <div class="rnk-filter-group">
-                        <label class="rnk-filter-label">Liga</label>
-                        <select class="rnk-filter-select" id="ligaFilter">
-                            <option value="">Todas las ligas</option>
-                        </select>
-                    </div>
-                    <div class="rnk-filter-group">
-                        <label class="rnk-filter-label">Buscar usuario</label>
-                        <input type="text" class="rnk-filter-input" id="searchInput" placeholder="Nombre...">
-                    </div>
-                    <div class="participants-badge">
-                        <span class="participants-count" id="participantsCount">0</span>
-                        <span class="participants-label">Participantes</span>
-                    </div>
-                    <button class="btn-share" onclick="compartirRanking()">
-                        <i class="bi bi-share"></i> Compartir Ranking
-                    </button>
-                </div>
- 
-                <div class="table-responsive">
-                    <table class="ranking-table">
-                        <thead>
-                            <tr>
-                                <th class="th-pos">Pos</th>
-                                <th class="th-user">Usuario</th>
-                                <th class="th-liga">Liga</th>
-                                <th class="th-total">Total</th>
-                            <!-- separador visual <th class="th-sep"></th> -->
-                                <th class="th-fase fase-col">Grupos</th>
-                                <th class="th-fase fase-col">16avos</th>
-                                <th class="th-fase fase-col">8vos</th>
-                                <th class="th-fase fase-col">4tos</th>
-                                <th class="th-fase fase-col">Semis</th>
-                                <th class="th-fase fase-col">3er</th>
-                                <th class="th-fase fase-col">Final</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rankingTableBody">
-                            <tr>
-                                <td colspan="11" style="text-align:center;padding:32px;color:#aaa;font-size:13px;">
-                                    Cargando ranking...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="table-header">
+        <div class="widget-bar"></div>
+        <span class="table-title">Tabla Completa</span>
+    </div>
+    <div class="filters-bar">
+        <div class="filters-left">
+            <div class="filter-group">
+                <label>Liga</label>
+                <select id="ligaFilter">
+                    <option value="">Todas las ligas</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Buscar usuario</label>
+                <input type="text" id="searchInput" placeholder="Nombre...">
+            </div>
+        </div>
+        <div class="filters-right">
+            <div class="participants-badge">
+                <span id="participantsCount">0</span>
+                <span>Participantes</span>
+            </div>
+            <button class="btn-share" onclick="compartirRanking()">
+                📤 Compartir Ranking
+            </button>
+        </div>
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-responsive">
+        <table class="ranking-table">
+            <thead>
+                <tr>
+                    <th class="th-pos">Pos</th>
+                    <th class="th-user">Usuario</th>
+                    <th class="th-liga">Liga</th>
+                    <th class="th-total">Total</th>
+                    <th class="th-fase">Grupos</th>
+                    <th class="th-fase">16avos</th>
+                    <th class="th-fase">8vos</th>
+                    <th class="th-fase">4tos</th>
+                    <th class="th-fase">Semis</th>
+                    <th class="th-fase">3er</th>
+                    <th class="th-fase">Final</th>
+                </tr>
+            </thead>
+            <tbody id="rankingTableBody">
+                <tr>
+                    <td colspan="11" style="text-align:center;">Cargando ranking...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
  
                 <div class="empty-state" id="emptyState" style="display:none;">
                     <span class="empty-icon">🔍</span>
