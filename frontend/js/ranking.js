@@ -453,10 +453,14 @@ function obtenerLigaPrincipal(ligas) {
 function obtenerIconoLigaPrincipal(ligas) {
     if (!ligas || ligas.length === 0) return '🏅';
     
+    const tieneMultiplesLigas = Array.isArray(ligas) && ligas.length > 1;
+    
     const ligaId = Array.isArray(ligas) ? ligas[0] : ligas;
     const liga = ligasDisponibles.find(l => l.id === ligaId);
     
-    return liga ? (liga.icono || '🏅') : '🏅';
+    const iconoBase = liga ? (liga.icono || '🏅') : '🏅';
+    
+    return iconoBase + (tieneMultiplesLigas ? ' 🔄' : '');
 }
 
 async function cargarLigasRegistradas() {
