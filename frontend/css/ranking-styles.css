@@ -652,7 +652,7 @@ body {
     transition: opacity .2s, transform .1s;
     flex-shrink: 0;
     width: 100%;
-    text-align: center;
+    justify-content: center;
 }
 .btn-share-toolbar:hover  { opacity: .85; }
 .btn-share-toolbar:active { transform: scale(.98); }
