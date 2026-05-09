@@ -1857,7 +1857,7 @@ body {
     /* ── RESPONSIVE ───────────────────────────────────── */
     @media(max-width:1024px){
         .qui-grid { grid-template-columns:1fr 220px; grid-template-areas:"centro derecha" "izquierda izquierda"; }
-        .qui-col-left { position:static; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .qui-col-left { position:static; display:grid; grid-template-columns:1fr; gap:16px; }
     }
     @media(max-width:700px){
         .qui-grid { grid-template-columns:1fr; grid-template-areas:"centro" "derecha" "izquierda"; padding:16px 12px 40px; }
