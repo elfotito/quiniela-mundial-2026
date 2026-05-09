@@ -246,7 +246,8 @@ function mostrarPartidosDelDia() {
 // ===============================================
 
 function crearMatchCard(partido) {
-    const fecha = new Date(p.fecha);
+    container.innerHTML = partidos.map(p => {
+            const fecha = new Date(p.fecha);
             const fechaCorta = fecha.toLocaleDateString('es-ES', {
                 day: '2-digit', month: '2-digit', year: 'numeric'
             });
@@ -300,6 +301,7 @@ function crearMatchCard(partido) {
             </div>
         </div>
     `;
+    }).join('');
 }
 
 // ===============================================
