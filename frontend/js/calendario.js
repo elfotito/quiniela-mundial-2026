@@ -273,6 +273,7 @@ function crearMatchCard(partido) {
     }
 
     return `
+    <div class="matches-listoo">
     <div class="ppm-card">
                 <div class="ppm-header">
                     <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
@@ -296,6 +297,7 @@ function crearMatchCard(partido) {
                 </div>
             </div>
         </div>
+    </div>
     `;
 }
 
