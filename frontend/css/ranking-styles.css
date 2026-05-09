@@ -587,7 +587,7 @@ body {
 }
 
 .toolbar-count {
-    font-size: 11px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: .8px;
     text-transform: uppercase;
@@ -599,7 +599,9 @@ body {
 }
 .toolbar-count span {
     color: #003d7a;
-    font-size: 16px;
+    font-size: 20px;
+    font-family: "Yolk";
+    font-weight: 800;
 }
 
 /* Select y input inline dentro de la toolbar */
@@ -614,6 +616,7 @@ body {
     -webkit-appearance: none;
     transition: border-color .2s;
     height: 34px;
+    width: 48%;
 }
 .toolbar-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
