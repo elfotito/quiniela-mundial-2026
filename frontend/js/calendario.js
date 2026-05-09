@@ -291,7 +291,7 @@ function crearMatchCard(partido) {
                         </div>
                     </div>
                     <div class="ppm-hora-col">
-                        <span class="ppm-hora">${hora}</span>
+                        <span class="ppm-hora">${hora}</span><br>
                         <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
                     </div>
                 </div>
