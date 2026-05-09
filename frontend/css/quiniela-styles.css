@@ -1721,7 +1721,7 @@ body {
     .qui-grid-bg { background:#f4f4f4; }
     .qui-grid { max-width:1280px; margin:0 auto; padding:28px 16px 48px; display:grid; grid-template-columns:240px 1fr 240px; grid-template-areas:"izquierda centro derecha"; gap:24px; align-items:start; }
     .qui-col-left  { grid-area:izquierda; display:flex; flex-direction:column; gap:16px; position:sticky; top:110px; }
-    .qui-col-main  { grid-area:centro;    display:flex; flex-direction:column; gap:16px; min-width:0; }
+    .qui-col-main  { grid-area:centro;    display:flex; flex-direction:column; gap:16px; min-width:0; overflow: hidden; }
     .qui-col-right { grid-area:derecha;   display:flex; flex-direction:column; gap:16px; position:sticky; top:110px; }
 
     /* ── WIDGET BASE ──────────────────────────────────── */
