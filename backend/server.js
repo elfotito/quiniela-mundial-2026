@@ -1284,10 +1284,9 @@ app.patch('/api/usuarios/:id/estado', verificarAdmin, async (req, res) => {
 app.get('/api/noticias', async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 10;
-
         const result = await pool.query(
             `SELECT 
-                id, tipo, titulo, resena, imagen_url,
+                id, tipo, titulo, resena, imagen_url, youtube_url,
                 equipo_local, equipo_visitante,
                 marcador_local, marcador_visitante,
                 created_at
@@ -1297,7 +1296,6 @@ app.get('/api/noticias', async (req, res) => {
              LIMIT $1`,
             [limit]
         );
-
         res.json(result.rows);
     } catch (err) {
         console.error('Error GET /api/noticias:', err);
@@ -1315,6 +1313,7 @@ app.post('/api/noticias', verificarAdmin, async (req, res) => {
             titulo,
             resena,
             imagen_url,
+            youtube_url,
             equipo_local,
             equipo_visitante,
             marcador_local,
@@ -1322,26 +1321,46 @@ app.post('/api/noticias', verificarAdmin, async (req, res) => {
         } = req.body;
 
         // Validaciones básicas
-        if (!tipo || !['hero', 'secundaria', 'partido'].includes(tipo)) {
+        if (!tipo || !['hero', 'secundaria', 'partido', 'video'].includes(tipo)) {
             return res.status(400).json({ error: 'Tipo de noticia inválido' });
         }
         if (!titulo || titulo.trim().length === 0) {
             return res.status(400).json({ error: 'El título es obligatorio' });
         }
+        if (!resena || resena.trim().length === 0) {
+            return res.status(400).json({ error: 'La reseña es obligatoria' });
+        }
+
+        // Validaciones por tipo
+        if ((tipo === 'hero' || tipo === 'secundaria') && !imagen_url) {
+            return res.status(400).json({ error: 'La imagen es obligatoria para este tipo' });
+        }
         if (tipo === 'partido' && (!equipo_local || !equipo_visitante)) {
             return res.status(400).json({ error: 'Los equipos son obligatorios para tipo partido' });
+        }
+        if (tipo === 'video' && !youtube_url) {
+            return res.status(400).json({ error: 'El enlace de YouTube es obligatorio para tipo video' });
+        }
+
+        // Validar URL de YouTube
+        if (tipo === 'video' && youtube_url) {
+            const isValidYouTube = youtube_url.includes('youtube.com') || youtube_url.includes('youtu.be');
+            if (!isValidYouTube) {
+                return res.status(400).json({ error: 'El enlace debe ser de YouTube' });
+            }
         }
 
         const result = await pool.query(
             `INSERT INTO noticias 
-                (tipo, titulo, resena, imagen_url, equipo_local, equipo_visitante, marcador_local, marcador_visitante)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                (tipo, titulo, resena, imagen_url, youtube_url, equipo_local, equipo_visitante, marcador_local, marcador_visitante)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
              RETURNING *`,
             [
                 tipo,
                 titulo.trim(),
                 resena?.trim() || null,
                 imagen_url?.trim() || null,
+                youtube_url?.trim() || null,
                 equipo_local || null,
                 equipo_visitante || null,
                 marcador_local ?? null,
@@ -1356,25 +1375,22 @@ app.post('/api/noticias', verificarAdmin, async (req, res) => {
     }
 });
 
+// ─── DELETE /api/noticias/:id ────────────────────────────
 // Elimina (desactiva) una noticia por ID
 // Solo admin
 app.delete('/api/noticias/:id', verificarAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-
         if (isNaN(id)) {
             return res.status(400).json({ error: 'ID inválido' });
         }
-
         const result = await pool.query(
             `UPDATE noticias SET activa = FALSE WHERE id = $1 RETURNING id`,
             [id]
         );
-
         if (result.rowCount === 0) {
             return res.status(404).json({ error: 'Noticia no encontrada' });
         }
-
         res.json({ ok: true, id: parseInt(id) });
     } catch (err) {
         console.error('Error DELETE /api/noticias/:id:', err);
