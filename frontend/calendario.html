@@ -540,6 +540,18 @@
         .match-status { display: flex; justify-content: center; }
     }
 
+    @media (pointer: coarse) {
+    .scroller-nav {
+        display: none !important;
+    }
+}
+
+/* Mostrar SOLO en dispositivos con mouse/precisión */
+@media (pointer: fine) {
+    .scroller-nav {
+        display: block; /* o flex, según tu diseño */
+    }
+}
     </style>
 </head>
 <body>
@@ -601,9 +613,7 @@
     </div>
 
     <div class="user-pill-mobile">
-        <span class="user-emoji-display" id="mobileUserCampeon">👤</span>
         <div class="user-info">
-            <span class="greeting">Bienvenido,</span>
             <span class="user-name-display" id="mobileUserName">Usuario</span>
         </div>
     </div>

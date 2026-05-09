@@ -269,42 +269,51 @@ function crearMatchCard(partido) {
     }
 
     return `
-        <div class="match-card-fifa">
-            <!-- Hora -->
-            <div class="match-time">
-                <div class="match-hour">${hora}</div>
-                <div class="match-phase">${partido.fase}</div>
+        <div class="match-card" id="card-${partido.id}">
+            <div class="mc-header">
+                <div>
+                    <div class="mc-competition">Copa Mundial FIFA 2026™</div>
+                    <div class="mc-subtitle">Fase de Grupos · ${partido.fase}${estadio}</div>
+                </div>
+                <span class="mc-date">${fechaCorta}</span>
             </div>
-            
-            <!-- Equipo Local -->
-            <div class="match-team">
-                <span class="team-flag-fifa">${obtenerBandera(partido.equipo_local)}</span>
-                <span class="team-name-fifa">${partido.equipo_local}</span>
-            </div>
-            
-            <!-- Marcador -->
-            <div class="match-score">
-                ${tieneMarcador ? `
-                    <div class="score-display-fifa">
-                        ${partido.goles_local_real} - ${partido.goles_visitante_real}
+            <div class="mc-body">
+                <div class="mc-teams-inputs">
+                    <div class="mc-team-row">
+                        <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
+                        <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
+                        <div class="mc-score-spinner">
+                            <div class="mc-spin-arrows">
+                                <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', 1)" tabindex="-1">▲</button>
+                                <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
+                            </div>
+                            <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0"
+                                inputmode="numeric" pattern="[0-9]*"
+                                oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
+                        </div>
                     </div>
-                ` : `
-                    <div class="score-vs">VS</div>
-                `}
+                    <div class="mc-team-row">
+                        <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
+                        <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
+                        <div class="mc-score-spinner">
+                            <div class="mc-spin-arrows">
+                                <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', 1)" tabindex="-1">▲</button>
+                                <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
+                            </div>
+                            <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0"
+                                inputmode="numeric" pattern="[0-9]*"
+                                oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
+                        </div>
+                    </div>
+                </div>
+                <div class="mc-hora-col">
+                    <span class="mc-hora">${hora}</span>
+                </div>
             </div>
-            
-            <!-- Equipo Visitante -->
-            <div class="match-team away">
-                <span class="team-flag-fifa">${obtenerBandera(partido.equipo_visitante)}</span>
-                <span class="team-name-fifa">${partido.equipo_visitante}</span>
-            </div>
-            
-            <!-- Estado -->
-            <div class="match-status">
-                <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
-            </div>
-        </div>
-    `;
+            <button class="mc-btn-predict" onclick="enviarPrediccion(${partido.id})">
+                Guardar Predicción
+            </button>
+        </div>`;
 }
 
 // ===============================================
@@ -615,6 +624,47 @@ setTimeout(() => {
     });
   });
 }, 500);
+
+// ===============================================
+// MENÚ MÓVIL
+// ===============================================
+(function inicializarMenuMovil() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', inicializarMenuMovil);
+        return;
+    }
+    const menuBtn    = document.getElementById('menuToggleBtn');
+    const menu       = document.getElementById('mobileMenu');
+    const backdrop   = document.getElementById('mmoBackdrop');
+    const closeBtn   = document.getElementById('mobileMenuClose');
+ 
+    function openMenu() {
+        menu.classList.add('show');
+        backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+ 
+    function closeMenu() {
+        menu.classList.remove('show');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+ 
+    if (menuBtn) menuBtn.addEventListener('click', () => {
+    menu.classList.contains('show') ? closeMenu() : openMenu();
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
+ 
+    // Marcar ítem activo según página actual
+    const currentPage = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.mbn-item').forEach(item => {
+        const href = item.getAttribute('href') || '';
+        if (href && href.includes(currentPage)) {
+            item.classList.add('active');
+        }
+    });
+})();
 
 // ===============================================
 // MENÚ MÓVIL
