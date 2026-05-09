@@ -247,8 +247,8 @@ function mostrarPartidosDelDia() {
 
 function crearMatchCard(partido) {
     const fecha = new Date(partido.fecha);
+    const fechaCorta = fecha.toLocaleDateString('es', { day: '2-digit', month: '2-digit', year: 'numeric' });
     const hora = fecha.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
-    
     const tieneMarcador = partido.goles_local_real !== null && partido.goles_local_real !== undefined;
     
     let statusBadge = '';
