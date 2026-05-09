@@ -21,7 +21,7 @@
             --danger: #ef4444;
             --radius: 12px;
         }
-        :root { --header-h: 0px; }  /* ❗ Anular el header height */
+        :root { --header-h: 0px; }
     
         body {
             background: #f5f5f5 !important;
@@ -97,7 +97,7 @@
 
         .tipo-selector {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             margin-bottom: 24px;
         }
@@ -228,44 +228,74 @@
             padding-right: 36px;
         }
 
-        /* MARCADOR */
-        .marcador-row {
-            display: grid;
-            grid-template-columns: 1fr 40px 1fr;
-            gap: 10px;
+        /* CONTADOR DE CARACTERES */
+        .input-counter {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-        }
-        .marcador-vs {
-            text-align: center;
-            font-weight: 800;
-            font-size: 13px;
-            color: var(--gray-500);
-        }
-        .marcador-row input[type="number"] {
-            text-align: center;
-            font-size: 22px;
-            font-weight: 700;
-            padding: 10px 8px;
-        }
-
-        /* EQUIPOS */
-        .equipos-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            margin-top: 6px;
             gap: 10px;
         }
+        .char-count {
+            font-size: 11px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+        .char-count.warning {
+            color: #f59e0b;
+        }
+        .char-count.danger {
+            color: var(--danger);
+        }
 
-        /* IMAGEN URL + PREVIEW */
-        .img-preview-box {
-            margin-top: 10px;
+        /* YOUTUBE PREVIEW */
+        .youtube-preview-box {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-top: 12px;
             border-radius: 8px;
             overflow: hidden;
             background: var(--gray-100);
-            height: 140px;
+        }
+        .youtube-preview-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .youtube-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1.5px dashed var(--gray-300);
+            background: var(--gray-100);
+            color: var(--gray-500);
+            font-size: 48px;
+            gap: 8px;
+        }
+        .youtube-placeholder span {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* IMAGE PREVIEW */
+        .img-preview-box {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin-top: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--gray-100);
         }
         .img-preview-box img {
             width: 100%;
@@ -274,18 +304,52 @@
             display: none;
         }
         .img-preview-placeholder {
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 8px;
             color: var(--gray-300);
+        }
+        .img-preview-placeholder i {
+            font-size: 40px;
+        }
+        .img-preview-placeholder span {
             font-size: 12px;
         }
-        .img-preview-placeholder i { font-size: 28px; }
 
-        /* SECCIÓN OCULTA POR TIPO */
-        .tipo-section { display: none; }
-        .tipo-section.visible { display: block; }
+        /* EQUIPOS ROW */
+        .equipos-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .equipos-row > div {
+            flex: 1;
+        }
+
+        /* MARCADOR */
+        .marcador-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: center;
+        }
+        .marcador-vs {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .marcador-row input {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
 
         /* BTN GUARDAR */
         .btn-guardar {
@@ -295,108 +359,95 @@
             color: var(--white);
             border: none;
             border-radius: var(--radius);
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
+            transition: all 0.2s;
             letter-spacing: 0.5px;
-            transition: background 0.2s, transform 0.1s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .btn-guardar:active { transform: scale(0.98); }
-        .btn-guardar:hover { background: var(--fifa-dark-blue); }
-        .btn-guardar:disabled { background: var(--gray-300); cursor: not-allowed; }
-
-        /* TOAST */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: var(--dark-bg);
-            color: var(--white);
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 999;
-            transition: transform 0.3s ease;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
             gap: 8px;
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast.error { border-left: 4px solid var(--danger); }
+        .btn-guardar:hover:not(:disabled) {
+            background: var(--fifa-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,102,204,0.2);
+        }
+        .btn-guardar:active:not(:disabled) {
+            transform: translateY(0);
+        }
 
-        /* LISTA DE NOTICIAS PUBLICADAS */
+        /* NOTICIAS LIST */
         .noticias-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
         .noticia-item {
             background: var(--white);
-            border-radius: 10px;
-            padding: 14px 16px;
+            border-radius: var(--radius);
+            padding: 12px;
             display: flex;
-            align-items: center;
             gap: 12px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            align-items: flex-start;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+        }
+        .noticia-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
         .noticia-item-thumb {
-            width: 52px;
-            height: 52px;
+            width: 60px;
+            height: 60px;
             border-radius: 8px;
-            object-fit: cover;
-            background: var(--gray-100);
+            overflow: hidden;
             flex-shrink: 0;
+            background: var(--gray-100);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
         .noticia-item-thumb img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .noticia-item-thumb .thumb-icon {
-            font-size: 22px;
-            color: var(--gray-300);
+        .thumb-icon {
+            font-size: 24px;
         }
-        .noticia-item-info { flex: 1; min-width: 0; }
+        .noticia-item-info {
+            flex: 1;
+            min-width: 0;
+        }
         .noticia-item-titulo {
             font-size: 13px;
             font-weight: 700;
             color: var(--dark-bg);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            line-height: 1.4;
+            word-break: break-word;
+            margin-bottom: 4px;
         }
         .noticia-item-meta {
-            font-size: 11px;
-            color: var(--gray-500);
-            margin-top: 3px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--gray-500);
         }
         .tipo-badge {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 20px;
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            font-size: 10px;
         }
-        .tipo-badge.partido { background: #FFF3CD; color: #856404; }
-        .tipo-badge.hero { background: #D1E7FF; color: #004085; }
-        .tipo-badge.secundaria { background: #D1F2EB; color: #145A32; }
+        .tipo-badge.hero { background: #EBF3FF; color: var(--fifa-blue); }
+        .tipo-badge.secundaria { background: #FFF5E6; color: #d97706; }
+        .tipo-badge.partido { background: #E0F8E0; color: #059669; }
+        .tipo-badge.video { background: #FFE6E6; color: #dc2626; }
 
         .btn-eliminar {
             background: none;
@@ -429,6 +480,13 @@
             background: var(--gray-300);
             cursor: not-allowed;
             opacity: 0.7;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .tipo-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
     </style>
@@ -480,17 +538,22 @@
         <button class="tipo-btn active" data-tipo="hero" onclick="setTipo('hero', this)">
             <span class="tipo-icon">🖼️</span>
             <span class="tipo-name">Hero</span>
-            <span class="tipo-desc">Imagen grande + texto</span>
+            <span class="tipo-desc">Imagen grande</span>
         </button>
         <button class="tipo-btn" data-tipo="secundaria" onclick="setTipo('secundaria', this)">
             <span class="tipo-icon">📰</span>
             <span class="tipo-name">Secundaria</span>
-            <span class="tipo-desc">Imagen chica + texto</span>
+            <span class="tipo-desc">Imagen chica</span>
         </button>
         <button class="tipo-btn" data-tipo="partido" onclick="setTipo('partido', this)">
             <span class="tipo-icon">⚽</span>
             <span class="tipo-name">Partido</span>
-            <span class="tipo-desc">Resultado + equipos</span>
+            <span class="tipo-desc">Resultado</span>
+        </button>
+        <button class="tipo-btn" data-tipo="video" onclick="setTipo('video', this)">
+            <span class="tipo-icon">🎥</span>
+            <span class="tipo-name">Video</span>
+            <span class="tipo-desc">YouTube</span>
         </button>
     </div>
 
@@ -506,12 +569,18 @@
 
         <div class="form-group">
             <label>Título</label>
-            <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="200">
+            <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="100">
+            <div class="input-counter">
+                <span class="char-count"><span id="titleCount">0</span>/100</span>
+            </div>
         </div>
 
         <div class="form-group" id="resenaGroup">
             <label>Reseña breve</label>
-            <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..."></textarea>
+            <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..." maxlength="300"></textarea>
+            <div class="input-counter">
+                <span class="char-count"><span id="resenaCount">0</span>/300</span>
+            </div>
         </div>
     </div>
 
@@ -521,6 +590,9 @@
         <div class="form-group">
             <label>URL de la imagen</label>
             <input type="url" id="imagen_url" placeholder="https://..." oninput="previewImagen(this.value)">
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                Desktop: 900x400px | Mobile: 500x300px
+            </div>
         </div>
         <div class="img-preview-box" id="imgPreviewBox">
             <img id="imgPreview" alt="Preview">
@@ -564,6 +636,9 @@
         <div class="form-group">
             <label>Imagen del partido (opcional)</label>
             <input type="url" id="imagen_url_partido" placeholder="https://..." oninput="previewImagen(this.value)">
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                Recomendado: 350x200px
+            </div>
         </div>
         <div class="img-preview-box" id="imgPreviewBoxPartido" style="margin-top:10px;">
             <img id="imgPreviewPartido" alt="Preview">
@@ -571,6 +646,25 @@
                 <i class="far fa-image"></i>
                 <span>Opcional</span>
             </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: VIDEO YOUTUBE -->
+    <div class="form-card tipo-section" id="seccionVideo">
+        <h3><i class="fas fa-video"></i> Video de YouTube</h3>
+        <div class="form-group">
+            <label>Enlace del video</label>
+            <input type="url" id="youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="previewYouTube(this.value)">
+            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ o https://youtu.be/dQw4w9WgXcQ
+            </div>
+        </div>
+        <div class="youtube-preview-box" id="youtubePreviewBox">
+            <div id="youtubePlaceholder" class="youtube-placeholder">
+                <i class="fab fa-youtube"></i>
+                <span>Ingresa un enlace válido</span>
+            </div>
+            <iframe id="youtubeFrame" style="display:none;" allowfullscreen="" allow="autoplay"></iframe>
         </div>
     </div>
 
@@ -601,51 +695,107 @@
 <script src="js/config.js"></script>
 <script src="js/auth.js"></script>
 <script>
-    // ─── AUTH GUARD ──────────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', async () => {
-        const isAdmin = localStorage.getItem('quiniela_isAdmin');
-        if (!isAdmin || isAdmin === 'false') {
-            window.location.href = 'index.html';
-            return;
-        }
-        await cargarEquipos();
-        await cargarNoticias();
-    });
 
-    // ─── TIPO DE PLANTILLA ───────────────────────────────────
     let tipoActual = 'hero';
 
-    const descripciones = {
-        hero: 'Imagen grande arriba, título destacado y reseña abajo',
-        secundaria: 'Imagen pequeña a la izquierda, título y reseña a la derecha',
-        partido: 'Equipos enfrentados con marcador y foto del partido'
-    };
+    // ─── INICIALIZACIÓN ─────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', async () => {
+        await cargarEquipos();
+        await cargarNoticias();
+        
+        // Listeners para contadores de caracteres
+        document.getElementById('titulo').addEventListener('input', (e) => {
+            document.getElementById('titleCount').textContent = e.target.value.length;
+        });
+        
+        document.getElementById('resena').addEventListener('input', (e) => {
+            document.getElementById('resenaCount').textContent = e.target.value.length;
+        });
+    });
 
+    // ─── SELECTOR DE TIPO ────────────────────────────────────
     function setTipo(tipo, btn) {
         tipoActual = tipo;
+
+        // Actualizar botones
         document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('previewText').textContent = descripciones[tipo];
 
         // Mostrar/ocultar secciones
-        document.getElementById('seccionImagen').classList.toggle('visible', tipo !== 'partido');
-        document.getElementById('seccionPartido').classList.toggle('visible', tipo === 'partido');
+        document.querySelectorAll('.tipo-section').forEach(s => s.classList.remove('visible'));
+
+        // Textos de preview
+        const previews = {
+            hero: 'Imagen grande, título destacado y reseña abajo',
+            secundaria: 'Imagen pequeña junto a título y reseña',
+            partido: 'Resultado de partido con equipos y marcador',
+            video: 'Video de YouTube incrustado con título y reseña'
+        };
+        document.getElementById('previewText').textContent = previews[tipo];
+
+        // Mostrar sección específica
+        if (tipo === 'hero' || tipo === 'secundaria') {
+            document.getElementById('seccionImagen').classList.add('visible');
+        } else if (tipo === 'partido') {
+            document.getElementById('seccionPartido').classList.add('visible');
+        } else if (tipo === 'video') {
+            document.getElementById('seccionVideo').classList.add('visible');
+        }
     }
 
-    // ─── PREVIEW DE IMAGEN ──────────────────────────────────
-    function previewImagen(url) {
-        const isPartido = tipoActual === 'partido';
-        const img = document.getElementById(isPartido ? 'imgPreviewPartido' : 'imgPreview');
-        const placeholder = document.getElementById(isPartido ? 'imgPlaceholderPartido' : 'imgPlaceholder');
+    // ─── PREVIEW IMAGEN ─────────────────────────────────────
+    function previewImagen(url, tipoPartido = false) {
+        const imgId = tipoPartido ? 'imgPreviewPartido' : 'imgPreview';
+        const placeholderId = tipoPartido ? 'imgPlaceholderPartido' : 'imgPlaceholder';
 
-        if (url && url.startsWith('http')) {
-            img.src = url;
-            img.style.display = 'block';
-            img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'flex'; };
-            img.onload = () => { placeholder.style.display = 'none'; };
-        } else {
+        const img = document.getElementById(imgId);
+        const placeholder = document.getElementById(placeholderId);
+
+        if (!url) {
             img.style.display = 'none';
             placeholder.style.display = 'flex';
+            return;
+        }
+
+        img.src = url;
+        img.onload = () => { placeholder.style.display = 'none'; };
+        img.onerror = () => {
+            img.style.display = 'none';
+            placeholder.style.display = 'flex';
+        };
+    }
+
+    // ─── PREVIEW YOUTUBE ────────────────────────────────────
+    function previewYouTube(url) {
+        const placeholder = document.getElementById('youtubePlaceholder');
+        const frame = document.getElementById('youtubeFrame');
+        
+        if (!url) {
+            placeholder.style.display = 'flex';
+            frame.style.display = 'none';
+            return;
+        }
+
+        // Extraer video ID de diferentes formatos de YouTube
+        let videoId = null;
+        
+        // Formato: https://www.youtube.com/watch?v=VIDEO_ID
+        if (url.includes('youtube.com/watch?v=')) {
+            videoId = url.split('v=')[1]?.split('&')[0];
+        }
+        // Formato: https://youtu.be/VIDEO_ID
+        else if (url.includes('youtu.be/')) {
+            videoId = url.split('youtu.be/')[1]?.split('?')[0];
+        }
+
+        if (videoId && videoId.length === 11) {
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+            frame.src = embedUrl;
+            frame.style.display = 'block';
+            placeholder.style.display = 'none';
+        } else {
+            placeholder.style.display = 'flex';
+            frame.style.display = 'none';
         }
     }
 
@@ -676,105 +826,121 @@
         }
     }
 
-// ─── GUARDAR NOTICIA ────────────────────────────────────
-async function guardarNoticia(event) {
-    event.preventDefault();
-    
-    console.log('🚀 Guardando noticia...');
-    
-    // ✅ USAR EL TIPO SELECCIONADO EN LAS PLANTILLAS
-    const tipo = tipoActual; // 'hero', 'secundaria' o 'partido'
-    
-    // Obtener valores del formulario
-    const titulo = document.getElementById('titulo')?.value?.trim();
-    const resena = document.getElementById('resena')?.value?.trim();
-    
-    // Para partido, usar la URL de imagen específica
-    let imagen_url;
-    if (tipo === 'partido') {
-        imagen_url = document.getElementById('imagen_url_partido')?.value || null;
-    } else {
-        imagen_url = document.getElementById('imagen_url')?.value || null;
-    }
-    
-    // Equipos y marcadores (solo para tipo partido)
-    const equipo_local = tipo === 'partido' ? document.getElementById('equipo_local')?.value || null : null;
-    const equipo_visitante = tipo === 'partido' ? document.getElementById('equipo_visitante')?.value || null : null;
-    const marcador_local = tipo === 'partido' ? parseInt(document.getElementById('marcador_local')?.value) || 0 : 0;
-    const marcador_visitante = tipo === 'partido' ? parseInt(document.getElementById('marcador_visitante')?.value) || 0 : 0;
-
-    // Validaciones básicas para todos los tipos
-    if (!titulo) {
-        showToast('El título es obligatorio', 'error');
-        return;
-    }
-    
-    if (!resena) {
-        showToast('La reseña es obligatoria', 'error');
-        return;
-    }
-
-    // Validaciones específicas para partido
-    if (tipo === 'partido') {
-        if (!equipo_local || !equipo_visitante) {
-            showToast('Debes seleccionar ambos equipos para un partido', 'error');
+    // ─── GUARDAR NOTICIA ────────────────────────────────────
+    async function guardarNoticia(event) {
+        event.preventDefault();
+        
+        console.log('🚀 Guardando noticia...');
+        
+        const tipo = tipoActual;
+        
+        // Obtener valores del formulario
+        const titulo = document.getElementById('titulo')?.value?.trim();
+        const resena = document.getElementById('resena')?.value?.trim();
+        
+        // Validaciones básicas para todos los tipos
+        if (!titulo) {
+            showToast('El título es obligatorio', 'error');
             return;
         }
-    }
-
-    const formData = {
-        tipo: tipo,
-        titulo: titulo,
-        resena: resena,
-        imagen_url: imagen_url,
-        equipo_local: equipo_local,
-        equipo_visitante: equipo_visitante,
-        marcador_local: marcador_local,
-        marcador_visitante: marcador_visitante
-    };
-
-    console.log('📦 Datos a enviar:', formData);
-
-    // Deshabilitar botón mientras se envía
-    const btnGuardar = document.getElementById('btnGuardar');
-    btnGuardar.disabled = true;
-    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
-
-    try {
-        const response = await fetch(`${CONFIG.API_URL}/noticias`, {
-            method: 'POST',
-            headers: {
-                    'Content-Type': 'application/json',
-                    'x-usuario-id': localStorage.getItem('quiniela_id')
-                    },
-            body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Error al guardar');
+        
+        if (!resena) {
+            showToast('La reseña es obligatoria', 'error');
+            return;
         }
 
-        console.log('✅ Noticia guardada:', data);
-        
-        showToast('✅ ¡Noticia publicada exitosamente!', 'success');
-        
-        // Limpiar formulario
-        resetForm();
-        
-        // Recargar lista de noticias
-        await cargarNoticias();
-        
-    } catch (error) {
-        console.error('❌ Error:', error);
-        showToast('❌ ' + error.message, 'error');
-    } finally {
-        // Re-habilitar botón
-        btnGuardar.disabled = false;
-        btnGuardar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
+        let imagen_url = null;
+        let youtube_url = null;
+        let equipo_local = null;
+        let equipo_visitante = null;
+        let marcador_local = 0;
+        let marcador_visitante = 0;
+
+        // Validaciones específicas por tipo
+        if (tipo === 'hero' || tipo === 'secundaria') {
+            imagen_url = document.getElementById('imagen_url')?.value || null;
+            if (!imagen_url) {
+                showToast('Necesitas una imagen para este tipo de noticia', 'error');
+                return;
+            }
+        } else if (tipo === 'partido') {
+            equipo_local = document.getElementById('equipo_local')?.value || null;
+            equipo_visitante = document.getElementById('equipo_visitante')?.value || null;
+            marcador_local = parseInt(document.getElementById('marcador_local')?.value) || 0;
+            marcador_visitante = parseInt(document.getElementById('marcador_visitante')?.value) || 0;
+            imagen_url = document.getElementById('imagen_url_partido')?.value || null;
+
+            if (!equipo_local || !equipo_visitante) {
+                showToast('Debes seleccionar ambos equipos para un partido', 'error');
+                return;
+            }
+        } else if (tipo === 'video') {
+            youtube_url = document.getElementById('youtube_url')?.value?.trim() || null;
+            if (!youtube_url) {
+                showToast('Necesitas un enlace de YouTube para este tipo de noticia', 'error');
+                return;
+            }
+            // Validar que sea un enlace válido de YouTube
+            if (!youtube_url.includes('youtube.com') && !youtube_url.includes('youtu.be')) {
+                showToast('El enlace debe ser de YouTube', 'error');
+                return;
+            }
+        }
+
+        const formData = {
+            tipo: tipo,
+            titulo: titulo,
+            resena: resena,
+            imagen_url: imagen_url,
+            youtube_url: youtube_url,
+            equipo_local: equipo_local,
+            equipo_visitante: equipo_visitante,
+            marcador_local: marcador_local,
+            marcador_visitante: marcador_visitante
+        };
+
+        console.log('📦 Datos a enviar:', formData);
+
+        // Deshabilitar botón mientras se envía
+        const btnGuardar = document.getElementById('btnGuardar');
+        btnGuardar.disabled = true;
+        btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+
+        try {
+            const response = await fetch(`${CONFIG.API_URL}/noticias`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-usuario-id': localStorage.getItem('quiniela_id')
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Error al guardar');
+            }
+
+            console.log('✅ Noticia guardada:', data);
+            
+            showToast('✅ ¡Noticia publicada exitosamente!', 'success');
+            
+            // Limpiar formulario
+            resetForm();
+            
+            // Recargar lista de noticias
+            await cargarNoticias();
+            
+        } catch (error) {
+            console.error('❌ Error:', error);
+            showToast('❌ ' + error.message, 'error');
+        } finally {
+            // Re-habilitar botón
+            btnGuardar.disabled = false;
+            btnGuardar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
+        }
     }
-}
 
     // ─── CARGAR NOTICIAS PUBLICADAS ─────────────────────────
     async function cargarNoticias() {
@@ -793,8 +959,8 @@ async function guardarNoticia(event) {
                 <div class="noticia-item">
                     <div class="noticia-item-thumb">
                         ${n.imagen_url
-                            ? `<img src="${n.imagen_url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'thumb-icon\\'>📰</span>'">`
-                            : `<span class="thumb-icon">${n.tipo === 'partido' ? '⚽' : '📰'}</span>`}
+                            ? `<img src="${n.imagen_url}" alt="" onerror="this.parentElement.innerHTML='<span class=\\'thumb-icon\\'>${n.tipo === 'partido' ? '⚽' : n.tipo === 'video' ? '🎥' : '📰'}</span>'">`
+                            : `<span class="thumb-icon">${n.tipo === 'partido' ? '⚽' : n.tipo === 'video' ? '🎥' : '📰'}</span>`}
                     </div>
                     <div class="noticia-item-info">
                         <div class="noticia-item-titulo">${n.titulo}</div>
@@ -831,9 +997,12 @@ async function guardarNoticia(event) {
     // ─── HELPERS ────────────────────────────────────────────
     function resetForm() {
         document.getElementById('titulo').value = '';
+        document.getElementById('titleCount').textContent = '0';
         document.getElementById('resena').value = '';
+        document.getElementById('resenaCount').textContent = '0';
         document.getElementById('imagen_url').value = '';
         document.getElementById('imagen_url_partido').value = '';
+        document.getElementById('youtube_url').value = '';
         document.getElementById('marcador_local').value = '0';
         document.getElementById('marcador_visitante').value = '0';
         
@@ -842,6 +1011,9 @@ async function guardarNoticia(event) {
         document.getElementById('imgPlaceholder').style.display = 'flex';
         document.getElementById('imgPreviewPartido').style.display = 'none';
         document.getElementById('imgPlaceholderPartido').style.display = 'flex';
+        document.getElementById('youtubeFrame').src = '';
+        document.getElementById('youtubePlaceholder').style.display = 'flex';
+        document.getElementById('youtubeFrame').style.display = 'none';
         
         // Resetear selects de equipos a la primera opción
         if (document.getElementById('equipo_local').options.length > 0) {

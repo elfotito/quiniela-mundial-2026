@@ -1733,6 +1733,7 @@
     align-items: center;
     gap: 10px;
     border-bottom: 1px solid #f5f5f5;
+    padding: 10px 15px 10px;
 }
 .rank-row:last-child { border-bottom: none; }
  
