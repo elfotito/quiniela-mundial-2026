@@ -292,15 +292,12 @@ function crearMatchCard(partido) {
                     </div>
                     <div class="ppm-hora-col">
                         <span class="ppm-hora">${hora}</span>
+                        <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
                     </div>
                 </div>
             </div>
-                <!-- Estado -->
-            <div class="match-status">
-                <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
-            </div>
         </div>
-        </div>
+    </div>
     `;
 }
 
