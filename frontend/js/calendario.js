@@ -233,10 +233,6 @@ function mostrarPartidosDelDia() {
                 <div class="day-title">${fechaFormateada}</div>
                 <div class="day-match-count">${partidos.length} partido${partidos.length !== 1 ? 's' : ''}</div>
             </div>
-            
-            <div class="matches-list">
-                ${partidos.map(partido => crearMatchCard(partido)).join('')}
-            </div>
         </div>
     `;
 }
@@ -273,6 +269,7 @@ function crearMatchCard(partido) {
     }
 
     return `
+    <div class="matches-lis">
     <div class="ppm-card">
                 <div class="ppm-header">
                     <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
@@ -296,6 +293,7 @@ function crearMatchCard(partido) {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     `;
 }
