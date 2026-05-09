@@ -273,7 +273,7 @@ function crearMatchCard(partido) {
             <div class="mc-header">
                 <div>
                     <div class="mc-competition">Copa Mundial FIFA 2026™</div>
-                    <div class="mc-subtitle">Fase de Grupos · ${partido.fase}${estadio}</div>
+                    <div class="mc-subtitle">Fase de Grupos · ${partido.fase}</div>
                 </div>
                 <span class="mc-date">${fechaCorta}</span>
             </div>
