@@ -587,7 +587,7 @@ body {
 }
 
 .toolbar-count {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 700;
     letter-spacing: .8px;
     text-transform: uppercase;
@@ -599,7 +599,7 @@ body {
 }
 .toolbar-count span {
     color: #003d7a;
-    font-size: 20px;
+    font-size: 17px;
     font-family: "Yolk";
     font-weight: 800;
 }
@@ -616,7 +616,7 @@ body {
     -webkit-appearance: none;
     transition: border-color .2s;
     height: 34px;
-    width: 48%;
+    width: 49%;
 }
 .toolbar-select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
@@ -1748,7 +1748,7 @@ td.td-sep {
     /* ── RESPONSIVE ───────────────────────────────────── */
     @media(max-width:1024px){
         .rnk-grid { grid-template-columns:1fr 220px; grid-template-areas:"centro derecha" "izquierda izquierda"; }
-        .rnk-col-left { position:static; display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .rnk-col-left { position:static; display:grid; grid-template-columns:1fr; gap:14px; }
     }
     @media(max-width:700px){
         .rnk-grid { grid-template-columns:1fr; grid-template-areas:"centro" "derecha" "izquierda"; padding:16px 12px 40px; }
