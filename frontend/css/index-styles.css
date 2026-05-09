@@ -3269,7 +3269,7 @@
     display: flex;
     gap: 0;
     border-top: 1px solid #ccc;
-    padding: 10px 24px;
+    padding: 10px 24px 20px;
     align-items: center;
 }
 .uib-bar-block {
