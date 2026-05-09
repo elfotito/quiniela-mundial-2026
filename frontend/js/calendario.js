@@ -296,7 +296,6 @@ function crearMatchCard(partido) {
                 </div>
             </div>
         </div>
-    </div>
     `;
 }
 
