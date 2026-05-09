@@ -246,8 +246,7 @@ function mostrarPartidosDelDia() {
 // ===============================================
 
 function crearMatchCard(partido) {
-    container.innerHTML = partidos.map(p => {
-            const fecha = new Date(p.fecha);
+            const fecha = new Date(partido.fecha);
             const fechaCorta = fecha.toLocaleDateString('es-ES', {
                 day: '2-digit', month: '2-digit', year: 'numeric'
             });
@@ -276,18 +275,18 @@ function crearMatchCard(partido) {
     return `
     <div class="ppm-card">
                 <div class="ppm-header">
-                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fase">Fase de Grupos · ${partido.fase}</span>
                     <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
                 <div class="ppm-body">
                     <div class="ppm-teams">
                         <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
-                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                            <span class="ppm-flag">${obtenerBandera(partido.equipo_local)}</span>
+                            <span class="ppm-name">${partido.equipo_local.toUpperCase()}</span>
                         </div>
                         <div class="ppm-team-row">
-                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
-                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
+                            <span class="ppm-flag">${obtenerBandera(partido.equipo_visitante)}</span>
+                            <span class="ppm-name">${partido.equipo_visitante.toUpperCase()}</span>
                         </div>
                     </div>
                     <div class="ppm-hora-col">
@@ -301,7 +300,6 @@ function crearMatchCard(partido) {
             </div>
         </div>
     `;
-    }).join('');
 }
 
 // ===============================================
