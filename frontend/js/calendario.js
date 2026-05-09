@@ -660,7 +660,7 @@ setTimeout(() => {
         return;
     }
     const menuBtn    = document.getElementById('menuToggleBtn');
-    const menu       = document.getElementById('mobileMenu');
+    const menu       = document.getElementById('mobileMenuClose');
     const backdrop   = document.getElementById('mmoBackdrop');
     const closeBtn   = document.getElementById('mobileMenuClose');
  
