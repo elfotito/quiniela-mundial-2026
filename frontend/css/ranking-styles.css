@@ -137,21 +137,6 @@ body {
     gap: 1rem;
 }
 
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-}
-
-.user-icon {
-    font-size: 1.1rem;
-}
-
-
-
 .btn-admin {
     display: flex;
     align-items: center;
