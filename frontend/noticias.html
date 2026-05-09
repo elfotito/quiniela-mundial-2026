@@ -532,7 +532,7 @@
 
 <div class="container">
 
-    <!-- TIPO DE PLANTILLA -->
+    <!-- TIPO DE PLANTILLA - PESTAÑAS -->
     <div class="section-label">Elige la plantilla</div>
     <div class="tipo-selector">
         <button class="tipo-btn active" data-tipo="hero" onclick="setTipo('hero', this)">
@@ -557,114 +557,193 @@
         </button>
     </div>
 
-    <!-- PREVIEW STRIP -->
-    <div class="preview-strip">
-        <div class="preview-dot"></div>
-        <span class="preview-text" id="previewText">Imagen grande arriba, título destacado y reseña abajo</span>
-    </div>
-
-    <!-- CAMPOS COMUNES -->
-    <div class="form-card">
-        <h3><i class="fas fa-pen"></i> Contenido</h3>
-
-        <div class="form-group">
-            <label>Título</label>
-            <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="100">
-            <div class="input-counter">
-                <span class="char-count"><span id="titleCount">0</span>/100</span>
-            </div>
-        </div>
-
-        <div class="form-group" id="resenaGroup">
-            <label>Reseña breve</label>
-            <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..." maxlength="300"></textarea>
-            <div class="input-counter">
-                <span class="char-count"><span id="resenaCount">0</span>/300</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECCIÓN: IMAGEN (hero y secundaria) -->
-    <div class="form-card tipo-section visible" id="seccionImagen">
-        <h3><i class="fas fa-image"></i> Imagen</h3>
-        <div class="form-group">
-            <label>URL de la imagen</label>
-            <input type="url" id="imagen_url" placeholder="https://..." oninput="previewImagen(this.value)">
-            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                Desktop: 900x400px | Mobile: 500x300px
-            </div>
-        </div>
-        <div class="img-preview-box" id="imgPreviewBox">
-            <img id="imgPreview" alt="Preview">
-            <div class="img-preview-placeholder" id="imgPlaceholder">
-                <i class="far fa-image"></i>
-                <span>La imagen aparecerá aquí</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- SECCIÓN: PARTIDO -->
-    <div class="form-card tipo-section" id="seccionPartido">
-        <h3><i class="fas fa-futbol"></i> Datos del partido</h3>
-
-        <div class="form-group">
-            <div class="equipos-row">
-                <div>
-                    <label>Equipo Local</label>
-                    <select id="equipo_local">
-                        <option value="">Cargando...</option>
-                    </select>
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PESTAÑA: HERO -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="tipo-tab" id="tab-hero" style="display: block;">
+        <div class="form-card">
+            <h3><i class="fas fa-pen"></i> Contenido</h3>
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" id="titulo" placeholder="Ej: Brasil golea en el debut mundialista" maxlength="100">
+                <div class="input-counter">
+                    <span class="char-count"><span id="titleCount">0</span>/100</span>
                 </div>
-                <div>
-                    <label>Equipo Visitante</label>
-                    <select id="equipo_visitante">
-                        <option value="">Cargando...</option>
-                    </select>
+            </div>
+            <div class="form-group">
+                <label>Reseña breve</label>
+                <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..." maxlength="300"></textarea>
+                <div class="input-counter">
+                    <span class="char-count"><span id="resenaCount">0</span>/300</span>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Marcador final</label>
-            <div class="marcador-row">
-                <input type="number" id="marcador_local" min="0" max="99" value="0" placeholder="0">
-                <div class="marcador-vs">VS</div>
-                <input type="number" id="marcador_visitante" min="0" max="99" value="0" placeholder="0">
+        <div class="form-card">
+            <h3><i class="fas fa-image"></i> Imagen</h3>
+            <div class="form-group">
+                <label>URL de la imagen</label>
+                <input type="url" id="imagen_url" placeholder="https://..." oninput="previewImagen(this.value)">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                    Desktop: 900x400px | Mobile: 500x300px
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label>Imagen del partido (opcional)</label>
-            <input type="url" id="imagen_url_partido" placeholder="https://..." oninput="previewImagen(this.value)">
-            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                Recomendado: 350x200px
-            </div>
-        </div>
-        <div class="img-preview-box" id="imgPreviewBoxPartido" style="margin-top:10px;">
-            <img id="imgPreviewPartido" alt="Preview">
-            <div class="img-preview-placeholder" id="imgPlaceholderPartido">
-                <i class="far fa-image"></i>
-                <span>Opcional</span>
+            <div class="img-preview-box" id="imgPreviewBox">
+                <img id="imgPreview" alt="Preview">
+                <div class="img-preview-placeholder" id="imgPlaceholder">
+                    <i class="far fa-image"></i>
+                    <span>La imagen aparecerá aquí</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- SECCIÓN: VIDEO YOUTUBE -->
-    <div class="form-card tipo-section" id="seccionVideo">
-        <h3><i class="fas fa-video"></i> Video de YouTube</h3>
-        <div class="form-group">
-            <label>Enlace del video</label>
-            <input type="url" id="youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="previewYouTube(this.value)">
-            <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ o https://youtu.be/dQw4w9WgXcQ
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PESTAÑA: SECUNDARIA -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="tipo-tab" id="tab-secundaria" style="display: none;">
+        <div class="form-card">
+            <h3><i class="fas fa-pen"></i> Contenido</h3>
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" id="titulo_sec" placeholder="Ej: Argentina avanza a cuartos" maxlength="100">
+                <div class="input-counter">
+                    <span class="char-count"><span id="titleCount_sec">0</span>/100</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Reseña breve</label>
+                <textarea id="resena_sec" placeholder="Escribe un resumen corto..." maxlength="300"></textarea>
+                <div class="input-counter">
+                    <span class="char-count"><span id="resenaCount_sec">0</span>/300</span>
+                </div>
             </div>
         </div>
-        <div class="youtube-preview-box" id="youtubePreviewBox">
-            <div id="youtubePlaceholder" class="youtube-placeholder">
-                <i class="fab fa-youtube"></i>
-                <span>Ingresa un enlace válido</span>
+
+        <div class="form-card">
+            <h3><i class="fas fa-image"></i> Imagen</h3>
+            <div class="form-group">
+                <label>URL de la imagen</label>
+                <input type="url" id="imagen_url_sec" placeholder="https://..." oninput="previewImagen(this.value, 'sec')">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                    Desktop: 400x250px | Mobile: 300x200px
+                </div>
             </div>
-            <iframe id="youtubeFrame" style="display:none;" allowfullscreen="" allow="autoplay"></iframe>
+            <div class="img-preview-box" id="imgPreviewBox_sec">
+                <img id="imgPreview_sec" alt="Preview">
+                <div class="img-preview-placeholder" id="imgPlaceholder_sec">
+                    <i class="far fa-image"></i>
+                    <span>La imagen aparecerá aquí</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PESTAÑA: PARTIDO -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="tipo-tab" id="tab-partido" style="display: none;">
+        <div class="form-card">
+            <h3><i class="fas fa-pen"></i> Contenido</h3>
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" id="titulo_partido" placeholder="Ej: Brasil 3-1 México" maxlength="100">
+                <div class="input-counter">
+                    <span class="char-count"><span id="titleCount_partido">0</span>/100</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Reseña breve</label>
+                <textarea id="resena_partido" placeholder="Escribe un resumen del partido..." maxlength="300"></textarea>
+                <div class="input-counter">
+                    <span class="char-count"><span id="resenaCount_partido">0</span>/300</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h3><i class="fas fa-futbol"></i> Datos del partido</h3>
+            <div class="form-group">
+                <div class="equipos-row">
+                    <div>
+                        <label>Equipo Local</label>
+                        <select id="equipo_local">
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Equipo Visitante</label>
+                        <select id="equipo_visitante">
+                            <option value="">Cargando...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Marcador final</label>
+                <div class="marcador-row">
+                    <input type="number" id="marcador_local" min="0" max="99" value="0" placeholder="0">
+                    <div class="marcador-vs">VS</div>
+                    <input type="number" id="marcador_visitante" min="0" max="99" value="0" placeholder="0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Imagen del partido (opcional)</label>
+                <input type="url" id="imagen_url_partido" placeholder="https://..." oninput="previewImagen(this.value, 'partido')">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                    Recomendado: 350x200px
+                </div>
+            </div>
+            <div class="img-preview-box" id="imgPreviewBox_partido">
+                <img id="imgPreview_partido" alt="Preview">
+                <div class="img-preview-placeholder" id="imgPlaceholder_partido">
+                    <i class="far fa-image"></i>
+                    <span>Opcional</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PESTAÑA: VIDEO YOUTUBE -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="tipo-tab" id="tab-video" style="display: none;">
+        <div class="form-card">
+            <h3><i class="fas fa-pen"></i> Contenido</h3>
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" id="titulo_video" placeholder="Ej: Resumen del partido Brasil vs México" maxlength="100">
+                <div class="input-counter">
+                    <span class="char-count"><span id="titleCount_video">0</span>/100</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Reseña breve</label>
+                <textarea id="resena_video" placeholder="Escribe un resumen del video..." maxlength="300"></textarea>
+                <div class="input-counter">
+                    <span class="char-count"><span id="resenaCount_video">0</span>/300</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h3><i class="fas fa-video"></i> Video de YouTube</h3>
+            <div class="form-group">
+                <label>Enlace del video</label>
+                <input type="url" id="youtube_url" placeholder="https://www.youtube.com/watch?v=..." oninput="previewYouTube(this.value)">
+                <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
+                    Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ o https://youtu.be/dQw4w9WgXcQ
+                </div>
+            </div>
+            <div class="youtube-preview-box" id="youtubePreviewBox">
+                <div id="youtubePlaceholder" class="youtube-placeholder">
+                    <i class="fab fa-youtube"></i>
+                    <span>Ingresa un enlace válido</span>
+                </div>
+                <iframe id="youtubeFrame" style="display:none;" allowfullscreen="" allow="autoplay"></iframe>
+            </div>
         </div>
     </div>
 
@@ -703,17 +782,40 @@
         await cargarEquipos();
         await cargarNoticias();
         
-        // Listeners para contadores de caracteres
+        // Contadores HERO
         document.getElementById('titulo').addEventListener('input', (e) => {
             document.getElementById('titleCount').textContent = e.target.value.length;
         });
-        
         document.getElementById('resena').addEventListener('input', (e) => {
             document.getElementById('resenaCount').textContent = e.target.value.length;
         });
+
+        // Contadores SECUNDARIA
+        document.getElementById('titulo_sec').addEventListener('input', (e) => {
+            document.getElementById('titleCount_sec').textContent = e.target.value.length;
+        });
+        document.getElementById('resena_sec').addEventListener('input', (e) => {
+            document.getElementById('resenaCount_sec').textContent = e.target.value.length;
+        });
+
+        // Contadores PARTIDO
+        document.getElementById('titulo_partido').addEventListener('input', (e) => {
+            document.getElementById('titleCount_partido').textContent = e.target.value.length;
+        });
+        document.getElementById('resena_partido').addEventListener('input', (e) => {
+            document.getElementById('resenaCount_partido').textContent = e.target.value.length;
+        });
+
+        // Contadores VIDEO
+        document.getElementById('titulo_video').addEventListener('input', (e) => {
+            document.getElementById('titleCount_video').textContent = e.target.value.length;
+        });
+        document.getElementById('resena_video').addEventListener('input', (e) => {
+            document.getElementById('resenaCount_video').textContent = e.target.value.length;
+        });
     });
 
-    // ─── SELECTOR DE TIPO ────────────────────────────────────
+    // ─── SELECTOR DE TIPO (PESTAÑAS) ────────────────────────
     function setTipo(tipo, btn) {
         tipoActual = tipo;
 
@@ -721,35 +823,18 @@
         document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Mostrar/ocultar secciones
-        document.querySelectorAll('.tipo-section').forEach(s => s.classList.remove('visible'));
+        // Ocultar todas las pestañas
+        document.querySelectorAll('.tipo-tab').forEach(tab => tab.style.display = 'none');
 
-        // Textos de preview
-        const previews = {
-            hero: 'Imagen grande, título destacado y reseña abajo',
-            secundaria: 'Imagen pequeña junto a título y reseña',
-            partido: 'Resultado de partido con equipos y marcador',
-            video: 'Video de YouTube incrustado con título y reseña'
-        };
-        document.getElementById('previewText').textContent = previews[tipo];
-
-        // Mostrar sección específica
-        if (tipo === 'hero' || tipo === 'secundaria') {
-            document.getElementById('seccionImagen').classList.add('visible');
-        } else if (tipo === 'partido') {
-            document.getElementById('seccionPartido').classList.add('visible');
-        } else if (tipo === 'video') {
-            document.getElementById('seccionVideo').classList.add('visible');
-        }
+        // Mostrar pestaña actual
+        document.getElementById(`tab-${tipo}`).style.display = 'block';
     }
 
     // ─── PREVIEW IMAGEN ─────────────────────────────────────
-    function previewImagen(url, tipoPartido = false) {
-        const imgId = tipoPartido ? 'imgPreviewPartido' : 'imgPreview';
-        const placeholderId = tipoPartido ? 'imgPlaceholderPartido' : 'imgPlaceholder';
-
-        const img = document.getElementById(imgId);
-        const placeholder = document.getElementById(placeholderId);
+    function previewImagen(url, tipo = '') {
+        const suffix = tipo ? `_${tipo}` : '';
+        const img = document.getElementById(`imgPreview${suffix}`);
+        const placeholder = document.getElementById(`imgPlaceholder${suffix}`);
 
         if (!url) {
             img.style.display = 'none';
@@ -833,75 +918,64 @@
         console.log('🚀 Guardando noticia...');
         
         const tipo = tipoActual;
-        
-        // Obtener valores del formulario
-        const titulo = document.getElementById('titulo')?.value?.trim();
-        const resena = document.getElementById('resena')?.value?.trim();
-        
-        // Validaciones básicas para todos los tipos
-        if (!titulo) {
-            showToast('El título es obligatorio', 'error');
-            return;
-        }
-        
-        if (!resena) {
-            showToast('La reseña es obligatoria', 'error');
-            return;
-        }
+        let titulo, resena, imagen_url = null, youtube_url = null;
+        let equipo_local = null, equipo_visitante = null;
+        let marcador_local = 0, marcador_visitante = 0;
 
-        let imagen_url = null;
-        let youtube_url = null;
-        let equipo_local = null;
-        let equipo_visitante = null;
-        let marcador_local = 0;
-        let marcador_visitante = 0;
-
-        // Validaciones específicas por tipo
-        if (tipo === 'hero' || tipo === 'secundaria') {
+        // Obtener valores según el tipo
+        if (tipo === 'hero') {
+            titulo = document.getElementById('titulo')?.value?.trim();
+            resena = document.getElementById('resena')?.value?.trim();
             imagen_url = document.getElementById('imagen_url')?.value || null;
-            if (!imagen_url) {
-                showToast('Necesitas una imagen para este tipo de noticia', 'error');
-                return;
-            }
+        } else if (tipo === 'secundaria') {
+            titulo = document.getElementById('titulo_sec')?.value?.trim();
+            resena = document.getElementById('resena_sec')?.value?.trim();
+            imagen_url = document.getElementById('imagen_url_sec')?.value || null;
         } else if (tipo === 'partido') {
+            titulo = document.getElementById('titulo_partido')?.value?.trim();
+            resena = document.getElementById('resena_partido')?.value?.trim();
             equipo_local = document.getElementById('equipo_local')?.value || null;
             equipo_visitante = document.getElementById('equipo_visitante')?.value || null;
             marcador_local = parseInt(document.getElementById('marcador_local')?.value) || 0;
             marcador_visitante = parseInt(document.getElementById('marcador_visitante')?.value) || 0;
             imagen_url = document.getElementById('imagen_url_partido')?.value || null;
-
-            if (!equipo_local || !equipo_visitante) {
-                showToast('Debes seleccionar ambos equipos para un partido', 'error');
-                return;
-            }
         } else if (tipo === 'video') {
+            titulo = document.getElementById('titulo_video')?.value?.trim();
+            resena = document.getElementById('resena_video')?.value?.trim();
             youtube_url = document.getElementById('youtube_url')?.value?.trim() || null;
-            if (!youtube_url) {
-                showToast('Necesitas un enlace de YouTube para este tipo de noticia', 'error');
-                return;
-            }
-            // Validar que sea un enlace válido de YouTube
-            if (!youtube_url.includes('youtube.com') && !youtube_url.includes('youtu.be')) {
-                showToast('El enlace debe ser de YouTube', 'error');
-                return;
-            }
+        }
+        
+        // Validaciones
+        if (!titulo) {
+            showToast('El título es obligatorio', 'error');
+            return;
+        }
+        if (!resena) {
+            showToast('La reseña es obligatoria', 'error');
+            return;
+        }
+        if ((tipo === 'hero' || tipo === 'secundaria') && !imagen_url) {
+            showToast('Necesitas una imagen para este tipo de noticia', 'error');
+            return;
+        }
+        if (tipo === 'partido' && (!equipo_local || !equipo_visitante)) {
+            showToast('Debes seleccionar ambos equipos', 'error');
+            return;
+        }
+        if (tipo === 'video' && !youtube_url) {
+            showToast('Necesitas un enlace de YouTube', 'error');
+            return;
+        }
+        if (tipo === 'video' && !youtube_url.includes('youtube.com') && !youtube_url.includes('youtu.be')) {
+            showToast('El enlace debe ser de YouTube', 'error');
+            return;
         }
 
         const formData = {
-            tipo: tipo,
-            titulo: titulo,
-            resena: resena,
-            imagen_url: imagen_url,
-            youtube_url: youtube_url,
-            equipo_local: equipo_local,
-            equipo_visitante: equipo_visitante,
-            marcador_local: marcador_local,
-            marcador_visitante: marcador_visitante
+            tipo, titulo, resena, imagen_url, youtube_url,
+            equipo_local, equipo_visitante, marcador_local, marcador_visitante
         };
 
-        console.log('📦 Datos a enviar:', formData);
-
-        // Deshabilitar botón mientras se envía
         const btnGuardar = document.getElementById('btnGuardar');
         btnGuardar.disabled = true;
         btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
@@ -917,26 +991,15 @@
             });
 
             const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'Error al guardar');
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Error al guardar');
-            }
-
-            console.log('✅ Noticia guardada:', data);
-            
             showToast('✅ ¡Noticia publicada exitosamente!', 'success');
-            
-            // Limpiar formulario
             resetForm();
-            
-            // Recargar lista de noticias
             await cargarNoticias();
             
         } catch (error) {
-            console.error('❌ Error:', error);
             showToast('❌ ' + error.message, 'error');
         } finally {
-            // Re-habilitar botón
             btnGuardar.disabled = false;
             btnGuardar.innerHTML = '<i class="fas fa-paper-plane"></i> Publicar noticia';
         }
@@ -996,32 +1059,50 @@
 
     // ─── HELPERS ────────────────────────────────────────────
     function resetForm() {
+        // Limpiar Hero
         document.getElementById('titulo').value = '';
         document.getElementById('titleCount').textContent = '0';
         document.getElementById('resena').value = '';
         document.getElementById('resenaCount').textContent = '0';
         document.getElementById('imagen_url').value = '';
-        document.getElementById('imagen_url_partido').value = '';
-        document.getElementById('youtube_url').value = '';
-        document.getElementById('marcador_local').value = '0';
-        document.getElementById('marcador_visitante').value = '0';
-        
-        // Resetear previews
         document.getElementById('imgPreview').style.display = 'none';
         document.getElementById('imgPlaceholder').style.display = 'flex';
-        document.getElementById('imgPreviewPartido').style.display = 'none';
-        document.getElementById('imgPlaceholderPartido').style.display = 'flex';
-        document.getElementById('youtubeFrame').src = '';
-        document.getElementById('youtubePlaceholder').style.display = 'flex';
-        document.getElementById('youtubeFrame').style.display = 'none';
-        
-        // Resetear selects de equipos a la primera opción
+
+        // Limpiar Secundaria
+        document.getElementById('titulo_sec').value = '';
+        document.getElementById('titleCount_sec').textContent = '0';
+        document.getElementById('resena_sec').value = '';
+        document.getElementById('resenaCount_sec').textContent = '0';
+        document.getElementById('imagen_url_sec').value = '';
+        document.getElementById('imgPreview_sec').style.display = 'none';
+        document.getElementById('imgPlaceholder_sec').style.display = 'flex';
+
+        // Limpiar Partido
+        document.getElementById('titulo_partido').value = '';
+        document.getElementById('titleCount_partido').textContent = '0';
+        document.getElementById('resena_partido').value = '';
+        document.getElementById('resenaCount_partido').textContent = '0';
+        document.getElementById('imagen_url_partido').value = '';
+        document.getElementById('imgPreview_partido').style.display = 'none';
+        document.getElementById('imgPlaceholder_partido').style.display = 'flex';
+        document.getElementById('marcador_local').value = '0';
+        document.getElementById('marcador_visitante').value = '0';
         if (document.getElementById('equipo_local').options.length > 0) {
             document.getElementById('equipo_local').selectedIndex = 0;
             document.getElementById('equipo_visitante').selectedIndex = 0;
         }
-        
-        // Volver a plantilla Hero por defecto
+
+        // Limpiar Video
+        document.getElementById('titulo_video').value = '';
+        document.getElementById('titleCount_video').textContent = '0';
+        document.getElementById('resena_video').value = '';
+        document.getElementById('resenaCount_video').textContent = '0';
+        document.getElementById('youtube_url').value = '';
+        document.getElementById('youtubeFrame').src = '';
+        document.getElementById('youtubePlaceholder').style.display = 'flex';
+        document.getElementById('youtubeFrame').style.display = 'none';
+
+        // Volver a Hero por defecto
         const heroBtn = document.querySelector('[data-tipo="hero"]');
         if (heroBtn) setTipo('hero', heroBtn);
     }
