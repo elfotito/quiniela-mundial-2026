@@ -312,6 +312,20 @@
     order: -1;
     }
         }
+
+    .mobile-index-widget {
+    display: none;
+    order: -1;
+    }
+
+@media(max-width:700px) {
+    .mobile-index-widget {
+        display: block;
+    }
+    .desktop-widget-index {
+    display: none;
+    }
+}
     </style>
 </head>
 
@@ -342,6 +356,7 @@
     <div class="sis-grid">
 
         <!-- ══ COLUMNA IZQUIERDA ══ -->
+         
         <aside class="sis-col-left">
 
             <!-- Índice -->
@@ -376,7 +391,20 @@
 
         <!-- ══ COLUMNA PRINCIPAL ══ -->
         <main class="sis-col-main">
-
+            <div class="widget mobile-index-widget">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">enlances</span>
+                </div>
+                <div class="widget-body" style="padding:10px 12px">
+                    <a href="javascript:history.back()"  class="ter-nav-link"><i class="bi bi-arrow-left-short"></i>Ir a la pagina anterior</a>
+                    <a href="index.html"  class="ter-nav-link"><i class="bi bi-person-fill"></i>Inicio de sesión</a>
+                    <a href="registro.html"  class="ter-nav-link"><i class="bi bi-person-fill-add"></i>Registrar Usuario</a>
+                    <a href="recuperar.html"  class="ter-nav-link"><i class="bi bi-key"></i>Cambio de Clave</a>
+                    <a href="terminos.html"  class="ter-nav-link"><i class="bi bi-file-earmark-check"></i>Terminos y Condiciones</a>
+                    <a href="reglamento.html"  class="ter-nav-link"><i class="bi bi-calculator-fill"></i>Reglamento</a>
+                </div>
+            </div>
             <!-- Tabla de puntos -->
             <div class="sis-section" id="tabla">
                 <div class="sis-section-header">
