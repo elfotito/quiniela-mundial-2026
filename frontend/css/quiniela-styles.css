@@ -33,11 +33,12 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Yolk', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--dark-bg);
     color: var(--text-white);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .header {
@@ -205,6 +206,7 @@ body {
 .logros-track-wrap {
   position: relative;
   background: #080810;
+  overflow: hidden;
 }
 .logros-nav {
   position: absolute;
@@ -236,7 +238,8 @@ body {
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 30px 20px;
-  scrollbar-width: none;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 .logros-track::-webkit-scrollbar { display: none; }
  
