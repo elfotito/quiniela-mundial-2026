@@ -586,7 +586,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Pill "N resultados" */
 .toolbar-count {
     font-size: 11px;
     font-weight: 700;
@@ -595,6 +594,8 @@ body {
     color: #555;
     white-space: nowrap;
     margin: 0 auto;
+    width: 100%;
+    text-align: center;
 }
 .toolbar-count span {
     color: #003d7a;
@@ -650,6 +651,7 @@ body {
     white-space: nowrap;
     transition: opacity .2s, transform .1s;
     flex-shrink: 0;
+    width: 100%;
 }
 .btn-share-toolbar:hover  { opacity: .85; }
 .btn-share-toolbar:active { transform: scale(.98); }
