@@ -290,8 +290,8 @@ function crearMatchCard(partido) {
                             <span class="ppm-name">${partido.equipo_visitante.toUpperCase()}</span>
                         </div>
                     </div>
-                    <div class="ppm-hora-col">
-                        <span class="ppm-hora">${hora}</span><br>
+                    <div class="ppm-hora-cal">
+                        <span class="ppm-hora">${hora}</span>
                         <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
                     </div>
                 </div>
