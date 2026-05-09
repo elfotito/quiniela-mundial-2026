@@ -246,9 +246,13 @@ function mostrarPartidosDelDia() {
 // ===============================================
 
 function crearMatchCard(partido) {
-    const fecha = new Date(partido.fecha);
-    const fechaCorta = fecha.toLocaleDateString('es', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    const hora = fecha.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
+    const fecha = new Date(p.fecha);
+            const fechaCorta = fecha.toLocaleDateString('es-ES', {
+                day: '2-digit', month: '2-digit', year: 'numeric'
+            });
+            const hora = fecha.toLocaleTimeString('es-ES', {
+                hour: '2-digit', minute: '2-digit'
+            });
     const tieneMarcador = partido.goles_local_real !== null && partido.goles_local_real !== undefined;
     
     let statusBadge = '';
@@ -269,51 +273,33 @@ function crearMatchCard(partido) {
     }
 
     return `
-        <div class="match-card" id="card-${partido.id}">
-            <div class="mc-header">
-                <div>
-                    <div class="mc-competition">Copa Mundial FIFA 2026™</div>
-                    <div class="mc-subtitle">Fase de Grupos · ${partido.fase}</div>
+    <div class="ppm-card">
+                <div class="ppm-header">
+                    <span class="ppm-fase">Fase de Grupos · ${p.fase}</span>
+                    <span class="ppm-fecha">${fechaCorta}</span>
                 </div>
-                <span class="mc-date">${fechaCorta}</span>
-            </div>
-            <div class="mc-body">
-                <div class="mc-teams-inputs">
-                    <div class="mc-team-row">
-                        <span class="mc-flag">${obtenerBandera(partido.equipo_local)}</span>
-                        <span class="mc-name">${partido.equipo_local.toUpperCase()}</span>
-                        <div class="mc-score-spinner">
-                            <div class="mc-spin-arrows">
-                                <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', 1)" tabindex="-1">▲</button>
-                                <button class="mc-spin-btn" onclick="cambiarGol('local_${partido.id}', -1)" tabindex="-1">▼</button>
-                            </div>
-                            <input type="number" class="mc-goal-input" id="local_${partido.id}" min="0" max="9" value="0"
-                                inputmode="numeric" pattern="[0-9]*"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
+                <div class="ppm-body">
+                    <div class="ppm-teams">
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_local)}</span>
+                            <span class="ppm-name">${p.equipo_local.toUpperCase()}</span>
+                        </div>
+                        <div class="ppm-team-row">
+                            <span class="ppm-flag">${obtenerBandera(p.equipo_visitante)}</span>
+                            <span class="ppm-name">${p.equipo_visitante.toUpperCase()}</span>
                         </div>
                     </div>
-                    <div class="mc-team-row">
-                        <span class="mc-flag">${obtenerBandera(partido.equipo_visitante)}</span>
-                        <span class="mc-name">${partido.equipo_visitante.toUpperCase()}</span>
-                        <div class="mc-score-spinner">
-                            <div class="mc-spin-arrows">
-                                <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', 1)" tabindex="-1">▲</button>
-                                <button class="mc-spin-btn" onclick="cambiarGol('visitante_${partido.id}', -1)" tabindex="-1">▼</button>
-                            </div>
-                            <input type="number" class="mc-goal-input" id="visitante_${partido.id}" min="0" max="9" value="0"
-                                inputmode="numeric" pattern="[0-9]*"
-                                oninput="this.value=this.value.replace(/[^0-9]/g,''); if(this.value>9)this.value=9; if(this.value<0)this.value=0;">
-                        </div>
+                    <div class="ppm-hora-col">
+                        <span class="ppm-hora">${hora}</span>
                     </div>
                 </div>
-                <div class="mc-hora-col">
-                    <span class="mc-hora">${hora}</span>
-                </div>
             </div>
-            <button class="mc-btn-predict" onclick="enviarPrediccion(${partido.id})">
-                Guardar Predicción
-            </button>
-        </div>`;
+                <!-- Estado -->
+            <div class="match-status">
+                <div class="status-badge-fifa ${statusClass}">${statusBadge}</div>
+            </div>
+        </div>
+    `;
 }
 
 // ===============================================
