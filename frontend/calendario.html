@@ -251,24 +251,29 @@
     .date-scroller { position: relative; }
  
     .scroller-nav {
-        position: absolute;
-        top: 50%; transform: translateY(-50%);
+            position: absolute;
+        top: 50%; 
+        transform: translateY(-50%);
         z-index: 10;
         background: #fff;
         border: 1px solid #e0e0e0;
-        width: 32px; height: 32px;
+        width: 32px; 
+        height: 32px;
         border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
         cursor: pointer;
-        font-size: 12px;
-        color: #555;
         transition: all 0.2s;
         box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .scroller-nav:hover { background: #0066CC; color: #fff; border-color: #0066CC; }
-    .scroller-nav.left  { left: 0; }
-    .scroller-nav.right { right: 0; }
- 
+    .scroller-nav.left  { left: -16px; }
+    .scroller-nav.right { right: -16px; }
+    .scroller-nav i {
+    font-size: 18px; /* Tamaño del icono */
+    line-height: 1;
+}
     .dates-track {
         display: flex;
         gap: 8px;
@@ -810,10 +815,14 @@
                 </div>
  
                 <div class="date-scroller">
-                    <div class="scroller-nav left"  id="scrollLeft">‹</div>
-                    <div class="scroller-nav right" id="scrollRight">›</div>
-                    <div class="dates-track" id="datesTrack"></div>
-                </div>
+    <div class="scroller-nav left" id="scrollLeft">
+        <i class="bi bi-chevron-left"></i>
+    </div>
+    <div class="scroller-nav right" id="scrollRight">
+        <i class="bi bi-chevron-right"></i>
+    </div>
+    <div class="dates-track" id="datesTrack"></div>
+</div>
             </div>
  
             <!-- Matches Container -->
