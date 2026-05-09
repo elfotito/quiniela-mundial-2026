@@ -360,7 +360,20 @@
     <div class="sis-grid">
 
         <!-- ══ COLUMNA IZQUIERDA ══ -->
-         
+         <div class="widget desktop-widget-index">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">enlances</span>
+                </div>
+                <div class="widget-body" style="padding:10px 12px">
+                    <a href="javascript:history.back()"  class="ter-nav-link"><i class="bi bi-arrow-left-short"></i>Ir a la pagina anterior</a>
+                    <a href="index.html"  class="ter-nav-link"><i class="bi bi-person-fill"></i>Inicio de sesión</a>
+                    <a href="registro.html"  class="ter-nav-link"><i class="bi bi-person-fill-add"></i>Registrar Usuario</a>
+                    <a href="recuperar.html"  class="ter-nav-link"><i class="bi bi-key"></i>Cambio de Clave</a>
+                    <a href="terminos.html"  class="ter-nav-link"><i class="bi bi-file-earmark-check"></i>Terminos y Condiciones</a>
+                    <a href="reglamento.html"  class="ter-nav-link"><i class="bi bi-calculator-fill"></i>Reglamento</a>
+                </div>
+            </div>
         <aside class="sis-col-left">
 
             <!-- Índice -->
@@ -375,21 +388,31 @@
                     <a href="#ejemplos"   class="nav-link-sis"><i class="bi bi-lightbulb"></i> Ejemplos</a>
                 </div>
             </div>
-
-            <div class="widget resumen">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Resumen</span>
-                </div>
-                <div class="widget-body">
-                    <div class="stat-row"><span class="pts-label">Resultado exacto</span><span class="stat-val p9">+9 pts</span></div>
-                    <div class="stat-row"><span class="pts-label">Ganador + marcador</span><span class="stat-val p7">+7 pts</span></div>
-                    <div class="stat-row"><span class="pts-label">Solo ganador</span><span class="stat-val p5">+5 pts</span></div>
-                    <div class="stat-row"><span class="pts-label">Solo marcador</span><span class="stat-val p2">+2 pts</span></div>
-                    <div class="stat-row"><span class="pts-label">Sin acierto</span><span class="stat-val p0">0 pts</span></div>
-                </div>
+            <div class="widget">
+        <div class="widget-header">
+            <div class="widget-header-bar"></div>
+            <span class="widget-header-title">Reglamento</span>
+        </div>
+        <div class="widget-body">
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Límite de ingreso de predicción:<br> <strong>10 min antes de cada partido</strong></span>
             </div>
-
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Cantidad de predicciones por partido:<br><strong>1 predicción por partido</strong></span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text"><strong>Prohibida</strong> la modificacion de predicciones luego de su ingreso</span>
+            </div>
+            <div class="reg-item">
+                <div class="reg-dot"></div>
+                <span class="reg-text">Toda decision del VAR es <strong>inapelable</strong></span>
+            </div>
+            <a href="reglamento.html" class="btn-widget-full">Ver reglamento completo</a>
+        </div>
+    </div>
         </aside>
 
 
@@ -572,6 +595,19 @@
 
         <!-- ══ COLUMNA DERECHA ══ -->
         <aside class="sis-col-right">
+            <div class="widget resumen">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">Resumen</span>
+                </div>
+                <div class="widget-body">
+                    <div class="stat-row"><span class="pts-label">Resultado exacto</span><span class="stat-val p9">+9 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Ganador + marcador</span><span class="stat-val p7">+7 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Solo ganador</span><span class="stat-val p5">+5 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Solo marcador</span><span class="stat-val p2">+2 pts</span></div>
+                    <div class="stat-row"><span class="pts-label">Sin acierto</span><span class="stat-val p0">0 pts</span></div>
+                </div>
+            </div>
 
             <!-- CTA: Predicciones -->
             <div class="widget widget-cta-dark">
