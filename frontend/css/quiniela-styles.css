@@ -240,6 +240,17 @@ body {
 }
 .logros-track::-webkit-scrollbar { display: none; }
  
+    @media (pointer: coarse) {
+    .logros-nav {
+        display: none !important;
+    }
+}
+
+@media (pointer: fine) {
+    .logros-nav {
+        display: block;
+    }
+}
 /* ─── CARD BASE ──────────────────────────────────────── */
 .lcard {
   flex: 0 0 122px;
