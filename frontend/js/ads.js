@@ -11,9 +11,11 @@ const ADS_11 = [
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
 const ADS_43 = [
-  { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://tu-sitio.com/pagina' },
   { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://www.instagram.com/dcarrisan' },
+  { url: 'https://i.ibb.co/qYQ1jYmZ/Gemini-Generated-Image-fgsxjlfgsxjlfgsx.png', link: 'https://www.instagram.com/dcarrisan' },
+  { url: 'https://i.ibb.co/PvpKL0gS/Gemini-Generated-Image-81pq5l81pq5l81pq.png', link: 'https://www.instagram.com/dcarrisan' },
 ];
+
 
 const AD_INTERVAL = 8000; // ms
 
