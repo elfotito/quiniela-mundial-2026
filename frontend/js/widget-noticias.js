@@ -41,8 +41,8 @@ async function cargarNoticiasWidget() {
 
 // ─── HELPER: Obtener emoji/thumb según tipo ────────────────
 function getNoticiaThumb(noticia) {
-    if (noticia.tipo === 'hero') return '📰';
-    if (noticia.tipo === 'secundaria') return '📌';
+    if (noticia.tipo === 'hero') return '📣';
+    if (noticia.tipo === 'secundaria') return '📰';
     if (noticia.tipo === 'partido') return '⚽';
     if (noticia.tipo === 'video') return '🎥';
     return '📄';
