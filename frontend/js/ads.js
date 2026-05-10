@@ -2,13 +2,13 @@
 // ─── 1:1 (260x260) ───────────────────────────────────────
 const ADS_11 = [
   { url: 'https://i.ibb.co/zVb3CqPk/Save-Clip-App-643561767-17977242236830415-4476175652748288014-n.webp', link: 'https://www.instagram.com/unicardio.ha/' },
-  { url: 'https://i.ibb.co/ID/imagen.jpg', link: 'https://tu-sitio.com/pagina' },
+  { url: 'https://i.ibb.co/zVb3CqPk/Save-Clip-App-643561767-17977242236830415-4476175652748288014-n.webp', link: 'https://tu-sitio.com/pagina' },
 ];
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
 const ADS_43 = [
   { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://tu-sitio.com/pagina' },
-  { url: 'https://i.ibb.co/ID/imagen.jpg', link: 'https://www.instagram.com/dcarrisan' },
+  { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://www.instagram.com/dcarrisan' },
 ];
 
 const AD_INTERVAL = 5000; // ms
