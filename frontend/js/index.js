@@ -590,7 +590,7 @@ function renderNoticia(n) {
             ? `<img style="width:100%;height:200px;object-fit:cover;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
             : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
         return `
-        <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+        <div style="background:#fff;object-position: 50% 30%;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             ${img}
             <div style="padding:14px 16px 16px;">
                 <span style="display:inline-block;background:#0066CC;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">Destacado</span>
@@ -606,7 +606,7 @@ function renderNoticia(n) {
             ? `<img style="width:100px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
             : `<div style="width:100px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
         return `
-        <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+        <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
             ${img}
             <div style="padding:12px 14px;display:flex;flex-direction:column;justify-content:center;flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
