@@ -1,4 +1,16 @@
-    /* ── FONDO DE PÁGINA ─────────────────────────────── */
+.main-nav-links-notimovil a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 11px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s;
+}
+
+/* ── FONDO DE PÁGINA ─────────────────────────────── */
     .article-page {
         background: #f4f4f4;
         min-height: 100vh;
