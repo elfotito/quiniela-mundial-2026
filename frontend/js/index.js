@@ -587,10 +587,10 @@ function renderNoticia(n) {
 
     if (n.tipo === 'hero') {
         const img = n.imagen_url
-            ? `<img style="width:100%;height:200px;object-fit:cover;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            ? `<img style="width:100%;height:200px;object-fit:cover;object-position: 50% 30%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
             : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
         return `
-        <div style="background:#fff;object-position: 50% 30%;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             ${img}
             <div style="padding:14px 16px 16px;">
                 <span style="display:inline-block;background:#0066CC;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">Destacado</span>
