@@ -95,6 +95,14 @@ app.use((req, res, next) => {
         'Permissions-Policy',
         'camera=(), microphone=(), geolocation=(), interest-cohort=()'
     );
+    res.setHeader(
+        'Content-Security-Policy',
+        "default-src 'self' https://quinielamundial2026.onrender.com; " +
+        "frame-src 'self' https://www.youtube.com https://youtu.be; " +
+        "img-src 'self' https: data:; " +
+        "script-src 'self' https: 'unsafe-inline'; " +
+        "style-src 'self' https: 'unsafe-inline'"
+    );
     
     res.removeHeader('X-Powered-By');
     
