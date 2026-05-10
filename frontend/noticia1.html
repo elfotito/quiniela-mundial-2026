@@ -360,6 +360,41 @@
             </div>
         </div>
         </footer>
+        <script>
+function compartirNoticia() {
+    const titulo   = document.querySelector('.article-hero-title')?.innerText?.trim()
+                     || document.title;
+    const subtitulo = document.querySelector('.article-hero-subtitle')?.innerText?.trim()
+                     || '';
+    const url      = location.href;
+    const texto    = `${titulo}\n\n${subtitulo}\n\n🔗 Quiniela Mundial 2026`;
+
+    const btn      = document.querySelector('.share-btn');
+    const icon     = document.getElementById('shareIcon');
+    const label    = document.getElementById('shareLabel');
+
+    function feedback(exito) {
+        icon.className  = exito ? 'bi bi-check2' : 'bi bi-clipboard';
+        label.textContent = exito ? '¡Copiado!' : 'Link copiado';
+        btn.style.opacity = '0.7';
+        setTimeout(() => {
+            icon.className    = 'bi bi-share';
+            label.textContent = 'Compartir';
+            btn.style.opacity = '';
+        }, 2000);
+    }
+
+    if (navigator.share) {
+        navigator.share({ title: titulo, text: texto, url })
+            .catch(err => { if (err.name !== 'AbortError') console.error(err); });
+    } else {
+        // Fallback: copia el link al clipboard con feedback visual
+        navigator.clipboard.writeText(url)
+            .then(()  => feedback(true))
+            .catch(()  => feedback(false));
+    }
+}
+</script>
         <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script>
