@@ -57,5 +57,6 @@ function initAdWidget(widgetId, imgId, ads, interval) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initAdWidget('ad-widget-11', 'ad-img-11', ADS_11, AD_INTERVAL);
+  initAdWidget('ad-widget-11', 'ad-img-11', ADS_11, AD_INTERVAL);
   initAdWidget('ad-widget-43', 'ad-img-43', ADS_43, AD_INTERVAL);
 });
