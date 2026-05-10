@@ -111,7 +111,6 @@
         font-size: 12px;
         font-weight: 600;
         padding: 8px 16px;
-        border-radius: 30px;
         cursor: pointer;
         transition: background 0.2s;
         letter-spacing: 0.3px;
@@ -186,7 +185,6 @@
     /* ── BODY DEL ARTÍCULO ───────────────────────────── */
     .article-body {
         background: #fff;
-        border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         padding: 36px 40px 48px;
@@ -241,7 +239,6 @@
         background: #fafafa;
         margin: 28px 0;
         padding: 20px 24px;
-        border-radius: 0 10px 10px 0;
         font-size: 17px;
         font-style: italic;
         color: #333;
@@ -259,7 +256,6 @@
  
     /* Cajas destacadas */
     .highlight-box {
-        border-radius: 12px;
         padding: 22px 24px;
         margin: 28px 0;
     }
@@ -333,7 +329,6 @@
         text-decoration: none;
         background: #EBF3FF;
         padding: 4px 12px;
-        border-radius: 20px;
         font-weight: 600;
         transition: background 0.2s;
     }
@@ -344,7 +339,6 @@
  
     .widget {
         background: #fff;
-        border-radius: 14px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         border: 1px solid #eee;
