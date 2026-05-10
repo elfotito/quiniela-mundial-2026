@@ -576,9 +576,9 @@
             </div>
             <div class="form-group">
                 <label>Reseña breve</label>
-                <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..." maxlength="300"></textarea>
+                <textarea id="resena" placeholder="Escribe un resumen corto de la noticia..." maxlength="130"></textarea>
                 <div class="input-counter">
-                    <span class="char-count"><span id="resenaCount">0</span>/300</span>
+                    <span class="char-count"><span id="resenaCount">0</span>/130</span>
                 </div>
             </div>
         </div>
@@ -589,7 +589,7 @@
                 <label>URL de la imagen</label>
                 <input type="url" id="imagen_url" placeholder="https://..." oninput="previewImagen(this.value)">
                 <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                    Desktop: 900x400px | Mobile: 500x300px
+                    Desktop: 900x400px | Mobile: 340x200px | Aspect Ratio: 17:10
                 </div>
             </div>
             <div class="img-preview-box" id="imgPreviewBox">
@@ -610,16 +610,16 @@
             <h3><i class="fas fa-pen"></i> Contenido</h3>
             <div class="form-group">
                 <label>Título</label>
-                <input type="text" id="titulo_sec" placeholder="Ej: Argentina avanza a cuartos" maxlength="100">
+                <input type="text" id="titulo_sec" placeholder="Ej: Argentina avanza a cuartos" maxlength="58">
                 <div class="input-counter">
-                    <span class="char-count"><span id="titleCount_sec">0</span>/100</span>
+                    <span class="char-count"><span id="titleCount_sec">0</span>/58</span>
                 </div>
             </div>
             <div class="form-group">
                 <label>Reseña breve</label>
-                <textarea id="resena_sec" placeholder="Escribe un resumen corto..." maxlength="300"></textarea>
+                <textarea id="resena_sec" placeholder="Escribe un resumen corto..." maxlength="58"></textarea>
                 <div class="input-counter">
-                    <span class="char-count"><span id="resenaCount_sec">0</span>/200</span>
+                    <span class="char-count"><span id="resenaCount_sec">0</span>/58</span>
                 </div>
             </div>
         </div>
@@ -630,7 +630,7 @@
                 <label>URL de la imagen</label>
                 <input type="url" id="imagen_url_sec" placeholder="https://..." oninput="previewImagen(this.value, 'sec')">
                 <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                    Desktop: 400x250px | Mobile: 300x200px
+                    Desktop: 400x250px | Mobile: 100x140px | Aspect Ratio: 5:7
                 </div>
             </div>
             <div class="img-preview-box" id="imgPreviewBox_sec">
@@ -651,16 +651,16 @@
             <h3><i class="fas fa-pen"></i> Contenido</h3>
             <div class="form-group">
                 <label>Título</label>
-                <input type="text" id="titulo_partido" placeholder="Ej: Brasil 3-1 México" maxlength="100">
+                <input type="text" id="titulo_partido" placeholder="Ej: Brasil 3-1 México" maxlength="50">
                 <div class="input-counter">
-                    <span class="char-count"><span id="titleCount_partido">0</span>/100</span>
+                    <span class="char-count"><span id="titleCount_partido">0</span>/50</span>
                 </div>
             </div>
             <div class="form-group">
                 <label>Reseña breve</label>
-                <textarea id="resena_partido" placeholder="Escribe un resumen del partido..." maxlength="300"></textarea>
+                <textarea id="resena_partido" placeholder="Escribe un resumen del partido..." maxlength="260"></textarea>
                 <div class="input-counter">
-                    <span class="char-count"><span id="resenaCount_partido">0</span>/300</span>
+                    <span class="char-count"><span id="resenaCount_partido">0</span>/260</span>
                 </div>
             </div>
         </div>
@@ -697,7 +697,7 @@
                 <label>Imagen del partido (opcional)</label>
                 <input type="url" id="imagen_url_partido" placeholder="https://..." oninput="previewImagen(this.value, 'partido')">
                 <div style="font-size: 11px; color: var(--gray-500); margin-top: 6px;">
-                    Recomendado: 350x200px
+                    Recomendado: 340x130px | Aspect Ratio: 34:13
                 </div>
             </div>
             <div class="img-preview-box" id="imgPreviewBox_partido">

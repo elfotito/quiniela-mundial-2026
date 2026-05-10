@@ -622,9 +622,9 @@ function renderNoticia(n) {
         const imgPartido = n.imagen_url
             ? `<img style="width:100%;height:130px;object-fit:cover;display:block;" src="${n.imagen_url}" alt="" onerror="this.remove()">` : '';
         return `
-        <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             <div style="background:#0a0a0a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:10px;color:#FFD700;font-weight:800;letter-spacing:1px;text-transform:uppercase;">⚽ Resultado</span>
+                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ Resultado</span>
                 <span style="font-size:10px;color:#666;">${fecha}</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px 14px 14px;gap:8px;">
