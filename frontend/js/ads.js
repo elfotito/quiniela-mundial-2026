@@ -2,7 +2,11 @@
 // ─── 1:1 (260x260) ───────────────────────────────────────
 const ADS_11 = [
   { url: 'https://i.ibb.co/zVb3CqPk/Save-Clip-App-643561767-17977242236830415-4476175652748288014-n.webp', link: 'https://www.instagram.com/unicardio.ha/' },
-  { url: 'https://i.ibb.co/zVb3CqPk/Save-Clip-App-643561767-17977242236830415-4476175652748288014-n.webp', link: 'https://tu-sitio.com/pagina' },
+  { url: 'https://i.ibb.co/jP97FC5M/Save-Clip-App-651932567-18102108917497080-5880069149386066025-n.webp', link: 'https://www.instagram.com/unicardio.ha/' },
+  { url: 'https://i.ibb.co/SXF8b6PN/Save-Clip-App-652773881-18087064778269663-1733593774225891798-n.webp', link: 'https://www.instagram.com/unicardio.ha/' },
+  { url: 'https://i.ibb.co/LKyHTd7/Save-Clip-App-655086237-18078404945574082-8845079464837833066-n-1.webp', link: 'thttps://www.instagram.com/deliverysorpresa/' },
+  { url: 'https://i.ibb.co/Pv6fMMLv/Save-Clip-App-658474710-18370531537202009-7154433570683986532-n.webp', link: 'thttps://www.instagram.com/deliverysorpresa/' },
+  { url: 'https://i.ibb.co/rRKfbtpH/Save-Clip-App-656057688-18117165637712782-2735713681201846829-n.webp', link: 'thttps://www.instagram.com/deliverysorpresa/' },
 ];
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
@@ -11,7 +15,7 @@ const ADS_43 = [
   { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://www.instagram.com/dcarrisan' },
 ];
 
-const AD_INTERVAL = 5000; // ms
+const AD_INTERVAL = 8000; // ms
 
 function initAdWidget(widgetId, imgId, ads, interval) {
   const widget = document.getElementById(widgetId);
