@@ -609,8 +609,8 @@ function renderNoticia(n) {
         <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
             ${img}
             <div style="padding:12px 14px;display:flex;flex-direction:column;justify-content:center;flex:1;min-width:0;">
-                <div style="font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
-                ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${n.resena}</div>` : ''}
+                <div style="font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
+                ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${n.resena}</div>` : ''}
                 <div style="font-size:10px;color:#bbb;font-weight:600;">${fecha}</div>
             </div>
         </div>`;
