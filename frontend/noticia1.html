@@ -369,17 +369,37 @@ function compartirNoticia() {
         await cargarProximosPartidos();
         await cargarUltimosResultados();
     });
-        (function() {
+            (function() {
+        // Guardar referencia original
+        var originalSetInterval = window.setInterval;
+        
+        // Crear elemento dummy por si acaso
         if (!document.getElementById("lvTip")) {
-            var lvTip = document.createElement("div");
-            lvTip.id = "lvTip";
-            lvTip.style.display = "none";
-            lvTip.style.position = "absolute";
-            lvTip.style.visibility = "hidden";
-            document.body.appendChild(lvTip);
-            console.log("✅ Elemento lvTip creado automáticamente");
+            var dummy = document.createElement("div");
+            dummy.id = "lvTip";
+            dummy.style.display = "none";
+            document.body.appendChild(dummy);
         }
-    })();
+        
+        // Alternativa: capturar errores específicos
+        window.addEventListener("error", function(e) {
+            if (e.filename && e.filename.includes("index.js") && 
+                (e.message.includes("lvTip") || e.message.includes("style"))) {
+                console.warn("⚠️ Error de lvTip capturado y silenciado");
+                
+                // Asegurar que lvTip existe en este momento
+                if (!document.getElementById("lvTip")) {
+                    var nuevo = document.createElement("div");
+                    nuevo.id = "lvTip";
+                    nuevo.style.display = "none";
+                    document.body.appendChild(nuevo);
+                }
+                
+                e.preventDefault();
+                return false;
+            }
+        });
+    })()
     </script>
     <script src="js/index.js"></script>
     <script src="js/widget-noticias.js"></script>
