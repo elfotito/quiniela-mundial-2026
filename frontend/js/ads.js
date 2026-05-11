@@ -19,44 +19,47 @@ const ADS_43 = [
 
 const AD_INTERVAL = 8000; // ms
 
-function initAdWidget(widgetId, imgId, ads, interval) {
-  const widget = document.getElementById(widgetId);
-  const img    = document.getElementById(imgId);
-  if (!widget || !ads.length) return;
+function initAdWidgets() {
+  const widgets = document.querySelectorAll('.ad-widget[data-ads]');
+  const typeCounters = {};
 
-  // Empieza en uno aleatorio cada carga
-  let current = Math.floor(Math.random() * ads.length);
+  widgets.forEach(widget => {
+    const type = widget.dataset.ads;
+    const pool = AD_POOL[type];
+    if (!pool || !pool.length) return;
 
-  function show(idx, fade) {
-    const ad = ads[idx];
-    widget.href = ad.link;
-    const next = new Image();
-    next.onload = () => {
-      if (fade) img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = next.src;
-        img.style.opacity = '1';
-      }, fade ? 400 : 0);
-    };
-    next.src = ad.url;
-  }
+    // Cada widget arranca en un anuncio distinto
+    if (typeCounters[type] === undefined) {
+      typeCounters[type] = Math.floor(Math.random() * pool.length);
+    }
+    let current = typeCounters[type];
+    typeCounters[type] = (typeCounters[type] + 1) % pool.length;
 
-  // Transición CSS en el img
-  img.style.transition = 'opacity 0.5s ease';
-  img.style.width  = '100%';
-  img.style.height = '100%';
-  img.style.objectFit = 'cover';
-  img.style.display = 'block';
+    const img = widget.querySelector('img');
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.5s ease;opacity:0;';
 
-  show(current, false);
-  setInterval(() => {
-    current = (current + 1) % ads.length;
-    show(current, true);
-  }, interval);
+    function show(idx, fade) {
+      const ad = pool[idx];
+      widget.href = ad.link;
+      const next = new Image();
+      next.onload = () => {
+        if (fade) {
+          img.style.opacity = '0';
+          setTimeout(() => { img.src = next.src; img.style.opacity = '1'; }, 450);
+        } else {
+          img.src = next.src;
+          img.style.opacity = '1';
+        }
+      };
+      next.src = ad.url;
+    }
+
+    show(current, false);
+    setInterval(() => {
+      current = (current + 1) % pool.length;
+      show(current, true);
+    }, AD_INTERVAL);
+  });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initAdWidget('ad-widget-11', 'ad-img-11', ADS_11, AD_INTERVAL);
-  initAdWidget('ad-widget-12', 'ad-img-11', ADS_11, AD_INTERVAL);
-  initAdWidget('ad-widget-43', 'ad-img-43', ADS_43, AD_INTERVAL);
-});
+document.addEventListener('DOMContentLoaded', initAdWidgets);

@@ -3544,3 +3544,7 @@
     padding: 15px 20px !important;
     align-items: center !important;
 }
+
+.ad-widget { width:100%; background:#fff; overflow:hidden;
+            box-shadow:0 2px 8px rgba(0,0,0,0.07);
+            display:block; text-decoration:none; }
