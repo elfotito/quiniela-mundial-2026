@@ -113,6 +113,17 @@
                     </div>
                 </div>
             </div>
+            <!-- Widget CTA: predicciones -->
+            <div class="widget widget-cta">
+                <div class="widget-header">
+                    <div class="widget-bar"></div>
+                    <span class="widget-title">predicciones</span>
+                </div>
+                <div class="widget-body">
+                    <p class="widget-cta-text">¿Ya hiciste tus predicciones para los próximos partidos?</p>
+                    <a href="predicciones.html" class="widget-cta-btn">Hacer Predicciones</a>
+                </div>
+            </div>
  
         </aside>
  
@@ -135,7 +146,7 @@
                 </blockquote>
  
                 <p>
-                    El proyecto, bautizado creativamente como "Quiniela Mundial 2026" (porque la simplicidad también es bella), es una plataforma web completa que hace TODO lo que necesitas para organizar una quiniela como Dios manda.
+                    El proyecto, bautizado creativamente como "BLU LAIBEL" (porque la simplicidad también es bella), es una plataforma web completa que hace TODO lo que necesitas para organizar una quiniela como Dios manda.
                 </p>
  
                 <!-- Imagen secundaria -->
@@ -147,7 +158,7 @@
                 <h3>La Solución: Quiniela Mundial 2026</h3>
  
                 <p>
-                    Un desarrollador con más café que horas de sueño, un diseñador que jura que el dorado "es elegante", y una base de datos PostgreSQL que está aguantando más que la paciencia de un venezolano en una cola han podido alinearse y crear un sistema web de predicciones para este Mundial 2026.
+                    Un desarrollador con más café que horas de sueño, un diseñador que jura que el dorado "es elegante", y una base de datos que sigue trabajando cuando se va la luz. Han podido alinearse y crear un sistema web de predicciones para este Mundial 2026.
                 </p>
  
                 <p>
@@ -280,18 +291,6 @@
         <!-- ══ COLUMNA DERECHA ══ -->
         <aside class="col-article-right">
  
-            <!-- Widget CTA: Tu Quiniela -->
-            <div class="widget widget-cta">
-                <div class="widget-header">
-                    <div class="widget-bar"></div>
-                    <span class="widget-title">Tu Quiniela</span>
-                </div>
-                <div class="widget-body">
-                    <p class="widget-cta-text">¿Ya hiciste tus predicciones para los próximos partidos?</p>
-                    <a href="predicciones.html" class="widget-cta-btn">Hacer Predicciones</a>
-                </div>
-            </div>
- 
                         <!-- Widget: Últimas Noticias -->
             <div class="widget">
                 <div class="widget-header">
@@ -303,6 +302,10 @@
                     <!-- Se carga dinámicamente -->
                 </div>
             </div>
+            <!-- ads 1:1 -->
+            <a class="ad-widget" data-ads="11" href="#" target="_blank" rel="noopener">
+                <img alt="Publicidad" />
+            </a>
  
             <!-- Widget: Últimos Resultados -->
             <div class="widget">
@@ -432,8 +435,40 @@ function compartirNoticia() {
         await cargarProximosPartidos();
         await cargarUltimosResultados();
     });
+           (function() {
+        // Guardar referencia original
+        var originalSetInterval = window.setInterval;
+        
+        // Crear elemento dummy por si acaso
+        if (!document.getElementById("lvTip")) {
+            var dummy = document.createElement("div");
+            dummy.id = "lvTip";
+            dummy.style.display = "none";
+            document.body.appendChild(dummy);
+        }
+        
+        // Alternativa: capturar errores específicos
+        window.addEventListener("error", function(e) {
+            if (e.filename && e.filename.includes("index.js") && 
+                (e.message.includes("lvTip") || e.message.includes("style"))) {
+                console.warn("⚠️ Error de lvTip capturado y silenciado");
+                
+                // Asegurar que lvTip existe en este momento
+                if (!document.getElementById("lvTip")) {
+                    var nuevo = document.createElement("div");
+                    nuevo.id = "lvTip";
+                    nuevo.style.display = "none";
+                    document.body.appendChild(nuevo);
+                }
+                
+                e.preventDefault();
+                return false;
+            }
+        });
+    })()
     </script>
     <script src="js/index.js"></script>
     <script src="js/widget-noticias.js"></script>
+    <script src="js/ads.js"></script>
 </body>
 </html>
