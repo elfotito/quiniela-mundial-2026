@@ -139,7 +139,7 @@
                     El cuerpo técnico confirmó lo que muchos temían pero pocos se atrevían a vocalizar: esta vez, el sueño de ver a la selección en tierras extranjeras se queda en la puerta del horno.
                 </p>
                 <blockquote class="article-quote">
-                <h3>"Hemos tomado la difícil decisión de priorizar la comodidad del hogar"</h3>
+                "Hemos tomado la difícil decisión de priorizar la comodidad del hogar"
                 </blockquote>
                 <p>
                     La noticia, que ha dividido la opinión pública, también ha desatado una ola de creatividad en el seno del combinado patrio.
@@ -362,13 +362,24 @@ function compartirNoticia() {
     }
 }
 </script>
-        <script src="js/config.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', async () => {
         await cargarProximosPartidos();
         await cargarUltimosResultados();
     });
+        (function() {
+        if (!document.getElementById("lvTip")) {
+            var lvTip = document.createElement("div");
+            lvTip.id = "lvTip";
+            lvTip.style.display = "none";
+            lvTip.style.position = "absolute";
+            lvTip.style.visibility = "hidden";
+            document.body.appendChild(lvTip);
+            console.log("✅ Elemento lvTip creado automáticamente");
+        }
+    })();
     </script>
     <script src="js/index.js"></script>
     <script src="js/widget-noticias.js"></script>
