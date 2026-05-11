@@ -1,5 +1,5 @@
 
-const LV_ESTADIOS = [
+const ESTADIOS = [
   { img:"https://i.ibb.co/WN8rGNtr/Metlife-stadium-Aerial-view.jpg",
     badge:"🏆 Final · Nueva York",
     fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
@@ -13,7 +13,7 @@ const LV_ESTADIOS = [
     badge:"🌹 Los Ángeles · Rose Bowl",
     fact:"Rose Bowl — Sede de la final del Mundial 1994" },
 ];
-const WE_INTERVAL = 5000;
+const EINTERVAL = 5000;
 
 function initWidgetEstadio(imgId, badgeId, factId) {
   const img   = document.getElementById(imgId);
