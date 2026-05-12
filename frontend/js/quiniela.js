@@ -1451,16 +1451,20 @@ setTimeout(() => {
 // ===============================================
 
 const TIPS_ALEATORIOS = [
-  { icon: '⚽', texto: 'El Mundial 2026 es el primero con 48 selecciones.' },
-  { icon: '🌍', texto: 'Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá.' },
-  { icon: '💡', texto: 'Predice el resultado exacto y ganas puntos extra.' },
-  { icon: '🏆', texto: 'El campeón que eliges al inicio vale puntos dobles.' },
-  { icon: '📊', texto: 'Hay 104 partidos en total en el torneo.' },
-  { icon: '🌟', texto: 'La final se jugará el 19 de julio de 2026 en Nueva York.' },
-  { icon: '🇻🇪', texto: 'Droguería Carrisan trae la Quiniela más emocionante del 2026.' },
-  { icon: '⚡', texto: 'El torneo arranca el 11 de junio de 2026.' },
-  { icon: '🥅', texto: 'Los grupos tienen 3 equipos cada uno — más partidos por equipo.' },
-  { icon: '🎯', texto: 'Cuanto más aciertes, más alto subes en el ranking global.' },
+{ icon: '🇵🇹', texto: 'Cristiano Ronaldo será el primer jugador en participar en 6 Mundiales (2006, 2010, 2014, 2018, 2022, 2026).' },
+{ icon: '🇦🇷', texto: 'Lionel Messi tiene el récord de más partidos en Mundiales: 26 apariciones.' },
+{ icon: '🇲🇽', texto: 'Guillermo Ochoa jugará su sexto Mundial (2006, 2010, 2014, 2018, 2022, 2026), igualando a Messi y Ronaldo.' },
+{ icon: '🇵🇹', texto: 'Cristiano Ronaldo puede convertirse en el único jugador en marcar en 6 Mundiales distintos (ha marcado en 2006, 2010, 2014, 2018, 2022).' },
+{ icon: '🇵🇹', texto: 'Cristiano Ronaldo está a 1 gol de igualar a Eusebio (9) como máximo goleador portugués en la historia de los Mundiales.' },
+{ icon: '🇵🇹', texto: 'Si Portugal gana el Mundial, Cristiano Ronaldo (41 años) será el campeón más longevo, superando a Dino Zoff (40 años, 1982).' },
+{ icon: '🇦🇷', texto: 'Lionel Messi suma 13 goles en Mundiales, a 3 de igualar a Miroslav Klose (16) como máximo goleador histórico.' },
+{ icon: '🇦', texto: 'Messi fue el primer jugador en ganar dos veces el Balón de Oro del Mundial (2014, 2022).' },
+{ icon: '🇩🇪', texto: 'Miroslav Klose es el máximo goleador histórico de los Mundiales con 16 goles en 4 ediciones.' },
+{ icon: '🇫🇷', texto: 'Kylian Mbappé suma 12 goles en solo 2 Mundiales; está a 4 de igualar el récord histórico de Klose (16).' },
+{ icon: '🇫🇷', texto: 'Just Fontaine anotó 13 goles en un solo Mundial (1958), récord que aún no ha sido superado.' },
+{ icon: '🇧🇷', texto: 'Pelé es el único jugador en ganar 3 Copas del Mundo (1958, 1962, 1970).' },
+{ icon: '🇦🇷🇫🇷', texto: 'Messi y Mbappé son los únicos activos dentro del Top 6 de máximos goleadores históricos del Mundial.' },
+{ icon: '🇫🇷', texto: 'Mbappé anotó 8 goles en Qatar 2022, la segunda mejor marca en una sola edición (solo superada por Fontaine con 13).' },
 ];
 
 // ── Listener para tips aleatorios ──
