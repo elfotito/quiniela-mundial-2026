@@ -3562,7 +3562,6 @@
   object-fit: cover; display: block;
   transition: opacity 0.5s ease;
   opacity: 0;
-  animation: kenburns 6s ease-in-out infinite alternate;
 }
 @keyframes kenburns-out {
   0%   { transform: scale(1.06); }
