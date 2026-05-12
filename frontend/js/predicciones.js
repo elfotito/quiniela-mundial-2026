@@ -722,16 +722,26 @@ setTimeout(() => {
 // ===============================================
 
 const TIPS_ALEATORIOS = [
-  { icon: '⚽', texto: 'El Mundial 2026 es el primero con 48 selecciones.' },
-  { icon: '🌍', texto: 'Por primera vez el Mundial se juega en 3 países: EE.UU., México y Canadá.' },
-  { icon: '💡', texto: 'Predice el resultado exacto y ganas puntos extra.' },
-  { icon: '🏆', texto: 'El campeón que eliges al inicio vale puntos dobles.' },
-  { icon: '📊', texto: 'Hay 104 partidos en total en el torneo.' },
-  { icon: '🌟', texto: 'La final se jugará el 19 de julio de 2026 en Nueva York.' },
-  { icon: '🇻🇪', texto: 'Droguería Carrisan trae la Quiniela más emocionante del 2026.' },
-  { icon: '⚡', texto: 'El torneo arranca el 11 de junio de 2026.' },
-  { icon: '🥅', texto: 'Los grupos tienen 3 equipos cada uno — más partidos por equipo.' },
-  { icon: '🎯', texto: 'Cuanto más aciertes, más alto subes en el ranking global.' },
+{ icon: '🇩🇪', texto: 'Alemania es la selección con mayor porcentaje de clasificación en la historia de los mundiales: 100% (18/18 desde 1954).' },
+{ icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', texto: 'Inglaterra clasificó a este Mundial con 100% de puntos en la eliminatoria y 0 goles en contra (22 goles a favor, 8 partidos).' },
+{ icon: '🇳🇴', texto: 'Noruega también logró el 100% de puntos en su eliminatoria europea, su primer Mundial tras 28 años de ausencia.' },
+{ icon: '🇧🇷', texto: 'Brasil es el único país que ha participado en las 23 ediciones de la Copa del Mundo (récord absoluto).' },
+{ icon: '🇦🇷', texto: 'Argentina sumó 38 puntos en las eliminatorias sudamericanas, la segunda mejor marca histórica de la región.' },
+{ icon: '🇺🇿', texto: 'Uzbekistán debutará en un Mundial por primera vez en su historia.' },
+{ icon: '🇯🇴', texto: 'Jordania jugará su primera Copa del Mundo en 2026.' },
+{ icon: '🇨🇻', texto: 'Cabo Verde se estrena en un Mundial, tras eliminar a Nigeria por penaltis en el repechaje africano.' },
+{ icon: '🇨🇼', texto: 'Curazao también debutará en el Mundial 2026, récord de nuevos equipos para una edición.' },
+{ icon: '🇲🇦', texto: 'Marruecos fue la selección africana con mejor rendimiento en la última Copa del Mundo (semifinalista).' },
+{ icon: '🇫🇷', texto: 'Francia ha llegado a 3 de las últimas 4 finales del Mundial (2018, 2022, 2026).' },
+{ icon: '🇭🇷', texto: 'Croacia ha alcanzado semifinales en 2 de los últimos 3 mundiales a pesar de tener solo 3.9 millones de habitantes.' },
+{ icon: '🇵🇹', texto: 'Cristiano Ronaldo jugará su sexto Mundial (récord compartido con Messi y otros 3 jugadores).' },
+{ icon: '🇦🇷🇫🇷', texto: 'Argentina y Francia son las únicas selecciones campeonas que repiten base titular con más del 70% de los mismos jugadores.' },
+{ icon: '🇪🇸', texto: 'España tuvo la posesión promedio más alta de la historia en una eliminatoria (78.3% en 2025).' },
+{ icon: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', texto: 'El goleador europeo en eliminatorias fue Harry Kane con 14 goles en 9 partidos.' },
+{ icon: '🇦🇷', texto: 'Messi lideró las eliminatorias sudamericanas en asistencias (8 pases a gol).' },
+{ icon: '🇺🇾', texto: 'Uruguay tuvo la defensa más sólida de Sudamérica: solo 4 goles recibidos en 18 partidos.' },
+{ icon: '🇨🇴', texto: 'Colombia mantuvo el invicto más largo de la eliminatoria: 15 partidos sin perder.' },
+{ icon: '🇯🇵', texto: 'Japón fue la selección que más kilómetros recorrió por partido en las eliminatorias asiáticas (112 km en promedio).' }
 ];
 
 // ── Listener para tips aleatorios ──

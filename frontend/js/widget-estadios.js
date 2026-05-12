@@ -1,10 +1,10 @@
 
 const ESTADIOS = [
   { img:"https://i.ibb.co/WN8rGNtr/Metlife-stadium-Aerial-view.jpg",
-    badge:"🏆 Final · Nueva York",
-    fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
+    badge:"🗽 Sede Final · Nueva York",
+    fact:"MetLife Stadium — 82,500 espectadores" },
   { img:"https://i.ibb.co/BHr1PZPk/AZTECA.jpg",
-    badge:"⚽ Inauguración · Ciudad de México",
+    badge:"🏁 Inauguración · Ciudad de México",
     fact:"Estadio Azteca — El único con dos inauguraciones mundialistas" },
   { img:"https://i.ibb.co/HL8gzc8R/ATT-Stadium-AP.jpg",
     badge:"🌟 Dallas · AT&T Stadium",
@@ -12,6 +12,10 @@ const ESTADIOS = [
   { img:"https://i.ibb.co/0jJtK9zq/una-vista-dallalto-del-rose-bowl-stadium-di-pasadena-77xtyf1lmfjf106jhptoygoxr.jpg",
     badge:"🌹 Los Ángeles · Rose Bowl",
     fact:"Rose Bowl — Sede de la final del Mundial 1994" },
+  { img:"https://i.ibb.co/bjyCpDqq/vancouver.jpg",
+  badge:"🎪 Vancouver · Stadium BC Place",
+  fact:"Stadium BC Place — Su techo de teflón es el más grande del mundo" },
+
 ];
 const WE_INTERVAL = 5000;
 
