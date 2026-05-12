@@ -24,7 +24,7 @@ function initWidgetEstadio(imgId, badgeId, factId) {
   let current = Math.floor(Math.random() * ESTADIOS.length);
 
   function mostrar(idx, fade) {
-  const e = WE_ESTADIOS[idx % ESTADIOS.length];
+  const e = ESTADIOS[idx % ESTADIOS.length];
   
   // Alternar animación según si es par o impar
   const anim = idx % 2 === 0 ? 'kenburns-out' : 'kenburns-in';
