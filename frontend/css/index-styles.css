@@ -3564,24 +3564,24 @@
   opacity: 0;
 }
 @keyframes kenburns-out {
-  0%   { transform: scale(1.06); }
+  0%   { transform: scale(1.04); }
   100% { transform: scale(1);    }
 }
 
 @keyframes kenburns-in {
   0%   { transform: scale(1);    }
-  100% { transform: scale(1.06); }
+  100% { transform: scale(1.04); }
 }
 .widget-estadio .we-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.72) 20%, transparent 80%);
+  background: linear-gradient(to top, rgba(0,0,0,.72) 20%, transparent 60%);
   pointer-events: none;
 }
 .widget-estadio .we-badge {
   position: absolute; top: 10px; left: 10px;
   background: rgba(0,0,0,.55);
   color: #fff; font-size: 10px; font-weight: 600;
-  padding: 3px 8px; border-radius: 4px;
+  padding: 3px 8px;
   backdrop-filter: blur(4px);
   letter-spacing: .02em; white-space: nowrap;
 }
