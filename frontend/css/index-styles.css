@@ -3564,9 +3564,14 @@
   opacity: 0;
   animation: kenburns 6s ease-in-out infinite alternate;
 }
-@keyframes kenburns {
-  0%   { transform: scale(1);    transform-origin: center center; }
-  100% { transform: scale(1.06); transform-origin: center bottom; }
+@keyframes kenburns-out {
+  0%   { transform: scale(1.06); }
+  100% { transform: scale(1);    }
+}
+
+@keyframes kenburns-in {
+  0%   { transform: scale(1);    }
+  100% { transform: scale(1.06); }
 }
 .widget-estadio .we-overlay {
   position: absolute; inset: 0;

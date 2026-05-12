@@ -13,7 +13,7 @@ const ESTADIOS = [
     badge:"🌹 Los Ángeles · Rose Bowl",
     fact:"Rose Bowl — Sede de la final del Mundial 1994" },
 ];
-const EINTERVAL = 5000;
+const WE_INTERVAL = 5000;
 
 function initWidgetEstadio(imgId, badgeId, factId) {
   const img   = document.getElementById(imgId);
@@ -21,27 +21,42 @@ function initWidgetEstadio(imgId, badgeId, factId) {
   const fact  = document.getElementById(factId);
   if (!img) return;
 
-  let current = Math.floor(Math.random() * LV_ESTADIOS.length);
+  let current = Math.floor(Math.random() * ESTADIOS.length);
 
   function mostrar(idx, fade) {
-    const e = LV_ESTADIOS[idx % LV_ESTADIOS.length];
-    if (fade) {
-      img.style.opacity = '0';
-      setTimeout(() => {
-        img.src = e.img; badge.textContent = e.badge; fact.textContent = e.fact;
-        img.onload = () => img.style.opacity = '1';
-        if (img.complete) img.style.opacity = '1';
-      }, 400);
-    } else {
-      img.src = e.img; badge.textContent = e.badge; fact.textContent = e.fact;
+  const e = WE_ESTADIOS[idx % ESTADIOS.length];
+  
+  // Alternar animación según si es par o impar
+  const anim = idx % 2 === 0 ? 'kenburns-out' : 'kenburns-in';
+
+  if (fade) {
+    img.style.opacity = '0';
+    setTimeout(() => {
+      img.src = e.img;
+      badge.textContent = e.badge;
+      fact.textContent  = e.fact;
+      // Reiniciar la animación forzando reflow
+      img.style.animation = 'none';
+      void img.offsetWidth; // fuerza reflow
+      img.style.animation = `${anim} 5s ease-in-out forwards`;
       img.onload = () => img.style.opacity = '1';
       if (img.complete) img.style.opacity = '1';
-    }
+    }, 400);
+  } else {
+    img.src = e.img;
+    badge.textContent = e.badge;
+    fact.textContent  = e.fact;
+    img.style.animation = 'none';
+    void img.offsetWidth;
+    img.style.animation = `${anim} 5s ease-in-out forwards`;
+    img.onload = () => img.style.opacity = '1';
+    if (img.complete) img.style.opacity = '1';
   }
+}
 
   mostrar(current, false);
   setInterval(() => {
-    current = (current + 1) % LV_ESTADIOS.length;
+    current = (current + 1) % ESTADIOS.length;
     mostrar(current, true);
   }, WE_INTERVAL);
 }
