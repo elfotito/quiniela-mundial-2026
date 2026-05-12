@@ -157,9 +157,9 @@ async function lvSecuenciaLarga() {
   lvCambiarTip(0);
 
   await lvAvanzar(30, 1200);
-  await new Promise(r => setTimeout(r, 900));   // "Canaima arrancando"
+  await new Promise(r => setTimeout(r, 1100));   // "Canaima arrancando"
   await lvAvanzar(48, 2000);
-  await new Promise(r => setTimeout(r, 1300));  // frenazo dramático
+  await new Promise(r => setTimeout(r, 1500));  // frenazo dramático
   await lvAvanzar(65, 1500);
 
   lvStatus.textContent = "Despertando al servidor... ☕";
