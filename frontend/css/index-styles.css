@@ -178,11 +178,10 @@
   transform: scale(0.98);
 }
 .btn-instalar-fancy span {
-  width: 45px;
-  height: 45px;
-  max-width: 45px;
-  max-height: 45px;
-  font-size: 45px;
+  width: 30px;
+  height: 30px;
+  max-width: 30px;
+  max-height: 30px;
   color: white;
 }
 
