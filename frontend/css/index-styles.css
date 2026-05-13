@@ -2964,10 +2964,13 @@
     background: #ffffff;
 }
 @media (max-width: 384px) {
-   .uib-wrapper {
+    .uib-wrapper {
     width:100%;
     max-width:358px;
-}
+    .uib-chart-wrap canvas {
+    width: 340px !important;
+    height: auto !important;
+  }
 }
 /* ── FILA PRINCIPAL ───────────────────────────────── */
 .uib {
