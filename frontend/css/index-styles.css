@@ -2967,8 +2967,9 @@
     .uib-wrapper {
     width:100%;
     max-width:358px;
+    }
     .uib-chart-wrap canvas {
-    width: 340px !important;
+    width: 300px !important;
     height: auto !important;
   }
 }
