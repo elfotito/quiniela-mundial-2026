@@ -21,64 +21,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body style="background:#edeef0">
-    <script>
-  console.log('🔍 DEBUG PWA COMPLETO');
-  
-  // 1. Verifica HTTPS
-  console.log('✅ HTTPS:', window.location.protocol === 'https:');
-  
-  // 2. Verifica que el manifest esté en el DOM
-  const manifestLink = document.querySelector('link[rel="manifest"]');
-  console.log('✅ Manifest link en DOM:', !!manifestLink);
-  
-  // 3. Verifica Service Worker
-  navigator.serviceWorker.getRegistrations().then(regs => {
-    console.log('✅ Service Workers registrados:', regs.length);
-    regs.forEach((reg, i) => {
-      console.log(`   SW ${i}: scope = ${reg.scope}`);
-    });
-  });
-  
-  // 4. Verifica que el manifest sea válido
-  fetch('/icon/site.webmanifest')
-    .then(r => {
-      console.log('✅ Manifest HTTP status:', r.status);
-      return r.json();
-    })
-    .then(manifest => {
-      console.log('✅ Manifest JSON válido');
-      console.log('   - name:', manifest.name);
-      console.log('   - display:', manifest.display);
-      console.log('   - start_url:', manifest.start_url);
-      console.log('   - icons cantidad:', manifest.icons.length);
-    })
-    .catch(e => console.error('❌ Manifest error:', e));
-  
-  // 5. Verifica que los iconos existan
-  setTimeout(() => {
-    console.log('🔍 Checkeando iconos...');
-    const iconos = [
-      '/icon/android-chrome-192x192.png',
-      '/icon/android-chrome-512x512.png'
-    ];
-    
-    iconos.forEach(ico => {
-      fetch(ico).then(r => {
-        console.log(`   ${ico}: ${r.status === 200 ? '✅' : '❌'}`);
-      });
-    });
-  }, 500);
-  
-  // 6. Escucha el evento beforeinstallprompt
-  window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('🎉🎉🎉 beforeinstallprompt DISPARADO!!!');
-  });
-  
-  // 7. Timeout para ver si se dispara
-  setTimeout(() => {
-    console.log('⏱️ 3 segundos pasados. ¿Se disparó beforeinstallprompt?');
-  }, 3000);
-</script>
     <div id="loading-overlay">
 
   <div class="lv-bg">
