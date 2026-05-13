@@ -635,16 +635,35 @@ async function compartirRanking() {
     }
 
     // -- Llenar badge de liga activa --
-    const ligaSelect  = document.getElementById('ligaFilter');
-    const ligaNombre  = ligaSelect && ligaSelect.selectedIndex > 0
+const ligaSelect = document.getElementById('ligaFilter');
+    const ligaNombre = ligaSelect && ligaSelect.selectedIndex > 0
         ? ligaSelect.options[ligaSelect.selectedIndex].text
         : 'Todas las Ligas';
 
+    // Fecha actual formateada en español
+    const fecha = new Date().toLocaleDateString('es-ES', {
+        weekday: 'long',
+        day:     'numeric',
+        month:   'long',
+        year:    'numeric'
+    });
+    // Primera letra mayúscula → "Miércoles, 13 de mayo de 2026"
+    const fechaFormateada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
+
     document.getElementById('share-liga-badge').innerHTML = `
-        <span style="color:#C9A84C; font-weight:700;">📊</span>
-        &nbsp;
-        <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:20px;">${ligaNombre}</span>
-        <span style="margin-left:auto; font-size:15px; color:rgba(255,255,255,0.25);">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="color:#C9A84C; font-weight:700;">📊</span>
+                <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:20px;">${ligaNombre}</span>
+            </div>
+            <span style="
+                font-size: 14px;
+                color: rgba(255,255,255,0.3);
+                font-family: Arial, sans-serif;
+                letter-spacing: 1px;
+            ">📅 ${fechaFormateada}</span>
+        </div>
+        <span style="margin-left:auto; font-size:15px; color:rgba(255,255,255,0.25); font-family:Arial,sans-serif; align-self:center;">
             ${datos.length} participante${datos.length !== 1 ? 's' : ''}
         </span>
     `;
@@ -744,14 +763,14 @@ async function compartirRanking() {
 
         // Convertir a blob
         canvas.toBlob(async (blob) => {
-            const archivo = new File([blob], 'quiniela-mundial-2026.png', { type: 'image/png' });
+            const archivo = new File([blob], 'ranking-quiniela.png', { type: 'image/png' });
 
             // Web Share API (móvil) con fallback a descarga (desktop)
             if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
                 try {
                     await navigator.share({
                         files: [archivo],
-                        title: 'Quiniela Mundial 2026',
+                        title: 'Ranking Quiniela',
                         text: '¡Mira cómo va la tabla! 🏆⚽'
                     });
                 } catch (err) {
@@ -761,7 +780,7 @@ async function compartirRanking() {
             } else {
                 // Fallback: descarga directa
                 const link = document.createElement('a');
-                link.download = 'quiniela-mundial-2026.png';
+                link.download = 'ranking-quiniela.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }
