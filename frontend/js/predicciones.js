@@ -40,6 +40,12 @@ function configurarUI() {
         el.textContent = usuario.nombre || usuario.codigo;
     });
 
+    // ✅ PRIMERO: Ocultar botones admin para todos
+    document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+        btn.style.display = 'none';
+    });
+
+    // LUEGO: Mostrar solo si es admin
     const adminBtn = document.getElementById('adminBtn');
     if (adminBtn && auth.isAdmin()) {
         adminBtn.style.display = 'flex';
