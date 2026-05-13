@@ -635,41 +635,99 @@ async function compartirRanking() {
     }
 
     // -- Llenar badge de liga activa --
-    const ligaSelect = document.getElementById('ligaFilter');
-    const ligaNombre = ligaSelect && ligaSelect.selectedIndex > 0
+    const ligaSelect  = document.getElementById('ligaFilter');
+    const ligaNombre  = ligaSelect && ligaSelect.selectedIndex > 0
         ? ligaSelect.options[ligaSelect.selectedIndex].text
         : 'Todas las Ligas';
 
-    document.getElementById('share-liga-badge').innerHTML =
-        `📊 &nbsp;<strong style="color:#fff;">${ligaNombre}</strong>`;
+    document.getElementById('share-liga-badge').innerHTML = `
+        <span style="color:#C9A84C; font-weight:700;">📊</span>
+        &nbsp;
+        <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:20px;">${ligaNombre}</span>
+        <span style="margin-left:auto; font-size:15px; color:rgba(255,255,255,0.25);">
+            ${datos.length} participante${datos.length !== 1 ? 's' : ''}
+        </span>
+    `;
 
-    // -- Llenar filas de la tabla --
+    // -- Filas --
     const tbody = document.getElementById('share-tbody');
     const total = datos.length;
 
     tbody.innerHTML = datos.map((user, index) => {
-        const posicion  = index + 1;
-        const medalla   = obtenerMedallaPosicion(posicion, total);
-        const nombre    = user.nombre_publico || user.nombre || 'Usuario';
-        const puntos    = user.puntos_totales || 0;
-
-        // Alternar fondo de filas
-        const bgFila = index % 2 === 0 ? '#111' : '#0d0d0d';
-
-        // Resaltar top 3
-        const esTop3    = posicion <= 3;
-        const colorPts  = esTop3 ? '#C9A84C' : '#ffffff';
-        const fontPts   = esTop3 ? '700' : '400';
-
-        // Resaltar penúltimo
+        const posicion    = index + 1;
+        const medalla     = obtenerMedallaPosicion(posicion, total);
+        const nombre      = user.nombre_publico || user.nombre || 'Usuario';
+        const puntos      = user.puntos_totales || 0;
         const esPenultimo = posicion === total - 1;
-        const colorNombre = esPenultimo ? '#ff6b6b' : '#ffffff';
+        const esTop1      = posicion === 1;
+        const esTop3      = posicion <= 3;
+
+        // Fondo de fila
+        const bgFila = index % 2 === 0
+            ? 'rgba(255,255,255,0.03)'
+            : 'transparent';
+
+        // Acento izquierdo top 3
+        const borderLeft = esTop1
+            ? '4px solid #C9A84C'
+            : posicion === 2
+                ? '4px solid #9e9e9e'
+                : posicion === 3
+                    ? '4px solid #8B5E3C'
+                    : '4px solid transparent';
+
+        // Color nombre
+        const colorNombre = esPenultimo
+            ? '#ff6b6b'
+            : esTop1
+                ? '#ffffff'
+                : 'rgba(255,255,255,0.85)';
+
+        const fontNombre  = esTop3 ? '700' : '400';
+
+        // Color puntos
+        const colorPts   = esTop1  ? '#C9A84C'
+                         : esTop3  ? 'rgba(201,168,76,0.8)'
+                         :           'rgba(255,255,255,0.6)';
+        const fontPts    = esTop3  ? '900' : '500';
+        const sizePts    = esTop1  ? '34px' : esTop3 ? '28px' : '24px';
+
+        // Fondo especial líder
+        const bgEspecial = esTop1
+            ? 'background: linear-gradient(90deg, rgba(201,168,76,0.12) 0%, transparent 70%);'
+            : '';
 
         return `
-            <tr style="background: ${bgFila}; border-bottom: 1px solid #1a1a1a;">
-                <td style="padding: 20px 12px; font-size: 28px; text-align: center;">${medalla}</td>
-                <td style="padding: 20px 12px; font-size: 26px; color: ${colorNombre}; font-weight: 500;">${nombre}</td>
-                <td style="padding: 20px 12px; font-size: 28px; text-align: center; color: ${colorPts}; font-weight: ${fontPts};">${puntos}</td>
+            <tr style="
+                ${bgEspecial}
+                background-color: ${bgFila};
+                border-bottom: 1px solid rgba(255,255,255,0.04);
+                border-left: ${borderLeft};
+            ">
+                <td style="
+                    padding: 22px 12px;
+                    font-size: ${esTop3 ? '30px' : '22px'};
+                    text-align: center;
+                    font-family: Arial Black, Arial, sans-serif;
+                    color: rgba(255,255,255,0.4);
+                ">${medalla}</td>
+                <td style="
+                    padding: 22px 12px;
+                    font-size: 26px;
+                    color: ${colorNombre};
+                    font-weight: ${fontNombre};
+                    font-family: Arial, sans-serif;
+                    letter-spacing: -0.5px;
+                ">${nombre}</td>
+                <td style="
+                    padding: 22px 12px;
+                    font-size: ${sizePts};
+                    text-align: center;
+                    color: ${colorPts};
+                    font-weight: ${fontPts};
+                    font-family: Arial Black, Arial, sans-serif;
+                    letter-spacing: -1px;
+                ">${puntos}</td>
             </tr>
         `;
     }).join('');
