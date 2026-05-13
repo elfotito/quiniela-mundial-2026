@@ -177,6 +177,14 @@
 .btn-instalar-fancy:active {
   transform: scale(0.98);
 }
+.btn-instalar-fancy span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
+
 /* Fondo */
 .lv-bg { position: absolute; inset: 0; pointer-events: none; }
 .lv-hex {
