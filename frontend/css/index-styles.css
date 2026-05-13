@@ -2963,7 +2963,7 @@
     padding: 0 16px;
     background: #ffffff;
 }
-@media (max-width: 384px) {
+@media (min-width: 360px) and (max-width: 384px) {
     .uib-wrapper {
     width:100%;
     max-width:358px;
