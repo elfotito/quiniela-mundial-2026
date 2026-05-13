@@ -1456,7 +1456,7 @@
     .footer-legal-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 25px;
       flex-wrap: wrap;
     }
  
