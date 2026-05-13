@@ -46,10 +46,16 @@ async function verificarLogin() {
         el.textContent = emoji;
     });
 
+    // ✅ PRIMERO: Ocultar botones admin para todos
+    document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+        btn.style.display = 'none';
+    });
+
     if (usuario.isAdmin) {
         // Esperar a que el DOM esté listo para estos elementos
         await new Promise(resolve => setTimeout(resolve, 100));
         
+        // LUEGO: Mostrar solo si es admin
         document.querySelectorAll('.btn-admin-display').forEach(btn => {
             btn.style.display = 'flex';
             btn.onclick = () => window.location.href = 'admin.html';
@@ -222,8 +228,8 @@ function mostrarPodio(ranking) {
  
     // Imágenes por posición real (ajusta si quieres otras)
     const images = [
-        'img/baggio.jpg',  // 1er lugar
-        'img/messi.png',   // 2do lugar
+        'img/messi.png',  // 1er lugar
+        'img/baggio.jpg',   // 2do lugar
         'img/turquia.jpg'  // 3er lugar
     ];
  
@@ -232,9 +238,9 @@ function mostrarPodio(ranking) {
  
     // Orden visual: 2do izquierda | 1ro centro | 3ro derecha
     const ordenVisual = [
-        { real: 1, clase: 'second', corona: '🥈', img: images[1] },
+        { real: 2, clase: 'third',  corona: '🥉', img: images[2] },
         { real: 0, clase: 'first',  corona: '👑',  img: images[0] },
-        { real: 2, clase: 'third',  corona: '🥉', img: images[2] }
+        { real: 1, clase: 'second', corona: '🥈', img: images[1] }
     ];
  
     const posNumeros = { first: '1', second: '2', third: '3' };

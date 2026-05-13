@@ -55,10 +55,16 @@ async function verificarLogin() {
         el.textContent = emoji;
     });
 
+    // ✅ PRIMERO: Ocultar botones admin para todos
+    document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+        btn.style.display = 'none';
+    });
+
     if (usuario.isAdmin) {
         // Esperar a que el DOM esté listo para estos elementos
         await new Promise(resolve => setTimeout(resolve, 100));
         
+        // LUEGO: Mostrar solo si es admin
         document.querySelectorAll('.btn-admin-display').forEach(btn => {
             btn.style.display = 'flex';
             btn.onclick = () => window.location.href = 'admin.html';
