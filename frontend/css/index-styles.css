@@ -2963,7 +2963,12 @@
     padding: 0 16px;
     background: #ffffff;
 }
-
+@media (max-width: 384px) {
+   .uib-wrapper {
+    width:100%;
+    max-width:358px;
+}
+}
 /* ── FILA PRINCIPAL ───────────────────────────────── */
 .uib {
     display: flex;
@@ -3564,13 +3569,13 @@
   opacity: 0;
 }
 @keyframes kenburns-out {
-  0%   { transform: scale(1.04); }
+  0%   { transform: scale(1.06); }
   100% { transform: scale(1);    }
 }
 
 @keyframes kenburns-in {
   0%   { transform: scale(1);    }
-  100% { transform: scale(1.04); }
+  100% { transform: scale(1.06); }
 }
 .widget-estadio .we-overlay {
   position: absolute; inset: 0;
