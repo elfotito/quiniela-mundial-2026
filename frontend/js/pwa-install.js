@@ -6,8 +6,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
   
   // Muestra el botón
   document.getElementById('btn-instalar-app').classList.add('show');
+  iniciarTemporizadorBoton();
 });
-
+function iniciarTemporizadorBoton() {
+  setTimeout(() => {
+    const btn = document.getElementById('btn-instalar-app');
+    if (btn) {
+      // Animación de salida (usa la transición que ya tienes)
+      btn.classList.remove('show');
+    }
+  }, 8000); // 8 segundos
+}
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('btn-instalar-app');
   
@@ -25,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const esMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
   if (esMobile) {
     btn.classList.add('show');
+    iniciarTemporizadorBoton();
   }
   
   btn.addEventListener('click', async () => {
