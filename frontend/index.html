@@ -822,9 +822,9 @@
         <script src="js/widget-estadios.js"></script>
         <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/js/sw.js')
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
       .then(function(registration) {
-        console.log('✅ Service Worker registrado desde /js/sw.js');
+        console.log('✅ Service Worker registrado en scope "/"');
       })
       .catch(function(error) {
         console.error('❌ Error registrando SW:', error);
