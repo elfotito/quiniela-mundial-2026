@@ -169,7 +169,11 @@
     transform: translateY(-3px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
-
+.btn-instalar-fancy.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 .btn-instalar-fancy:active {
   transform: scale(0.98);
 }
