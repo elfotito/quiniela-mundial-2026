@@ -773,49 +773,7 @@
       });
   }
 </script>
-<script>
-  console.log('🔍 Debuggeando Manifest...');
-  
-  // Verifica que el link esté en el DOM
-  const manifestLink = document.querySelector('link[rel="manifest"]');
-  console.log('¿Link manifest en HTML?', manifestLink);
-  if (manifestLink) {
-    console.log('href del manifest:', manifestLink.href);
-  }
-  
-  // Intenta cargar el manifest directamente
-  fetch('/site.webmanifest')
-    .then(response => {
-      console.log('📥 Manifest status:', response.status);
-      return response.json();
-    })
-    .then(data => {
-      console.log('✅ Manifest válido. Contenido:', data);
-      
-      // Verifica que tenga los campos obligatorios
-      console.log('  - name:', data.name);
-      console.log('  - short_name:', data.short_name);
-      console.log('  - display:', data.display);
-      console.log('  - icons:', data.icons);
-      
-      // Verifica que los iconos existan
-      if (data.icons && data.icons.length > 0) {
-        console.log('🎯 Verificando iconos...');
-        data.icons.forEach((icon, i) => {
-          fetch(icon.src)
-            .then(r => {
-              console.log(`  ✅ Ícono ${i} (${icon.sizes}): ${r.status === 200 ? 'ENCONTRADO' : 'ERROR'}`);
-            })
-            .catch(e => {
-              console.log(`  ❌ Ícono ${i} (${icon.sizes}): NO ENCONTRADO`);
-            });
-        });
-      }
-    })
-    .catch(error => {
-      console.error('❌ Error cargando manifest:', error);
-    });
-</script>
+
         <script src="js/pwa-install.js"></script>
         
 </body>
