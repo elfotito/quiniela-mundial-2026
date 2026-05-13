@@ -21,6 +21,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body style="background:#edeef0">
+    <div id="cookieBanner" class="cookie-banner">
+    <div class="cookie-content">
+        <div class="cookie-text">
+            <p><strong>🍪 Usamos cookies</strong> para mejorar tu experiencia y analizar el uso de la plataforma.</p>
+        </div>
+        <div class="cookie-buttons">
+            <button id="cookieAccept" class="btn-cookie-accept">Aceptar</button>
+            <button id="cookieReject" class="btn-cookie-reject">Rechazar</button>
+        </div>
+    </div>
+    </div>
     <div id="loading-overlay">
 
   <div class="lv-bg">
@@ -762,6 +773,7 @@
         <script src="js/index.js"></script>
         <script src="js/ads.js"></script>
         <script src="js/widget-estadios.js"></script>
+        <script src="js/pwa-install.js"></script>
         <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' })
@@ -773,8 +785,34 @@
       });
   }
 </script>
+    <script>
+(function() {
+    const COOKIE_KEY = 'quiniela_cookies_accepted';
+    const banner = document.getElementById('cookieBanner');
+    const acceptBtn = document.getElementById('cookieAccept');
+    const rejectBtn = document.getElementById('cookieReject');
+    
+    // Verificar si ya aceptó
+    if (!localStorage.getItem(COOKIE_KEY)) {
+        banner.style.display = 'block';
+    } else {
+        banner.style.display = 'none';
+    }
+    
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem(COOKIE_KEY, 'true');
+        banner.style.display = 'none';
+        // Aquí cargarías scripts de analytics si tienes
+    });
+    
+    rejectBtn.addEventListener('click', () => {
+        localStorage.setItem(COOKIE_KEY, 'false');
+        banner.style.display = 'none';
+    });
+})();
+    </script>
 
-        <script src="js/pwa-install.js"></script>
+        
         
 </body>
 </html>
