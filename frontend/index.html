@@ -763,44 +763,17 @@
         <script src="js/ads.js"></script>
         <script src="js/widget-estadios.js"></script>
         <script>
-  self.addEventListener('install', function(event) {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', function(event) {
-  event.waitUntil(clients.claim());
-});
-</script>
-        <script src="js/pwa-install.js"></script>
-        <script>
-  console.log('📍 Buscando Service Worker...');
-  
   if ('serviceWorker' in navigator) {
-    console.log('✅ Navigator soporta Service Worker');
-    
-    // Intenta registrar desde la raíz
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('/js/sw.js')
       .then(function(registration) {
-        console.log('✅✅✅ Service Worker REGISTRADO EXITOSAMENTE');
-        console.log('Scope:', registration.scope);
+        console.log('✅ Service Worker registrado desde /js/sw.js');
       })
       .catch(function(error) {
-        console.error('❌ Error registrando SW desde /sw.js:', error);
-        console.error('Detalles del error:', error.message);
-        
-        // Si falla, intenta desde js/
-        console.log('🔄 Intentando desde /js/sw.js...');
-        navigator.serviceWorker.register('/js/sw.js')
-          .then(function(registration) {
-            console.log('✅ SW registrado desde js/');
-          })
-          .catch(function(error2) {
-            console.error('❌ También falló desde /js/sw.js:', error2.message);
-          });
+        console.error('❌ Error registrando SW:', error);
       });
-  } else {
-    console.error('❌ Navigator NO soporta Service Worker');
   }
 </script>
+        <script src="js/pwa-install.js"></script>
+        
 </body>
 </html>
