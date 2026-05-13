@@ -3167,7 +3167,7 @@
     width: auto;
     height: 120px !important;
 }
-@media (max-width: 392px) {
+@media (min-width: 385px) and (max-width: 392px) {
     .uib-chart-col {
         align-items: center;
     }
