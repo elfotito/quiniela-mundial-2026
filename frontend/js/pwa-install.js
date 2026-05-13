@@ -46,12 +46,12 @@ function mostrarModalInstalacion() {
   const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
   
   const instruccion = esIOS
-    ? `<ol>
+    ? `<ol style="text-align: left; font-size: 13px; color: #ccc; padding-left: 20px; line-height: 1.8;">
         <li>Toca el botón <strong>compartir</strong> (□↑) abajo</li>
         <li>Selecciona <strong>"Agregar a pantalla de inicio"</strong></li>
         <li>Toca <strong>"Agregar"</strong></li>
       </ol>`
-    : `<ol>
+    : `<ol style="text-align: left; font-size: 13px; color: #ccc; padding-left: 20px; line-height: 1.8;">
         <li>Toca los <strong>3 puntos</strong> (⋮) arriba a la derecha</li>
         <li>Selecciona <strong>"Agregar a pantalla de inicio"</strong></li>
         <li>Toca <strong>"Agregar"</strong></li>
@@ -67,8 +67,7 @@ function mostrarModalInstalacion() {
       padding: 20px;
     ">
       <div style="
-        background: #1a1a1a;
-        border: 1px solid #0066CC;
+        background: #000000;
         border-radius: 16px;
         padding: 28px;
         max-width: 360px;
@@ -77,7 +76,7 @@ function mostrarModalInstalacion() {
         text-align: center;
       ">
         <div style="font-size: 48px; margin-bottom: 12px;">📱</div>
-        <h3 style="color: #0066CC; margin-bottom: 8px;">Instalar Quiniela</h3>
+        <h3 style="color: #fffb00; margin-bottom: 8px;">Instalar Quiniela Mundial</h3>
         <p style="color: #aaa; font-size: 14px; margin-bottom: 16px;">
           Sigue estos pasos para agregar la app a tu pantalla de inicio:
         </p>
