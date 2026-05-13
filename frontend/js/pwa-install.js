@@ -1,45 +1,60 @@
-let deferredPrompt; // Almacena el evento de instalación
+let deferredPrompt;
 
-// Captura el evento 'beforeinstallprompt'
+console.log('🔍 Script de PWA Install cargado');
+
+// Escucha el evento beforeinstallprompt
 window.addEventListener('beforeinstallprompt', (e) => {
-  // Previene que se muestre el mini-cartel automático
-  e.preventDefault();
+  console.log('✅ beforeinstallprompt DISPARADO');
   
-  // Guarda el evento para usarlo después
+  e.preventDefault();
   deferredPrompt = e;
   
-  // Muestra tu botón personalizado
   const btnInstalar = document.getElementById('btn-instalar-app');
+  console.log('🔎 Buscando botón:', btnInstalar);
+  
   if (btnInstalar) {
-    btnInstalar.style.display = 'block'; // Era hidden por defecto
+    console.log('✅ Botón encontrado, agregando clase "show"');
+    btnInstalar.classList.add('show');
+  } else {
+    console.error('❌ Botón NO encontrado (id="btn-instalar-app")');
   }
 });
 
-// Cuando el usuario hace click en tu botón
-document.getElementById('btn-instalar-app')?.addEventListener('click', async () => {
-  if (!deferredPrompt) {
-    console.log('Install prompt no disponible');
-    return;
+// Click en el botón
+document.addEventListener('DOMContentLoaded', () => {
+  const btnInstalar = document.getElementById('btn-instalar-app');
+  
+  if (btnInstalar) {
+    btnInstalar.addEventListener('click', async () => {
+      console.log('📱 Click en botón instalar');
+      console.log('deferredPrompt disponible?', deferredPrompt);
+      
+      if (!deferredPrompt) {
+        console.warn('⚠️ deferredPrompt es null. beforeinstallprompt no se disparó');
+        return;
+      }
+      
+      try {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`📊 Usuario eligió: ${outcome}`);
+        deferredPrompt = null;
+        btnInstalar.classList.remove('show');
+      } catch (error) {
+        console.error('❌ Error mostrando el prompt:', error);
+      }
+    });
   }
-  
-  // Muestra el diálogo nativo de instalación
-  deferredPrompt.prompt();
-  
-  // Espera a ver qué eligió el usuario
-  const { outcome } = await deferredPrompt.userChoice;
-  
-  console.log(`User response: ${outcome}`); // 'accepted' o 'dismissed'
-  
-  // Limpia el evento
-  deferredPrompt = null;
-  
-  // Esconde el botón
-  document.getElementById('btn-instalar-app').style.display = 'none';
 });
 
-// Si la app ya está instalada (o el navegador no soporta)
+// Si ya está instalada
 window.addEventListener('appinstalled', () => {
-  console.log('✅ App instalada correctamente');
-  deferredPrompt = null;
-  // Aquí podrías mostrar un mensaje de éxito
+  console.log('🎉 App instalada correctamente!');
 });
+
+// Log inicial
+console.log('🌐 Navegador soporta PWA?', 
+  'serviceWorker' in navigator && 
+  'Notification' in window && 
+  'beforeinstallprompt' in window
+);
