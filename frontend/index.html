@@ -763,12 +763,13 @@
         <script src="js/ads.js"></script>
         <script src="js/widget-estadios.js"></script>
         <script>
-  // Registrar el Service Worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('✅ Service Worker registrado'))
-      .catch(err => console.error('❌ Error registrando SW:', err));
-  }
+  self.addEventListener('install', function(event) {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(clients.claim());
+});
 </script>
         <script src="js/pwa-install.js"></script>
 </body>
