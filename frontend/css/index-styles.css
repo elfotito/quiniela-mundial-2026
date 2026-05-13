@@ -143,8 +143,8 @@
 }
 .btn-instalar-fancy {
     position: fixed;
-    bottom: 60px;
-    left: 30px;
+    bottom: 80px;
+    left: 60px;
     width: 50px;
     height: 50px;
     background-color: #000000;
@@ -178,10 +178,12 @@
   transform: scale(0.98);
 }
 .btn-instalar-fancy span {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
+  width: 45px;
+  height: 45px;
+  max-width: 45px;
+  max-height: 45px;
+  font-size: 45px;
+  color: white;
 }
 
 /* Fondo */
