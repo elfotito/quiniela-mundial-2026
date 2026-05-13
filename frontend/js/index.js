@@ -238,6 +238,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.user-name-display').forEach(el => el.textContent = usuario.nombre);
   const emoji = obtenerCampeon(usuario.campeon_elegido);
   document.querySelectorAll('.user-emoji-display').forEach(el => el.textContent = emoji);
+  document.querySelectorAll('.btn-admin-display, .btn-noticias-display').forEach(btn => {
+    btn.style.display = 'none';
+  });
+
+  // Luego mostrar solo si es admin
   if (usuario.isAdmin) {
     document.querySelectorAll('.btn-admin-display').forEach(btn => {
       btn.style.display = 'flex';
