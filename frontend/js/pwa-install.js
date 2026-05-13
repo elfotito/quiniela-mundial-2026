@@ -76,7 +76,7 @@ function mostrarModalInstalacion() {
         text-align: center;
       ">
         <div style="font-size: 48px; margin-bottom: 12px;">📱</div>
-        <h3 style="color: #fffb00; margin-bottom: 8px;">Instalar Quiniela Mundial</h3>
+        <h3 style="color: #ffee00; margin-bottom: 8px;">Al alcance de tus manos</h3>
         <p style="color: #aaa; font-size: 14px; margin-bottom: 16px;">
           Sigue estos pasos para agregar la app a tu pantalla de inicio:
         </p>
