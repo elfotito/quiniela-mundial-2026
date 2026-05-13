@@ -36,17 +36,69 @@ document.addEventListener('DOMContentLoaded', () => {
       deferredPrompt = null;
       btn.classList.remove('show');
     } else {
-      // No hay prompt, detecta si es iOS o Android
-      const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      
-      if (esIOS) {
-        alert('Para instalar:\n1. Toca el botón de compartir (cuadrado con flecha)\n2. Selecciona "Agregar a pantalla de inicio"');
-      } else {
-        alert('Para instalar:\n1. Toca los 3 puntos (⋮) arriba a la derecha\n2. Selecciona "Agregar a pantalla de inicio"');
-      }
-    }
+  // Android sin prompt disponible
+  mostrarModalInstalacion();
+}
   });
 });
+
+function mostrarModalInstalacion() {
+  const esIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  
+  const instruccion = esIOS
+    ? `<ol>
+        <li>Toca el botón <strong>compartir</strong> (□↑) abajo</li>
+        <li>Selecciona <strong>"Agregar a pantalla de inicio"</strong></li>
+        <li>Toca <strong>"Agregar"</strong></li>
+      </ol>`
+    : `<ol>
+        <li>Toca los <strong>3 puntos</strong> (⋮) arriba a la derecha</li>
+        <li>Selecciona <strong>"Agregar a pantalla de inicio"</strong></li>
+        <li>Toca <strong>"Agregar"</strong></li>
+      </ol>`;
+
+  // Crea el modal dinámicamente
+  const modal = document.createElement('div');
+  modal.innerHTML = `
+    <div id="modal-instalar" style="
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(0,0,0,0.85);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    ">
+      <div style="
+        background: #1a1a1a;
+        border: 1px solid #0066CC;
+        border-radius: 16px;
+        padding: 28px;
+        max-width: 360px;
+        width: 100%;
+        color: white;
+        text-align: center;
+      ">
+        <div style="font-size: 48px; margin-bottom: 12px;">📱</div>
+        <h3 style="color: #0066CC; margin-bottom: 8px;">Instalar Quiniela</h3>
+        <p style="color: #aaa; font-size: 14px; margin-bottom: 16px;">
+          Sigue estos pasos para agregar la app a tu pantalla de inicio:
+        </p>
+        ${instruccion}
+        <button onclick="document.getElementById('modal-instalar').remove()" style="
+          margin-top: 20px;
+          background: #0066CC;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          padding: 12px 32px;
+          font-size: 16px;
+          cursor: pointer;
+          width: 100%;
+        ">Entendido</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+}
 
 window.addEventListener('appinstalled', () => {
   document.getElementById('btn-instalar-app').classList.remove('show');

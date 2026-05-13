@@ -165,7 +165,7 @@
 }
 
 .btn-instalar-fancy:hover {
-    background-color: #333333;
+    background-color: #000000;
     transform: translateY(-3px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
