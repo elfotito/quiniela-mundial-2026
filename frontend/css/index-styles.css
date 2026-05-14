@@ -3624,7 +3624,7 @@
     background-color: #000000;
     color: #ffffff;
     border: none;
-    border-radius: 10px;  /* Cuadrado con esquinas ligeramente redondeadas */
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3713,4 +3713,59 @@
   position: absolute; bottom: 10px; left: 10px; right: 10px;
   color: rgba(255,255,255,.9);
   font-size: 10.5px; line-height: 1.4;
+}
+
+/* ============================================
+   REACCIONES EMOJI - ESTILOS
+   ============================================ */
+
+.reacciones-container {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.reaccion-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: 1.5px solid #ddd;
+    border-radius: 20px;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    color: #666;
+    user-select: none;
+}
+
+.reaccion-btn:hover {
+    border-color: #0066CC;
+    background: #f0f4ff;
+    transform: scale(1.05);
+}
+
+.reaccion-btn:active {
+    transform: scale(0.98);
+}
+
+.reaccion-btn.activa {
+    border-color: #0066CC;
+    background: #EBF3FF;
+    color: #0066CC;
+    font-weight: 600;
+}
+
+.reaccion-emoji {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.reaccion-count {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
 }

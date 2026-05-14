@@ -580,6 +580,7 @@ async function cargarNoticiasIndex() {
         }
 
         feed.innerHTML = noticias.map(n => renderNoticia(n)).join('');
+        inicializarReacciones();
 
     } catch (err) {
         console.error('Error cargando noticias:', err);
@@ -1251,7 +1252,222 @@ function iniciarCountdown() {
 // ===============================================
 // UTILIDADES — BANDERAS
 // ===============================================
+// ============================================
+// REACCIONES CON EMOJI (localStorage)
+// ============================================
 
+const REACCIONES_EMOJI = ['❤️', '🤣', '😮', '💩', '👻', '🫪'];
+
+function inicializarReacciones() {
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.reaccion-btn')) {
+            manejarClickReaccion(e.target.closest('.reaccion-btn'));
+        }
+    });
+}
+
+function manejarClickReaccion(btn) {
+    const noticiaId = btn.dataset.noticiaId;
+    const usuarioId = localStorage.getItem('quiniela_id');
+    const tipoReaccion = btn.dataset.emoji;
+    
+    if (!usuarioId) {
+        console.warn('Usuario no autenticado');
+        return;
+    }
+
+    const key = `reactions_${noticiaId}_${usuarioId}`;
+    const reaccionActual = localStorage.getItem(key);
+    const nuevaReaccion = reaccionActual === tipoReaccion ? null : tipoReaccion;
+    
+    if (nuevaReaccion) {
+        localStorage.setItem(key, nuevaReaccion);
+    } else {
+        localStorage.removeItem(key);
+    }
+
+    actualizarBotonesReaccion(noticiaId);
+}
+
+function actualizarBotonesReaccion(noticiaId) {
+    const usuarioId = localStorage.getItem('quiniela_id');
+    const contenedor = document.querySelector(`.reacciones-container[data-noticia-id="${noticiaId}"]`);
+    
+    if (!contenedor) return;
+
+    REACCIONES_EMOJI.forEach(emoji => {
+        const btn = contenedor.querySelector(`.reaccion-btn[data-emoji="${emoji}"]`);
+        if (!btn) return;
+
+        const conteos = obtenerConteoReacciones(noticiaId);
+        const cantidad = conteos[emoji] || 0;
+        const key = `reactions_${noticiaId}_${usuarioId}`;
+        const tieneEsta = localStorage.getItem(key) === emoji;
+
+        const spanConteo = btn.querySelector('.reaccion-count');
+        spanConteo.textContent = cantidad > 0 ? cantidad : '';
+        btn.classList.toggle('activa', tieneEsta);
+    });
+}
+
+function obtenerConteoReacciones(noticiaId) {
+    const conteos = {};
+    REACCIONES_EMOJI.forEach(emoji => conteos[emoji] = 0);
+
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith(`reactions_${noticiaId}_`)) {
+            const emoji = localStorage.getItem(key);
+            if (emoji && REACCIONES_EMOJI.includes(emoji)) {
+                conteos[emoji]++;
+            }
+        }
+    }
+
+    return conteos;
+}
+
+function crearHtmlReacciones(noticiaId) {
+    const conteos = obtenerConteoReacciones(noticiaId);
+    const usuarioId = localStorage.getItem('quiniela_id');
+    const reaccionUsuario = localStorage.getItem(`reactions_${noticiaId}_${usuarioId}`);
+
+    return `
+        <div class="reacciones-container" data-noticia-id="${noticiaId}">
+            ${REACCIONES_EMOJI.map(emoji => {
+                const count = conteos[emoji] || 0;
+                const esActiva = reaccionUsuario === emoji;
+                return `
+                    <button class="reaccion-btn ${esActiva ? 'activa' : ''}" 
+                            data-noticia-id="${noticiaId}" 
+                            data-emoji="${emoji}"
+                            title="Reacciona con ${emoji}">
+                        <span class="reaccion-emoji">${emoji}</span>
+                        ${count > 0 ? `<span class="reaccion-count">${count}</span>` : ''}
+                    </button>
+                `;
+            }).join('')}
+        </div>
+    `;
+}
+
+// ============================================
+// FUNCIÓN RENDERIZAR (CON REACCIONES AL FINAL)
+// ============================================
+
+function renderNoticia(n) {
+    const fecha = formatearFechaNoticia(n.created_at);
+    const reacciones = crearHtmlReacciones(n.id);
+
+    if (n.tipo === 'hero') {
+        const img = n.imagen_url
+            ? `<img style="width:100%;height:200px;object-fit:cover;object-position: 50% 30%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
+        return `
+        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+            ${img}
+            <div style="padding:14px 16px 16px;">
+                <span style="display:inline-block;background:#0066CC;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">Destacado</span>
+                <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
+                ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
+                <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:12px;">${fecha}</div>
+                ${reacciones}
+            </div>
+        </div>`;
+    }
+
+    if (n.tipo === 'secundaria') {
+        const img = n.imagen_url
+            ? `<img style="width:100px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            : `<div style="width:100px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
+        return `
+        <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
+            <div style="display:flex;align-items:stretch;min-height:90px;">
+                ${img}
+                <div style="padding:12px 14px;display:flex;flex-direction:column;justify-content:center;flex:1;min-width:0;">
+                    <div style="font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
+                    ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${n.resena}</div>` : ''}
+                    <div style="font-size:10px;color:#bbb;font-weight:600;">${fecha}</div>
+                </div>
+            </div>
+            <div style="padding:10px 14px;">
+                ${reacciones}
+            </div>
+        </div>`;
+    }
+
+    if (n.tipo === 'partido') {
+        const flagLocal    = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_local)     : '🏳️';
+        const flagVisitante = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_visitante) : '🏳️';
+        const imgPartido = n.imagen_url
+            ? `<img style="width:100%;height:130px;object-fit:cover;display:block;" src="${n.imagen_url}" alt="" onerror="this.remove()">` : '';
+        return `
+        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+            <div style="background:#0a0a0a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ Resultado</span>
+                <span style="font-size:10px;color:#666;">${fecha}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px 14px 14px;gap:8px;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                    <span style="font-size:32px;line-height:1;">${flagLocal}</span>
+                    <span style="font-size:11px;font-weight:700;color:#333;text-align:center;text-transform:uppercase;">${n.equipo_local || ''}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:3px;">
+                    <span style="font-size:34px;font-weight:900;color:#0a0a0a;min-width:32px;text-align:center;">${n.marcador_local ?? 0}</span>
+                    <span style="font-size:20px;color:#ccc;">–</span>
+                    <span style="font-size:34px;font-weight:900;color:#0a0a0a;min-width:32px;text-align:center;">${n.marcador_visitante ?? 0}</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+                    <span style="font-size:32px;line-height:1;">${flagVisitante}</span>
+                    <span style="font-size:11px;font-weight:700;color:#333;text-align:center;text-transform:uppercase;">${n.equipo_visitante || ''}</span>
+                </div>
+            </div>
+            ${imgPartido}
+            ${n.titulo || n.resena ? `
+            <div style="padding:10px 14px 14px;border-top:1px solid #f5f5f5;">
+                ${n.titulo ? `<div style="font-size:13px;font-weight:700;color:#0a0a0a;margin-bottom:4px;">${n.titulo}</div>` : ''}
+                ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;margin-bottom:10px;">${n.resena}</div>` : ''}
+                ${reacciones}
+            </div>` : `
+            <div style="padding:10px 14px 14px;">
+                ${reacciones}
+            </div>`}
+        </div>`;
+    }
+
+    if (n.tipo === 'video' && n.youtube_url) {
+        let videoId = null;
+        if (n.youtube_url.includes('youtube.com/watch?v=')) {
+            videoId = n.youtube_url.split('v=')[1]?.split('&')[0];
+        } else if (n.youtube_url.includes('youtu.be/')) {
+            videoId = n.youtube_url.split('youtu.be/')[1]?.split('?')[0];
+        }
+
+        if (videoId) {
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+            return `
+            <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+                <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;background:#000;">
+                    <iframe 
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" 
+                        src="${embedUrl}"
+                        allowfullscreen
+                        allow="autoplay"
+                    ></iframe>
+                </div>
+                <div style="padding:14px 16px 16px;">
+                    <span style="display:inline-block;background:#dc2626;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">🎥 Video</span>
+                    <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
+                    ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
+                    <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:12px;">${fecha}</div>
+                    ${reacciones}
+                </div>
+            </div>`;
+        }
+    }
+
+    return '';
+}
 function obtenerBandera(nombre) {
     const banderas = {
         // Anfitriones y CONCACAF
