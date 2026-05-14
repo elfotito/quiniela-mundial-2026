@@ -3730,12 +3730,12 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 6px 10px;
+    padding: 4px 8px;
     border: 1.5px solid #ddd;
     border-radius: 20px;
     background: #f5f5f5;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-family: inherit;
     transition: all 0.2s ease;
     color: #666;
@@ -3760,12 +3760,12 @@
 }
 
 .reaccion-emoji {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1;
 }
 
 .reaccion-count {
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 600;
     line-height: 1;
 }
