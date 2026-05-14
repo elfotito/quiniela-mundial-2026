@@ -1304,8 +1304,22 @@ function actualizarBotonesReaccion(noticiaId) {
         const key = `reactions_${noticiaId}_${usuarioId}`;
         const tieneEsta = localStorage.getItem(key) === emoji;
 
-        const spanConteo = btn.querySelector('.reaccion-count');
-        spanConteo.textContent = cantidad > 0 ? cantidad : '';
+        // Buscar o crear el span de conteo
+        let spanConteo = btn.querySelector('.reaccion-count');
+        if (!spanConteo && cantidad > 0) {
+            spanConteo = document.createElement('span');
+            spanConteo.className = 'reaccion-count';
+            btn.appendChild(spanConteo);
+        }
+        
+        // Actualizar conteo si existe
+        if (spanConteo) {
+            spanConteo.textContent = cantidad > 0 ? cantidad : '';
+            if (cantidad === 0) {
+                spanConteo.remove();
+            }
+        }
+        
         btn.classList.toggle('activa', tieneEsta);
     });
 }
