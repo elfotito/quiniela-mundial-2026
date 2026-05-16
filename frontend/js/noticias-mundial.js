@@ -25,7 +25,7 @@ const NOTICIAS_MUNDIAL = [
   },
   {
     titulo: "Ronwen Williams: Sudáfrica aportará energía, alegría y estilo",
-    imagen: "https://digitalhub.fifa.com/transform/4101f77f-7be7-47d1-8af5-321297c3a98b/Ronwen-Williams-applauds-South-Africa-fans?focuspoint=0.43,0.18&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+    imagen: "https://digitalhub.fifa.com/transform/4101f77f-7be7-47d1-8af5-321297c3a98b/Ronwen-Williams-applauds-South-Africa-fans",
     categoria: "Fixture",
     url: "#"
   },
