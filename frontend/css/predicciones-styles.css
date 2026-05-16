@@ -1040,9 +1040,8 @@
     display: inline-block;
     background: var(--fifa-blue, #0066CC);
     color: #fff;
-    font-size: 10px;
+    font-size: 17px;
     font-weight: 600;
     padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
+    letter-spacing: -0.5px;
 }
