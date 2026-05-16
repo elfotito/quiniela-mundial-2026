@@ -260,7 +260,7 @@
                 <div class="widget-body">
                     <div class="reg-item">
                         <div class="reg-dot"></div>
-                        <span class="reg-text">Límite de ingreso de predicción:<br> <strong>10 min antes de cada partido</strong></span>
+                        <span class="reg-text">Límite de ingreso de predicción:<br> <strong>10 min antes del partido inaugural</strong></span>
                     </div>
                     <div class="reg-item">
                         <div class="reg-dot"></div>
@@ -308,6 +308,24 @@
                 </div>
             </div>
             <!-- Tabs -->
+             <div class="sidebar-card" id="countdown-card">
+            <div class="cw-header">
+                <div class="cw-bar"></div>
+                <span class="cw-label">Tiempo para predecir</span>
+            </div>
+            <div class="cw-units">
+                <div class="cw-unit"><span class="cw-num" id="days">--</span><span class="cw-tag">días</span></div>
+                <span class="cw-sep">:</span>
+                <div class="cw-unit"><span class="cw-num" id="hours">--</span><span class="cw-tag">horas</span></div>
+                <span class="cw-sep">:</span>
+                <div class="cw-unit"><span class="cw-num" id="mins">--</span><span class="cw-tag">min</span></div>
+                <span class="cw-sep">:</span>
+                <div class="cw-unit"><span class="cw-num" id="secs">--</span><span class="cw-tag">seg</span></div>
+            </div>
+            <hr>
+            <p class="cw-info">Primer partido · <strong>México vs Sudáfrica</strong><br>
+            <span class="cw-badge">11 Jun 2026 · 15:00</span></p>
+            </div>
             <div class="pred-tabs">
                 <button class="pred-tab-btn active" data-tab="pending">
                     <i class="bi bi-crosshair"></i>
@@ -550,5 +568,47 @@
     <script src="js/auth.js"></script>
     <script src="js/predicciones.js"></script>
     <script src="js/ads.js"></script>
+    <script>
+(function() {
+  const target = new Date('June 11, 2026 15:00:00').getTime();
+  const els = {
+    d: document.getElementById('cw-days'),
+    h: document.getElementById('cw-hours'),
+    m: document.getElementById('cw-mins'),
+    s: document.getElementById('cw-secs')
+  };
+
+  function flash(el) {
+    el.classList.add('flash');
+    setTimeout(() => el.classList.remove('flash'), 300);
+  }
+
+  let prev = {};
+
+  function tick() {
+    const dist = target - Date.now();
+    if (dist <= 0) {
+      Object.values(els).forEach(e => e.textContent = '00');
+      return;
+    }
+    const d = Math.floor(dist / 86400000);
+    const h = Math.floor((dist % 86400000) / 3600000);
+    const m = Math.floor((dist % 3600000) / 60000);
+    const s = Math.floor((dist % 60000) / 1000);
+
+    const vals = { d, h, m, s };
+    const pads = { d: String(d), h: String(h).padStart(2,'0'), m: String(m).padStart(2,'0'), s: String(s).padStart(2,'0') };
+
+    if (vals.s !== prev.s) { els.s.textContent = pads.s; flash(els.s); }
+    if (vals.m !== prev.m) { els.m.textContent = pads.m; flash(els.m); }
+    if (vals.h !== prev.h) { els.h.textContent = pads.h; flash(els.h); }
+    if (vals.d !== prev.d) { els.d.textContent = pads.d; }
+    prev = vals;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
     </body>
 </html>
