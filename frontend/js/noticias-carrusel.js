@@ -59,12 +59,12 @@
       font-size: 15px;
       font-weight: 700;
       color: #000000;
-      letter-spacing: .3px;
+      letter-spacing: 1.5px;
     }
     .nw-subtitle {
       font-size: 11px;
       color: #0052a3;
-      margin-top: 1px;
+      margin-top: -4px;
     }
     .nw-nav-btns {
       display: flex;
@@ -237,7 +237,7 @@
         <div class="nw-header-left">
           <div class="nw-icon">📰</div>
           <div>
-            <div class="nw-title">Noticias</div>
+            <div class="nw-title">NOTICIAS</div>
             <div class="nw-subtitle">Copa Mundial FIFA 2026™</div>
           </div>
         </div>
