@@ -964,95 +964,85 @@
         order: -1; 
     }
 }
+/* ─── COUNTDOWN WIDGET ─── */
+.countdown-widget {
+    border-radius: 10px;
+    margin-bottom: 16px;
+}
 
-.cw-card {
-  background: var(--color-background-primary);
-  border: 0.5px solid var(--color-border-tertiary);
-  border-radius: var(--border-radius-lg);
-  padding: 1rem 1.25rem 1.1rem;
-  max-width: 260px;
+.countdown-body {
+    padding: 14px 16px 16px;
 }
-.cw-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
+
+.countdown-units {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 14px;
 }
-.cw-bar {
-  width: 3px;
-  height: 16px;
-  background: #0066CC;
-  border-radius: 2px;
-  flex-shrink: 0;
+
+.countdown-unit {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
 }
-.cw-label {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  letter-spacing: .5px;
-  text-transform: uppercase;
+
+.countdown-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark-bg, #0a0a0a);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    transition: color 0.2s;
 }
-.cw-units {
-  display: flex;
-  gap: 6px;
-  justify-content: space-between;
+
+.countdown-num.cw-flash {
+    color: var(--fifa-blue, #0066CC);
 }
-.cw-unit {
-  flex: 1;
-  text-align: center;
+
+.countdown-tag {
+    font-size: 10px;
+    color: #999;
+    letter-spacing: 0.3px;
+    text-transform: lowercase;
 }
-.cw-num {
-  display: block;
-  font-size: 26px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  line-height: 1.1;
-  letter-spacing: -0.5px;
-  font-variant-numeric: tabular-nums;
-  transition: color .15s;
+
+.countdown-sep {
+    font-size: 22px;
+    font-weight: 300;
+    color: #ddd;
+    padding-bottom: 12px;
+    flex-shrink: 0;
 }
-.cw-num.flash { color: #0066CC; }
-.cw-sep {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 4px;
-  font-size: 20px;
-  color: var(--color-border-tertiary);
-  font-weight: 300;
-  line-height: 1.2;
+
+.countdown-info {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 12px;
+    font-size: 11.5px;
+    color: #777;
+    text-align: center;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
 }
-.cw-tag {
-  display: block;
-  font-size: 10px;
-  color: var(--color-text-tertiary);
-  margin-top: 3px;
-  letter-spacing: .3px;
+
+.countdown-info strong {
+    color: var(--dark-bg, #0a0a0a);
+    font-weight: 600;
 }
-.cw-divider {
-  border: none;
-  border-top: 0.5px solid var(--color-border-tertiary);
-  margin: 12px 0 10px;
-}
-.cw-info {
-  font-size: 11px;
-  color: var(--color-text-secondary);
-  text-align: center;
-  line-height: 1.4;
-}
-.cw-info strong {
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-.cw-badge {
-  display: inline-block;
-  background: #E6F1FB;
-  color: #0C447C;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 20px;
-  margin-top: 6px;
-}
-@media (prefers-color-scheme: dark) {
-  .cw-badge { background: #0C447C; color: #B5D4F4; }
+
+.countdown-badge {
+    display: inline-block;
+    background: var(--fifa-blue, #0066CC);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
 }
