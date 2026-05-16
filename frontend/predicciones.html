@@ -308,34 +308,41 @@
                 </div>
             </div>
             <!-- Tabs -->
-             <div class="sidebar-card" id="countdown-card">
-            <div class="cw-header">
-                <div class="cw-bar"></div>
-                <span class="cw-label">Tiempo para predecir</span>
+<!-- COUNTDOWN WIDGET -->
+<div class="widget countdown-widget">
+    <div class="widget-header">
+        <div class="widget-header-accent"></div>
+        <span class="widget-header-icon">⏱️</span>
+        <span class="widget-header-title">Tiempo para predecir</span>
+    </div>
+    <div class="widget-body countdown-body">
+        <div class="countdown-units">
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cw-days">--</span>
+                <span class="countdown-tag">días</span>
             </div>
-            <div class="cw-units">
-                <div class="cw-unit"><span class="cw-num" id="days">--</span><span class="cw-tag">días</span></div>
-                <span class="cw-sep">:</span>
-                <div class="cw-unit"><span class="cw-num" id="hours">--</span><span class="cw-tag">horas</span></div>
-                <span class="cw-sep">:</span>
-                <div class="cw-unit"><span class="cw-num" id="mins">--</span><span class="cw-tag">mins</span></div>
-                <span class="cw-sep">:</span>
-                <div class="cw-unit"><span class="cw-num" id="secs">--</span><span class="cw-tag">seg</span></div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cw-hours">--</span>
+                <span class="countdown-tag">horas</span>
             </div>
-            <hr>
-            <p class="cw-info">Primer partido · <strong>México vs Sudáfrica</strong><br>
-            <span class="cw-badge">11 Jun 2026 · 15:00</span></p>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cw-mins">--</span>
+                <span class="countdown-tag">min</span>
             </div>
-            <div class="pred-tabs">
-                <button class="pred-tab-btn active" data-tab="pending">
-                    <i class="bi bi-crosshair"></i>
-                    Por Predecir
-                </button>
-                <button class="pred-tab-btn" data-tab="completed">
-                    <i class="bi bi-clipboard-check"></i>
-                    Mis Predicciones
-                </button>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+                <span class="countdown-num" id="cw-secs">--</span>
+                <span class="countdown-tag">seg</span>
             </div>
+        </div>
+        <div class="countdown-info">
+            Primer partido · <strong>México vs Sudáfrica</strong>
+            <span class="countdown-badge">11 Jun 2026 · 15:00</span>
+        </div>
+    </div>
+</div>
 
             <!-- TAB 1: Por Predecir -->
             <div id="tab-pending" class="pred-tab-content active">
@@ -568,52 +575,5 @@
     <script src="js/auth.js"></script>
     <script src="js/predicciones.js"></script>
     <script src="js/ads.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const target = new Date('June 11, 2026 15:00:00').getTime();
-  const els = {
-    d: document.getElementById('cw-days'),
-    h: document.getElementById('cw-hours'),
-    m: document.getElementById('cw-mins'),
-    s: document.getElementById('cw-secs')
-  };
-
-  function flash(el) {
-    el.classList.add('flash');
-    setTimeout(() => el.classList.remove('flash'), 300);
-  }
-
-  let prev = {};
-
-  function tick() {
-    const dist = target - Date.now();
-    if (dist <= 0) {
-      Object.values(els).forEach(e => e.textContent = '00');
-      return;
-    }
-    const d = Math.floor(dist / 86400000);
-    const h = Math.floor((dist % 86400000) / 3600000);
-    const m = Math.floor((dist % 3600000) / 60000);
-    const s = Math.floor((dist % 60000) / 1000);
-
-    const vals = { d, h, m, s };
-    const pads = {
-      d: String(d),
-      h: String(h).padStart(2,'0'),
-      m: String(m).padStart(2,'0'),
-      s: String(s).padStart(2,'0')
-    };
-
-    if (vals.s !== prev.s) { els.s.textContent = pads.s; flash(els.s); }
-    if (vals.m !== prev.m) { els.m.textContent = pads.m; flash(els.m); }
-    if (vals.h !== prev.h) { els.h.textContent = pads.h; flash(els.h); }
-    if (vals.d !== prev.d) { els.d.textContent = pads.d; }
-    prev = vals;
-  }
-
-  tick();
-  setInterval(tick, 1000);
-});
-</script>
     </body>
 </html>

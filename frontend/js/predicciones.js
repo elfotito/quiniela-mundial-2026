@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     configurarUI();
     configurarEventos();
     configurarTabs(); 
-    cargarStatsHero(); 
+    cargarStatsHero();
+    iniciarCountdown(); 
     await cargarDatos();
 });
 
@@ -824,7 +825,53 @@ const backToTopBtn = document.getElementById('backToTop');
                 behavior: 'smooth'
             });
         });
+function iniciarCountdown() {
+    const target = new Date('June 11, 2026 14:50:00').getTime();
+    const els = {
+        d: document.getElementById('cw-days'),
+        h: document.getElementById('cw-hours'),
+        m: document.getElementById('cw-mins'),
+        s: document.getElementById('cw-secs')
+    };
 
+    if (!els.d || !els.h || !els.m || !els.s) return; // seguro si el HTML no está
+
+    let prev = {};
+
+    function flash(el) {
+        el.classList.add('cw-flash');
+        setTimeout(() => el.classList.remove('cw-flash'), 300);
+    }
+
+    function tick() {
+        const dist = target - Date.now();
+        if (dist <= 0) {
+            Object.values(els).forEach(e => e.textContent = '00');
+            return;
+        }
+        const d = Math.floor(dist / 86400000);
+        const h = Math.floor((dist % 86400000) / 3600000);
+        const m = Math.floor((dist % 3600000) / 60000);
+        const s = Math.floor((dist % 60000) / 1000);
+
+        const vals = { d, h, m, s };
+        const pads = {
+            d: String(d),
+            h: String(h).padStart(2,'0'),
+            m: String(m).padStart(2,'0'),
+            s: String(s).padStart(2,'0')
+        };
+
+        if (vals.s !== prev.s) { els.s.textContent = pads.s; flash(els.s); }
+        if (vals.m !== prev.m) { els.m.textContent = pads.m; flash(els.m); }
+        if (vals.h !== prev.h) { els.h.textContent = pads.h; flash(els.h); }
+        if (vals.d !== prev.d) { els.d.textContent = pads.d; }
+        prev = vals;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+}
 function logout() {
     if (confirm('¿Estás seguro de que quieres salir?')) auth.logout();
 }
