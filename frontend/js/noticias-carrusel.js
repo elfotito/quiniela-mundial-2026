@@ -43,7 +43,8 @@
     .nw-header-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      padding-left: 8px;
     }
     .nw-icon {
       width: 28px;
@@ -290,17 +291,6 @@
       const offset = current * (cardW + 14);
       track.style.transform = `translateX(-${offset}px)`;
       updateUI();
-    }
-
-    /* ── Dots ── */
-    function buildDots() {
-      const pages = Math.ceil(total / visible);
-      dotsEl.innerHTML = Array.from({ length: pages }, (_, i) =>
-        `<button class="nw-dot${i === 0 ? ' active' : ''}" data-page="${i}" aria-label="Página ${i+1}"></button>`
-      ).join('');
-      dotsEl.querySelectorAll(".nw-dot").forEach(d =>
-        d.addEventListener("click", () => goTo(+d.dataset.page * visible))
-      );
     }
 
     /* ── Actualizar estado de botones y dots ── */
