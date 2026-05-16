@@ -30,21 +30,21 @@ const NOTICIAS_MUNDIAL = [
     url: "#"
   },
   {
-    titulo: "FIFA recibió más de 500 millones de solicitudes durante última fase para la compra de boletos",
+    titulo: "500 millones de solicitudes durante última fase para la compra de boletos",
     imagen: "https://digitalhub.fifa.com/transform/7e47ea3b-bf2d-42ed-9bc7-837c2e4f11b7/FIFA-com_FWC26_Ticketing-Thumbnail_3840x2160",
     categoria: "Entradas",
     url: "#"
   },
   {
     titulo: "Mbappé liderará a Francia en busca del bicampeonato",
-    imagen: "assets/img/noticias/mbappe.jpg",
+    imagen: "https://digitalhub.fifa.com/transform/f07890cb-352c-4424-92cf-7b49a6130e8d/GettyImages-2246154907",
     categoria: "Favoritos",
     url: "#"
   },
   {
-    titulo: "El formato de 48 equipos: todo lo que necesitas saber",
-    imagen: "assets/img/noticias/formato.jpg",
-    categoria: "Info",
+    titulo: "Vinícius Júnior es uno de los mejores representantes que el Jogo Bonito podría tener",
+    imagen: "https://digitalhub.fifa.com/transform/edbce853-55bc-49fc-ac93-4b5ffea0bd30/Vinicius-Junior-of-Brazil-during-the-International-Friendly-match-against-Senegal",
+    categoria: "Favoritos",
     url: "#"
   }
 ];
