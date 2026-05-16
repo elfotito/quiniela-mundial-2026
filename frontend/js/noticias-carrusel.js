@@ -56,7 +56,7 @@
       font-size: 15px;
     }
     .nw-title {
-      font-size: 15px;
+      font-size: 11px;
       font-weight: 700;
       color: #000000;
       letter-spacing: 1.5px;
@@ -96,7 +96,6 @@
     /* ── Track ── */
     .nw-viewport {
       overflow: hidden;
-      border-radius: var(--nw-radius);
     }
     .nw-track {
       display: flex;
@@ -109,8 +108,6 @@
     .nw-card {
       flex: 0 0 var(--nw-card-w, 200px);
       background: var(--nw-card);
-      border-radius: var(--nw-radius);
-      border: 1px solid var(--nw-border);
       overflow: hidden;
       cursor: pointer;
       transition: transform .22s, box-shadow .22s, border-color .22s;
