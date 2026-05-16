@@ -21,9 +21,9 @@
     #noticias-widget {
       --nw-blue:      #0066CC;
       --nw-dark-blue: #003d7a;
-      --nw-gold:      #C9A84C;
-      --nw-dark:      #0a0a0a;
-      --nw-card:      #141420;
+      --nw-gold:      #ffd830;
+      --nw-dark:      #000000;
+      --nw-card:      #000000;
       --nw-border:    rgba(0,102,204,.25);
       --nw-radius:    10px;
       --nw-gap:       14px;
@@ -49,7 +49,6 @@
       width: 28px;
       height: 28px;
       background: var(--nw-blue);
-      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -58,12 +57,12 @@
     .nw-title {
       font-size: 15px;
       font-weight: 700;
-      color: #fff;
+      color: #000000;
       letter-spacing: .3px;
     }
     .nw-subtitle {
       font-size: 11px;
-      color: rgba(255,255,255,.45);
+      color: #0052a3;
       margin-top: 1px;
     }
     .nw-nav-btns {
@@ -237,8 +236,8 @@
         <div class="nw-header-left">
           <div class="nw-icon">📰</div>
           <div>
-            <div class="nw-title">Noticias del Mundial</div>
-            <div class="nw-subtitle">FIFA World Cup 2026</div>
+            <div class="nw-title">Noticias</div>
+            <div class="nw-subtitle">Copa Mundial FIFA 2026™</div>
           </div>
         </div>
         <div class="nw-nav-btns">
