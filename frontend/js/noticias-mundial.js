@@ -30,9 +30,9 @@ const NOTICIAS_MUNDIAL = [
     url: "#"
   },
   {
-    titulo: "La Vinotinto clasifica por primera vez al Mundial",
-    imagen: "assets/img/noticias/vinotinto.jpg",
-    categoria: "Venezuela",
+    titulo: "FIFA recibió más de 500 millones de solicitudes durante última fase para la compra de boletos",
+    imagen: "https://digitalhub.fifa.com/transform/7e47ea3b-bf2d-42ed-9bc7-837c2e4f11b7/FIFA-com_FWC26_Ticketing-Thumbnail_3840x2160",
+    categoria: "Entradas",
     url: "#"
   },
   {
