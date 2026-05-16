@@ -966,7 +966,7 @@
 }
 /* ─── COUNTDOWN WIDGET ─── */
 .countdown-widget {
-    margin-bottom: 16px;
+    margin-bottom: -33px;
 }
 
 .countdown-body {
