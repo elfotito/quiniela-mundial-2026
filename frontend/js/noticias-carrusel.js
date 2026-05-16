@@ -261,7 +261,6 @@
               </div>
               <div class="nw-card-body">
                 <div class="nw-card-titulo">${n.titulo}</div>
-                <div class="nw-card-fecha">${n.fecha}</div>
               </div>
             </div>
           `).join('')}
