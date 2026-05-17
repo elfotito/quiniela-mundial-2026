@@ -1102,7 +1102,7 @@ td.td-sep {
         .th-user { min-width: 100px; }
         .th-liga { min-width: 80px; }
         .th-fase { width: 70px; text-align: center; }
-        .th-total { width: 80px; text-align: center; font-size: 1rem; }
+        .th-total { width: 70px; text-align: center; font-size: 1rem; }
         
         .td-pos {
             text-align: center;
