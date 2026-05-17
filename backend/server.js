@@ -529,6 +529,7 @@ app.get('/api/ranking', async (req, res) => {
                 u.id,
                 u.nombre_publico as nombre,
                 u.codigo_acceso,
+                u.campeon_elegido,
                 COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) as total_predicciones,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0) as aciertos,

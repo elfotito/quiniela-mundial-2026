@@ -313,7 +313,7 @@ function mostrarTablaRanking(ranking) {
         <td class="td-pos">${obtenerMedallaPosicion(posicion, ranking.length)}</td>
         <td>
             <div class="user-cell">
-                <span class="user-nametable">${obtenerCampeon(usuario.campeon_elegido)} ${user.nombre_publico || user.nombre || 'Usuario'}</span>
+                <span class="user-nametable">${obtenerCampeon(user.campeon_elegido)} ${user.nombre_publico || user.nombre || 'Usuario'}</span>
             </div>
         </td>
         <td>
