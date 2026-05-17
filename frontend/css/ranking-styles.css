@@ -691,7 +691,7 @@ body {
 }
 .th-pos   { width: 52px;   text-align: center; }
 .th-user  { min-width: 100px; }
-.th-liga  { min-width: 80px; }
+.th-liga  { min-width: 60px; }
 .th-total {
     width: 90px;
     text-align: center;
