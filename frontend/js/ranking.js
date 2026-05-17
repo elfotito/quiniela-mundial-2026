@@ -286,7 +286,10 @@ function mostrarPodio(ranking) {
 function mostrarTablaRanking(ranking) {
     const tbody = document.getElementById('rankingTableBody');
     if (!tbody) return;
-    
+    if (ranking.length > 0) {
+        console.log('Primer usuario del ranking:', ranking[0]);
+        console.log('Campos disponibles:', Object.keys(ranking[0]));
+    }
     if (ranking.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -310,7 +313,7 @@ function mostrarTablaRanking(ranking) {
         <td class="td-pos">${obtenerMedallaPosicion(posicion, ranking.length)}</td>
         <td>
             <div class="user-cell">
-                <span class="user-nametable">${obtenerCampeon(usuario.campeon_elegido)}${user.nombre_publico || user.nombre || 'Usuario'}</span>
+                <span class="user-nametable">${obtenerCampeon(usuario.campeon_elegido)} ${user.nombre_publico || user.nombre || 'Usuario'}</span>
             </div>
         </td>
         <td>
