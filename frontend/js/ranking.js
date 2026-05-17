@@ -303,14 +303,14 @@ function mostrarTablaRanking(ranking) {
         const esUsuarioActual = user.usuario_id === parseInt(usuario.id);
         const claseFila = esUsuarioActual ? 'current-user' : '';
         
-        const fases = ['grupos', '16avos', '8vos', '4tos', 'semis', 'tercer_puesto', 'final'];
+        const fases = ['F.G.', '16vos', '8vos', '4tos', 'semis', 'tercer_puesto', 'final'];
         
         return `
     <tr class="${claseFila}">
         <td class="td-pos">${obtenerMedallaPosicion(posicion, ranking.length)}</td>
         <td>
             <div class="user-cell">
-                <span class="user-nametable">${user.nombre_publico || user.nombre || 'Usuario'}</span>
+                <span class="user-nametable">${user.campeon_elegido}${user.nombre_publico || user.nombre || 'Usuario'}</span>
             </div>
         </td>
         <td>
