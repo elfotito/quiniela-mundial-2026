@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="css/predicciones-styles.css">
     <link rel="stylesheet" href="css/index-styles.css">
 <body>
+    <div id="cookieBanner" class="cookie-banner">
+    <div class="cookie-content">
+        <div class="cookie-text">
+            <p><strong>🛃 Irrevocabilidad total</strong> Una vez confirmada, tu predicción es definitiva. No se modifica, no se elimina, no se negocia. ¡Revísala bien antes de guardar! </p>
+        </div>
+        <div class="cookie-buttons">
+            <button id="cookieAccept" class="btn-cookie-accept">Aceptar</button>
+            <button id="cookieReject" class="btn-cookie-reject">Rechazar</button>
+        </div>
+    </div>
+    </div>
     <header class="desktop-header">
     <div class="top-tier">
         <div class="fw-black">FIFA WORLD CUP 2026™</div>
@@ -585,5 +596,31 @@
     <script src="js/auth.js"></script>
     <script src="js/predicciones.js"></script>
     <script src="js/ads.js"></script>
+    <script>
+(function() {
+    const COOKIE_KEY = 'quiniela_cookies_accepted';
+    const banner = document.getElementById('cookieBanner');
+    const acceptBtn = document.getElementById('cookieAccept');
+    const rejectBtn = document.getElementById('cookieReject');
+    
+    // Verificar si ya aceptó
+    if (!localStorage.getItem(COOKIE_KEY)) {
+        banner.style.display = 'block';
+    } else {
+        banner.style.display = 'none';
+    }
+    
+    acceptBtn.addEventListener('click', () => {
+        localStorage.setItem(COOKIE_KEY, 'true');
+        banner.style.display = 'none';
+        // Aquí cargarías scripts de analytics si tienes
+    });
+    
+    rejectBtn.addEventListener('click', () => {
+        localStorage.setItem(COOKIE_KEY, 'false');
+        banner.style.display = 'none';
+    });
+})();
+    </script>
     </body>
 </html>
