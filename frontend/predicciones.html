@@ -598,26 +598,26 @@
     <script src="js/ads.js"></script>
     <script>
 (function() {
-    const COOKIE_KEY = 'quiniela_cookies_accepted';
+    const PREDI_KEY = 'quiniela_cookies_accepted';
     const banner = document.getElementById('cookieBanner');
     const acceptBtn = document.getElementById('cookieAccept');
     const rejectBtn = document.getElementById('cookieReject');
     
     // Verificar si ya aceptó
-    if (!localStorage.getItem(COOKIE_KEY)) {
+    if (!localStorage.getItem(PREDI_KEY)) {
         banner.style.display = 'block';
     } else {
         banner.style.display = 'none';
     }
     
     acceptBtn.addEventListener('click', () => {
-        localStorage.setItem(COOKIE_KEY, 'true');
+        localStorage.setItem(PREDI_KEY, 'true');
         banner.style.display = 'none';
         // Aquí cargarías scripts de analytics si tienes
     });
     
     rejectBtn.addEventListener('click', () => {
-        localStorage.setItem(COOKIE_KEY, 'false');
+        localStorage.setItem(PREDI_KEY, 'false');
         banner.style.display = 'none';
     });
 })();
