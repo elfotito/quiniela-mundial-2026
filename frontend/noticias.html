@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png">
     <link rel="shortcut icon" href="img/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="css/index-styles.css">
+
     <style>
         :root {
             --fifa-blue: #0066CC;
@@ -847,7 +847,7 @@
         }
 
         img.src = url;
-        img.onload = () => { placeholder.style.display = 'none'; };
+        img.onload = () => { img.style.display = 'block'; placeholder.style.display = 'none'; };
         img.onerror = () => {
             img.style.display = 'none';
             placeholder.style.display = 'flex';
