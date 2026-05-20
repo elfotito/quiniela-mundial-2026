@@ -1278,7 +1278,6 @@ function renderNoticia(n) {
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             ${img}
             <div style="padding:14px 16px 16px;">
-                <span style="display:inline-block;background:#0066CC;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">Destacado</span>
                 <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
                 ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
                 <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:12px;">${fecha}</div>
