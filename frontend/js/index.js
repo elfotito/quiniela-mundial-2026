@@ -588,109 +588,6 @@ async function cargarNoticiasIndex() {
     }
 }
 
-function renderNoticia(n) {
-    const fecha = formatearFechaNoticia(n.created_at);
-
-    if (n.tipo === 'hero') {
-        const img = n.imagen_url
-            ? `<img style="width:100%;height:300px;object-fit:cover;object-position: 50% 5%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:100%;height:300px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
-        return `
-        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-            ${img}
-            <div style="padding:14px 16px 16px;">
-                <span style="display:inline-block;background:#0066CC;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">Destacado</span>
-                <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
-                ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
-                <div style="font-size:11px;color:#aaa;font-weight:600;">${fecha}</div>
-            </div>
-        </div>`;
-    }
-
-    if (n.tipo === 'secundaria') {
-        const img = n.imagen_url
-            ? `<img style="width:150px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:150px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
-        return `
-        <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
-            ${img}
-            <div style="padding:12px 14px;display:flex;flex-direction:column;justify-content:center;flex:1;min-width:0;">
-                <div style="font-size:13px;font-weight:700;color:#0a0a0a;line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
-                ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:4px;">${n.resena}</div>` : ''}
-                <div style="font-size:10px;color:#bbb;font-weight:600;">${fecha}</div>
-            </div>
-        </div>`;
-    }
-
-    if (n.tipo === 'partido') {
-        const flagLocal    = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_local)     : '🏳️';
-        const flagVisitante = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_visitante) : '🏳️';
-        const imgPartido = n.imagen_url
-            ? `<img style="width:100%;height:200px;object-fit:cover;object-position:top;display:block;" src="${n.imagen_url}" alt="" onerror="this.remove()">` : '';
-        return `
-        <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-            <div style="background:#0a0a0a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ COPA MUNDIAL FIFA 2026™</span>
-                <span style="font-size:10px;color:#666;">${fecha}</span>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px 14px 14px;gap:8px;">
-                <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
-                    <span style="font-size:32px;line-height:1;">${flagLocal}</span>
-                    <span style="font-size:11px;font-weight:700;color:#333;text-align:center;text-transform:uppercase;">${n.equipo_local || ''}</span>
-                </div>
-                <div style="display:flex;align-items:center;gap:3px;">
-                    <span style="font-size:34px;font-weight:900;color:#0a0a0a;min-width:32px;text-align:center;">${n.marcador_local ?? 0}</span>
-                    <span style="font-size:20px;color:#ccc;">–</span>
-                    <span style="font-size:34px;font-weight:900;color:#0a0a0a;min-width:32px;text-align:center;">${n.marcador_visitante ?? 0}</span>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
-                    <span style="font-size:32px;line-height:1;">${flagVisitante}</span>
-                    <span style="font-size:11px;font-weight:700;color:#333;text-align:center;text-transform:uppercase;">${n.equipo_visitante || ''}</span>
-                </div>
-            </div>
-            ${imgPartido}
-            ${n.titulo || n.resena ? `
-            <div style="padding:10px 14px 14px;border-top:1px solid #f5f5f5;">
-                ${n.titulo ? `<div style="font-size:13px;font-weight:700;color:#0a0a0a;margin-bottom:4px;">${n.titulo}</div>` : ''}
-                ${n.resena ? `<div style="font-size:12px;color:#777;line-height:1.5;">${n.resena}</div>` : ''}
-            </div>` : ''}
-        </div>`;
-    }
-
-    if (n.tipo === 'video' && n.youtube_url) {
-        // Extraer video ID de diferentes formatos
-        let videoId = null;
-        if (n.youtube_url.includes('youtube.com/watch?v=')) {
-            videoId = n.youtube_url.split('v=')[1]?.split('&')[0];
-        } else if (n.youtube_url.includes('youtu.be/')) {
-            videoId = n.youtube_url.split('youtu.be/')[1]?.split('?')[0];
-        }
-
-        if (videoId) {
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
-            return `
-            <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
-                <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;background:#000;">
-                    <iframe 
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" 
-                        src="${embedUrl}"
-                        allowfullscreen
-                        allow="autoplay"
-                    ></iframe>
-                </div>
-                <div style="padding:14px 16px 16px;">
-                    <span style="display:inline-block;background:#dc2626;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">🎥 Video</span>
-                    <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
-                    ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
-                    <div style="font-size:11px;color:#aaa;font-weight:600;">${fecha}</div>
-                </div>
-            </div>`;
-        }
-    }
-
-    return '';
-}
-
 function formatearFechaNoticia(iso) {
     if (!iso) return '';
     const d = new Date(iso);
@@ -1375,8 +1272,8 @@ function renderNoticia(n) {
 
     if (n.tipo === 'hero') {
         const img = n.imagen_url
-            ? `<img style="width:100%;height:200px;object-fit:cover;object-position: 50% 30%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
+            ? `<img style="width:100%;height:300px;object-fit:cover;object-position:top;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            : `<div style="width:100%;height:300px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
         return `
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             ${img}
@@ -1392,8 +1289,8 @@ function renderNoticia(n) {
 
     if (n.tipo === 'secundaria') {
         const img = n.imagen_url
-            ? `<img style="width:100px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:100px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
+            ? `<img style="width:150px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            : `<div style="width:150px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
         return `
         <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
             <div style="display:flex;align-items:stretch;min-height:90px;">
@@ -1418,7 +1315,7 @@ function renderNoticia(n) {
         return `
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             <div style="background:#0a0a0a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ Resultado</span>
+                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ Copa Mundial FIFA 2026™ </span>
                 <span style="font-size:10px;color:#666;">${fecha}</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px 14px 14px;gap:8px;">
