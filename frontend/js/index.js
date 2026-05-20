@@ -594,7 +594,7 @@ function renderNoticia(n) {
     if (n.tipo === 'hero') {
         const img = n.imagen_url
             ? `<img style="width:100%;height:300px;object-fit:cover;object-position: 50% 5%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
+            : `<div style="width:100%;height:300px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
         return `
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             ${img}
@@ -610,7 +610,7 @@ function renderNoticia(n) {
     if (n.tipo === 'secundaria') {
         const img = n.imagen_url
             ? `<img style="width:150px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
-            : `<div style="width:100px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
+            : `<div style="width:150px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
         return `
         <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
             ${img}
@@ -626,11 +626,11 @@ function renderNoticia(n) {
         const flagLocal    = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_local)     : '🏳️';
         const flagVisitante = typeof obtenerBandera === 'function' ? obtenerBandera(n.equipo_visitante) : '🏳️';
         const imgPartido = n.imagen_url
-            ? `<img style="width:100%;height:130px;object-fit:cover;display:block;" src="${n.imagen_url}" alt="" onerror="this.remove()">` : '';
+            ? `<img style="width:100%;height:200px;object-fit:cover;object-position:top;display:block;" src="${n.imagen_url}" alt="" onerror="this.remove()">` : '';
         return `
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
             <div style="background:#0a0a0a;padding:7px 14px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ Resultado</span>
+                <span style="font-size:10px;color:#FFD700;font-weight:600;letter-spacing:1px;text-transform:uppercase;">⚽ COPA MUNDIAL FIFA 2026™</span>
                 <span style="font-size:10px;color:#666;">${fecha}</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:18px 14px 14px;gap:8px;">
