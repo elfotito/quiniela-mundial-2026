@@ -593,7 +593,7 @@ function renderNoticia(n) {
 
     if (n.tipo === 'hero') {
         const img = n.imagen_url
-            ? `<img style="width:100%;height:200px;object-fit:cover;object-position: 50% 30%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            ? `<img style="width:100%;height:300px;object-fit:cover;object-position: 50% 5%;display:block;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
             : `<div style="width:100%;height:200px;background:#111;display:flex;align-items:center;justify-content:center;font-size:40px;">⚽</div>`;
         return `
         <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
@@ -609,7 +609,7 @@ function renderNoticia(n) {
 
     if (n.tipo === 'secundaria') {
         const img = n.imagen_url
-            ? `<img style="width:100px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
+            ? `<img style="width:150px;height:100%;object-fit:cover;flex-shrink:0;" src="${n.imagen_url}" alt="${n.titulo}" onerror="this.style.display='none'">`
             : `<div style="width:100px;flex-shrink:0;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">📰</div>`;
         return `
         <div style="background:#fff;object-fit: cover;overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch;min-height:90px;box-shadow:0 1px 6px rgba(0,0,0,0.07);">
