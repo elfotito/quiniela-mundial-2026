@@ -878,7 +878,7 @@
         }
 
         if (videoId && videoId.length === 11) {
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1`;
             frame.src = embedUrl;
             frame.style.display = 'block';
             placeholder.style.display = 'none';
