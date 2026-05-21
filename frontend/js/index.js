@@ -1418,48 +1418,48 @@ function obtenerBandera(nombre) {
 // ===============================================
 // Función principal — llama esto al hacer login o en DOMContentLoaded
 async function iniciarPushNotifications() {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-    console.log('Push no soportado en este navegador');
-    return;
-  }
-
-  try {
-    // 1. Registrar el Service Worker
-    const swReg = await navigator.serviceWorker.register('/sw.js');
-    console.log('Service Worker registrado ✅');
-
-    // 2. Pedir permiso al usuario
-    const permiso = await Notification.requestPermission();
-    if (permiso !== 'granted') {
-      console.log('Usuario rechazó las notificaciones');
-      return;
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        console.log('Push no soportado en este navegador');
+        return;
     }
+    try {
+        // 1. Registrar el Service Worker
+        const swReg = await navigator.serviceWorker.register('/sw.js');
+        console.log('Service Worker registrado ✅');
 
-    // 3. Obtener la VAPID public key del servidor
-    const resp = await fetch(`${API_URL}/api/push/vapid-public-key`);
-    const { publicKey } = await resp.json();
+        // 2. Pedir permiso al usuario
+        const permiso = await Notification.requestPermission();
+        if (permiso !== 'granted') {
+            console.log('Usuario rechazó las notificaciones');
+            return;
+        }
 
-    // 4. Suscribir al navegador
-    const subscription = await swReg.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(publicKey)
-    });
+        // 3. Obtener la VAPID public key del servidor
+        const resp = await fetch(`${CONFIG.API_URL}/push/vapid-public-key`);
+        const { publicKey } = await resp.json();
 
-    // 5. Guardar la subscription en el backend
-    const usuario = getUser(); // tu función de auth.js
-    await fetch(`${API_URL}/api/push/subscribe`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        subscription: subscription.toJSON(),
-        usuario_id: usuario.id
-      })
-    });
+        // 4. Suscribir al navegador
+        const subscription = await swReg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(publicKey)
+        });
 
-    console.log('Notificaciones push activadas ✅');
-  } catch (err) {
-    console.error('Error activando push:', err);
-  }
+        // 5. Guardar la subscription en el backend
+        const usuario = auth.getUser();
+        await fetch(`${CONFIG.API_URL}/push/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                subscription: subscription.toJSON(),
+                usuario_id: usuario.id
+            })
+        });
+
+        console.log('Notificaciones push activadas ✅');
+
+    } catch (err) {
+        console.error('Error activando push:', err);
+    }
 }
 
 // Helper necesario para convertir la VAPID key

@@ -1612,8 +1612,6 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
         const { rows: subs } = await pool.query(
             `SELECT id, subscription FROM push_subscriptions`
         );
-        console.log('🔍 Tipo:', typeof subs[0]?.subscription);
-        console.log('🔍 Raw:', JSON.stringify(subs[0]?.subscription).substring(0, 200));
 
         if (subs.length === 0) {
             return res.json({ ok: true, enviadas: 0, mensaje: 'No hay suscriptores' });
