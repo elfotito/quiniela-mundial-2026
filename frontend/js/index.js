@@ -1354,7 +1354,7 @@ function renderNoticia(n) {
         }
 
         if (videoId) {
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0`;
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1`;
             return `
             <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
                 <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;background:#000;">
@@ -1366,7 +1366,6 @@ function renderNoticia(n) {
                     ></iframe>
                 </div>
                 <div style="padding:14px 16px 16px;">
-                    <span style="display:inline-block;background:#dc2626;color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:8px;">🎥 Video</span>
                     <div style="font-size:16px;font-weight:800;color:#0a0a0a;line-height:1.35;margin-bottom:7px;">${n.titulo}</div>
                     ${n.resena ? `<div style="font-size:13px;color:#555;line-height:1.6;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${n.resena}</div>` : ''}
                     <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:12px;">${fecha}</div>
