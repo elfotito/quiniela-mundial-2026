@@ -263,6 +263,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   iniciarTicker();
   iniciarEasterEgg();
   initUserBanner();
+  iniciarPushNotifications();
 });
 
 // ===============================================
