@@ -1526,7 +1526,7 @@ app.post('/api/recuperar-clave', async (req, res) => {
 
 
 // Ruta para guardar subscription del navegador
-app.post('/push/subscribe', async (req, res) => {
+app.post('/api/push/subscribe', async (req, res) => {
   const { subscription } = req.body;
   const usuarioId = req.body.usuario_id; // o desde tu middleware de auth
 
@@ -1545,12 +1545,12 @@ app.post('/push/subscribe', async (req, res) => {
 });
 
 // Ruta para obtener la VAPID public key (el frontend la necesita)
-app.get('/push/vapid-public-key', (req, res) => {
+app.get('/api/push/vapid-public-key', (req, res) => {
   res.json({ publicKey: process.env.VAPID_PUBLIC_KEY });
 });
 
 // POST /api/push/notificar-partido
-app.post('/push/notificar-partido', verificarAdmin, async (req, res) => {
+app.post('/api/push/notificar-partido', verificarAdmin, async (req, res) => {
     const { partido_id, equipo_local, equipo_visitante, goles_local, goles_visitante } = req.body;
 
     try {
@@ -1600,7 +1600,7 @@ app.post('/push/notificar-partido', verificarAdmin, async (req, res) => {
     }
 });
 // POST /api/push/broadcast
-app.post('/push/broadcast', verificarAdmin, async (req, res) => {
+app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
     const { title, body, url } = req.body;
 
     if (!title || !body) {
