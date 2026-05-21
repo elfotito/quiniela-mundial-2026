@@ -10,9 +10,15 @@ webpush.setVapidDetails(
 async function enviarNotificacion(subscription, payload) {
     try {
         // subscription puede llegar como string (de la BD) o como objeto
-        const sub = typeof subscription === 'string' 
-            ? JSON.parse(subscription) 
-            : subscription;
+        let sub;
+try {
+    sub = typeof subscription === 'string' ? JSON.parse(subscription) : subscription;
+    // PostgreSQL JSONB a veces devuelve string con escapes dobles
+    if (typeof sub === 'string') sub = JSON.parse(sub);
+} catch(e) {
+    console.error('❌ Error parseando subscription:', e.message, '| Raw:', subscription);
+    return false;
+}
 
         await webpush.sendNotification(sub, JSON.stringify(payload));
         return true;
