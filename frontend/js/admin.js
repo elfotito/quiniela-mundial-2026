@@ -350,6 +350,42 @@ async function eliminarPrediccion(predId) {
     }
 }
 
+async function enviarBroadcast() {
+    const title = document.getElementById('broadcastTitle').value.trim();
+    const body = document.getElementById('broadcastBody').value.trim();
+    const url = document.getElementById('broadcastUrl').value.trim();
+    const resultEl = document.getElementById('broadcastResult');
+
+    if (!title || !body) {
+        mostrarToast('⚠️ Título y mensaje son obligatorios', 'error');
+        return;
+    }
+
+    if (!confirm(`¿Enviar esta notificación a TODOS los suscriptores?\n\n"${title}\n${body}"`)) return;
+
+    resultEl.textContent = '⏳ Enviando...';
+
+    try {
+        const res = await fetch(`${CONFIG.API_URL}/api/push/broadcast`, {
+            method: 'POST',
+            headers: auth.getAuthHeaders(),
+            body: JSON.stringify({ title, body, url })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error);
+
+        resultEl.textContent = `✅ Enviadas: ${data.enviadas}/${data.total} notificaciones`;
+        mostrarToast(`✅ Broadcast enviado a ${data.enviadas} usuarios`, 'success');
+
+    } catch (err) {
+        console.error(err);
+        resultEl.textContent = '❌ Error al enviar';
+        mostrarToast('❌ Error enviando broadcast', 'error');
+    }
+}
+
 // ===============================================
 // TABS
 // ===============================================

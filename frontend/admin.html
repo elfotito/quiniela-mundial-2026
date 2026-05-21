@@ -353,14 +353,36 @@
         </a>
     
     </nav>
-    <section class="hero hero-admin">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-badge">🛠️</div>
-            <h1 class="hero-title">Panel de Administración</h1>
-            <p class="hero-subtitle">Gestión de partidos, usuarios y predicciones</p>
-        </div>
-    </section>
+    <!-- Dentro de tu tab de admin o como nueva tab -->
+<div class="broadcast-panel">
+    <h3>📢 Enviar Notificación a Todos</h3>
+    
+    <div class="form-group">
+        <label class="form-label">Título</label>
+        <input type="text" id="broadcastTitle" class="form-input" 
+               placeholder="⚽ Quiniela Mundial 2026"
+               value="⚽ Quiniela Mundial 2026">
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Mensaje</label>
+        <textarea id="broadcastBody" class="form-input" rows="3"
+                  placeholder="¡Faltan 20 días para el Mundial! ¿Ya llenaste tus predicciones?"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">URL al hacer click (opcional)</label>
+        <input type="text" id="broadcastUrl" class="form-input" 
+               placeholder="/partidos.html"
+               value="/partidos.html">
+    </div>
+
+    <button class="btn-table btn-primary" onclick="enviarBroadcast()" style="width:100%; padding:1rem;">
+        📤 Enviar a todos los suscriptores
+    </button>
+    
+    <p id="broadcastResult" style="text-align:center; margin-top:1rem; color:var(--fifa-gold);"></p>
+</div>
     
     <main class="main-container">
         <div class="admin-tabs">

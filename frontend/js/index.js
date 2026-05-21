@@ -31,7 +31,7 @@ const LV_TIPS = [
   { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
   { icon:"📊", texto:"Hay 72 partidos en Fase de Grupos. ¡Ponte al dia con tus predicciones!." },
   { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
-  { icon:"🇻🇪", texto:"4 selecciones vivirán su primera participación histórica, ninguna es la Vinotinto." },
+  { icon:"🇻🇪", texto:"4 paises vivirán su primera participación histórica, ninguna es la Vinotinto." },
   { icon:"📅", texto:"El torneo arranca el 11 de junio de 2026. ¡Marca la fecha!" },
 ];
 
@@ -1356,7 +1356,7 @@ function renderNoticia(n) {
         if (videoId) {
             const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1`;
             return `
-            <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
+            <div style="background:#fff;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,0.08);">
                 <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;background:#000;">
                     <iframe 
                         style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" 
@@ -1415,7 +1415,59 @@ function obtenerBandera(nombre) {
 // ===============================================
 // UTILIDADES — CAMPEÓN ELEGIDO
 // ===============================================
+// Función principal — llama esto al hacer login o en DOMContentLoaded
+async function iniciarPushNotifications() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    console.log('Push no soportado en este navegador');
+    return;
+  }
 
+  try {
+    // 1. Registrar el Service Worker
+    const swReg = await navigator.serviceWorker.register('/sw.js');
+    console.log('Service Worker registrado ✅');
+
+    // 2. Pedir permiso al usuario
+    const permiso = await Notification.requestPermission();
+    if (permiso !== 'granted') {
+      console.log('Usuario rechazó las notificaciones');
+      return;
+    }
+
+    // 3. Obtener la VAPID public key del servidor
+    const resp = await fetch(`${API_URL}/api/push/vapid-public-key`);
+    const { publicKey } = await resp.json();
+
+    // 4. Suscribir al navegador
+    const subscription = await swReg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(publicKey)
+    });
+
+    // 5. Guardar la subscription en el backend
+    const usuario = getUser(); // tu función de auth.js
+    await fetch(`${API_URL}/api/push/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        subscription: subscription.toJSON(),
+        usuario_id: usuario.id
+      })
+    });
+
+    console.log('Notificaciones push activadas ✅');
+  } catch (err) {
+    console.error('Error activando push:', err);
+  }
+}
+
+// Helper necesario para convertir la VAPID key
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+}
 function obtenerCampeon(codigo) {
     const campeon = {
         'GER': '🇩🇪', 'ARG': '🇦🇷', 'AUS': '🇦🇺', 'AUT': '🇦🇹',

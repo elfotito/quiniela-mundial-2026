@@ -8,6 +8,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const rateLimit = require('express-rate-limit')
 const bcrypt = require('bcrypt');
+const { enviarNotificacion } = require('./pushNotifications');
 const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutos
     max: 10,
@@ -1521,6 +1522,132 @@ app.post('/api/recuperar-clave', async (req, res) => {
             res.status(500).json({ error: 'Error del servidor' });
         }
     });
+
+
+// Ruta para guardar subscription del navegador
+app.post('/api/push/subscribe', async (req, res) => {
+  const { subscription } = req.body;
+  const usuarioId = req.body.usuario_id; // o desde tu middleware de auth
+
+  try {
+    await pool.query(
+      `INSERT INTO push_subscriptions (usuario_id, subscription)
+       VALUES ($1, $2)
+       ON CONFLICT (usuario_id, subscription) DO NOTHING`,
+      [usuarioId, JSON.stringify(subscription)]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error guardando subscription' });
+  }
+});
+
+// Ruta para obtener la VAPID public key (el frontend la necesita)
+app.get('/api/push/vapid-public-key', (req, res) => {
+  res.json({ publicKey: process.env.VAPID_PUBLIC_KEY });
+});
+
+// POST /api/push/notificar-partido
+app.post('/api/push/notificar-partido', verificarAdmin, async (req, res) => {
+    const { partido_id, equipo_local, equipo_visitante, goles_local, goles_visitante } = req.body;
+
+    try {
+        // Buscar usuarios que predijeron este partido
+        const { rows: subs } = await pool.query(`
+            SELECT ps.id, ps.subscription, ps.usuario_id
+            FROM push_subscriptions ps
+            INNER JOIN predicciones pr ON pr.usuario_id = ps.usuario_id
+            WHERE pr.partido_id = $1
+        `, [partido_id]);
+
+        if (subs.length === 0) {
+            return res.json({ ok: true, enviadas: 0 });
+        }
+
+        const payload = {
+            title: '⚽ ¡Partido finalizado!',
+            body: `${equipo_local} ${goles_local} - ${goles_visitante} ${equipo_visitante}`,
+            icon: '/img/logo-192.png',
+            url: '/partidos.html'
+        };
+
+        let enviadas = 0;
+        const expiradas = [];
+
+        for (const sub of subs) {
+            const resultado = await enviarNotificacion(sub.subscription, payload);
+            if (resultado === true) enviadas++;
+            if (resultado === 'expired') expiradas.push(sub.id);
+        }
+
+        // Limpiar subscriptions expiradas
+        if (expiradas.length > 0) {
+            await pool.query(
+                `DELETE FROM push_subscriptions WHERE id = ANY($1)`,
+                [expiradas]
+            );
+            console.log(`🧹 ${expiradas.length} subscriptions expiradas eliminadas`);
+        }
+
+        console.log(`🔔 Push enviados: ${enviadas}/${subs.length} para partido ${partido_id}`);
+        res.json({ ok: true, enviadas, total: subs.length });
+
+    } catch (err) {
+        console.error('❌ Error enviando push:', err);
+        res.status(500).json({ error: 'Error enviando notificaciones' });
+    }
+});
+// POST /api/push/broadcast
+app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
+    const { title, body, url } = req.body;
+
+    if (!title || !body) {
+        return res.status(400).json({ error: 'title y body son requeridos' });
+    }
+
+    try {
+        // Traer TODAS las subscriptions activas
+        const { rows: subs } = await pool.query(
+            `SELECT id, subscription FROM push_subscriptions`
+        );
+
+        if (subs.length === 0) {
+            return res.json({ ok: true, enviadas: 0, mensaje: 'No hay suscriptores' });
+        }
+
+        const payload = {
+            title,
+            body,
+            icon: '/icon/android-chrome-192x192.png',
+            url: url || '/index.html'
+        };
+
+        let enviadas = 0;
+        const expiradas = [];
+
+        for (const sub of subs) {
+            const resultado = await enviarNotificacion(sub.subscription, payload);
+            if (resultado === true) enviadas++;
+            if (resultado === 'expired') expiradas.push(sub.id);
+        }
+
+        if (expiradas.length > 0) {
+            await pool.query(
+                `DELETE FROM push_subscriptions WHERE id = ANY($1)`,
+                [expiradas]
+            );
+            console.log(`🧹 ${expiradas.length} subscriptions expiradas eliminadas`);
+        }
+
+        console.log(`📢 Broadcast enviado: ${enviadas}/${subs.length}`);
+        res.json({ ok: true, enviadas, total: subs.length, expiradas: expiradas.length });
+
+    } catch (err) {
+        console.error('❌ Error en broadcast:', err);
+        res.status(500).json({ error: 'Error enviando broadcast' });
+    }
+});
 // ===============================================
 // INICIAR SERVIDOR
 // ===============================================
