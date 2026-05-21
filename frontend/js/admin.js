@@ -366,7 +366,7 @@ async function enviarBroadcast() {
     resultEl.textContent = '⏳ Enviando...';
 
     try {
-        const res = await fetch(`${CONFIG.API_URL}/api/push/broadcast`, {
+        const res = await fetch(`${CONFIG.API_URL}/push/broadcast`, {
             method: 'POST',
             headers: auth.getAuthHeaders(),
             body: JSON.stringify({ title, body, url })
