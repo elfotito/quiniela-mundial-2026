@@ -1,4 +1,3 @@
-// pushNotifications.js
 const webpush = require('web-push');
 
 webpush.setVapidDetails(
@@ -9,24 +8,27 @@ webpush.setVapidDetails(
 
 async function enviarNotificacion(subscription, payload) {
     try {
-        // subscription puede llegar como string (de la BD) o como objeto
-        let sub;
-try {
-    sub = typeof subscription === 'string' ? JSON.parse(subscription) : subscription;
-    // PostgreSQL JSONB a veces devuelve string con escapes dobles
-    if (typeof sub === 'string') sub = JSON.parse(sub);
-} catch(e) {
-    console.error('❌ Error parseando subscription:', e.message, '| Raw:', subscription);
-    return false;
-}
+        // PostgreSQL JSONB puede llegar como objeto o como string
+        let sub = subscription;
+        if (typeof sub === 'string') {
+            sub = JSON.parse(sub);
+        }
+        // Doble parse por si viene escapado
+        if (typeof sub === 'string') {
+            sub = JSON.parse(sub);
+        }
+
+        console.log('📤 Enviando a endpoint:', sub?.endpoint?.substring(0, 50));
 
         await webpush.sendNotification(sub, JSON.stringify(payload));
         return true;
+
     } catch (error) {
         if (error.statusCode === 410 || error.statusCode === 404) {
+            console.log('🗑️ Subscription expirada');
             return 'expired';
         }
-        console.error('Error enviando push:', error.message);
+        console.error('❌ Error push:', error.message);
         return false;
     }
 }
