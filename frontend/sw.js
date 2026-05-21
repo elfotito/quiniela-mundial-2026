@@ -18,8 +18,8 @@ self.addEventListener('push', function(event) {
   
   var options = {
     body: data.body || 'Nueva notificación',          // FIX: era data.mensaje
-    icon: '/icon/android-chrome-192x192.png',
-    badge: '/icon/favicon-32x32.png',
+    icon: '/img/icon/android-chrome-192x192.png',
+    badge: '/img/icon/favicon-32x32.png',
     vibrate: [200, 100, 200],                          // NUEVO: vibra en móvil
     data: { url: data.url || '/index.html' }           // NUEVO: guarda la URL
   };

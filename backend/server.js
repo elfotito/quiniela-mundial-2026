@@ -1569,8 +1569,8 @@ app.post('/api/push/notificar-partido', verificarAdmin, async (req, res) => {
         const payload = {
             title: '⚽ ¡Partido finalizado!',
             body: `${equipo_local} ${goles_local} - ${goles_visitante} ${equipo_visitante}`,
-            icon: '/img/logo-192.png',
-            url: '/partidos.html'
+            icon: '/img/icon/android-chrome-192x192.png',
+            url: '/index.html'
         };
 
         let enviadas = 0;
@@ -1620,7 +1620,7 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
         const payload = {
             title,
             body,
-            icon: '/icon/android-chrome-192x192.png',
+            icon: '/img/icon/android-chrome-192x192.png',
             url: url || '/index.html'
         };
 
