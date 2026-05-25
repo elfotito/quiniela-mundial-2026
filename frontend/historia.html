@@ -88,7 +88,7 @@
     .hist-col-right { grid-area: derecha;   display: flex; flex-direction: column; gap: 14px; position: sticky; top: 110px; }
 
     /* ── WIDGET BASE ──────────────────────────────────── */
-    .widget { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .widget { background: #fff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #eee; }
     .widget-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
     .widget-bar    { width: 3px; height: 14px; background: var(--fifa-gold, #FFD700); border-radius: 0; flex-shrink: 0; }
     .widget-title  { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #0a0a0a; flex: 1; margin: 0; }
@@ -370,7 +370,159 @@
 
 <body>
 
-    <!-- PEGA TU HEADER AQUÍ -->
+<header class="desktop-header">
+    <div class="top-tier">
+        <div class="fw-black">FIFA WORLD CUP 2026™</div>
+        <div class="top-tier-links">
+            <a href="reglamento.html">REGLAMENTO</a>
+            <a href="sistema.html">SISTEMA DE PUNTOS</a>
+            <a href="terminos.html">TERMINOS Y CONDICIONES</a>
+            <a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F">CANAL OFICIAL</a>
+            <a href="#" data-construccion>QUINIELA GATES</a>
+        </div>
+    </div>
+    <div class="main-tier">
+        <div class="brand-wrapper">
+            <div class="logo-container">
+                <img src="img/logomenu.png" alt="FIFA Logo">
+            </div>
+            <div class="logo-text">
+                <img src="img/logoblancomenu.png" alt="Quiniela 2026">
+            </div>
+        </div>
+
+        <nav class="main-nav-links">
+            <a href="index.html">INICIO</a>
+            <a href="predicciones.html">PREDICCIONES</a>
+            <a href="quiniela.html">QUINIELA</a>
+            <a href="ranking.html">RANKING</a>
+            <a href="#" data-construccion="">MR CHIP</a>
+            <a href="calendario.html">CALENDARIO</a>
+            <a href="#" data-construccion="">HISTORIA</a>
+        </nav>
+
+        <div class="right-section">
+            <div class="user-pill">
+                <span class="greeting">Bienvenido,</span>
+                <span class="user-emoji-display">👤</span>
+                <span class="user-name-display">Tito</span>
+            </div>
+            <button class="btn-admin-display" data-target="admin.html">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-noticias-display" data-target="noticias.html">
+                <i class="fas fa-tools"></i>
+            </button>
+            <button class="btn-logout-elegant" onclick="logout()">
+                <span>SALIR</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+</header>
+
+<header class="mobile-top-bar" id="mobileTopBar">
+    <div class="mtb-logo">
+        <img src="img/logoblancomenu.png" alt="Quiniela 2026">
+    </div>
+    <span class="user-bg"></span>
+    <div class="user-pill-mobile">
+        <div class="user-info">
+            <span class="user-name-display" id="mobileUserName"><i class="fa-regular fa-circle-user"></i>Usuario</span>
+        </div>
+    </div>
+    <button class="btn-admin-display" id="mobileAdminBtn" title="Panel Admin">
+        <i class="fas fa-tools"></i>
+    </button>
+    <button class="btn-noticias-display" id="mobileAdminNoti" title="Panel Noticias">
+        <i class="fas fa-newspaper"></i>
+    </button>
+</header>
+
+
+<div class="mobile-menu-overlay" id="mobileMenu">
+
+    <div class="mmo-header">
+        <span class="mmo-title">Menú</span>
+        <button class="mmo-close" id="mobileMenuClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+ 
+    <div class="mmo-section">
+        <a href="index.html"         class="mmo-link mmo-link-main">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+        </a>
+        <a href="predicciones.html"  class="mmo-link mmo-link-main">
+            <i class="fas fa-bullseye"></i>
+            <span>Predicciones</span>
+        </a>
+        <a href="quiniela.html"      class="mmo-link mmo-link-main">
+            <i class="fa fa-file-text"></i>
+            <span>Mi Quiniela</span>
+        </a>
+        <a href="ranking.html"       class="mmo-link mmo-link-main">
+            <i class="fas fa-trophy"></i>
+            <span>Ranking</span>
+        </a>
+        <a href="calendario.html"    class="mmo-link mmo-link-main">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Calendario</span>
+        </a>
+        <a href="#" data-construccion="" class="mmo-link mmo-link-main">
+            <i class="fas fa-robot"></i>
+            <span>Mr. CHIP</span>
+        </a>
+    </div>
+
+    <div class="mmo-divider"></div>
+ 
+    <div class="mmo-section">
+        <a href="sistema.html"       class="mmo-link mmo-link-sec">Sistema de Puntos</a>
+        <a href="reglamento.html"    class="mmo-link mmo-link-sec">Reglamento</a>
+        <a href="terminos.html"      class="mmo-link mmo-link-sec">Términos y Condiciones</a>
+    </div>
+ 
+    <div class="mmo-footer">
+        <button class="mmo-logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Cerrar sesión
+        </button>
+    </div>
+ 
+</div>
+<div class="mmo-backdrop" id="mmoBackdrop"></div>
+ 
+<!-- ── BOTTOM NAV ─────────────────────────────────────────── -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+ 
+    <a href="index.html" class="mbn-item active">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+    </a>
+ 
+    <a href="predicciones.html" class="mbn-item">
+        <i class="fas fa-bullseye"></i>
+        <span>Predicciones</span>
+    </a>
+
+    <button class="mbn-item" id="menuToggleBtn">
+        <i class="fas fa-bars"></i>
+        <span>Menú</span>
+    </button>
+
+    <a href="quiniela.html" class="mbn-item">
+        <i class="fa fa-file-text"></i>
+        <span>Mi Quiniela</span>
+    </a>
+
+    <a href="ranking.html" class="mbn-item">
+        <i class="fas fa-trophy"></i>
+        <span>Ranking</span>
+    </a>
+ 
+</nav>
 
     <!-- ── HERO ──────────────────────────────────────── -->
     <div class="hist-hero">
@@ -430,7 +582,10 @@
                     </div>
                 </div>
             </div>
-
+                <!-- ads 1:1 -->
+            <a class="ad-widget" data-ads="11" href="#" target="_blank" rel="noopener">
+                <img alt="Publicidad" />
+            </a>
             <!-- Estadísticas generales -->
             <div class="widget">
                 <div class="widget-header">
@@ -479,12 +634,12 @@
             <div class="hist-section" id="origen">
                 <div class="hist-section-header">
                     <span class="hist-section-icon">🌟</span>
-                    <span class="hist-section-title">El Origen de Todo</span>
+                    <span class="hist-section-title">La Génesis de la Quiniela Mundial</span>
                 </div>
                 <div class="hist-section-body">
-                    <p class="hist-text">Corría el año <strong>2010</strong> cuando un grupo de amigos, empleados y clientes de <strong>Droguería Carrisan</strong> decidió que ver el Mundial no era suficiente — había que <em>jugársela</em>. Sin apps, sin plataformas digitales, solo papel, lápiz y una fe ciega en que España iba a ganar.</p>
+                    <p class="hist-text">En las entrañas del año 2010, cuando Sudáfrica acogía el Mundial de Fútbol, nació una criatura que perduraría en el tiempo: la Quiniela Mundial. Su génesis no fue en un laboratorio de sofisticados algoritmos, sino en la más antigua y honorable de las tecnologías: el lápiz, el papel, y —para los más audaces— un archivo Excel que funcionaba como oráculo matemático.</p>
                     
-                    <p class="hist-text">Lo que comenzó como una apuesta informal entre conocidos se transformó en una tradición que ha sobrevivido cuatro mundiales, decenas de participantes, mil desaciertos y algunos resultados exactos que todavía se discuten en las reuniones familiares.</p>
+                    <p class="hist-text">El arquitecto de este sistema fue Víctor Carrillo Sr., quien concibió no solo una idea, sino una filosofía: la de transformar la pasión futbolística en una competencia de predicción donde el cerebro valía más que la suerte. Pero Carrillo Sr. no se conformó con crear un juego; creó un sistema de puntos que, sorprendentemente, sigue siendo la columna vertebral de la plataforma hoy en día. Tres décadas de actualizaciones tecnológicas y optimizaciones digitales, y la fórmula sigue intacta. Un tributo a la genialidad del pensamiento analógico.</p>
 
                     <p class="hist-text">Desde entonces, cada cuatro años la quiniela regresa. Con más participantes, más tecnología y la misma pasión de siempre. Esta página existe para que recordemos de dónde venimos — y para que los nuevos sepan en qué se están metiendo.</p>
                 </div>
@@ -507,7 +662,7 @@
                                 2010
                                 <span class="timeline-badge">Sudáfrica</span>
                             </div>
-                            <h3 class="timeline-title">🇿🇦 El Comienzo de una Tradición</h3>
+                            <h3 class="timeline-title">🇿🇦 Cuando Sudáfrica nos robó el sueño (y nos dio una idea)</h3>
                             <p class="timeline-desc">
                                 Todo empezó aquí. <strong>España</strong> ganó su primer Mundial con gol de Iniesta en el minuto 116, y nuestra quiniela dio sus primeros pasos. Participaron apenas 15 personas, las predicciones se hacían en papel y los resultados se anunciaban por llamadas telefónicas. Un caos hermoso que sentó las bases de lo que vendría después.
                             </p>
@@ -697,10 +852,10 @@
         <!-- ══ COLUMNA DERECHA ══ -->
         <aside class="hist-col-right">
 
-            <!-- Widget publicidad aleatoria -->
-            <div class="widget-ad-random">
-                <img id="ad-image" src="" alt="Publicidad" style="width:100%;height:auto;border-radius:12px;display:block;">
-            </div>
+    <!-- ads 1:1 -->
+            <a class="ad-widget" data-ads="11" href="#" target="_blank" rel="noopener">
+                <img alt="Publicidad" />
+            </a>
 
             <!-- Curiosidades -->
             <div class="widget">
@@ -723,8 +878,8 @@
                     <span class="widget-title" style="color:#fff;">Únete a la historia</span>
                 </div>
                 <div class="widget-body">
-                    <p style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:12px;">El Mundial 2026 será el más grande de todos. No te quedes fuera.</p>
-                    <a href="registro.html" style="display:block;text-align:center;padding:10px;background:var(--fifa-gold,#FFD700);color:#000;font-size:12px;font-weight:800;border-radius:6px;text-decoration:none;">Registrarme →</a>
+                    <p style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:12px;">El Mundial 2026 será el más grande de todos. Se parte de la historia jugando y ganando.</p>
+                    <a href="quiniela.html" style="display:block;text-align:center;padding:10px;background:var(--fifa-gold,#FFD700);color:#000;font-size:12px;font-weight:800;border-radius:6px;text-decoration:none;">Mi Quiniela →</a>
                 </div>
             </div>
 
@@ -733,34 +888,79 @@
     </div>
     </div>
 
-    <!-- PEGA TU FOOTER AQUÍ -->
-    <!-- PEGA TU NAVBAR MÓVIL AQUÍ -->
+        <footer class="footer">
+        <div class="footer-top-bar">
+            <div class="footer-logo"><img src="img/logoblancomenu.png" alt="Quiniela 2026"></div>
+            <div class="sponsor-logo">
+            <span class="logo-placeholder"><a href="https://whatsapp.com/channel/0029Vb7k6v9JJhzbny79Ng1F" target="_blank"><img src="img/canal.png" alt="canal"></a></span>
+            </div>
+            <div class="footer-tagline">Copa Mundial FIFA 2026™ <br> 🇺🇸 USA • 🇲🇽 México • 🇨🇦 Canadá</div>
+        </div>
+        <div class="footer-sponsors">
+        
+            <!-- GRUPO 1: Patrocinadores principales -->
+            <div class="sponsor-group">
+            <div class="sponsor-group-title">Patrocinador Oficial</div>
+            <div class="sponsor-logos">
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/dcarrisan" target="_blank"><img src="img/dcarrisan.png" alt="drogueria"></a></span>
+                </div>
+            </div>
+            </div>
+            <!-- GRUPO 2: Colaboradores -->
+            <div class="sponsor-group">
+            <div class="sponsor-group-title">Aliados</div>
+            <div class="sponsor-logos">
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/unicardio.ha" target="_blank"><img src="img/unicardio.png" alt="unidad"></a></span>
+                </div>
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://www.instagram.com/deliverysorpresa" target="_blank"><img src="img/deliverysorpresa.png" alt="delivery"></a></span>
+                </div>
+                <div class="sponsor-logo">
+                <span class="logo-placeholder"><a href="https://wa.link/d41v78" target="_blank"><img src="img/celina.png" alt="laboratorio"></a></span>
+                </div>
+            </div>
+            </div>
+            <!-- GRUPO 3: Aliados -->
+            <div class="sponsor-group">
+    <div class="sponsor-group-title">Colaboradores</div>
+    <div class="sponsor-logos">
+        <div class="sponsor-logo">
+            <div class="sponsor-wrap" id="sponsorEasterEgg">
+                <span class="logo-placeholder">
+                    <img
+                        src="img/viktor.png"
+                        alt="viktor"
+                        id="sponsorLogo"
+                        class="easter-logo"
+                        draggable="false"
+                    >
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="meme-bubble" id="memeBubble">
+    <div class="meme-bubble-tail"></div>
+    <img id="memeGif" src="" alt="">
+</div>
+        </div>
+        <div class="footer-bottom-bar">
+            <nav class="footer-legal-links">
+            <a href="reglamento.html">Reglamento</a>
+            <a href="terminos.html">Términos</a>
+            <a href="https://wa.link/d9pve4">Contactar al Admin</a>
+            </nav>
+            <div class="footer-copyright">
+            Quiniela Mundial 2026 © · Todos los derechos reservados.
+            </div>
+        </div>
+        </footer>
 
     <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
-
-    <script>
-    // Publicidad aleatoria
-    (function(){
-        const ads = [
-            'https://i.ibb.co/ejemplo1/imagen1.jpg',
-            'https://i.ibb.co/ejemplo2/imagen2.png',
-            'https://i.ibb.co/ejemplo3/imagen3.jpg',
-            // Agrega tus URLs de imgbb aquí
-        ];
-        
-        if (ads.length > 0 && ads[0] !== 'https://i.ibb.co/ejemplo1/imagen1.jpg') {
-            const randomAd = ads[Math.floor(Math.random() * ads.length)];
-            const adImage = document.getElementById('ad-image');
-            if (adImage) {
-                adImage.src = randomAd;
-            }
-        } else {
-            const adWidget = document.querySelector('.widget-ad-random');
-            if (adWidget) adWidget.style.display = 'none';
-        }
-    })();
-    </script>
+    <script src="js/ads.js"></script>
 
 </body>
 </html>
