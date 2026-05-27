@@ -1181,6 +1181,23 @@
         </div>
         </footer>
         <script>
+let usuarioId = null;
+let usuario = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    
+    if (!auth.isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    usuario = auth.getUser();
+    usuarioId = usuario.id;
+    
+    await verificarLogin();
+    
+    configurarUI();
+});
             async function verificarLogin() {
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
