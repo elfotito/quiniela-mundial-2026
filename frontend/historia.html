@@ -318,7 +318,7 @@
             grid-template-columns: 1fr 200px;
             grid-template-areas: "centro derecha" "izquierda izquierda";
         }
-        .hist-col-left { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .hist-col-left { position: static; display: grid; gap: 14px; }
     }
     @media (max-width: 700px) {
         .hist-grid {
@@ -365,7 +365,8 @@
         transform: scale(1.02);
         opacity: 0.95;
     }
-    timeline-desc li {
+
+    .timeline-desc li {
   display: list-item;    /* asegura que sean elementos de lista */
 }
     </style>
