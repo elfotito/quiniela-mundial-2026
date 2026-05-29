@@ -747,8 +747,8 @@ async function cargarLigaRankingWidget() {
 // ===============================================
 function iniciarEasterEgg() {
     const memes = [
-        { video: 'img/memes/cucurella.mp4',    dur: 2100  },
-        { video: 'memes/failshot.mp4',     dur: 2300  }
+        { video: 'img/memes/cucurella.mp4'},
+        { video: 'img/memes/cucurella.mp4'}
 
     ];
  
@@ -791,28 +791,35 @@ function iniciarEasterEgg() {
     }
  
     function disparar() {
-        let idx;
-        do { idx = Math.floor(Math.random() * memes.length); } while (idx === ultimoIdx);
-        ultimoIdx = idx;
-        const m = memes[idx];
- 
-        logo.classList.remove('shake');
-        void logo.offsetWidth;
-        logo.classList.add('shake');
- 
-        video.src = m.video;
+    let idx;
+    do { idx = Math.floor(Math.random() * memes.length); } while (idx === ultimoIdx);
+    ultimoIdx = idx;
+    const m = memes[idx];
+
+    logo.classList.remove('shake');
+    void logo.offsetWidth;
+    logo.classList.add('shake');
+
+    video.src = m.video;
+    bubble.classList.remove('show');
+    void bubble.offsetWidth;
+
+    setTimeout(() => {
+        posicionarBurbuja();
+        bubble.classList.add('show');
+        video.play().catch(() => {});
+    }, 30);
+
+    clearTimeout(closeTimer);
+    
+    // Se cierra cuando el video termina
+    video.onended = () => {
         bubble.classList.remove('show');
-        void bubble.offsetWidth;
- 
-        setTimeout(() => {
-            posicionarBurbuja();
-            bubble.classList.add('show');
-            video.play().catch(() => {});
-        }, 30);
- 
-        clearTimeout(closeTimer);
-        closeTimer = setTimeout(() => bubble.classList.remove('show'), m.dur);
-    }
+    };
+    
+    // Respaldo: si el video no termina por algún motivo (ej: error de carga)
+    closeTimer = setTimeout(() => bubble.classList.remove('show'), m.dur + 1000);
+}
  
     document.addEventListener('click', e => {
         if (!wrap.contains(e.target) && !bubble.contains(e.target)) {
