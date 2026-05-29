@@ -754,6 +754,7 @@ function iniciarEasterEgg() {
         { video: 'img/memes/ney.mp4'},
         { video: 'img/memes/yamal.mp4'},
         { video: 'img/memes/kane.mp4'},
+        { video: 'img/memes/mbappe.mp4'},
 
     ];
  
