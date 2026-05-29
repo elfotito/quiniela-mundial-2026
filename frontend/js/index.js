@@ -748,7 +748,12 @@ async function cargarLigaRankingWidget() {
 function iniciarEasterEgg() {
     const memes = [
         { video: 'img/memes/cucurella.mp4'},
-        { video: 'img/memes/cucurella.mp4'}
+        { video: 'img/memes/griezman.mp4'},
+        { video: 'img/memes/vini.mp4'},
+        { video: 'img/memes/wirtz.mp4'},
+        { video: 'img/memes/ney.mp4'},
+        { video: 'img/memes/yamal.mp4'},
+        { video: 'img/memes/kane.mp4'},
 
     ];
  
