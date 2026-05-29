@@ -748,17 +748,8 @@ async function cargarLigaRankingWidget() {
 function iniciarEasterEgg() {
     const memes = [
         { video: 'img/memes/cucurella.mp4',    dur: 2100  },
-        { video: 'memes/failshot.mp4',     dur: 2300  },
-        { video: 'memes/griezman.mp4',     dur: 2800  },
-        { video: 'memes/lamine.mp4',       dur: 7900  },
-        { video: 'memes/kane.mp4',         dur: 5300  },
-        { video: 'memes/mbappe-zeki.mp4',  dur: 4700  },
-        { video: 'memes/neymar.mp4',       dur: 4200  },
-        { video: 'memes/quemirasbobo.mp4', dur: 7200  },
-        { video: 'memes/ronaldosiu.mp4',   dur: 2700  },
-        { video: 'memes/speed.mp4',        dur: 4600  },
-        { video: 'memes/vinicius.mp4',     dur: 6000  },
-        { video: 'memes/wirtz.mp4',        dur: 1700 }
+        { video: 'memes/failshot.mp4',     dur: 2300  }
+
     ];
  
     let ultimoIdx  = -1;
