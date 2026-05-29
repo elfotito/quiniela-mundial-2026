@@ -747,7 +747,7 @@ async function cargarLigaRankingWidget() {
 // ===============================================
 function iniciarEasterEgg() {
     const memes = [
-        { video: 'memes/cucurella.mp4',    dur: 2100  },
+        { video: 'img/memes/cucurella.mp4',    dur: 2100  },
         { video: 'memes/failshot.mp4',     dur: 2300  },
         { video: 'memes/griezman.mp4',     dur: 2800  },
         { video: 'memes/lamine.mp4',       dur: 7900  },
@@ -771,14 +771,7 @@ function iniciarEasterEgg() {
  
     if (!wrap || !logo || !bubble) return;
  
-    // Crear elemento video una sola vez
-    const video = document.createElement('video');
-    video.id = 'memeVideo';
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.style.borderRadius = '8px';
-    bubble.innerHTML = '';
-    bubble.appendChild(video);
+    const video = document.getElementById('memeVideo');
  
     wrap.addEventListener('click',    disparar);
     wrap.addEventListener('touchend', e => { e.preventDefault(); disparar(); });
