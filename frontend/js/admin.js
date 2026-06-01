@@ -290,7 +290,7 @@ async function toggleUsuario(userId, activo) {
 function llenarSelectUsuarios() {
     const select = document.getElementById('selectUsuarioPred');
     select.innerHTML = '<option value="">Selecciona un usuario</option>' +
-        usuarios.map(u => `<option value="${u.id}">${u.nombre} (${u.codigo_acceso})</option>`).join('');
+        usuarios.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('');
 }
 
 async function cargarPrediccionesUsuario() {
