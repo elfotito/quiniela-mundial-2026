@@ -1649,6 +1649,84 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
         res.status(500).json({ error: 'Error enviando broadcast' });
     }
 });
+
+// ===============================================
+// 💬 RUTAS DE CHAT GENERAL
+// ===============================================
+
+// GET /api/chat/mensajes — últimos 100 mensajes
+app.get('/api/chat/mensajes', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT id, usuario_id, usuario_nombre, mensaje, created_at
+            FROM chat_mensajes
+            ORDER BY created_at ASC
+            LIMIT 100
+        `);
+        res.json({ success: true, mensajes: result.rows });
+    } catch (error) {
+        console.error('❌ Error obteniendo mensajes:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+// POST /api/chat/mensajes — enviar mensaje
+app.post('/api/chat/mensajes', async (req, res) => {
+    try {
+        const usuarioId = req.headers['x-usuario-id'];
+        const { mensaje } = req.body;
+
+        if (!usuarioId) {
+            return res.status(401).json({ error: 'No autorizado' });
+        }
+        if (!mensaje || mensaje.trim().length === 0) {
+            return res.status(400).json({ error: 'Mensaje vacío' });
+        }
+        if (mensaje.trim().length > 500) {
+            return res.status(400).json({ error: 'Mensaje demasiado largo (máx 500 caracteres)' });
+        }
+
+        // Obtener nombre del usuario
+        const usuarioResult = await pool.query(
+            `SELECT nombre_publico FROM usuarios WHERE id = $1 AND esta_activo = true`,
+            [usuarioId]
+        );
+        if (usuarioResult.rows.length === 0) {
+            return res.status(401).json({ error: 'Usuario no encontrado' });
+        }
+
+        const result = await pool.query(`
+            INSERT INTO chat_mensajes (usuario_id, usuario_nombre, mensaje)
+            VALUES ($1, $2, $3)
+            RETURNING id, usuario_id, usuario_nombre, mensaje, created_at
+        `, [usuarioId, usuarioResult.rows[0].nombre_publico, mensaje.trim()]);
+
+        res.status(201).json({ success: true, mensaje: result.rows[0] });
+    } catch (error) {
+        console.error('❌ Error enviando mensaje:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+// DELETE /api/chat/mensajes/:id — solo admin
+app.delete('/api/chat/mensajes/:id', verificarAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await pool.query(
+            `DELETE FROM chat_mensajes WHERE id = $1 RETURNING id`,
+            [id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Mensaje no encontrado' });
+        }
+
+        res.json({ success: true, mensaje: 'Mensaje eliminado' });
+    } catch (error) {
+        console.error('❌ Error eliminando mensaje:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
 // ===============================================
 // INICIAR SERVIDOR
 // ===============================================
