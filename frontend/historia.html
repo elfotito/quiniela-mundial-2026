@@ -267,68 +267,99 @@
     .stat-val   { font-size: 13px; font-weight: 800; color: #0a0a0a; }
     .stat-val.gold { color: #BA7517; }
 
-    /* ── HALL OF FAME ─────────────────────────────────── */
-    .hall-of-fame {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 14px;
-        margin: 16px 0;
-    }
-    .hall-card {
-        background: linear-gradient(135deg, #fafafa 0%, #fff 100%);
-        border: 1px solid #e0e0e0;
-        padding: 16px;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .hall-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-    .hall-trophy {
-        font-size: 36px;
-        margin-bottom: 10px;
-    }
-    .hall-year {
-        font-size: 12px;
-        font-weight: 700;
-        color: #888;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 6px;
-    }
-    .hall-winner {
-        font-size: 15px;
-        font-weight: 800;
-        color: #0a0a0a;
-        margin-bottom: 4px;
-    }
-    .hall-points {
-        font-size: 11px;
-        color: #BA7517;
-        font-weight: 700;
-    }
+/* ========== HALL OF FAME ========== */
+.hall-of-fame {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+}
 
-    /* ── RESPONSIVE ───────────────────────────────────── */
-    @media (max-width: 1024px) {
-        .hist-grid {
-            grid-template-columns: 1fr 200px;
-            grid-template-areas: "centro derecha" "izquierda izquierda";
-        }
-        .hist-col-left { position: static; display: grid; gap: 14px; }
+.hall-card {
+    position: relative;
+    background: var(--dark-card);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-top: 2px solid var(--fifa-gold);
+    border-radius: 0 0 12px 12px;
+    padding: 1.25rem 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.hall-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 215, 0, 0.45);
+    border-top-color: var(--fifa-gold);
+}
+
+.hall-edition {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 215, 0, 0.45);
+}
+
+.hall-trophy-slot {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    font-size: 26px;
+}
+
+.hall-trophy-slot img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.hall-tournament {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fifa-gold);
+    opacity: 0.85;
+}
+
+.hall-divider {
+    width: 22px;
+    height: 1px;
+    background: rgba(255, 215, 0, 0.25);
+    margin: 2px auto;
+}
+
+.hall-winner {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.hall-points {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.hall-points strong {
+    color: var(--fifa-gold);
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .hall-of-fame {
+        grid-template-columns: repeat(2, 1fr);
     }
-    @media (max-width: 700px) {
-        .hist-grid {
-            grid-template-columns: 1fr;
-            grid-template-areas: "centro" "derecha" "izquierda";
-            padding: 16px 12px 40px;
-        }
-        .hist-col-left, .hist-col-right { position: static; }
-        .hist-section-body { padding: 16px 16px 20px; }
-        .timeline { padding-left: 30px; }
-        .timeline::before { left: 10px; }
-        .timeline-dot { left: -26px; }
-    }
+}
 
     /* Índice móvil */
     .mobile-index-widget {
@@ -1006,55 +1037,81 @@
                 </div>
             </div>
 
-            <!-- Hall of Fame -->
-            <div class="hist-section" id="hall">
-                <div class="hist-section-header">
-                    <span class="hist-section-icon">🏛️</span>
-                    <span class="hist-section-title">Salón de la Fama</span>
+<!-- Hall of Fame -->
+<div class="hist-section" id="hall">
+    <div class="hist-section-header">
+        <span class="hist-section-icon">🏛️</span>
+        <span class="hist-section-title">Salón de la Fama</span>
+    </div>
+    <div class="hist-section-body">
+        <p class="hist-text" style="font-style: italic; margin-bottom: 2rem;">
+            Los campeones que escribieron su nombre en la historia de la quiniela.
+        </p>
+
+        <div class="hall-of-fame">
+            <div class="hall-card">
+                <span class="hall-edition">I</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/mundial.png" alt="Trofeo Sudáfrica 2010" onerror="this.outerHTML='🏆'">
                 </div>
-                <div class="hist-section-body">
-                    <p class="hist-text">Los campeones que escribieron su nombre en la historia de la quiniela. Cuatro torneos, cuatro leyendas.</p>
-                    
-                    <div class="hall-of-fame">
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">Sudáfrica 2010</div>
-                            <div class="hall-winner">Wilson A.</div>
-                            <div class="hall-points">92 puntos</div>
-                        </div>
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">Brasil 2014</div>
-                            <div class="hall-winner">Luis C.</div>
-                            <div class="hall-points">111 puntos</div>
-                        </div>
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">Rusia 2018</div>
-                            <div class="hall-winner">Jorge M.</div>
-                            <div class="hall-points">172 puntos</div>
-                        </div>
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">Qatar 2022</div>
-                            <div class="hall-winner">Tito</div>
-                            <div class="hall-points">162 puntos</div>
-                        </div>
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">EuroCopa 2024</div>
-                            <div class="hall-winner">Jose</div>
-                            <div class="hall-points">156 puntos</div>
-                        </div>
-                        <div class="hall-card">
-                            <div class="hall-trophy">🏆</div>
-                            <div class="hall-year">Copa America 2024</div>
-                            <div class="hall-winner">Vicente O.</div>
-                            <div class="hall-points">121 puntos</div>
-                        </div>
-                    </div>
-                </div>
+                <div class="hall-tournament">Sudáfrica 2010</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Wilson A.</div>
+                <div class="hall-points"><strong>92</strong> puntos</div>
             </div>
+            <div class="hall-card">
+                <span class="hall-edition">II</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/mundial.png" alt="Trofeo Brasil 2014" onerror="this.outerHTML='🏆'">
+                </div>
+                <div class="hall-tournament">Brasil 2014</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Luis C.</div>
+                <div class="hall-points"><strong>111</strong> puntos</div>
+            </div>
+            <div class="hall-card">
+                <span class="hall-edition">III</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/mundial.png" alt="Trofeo Rusia 2018" onerror="this.outerHTML='🏆'">
+                </div>
+                <div class="hall-tournament">Rusia 2018</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Jorge M.</div>
+                <div class="hall-points"><strong>172</strong> puntos</div>
+            </div>
+            <div class="hall-card">
+                <span class="hall-edition">IV</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/mundial.png" alt="Trofeo Qatar 2022" onerror="this.outerHTML='🏆'">
+                </div>
+                <div class="hall-tournament">Qatar 2022</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Tito</div>
+                <div class="hall-points"><strong>162</strong> puntos</div>
+            </div>
+            <div class="hall-card">
+                <span class="hall-edition">V</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/euro.png" alt="Trofeo EuroCopa 2024" onerror="this.outerHTML='🏆'">
+                </div>
+                <div class="hall-tournament">EuroCopa 2024</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Jose</div>
+                <div class="hall-points"><strong>156</strong> puntos</div>
+            </div>
+            <div class="hall-card">
+                <span class="hall-edition">VI</span>
+                <div class="hall-trophy-slot">
+                    <img src="img/america.png" alt="Trofeo Copa América 2024" onerror="this.outerHTML='🏆'">
+                </div>
+                <div class="hall-tournament">Copa América 2024</div>
+                <div class="hall-divider"></div>
+                <div class="hall-winner">Vicente O.</div>
+                <div class="hall-points"><strong>121</strong> puntos</div>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- CTA Final -->
             <div class="hist-highlight">
@@ -1268,7 +1325,7 @@ function configurarUI() {
                 behavior: 'smooth'
             });
         });
-        // ===============================================
+// ===============================================
 // MENÚ MÓVIL
 // ===============================================
 (function inicializarMenuMovil() {
