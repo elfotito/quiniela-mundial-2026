@@ -104,7 +104,7 @@ app.use((req, res, next) => {
     "img-src 'self' https: data:; " +
     "script-src 'self' https: 'unsafe-inline'; " +
     "style-src 'self' https: 'unsafe-inline'; " +
-    "connect-src 'self' https:"
+    "connect-src 'self' https: wss://aohnbafexgwkugtfryrk.supabase.co"
 );
     
     res.removeHeader('X-Powered-By');
