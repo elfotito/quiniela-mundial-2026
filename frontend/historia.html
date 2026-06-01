@@ -361,6 +361,27 @@
     }
 }
 
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 1024px) {
+        .hist-grid {
+            grid-template-columns: 1fr 200px;
+            grid-template-areas: "centro derecha" "izquierda izquierda";
+        }
+        .hist-col-left { position: static; display: grid; gap: 14px; }
+    }
+    @media (max-width: 700px) {
+        .hist-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
+        }
+        .hist-col-left, .hist-col-right { position: static; }
+        .hist-section-body { padding: 16px 16px 20px; }
+        .timeline { padding-left: 30px; }
+        .timeline::before { left: 10px; }
+        .timeline-dot { left: -26px; }
+    }
+
     /* Índice móvil */
     .mobile-index-widget {
         display: none !important;
@@ -1110,7 +1131,8 @@
                 <div class="hall-points"><strong>121</strong> puntos</div>
             </div>
         </div>
-    
+    </div>
+</div>
 
             <!-- CTA Final -->
             <div class="hist-highlight">
