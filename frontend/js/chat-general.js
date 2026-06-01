@@ -42,7 +42,7 @@
             <div class="cg-header">
                 <div class="cg-header-left">
                     <span class="cg-icon">💬</span>
-                    <span class="cg-title">Chat General</span>
+                    <span class="cg-title">Chat Mundial</span>
                     <span class="cg-badge" id="cg-badge">0</span>
                 </div>
                 <button class="cg-toggle" id="cg-toggle" title="Minimizar">▾</button>
@@ -315,8 +315,8 @@
     // ── EMOJIS ─────────────────────────────────────
     const EMOJIS = [
         '😂','🔥','⚽','🏆','😎','👏','💀','🤣','😭','🥶',
-        '😤','🤔','👀','💪','🙌','🥅','🎯','😱','🤦','🙏',
-        '❤️','👋','😅','🤩','😬','🫡','💥','🎉','👑','🫠'
+        '😤','🤔','👀','💪','🙌','💩','🎯','😱','🤦','🙏',
+        '👻','👋','😅','🤩','😬','🫡','🫩','🎉','👑','🫠'
     ];
 
     // ── ESTILOS ────────────────────────────────────
