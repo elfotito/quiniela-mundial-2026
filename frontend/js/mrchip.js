@@ -8,29 +8,27 @@ if (!auth.isAuthenticated()) {
     window.location.href = 'login.html';
 }
 
-const usuario = auth.getUser();
-let todosPartidos = [];
-let partidoActualId = null;
-let datosEnCache = {};
-let usuarioId = null;
-let usuario = null;
+// ========== VARIABLES GLOBALES ==========
+let usuario;
+let usuarioId;
+let partidoActualId;
 
 // ========== ÚNICO LISTENER ==========
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // === PARTE 1: Autenticación y verificación ===
+    // === PARTE 1: Autenticación ===
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
         return;
     }
 
-    usuario = auth.getUser();
-    usuarioId = usuario.id;
+    usuario = auth.getUser();      
+    usuarioId = usuario.id;     
     
-    await verificarLogin();
+    await verificarLogin();       
     configurarUI();
     
-    // === PARTE 2: Carga de datos del CHIP ===
+    // === PARTE 2: Mr. CHIP ===
     console.log('🤓 Mr. CHIP iniciando carga...');
     
     await cargarPartidos();
@@ -49,14 +47,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('✅ Mr. CHIP listo');
 });
 
-// ========== FUNCIONES AUXILIARES ==========
+// ========== FUNCIONES ==========
 async function verificarLogin() {
     if (!auth.isAuthenticated()) {
         window.location.href = 'login.html';
         return;
     }
 
-    const usuario = auth.getUser();
+    // Usar la variable global, NO redeclarar con const/let
+    usuario = auth.getUser();      // SIN const/let - usa la global
     usuarioId = parseInt(usuario.id);
 
     document.querySelectorAll('.user-name-display').forEach(el => {
