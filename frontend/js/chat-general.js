@@ -313,11 +313,9 @@
     }
 
     // ── EMOJIS ─────────────────────────────────────
-    const EMOJIS = [
-        '😂','🔥','⚽','🏆','😎','👏','💀','🤣','😭','🥶',
-        '😤','🤔','👀','💪','🙌','💩','🎯','😱','🤦','🙏',
-        '👻','👋','😅','🤩','😬','🫡','🫩','🎉','👑','🫠'
-    ];
+const EMOJIS = ['😂','🤣','😭','😅','😬','🫠','😎','🤔','😱','🥶',
+                '😤','🤦‍♂️','🥲','👑','🏆','🎉','🔥','⚽','💪','👏','🙏',
+                '👋','🫡','👻','👀','💀','🫪','💩','🫩'];
 
     // ── ESTILOS ────────────────────────────────────
     function inyectarEstilos() {
@@ -385,7 +383,7 @@
 
         /* ── MENSAJES ── */
         .cg-mensajes {
-            height: 340px;
+            height: 440px;
             overflow-y: auto;
             padding: 16px;
             display: flex;
@@ -595,7 +593,7 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 600px) {
-            .cg-mensajes { height: 260px; }
+            .cg-mensajes { height: 490px; }
             .cg-mensaje  { max-width: 88%; }
         }
         `;
