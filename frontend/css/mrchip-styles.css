@@ -908,3 +908,62 @@
         font-size: 0.85rem;
     }
 }
+/* ── HERO ─────────────────────────────────────────── */
+    .hist-hero {
+        background: #000;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 3px solid var(--fifa-gold, #FFD700);
+    }
+    .hist-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px),
+            repeating-linear-gradient(0deg,  rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px);
+        pointer-events: none;
+    }
+    .hist-hero-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 32px;
+    }
+    .hist-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .hist-eyebrow-line { width: 32px; height: 2px; background: var(--fifa-gold, #FFD700); }
+    .hist-eyebrow span {
+        font-size: 11px; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; color: var(--fifa-gold, #FFD700);
+    }
+    .hist-title {
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 900; color: #fff; line-height: 1;
+        letter-spacing: -2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hist-title em { font-style: normal; color: var(--fifa-gold, #FFD700); }
+    .hist-sub {
+        font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 520px;
+    }
+    .hist-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 24px; padding: 10px 18px;
+        background: rgba(255,215,0,0.08);
+        border: 1px solid rgba(255,215,0,0.3);
+        border-radius: 8px;
+        font-size: 12px; font-weight: 700; color: var(--fifa-gold, #FFD700);
+        letter-spacing: 0.5px;
+    }
+    .hist-deco {
+        font-size: 110px; opacity: 0.05; line-height: 1;
+        user-select: none; flex-shrink: 0;
+    }
+    @media (max-width: 700px) {
+        .hist-hero-inner { grid-template-columns: 1fr; padding: 32px 16px 28px; }
+        .hist-deco  { display: none; }
+    }
