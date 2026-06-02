@@ -426,72 +426,47 @@
 }
 .reseña-fama {
     font-style: italic;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     line-height: 1.5;
     text-align: center;
-    color: #e6d5a8; /* dorado antiguo */
-    background: linear-gradient(135deg, #1e1a15, #2a241e);
-    padding: 2rem 2.5rem;
-    margin: 2rem auto;
-    max-width: 900px;
-    border-radius: 4px 40px 4px 40px;
-    box-shadow: 
-        0 20px 35px -15px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 0 0 1px #4a3e2e;
-    letter-spacing: 0.02em;
-    font-family: 'Georgia', 'Times New Roman', Times, serif;
-    backdrop-filter: blur(2px);
-    border-left: 4px solid #c9a03d;
-    border-right: 4px solid #c9a03d;
-    position: relative;
-    transition: all 0.3s ease;
+    color: #c0b9a8;
+    background: rgba(20, 20, 22, 0.75);
+    backdrop-filter: blur(8px);
+    padding: 1.2rem 1.8rem;
+    margin: 1rem auto;
+    max-width: 750px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(200, 180, 120, 0.3);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
 }
 
-/* efecto museo: un pequeño "sello" o adorno */
+/* pequeños detalles elegantes (sin excesos) */
 .reseña-fama::before {
-    content: "✦";
-    font-size: 2rem;
-    color: #d4af37;
+    content: "—";
     display: block;
-    text-align: center;
-    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #b8a97c;
+    margin-bottom: 0.6rem;
     opacity: 0.7;
-    letter-spacing: 0.5rem;
 }
 
 .reseña-fama::after {
-    content: "✦";
-    font-size: 2rem;
-    color: #d4af37;
+    content: "—";
     display: block;
-    text-align: center;
-    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #b8a97c;
+    margin-top: 0.6rem;
     opacity: 0.7;
-    letter-spacing: 0.5rem;
 }
 
-/* efecto hover tipo museo que ilumina la frase */
+/* hover sutil */
 .reseña-fama:hover {
-    background: linear-gradient(135deg, #241f1a, #2f2822);
-    color: #f3e7c0;
-    box-shadow: 0 25px 40px -12px black, inset 0 1px 0 rgba(255,255,200,0.15), 0 0 0 1px #b48c3a;
-    border-left-color: #e9bc4a;
-    border-right-color: #e9bc4a;
-}
-
-/* responsivo */
-@media (max-width: 700px) {
-    .reseña-fama {
-        font-size: 1.2rem;
-        padding: 1.5rem;
-        margin: 1rem;
-        border-radius: 4px 25px 4px 25px;
-    }
-    .reseña-fama::before,
-    .reseña-fama::after {
-        font-size: 1.3rem;
-    }
+    background: rgba(25, 25, 30, 0.85);
+    border-color: rgba(200, 180, 120, 0.6);
+    color: #e2daca;
 }
     </style>
 </head>
