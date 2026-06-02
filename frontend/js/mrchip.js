@@ -12,7 +12,7 @@ if (!auth.isAuthenticated()) {
 let usuario;
 let usuarioId;
 let partidoActualId;
-let datosEnCache;
+let datosEnCache = {};
 
 // ========== ÚNICO LISTENER ==========
 document.addEventListener('DOMContentLoaded', async () => {
