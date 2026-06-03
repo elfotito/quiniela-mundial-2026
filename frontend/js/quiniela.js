@@ -1032,7 +1032,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_7pts', 
-            imagen: '/images/logros/mike.png',
+            imagen: '/images/logros/siuu.png',
             titulo: '¡SIIUU!', 
             descripcion: 'Consigue 2 predicciones de ganador y un marcador consecutivas',
             rareza: 'oro',
@@ -1052,7 +1052,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_5pts', 
-            imagen: '/images/logros/mike.png',
+            imagen: '/images/logros/italia82.png',
             titulo: 'El fútbol no es para bailarinas', 
             descripcion: 'Consigue 2 predicciones de solo ganador o empate consecutivas',
             rareza: 'plata',
