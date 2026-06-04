@@ -412,97 +412,99 @@
 
     <div style="
         height: 12px;
-        background: linear-gradient(90deg, #C9A84C 0%, #0066CC 35%, #C9A84C 65%, #003d7a 100%);
+        background: linear-gradient(90deg, #5e5e5e 0%, #272727 35%, #5a5a5a 65%, #272727 100%);
     "></div>
 
-    <!-- ══ HEADER ══ -->
+<!-- ══ HEADER ══ -->
+<div style="
+    position: relative;
+    background: linear-gradient(135deg, #001433 0%, #002766 60%, #001433 100%);
+    padding: 48px 64px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid rgba(201,168,76,0.4);
+    overflow: visible; /* Cambiado de hidden a visible */
+">
+    <!-- Fondo decorativo: número 26 gigante -->
     <div style="
-        position: relative;
-        background: linear-gradient(135deg, #001433 0%, #002766 60%, #001433 100%);
-        padding: 48px 64px 44px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        overflow: hidden;
-        border-bottom: 3px solid rgba(201,168,76,0.4);
-    ">
-        <!-- Fondo decorativo: número 26 gigante -->
+        position: absolute;
+        right: -20px;
+        top: -30px;
+        font-family: Yolk;
+        font-size: 320px;
+        font-weight: 900;
+        color: rgba(255,255,255,0.03);
+        line-height: 1;
+        letter-spacing: -20px;
+        user-select: none;
+        pointer-events: none;
+        overflow: hidden; /* Mantenemos el overflow hidden solo para el 26 */
+    ">26</div>
+
+    <!-- Izquierda: Logo + textos -->
+    <div style="display: flex; flex-direction: column; gap: 12px; z-index: 1;">
+        <!-- Logo blanco -->
+        <img src="img/logoblancomenu.png" alt="Quiniela 2026"
+             style="height: 52px; width: auto; object-fit: contain;">
+
+        <!-- Eyebrow -->
         <div style="
-            position: absolute;
-            right: -20px;
-            top: -30px;
-            font-family: Yolk;
-            font-size: 320px;
-            font-weight: 900;
-            color: rgba(255,255,255,0.03);
-            line-height: 1;
-            letter-spacing: -20px;
-            user-select: none;
-            pointer-events: none;
-        ">26</div>
-
-        <!-- Izquierda: Logo + textos -->
-        <div style="display: flex; flex-direction: column; gap: 12px; z-index: 1;">
-            <!-- Logo blanco -->
-            <img src="img/logoblancomenu.png" alt="Quiniela 2026"
-                 style="height: 52px; width: auto; object-fit: contain;">
-
-            <!-- Eyebrow -->
-            <div style="
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                margin-top: 4px;
-            ">
-                <div style="width: 40px; height: 3px; background: #C9A84C;"></div>
-                <span style="
-                    font-size: 14px;
-                    font-weight: 700;
-                    letter-spacing: 4px;
-                    text-transform: uppercase;
-                    color: #C9A84C;
-                    font-family: Arial, sans-serif;
-                ">Copa Mundial FIFA 2026™</span>
-            </div>
-
-            <!-- Título principal -->
-            <div style="
-                font-size: 64px;
-                font-weight: 900;
-                color: #ffffff;
-                line-height: 0.9;
-                letter-spacing: -2px;
-                text-transform: uppercase;
-            ">TABLA DE<br><span style="color: #C9A84C;">POSICIONES</span></div>
-
-            <!-- Sedes -->
-            <div style="
-                font-size: 16px;
-                color: rgba(255,255,255,0.45);
-                font-family: Arial, sans-serif;
-                font-weight: 400;
-                letter-spacing: 2px;
-                margin-top: 6px;
-            ">🇺🇸 USA &nbsp;·&nbsp; 🇲🇽 MÉXICO &nbsp;·&nbsp; 🇨🇦 CANADÁ</div>
-        </div>
-
-        <!-- Derecha: Trofeo -->
-        <div style="
-            position: relative;
-            z-index: 1;
-            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
         ">
-            <img src="img/trofeo.png" alt="Trofeo FIFA World Cup"
-                 style="
-                     height: 480px;
-                     width: auto;
-                     object-fit: contain;
-                     mix-blend-mode: multiply;
-                     filter: drop-shadow(0 0 40px rgba(201,168,76,0.5));
-                 ">
+            <div style="width: 40px; height: 3px; background: #C9A84C;"></div>
+            <span style="
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+                color: #C9A84C;
+                font-family: Arial, sans-serif;
+            ">Copa Mundial FIFA 2026™</span>
         </div>
 
+        <!-- Título principal -->
+        <div style="
+            font-size: 64px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        ">TABLA DE<br><span style="color: #C9A84C;">POSICIONES</span></div>
+
+        <!-- Sedes -->
+        <div style="
+            font-size: 16px;
+            color: rgba(255,255,255,0.45);
+            font-family: Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-top: 6px;
+        ">🇺🇸 USA &nbsp;·&nbsp; 🇲🇽 MÉXICO &nbsp;·&nbsp; 🇨🇦 CANADÁ</div>
     </div>
+
+    <!-- Derecha: Trofeo - AHORA ABSOLUTO PARA QUE SOBRESALGA -->
+    <div style="
+        position: absolute;
+        right: 40px;
+        bottom: -60px; /* Ajusta este valor para controlar cuánto sobresale hacia abajo */
+        z-index: 2;
+        pointer-events: none; /* Para que no interfiera con clicks */
+    ">
+        <img src="img/trofeo.png" alt="Trofeo FIFA World Cup"
+             style="
+                 height: 550px; /* Aumentado para que sea más grande */
+                 width: auto;
+                 object-fit: contain;
+                 filter: drop-shadow(0 0 40px rgba(201,168,76,0.5));
+             ">
+    </div>
+
+</div>
 
     <!-- ══ BADGE DE LIGA ══ -->
     <div id="share-liga-badge" style="
@@ -593,7 +595,7 @@
     <!-- ══ FRANJA DECORATIVA BOTTOM ══ -->
     <div style="
         height: 12px;
-        background: linear-gradient(90deg, #e2e2e2 0%, #272727 35%, #e8e8e9 65%, #272727 100%);
+        background: linear-gradient(90deg, #5e5e5e 0%, #272727 35%, #5a5a5a 65%, #272727 100%);
     "></div>
 
 </div>
