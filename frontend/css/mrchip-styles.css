@@ -379,7 +379,6 @@
 .mc-selector-section {
     background: var(--dark-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
     padding: 24px 28px;
     margin-bottom: 32px;
     transition: border-color .3s;
@@ -473,7 +472,6 @@
 .mc-vs-card {
     background: linear-gradient(160deg, #0d0d0d 0%, #111827 60%, #0a0f1a 100%);
     border: 1px solid var(--border-light);
-    border-radius: 18px;
     padding: 0;
     margin-bottom: 28px;
     overflow: hidden;
@@ -1253,7 +1251,6 @@
     .mc-hero-title { letter-spacing: -2px; }
     .mc-ticker-bar { height: 36px; }
     .mc-ticker-items { font-size: 11px; }
-    .mc-vs-card { border-radius: 12px; }
     .mc-col-header { padding: 18px 14px; }
 }
 
