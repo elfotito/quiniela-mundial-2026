@@ -344,6 +344,15 @@ const getPuntosClass = (puntos) => {
     return 'points-none';
 };
 
+// Clases para el nuevo diseño mc-
+const getMcPuntosClass = (puntos) => {
+    if (puntos === 9) return 'mc-pts-perfect';
+    if (puntos === 7) return 'mc-pts-good';
+    if (puntos === 5 || puntos === 2) return 'mc-pts-partial';
+    if (puntos === 0) return 'mc-pts-none';
+    return 'mc-pts-pending';
+};
+
 // UI HELPERS
 // ===================================
 
@@ -481,18 +490,38 @@ function mostrarPartido(partido) {
         statusText = 'Finalizado ✅';
     }
 
-    statusBadge.innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
+    statusBadge.className = `mc-status-badge mc-status-${statusClass}`;
+    statusBadge.innerHTML = `<span class="mc-status-dot"></span>${statusText}`;
 
     // Equipos
+    // Banderas y nombres — compatibles con nuevo HTML (mc-team-flag / mc-team-name)
+    // y también con el HTML antiguo (team-flag / team-name) por si acaso
     const teamHome = document.getElementById('teamHome');
-    teamHome.querySelector('.team-flag').textContent = obtenerBandera(partido.equipo_local);
-    teamHome.querySelector('.team-name').textContent = partido.equipo_local;
-    document.getElementById('scoreHome').textContent = partido.goles_local_real !== null ? partido.goles_local_real : '-';
+    const flagHome = teamHome.querySelector('.mc-team-flag') || teamHome.querySelector('.team-flag');
+    const nameHome = teamHome.querySelector('.mc-team-name') || teamHome.querySelector('.team-name');
+    if (flagHome) flagHome.textContent = obtenerBandera(partido.equipo_local);
+    if (nameHome) nameHome.textContent = partido.equipo_local;
+
+    // También actualizar los IDs directos del nuevo HTML
+    const flagHomeId = document.getElementById('flagHome');
+    const nameHomeId = document.getElementById('nameHome');
+    if (flagHomeId) flagHomeId.textContent = obtenerBandera(partido.equipo_local);
+    if (nameHomeId) nameHomeId.textContent = partido.equipo_local;
+
+    document.getElementById('scoreHome').textContent = partido.goles_local_real !== null ? partido.goles_local_real : '—';
 
     const teamAway = document.getElementById('teamAway');
-    teamAway.querySelector('.team-flag').textContent = obtenerBandera(partido.equipo_visitante);
-    teamAway.querySelector('.team-name').textContent = partido.equipo_visitante;
-    document.getElementById('scoreAway').textContent = partido.goles_visitante_real !== null ? partido.goles_visitante_real : '-';
+    const flagAway = teamAway.querySelector('.mc-team-flag') || teamAway.querySelector('.team-flag');
+    const nameAway = teamAway.querySelector('.mc-team-name') || teamAway.querySelector('.team-name');
+    if (flagAway) flagAway.textContent = obtenerBandera(partido.equipo_visitante);
+    if (nameAway) nameAway.textContent = partido.equipo_visitante;
+
+    const flagAwayId = document.getElementById('flagAway');
+    const nameAwayId = document.getElementById('nameAway');
+    if (flagAwayId) flagAwayId.textContent = obtenerBandera(partido.equipo_visitante);
+    if (nameAwayId) nameAwayId.textContent = partido.equipo_visitante;
+
+    document.getElementById('scoreAway').textContent = partido.goles_visitante_real !== null ? partido.goles_visitante_real : '—';
 }
 
 function mostrarPredicciones(predicciones, partido) {
@@ -525,13 +554,13 @@ function mostrarUsuariosColumna(containerId, usuarios) {
     }
 
     container.innerHTML = usuarios.map(user => `
-        <div class="user-card">
-            <div class="user-avatar">${obtenerCampeon(user.campeon_elegido)}</div>
-            <div class="user-info">
-                <div class="user-name">${user.nombre}</div>
-                <div class="user-prediction">${user.goles_local} - ${user.goles_visitante}</div>
+        <div class="mc-user-card">
+            <div class="mc-user-avatar">${obtenerCampeon(user.campeon_elegido)}</div>
+            <div class="mc-user-info">
+                <div class="mc-user-name">${user.nombre}</div>
+                <div class="mc-user-pred">${user.goles_local} - ${user.goles_visitante}</div>
             </div>
-            ${user.puntos !== null ? `<div class="user-points ${getPuntosClass(user.puntos)}">${user.puntos} pts</div>` : ''}
+            ${user.puntos !== null ? `<div class="mc-user-pts ${getMcPuntosClass(user.puntos)}">${user.puntos} pts</div>` : '<div class="mc-user-pts mc-pts-pending">—</div>'}
         </div>
     `).join('');
 }
@@ -548,9 +577,9 @@ function mostrarUsuariosSinPrediccion(usuarios) {
     if (section) section.style.display = 'block';
     if (container) {
         container.innerHTML = usuarios.map(user => `
-            <div class="user-sin-pred">
-                <span class="user-avatar-small">😴</span>
-                <span class="user-name-small">${user.nombre}</span>
+            <div class="mc-user-no-pred">
+                <span>😴</span>
+                <span>${user.nombre}</span>
             </div>
         `).join('');
     }
@@ -564,16 +593,38 @@ function mostrarEstadisticas(predicciones, total) {
             const elem = document.getElementById(id);
             if (elem) elem.textContent = '0%';
         });
+        const barHome = document.getElementById('barHome');
+        const barDraw = document.getElementById('barDraw');
+        const barAway = document.getElementById('barAway');
+        if (barHome) barHome.style.width = '33%';
+        if (barDraw) barDraw.style.width = '34%';
+        if (barAway) barAway.style.width = '33%';
         return;
     }
 
-    const pctLocal = Math.round((predicciones.local.length / total) * 100);
-    const pctEmpate = Math.round((predicciones.empate.length / total) * 100);
+    const pctLocal     = Math.round((predicciones.local.length     / total) * 100);
+    const pctEmpate    = Math.round((predicciones.empate.length    / total) * 100);
     const pctVisitante = Math.round((predicciones.visitante.length / total) * 100);
 
-    document.getElementById('porcentajeLocal').textContent = `${pctLocal}%`;
-    document.getElementById('porcentajeEmpate').textContent = `${pctEmpate}%`;
+    document.getElementById('porcentajeLocal').textContent     = `${pctLocal}%`;
+    document.getElementById('porcentajeEmpate').textContent    = `${pctEmpate}%`;
     document.getElementById('porcentajeVisitante').textContent = `${pctVisitante}%`;
+
+    // Actualizar barras de distribución del nuevo diseño
+    const barHome = document.getElementById('barHome');
+    const barDraw = document.getElementById('barDraw');
+    const barAway = document.getElementById('barAway');
+    if (barHome) barHome.style.width = `${pctLocal}%`;
+    if (barDraw) barDraw.style.width = `${pctEmpate}%`;
+    if (barAway) barAway.style.width = `${pctVisitante}%`;
+
+    // Nombres en la distribución
+    const distNameHome = document.getElementById('distNameHome');
+    const distNameAway = document.getElementById('distNameAway');
+    if (distNameHome) distNameHome.textContent = predicciones.local.length > 0
+        ? document.getElementById('nameHome')?.textContent || 'Local' : 'Local';
+    if (distNameAway) distNameAway.textContent = predicciones.visitante.length > 0
+        ? document.getElementById('nameAway')?.textContent || 'Visitante' : 'Visitante';
 }
 
 // BANDERAS Y MAPEOS
