@@ -666,7 +666,7 @@ const ligaSelect = document.getElementById('ligaFilter');
                 letter-spacing: 1px;
             ">📅 ${fechaFormateada}</span>
         </div>
-        <span style="margin-left:auto; font-size:15px; color:rgba(255,255,255,0.25); font-family:Arial,sans-serif; align-self:center;">
+        <span style="margin-left:auto; font-size:15px; color:rgb(255, 255, 255); font-family:Arial,sans-serif; align-self:center;">
             ${datos.length} participante${datos.length !== 1 ? 's' : ''}
         </span>
     `;
@@ -686,7 +686,7 @@ const ligaSelect = document.getElementById('ligaFilter');
 
         // Fondo de fila
         const bgFila = index % 2 === 0
-            ? 'rgba(255,255,255,0.03)'
+            ? 'rgba(255, 255, 255, 0.27)'
             : 'transparent';
 
         // Acento izquierdo top 3
@@ -700,7 +700,7 @@ const ligaSelect = document.getElementById('ligaFilter');
 
         // Color nombre
         const colorNombre = esPenultimo
-            ? '#ff6b6b'
+            ? '#ffffff'
             : esTop1
                 ? '#ffffff'
                 : 'rgba(255,255,255,0.85)';
