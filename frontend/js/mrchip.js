@@ -675,6 +675,264 @@ const obtenerBandera = (nombre) => {
     return banderas[nombre] || '🏴';
 };
 
+/* ================================================================
+   NUEVAS FUNCIONES — Pegar al FINAL de mrchip.js
+   Conectan el HTML nuevo con tu backend existente
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   RANKINGS GLOBALES
+   Expone window.mrchipCargarRankings() para que el HTML lo llame
+---------------------------------------------------------------- */
+window.mrchipCargarRankings = async function () {
+    const loading      = document.getElementById('loadingRankings');
+    const listOraculo  = document.getElementById('listOraculo');
+    const listMufas    = document.getElementById('listMufas');
+
+    // Stats globales IDs
+    const statIds = {
+        masConsenso     : document.getElementById('statMasConsensoSub'),
+        marcadorTopVal  : document.getElementById('statMarcadorTopVal'),
+        marcadorTopSub  : document.getElementById('statMarcadorTopSub'),
+        totalPerfectas  : document.getElementById('statTotalPerfectasVal'),
+        mejorRachaVal   : document.getElementById('statMejorRachaVal'),
+        mejorRachaSub   : document.getElementById('statMejorRachaSub'),
+        totalPredVal    : document.getElementById('statTotalPredVal'),
+        masLocoVal      : document.getElementById('statPartidoMasLocoVal'),
+        masLocoSub      : document.getElementById('statPartidoMasLocoSub'),
+    };
+
+    if (loading) loading.style.display = 'flex';
+    if (listOraculo) listOraculo.innerHTML = '';
+    if (listMufas)   listMufas.innerHTML   = '';
+
+    try {
+        // ── Llama a tu API existente ──────────────────────────────
+        // Ajusta BASE_URL y rutas según tu config.js
+        const base = window.API_BASE_URL || '';
+
+        const [resOraculo, resMufas, resStats] = await Promise.all([
+            fetch(`${base}/api/rankings/oraculo?limit=5`,   { headers: authHeaders() }),
+            fetch(`${base}/api/rankings/mufas?limit=5`,     { headers: authHeaders() }),
+            fetch(`${base}/api/rankings/estadisticas-torneo`, { headers: authHeaders() }),
+        ]);
+
+        // ── El Oráculo ────────────────────────────────────────────
+        if (resOraculo.ok) {
+            const data = await resOraculo.json();
+            // Espera array: [{ nombre, emoji, exactos }]
+            if (listOraculo) {
+                listOraculo.innerHTML = data.length
+                    ? data.map((p, i) => renderRankRow(p, i, 'exactos', 'exactos')).join('')
+                    : '<div class="mc-rank-empty">Sin datos aún. El torneo recién empieza.</div>';
+            }
+        }
+
+        // ── El Mufas ──────────────────────────────────────────────
+        if (resMufas.ok) {
+            const data = await resMufas.json();
+            // Espera array: [{ nombre, emoji, ceros }]
+            if (listMufas) {
+                listMufas.innerHTML = data.length
+                    ? data.map((p, i) => renderRankRow(p, i, 'ceros', 'errores')).join('')
+                    : '<div class="mc-rank-empty">Nadie ha fallado tanto. Por ahora.</div>';
+            }
+        }
+
+        // ── Estadísticas globales ─────────────────────────────────
+        if (resStats.ok) {
+            const s = await resStats.json();
+            // Espera objeto con las keys de abajo — ajusta según tu backend
+
+            if (statIds.masConsenso && s.partido_mas_consenso)
+                statIds.masConsenso.textContent = s.partido_mas_consenso;
+
+            if (statIds.marcadorTopVal && s.marcador_top)
+                statIds.marcadorTopVal.textContent = s.marcador_top;
+
+            if (statIds.marcadorTopSub && s.marcador_top_veces)
+                statIds.marcadorTopSub.textContent = `Predicho ${s.marcador_top_veces} veces`;
+
+            if (statIds.totalPerfectas && s.total_perfectas !== undefined)
+                statIds.totalPerfectas.textContent = s.total_perfectas;
+
+            if (statIds.mejorRachaVal && s.mejor_racha !== undefined)
+                statIds.mejorRachaVal.textContent = s.mejor_racha;
+
+            if (statIds.mejorRachaSub && s.mejor_racha_usuario)
+                statIds.mejorRachaSub.textContent = s.mejor_racha_usuario;
+
+            if (statIds.totalPredVal && s.total_predicciones !== undefined)
+                statIds.totalPredVal.textContent = s.total_predicciones;
+
+            if (statIds.masLocoVal && s.partido_mas_polarizado)
+                statIds.masLocoVal.textContent = s.partido_mas_polarizado;
+
+            if (statIds.masLocoSub && s.partido_mas_polarizado_detalle)
+                statIds.masLocoSub.textContent = s.partido_mas_polarizado_detalle;
+        }
+
+    } catch (err) {
+        console.error('[MrChip] Error cargando rankings:', err);
+        if (listOraculo) listOraculo.innerHTML = '<div class="mc-rank-empty">Error al cargar. Intenta de nuevo.</div>';
+        if (listMufas)   listMufas.innerHTML   = '<div class="mc-rank-empty">Error al cargar. Intenta de nuevo.</div>';
+    } finally {
+        if (loading) loading.style.display = 'none';
+    }
+};
+
+/* Renderiza una fila del ranking */
+function renderRankRow(p, index, campo, labelSingular) {
+    const posClasses = ['mc-pos-1','mc-pos-2','mc-pos-3'];
+    const posClass = index < 3 ? posClasses[index] : 'mc-pos-n';
+    return `
+        <div class="mc-rank-row">
+            <div class="mc-rank-pos ${posClass}">${index + 1}</div>
+            <div class="mc-rank-avatar">${p.emoji || '👤'}</div>
+            <div class="mc-rank-name">${p.nombre || p.username || 'Usuario'}</div>
+            <div class="mc-rank-val">${p[campo] ?? 0}</div>
+            <div class="mc-rank-val-label">${labelSingular}</div>
+        </div>
+    `;
+}
+
+/* ----------------------------------------------------------------
+   SALA DE GUERRA
+   Expone window.mrchipCargarGuerra(filtro) para que el HTML lo llame
+   filtro: 'hoy' | 'todos' | 'pendientes' | 'jugados'
+---------------------------------------------------------------- */
+window.mrchipCargarGuerra = async function (filtro = 'hoy') {
+    const loading   = document.getElementById('loadingGuerra');
+    const grid      = document.getElementById('guerraGrid');
+    const empty     = document.getElementById('guerraEmpty');
+
+    if (loading) loading.style.display = 'flex';
+    if (grid)    grid.innerHTML = '';
+    if (empty)   empty.style.display = 'none';
+
+    try {
+        const base = window.API_BASE_URL || '';
+
+        // Construye query param según filtro
+        const params = new URLSearchParams({ filtro });
+        const res = await fetch(`${base}/api/partidos/sala-guerra?${params}`, {
+            headers: authHeaders()
+        });
+
+        if (!res.ok) throw new Error('Error al cargar partidos');
+
+        const partidos = await res.json();
+        // Espera array de objetos partido con sus estadísticas de predicciones
+
+        if (!partidos.length) {
+            if (grid)  grid.style.display = 'none';
+            if (empty) empty.style.display = '';
+            return;
+        }
+
+        if (grid) {
+            grid.style.display = '';
+            grid.innerHTML = partidos.map(p => renderGuerraCard(p)).join('');
+        }
+
+    } catch (err) {
+        console.error('[MrChip] Error cargando sala de guerra:', err);
+        if (grid) grid.innerHTML = `
+            <div class="mc-empty" style="grid-column:1/-1;">
+                <div class="mc-empty-icon">⚠️</div>
+                <h3>Error al cargar partidos</h3>
+                <p>Verifica la conexión e intenta de nuevo.</p>
+            </div>
+        `;
+    } finally {
+        if (loading) loading.style.display = 'none';
+    }
+};
+
+/* Renderiza una card de partido para la Sala de Guerra */
+function renderGuerraCard(p) {
+    // p esperado: { id, equipo_local, equipo_visitante, bandera_local, bandera_visitante,
+    //              fecha, fase, estado, goles_local, goles_visitante,
+    //              total_pred, pct_local, pct_empate, pct_visitante }
+    const estado = p.estado || 'pendiente';
+    const liveClass = estado === 'en_vivo' ? 'mc-guerra-live' : '';
+
+    const score1 = (p.goles_local    !== null && p.goles_local    !== undefined) ? p.goles_local    : '—';
+    const score2 = (p.goles_visitante !== null && p.goles_visitante !== undefined) ? p.goles_visitante : '—';
+
+    const pctH = (p.pct_local     || 0) + '%';
+    const pctD = (p.pct_empate    || 0) + '%';
+    const pctA = (p.pct_visitante || 0) + '%';
+
+    const estadoBadge = {
+        pendiente : '<span class="mc-status-badge mc-status-pending"><span class="mc-status-dot"></span>Pendiente</span>',
+        en_vivo   : '<span class="mc-status-badge mc-status-live"><span class="mc-status-dot"></span>En Vivo</span>',
+        finalizado: '<span class="mc-status-badge mc-status-finished"><span class="mc-status-dot"></span>Finalizado</span>',
+    }[estado] || '';
+
+    return `
+        <div class="mc-guerra-match-card ${liveClass}" onclick="irAAnalisisPartido('${p.id}')">
+            <div class="mc-guerra-card-meta">
+                <span class="mc-guerra-card-date">${p.fecha || ''}</span>
+                <span class="mc-guerra-card-phase">${p.fase || ''}</span>
+            </div>
+            <div class="mc-guerra-teams">
+                <div class="mc-guerra-team">
+                    <div class="mc-guerra-flag">${p.bandera_local || '🏠'}</div>
+                    <div class="mc-guerra-name">${p.equipo_local || 'LOCAL'}</div>
+                    <div class="mc-guerra-score">${score1}</div>
+                </div>
+                <div class="mc-guerra-vs">VS</div>
+                <div class="mc-guerra-team">
+                    <div class="mc-guerra-flag">${p.bandera_visitante || '✈️'}</div>
+                    <div class="mc-guerra-name">${p.equipo_visitante || 'VISITANTE'}</div>
+                    <div class="mc-guerra-score">${score2}</div>
+                </div>
+            </div>
+            <div class="mc-guerra-dist">
+                <div class="mc-guerra-dist-bar">
+                    <div class="mc-dist-seg mc-dist-home" style="width:${pctH}"></div>
+                    <div class="mc-dist-seg mc-dist-draw" style="width:${pctD}"></div>
+                    <div class="mc-dist-seg mc-dist-away" style="width:${pctA}"></div>
+                </div>
+                <div class="mc-guerra-dist-labels">
+                    <span>${pctH}</span>
+                    <span>${pctD}</span>
+                    <span>${pctA}</span>
+                </div>
+            </div>
+            <div class="mc-guerra-card-footer">
+                <span class="mc-guerra-total">
+                    <strong>${p.total_pred || 0}</strong> predicciones
+                </span>
+                <button class="mc-guerra-btn-analizar">
+                    <i class="bi bi-bar-chart-fill"></i> Analizar
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+/* Al hacer click en una card de la Sala de Guerra,
+   cambia al tab de Análisis y carga ese partido */
+function irAAnalisisPartido(partidoId) {
+    // Cambiar al tab de análisis
+    const tabAnalisis = document.getElementById('tabAnalisis');
+    if (tabAnalisis) tabAnalisis.click();
+
+    // Seleccionar el partido en el select
+    const select = document.getElementById('partidoSelect');
+    if (select && partidoId) {
+        select.value = partidoId;
+        select.dispatchEvent(new Event('change'));
+    }
+}
+
+/* Helper: headers de autenticación (reutiliza lo que ya tengas en auth.js) */
+function authHeaders() {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+}
 
 // LOGOUT
 // ===================================
