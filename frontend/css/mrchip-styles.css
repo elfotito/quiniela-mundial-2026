@@ -1212,7 +1212,6 @@
 
     .mc-container { padding: 24px 16px; }
 
-    .mc-tabs-inner { padding: 0 16px; }
     .mc-tab { padding: 14px 16px; font-size: 12px; }
 
     .mc-vs-arena { flex-direction: column; padding: 32px 20px; gap: 16px; }
@@ -1256,4 +1255,69 @@
     .mc-ticker-items { font-size: 11px; }
     .mc-vs-card { border-radius: 12px; }
     .mc-col-header { padding: 18px 14px; }
+}
+
+/* ================================================================
+   TABS BAR - VERSIÓN MÓVIL CON SCROLL HORIZONTAL
+   ================================================================ */
+@media (max-width: 768px) {
+    /* Contenedor principal con scroll */
+    .mc-tabs-bar {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+        scrollbar-width: none; /* Oculta scrollbar en Firefox */
+        -ms-overflow-style: none; /* Oculta scrollbar en IE/Edge */
+    }
+    
+    /* Oculta la barra de scroll en WebKit (Chrome, Safari) */
+    .mc-tabs-bar::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Contenedor interno flexible */
+    .mc-tabs-inner {
+        padding: 0 8px;
+        gap: 0;
+        min-width: max-content; /* Permite que las tabs ocupen su espacio natural */
+        position: relative;
+    }
+    
+    /* Estilo de cada tab en móvil */
+    .mc-tab {
+        padding: 14px 16px;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        flex-shrink: 0; /* Evita que se compriman */
+        gap: 6px;
+    }
+    
+    .mc-tab i {
+        font-size: 14px;
+    }
+    
+    /* Badge más compacto */
+    .mc-tab-badge {
+        font-size: 8px;
+        padding: 1px 5px;
+        margin-left: 2px;
+    }
+    
+    /* Indicador animado - mantener funcionalidad */
+    .mc-tab-indicator {
+        position: absolute;
+        bottom: 0;
+    }
+    
+    /* Opcional: Gradiente sutil a la derecha para indicar que hay más contenido */
+    .mc-tabs-bar::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 40px;
+        background: linear-gradient(to right, transparent, var(--dark-card));
+        pointer-events: none;
+        z-index: 91;
+    }
 }
