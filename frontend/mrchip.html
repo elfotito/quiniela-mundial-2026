@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png">
     <link rel="shortcut icon" href="img/icon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
     <link rel="stylesheet" href="css/mrchip-styles.css">
 </head>
@@ -139,7 +138,7 @@
                     <span class="mc-eyebrow-dot"></span>
                     <span class="mc-eyebrow-dot"></span>
                     <span class="mc-eyebrow-dot"></span>
-                    <span class="mc-eyebrow-text">MÓDULO DE ANÁLISIS PREDICTIVO</span>
+                    <span class="mc-eyebrow-text">MÓDULO DE ANÁLISIS PREDICTIVO · QUINIELA CARRISAN 2026</span>
                 </div>
 
                 <h1 class="mc-hero-title">
@@ -149,8 +148,8 @@
 
                 <p class="mc-hero-sub">
                     Soy una IA con gafas de pasta, dos doctorados ficticios y acceso a 
-                    millones de datos que no pediste. Tengo las estadísticas. 
-                    <em>Tú tienes las excusas.</em> Que empiece el análisis.
+                    <em>millones</em> de datos que no pediste. Tengo las estadísticas. 
+                    Tú tienes las excusas. Que empiece el análisis.
                 </p>
 
                 <div class="mc-hero-badges">
@@ -179,7 +178,7 @@
 
         <!-- Ticker de stats absurdas -->
         <div class="mc-ticker-bar">
-            <span class="mc-ticker-badge">📡</span>
+            <span class="mc-ticker-badge">📡 MR. CHIP DATA FEED</span>
             <div class="mc-ticker-track">
                 <div class="mc-ticker-items">
                     <span>En los últimos 12 mundiales, cuando un portero es zurdo y su equipo viste de azul marino, la tasa de derrota es 61.3% · Coincidencia, ¿verdad?</span>
@@ -242,7 +241,7 @@
             <!-- Selector de Partido -->
             <section class="mc-selector-section">
                 <div class="mc-selector-header">
-                    <div class="mc-selector-icon">🤖</div>
+                    <div class="mc-selector-icon">⚽</div>
                     <div>
                         <div class="mc-selector-title">Selecciona el Partido</div>
                         <div class="mc-selector-sub">Mr. Chip procesará todas las predicciones registradas</div>
@@ -841,20 +840,86 @@
         const btn = document.getElementById('btnCompartirVS');
         if (!btn) return;
 
-        // Datos actuales del partido
-        const flag1  = document.getElementById('flagHome')?.textContent  || '🏠';
-        const flag2  = document.getElementById('flagAway')?.textContent  || '✈️';
-        const name1  = document.getElementById('nameHome')?.textContent  || 'LOCAL';
-        const name2  = document.getElementById('nameAway')?.textContent  || 'VISITANTE';
-        const score1 = document.getElementById('scoreHome')?.textContent || '—';
-        const score2 = document.getElementById('scoreAway')?.textContent || '—';
-        const pctH   = document.getElementById('porcentajeLocal')?.textContent  || '0%';
-        const pctD   = document.getElementById('porcentajeEmpate')?.textContent || '0%';
-        const pctA   = document.getElementById('porcentajeVisitante')?.textContent || '0%';
-        const total  = document.getElementById('totalPredicciones')?.textContent || '0';
-        const fecha  = document.getElementById('matchDate')?.textContent  || '';
-        const fase   = document.getElementById('matchPhase')?.textContent || '';
+        // ── Datos del partido ─────────────────────────────────────
+        const flag1      = document.getElementById('flagHome')?.textContent       || '🏠';
+        const flag2      = document.getElementById('flagAway')?.textContent       || '✈️';
+        const name1      = document.getElementById('nameHome')?.textContent       || 'LOCAL';
+        const name2      = document.getElementById('nameAway')?.textContent       || 'VISITANTE';
+        const score1     = document.getElementById('scoreHome')?.textContent      || '—';
+        const score2     = document.getElementById('scoreAway')?.textContent      || '—';
+        const pctH       = document.getElementById('porcentajeLocal')?.textContent   || '0%';
+        const pctD       = document.getElementById('porcentajeEmpate')?.textContent  || '0%';
+        const pctA       = document.getElementById('porcentajeVisitante')?.textContent || '0%';
+        const total      = document.getElementById('totalPredicciones')?.textContent || '0';
+        const fecha      = document.getElementById('matchDate')?.textContent      || '';
+        const fase       = document.getElementById('matchPhase')?.textContent     || '';
         const comentario = document.getElementById('chipCommentText')?.textContent || '';
+
+        // ── Leer usuarios de las 3 columnas del DOM ───────────────
+        // Cada .mc-user-card tiene: .mc-user-name, .mc-user-pred, .mc-user-pts
+        function leerUsuariosColumna(containerId) {
+            const cards = document.querySelectorAll(`#${containerId} .mc-user-card`);
+            return Array.from(cards).map(card => ({
+                nombre : card.querySelector('.mc-user-name')?.textContent?.trim() || '',
+                pred   : card.querySelector('.mc-user-pred')?.textContent?.trim() || '',
+                pts    : card.querySelector('.mc-user-pts')?.textContent?.trim()  || '—',
+                ptsClass: card.querySelector('.mc-user-pts')?.className || '',
+            }));
+        }
+
+        const usuariosLocal     = leerUsuariosColumna('usersLocal');
+        const usuariosEmpate    = leerUsuariosColumna('usersEmpate');
+        const usuariosVisitante = leerUsuariosColumna('usersVisitante');
+
+        // Determina si el partido ya tiene resultado (para mostrar pts o —)
+        const hayResultado = score1 !== '—' || score2 !== '—';
+
+        // ── Helper: color de pts según clase ─────────────────────
+        function colorPts(className) {
+            if (className.includes('mc-pts-perfect')) return '#00D084';
+            if (className.includes('mc-pts-good'))    return '#5bb3ff';
+            if (className.includes('mc-pts-partial'))  return '#FFB800';
+            if (className.includes('mc-pts-none'))     return '#ff6b6b';
+            return '#666';
+        }
+
+        // ── Helper: renderizar lista de usuarios para la imagen ───
+        function renderUsersHTML(usuarios, accentColor) {
+            if (!usuarios.length) {
+                return `<div style="font-size:11px; color:#444; font-style:italic; padding:8px 0;">Sin predicciones</div>`;
+            }
+            return usuarios.map(u => `
+                <div style="
+                    display:flex; align-items:center; justify-content:space-between;
+                    padding: 7px 10px;
+                    background: rgba(255,255,255,0.03);
+                    border: 1px solid rgba(255,255,255,0.06);
+                    border-radius: 7px;
+                    margin-bottom: 5px;
+                    gap: 8px;
+                ">
+                    <div style="flex:1; min-width:0;">
+                        <div style="font-size:12px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                            ${u.nombre}
+                        </div>
+                        <div style="font-size:11px; font-weight:800; color:${accentColor}; margin-top:1px;">
+                            ${u.pred}
+                        </div>
+                    </div>
+                    <div style="
+                        font-size:11px; font-weight:900;
+                        color:${hayResultado ? colorPts(u.ptsClass) : '#555'};
+                        white-space:nowrap; flex-shrink:0;
+                        padding: 2px 8px;
+                        background: rgba(255,255,255,0.04);
+                        border-radius: 5px;
+                        border: 1px solid rgba(255,255,255,0.07);
+                    ">
+                        ${hayResultado ? u.pts : '—'}
+                    </div>
+                </div>
+            `).join('');
+        }
 
         // Estado del botón durante generación
         const originalHTML = btn.innerHTML;
@@ -862,161 +927,174 @@
         btn.disabled = true;
 
         try {
-            // Construir el elemento off-screen
             const el = document.createElement('div');
             el.id = 'vsShareTarget';
             el.style.cssText = `
                 position: fixed;
                 left: -9999px; top: 0;
                 width: 720px;
-                background: #0a0a0a;
-                font-family: 'Segoe UI', sans-serif;
+                background: #000;
+                font-family: 'Segoe UI', Arial, sans-serif;
                 overflow: hidden;
                 border-radius: 0;
             `;
 
             el.innerHTML = `
-                <!-- Fondo con grid -->
-                <div style="
-                    background: #000;
-                    position: relative;
-                    overflow: hidden;
-                ">
+                <div style="background:#000; position:relative; overflow:hidden;">
+
                     <!-- Grid decorativo -->
                     <div style="
-                        position:absolute; inset:0;
+                        position:absolute; inset:0; pointer-events:none;
                         background:
-                            repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px),
-                            repeating-linear-gradient(0deg,  rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 64px);
-                        pointer-events:none;
+                            repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px),
+                            repeating-linear-gradient(0deg,  rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px);
                     "></div>
                     <!-- Glow azul -->
                     <div style="
-                        position:absolute; right:-60px; top:50%;
-                        transform:translateY(-50%);
+                        position:absolute; right:-60px; top:40%;
+                        transform:translateY(-50%); pointer-events:none;
                         width:500px; height:500px;
-                        background:radial-gradient(circle, rgba(0,102,204,0.2) 0%, transparent 70%);
-                        pointer-events:none;
+                        background:radial-gradient(circle, rgba(0,102,204,0.18) 0%, transparent 70%);
                     "></div>
 
-                    <!-- Contenido -->
-                    <div style="position:relative; z-index:2; padding: 36px 48px 32px;">
+                    <div style="position:relative; z-index:2; padding:32px 40px 28px;">
 
-                        <!-- Header: logo + título -->
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:28px;">
+                        <!-- ① HEADER -->
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
                             <div>
-                                <div style="font-size:10px; font-weight:800; letter-spacing:3px; color:#C9A84C; text-transform:uppercase; margin-bottom:4px;">
+                                <div style="font-size:9px; font-weight:800; letter-spacing:3px; color:#C9A84C; text-transform:uppercase; margin-bottom:3px;">
                                     QUINIELA CARRISAN 2026
                                 </div>
-                                <div style="font-size:22px; font-weight:900; color:#fff; letter-spacing:-1px;">
+                                <div style="font-size:20px; font-weight:900; color:#fff; letter-spacing:-0.5px;">
                                     🤖 MR. CHIP ANALYSIS
                                 </div>
                             </div>
                             <div style="text-align:right;">
-                                <div style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:2px;">${fecha}</div>
+                                <div style="font-size:10px; color:rgba(255,255,255,0.35); margin-bottom:3px;">${fecha}</div>
                                 <div style="
-                                    display:inline-block;
-                                    padding:4px 12px;
-                                    background:rgba(0,102,204,0.2);
-                                    border:1px solid rgba(0,102,204,0.5);
-                                    border-radius:20px;
-                                    font-size:10px; font-weight:800;
-                                    color:#5bb3ff; letter-spacing:1px;
-                                    text-transform:uppercase;
+                                    display:inline-block; padding:3px 10px;
+                                    background:rgba(0,102,204,0.2); border:1px solid rgba(0,102,204,0.5);
+                                    border-radius:20px; font-size:9px; font-weight:800;
+                                    color:#5bb3ff; letter-spacing:1px; text-transform:uppercase;
                                 ">${fase}</div>
                             </div>
                         </div>
 
                         <!-- Separador gold -->
-                        <div style="height:2px; background:linear-gradient(90deg, #C9A84C, transparent); margin-bottom:32px;"></div>
+                        <div style="height:2px; background:linear-gradient(90deg,#C9A84C,transparent); margin-bottom:24px;"></div>
 
-                        <!-- Equipos VS -->
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:32px;">
-
-                            <!-- Local -->
+                        <!-- ② EQUIPOS VS -->
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
                             <div style="flex:1; text-align:center;">
-                                <div style="font-size:72px; line-height:1; margin-bottom:12px; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.8));">${flag1}</div>
-                                <div style="font-size:18px; font-weight:900; letter-spacing:2px; color:#fff; text-transform:uppercase; margin-bottom:8px;">${name1}</div>
-                                <div style="font-size:56px; font-weight:900; color:#FFD700; line-height:1; text-shadow:0 0 30px rgba(255,215,0,0.5);">${score1}</div>
-                                <div style="font-size:10px; color:rgba(255,255,255,0.3); letter-spacing:2px; text-transform:uppercase; margin-top:6px;">LOCAL</div>
+                                <div style="font-size:60px; line-height:1; margin-bottom:8px;">${flag1}</div>
+                                <div style="font-size:15px; font-weight:900; letter-spacing:2px; color:#fff; text-transform:uppercase; margin-bottom:6px;">${name1}</div>
+                                <div style="font-size:48px; font-weight:900; color:#FFD700; line-height:1; text-shadow:0 0 20px rgba(255,215,0,0.5);">${score1}</div>
+                                <div style="font-size:9px; color:rgba(255,255,255,0.25); letter-spacing:2px; text-transform:uppercase; margin-top:4px;">LOCAL</div>
                             </div>
-
-                            <!-- VS Orb -->
-                            <div style="flex-shrink:0; width:88px; height:88px; border-radius:50%;
-                                background:radial-gradient(circle, rgba(255,215,0,0.15), rgba(255,215,0,0.02));
-                                border:2px solid rgba(255,215,0,0.3);
+                            <div style="
+                                flex-shrink:0; width:72px; height:72px; border-radius:50%;
+                                background:radial-gradient(circle, rgba(255,215,0,0.12), transparent);
+                                border:2px solid rgba(255,215,0,0.25);
                                 display:flex; align-items:center; justify-content:center;
-                                box-shadow:0 0 30px rgba(255,215,0,0.1);">
-                                <span style="font-size:20px; font-weight:900; color:#FFD700; letter-spacing:3px;">VS</span>
+                            ">
+                                <span style="font-size:16px; font-weight:900; color:#FFD700; letter-spacing:3px;">VS</span>
                             </div>
-
-                            <!-- Visitante -->
                             <div style="flex:1; text-align:center;">
-                                <div style="font-size:72px; line-height:1; margin-bottom:12px; filter:drop-shadow(0 8px 20px rgba(0,0,0,0.8));">${flag2}</div>
-                                <div style="font-size:18px; font-weight:900; letter-spacing:2px; color:#fff; text-transform:uppercase; margin-bottom:8px;">${name2}</div>
-                                <div style="font-size:56px; font-weight:900; color:#FFD700; line-height:1; text-shadow:0 0 30px rgba(255,215,0,0.5);">${score2}</div>
-                                <div style="font-size:10px; color:rgba(255,255,255,0.3); letter-spacing:2px; text-transform:uppercase; margin-top:6px;">VISITANTE</div>
+                                <div style="font-size:60px; line-height:1; margin-bottom:8px;">${flag2}</div>
+                                <div style="font-size:15px; font-weight:900; letter-spacing:2px; color:#fff; text-transform:uppercase; margin-bottom:6px;">${name2}</div>
+                                <div style="font-size:48px; font-weight:900; color:#FFD700; line-height:1; text-shadow:0 0 20px rgba(255,215,0,0.5);">${score2}</div>
+                                <div style="font-size:9px; color:rgba(255,255,255,0.25); letter-spacing:2px; text-transform:uppercase; margin-top:4px;">VISITANTE</div>
                             </div>
                         </div>
 
-                        <!-- Separador -->
-                        <div style="height:1px; background:rgba(255,255,255,0.07); margin-bottom:24px;"></div>
-
-                        <!-- Distribución -->
-                        <div style="margin-bottom:24px;">
-                            <div style="font-size:10px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-bottom:12px;">
-                                DISTRIBUCIÓN · ${total} predicciones registradas
+                        <!-- ③ DISTRIBUCIÓN -->
+                        <div style="margin-bottom:20px;">
+                            <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:10px;">
+                                DISTRIBUCIÓN · ${total} predicciones
                             </div>
-                            <!-- Barra -->
-                            <div style="height:12px; border-radius:6px; background:#1a1a1a; display:flex; overflow:hidden; margin-bottom:10px;">
+                            <div style="height:10px; border-radius:5px; background:#1a1a1a; display:flex; overflow:hidden; margin-bottom:8px;">
                                 <div style="width:${pctH}; background:#0066CC; height:100%;"></div>
                                 <div style="width:${pctD}; background:#FFB800; height:100%;"></div>
                                 <div style="width:${pctA}; background:#FF4444; height:100%;"></div>
                             </div>
-                            <!-- Labels -->
                             <div style="display:flex; justify-content:space-between;">
-                                <div style="text-align:left;">
-                                    <div style="font-size:20px; font-weight:900; color:#5bb3ff;">${pctH}</div>
-                                    <div style="font-size:10px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">${name1}</div>
-                                </div>
-                                <div style="text-align:center;">
-                                    <div style="font-size:20px; font-weight:900; color:#FFB800;">${pctD}</div>
-                                    <div style="font-size:10px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">Empate</div>
-                                </div>
-                                <div style="text-align:right;">
-                                    <div style="font-size:20px; font-weight:900; color:#ff6b6b;">${pctA}</div>
-                                    <div style="font-size:10px; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:1px;">${name2}</div>
-                                </div>
+                                <div><span style="font-size:16px; font-weight:900; color:#5bb3ff;">${pctH}</span> <span style="font-size:9px; color:rgba(255,255,255,0.3); text-transform:uppercase;">${name1}</span></div>
+                                <div style="text-align:center;"><span style="font-size:16px; font-weight:900; color:#FFB800;">${pctD}</span> <span style="font-size:9px; color:rgba(255,255,255,0.3); text-transform:uppercase;">Empate</span></div>
+                                <div style="text-align:right;"><span style="font-size:16px; font-weight:900; color:#ff6b6b;">${pctA}</span> <span style="font-size:9px; color:rgba(255,255,255,0.3); text-transform:uppercase;">${name2}</span></div>
                             </div>
                         </div>
 
-                        <!-- Comentario Mr. Chip -->
+                        <!-- Separador -->
+                        <div style="height:1px; background:rgba(255,255,255,0.06); margin-bottom:20px;"></div>
+
+                        <!-- ④ BANDOS — 3 columnas de usuarios -->
+                        <div style="margin-bottom:${comentario ? '20px' : '24px'};">
+                            <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:14px;">
+                                ⚔️ LOS BANDOS · ${hayResultado ? 'con puntos obtenidos' : 'partido pendiente'}
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+
+                                <!-- Columna Local -->
+                                <div>
+                                    <div style="
+                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
+                                        color:#5bb3ff; text-transform:uppercase; margin-bottom:8px;
+                                        padding-bottom:6px; border-bottom:1px solid rgba(0,102,204,0.3);
+                                    ">
+                                        🏠 ${name1} (${usuariosLocal.length})
+                                    </div>
+                                    ${renderUsersHTML(usuariosLocal, '#5bb3ff')}
+                                </div>
+
+                                <!-- Columna Empate -->
+                                <div>
+                                    <div style="
+                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
+                                        color:#FFB800; text-transform:uppercase; margin-bottom:8px;
+                                        padding-bottom:6px; border-bottom:1px solid rgba(255,184,0,0.3);
+                                    ">
+                                        🤝 Empate (${usuariosEmpate.length})
+                                    </div>
+                                    ${renderUsersHTML(usuariosEmpate, '#FFB800')}
+                                </div>
+
+                                <!-- Columna Visitante -->
+                                <div>
+                                    <div style="
+                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
+                                        color:#ff6b6b; text-transform:uppercase; margin-bottom:8px;
+                                        padding-bottom:6px; border-bottom:1px solid rgba(255,68,68,0.3);
+                                    ">
+                                        ✈️ ${name2} (${usuariosVisitante.length})
+                                    </div>
+                                    ${renderUsersHTML(usuariosVisitante, '#ff6b6b')}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- ⑤ COMENTARIO MR. CHIP (opcional) -->
                         ${comentario ? `
                         <div style="
                             background:rgba(0,102,204,0.06);
                             border:1px solid rgba(0,102,204,0.2);
                             border-left:3px solid #FFD700;
-                            border-radius:10px;
-                            padding:16px 20px;
-                            margin-bottom:24px;
-                            display:flex; align-items:flex-start; gap:12px;
+                            border-radius:8px; padding:12px 16px;
+                            margin-bottom:20px;
+                            display:flex; align-items:flex-start; gap:10px;
                         ">
-                            <span style="font-size:24px; line-height:1; flex-shrink:0;">🤖</span>
+                            <span style="font-size:20px; line-height:1; flex-shrink:0;">🤖</span>
                             <div>
-                                <div style="font-size:9px; font-weight:900; letter-spacing:2px; color:#FFD700; text-transform:uppercase; margin-bottom:5px;">MR. CHIP DICE:</div>
-                                <div style="font-size:12px; color:rgba(255,255,255,0.75); line-height:1.6; font-style:italic;">"${comentario}"</div>
+                                <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:#FFD700; text-transform:uppercase; margin-bottom:4px;">MR. CHIP DICE:</div>
+                                <div style="font-size:11px; color:rgba(255,255,255,0.72); line-height:1.6; font-style:italic;">"${comentario}"</div>
                             </div>
                         </div>
                         ` : ''}
 
-                        <!-- Footer de imagen -->
-                        <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px; border-top:1px solid rgba(255,255,255,0.07);">
-                            <div style="font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:1px;">
-                                quinielacarrisan.com.ve
-                            </div>
-                            <div style="font-size:10px; font-weight:800; letter-spacing:2px; color:rgba(255,215,0,0.4); text-transform:uppercase;">
-                                FIFA WORLD CUP 2026™
-                            </div>
+                        <!-- ⑥ FOOTER -->
+                        <div style="display:flex; align-items:center; justify-content:space-between; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size:10px; color:rgba(255,255,255,0.2); letter-spacing:1px;">quinielacarrisan.com.ve</div>
+                            <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,215,0,0.35); text-transform:uppercase;">FIFA WORLD CUP 2026™</div>
                         </div>
 
                     </div>
