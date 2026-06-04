@@ -291,10 +291,12 @@
         els.badge.textContent = total;
     }
 
-    function formatHora(ts) {
-        const d = new Date(ts);
-        return d.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' });
-    }
+  function formatHora(ts) {
+    const d = new Date(ts);
+    const fecha = d.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit' });
+    const hora  = d.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' });
+    return `${fecha} ${hora}`;
+}
 
     function escapeHTML(str) {
         return String(str)
