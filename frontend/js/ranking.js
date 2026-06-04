@@ -686,7 +686,7 @@ const ligaSelect = document.getElementById('ligaFilter');
 
         // Fondo de fila
         const bgFila = index % 2 === 0
-            ? 'rgba(255, 255, 255, 0.13)'
+            ? 'rgba(255, 255, 255, 0.1)'
             : 'transparent';
 
         // Acento izquierdo top 3
