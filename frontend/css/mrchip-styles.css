@@ -1308,16 +1308,4 @@
         bottom: 0;
     }
     
-    /* Opcional: Gradiente sutil a la derecha para indicar que hay más contenido */
-    .mc-tabs-bar::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 40px;
-        background: linear-gradient(to right, transparent, var(--dark-card));
-        pointer-events: none;
-        z-index: 91;
-    }
 }
