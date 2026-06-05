@@ -1691,7 +1691,7 @@ app.get('/api/chat/mensajes', async (req, res) => {
 app.post('/api/chat/mensajes', async (req, res) => {
     try {
         const usuarioId = req.headers['x-usuario-id'];
-        const { mensaje } = req.body;
+        const { mensaje, imagen_url } = req.body;
 
         if (!usuarioId) {
             return res.status(401).json({ error: 'No autorizado' });
