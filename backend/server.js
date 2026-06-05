@@ -52,6 +52,22 @@ const pool = new Pool({
     allowExitOnIdle: true
     });            
 
+const multer = require('multer');
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+);
+
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
+    fileFilter: (req, file, cb) => {
+        const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        allowed.includes(file.mimetype) ? cb(null, true) : cb(new Error('Tipo de archivo no permitido'));
+    }
+});
 // Probar conexión
 pool.connect((err, client, release) => {
     if (err) {
@@ -1658,7 +1674,7 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
 app.get('/api/chat/mensajes', async (req, res) => {
     try {
         const result = await pool.query(`
-            SELECT id, usuario_id, usuario_nombre, mensaje, created_at
+            SELECT id, usuario_id, usuario_nombre, mensaje, imagen_url, created_at
             FROM chat_mensajes
             ORDER BY created_at ASC
             LIMIT 100
@@ -1725,6 +1741,35 @@ app.delete('/api/chat/mensajes/:id', verificarAdmin, async (req, res) => {
     } catch (error) {
         console.error('❌ Error eliminando mensaje:', error);
         res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+app.post('/api/chat/imagen', upload.single('imagen'), async (req, res) => {
+    try {
+        const usuarioId = req.headers['x-usuario-id'];
+        if (!usuarioId) return res.status(401).json({ error: 'No autorizado' });
+        if (!req.file) return res.status(400).json({ error: 'No se recibió imagen' });
+
+        const ext = req.file.mimetype.split('/')[1];
+        const filename = `${Date.now()}-${usuarioId}.${ext}`;
+
+        const { error } = await supabase.storage
+            .from('chat-imagenes')
+            .upload(filename, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: false
+            });
+
+        if (error) throw error;
+
+        const { data } = supabase.storage
+            .from('chat-imagenes')
+            .getPublicUrl(filename);
+
+        res.json({ success: true, url: data.publicUrl });
+
+    } catch (error) {
+        console.error('❌ Error subiendo imagen:', error);
+        res.status(500).json({ error: error.message || 'Error subiendo imagen' });
     }
 });
 // ===============================================

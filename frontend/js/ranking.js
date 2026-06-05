@@ -657,10 +657,10 @@ const ligaSelect = document.getElementById('ligaFilter');
         <div style="display:flex; flex-direction:column; gap:4px;">
             <div style="display:flex; align-items:center; gap:10px;">
                 <span style="color:#C9A84C; font-weight:700;">🌎</span>
-                <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:20px;">${ligaNombre}</span>
+                <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:22px;">${ligaNombre}</span>
             </div>
             <span style="
-                font-size: 14px;
+                font-size: 18px;
                 color: rgba(255,255,255,0.8);
                 font-family: Arial, sans-serif;
                 letter-spacing: 1px;
