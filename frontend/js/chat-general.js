@@ -293,7 +293,9 @@
 
   function formatHora(ts) {
     const d = new Date(ts);
-    const fecha = d.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit' });
+    const dia = d.toLocaleDateString('es-VE', { day: '2-digit' });
+    const mes = d.toLocaleDateString('es-VE', { month: 'short' });
+    const fecha = `${dia}-${mes}`;
     const hora  = d.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' });
     return `${fecha} ${hora}`;
 }
