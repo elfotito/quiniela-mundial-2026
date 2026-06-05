@@ -331,7 +331,6 @@ const EMOJIS = ['😂','🤣','😭','😅','😬','🫠','😎','🤔','😱','
         .cg-card {
             background: var(--dark-card, #1a1a1a);
             border: 1px solid rgba(255,215,0,0.15);
-            border-radius: 12px;
             overflow: hidden;
             margin-top: 24px;
             font-family: inherit;
