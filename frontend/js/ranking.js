@@ -727,14 +727,14 @@ const ligaSelect = document.getElementById('ligaFilter');
                 border-left: ${borderLeft};
             ">
                 <td style="
-                    padding: 16px 12px;
+                    padding: 14px 12px;
                     font-size: ${esTop3 ? '30px' : '22px'};
                     text-align: center;
                     font-family: Arial Black, Arial, sans-serif;
                     color: rgba(255,255,255,0.4);
                 ">${medalla}</td>
                 <td style="
-                    padding: 16px 12px;
+                    padding: 14px 12px;
                     font-size: 26px;
                     color: ${colorNombre};
                     font-weight: ${fontNombre};
@@ -742,7 +742,7 @@ const ligaSelect = document.getElementById('ligaFilter');
                     letter-spacing: -0.5px;
                 ">${nombre}</td>
                 <td style="
-                    padding: 16px 12px;
+                    padding: 14px 12px;
                     font-size: ${sizePts};
                     text-align: center;
                     color: ${colorPts};
