@@ -656,17 +656,17 @@ const ligaSelect = document.getElementById('ligaFilter');
     document.getElementById('share-liga-badge').innerHTML = `
         <div style="display:flex; flex-direction:column; gap:4px;">
             <div style="display:flex; align-items:center; gap:10px;">
-                <span style="color:#C9A84C; font-weight:700;">📊</span>
+                <span style="color:#C9A84C; font-weight:700;">🌎</span>
                 <span style="color:rgba(255,255,255,0.8); font-weight:700; font-size:20px;">${ligaNombre}</span>
             </div>
             <span style="
                 font-size: 14px;
-                color: rgba(255,255,255,0.3);
+                color: rgba(255,255,255,0.8);
                 font-family: Arial, sans-serif;
                 letter-spacing: 1px;
             ">📅 ${fechaFormateada}</span>
         </div>
-        <span style="margin-left:auto; font-size:15px; color:rgb(255, 255, 255); font-family:Arial,sans-serif; align-self:center;">
+        <span style="margin-left:auto; font-size:24px; color:rgb(255, 255, 255); font-family:Arial,sans-serif; align-self:center;">
             ${datos.length} participante${datos.length !== 1 ? 's' : ''}
         </span>
     `;
@@ -727,14 +727,14 @@ const ligaSelect = document.getElementById('ligaFilter');
                 border-left: ${borderLeft};
             ">
                 <td style="
-                    padding: 22px 12px;
+                    padding: 16px 12px;
                     font-size: ${esTop3 ? '30px' : '22px'};
                     text-align: center;
                     font-family: Arial Black, Arial, sans-serif;
                     color: rgba(255,255,255,0.4);
                 ">${medalla}</td>
                 <td style="
-                    padding: 22px 12px;
+                    padding: 16px 12px;
                     font-size: 26px;
                     color: ${colorNombre};
                     font-weight: ${fontNombre};
@@ -742,7 +742,7 @@ const ligaSelect = document.getElementById('ligaFilter');
                     letter-spacing: -0.5px;
                 ">${nombre}</td>
                 <td style="
-                    padding: 22px 12px;
+                    padding: 16px 12px;
                     font-size: ${sizePts};
                     text-align: center;
                     color: ${colorPts};
