@@ -1702,6 +1702,7 @@ app.post('/api/chat/mensajes', async (req, res) => {
         if (mensaje.trim().length > 500) {
             return res.status(400).json({ error: 'Mensaje demasiado largo (máx 500 caracteres)' });
         }
+        
 
         // Obtener nombre del usuario
         const usuarioResult = await pool.query(
@@ -1720,9 +1721,9 @@ const result = await pool.query(`
 
         res.status(201).json({ success: true, mensaje: result.rows[0] });
     } catch (error) {
-        console.error('❌ Error enviando mensaje:', error);
-        res.status(500).json({ error: 'Error del servidor' });
-    }
+    console.error('❌ Error POST chat:', error.message, error.stack);
+    res.status(500).json({ error: error.message });
+}
 });
 
 // DELETE /api/chat/mensajes/:id — solo admin
