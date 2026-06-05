@@ -1672,6 +1672,7 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
 
 // GET /api/chat/mensajes — últimos 100 mensajes
 app.get('/api/chat/mensajes', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
     try {
         const result = await pool.query(`
             SELECT id, usuario_id, usuario_nombre, mensaje, imagen_url, created_at
