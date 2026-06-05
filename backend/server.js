@@ -1695,8 +1695,8 @@ app.post('/api/chat/mensajes', async (req, res) => {
         if (!usuarioId) {
             return res.status(401).json({ error: 'No autorizado' });
         }
-        if (!mensaje || mensaje.trim().length === 0) {
-            return res.status(400).json({ error: 'Mensaje vacío' });
+        if (!mensaje && !req.body.imagen_url) {
+        return res.status(400).json({ error: 'Mensaje vacío' });
         }
         if (mensaje.trim().length > 500) {
             return res.status(400).json({ error: 'Mensaje demasiado largo (máx 500 caracteres)' });
