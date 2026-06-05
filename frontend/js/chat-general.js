@@ -7,7 +7,7 @@
 (function () {
 
     const SUPABASE_URL  = 'https://aohnbafexgwkugtfryrk.supabase.co';
-    const SUPABASE_KEY  = 'TU_PUBLISHABLE_KEY_AQUI';
+    const SUPABASE_KEY  = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
     const API_BASE      = 'https://quinielamundial2026.onrender.com';
     const MAX_CHARS     = 500;
     const MAX_IMG_SIZE  = 2 * 1024 * 1024;
@@ -320,7 +320,7 @@
         const style = document.createElement('style');
         style.id = 'cg-styles';
         style.textContent = `
-        .cg-card { background:var(--dark-card,#1a1a1a); border:1px solid rgba(255,215,0,0.15); border-radius:12px; overflow:hidden; margin-top:24px; font-family:inherit; }
+        .cg-card { background:var(--dark-card,#1a1a1a); border:1px solid rgba(255,215,0,0.15); overflow:hidden; margin-top:24px; font-family:inherit; }
         .cg-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:rgba(255,215,0,0.05); border-bottom:1px solid rgba(255,215,0,0.1); }
         .cg-header-left { display:flex; align-items:center; gap:8px; }
         .cg-icon { font-size:16px; }
@@ -383,7 +383,7 @@
         .cg-lightbox-close { position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:18px; cursor:pointer; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:background 0.15s; }
         .cg-lightbox-close:hover { background:rgba(255,255,255,0.2); }
         .cg-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:#2a1a1a; border:1px solid rgba(255,80,80,0.3); color:#ff9090; padding:10px 18px; border-radius:8px; font-size:13px; z-index:9999; animation:cg-entrada 0.2s ease; }
-        @media (max-width:600px) { .cg-mensajes{height:260px} .cg-mensaje{max-width:88%} .cg-img-burbuja{max-width:180px;max-height:160px} }
+        @media (max-width:600px) { .cg-mensajes{height:550px} .cg-mensaje{max-width:88%} .cg-img-burbuja{max-width:180px;max-height:160px} }
         `;
         document.head.appendChild(style);
     }
