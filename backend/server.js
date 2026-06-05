@@ -1712,11 +1712,11 @@ app.post('/api/chat/mensajes', async (req, res) => {
             return res.status(401).json({ error: 'Usuario no encontrado' });
         }
 
-        const result = await pool.query(`
-            INSERT INTO chat_mensajes (usuario_id, usuario_nombre, mensaje)
-            VALUES ($1, $2, $3)
-            RETURNING id, usuario_id, usuario_nombre, mensaje, created_at
-        `, [usuarioId, usuarioResult.rows[0].nombre_publico, mensaje.trim()]);
+const result = await pool.query(`
+    INSERT INTO chat_mensajes (usuario_id, usuario_nombre, mensaje, imagen_url)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id, usuario_id, usuario_nombre, mensaje, imagen_url, created_at
+`, [usuarioId, usuarioResult.rows[0].nombre_publico, mensaje.trim(), imagen_url || null]);
 
         res.status(201).json({ success: true, mensaje: result.rows[0] });
     } catch (error) {
