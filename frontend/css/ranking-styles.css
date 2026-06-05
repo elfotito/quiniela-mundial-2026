@@ -624,23 +624,21 @@ body {
 /* Botón compartir dentro de la toolbar */
 .btn-share-toolbar {
     height: 34px;
-    padding: 0 14px;
-    background: linear-gradient(135deg, var(--fifa-blue), #0052a3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #25D366, #1ebe5d);
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     color: #fff;
     font-size: 13px;
     font-weight: 800;
-    letter-spacing: .5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    transition: opacity .2s, transform .1s;
-    flex-shrink: 0;
-    width: 100%;
-    justify-content: center;
+    transition: all .25s;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.3);
 }
 .btn-share-toolbar:hover  { opacity: .85; }
 .btn-share-toolbar:active { transform: scale(.98); }
