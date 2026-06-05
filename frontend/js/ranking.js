@@ -686,7 +686,7 @@ const ligaSelect = document.getElementById('ligaFilter');
 
         // Fondo de fila
         const bgFila = index % 2 === 0
-            ? 'rgba(255, 255, 255, 0.1)'
+            ? 'rgba(255, 255, 255, 0.05)'
             : 'transparent';
 
         // Acento izquierdo top 3
@@ -774,7 +774,7 @@ const ligaSelect = document.getElementById('ligaFilter');
                     await navigator.share({
                         files: [archivo],
                         title: 'Ranking Quiniela',
-                        text: '¡Mira cómo va la tabla! 🏆⚽'
+                        text: '¡Mira cómo va la tabla! 😱'
                     });
                 } catch (err) {
                     // Usuario canceló el share — no es un error real
