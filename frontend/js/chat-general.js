@@ -235,6 +235,7 @@
     }
 
     function renderMensaje(m, animado) {
+        console.log('mensaje recibido:', m);
         const esMio   = m.usuario_id?.toString() === usuario.id?.toString();
         const esAdmin = usuario.isAdmin;
         const hora    = formatHora(m.created_at);
