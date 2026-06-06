@@ -342,7 +342,6 @@ body {
 .podium-players {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
     align-items: flex-end;
     position: relative;
     z-index: 2;
@@ -1661,7 +1660,6 @@ td.td-sep {
     .btn-share { width:100%; padding:10px; background:#0a0a0a; border:none; border-radius:8px; color:#fff; font-size:12px; font-weight:800; cursor:pointer; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:8px; transition:background .2s; }
     .btn-share:hover { background:#222; }
  
-    #podiumSection { padding:20px; }
  
     .podium-container {
         display:grid;
