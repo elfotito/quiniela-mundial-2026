@@ -1775,6 +1775,339 @@ app.post('/api/chat/imagen', upload.single('imagen'), async (req, res) => {
     }
 });
 // ===============================================
+// MR. CHIP — NUEVOS ENDPOINTS
+// Pegar en server.js ANTES del bloque app.listen
+// ===============================================
+
+
+// ─────────────────────────────────────────────────────────────────
+// GET /api/rankings/oraculo?limit=5
+// Top N usuarios por mayor cantidad de predicciones exactas (9 pts)
+// ─────────────────────────────────────────────────────────────────
+app.get('/api/rankings/oraculo', async (req, res) => {
+    try {
+        const limit = Math.min(parseInt(req.query.limit) || 5, 20);
+
+        const result = await pool.query(`
+            SELECT
+                u.id,
+                u.nombre_publico   AS nombre,
+                u.campeon_elegido  AS emoji,
+                COUNT(*)::int      AS exactos
+            FROM predicciones p
+            JOIN usuarios     u ON u.id = p.usuario_id
+            JOIN partidos     pa ON pa.id = p.partido_id
+            WHERE pa.estado       = 'finalizado'
+              AND p.puntos_obtenidos = 9
+              AND u.esta_activo    = true
+            GROUP BY u.id, u.nombre_publico, u.campeon_elegido
+            ORDER BY exactos DESC
+            LIMIT $1
+        `, [limit]);
+
+        res.json(result.rows);
+
+    } catch (error) {
+        console.error('❌ Error /api/rankings/oraculo:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+
+// ─────────────────────────────────────────────────────────────────
+// GET /api/rankings/mufas?limit=5
+// Top N usuarios por mayor cantidad de predicciones con 0 puntos
+// ─────────────────────────────────────────────────────────────────
+app.get('/api/rankings/mufas', async (req, res) => {
+    try {
+        const limit = Math.min(parseInt(req.query.limit) || 5, 20);
+
+        const result = await pool.query(`
+            SELECT
+                u.id,
+                u.nombre_publico   AS nombre,
+                u.campeon_elegido  AS emoji,
+                COUNT(*)::int      AS ceros
+            FROM predicciones p
+            JOIN usuarios     u ON u.id = p.usuario_id
+            JOIN partidos     pa ON pa.id = p.partido_id
+            WHERE pa.estado       = 'finalizado'
+              AND p.puntos_obtenidos = 0
+              AND u.esta_activo    = true
+            GROUP BY u.id, u.nombre_publico, u.campeon_elegido
+            ORDER BY ceros DESC
+            LIMIT $1
+        `, [limit]);
+
+        res.json(result.rows);
+
+    } catch (error) {
+        console.error('❌ Error /api/rankings/mufas:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+
+// ─────────────────────────────────────────────────────────────────
+// GET /api/rankings/estadisticas-torneo
+// Estadísticas globales del torneo para Mr. Chip
+// ─────────────────────────────────────────────────────────────────
+app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
+    try {
+
+        // 1. Total de predicciones registradas
+        const totalPredRes = await pool.query(`
+            SELECT COUNT(*)::int AS total FROM predicciones
+        `);
+
+        // 2. Total de predicciones perfectas (9 pts)
+        const perfectasRes = await pool.query(`
+            SELECT COUNT(*)::int AS total
+            FROM predicciones p
+            JOIN partidos pa ON pa.id = p.partido_id
+            WHERE pa.estado = 'finalizado'
+              AND p.puntos_obtenidos = 9
+        `);
+
+        // 3. Marcador más predicho en todo el torneo
+        const marcadorTopRes = await pool.query(`
+            SELECT
+                goles_local || '-' || goles_visitante AS marcador,
+                COUNT(*)::int AS veces
+            FROM predicciones
+            GROUP BY goles_local, goles_visitante
+            ORDER BY veces DESC
+            LIMIT 1
+        `);
+
+        // 4. Partido con más consenso (mayor % de votos al mismo resultado)
+        // Se calcula como: partido donde el grupo mayoritario tiene mayor % del total
+        const consensoRes = await pool.query(`
+            WITH votos AS (
+                SELECT
+                    p.partido_id,
+                    pa.equipo_local,
+                    pa.equipo_visitante,
+                    COUNT(*) FILTER (WHERE p.goles_local > p.goles_visitante)  AS votos_local,
+                    COUNT(*) FILTER (WHERE p.goles_local = p.goles_visitante)  AS votos_empate,
+                    COUNT(*) FILTER (WHERE p.goles_local < p.goles_visitante)  AS votos_visitante,
+                    COUNT(*) AS total_votos
+                FROM predicciones p
+                JOIN partidos pa ON pa.id = p.partido_id
+                WHERE pa.estado = 'finalizado'
+                GROUP BY p.partido_id, pa.equipo_local, pa.equipo_visitante
+                HAVING COUNT(*) > 0
+            )
+            SELECT
+                equipo_local || ' vs ' || equipo_visitante AS partido,
+                GREATEST(votos_local, votos_empate, votos_visitante) * 100 / total_votos AS pct_consenso
+            FROM votos
+            ORDER BY pct_consenso DESC
+            LIMIT 1
+        `);
+
+        // 5. Partido más polarizado (menor % del grupo mayoritario = más dividido)
+        const polarizadoRes = await pool.query(`
+            WITH votos AS (
+                SELECT
+                    p.partido_id,
+                    pa.equipo_local,
+                    pa.equipo_visitante,
+                    COUNT(*) FILTER (WHERE p.goles_local > p.goles_visitante)  AS votos_local,
+                    COUNT(*) FILTER (WHERE p.goles_local = p.goles_visitante)  AS votos_empate,
+                    COUNT(*) FILTER (WHERE p.goles_local < p.goles_visitante)  AS votos_visitante,
+                    COUNT(*) AS total_votos
+                FROM predicciones p
+                JOIN partidos pa ON pa.id = p.partido_id
+                WHERE pa.estado = 'finalizado'
+                GROUP BY p.partido_id, pa.equipo_local, pa.equipo_visitante
+                HAVING COUNT(*) >= 3
+            )
+            SELECT
+                equipo_local || ' vs ' || equipo_visitante AS partido,
+                GREATEST(votos_local, votos_empate, votos_visitante) * 100 / total_votos AS pct_max
+            FROM votos
+            ORDER BY pct_max ASC
+            LIMIT 1
+        `);
+
+        // 6. Mejor racha activa (usuario con más partidos consecutivos acertando,
+        //    contando desde el último partido finalizado hacia atrás)
+        const rachaRes = await pool.query(`
+            WITH partidos_ordenados AS (
+                SELECT
+                    p.usuario_id,
+                    u.nombre_publico,
+                    u.campeon_elegido,
+                    pa.fecha_hora,
+                    p.puntos_obtenidos,
+                    ROW_NUMBER() OVER (PARTITION BY p.usuario_id ORDER BY pa.fecha_hora DESC) AS rn
+                FROM predicciones p
+                JOIN partidos pa ON pa.id = p.partido_id
+                JOIN usuarios  u ON u.id  = p.usuario_id
+                WHERE pa.estado = 'finalizado'
+                  AND u.esta_activo = true
+            ),
+            racha AS (
+                SELECT
+                    usuario_id,
+                    nombre_publico,
+                    campeon_elegido,
+                    SUM(CASE WHEN puntos_obtenidos >= 5 THEN 1 ELSE 0 END)
+                        FILTER (WHERE rn <= (
+                            -- Cantidad de partidos consecutivos acertando desde el último
+                            SELECT MIN(rn) - 1
+                            FROM partidos_ordenados p2
+                            WHERE p2.usuario_id = partidos_ordenados.usuario_id
+                              AND p2.puntos_obtenidos = 0
+                        ) + 1
+                    ) AS racha_actual
+                FROM partidos_ordenados
+                GROUP BY usuario_id, nombre_publico, campeon_elegido
+            )
+            SELECT nombre_publico AS usuario, campeon_elegido AS emoji, COALESCE(racha_actual, 0) AS racha
+            FROM racha
+            ORDER BY racha DESC
+            LIMIT 1
+        `);
+
+        // ── Armar respuesta ────────────────────────────────────────
+        const marcadorTop  = marcadorTopRes.rows[0];
+        const consenso     = consensoRes.rows[0];
+        const polarizado   = polarizadoRes.rows[0];
+        const racha        = rachaRes.rows[0];
+
+        res.json({
+            total_predicciones       : totalPredRes.rows[0]?.total              || 0,
+            total_perfectas          : perfectasRes.rows[0]?.total              || 0,
+            marcador_top             : marcadorTop?.marcador                    || '—',
+            marcador_top_veces       : marcadorTop?.veces                       || 0,
+            partido_mas_consenso     : consenso?.partido                        || '—',
+            partido_mas_consenso_pct : consenso?.pct_consenso                  || 0,
+            partido_mas_polarizado   : polarizado?.partido                      || '—',
+            partido_mas_polarizado_detalle: polarizado
+                ? `Solo ${polarizado.pct_max}% de consenso`
+                : '—',
+            mejor_racha              : racha?.racha                             || 0,
+            mejor_racha_usuario      : racha
+                ? `${racha.emoji || '👤'} ${racha.usuario}`
+                : '—',
+        });
+
+    } catch (error) {
+        console.error('❌ Error /api/rankings/estadisticas-torneo:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+
+// ─────────────────────────────────────────────────────────────────
+// GET /api/partidos/sala-guerra?filtro=hoy|todos|pendientes|jugados
+// Todos los partidos con estadísticas de predicciones para Sala de Guerra
+// ─────────────────────────────────────────────────────────────────
+app.get('/api/partidos/sala-guerra', async (req, res) => {
+    try {
+        const filtro = req.query.filtro || 'hoy';
+
+        // Condición de filtro
+        let condicion = '';
+        if (filtro === 'hoy') {
+            condicion = `AND DATE(pa.fecha_hora AT TIME ZONE 'America/Caracas') = CURRENT_DATE`;
+        } else if (filtro === 'pendientes') {
+            condicion = `AND pa.estado = 'pendiente'`;
+        } else if (filtro === 'jugados') {
+            condicion = `AND pa.estado = 'finalizado'`;
+        }
+        // 'todos' → sin condición extra
+
+        const result = await pool.query(`
+            SELECT
+                pa.id,
+                pa.equipo_local,
+                pa.equipo_visitante,
+                pa.fecha_hora,
+                pa.fase,
+                pa.estado,
+                pa.goles_local_real    AS goles_local,
+                pa.goles_visitante_real AS goles_visitante,
+
+                -- Total predicciones
+                COUNT(p.id)::int AS total_pred,
+
+                -- Votos por resultado
+                COUNT(p.id) FILTER (WHERE p.goles_local > p.goles_visitante)::int  AS votos_local,
+                COUNT(p.id) FILTER (WHERE p.goles_local = p.goles_visitante)::int  AS votos_empate,
+                COUNT(p.id) FILTER (WHERE p.goles_local < p.goles_visitante)::int  AS votos_visitante,
+
+                -- Porcentajes (0 si no hay predicciones)
+                CASE WHEN COUNT(p.id) > 0
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local > p.goles_visitante) * 100.0 / COUNT(p.id))
+                    ELSE 0 END::int AS pct_local,
+                CASE WHEN COUNT(p.id) > 0
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local = p.goles_visitante) * 100.0 / COUNT(p.id))
+                    ELSE 0 END::int AS pct_empate,
+                CASE WHEN COUNT(p.id) > 0
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local < p.goles_visitante) * 100.0 / COUNT(p.id))
+                    ELSE 0 END::int AS pct_visitante
+
+            FROM partidos pa
+            LEFT JOIN predicciones p ON p.partido_id = pa.id
+            WHERE 1=1
+            ${condicion}
+            GROUP BY pa.id
+            ORDER BY pa.fecha_hora ASC
+        `);
+
+        // Formatear fechas y agregar banderas para el frontend
+        const partidos = result.rows.map(p => ({
+            ...p,
+            fecha        : formatearFechaServer(p.fecha_hora),
+            bandera_local    : obtenerBanderaServer(p.equipo_local),
+            bandera_visitante: obtenerBanderaServer(p.equipo_visitante),
+        }));
+
+        res.json(partidos);
+
+    } catch (error) {
+        console.error('❌ Error /api/partidos/sala-guerra:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
+
+// ─── Helpers internos del servidor ───────────────────────────────
+
+function formatearFechaServer(fechaISO) {
+    if (!fechaISO) return '';
+    const d = new Date(fechaISO);
+    const dia  = d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', timeZone: 'America/Caracas' });
+    const hora = d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Caracas' });
+    return `${dia} · ${hora}`;
+}
+
+function obtenerBanderaServer(equipo) {
+    const banderas = {
+        'Argentina'      : '🇦🇷', 'Brasil'          : '🇧🇷', 'Francia'         : '🇫🇷',
+        'Alemania'       : '🇩🇪', 'España'          : '🇪🇸', 'Inglaterra'      : '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+        'Portugal'       : '🇵🇹', 'Italia'          : '🇮🇹', 'Países Bajos'    : '🇳🇱',
+        'Bélgica'        : '🇧🇪', 'Uruguay'         : '🇺🇾', 'Colombia'        : '🇨🇴',
+        'México'         : '🇲🇽', 'Estados Unidos'  : '🇺🇸', 'Canadá'          : '🇨🇦',
+        'Marruecos'      : '🇲🇦', 'Senegal'         : '🇸🇳', 'Japón'           : '🇯🇵',
+        'Corea del Sur'  : '🇰🇷', 'Australia'       : '🇦🇺', 'Ecuador'         : '🇪🇨',
+        'Venezuela'      : '🇻🇪', 'Chile'           : '🇨🇱', 'Perú'            : '🇵🇪',
+        'Arabia Saudita' : '🇸🇦', 'Irán'            : '🇮🇷', 'Ghana'           : '🇬🇭',
+        'Camerún'        : '🇨🇲', 'Nigeria'         : '🇳🇬', 'Túnez'           : '🇹🇳',
+        'Polonia'        : '🇵🇱', 'Croacia'         : '🇭🇷', 'Dinamarca'       : '🇩🇰',
+        'Suiza'          : '🇨🇭', 'Serbia'          : '🇷🇸', 'Ucrania'         : '🇺🇦',
+        'Turquía'        : '🇹🇷', 'Austria'         : '🇦🇹', 'Escocia'         : '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+        'Sudáfrica'      : '🇿🇦', 'Egipto'          : '🇪🇬', 'Argelia'         : '🇩🇿',
+        'Costa Rica'     : '🇨🇷', 'Panamá'          : '🇵🇦', 'Jamaica'         : '🇯🇲',
+        'Bolivia'        : '🇧🇴', 'Paraguay'        : '🇵🇾', 'Honduras'        : '🇭🇳',
+        'Irak'           : '🇮🇶', 'Indonesia'       : '🇮🇩', 'Nueva Zelanda'   : '🇳🇿',
+    };
+    return banderas[equipo] || '🏳️';
+}
+// ===============================================
 // INICIAR SERVIDOR
 // ===============================================
 
