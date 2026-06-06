@@ -899,7 +899,7 @@ function generarFraseFinalizado(ganador, mayoria, esConsenso, esCaos, local, vis
         const perdedores = ganador === 'local' ? nV + nE : ganador === 'visitante' ? nL + nE : nL + nV;
         frases.push(
             `💀 CAOS ESTADÍSTICO. El resultado fue ${marcador} y ${perdedores} de ${total} personas estaban equivocadas. Cuando el consenso falla así, Mr. Chip experimenta algo parecido a la felicidad.`,
-            `💀 ${marcador}. La mayoría falló colectivamente. Esto es lo que los estadísticos llamamos "error sistemático de grupo". Lo que el resto llama "un desastre". Ambas descripciones son correctas.`
+            `💀 ${marcador}. La mayoría falló colectivamente. Esto es lo que los estadísticos llamamos "Mufada contagiosa". Lo que el resto llama "un desastre". Ambas descripciones son correctas.`
         );
     }
 
