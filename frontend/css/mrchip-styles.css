@@ -973,7 +973,6 @@
 .mc-vs-selector-section {
     background: var(--dark-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
     padding: 28px;
     margin-bottom: 32px;
 }
@@ -1405,7 +1404,6 @@
 .mc-rank-card {
     background: var(--dark-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1544,7 +1542,6 @@
 .mc-stat-global-card {
     background: var(--dark-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
     padding: 24px 20px;
     text-align: center;
     transition: all .3s;

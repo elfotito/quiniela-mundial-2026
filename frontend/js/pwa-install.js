@@ -15,7 +15,7 @@ function iniciarTemporizadorBoton() {
       // Animación de salida (usa la transición que ya tienes)
       btn.classList.remove('show');
     }
-  }, 8000); // 8 segundos
+  }, 12000); // 8 segundos
 }
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('btn-instalar-app');

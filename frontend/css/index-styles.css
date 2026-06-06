@@ -2535,7 +2535,7 @@
     bottom: 0; left: 0;
     width: 100%;
     height: 64px;
-    background: radial-gradient(circle at 50% 50%, #0b0b0b 0%, #111 45%, #0b0b0b 100% );
+    background: #000;
     z-index: 1100;
     align-items: center;
     justify-content: space-around;
@@ -2563,8 +2563,35 @@
     padding: 0;
 }
 .mbn-item i { font-size: 1.2rem; }
-.mbn-item.active { color: #fff; }
 .mbn-item:hover:not(.mbn-center) { color: rgba(255,255,255,0.7); }
+.mbn-item.active { 
+    color: var(--fifa-gold);
+    position: relative;
+}
+
+.mbn-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 2px;
+    background: var(--fifa-gold);
+    border-radius: 2px;
+    animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 32px;
+        opacity: 1;
+    }
+}
  
 /* Botón central */
 .mbn-center {
