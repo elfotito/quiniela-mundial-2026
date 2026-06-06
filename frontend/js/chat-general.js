@@ -323,7 +323,7 @@
         const style = document.createElement('style');
         style.id = 'cg-styles';
         style.textContent = `
-        .cg-card { background:var(--dark-card,#1a1a1a); border:1px solid rgba(255,215,0,0.15); overflow:hidden; margin-top:24px; font-family:inherit; }
+        .cg-card { background:#000; border:1px solid rgba(255,215,0,0.15); overflow:hidden; margin-top:24px; font-family:inherit; }
         .cg-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:rgba(255,215,0,0.05); border-bottom:1px solid rgba(255,215,0,0.1); }
         .cg-header-left { display:flex; align-items:center; gap:8px; }
         .cg-icon { font-size:16px; }
