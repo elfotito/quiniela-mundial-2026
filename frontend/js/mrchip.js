@@ -463,6 +463,7 @@ function mostrarDatos(datos) {
     mostrarPredicciones(datos.predicciones, datos.partido);
     mostrarUsuariosSinPrediccion(datos.usuariosSinPred);
     mostrarEstadisticas(datos.predicciones, datos.totalPredicciones);
+    generarComentarioMrChip(datos.partido, datos.predicciones, datos.totalPredicciones);
 }
 
 // MOSTRAR INFORMACIÓN
@@ -675,264 +676,6 @@ const obtenerBandera = (nombre) => {
     return banderas[nombre] || '🏴';
 };
 
-/* ================================================================
-   NUEVAS FUNCIONES — Pegar al FINAL de mrchip.js
-   Conectan el HTML nuevo con tu backend existente
-   ================================================================ */
-
-/* ----------------------------------------------------------------
-   RANKINGS GLOBALES
-   Expone window.mrchipCargarRankings() para que el HTML lo llame
----------------------------------------------------------------- */
-window.mrchipCargarRankings = async function () {
-    const loading      = document.getElementById('loadingRankings');
-    const listOraculo  = document.getElementById('listOraculo');
-    const listMufas    = document.getElementById('listMufas');
-
-    // Stats globales IDs
-    const statIds = {
-        masConsenso     : document.getElementById('statMasConsensoSub'),
-        marcadorTopVal  : document.getElementById('statMarcadorTopVal'),
-        marcadorTopSub  : document.getElementById('statMarcadorTopSub'),
-        totalPerfectas  : document.getElementById('statTotalPerfectasVal'),
-        mejorRachaVal   : document.getElementById('statMejorRachaVal'),
-        mejorRachaSub   : document.getElementById('statMejorRachaSub'),
-        totalPredVal    : document.getElementById('statTotalPredVal'),
-        masLocoVal      : document.getElementById('statPartidoMasLocoVal'),
-        masLocoSub      : document.getElementById('statPartidoMasLocoSub'),
-    };
-
-    if (loading) loading.style.display = 'flex';
-    if (listOraculo) listOraculo.innerHTML = '';
-    if (listMufas)   listMufas.innerHTML   = '';
-
-    try {
-        // ── Llama a tu API existente ──────────────────────────────
-        // Ajusta BASE_URL y rutas según tu config.js
-        const base = window.API_BASE_URL || '';
-
-        const [resOraculo, resMufas, resStats] = await Promise.all([
-            fetch(`${base}/api/rankings/oraculo?limit=5`,   { headers: authHeaders() }),
-            fetch(`${base}/api/rankings/mufas?limit=5`,     { headers: authHeaders() }),
-            fetch(`${base}/api/rankings/estadisticas-torneo`, { headers: authHeaders() }),
-        ]);
-
-        // ── El Oráculo ────────────────────────────────────────────
-        if (resOraculo.ok) {
-            const data = await resOraculo.json();
-            // Espera array: [{ nombre, emoji, exactos }]
-            if (listOraculo) {
-                listOraculo.innerHTML = data.length
-                    ? data.map((p, i) => renderRankRow(p, i, 'exactos', 'exactos')).join('')
-                    : '<div class="mc-rank-empty">Sin datos aún. El torneo recién empieza.</div>';
-            }
-        }
-
-        // ── El Mufas ──────────────────────────────────────────────
-        if (resMufas.ok) {
-            const data = await resMufas.json();
-            // Espera array: [{ nombre, emoji, ceros }]
-            if (listMufas) {
-                listMufas.innerHTML = data.length
-                    ? data.map((p, i) => renderRankRow(p, i, 'ceros', 'errores')).join('')
-                    : '<div class="mc-rank-empty">Nadie ha fallado tanto. Por ahora.</div>';
-            }
-        }
-
-        // ── Estadísticas globales ─────────────────────────────────
-        if (resStats.ok) {
-            const s = await resStats.json();
-            // Espera objeto con las keys de abajo — ajusta según tu backend
-
-            if (statIds.masConsenso && s.partido_mas_consenso)
-                statIds.masConsenso.textContent = s.partido_mas_consenso;
-
-            if (statIds.marcadorTopVal && s.marcador_top)
-                statIds.marcadorTopVal.textContent = s.marcador_top;
-
-            if (statIds.marcadorTopSub && s.marcador_top_veces)
-                statIds.marcadorTopSub.textContent = `Predicho ${s.marcador_top_veces} veces`;
-
-            if (statIds.totalPerfectas && s.total_perfectas !== undefined)
-                statIds.totalPerfectas.textContent = s.total_perfectas;
-
-            if (statIds.mejorRachaVal && s.mejor_racha !== undefined)
-                statIds.mejorRachaVal.textContent = s.mejor_racha;
-
-            if (statIds.mejorRachaSub && s.mejor_racha_usuario)
-                statIds.mejorRachaSub.textContent = s.mejor_racha_usuario;
-
-            if (statIds.totalPredVal && s.total_predicciones !== undefined)
-                statIds.totalPredVal.textContent = s.total_predicciones;
-
-            if (statIds.masLocoVal && s.partido_mas_polarizado)
-                statIds.masLocoVal.textContent = s.partido_mas_polarizado;
-
-            if (statIds.masLocoSub && s.partido_mas_polarizado_detalle)
-                statIds.masLocoSub.textContent = s.partido_mas_polarizado_detalle;
-        }
-
-    } catch (err) {
-        console.error('[MrChip] Error cargando rankings:', err);
-        if (listOraculo) listOraculo.innerHTML = '<div class="mc-rank-empty">Error al cargar. Intenta de nuevo.</div>';
-        if (listMufas)   listMufas.innerHTML   = '<div class="mc-rank-empty">Error al cargar. Intenta de nuevo.</div>';
-    } finally {
-        if (loading) loading.style.display = 'none';
-    }
-};
-
-/* Renderiza una fila del ranking */
-function renderRankRow(p, index, campo, labelSingular) {
-    const posClasses = ['mc-pos-1','mc-pos-2','mc-pos-3'];
-    const posClass = index < 3 ? posClasses[index] : 'mc-pos-n';
-    return `
-        <div class="mc-rank-row">
-            <div class="mc-rank-pos ${posClass}">${index + 1}</div>
-            <div class="mc-rank-avatar">${p.emoji || '👤'}</div>
-            <div class="mc-rank-name">${p.nombre || p.username || 'Usuario'}</div>
-            <div class="mc-rank-val">${p[campo] ?? 0}</div>
-            <div class="mc-rank-val-label">${labelSingular}</div>
-        </div>
-    `;
-}
-
-/* ----------------------------------------------------------------
-   SALA DE GUERRA
-   Expone window.mrchipCargarGuerra(filtro) para que el HTML lo llame
-   filtro: 'hoy' | 'todos' | 'pendientes' | 'jugados'
----------------------------------------------------------------- */
-window.mrchipCargarGuerra = async function (filtro = 'hoy') {
-    const loading   = document.getElementById('loadingGuerra');
-    const grid      = document.getElementById('guerraGrid');
-    const empty     = document.getElementById('guerraEmpty');
-
-    if (loading) loading.style.display = 'flex';
-    if (grid)    grid.innerHTML = '';
-    if (empty)   empty.style.display = 'none';
-
-    try {
-        const base = window.API_BASE_URL || '';
-
-        // Construye query param según filtro
-        const params = new URLSearchParams({ filtro });
-        const res = await fetch(`${base}/api/partidos/sala-guerra?${params}`, {
-            headers: authHeaders()
-        });
-
-        if (!res.ok) throw new Error('Error al cargar partidos');
-
-        const partidos = await res.json();
-        // Espera array de objetos partido con sus estadísticas de predicciones
-
-        if (!partidos.length) {
-            if (grid)  grid.style.display = 'none';
-            if (empty) empty.style.display = '';
-            return;
-        }
-
-        if (grid) {
-            grid.style.display = '';
-            grid.innerHTML = partidos.map(p => renderGuerraCard(p)).join('');
-        }
-
-    } catch (err) {
-        console.error('[MrChip] Error cargando sala de guerra:', err);
-        if (grid) grid.innerHTML = `
-            <div class="mc-empty" style="grid-column:1/-1;">
-                <div class="mc-empty-icon">⚠️</div>
-                <h3>Error al cargar partidos</h3>
-                <p>Verifica la conexión e intenta de nuevo.</p>
-            </div>
-        `;
-    } finally {
-        if (loading) loading.style.display = 'none';
-    }
-};
-
-/* Renderiza una card de partido para la Sala de Guerra */
-function renderGuerraCard(p) {
-    // p esperado: { id, equipo_local, equipo_visitante, bandera_local, bandera_visitante,
-    //              fecha, fase, estado, goles_local, goles_visitante,
-    //              total_pred, pct_local, pct_empate, pct_visitante }
-    const estado = p.estado || 'pendiente';
-    const liveClass = estado === 'en_vivo' ? 'mc-guerra-live' : '';
-
-    const score1 = (p.goles_local    !== null && p.goles_local    !== undefined) ? p.goles_local    : '—';
-    const score2 = (p.goles_visitante !== null && p.goles_visitante !== undefined) ? p.goles_visitante : '—';
-
-    const pctH = (p.pct_local     || 0) + '%';
-    const pctD = (p.pct_empate    || 0) + '%';
-    const pctA = (p.pct_visitante || 0) + '%';
-
-    const estadoBadge = {
-        pendiente : '<span class="mc-status-badge mc-status-pending"><span class="mc-status-dot"></span>Pendiente</span>',
-        en_vivo   : '<span class="mc-status-badge mc-status-live"><span class="mc-status-dot"></span>En Vivo</span>',
-        finalizado: '<span class="mc-status-badge mc-status-finished"><span class="mc-status-dot"></span>Finalizado</span>',
-    }[estado] || '';
-
-    return `
-        <div class="mc-guerra-match-card ${liveClass}" onclick="irAAnalisisPartido('${p.id}')">
-            <div class="mc-guerra-card-meta">
-                <span class="mc-guerra-card-date">${p.fecha || ''}</span>
-                <span class="mc-guerra-card-phase">${p.fase || ''}</span>
-            </div>
-            <div class="mc-guerra-teams">
-                <div class="mc-guerra-team">
-                    <div class="mc-guerra-flag">${p.bandera_local || '🏠'}</div>
-                    <div class="mc-guerra-name">${p.equipo_local || 'LOCAL'}</div>
-                    <div class="mc-guerra-score">${score1}</div>
-                </div>
-                <div class="mc-guerra-vs">VS</div>
-                <div class="mc-guerra-team">
-                    <div class="mc-guerra-flag">${p.bandera_visitante || '✈️'}</div>
-                    <div class="mc-guerra-name">${p.equipo_visitante || 'VISITANTE'}</div>
-                    <div class="mc-guerra-score">${score2}</div>
-                </div>
-            </div>
-            <div class="mc-guerra-dist">
-                <div class="mc-guerra-dist-bar">
-                    <div class="mc-dist-seg mc-dist-home" style="width:${pctH}"></div>
-                    <div class="mc-dist-seg mc-dist-draw" style="width:${pctD}"></div>
-                    <div class="mc-dist-seg mc-dist-away" style="width:${pctA}"></div>
-                </div>
-                <div class="mc-guerra-dist-labels">
-                    <span>${pctH}</span>
-                    <span>${pctD}</span>
-                    <span>${pctA}</span>
-                </div>
-            </div>
-            <div class="mc-guerra-card-footer">
-                <span class="mc-guerra-total">
-                    <strong>${p.total_pred || 0}</strong> predicciones
-                </span>
-                <button class="mc-guerra-btn-analizar">
-                    <i class="bi bi-bar-chart-fill"></i> Analizar
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-/* Al hacer click en una card de la Sala de Guerra,
-   cambia al tab de Análisis y carga ese partido */
-function irAAnalisisPartido(partidoId) {
-    // Cambiar al tab de análisis
-    const tabAnalisis = document.getElementById('tabAnalisis');
-    if (tabAnalisis) tabAnalisis.click();
-
-    // Seleccionar el partido en el select
-    const select = document.getElementById('partidoSelect');
-    if (select && partidoId) {
-        select.value = partidoId;
-        select.dispatchEvent(new Event('change'));
-    }
-}
-
-/* Helper: headers de autenticación (reutiliza lo que ya tengas en auth.js) */
-function authHeaders() {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
-    return token ? { 'Authorization': `Bearer ${token}` } : {};
-}
 
 // LOGOUT
 // ===================================
@@ -941,4 +684,258 @@ function logout() {
     if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
         auth.logout();
     }
+}
+
+
+// ================================================================
+// COMENTARIO MR. CHIP — Generador de frases contextuales
+// ================================================================
+
+function generarComentarioMrChip(partido, predicciones, total) {
+    const chipBox  = document.getElementById('chipComment');
+    const chipText = document.getElementById('chipCommentText');
+    if (!chipBox || !chipText) return;
+
+    const local     = predicciones.local     || [];
+    const empate    = predicciones.empate    || [];
+    const visitante = predicciones.visitante || [];
+
+    const nLocal     = local.length;
+    const nEmpate    = empate.length;
+    const nVisitante = visitante.length;
+
+    const pctLocal     = total > 0 ? Math.round((nLocal     / total) * 100) : 0;
+    const pctEmpate    = total > 0 ? Math.round((nEmpate    / total) * 100) : 0;
+    const pctVisitante = total > 0 ? Math.round((nVisitante / total) * 100) : 0;
+
+    const estado      = partido.estado; // 'pendiente' | 'en_juego' | 'finalizado'
+    const equipoLocal = partido.equipo_local;
+    const equipoVis   = partido.equipo_visitante;
+
+    const golesL = partido.goles_local_real;
+    const golesV = partido.goles_visitante_real;
+
+    // ── Helpers ──────────────────────────────────────────────────
+
+    // Grupo mayoritario
+    const maxVotos = Math.max(nLocal, nEmpate, nVisitante);
+    let grupoMayoria = 'empate';
+    if (maxVotos === nLocal && nLocal > 0)     grupoMayoria = 'local';
+    if (maxVotos === nVisitante && nVisitante >= nLocal && nVisitante > 0) grupoMayoria = 'visitante';
+
+    // Consenso vs caos
+    const maxPct = Math.max(pctLocal, pctEmpate, pctVisitante);
+    const esConsenso = maxPct >= 70;
+    const esCaos     = maxPct <= 40 && total >= 5;
+
+    // ¿El usuario actual acertó?
+    let usuarioAcerto = null;
+    let puntosUsuario = null;
+    if (estado === 'finalizado') {
+        const todasLasCards = [...local, ...empate, ...visitante];
+        const miCard = todasLasCards.find(u => u.id === usuarioId);
+        if (miCard && miCard.puntos !== null) {
+            puntosUsuario = miCard.puntos;
+            usuarioAcerto = miCard.puntos >= 5;
+        }
+    }
+
+    // Nombre del ganador real
+    let ganadorReal = null;
+    if (estado === 'finalizado' && golesL !== null && golesV !== null) {
+        if (golesL > golesV)      ganadorReal = 'local';
+        else if (golesV > golesL) ganadorReal = 'visitante';
+        else                       ganadorReal = 'empate';
+    }
+
+    // ── Banco de frases por contexto ─────────────────────────────
+
+    // 1. SIN PREDICCIONES
+    if (total === 0) {
+        chipText.textContent = `Nadie ha predicho este partido. ${nLocal + nEmpate + nVisitante === 0
+            ? `Llevamos ${total} predicciones registradas, lo cual es técnicamente idéntico a cero. El silencio estadístico me perturba.`
+            : 'El vacío de datos es filosóficamente inquietante.'}`;
+        mostrarChipComment(chipBox, chipText.textContent);
+        return;
+    }
+
+    // 2. PARTIDO FINALIZADO
+    if (estado === 'finalizado' && ganadorReal !== null) {
+        const frasesFinalizado = generarFraseFinalizado(
+            ganadorReal, grupoMayoria, esConsenso, esCaos,
+            equipoLocal, equipoVis, golesL, golesV,
+            nLocal, nEmpate, nVisitante, total,
+            puntosUsuario, usuarioAcerto
+        );
+        mostrarChipComment(chipBox, frasesFinalizado);
+        return;
+    }
+
+    // 3. EN VIVO
+    if (estado === 'en_juego') {
+        const frasesVivo = generarFraseEnVivo(
+            equipoLocal, equipoVis, golesL, golesV,
+            grupoMayoria, nLocal, nEmpate, nVisitante, total
+        );
+        mostrarChipComment(chipBox, frasesVivo);
+        return;
+    }
+
+    // 4. PENDIENTE
+    const frasesPendiente = generarFrasePendiente(
+        equipoLocal, equipoVis,
+        esConsenso, esCaos, grupoMayoria,
+        pctLocal, pctEmpate, pctVisitante,
+        nLocal, nEmpate, nVisitante, total
+    );
+    mostrarChipComment(chipBox, frasesPendiente);
+}
+
+// ── Partido PENDIENTE ─────────────────────────────────────────────
+function generarFrasePendiente(local, vis, esConsenso, esCaos, mayoria, pL, pE, pV, nL, nE, nV, total) {
+    const frases = [];
+
+    if (esConsenso) {
+        const pct = Math.max(pL, pE, pV);
+        const nombreMayoria = mayoria === 'local' ? local : mayoria === 'visitante' ? vis : 'el empate';
+        frases.push(
+            `El ${pct}% de la quiniela apoya a ${nombreMayoria}. Cuando ${pct} de cada 100 personas piensa lo mismo, estadísticamente alguien aquí va a quedar en ridículo. Y no va a ser el ${pct}%.`,
+            `Consenso masivo detectado: ${pct}% apuesta por ${nombreMayoria}. Datos históricos sugieren que cuando hay tanta unanimidad en una quiniela, el universo interviene personalmente para arruinarlo.`,
+            `${pct}% votando por ${nombreMayoria}. He analizado 847 quinielas similares y en el 62.3% de los casos con este nivel de consenso, el resultado sorprende. El ${100-pct}% restante podría ser profético.`
+        );
+    } else if (esCaos) {
+        frases.push(
+            `${total} predicciones y ningún acuerdo. ${local} o ${vis} o empate — la quiniela está completamente dividida. Esto es estadísticamente hermoso y humanamente preocupante.`,
+            `División total detectada. ${nL} votan local, ${nE} empate, ${nV} visitante. Alguien aquí tiene razón. El resto va a pasar los próximos días reconstruyendo su modelo predictivo.`,
+            `El índice de caos de este partido es extraordinariamente alto. ${pL}% local · ${pE}% empate · ${pV}% visitante. Nadie se pone de acuerdo, lo cual me genera una satisfacción estadística considerable.`
+        );
+    } else {
+        frases.push(
+            `${total} predicciones registradas para ${local} vs ${vis}. El ${pL}% apuesta por local, ${pE}% por empate, ${pV}% por visitante. Que alguien esté equivocado es matemáticamente inevitable.`,
+            `Analizando ${total} predicciones. La distribución sugiere moderada incertidumbre colectiva. En términos más directos: nadie sabe realmente qué va a pasar, pero todos fingen que sí.`,
+            `Los datos están en. ${nL} personas confían en ${local}, ${nV} en ${vis}, ${nE} apostaron por el empate que nadie quiere pero todos usan como seguro de vida estadístico.`
+        );
+    }
+
+    return frases[Math.floor(Math.random() * frases.length)];
+}
+
+// ── Partido EN VIVO ───────────────────────────────────────────────
+function generarFraseEnVivo(local, vis, golesL, golesV, mayoria, nL, nE, nV, total) {
+    const marcador = (golesL !== null && golesV !== null) ? `${golesL}-${golesV}` : null;
+    const frases = [];
+
+    if (marcador) {
+        const ganandoLocal = golesL > golesV;
+        const ganandoVis   = golesV > golesL;
+        const igualados    = golesL === golesV;
+
+        if (igualados) {
+            frases.push(
+                `⚡ VIVO · Marcador ${marcador}. Empate actual. El ${nE} que votó empate está sudando frío — no de emoción, sino porque sabe que esto puede cambiar en cualquier momento.`,
+                `⚡ VIVO · ${marcador} en este momento. Los ${nE} que predijeron empate están rezando para que no pase nada. Los otros ${nL + nV} están rezando para que sí pase algo.`
+            );
+        } else if (ganandoLocal) {
+            frases.push(
+                `⚡ VIVO · ${local} gana ${marcador}. Los ${nL} que votaron local están en modo "se los dije". El resto está en modo "todavía hay tiempo". Estadísticamente, ambos grupos están en negación.`,
+                `⚡ VIVO · Marcador actual: ${marcador} a favor de ${local}. Los ${nV} que apostaron por ${vis} están consultando sus contratos de predicción buscando cláusulas de escape.`
+            );
+        } else {
+            frases.push(
+                `⚡ VIVO · ${vis} gana ${marcador}. Los ${nV} votantes visitantes están celebrando anticipadamente, lo cual estadísticamente jinxea el resultado. Dato comprobado.`,
+                `⚡ VIVO · ${marcador} favor de ${vis}. Situación tensa para los ${nL} que apostaron por ${local}. Nótese que "todavía hay tiempo" es la frase más repetida en quinielas perdidas.`
+            );
+        }
+    } else {
+        frases.push(
+            `⚡ PARTIDO EN CURSO · ${total} predicciones esperando su veredicto. En este momento, entre ${nL} y ${nV} personas están mirando el partido con una intensidad inversamente proporcional a su conocimiento de fútbol.`,
+            `⚡ EN VIVO · El partido está en marcha. Mr. Chip no puede ver el televisor desde aquí, pero los datos sugieren que alguien en esta quiniela está sufriendo. Estadísticamente es inevitable.`
+        );
+    }
+
+    return frases[Math.floor(Math.random() * frases.length)];
+}
+
+// ── Partido FINALIZADO ────────────────────────────────────────────
+function generarFraseFinalizado(ganador, mayoria, esConsenso, esCaos, local, vis, gL, gV, nL, nE, nV, total, mismasPuntos, acerte) {
+    const marcador = `${gL}-${gV}`;
+    const frases   = [];
+
+    const consensoAcerto = esConsenso && ganador === mayoria;
+    const consensoFallo  = esConsenso && ganador !== mayoria;
+
+    // El usuario adivinó perfectamente (9 pts)
+    if (acerte && mismasPuntos === 9) {
+        frases.push(
+            `✅ RESULTADO: ${marcador}. Has acertado el marcador exacto. He consultado 47 bases de datos y la probabilidad de este acierto era del 0.003%. Eres estadísticamente milagroso, o tienes información privilegiada. No te denunciaré.`,
+            `✅ ${marcador}. Predicción perfecta. 9 puntos. En mis modelos predictivos esto no debería haber ocurrido. Y sin embargo, aquí estamos. Impresionante. O afortunado. Probablemente ambos.`
+        );
+    }
+    // El usuario acertó el resultado pero no el marcador (5-7 pts)
+    else if (acerte && mismasPuntos !== null) {
+        frases.push(
+            `✅ RESULTADO: ${marcador}. Acertaste el resultado. No el marcador exacto, pero acertaste lo suficiente para no tener que reconstruir tu autoestima estadística. Por ahora.`,
+            `✅ ${marcador}. Resultado correcto. ${mismasPuntos} puntos. No es la predicción perfecta, pero es suficientemente buena para que puedas presumirla sin entrar en demasiados detalles.`
+        );
+    }
+    // El usuario falló
+    else if (!acerte && mismasPuntos !== null) {
+        frases.push(
+            `❌ RESULTADO FINAL: ${marcador}. Lo que acabas de vivir viola estadísticamente tres de tus principios predictivos fundamentales. Tómate un momento. Luego vuelve a los datos.`,
+            `❌ ${marcador}. Tu predicción fue incorrecta. He analizado cómo llegaste a esa conclusión y los resultados no son halagadores. En fin. El siguiente partido es una nueva oportunidad de fallar de formas completamente distintas.`
+        );
+    }
+
+    // Consenso que acertó
+    if (consensoAcerto) {
+        frases.push(
+            `✅ El consenso triunfó. ${marcador}. La mayoría apostó por ${ganador === 'local' ? local : ganador === 'visitante' ? vis : 'el empate'} y tuvo razón. Cuando tantos aciertan a la vez, estadísticamente pierde significado. Pero que lo disfruten.`,
+            `✅ RESULTADO: ${marcador}. La mayoría tenía razón. Queda la pregunta filosófica: ¿acertaron porque analizaron bien, o porque había suficientes personas para que alguien acertara por pura probabilidad?`
+        );
+    }
+
+    // Consenso que falló (el más dramático)
+    if (consensoFallo) {
+        const perdedores = ganador === 'local' ? nV + nE : ganador === 'visitante' ? nL + nE : nL + nV;
+        frases.push(
+            `💀 CAOS ESTADÍSTICO. El resultado fue ${marcador} y ${perdedores} de ${total} personas estaban equivocadas. Cuando el consenso falla así, Mr. Chip experimenta algo parecido a la felicidad.`,
+            `💀 ${marcador}. La mayoría falló colectivamente. Esto es lo que los estadísticos llamamos "error sistemático de grupo". Lo que el resto llama "un desastre". Ambas descripciones son correctas.`
+        );
+    }
+
+    // Si hay frases generadas, retornar una al azar
+    if (frases.length > 0) {
+        return frases[Math.floor(Math.random() * frases.length)];
+    }
+
+    // Frases genéricas de resultado
+    const genericas = [
+        `Resultado final: ${local} ${gL} - ${gV} ${vis}. Los datos no mienten. Las predicciones, sin embargo, mintieron bastante.`,
+        `${marcador}. Partido concluido. ${total} predicciones fueron juzgadas por la realidad. Como siempre, la realidad no negocia.`,
+        `FINAL: ${marcador}. Mr. Chip ha registrado el resultado. Los ganadores celebran. Los demás están "revisando su metodología".`
+    ];
+    return genericas[Math.floor(Math.random() * genericas.length)];
+}
+
+// ── Mostrar con animación de typing ──────────────────────────────
+function mostrarChipComment(chipBox, texto) {
+    const chipText = document.getElementById('chipCommentText');
+    if (!chipBox || !chipText) return;
+
+    chipBox.style.display = 'flex';
+    chipText.textContent  = '';
+
+    let i = 0;
+    const delay = texto.length > 200 ? 12 : 18; // más rápido si es largo
+
+    function escribir() {
+        if (i < texto.length) {
+            chipText.textContent += texto[i];
+            i++;
+            setTimeout(escribir, delay);
+        }
+    }
+
+    // Pequeño delay antes de empezar a escribir
+    setTimeout(escribir, 300);
 }
