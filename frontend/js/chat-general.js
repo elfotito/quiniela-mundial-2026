@@ -315,7 +315,7 @@
     }
 
     const EMOJIS = ['😂','🤣','😭','😅','😬','🫠','😎','🤔','😱','🥶',
-                '😤','🤦‍♂️','🥲','👑','🏆','🎉','🔥','⚽','💪','👏','🙏',
+                '😤','🤓','🫣','🥲','🤦‍♂️','🏆','🎉','🔥','⚽','💪','👏','🙏',
                 '👋','🫡','👻','👀','💀','🫪','💩','🫩'];
 
     function inyectarEstilos() {
@@ -333,7 +333,7 @@
         .cg-toggle:hover { color:rgba(255,255,255,0.8); }
         .cg-body { display:flex; flex-direction:column; }
         .cg-body.cg-hidden { display:none; }
-        .cg-mensajes { height:340px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:8px; scroll-behavior:smooth; }
+        .cg-mensajes { height:610px; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:8px; scroll-behavior:smooth; }
         .cg-mensajes::-webkit-scrollbar { width:4px; }
         .cg-mensajes::-webkit-scrollbar-thumb { background:rgba(255,215,0,0.2); border-radius:2px; }
         .cg-loading { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.4); font-size:13px; margin:auto; }
