@@ -285,10 +285,12 @@
     function quitarVacio() { document.getElementById('cg-vacio')?.remove(); }
 
     function scrollAbajo(forzar) {
-        const el = els.mensajes;
-        const cerca = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
-        if (forzar || cerca) setTimeout(() => el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' }), 50);
+    const el = els.mensajes;
+    const cerca = el.scrollHeight - el.scrollTop - el.clientHeight < 150;
+    if (forzar || cerca) {
+        setTimeout(() => { els.mensajes.scrollTop = els.mensajes.scrollHeight; }, 150);
     }
+}
 
     function actualizarBadge() {
         els.badge.textContent = els.mensajes.querySelectorAll('.cg-mensaje').length;
