@@ -1256,7 +1256,23 @@
                 </p>
                 <a href="quiniela.html" class="hist-highlight-btn">📝 Ver tu quiniela →</a>
             </div>
+            <div class="museum-container">
+    <!-- Frase épica del salón de la fama -->
+    <div class="reseña-fama">
+        “Donde el azar tiembla y la fortuna se rinde, ellos alzaron la vista y descifraron el futuro. Sus nombres no son obra de la suerte, sino la huella imborrable de quien supo leer el juego antes de que el balón rodara.”
+    </div>
 
+    <!-- CARRUSEL PRINCIPAL -->
+    <div class="carousel-wrapper">
+        <button class="nav-btn" id="prevBtn" aria-label="Anterior">◀</button>
+        <div id="cardContainer" class="museum-card"></div>
+        <button class="nav-btn" id="nextBtn" aria-label="Siguiente">▶</button>
+    </div>
+    <div class="carousel-indicator">
+        <span>📜 Archivo <span id="currentIdxDisplay">1</span> / <span id="totalCount"></span> 📜</span>
+    </div>
+    <button id="soundToggleBtn" class="sound-toggle" title="Sonido ambiente">🔊</button>
+</div>
         </main>
 
         <!-- ══ COLUMNA DERECHA ══ -->
@@ -1670,7 +1686,205 @@ setTimeout(() => {
 }, 500);
 
     </script>
+    <script>
+    // ======================= BASE DE DATOS SIMULADA =======================
+    // Aquí conectas tus propias imágenes y datos desde tu backend
+    const archives = [
+        {
+            catalog: "ARCH-1942-Q",
+            year: 1998,
+            event: "Mundial Francia",
+            prediction: "Francia 3-0 Brasil",
+            winner: "Zinedine Zidane (El Elegido)",
+            imageUrl: "https://picsum.photos/id/20/500/350",   // vintage typewriter
+            stamp: "DESCLASIFICADO",
+            secret: "TOP SECRET - FÚTBOL"
+        },
+        {
+            catalog: "ARCH-1986-M",
+            year: 1986,
+            event: "Mundial México",
+            prediction: "Maradona: Mano de Dios & Gol del Siglo",
+            winner: "El Profeta del Potrero",
+            imageUrl: "https://picsum.photos/id/26/500/350",
+            stamp: "ÚNICO TESTIMONIO",
+            secret: "MATERIAL RESERVADO"
+        },
+        {
+            catalog: "ARCH-2002-R",
+            year: 2002,
+            event: "Corea-Japón",
+            prediction: "Brasil pentacampeón - Ronaldo decide",
+            winner: "Ronaldo Fenómeno (vidente ofensivo)",
+            imageUrl: "https://picsum.photos/id/42/500/350",
+            stamp: "DESCLASIFICADO",
+            secret: "ARCHIVO HISTÓRICO"
+        },
+        {
+            catalog: "ARCH-2010-S",
+            year: 2010,
+            event: "Sudáfrica",
+            prediction: "La Roja se corona con Iniesta",
+            winner: "Andrés El Iluminado",
+            imageUrl: "https://picsum.photos/id/33/500/350",
+            stamp: "COTA MÁXIMA",
+            secret: "TOP SECRET - FÚTBOL"
+        },
+        {
+            catalog: "ARCH-2014-Z",
+            year: 2014,
+            event: "Brasil 2014",
+            prediction: "Alemania 7-1 Brasil (exacto)",
+            winner: "Oráculo Germánico",
+            imageUrl: "https://picsum.photos/id/15/500/350",
+            stamp: "DESCLASIFICADO",
+            secret: "MATERIAL SENSIBLE"
+        }
+    ];
 
+    let currentIndex = 0;
+    let soundEnabled = true;
+    let audioCtx = null;  // contexto de audio para sonido sutil
+
+    // Referencias DOM
+    const cardContainer = document.getElementById('cardContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentIdxDisplay = document.getElementById('currentIdxDisplay');
+    const totalCountSpan = document.getElementById('totalCount');
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+
+    totalCountSpan.innerText = archives.length;
+
+    // Función para reproducir sonido (efecto "archivo antiguo", un pequeño chasquido de papel)
+    function playArchiveSound() {
+        if (!soundEnabled) return;
+        try {
+            // Inicializar AudioContext solo en la primera interacción (necesario por políticas del navegador)
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            // Reanudar si está suspendido
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume().then(() => {
+                    playBeep();
+                });
+            } else {
+                playBeep();
+            }
+        } catch(e) {
+            console.warn("Web Audio no soportado, sonido desactivado");
+        }
+    }
+
+    function playBeep() {
+        if (!soundEnabled || !audioCtx) return;
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        osc.start();
+        osc.stop(now + 0.25);
+        // un segundo sonido más grave para dar textura "pergamino"
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        osc2.type = 'triangle';
+        osc2.frequency.value = 220;
+        gain2.gain.setValueAtTime(0.04, now + 0.03);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+        osc2.start(now + 0.03);
+        osc2.stop(now + 0.38);
+    }
+
+    // Renderizar tarjeta actual con todos los elementos museo
+    function renderCard() {
+        const data = archives[currentIndex];
+        // Construir HTML de la cartulina
+        const stampText = data.stamp || "DESCLASIFICADO";
+        const secondStamp = data.secret || "ARCHIVO INÉDITO";
+        
+        const cardHTML = `
+            <div class="card-img-frame">
+                <img src="${data.imageUrl}" alt="Archivo visual ${data.catalog}" loading="lazy" onerror="this.src='https://picsum.photos/id/1/500/350'">
+            </div>
+            <div class="card-metadata">
+                <p><strong>📅 Año:</strong> ${data.year} | <strong>🏆 Evento:</strong> ${data.event}</p>
+                <p><strong>🔮 Predicción:</strong> <span class="prediction-text">“${data.prediction}”</span></p>
+                <p><strong>🏅 Vidente/Ganador:</strong> ${data.winner}</p>
+                <div class="catalog-number">📇 Nº Catálogo: ${data.catalog}</div>
+            </div>
+            <div class="ink-stamp">✧ ${stampText} ✧</div>
+            <div class="ink-stamp second">⚡ ${secondStamp} ⚡</div>
+        `;
+        
+        // Aplicar animación de entrada
+        cardContainer.style.animation = 'none';
+        cardContainer.offsetHeight; // forzar reflow
+        cardContainer.innerHTML = cardHTML;
+        cardContainer.classList.add('card-animate');
+        setTimeout(() => {
+            cardContainer.classList.remove('card-animate');
+        }, 280);
+        
+        // Actualizar indicador
+        currentIdxDisplay.innerText = currentIndex + 1;
+        
+        // Reproducir sonido al cambiar de ficha (efecto museo)
+        playArchiveSound();
+    }
+
+    // Navegación
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % archives.length;
+        renderCard();
+    }
+    
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + archives.length) % archives.length;
+        renderCard();
+    }
+    
+    // Alternar sonido
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        soundToggleBtn.innerText = soundEnabled ? "🔊" : "🔇";
+        if (soundEnabled && audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        // Pequeño feedback táctil sin sonido
+    }
+    
+    // Eventos y teclado
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    soundToggleBtn.addEventListener('click', toggleSound);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+    
+    // Inicializar primera tarjeta y precargar contexto de audio bajo demanda (se activa con primer click)
+    renderCard();
+    
+    // Pequeño helper: activar audio al primer clic en cualquier parte del carrusel (mejor UX)
+    const warmAudio = () => {
+        if (!audioCtx && soundEnabled) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        document.removeEventListener('click', warmAudio);
+        document.removeEventListener('touchstart', warmAudio);
+    };
+    document.addEventListener('click', warmAudio);
+    document.addEventListener('touchstart', warmAudio);
+</script>
 
 
     <script src="js/config.js"></script>
