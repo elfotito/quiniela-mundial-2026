@@ -2037,9 +2037,69 @@ body {
         min-width: 0;
         padding-top: 8px;
         margin-top: 4px;
-        border-top: 1px solid rgba(255,255,255,0.07);
+        border-top: 1px solid #f0f0f0;
     }
     .pi-pred-row {
         display: flex;
     }
+}
+
+/* ── REDISEÑO PREDICTION ITEMS ─────────────────────── */
+#predictionsList { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+
+.pi-row {
+    background: #fff;
+    border-radius: 12px;
+    border-left: 4px solid #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0,0,0,.05);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.pi-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.10);
+    background: #fff;
+}
+
+/* Acento lateral según resultado */
+.pi-row:has(.pi-badge-9) { border-left-color: #16a34a; }
+.pi-row:has(.pi-badge-7) { border-left-color: #65a30d; }
+.pi-row:has(.pi-badge-5) { border-left-color: var(--fifa-gold,#FFD700); }
+.pi-row:has(.pi-badge-2) { border-left-color: #0066CC; }
+.pi-row:has(.pi-badge-0) { border-left-color: #dc2626; }
+.pi-row:has(.pi-badge-pending) { border-left-color: #d4d4d4; }
+
+.pi-date {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-left: 2px;
+}
+.pi-date-day { font-size: 17px; }
+
+.pi-name { color: #1a1a1a; }
+
+.pi-score-real {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    min-width: 64px;
+}
+
+.pi-vsep {
+    background: #ebebeb;
+}
+
+.pi-side {
+    min-width: 90px;
+}
+.pi-pred-row {
+    background: #f0f6ff;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+.pi-pred-lbl { color: #0066CC; font-weight: 700; }
+.pi-pred-val { color: #0a0a0a; font-weight: 800; }
+
+.pi-pts-badge {
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
 }

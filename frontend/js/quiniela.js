@@ -1624,37 +1624,55 @@ function formatearFechaPrediccion(fechaStr) {
 }
 
 function exportarPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+// ── Header ──
+    doc.setFillColor(...DARK);
+    doc.rect(0, 0, 210, 32, 'F');
 
-    const FIFA_BLUE = [0, 102, 204];
-    const FIFA_GOLD = [255, 215, 0];
-    const DARK = [10, 10, 10];
-
-    // ── Header ──
-    doc.setFillColor(...FIFA_BLUE);
-    doc.rect(0, 0, 210, 28, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(16);
-    doc.setFont(undefined, 'bold');
-    doc.text('MI QUINIELA - MUNDIAL 2026', 14, 12);
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Jugador: ${usuario.nombre}`, 14, 20);
-    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 14, 25);
-
-    // ── Resumen (franja gold) ──
+    // Acento dorado lateral
     doc.setFillColor(...FIFA_GOLD);
-    doc.rect(0, 28, 210, 12, 'F');
-    doc.setTextColor(...DARK);
-    doc.setFontSize(10);
+    doc.rect(0, 0, 4, 32, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
     doc.setFont(undefined, 'bold');
-    const resumenTexto =
-        `Predicciones: ${predicciones.length}    |    ` +
-        `Puntos totales: ${document.getElementById('resPuntos')?.textContent || '—'}    |    ` +
-        `Efectividad: ${document.getElementById('resEfectividad')?.textContent || '—'}    |    ` +
-        `Campeón elegido: ${document.getElementById('userCampeon')?.textContent || '—'}`;
-    doc.text(resumenTexto, 14, 36);
+    doc.text('MI QUINIELA', 14, 13);
+
+    doc.setTextColor(...FIFA_GOLD);
+    doc.setFontSize(11);
+    doc.setFont(undefined, 'bold');
+    doc.text('MUNDIAL 2026', 14, 20);
+
+    doc.setTextColor(200, 200, 200);
+    doc.setFontSize(9);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Jugador: ${usuario.nombre}`, 14, 27);
+
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 196, 13, { align: 'right' });
+
+    // ── Resumen (franja gold con tarjetas) ──
+    doc.setFillColor(...FIFA_GOLD);
+    doc.rect(0, 32, 210, 14, 'F');
+    doc.setTextColor(...DARK);
+
+    const resumenItems = [
+        { label: 'Predicciones', val: `${predicciones.length}` },
+        { label: 'Puntos', val: document.getElementById('resPuntos')?.textContent || '—' },
+        { label: 'Efectividad', val: document.getElementById('resEfectividad')?.textContent || '—' },
+        { label: 'Campeón', val: document.getElementById('userCampeon')?.textContent || '—' }
+    ];
+
+    let xPos = 14;
+    resumenItems.forEach(item => {
+        doc.setFontSize(7);
+        doc.setFont(undefined, 'normal');
+        doc.text(item.label.toUpperCase(), xPos, 38);
+        doc.setFontSize(11);
+        doc.setFont(undefined, 'bold');
+        doc.text(item.val, xPos, 43);
+        xPos += 50;
+    });
 
     // ── Tabla ──
     const filas = [...predicciones]
@@ -1687,12 +1705,13 @@ function exportarPDF() {
         headStyles: { fillColor: DARK, textColor: 255, fontStyle: 'bold' },
         alternateRowStyles: { fillColor: [245, 245, 245] },
         columnStyles: {
-            0: { cellWidth: 22 },
-            2: { halign: 'center', cellWidth: 22 },
-            3: { halign: 'center', cellWidth: 22 },
-            4: { halign: 'center', cellWidth: 14 },
-            5: { cellWidth: 32 }
-        },
+                    0: { cellWidth: 20 },
+                    1: { cellWidth: 55 },
+                    2: { halign: 'center', cellWidth: 20 },
+                    3: { halign: 'center', cellWidth: 20 },
+                    4: { halign: 'center', cellWidth: 12 },
+                    5: { cellWidth: 38, fontSize: 7 }
+                },
         didParseCell: function (data) {
             if (data.section === 'body' && data.column.index === 4) {
                 const val = data.cell.raw;
