@@ -1624,6 +1624,12 @@ function formatearFechaPrediccion(fechaStr) {
 }
 
 function exportarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const FIFA_BLUE = [0, 102, 204];
+    const FIFA_GOLD = [255, 215, 0];
+    const DARK = [10, 10, 10];
 // ── Header ──
     doc.setFillColor(...DARK);
     doc.rect(0, 0, 210, 32, 'F');
