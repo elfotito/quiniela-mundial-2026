@@ -1611,7 +1611,119 @@ const backToTopBtn = document.getElementById('backToTop');
                 behavior: 'smooth'
             });
         });
+// ===============================================
+// EXPORTAR PDF
+// ===============================================
+function formatearFechaPrediccion(fechaStr) {
+    if (!fechaStr) return '—';
+    const f = new Date(fechaStr);
+    return f.toLocaleString('es-VE', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+    });
+}
 
+function exportarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const FIFA_BLUE = [0, 102, 204];
+    const FIFA_GOLD = [255, 215, 0];
+    const DARK = [10, 10, 10];
+
+    // ── Header ──
+    doc.setFillColor(...FIFA_BLUE);
+    doc.rect(0, 0, 210, 28, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('MI QUINIELA - MUNDIAL 2026', 14, 12);
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'normal');
+    doc.text(`Jugador: ${usuario.nombre}`, 14, 20);
+    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 14, 25);
+
+    // ── Resumen (franja gold) ──
+    doc.setFillColor(...FIFA_GOLD);
+    doc.rect(0, 28, 210, 12, 'F');
+    doc.setTextColor(...DARK);
+    doc.setFontSize(10);
+    doc.setFont(undefined, 'bold');
+    const resumenTexto =
+        `Predicciones: ${predicciones.length}    |    ` +
+        `Puntos totales: ${document.getElementById('resPuntos')?.textContent || '—'}    |    ` +
+        `Efectividad: ${document.getElementById('resEfectividad')?.textContent || '—'}    |    ` +
+        `Campeón elegido: ${document.getElementById('userCampeon')?.textContent || '—'}`;
+    doc.text(resumenTexto, 14, 36);
+
+    // ── Tabla ──
+    const filas = [...predicciones]
+        .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha))
+        .map(p => {
+            const fechaPartido = new Date(p.fecha_partido || p.fecha);
+            const fechaPartidoStr = fechaPartido.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+            const golesLocalReal = p.goles_local_real ?? p.goles_local ?? null;
+            const golesVisitanteReal = p.goles_visitante_real ?? p.goles_visitante ?? null;
+            const tieneResultado = golesLocalReal !== null && golesLocalReal !== undefined;
+
+            const resultado = tieneResultado
+                ? `${golesLocalReal} - ${golesVisitanteReal}`
+                : 'Pendiente';
+
+            const partido = `${p.equipo_local} vs ${p.equipo_visitante}`;
+            const prediccion = `${p.goles_local_pred} - ${p.goles_visitante_pred}`;
+
+            const pts = p.puntos_obtenidos === null ? '—' : `+${p.puntos_obtenidos}`;
+
+            return [fechaPartidoStr, partido, resultado, prediccion, pts, formatearFechaPrediccion(p.fecha_prediccion)];
+        });
+
+    doc.autoTable({
+        startY: 44,
+        head: [['Fecha partido', 'Partido', 'Resultado', 'Predicción', 'Pts', 'Fecha de predicción']],
+        body: filas,
+        styles: { fontSize: 8, cellPadding: 3 },
+        headStyles: { fillColor: DARK, textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [245, 245, 245] },
+        columnStyles: {
+            0: { cellWidth: 22 },
+            2: { halign: 'center', cellWidth: 22 },
+            3: { halign: 'center', cellWidth: 22 },
+            4: { halign: 'center', cellWidth: 14 },
+            5: { cellWidth: 32 }
+        },
+        didParseCell: function (data) {
+            if (data.section === 'body' && data.column.index === 4) {
+                const val = data.cell.raw;
+                const colores = {
+                    '+9': [209, 242, 235], '+7': [234, 243, 222],
+                    '+5': [250, 238, 218], '+2': [235, 243, 255], '+0': [254, 242, 242]
+                };
+                if (colores[val]) {
+                    data.cell.styles.fillColor = colores[val];
+                    data.cell.styles.fontStyle = 'bold';
+                }
+            }
+        },
+        didDrawPage: function (data) {
+            const pageCount = doc.internal.getNumberOfPages();
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text(
+                `Quiniela Mundial 2026 © Droguería Carrisan — Página ${doc.internal.getCurrentPageInfo().pageNumber} de ${pageCount}`,
+                14, doc.internal.pageSize.height - 8
+            );
+        }
+    });
+
+    doc.save(`quiniela_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnPDF = document.getElementById('btnExportarPDF');
+    if (btnPDF) btnPDF.addEventListener('click', exportarPDF);
+});
 function logout() {
     if (confirm('¿Estás seguro de que quieres salir?')) {
         auth.logout();

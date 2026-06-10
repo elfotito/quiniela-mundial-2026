@@ -12,7 +12,7 @@
 
 const NOTICIAS_MUNDIAL = [
     {
-    titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane sera el 1er futbolista de la historia que gana la Bota de Oro en dos ocasiones?",
+    titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane ganara la bota de oro por segunda vez? Seria el primero en hacerlo.",
     imagen: "https://digitalhub.fifa.com/transform/38f4af27-b519-4fde-a6d0-44d339831b12/Harry-Kane-celebrates-after-England-beat-Serbia-in-European-qualifying-for-the-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
     categoria: "BOTA DE ORO",
     url: "#"

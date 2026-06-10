@@ -2002,8 +2002,44 @@ body {
 .pi-badge-pending { background: #f5f5f5; color: #aaa;    }
 
 @media (max-width: 500px) {
-    .pi-row { grid-template-columns: 36px 1fr auto; }
-    .pi-vsep, .pi-pred-row { display: none; }
-    .pi-side { padding: 8px 10px; }
-    .pi-name { max-width: 60px; font-size: 11px; }
+    .pi-row {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px 14px;
+    }
+    .pi-date {
+        padding: 0;
+    }
+    .pi-match {
+        flex: 1 1 auto;
+    }
+    .pi-name {
+        max-width: 75px;
+        font-size: 11px;
+    }
+    .pi-flag {
+        font-size: 16px;
+    }
+    .pi-score-num {
+        font-size: 1.1rem;
+    }
+    .pi-score-hora {
+        font-size: 12px;
+    }
+
+    .pi-vsep { display: none; }
+
+    .pi-side {
+        flex-basis: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 0;
+        padding-top: 8px;
+        margin-top: 4px;
+        border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .pi-pred-row {
+        display: flex;
+    }
 }
