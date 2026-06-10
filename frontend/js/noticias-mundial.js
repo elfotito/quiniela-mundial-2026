@@ -11,6 +11,12 @@
  */
 
 const NOTICIAS_MUNDIAL = [
+    {
+    titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿¿Logrará Kane convertirse en el primer futbolista de la historia que gana la Bota de Oro en dos ocasiones?",
+    imagen: "https://digitalhub.fifa.com/transform/38f4af27-b519-4fde-a6d0-44d339831b12/Harry-Kane-celebrates-after-England-beat-Serbia-in-European-qualifying-for-the-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+    categoria: "BOTA DE ORO",
+    url: "#"
+  },
   {
     titulo: "🇲🇽 México ya tiene listo su espectáculo para inaugurar el Mundial 2026.",
     imagen: "https://i.ibb.co/Z69TCzdP/Getty-Images-2268851671-ee7486.png",
