@@ -1553,6 +1553,25 @@ function obtenerCampeon(codigo) {
     };
     return campeon[codigo] || '🏴';
 }
+
+const NOMBRES_PAISES = {
+    'GER': 'Alemania', 'ARG': 'Argentina', 'AUS': 'Australia', 'AUT': 'Austria',
+    'BEL': 'Bélgica', 'BOL': 'Bolivia', 'BRA': 'Brasil', 'CPV': 'Cabo Verde',
+    'CAN': 'Canadá', 'QAT': 'Catar', 'COL': 'Colombia', 'KOR': 'Corea del Sur',
+    'CIV': 'Costa de Marfil', 'CRO': 'Croacia', 'CUW': 'Curazao', 'ECU': 'Ecuador',
+    'EGY': 'Egipto', 'SCO': 'Escocia', 'ESP': 'España', 'USA': 'EE.UU.',
+    'FRA': 'Francia', 'GHA': 'Ghana', 'HAI': 'Haití', 'ENG': 'Inglaterra',
+    'IRQ': 'Irak', 'IRN': 'Irán', 'JAM': 'Jamaica', 'JPN': 'Japón',
+    'JOR': 'Jordania', 'MAR': 'Marruecos', 'MEX': 'México', 'NOR': 'Noruega',
+    'NCL': 'Nueva Caledonia', 'NZL': 'Nueva Zelanda', 'NED': 'Países Bajos', 'PAN': 'Panamá',
+    'PAR': 'Paraguay', 'POR': 'Portugal', 'COD': 'Congo', 'SEN': 'Senegal',
+    'RSA': 'Sudáfrica', 'SUI': 'Suiza', 'SUR': 'Surinam', 'TUN': 'Túnez',
+    'URU': 'Uruguay', 'UZB': 'Uzbekistán', 'KSA': 'Arabia Saudí', 'ALG': 'Argelia'
+};
+
+function obtenerNombrePais(codigo) {
+    return NOMBRES_PAISES[codigo] || codigo || '—';
+}
 // ===============================================
 // MENÚ MÓVIL
 // ===============================================
@@ -1632,31 +1651,39 @@ function exportarPDF() {
     const DARK = [10, 10, 10];
 // ── Header ──
     doc.setFillColor(...DARK);
-    doc.rect(0, 0, 210, 32, 'F');
+    doc.rect(0, 0, 210, 38, 'F');
 
     // Acento dorado lateral
     doc.setFillColor(...FIFA_GOLD);
-    doc.rect(0, 0, 4, 32, 'F');
+    doc.rect(0, 0, 4, 38, 'F');
 
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.setFont(undefined, 'bold');
-    doc.text('MI QUINIELA', 14, 13);
+    // Línea decorativa diagonal tipo "deportivo"
+    doc.setFillColor(...FIFA_BLUE);
+    doc.triangle(160, 0, 210, 0, 210, 38, 'F');
+    doc.setFillColor(...FIFA_GOLD);
+    doc.triangle(170, 0, 210, 0, 210, 28, 'F');
 
+    // Eyebrow
     doc.setTextColor(...FIFA_GOLD);
-    doc.setFontSize(11);
-    doc.setFont(undefined, 'bold');
-    doc.text('MUNDIAL 2026', 14, 20);
-
-    doc.setTextColor(200, 200, 200);
     doc.setFontSize(9);
-    doc.setFont(undefined, 'normal');
-    doc.text(`Jugador: ${usuario.nombre}`, 14, 27);
+    doc.setFont(undefined, 'bold');
+    doc.text('QUINIELA MUNDIAL 2026', 14, 11);
 
+    // Nombre del usuario, grande
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont(undefined, 'bold');
+    doc.text(usuario.nombre.toUpperCase(), 14, 24);
+
+    // Subtítulo
+    doc.setTextColor(180, 180, 180);
     doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 196, 13, { align: 'right' });
+    doc.setFont(undefined, 'normal');
+    doc.text('HISTORIAL OFICIAL DE PREDICCIONES', 14, 31);
 
+    doc.setFontSize(7);
+    doc.setTextColor(140, 140, 140);
+    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 14, 36);
     // ── Resumen (franja gold con tarjetas) ──
     doc.setFillColor(...FIFA_GOLD);
     doc.rect(0, 32, 210, 14, 'F');
@@ -1666,7 +1693,7 @@ function exportarPDF() {
         { label: 'Predicciones', val: `${predicciones.length}` },
         { label: 'Puntos', val: document.getElementById('resPuntos')?.textContent || '—' },
         { label: 'Efectividad', val: document.getElementById('resEfectividad')?.textContent || '—' },
-        { label: 'Campeón', val: document.getElementById('userCampeon')?.textContent || '—' }
+        { label: 'Campeón', val: obtenerNombrePais(usuario.campeon_elegido) }
     ];
 
     let xPos = 14;
