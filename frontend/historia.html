@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/index-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 
     <style>
     /* ── HERO ─────────────────────────────────────────── */
@@ -726,6 +729,444 @@
         .card-animate {
             animation: gentleFade 0.25s ease-out;
         }
+        /* === Variables — ajusta a tu sistema de diseño === */
+:root {
+  --vault-bg:        #111008;
+  --vault-surface:   #1c1810;
+  --vault-border:    #2e2818;
+  --vault-accent:    #c9a84c;
+  --vault-accent-dim:#7a6228;
+  --vault-text:      #e8dfc0;
+  --vault-text-muted:#6b5f3a;
+  --card-bg:         #f4eed8;
+  --card-bg-aged:    #ede2be;
+  --card-border:     #c8ba90;
+  --card-text:       #1a1206;
+  --card-text-mid:   #4a3c1e;
+  --card-text-faint: #8a7a52;
+  --stamp-closed-color: #7a1515;
+  --stamp-active-color: #0d5c2e;
+  --font-mono:       'Courier Prime', 'Courier New', monospace;
+  --font-display:    'Special Elite', 'Courier New', monospace;
+}
+ 
+/* === Sección contenedora === */
+.boveda-section {
+  width: 100%;
+  padding: 4rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: var(--vault-bg);
+  position: relative;
+  overflow: hidden;
+}
+ 
+/* Textura de fondo — rejilla sutil */
+.boveda-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+ 
+/* === Encabezado de la bóveda === */
+.boveda-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(-16px);
+  animation: fadeDown 0.7s ease 0.1s forwards;
+}
+.boveda-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--vault-accent-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.boveda-titulo {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--vault-accent);
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+.boveda-subtitulo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--vault-text-muted);
+  letter-spacing: 2px;
+}
+ 
+/* === Área del stack === */
+.stack-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.8s ease 0.35s forwards;
+}
+ 
+.stack-area {
+  position: relative;
+  width: 280px;
+  height: 380px;
+  cursor: pointer;
+}
+ 
+/* === Sombra proyectada debajo del stack === */
+.stack-shadow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 18px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  filter: blur(8px);
+  pointer-events: none;
+}
+ 
+/* === Tarjeta individual === */
+.bv-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 2px;
+  overflow: visible;
+  transform-origin: 50% 100%;
+  transition: box-shadow 0.3s ease;
+  will-change: transform, opacity;
+}
+ 
+/* Hover en la tarjeta del tope */
+.bv-card.is-top:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4);
+}
+.bv-card.is-top:hover .card-hover-hint {
+  opacity: 1;
+}
+ 
+/* Cinta adhesiva */
+.bv-tape {
+  position: absolute;
+  width: 52px;
+  height: 16px;
+  background: rgba(230,210,140,0.5);
+  border: 0.5px solid rgba(180,155,80,0.35);
+  top: -7px;
+  left: 22px;
+  transform: rotate(-12deg);
+  z-index: 2;
+}
+.bv-tape-2 {
+  right: 30px;
+  left: auto;
+  top: -5px;
+  transform: rotate(8deg);
+  width: 36px;
+}
+ 
+/* === Zona de imagen (Polaroid) === */
+.card-photo {
+  width: 100%;
+  height: 175px;
+  background: #1a1208;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.card-photo .photo-fallback {
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+}
+ 
+/* Overlay oscuro sutil sobre la foto */
+.card-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.45) 100%);
+  pointer-events: none;
+}
+ 
+/* Año flotante sobre la foto */
+.card-photo-year {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3px;
+  z-index: 2;
+  pointer-events: none;
+}
+ 
+/* Número de edición sobre la foto */
+.card-photo-num {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1px;
+  z-index: 2;
+}
+ 
+/* === Cuerpo de la tarjeta === */
+.card-body {
+  padding: 10px 13px 12px;
+}
+ 
+/* Fila superior: expediente + sello */
+.card-row-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  gap: 6px;
+}
+.card-exp-num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--card-text-faint);
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+ 
+/* Sello de goma */
+.card-stamp {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 2px 5px;
+  border: 1.5px solid;
+  border-radius: 1px;
+  white-space: nowrap;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+.card-stamp.closed {
+  color: var(--stamp-closed-color);
+  border-color: var(--stamp-closed-color);
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+.card-stamp.active {
+  color: var(--stamp-active-color);
+  border-color: var(--stamp-active-color);
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+ 
+/* País / Sede */
+.card-sede {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--card-text-mid);
+  letter-spacing: 0.5px;
+  margin-bottom: 1px;
+}
+ 
+/* Año grande */
+.card-year-big {
+  font-family: var(--font-display);
+  font-size: 42px;
+  color: var(--card-text);
+  line-height: 0.9;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+ 
+/* Línea divisora */
+.card-divider {
+  height: 0.5px;
+  background: var(--card-border);
+  margin: 8px 0;
+}
+ 
+/* Datos en dos columnas */
+.card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 8px;
+  margin-bottom: 8px;
+}
+.card-meta-item {}
+.card-meta-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--card-text-faint);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+.card-meta-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--card-text);
+}
+ 
+/* Frase al pie */
+.card-caption {
+  border-top: 0.5px dashed var(--card-border);
+  padding-top: 7px;
+}
+.card-caption-text {
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 9px;
+  color: var(--card-text-faint);
+  line-height: 1.5;
+}
+ 
+/* Hint de hover */
+.card-hover-hint {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--vault-text-muted);
+  letter-spacing: 2px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+ 
+/* === Envejecimiento por CSS === */
+.aged-2 { filter: sepia(15%) brightness(0.97) saturate(0.92); }
+.aged-3 { filter: sepia(28%) brightness(0.95) saturate(0.88); }
+.aged-4 { filter: sepia(42%) brightness(0.93) saturate(0.82); }
+.aged-5 { filter: sepia(58%) brightness(0.91) saturate(0.75); }
+.aged-6 { filter: sepia(72%) brightness(0.88) saturate(0.65); }
+ 
+/* === Animaciones de vuelo === */
+@keyframes flyLeft {
+  0%   { transform: var(--rot-base); opacity: 1; }
+  40%  { opacity: 0.9; }
+  70%  { transform: var(--rot-base) translateX(-360px) translateY(-80px) rotate(-20deg); opacity: 0.4; }
+  100% { transform: var(--rot-base) translateX(-480px) translateY(30px)  rotate(-26deg); opacity: 0; }
+}
+@keyframes flyRight {
+  0%   { transform: var(--rot-base); opacity: 1; }
+  40%  { opacity: 0.9; }
+  70%  { transform: var(--rot-base) translateX(360px) translateY(-80px) rotate(20deg);  opacity: 0.4; }
+  100% { transform: var(--rot-base) translateX(480px) translateY(30px)  rotate(26deg);  opacity: 0; }
+}
+.bv-fly-left  { animation: flyLeft  0.58s cubic-bezier(.4,0,.2,1) forwards; }
+.bv-fly-right { animation: flyRight 0.58s cubic-bezier(.4,0,.2,1) forwards; }
+ 
+/* === Entrada al cargar === */
+@keyframes fadeDown { to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp   { to { opacity:1; transform:translateY(0); } }
+ 
+/* === Indicadores de profundidad (puntos) === */
+.bv-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.bv-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--vault-accent-dim);
+  background: transparent;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.bv-dot.active {
+  background: var(--vault-accent);
+  border-color: var(--vault-accent);
+  transform: scale(1.25);
+}
+ 
+/* === Controles === */
+.bv-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+.bv-btn {
+  background: transparent;
+  border: 0.5px solid var(--vault-accent-dim);
+  color: var(--vault-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.bv-btn:hover {
+  background: rgba(201,168,76,0.08);
+  border-color: var(--vault-accent);
+  color: var(--vault-accent);
+}
+.bv-btn:active {
+  transform: scale(0.97);
+}
+.bv-counter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--vault-accent-dim);
+  letter-spacing: 3px;
+  min-width: 52px;
+  text-align: center;
+}
+ 
+/* === Instrucción swipe / clic === */
+.bv-hint {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--vault-text-muted);
+  letter-spacing: 2px;
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+ 
+/* === Responsive === */
+@media (max-width: 400px) {
+  .stack-area  { width: 250px; height: 350px; }
+  .bv-card     { width: 250px; }
+  .card-photo  { height: 155px; }
+  .card-year-big { font-size: 36px; }
+}
+
     </style>
 </head>
 
@@ -1515,17 +1956,35 @@
         “Donde el azar tiembla y la fortuna se rinde, ellos alzaron la vista y descifraron el futuro. Sus nombres no son obra de la suerte, sino la huella imborrable de quien supo leer el juego antes de que el balón rodara.”
     </div>
 
-    <!-- CARRUSEL PRINCIPAL -->
-    <div class="carousel-wrapper">
-        <button class="nav-btn" id="prevBtn" aria-label="Anterior">◀</button>
-        <div id="cardContainer" class="museum-card"></div>
-        <button class="nav-btn" id="nextBtn" aria-label="Siguiente">▶</button>
+    <section class="boveda-section" id="boveda-carrisan" aria-label="Bóveda Carrisan — archivo de ediciones">
+ 
+  <div class="boveda-header">
+    <p class="boveda-eyebrow">Droguería Carrisan, C.A.</p>
+    <h2 class="boveda-titulo">La Bóveda Carrisan</h2>
+    <p class="boveda-subtitulo">Archivo histórico · 2006 – 2026</p>
+  </div>
+ 
+  <div class="stack-wrapper">
+ 
+    <div class="stack-area" id="bv-stack" role="region" aria-label="Carrusel de ediciones">
+      <div class="stack-shadow"></div>
+      <!-- Las tarjetas se generan por JS -->
     </div>
-    <div class="carousel-indicator">
-        <span>📜 Archivo <span id="currentIdxDisplay">1</span> / <span id="totalCount"></span> 📜</span>
+ 
+    <div class="bv-dots" id="bv-dots" role="tablist" aria-label="Navegación de ediciones"></div>
+ 
+    <div class="bv-controls">
+      <button class="bv-btn" id="bv-prev" aria-label="Edición anterior">&#x2190; anterior</button>
+      <span class="bv-counter" id="bv-counter" aria-live="polite">1 / 6</span>
+      <button class="bv-btn" id="bv-next" aria-label="Siguiente edición">siguiente &#x2192;</button>
     </div>
-    <button id="soundToggleBtn" class="sound-toggle" title="Sonido ambiente">🔊</button>
-</div>
+ 
+    <p class="bv-hint">toca la tarjeta o desliza para navegar</p>
+ 
+  </div>
+ 
+</section>
+
         </main>
 
         <!-- ══ COLUMNA DERECHA ══ -->
@@ -1940,204 +2399,268 @@ setTimeout(() => {
 
     </script>
     <script>
-    // ======================= BASE DE DATOS SIMULADA =======================
-    // Aquí conectas tus propias imágenes y datos desde tu backend
-    const archives = [
-        {
-            catalog: "ARCH-1942-Q",
-            year: 1998,
-            event: "Mundial Francia",
-            prediction: "Francia 3-0 Brasil",
-            winner: "Zinedine Zidane (El Elegido)",
-            imageUrl: "https://picsum.photos/id/20/500/350",   // vintage typewriter
-            stamp: "DESCLASIFICADO",
-            secret: "TOP SECRET - FÚTBOL"
-        },
-        {
-            catalog: "ARCH-1986-M",
-            year: 1986,
-            event: "Mundial México",
-            prediction: "Maradona: Mano de Dios & Gol del Siglo",
-            winner: "El Profeta del Potrero",
-            imageUrl: "https://picsum.photos/id/26/500/350",
-            stamp: "ÚNICO TESTIMONIO",
-            secret: "MATERIAL RESERVADO"
-        },
-        {
-            catalog: "ARCH-2002-R",
-            year: 2002,
-            event: "Corea-Japón",
-            prediction: "Brasil pentacampeón - Ronaldo decide",
-            winner: "Ronaldo Fenómeno (vidente ofensivo)",
-            imageUrl: "https://picsum.photos/id/42/500/350",
-            stamp: "DESCLASIFICADO",
-            secret: "ARCHIVO HISTÓRICO"
-        },
-        {
-            catalog: "ARCH-2010-S",
-            year: 2010,
-            event: "Sudáfrica",
-            prediction: "La Roja se corona con Iniesta",
-            winner: "Andrés El Iluminado",
-            imageUrl: "https://picsum.photos/id/33/500/350",
-            stamp: "COTA MÁXIMA",
-            secret: "TOP SECRET - FÚTBOL"
-        },
-        {
-            catalog: "ARCH-2014-Z",
-            year: 2014,
-            event: "Brasil 2014",
-            prediction: "Alemania 7-1 Brasil (exacto)",
-            winner: "Oráculo Germánico",
-            imageUrl: "https://picsum.photos/id/15/500/350",
-            stamp: "DESCLASIFICADO",
-            secret: "MATERIAL SENSIBLE"
-        }
-    ];
-
-    let currentIndex = 0;
-    let soundEnabled = true;
-    let audioCtx = null;  // contexto de audio para sonido sutil
-
-    // Referencias DOM
-    const cardContainer = document.getElementById('cardContainer');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const currentIdxDisplay = document.getElementById('currentIdxDisplay');
-    const totalCountSpan = document.getElementById('totalCount');
-    const soundToggleBtn = document.getElementById('soundToggleBtn');
-
-    totalCountSpan.innerText = archives.length;
-
-    // Función para reproducir sonido (efecto "archivo antiguo", un pequeño chasquido de papel)
-    function playArchiveSound() {
-        if (!soundEnabled) return;
-        try {
-            // Inicializar AudioContext solo en la primera interacción (necesario por políticas del navegador)
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            // Reanudar si está suspendido
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume().then(() => {
-                    playBeep();
-                });
-            } else {
-                playBeep();
-            }
-        } catch(e) {
-            console.warn("Web Audio no soportado, sonido desactivado");
-        }
+/* ════════════════════════════════════════════════════════════
+   BÓVEDA CARRISAN — Configuración de ediciones
+   Modifica únicamente este bloque para actualizar contenido
+   ════════════════════════════════════════════════════════════ */
+const EDICIONES = [
+  {
+    year:         '2026',
+    sede:         'EE.UU. / México / Canadá',
+    exp:          'EXP-2026-NAM',
+    status:       'active',           // 'active' o 'closed'
+    stampTxt:     'EN CURSO',
+    /* Pon la ruta de tu imagen relativa a tu proyecto, ej: '/img/historia/2026.jpg'
+       Si la imagen falla o no existe, se muestra el emoji como fallback */
+    img:          '',
+    imgAlt:       'Sede Mundial 2026',
+    fallbackEmoji:'🇺🇸',
+    participantes:'50',
+    topPuntos:    '—',
+    campeon:      '— por definir —',
+    caption:      'La edición más grande de la historia. 48 selecciones. Una quiniela.',
+    aged:         0,                  // 0 = sin efecto, 2-6 = nivel de envejecimiento
+  },
+  {
+    year:         '2022',
+    sede:         'Qatar',
+    exp:          'EXP-2022-QAT',
+    status:       'closed',
+    stampTxt:     'ARCHIVADO',
+    img:          '',
+    imgAlt:       'Sede Qatar 2022',
+    fallbackEmoji:'🇶🇦',
+    participantes:'38',
+    topPuntos:    '74 pts',
+    campeon:      'Argentina',
+    caption:      'El desierto árabe como escenario. La Scaloneta como protagonista.',
+    aged:         2,
+  },
+  {
+    year:         '2018',
+    sede:         'Rusia',
+    exp:          'EXP-2018-RUS',
+    status:       'closed',
+    stampTxt:     'ARCHIVADO',
+    img:          '',
+    imgAlt:       'Sede Rusia 2018',
+    fallbackEmoji:'🇷🇺',
+    participantes:'31',
+    topPuntos:    '68 pts',
+    campeon:      'Francia',
+    caption:      'Los Gallos Galos volaron sin piedad. Mbappé era un niño. Ya no.',
+    aged:         3,
+  },
+  {
+    year:         '2014',
+    sede:         'Brasil',
+    exp:          'EXP-2014-BRA',
+    status:       'closed',
+    stampTxt:     'ARCHIVADO',
+    img:          '',
+    imgAlt:       'Sede Brasil 2014',
+    fallbackEmoji:'🇧🇷',
+    participantes:'27',
+    topPuntos:    '61 pts',
+    campeon:      'Alemania',
+    caption:      'El 7-1 rompió más de una quiniela. Y más de un corazón.',
+    aged:         4,
+  },
+  {
+    year:         '2010',
+    sede:         'Sudáfrica',
+    exp:          'EXP-2010-ZAF',
+    status:       'closed',
+    stampTxt:     'ARCHIVADO',
+    img:          '',
+    imgAlt:       'Sede Sudáfrica 2010',
+    fallbackEmoji:'🇿🇦',
+    participantes:'18',
+    topPuntos:    '55 pts',
+    campeon:      'España',
+    caption:      'La edición fundacional. Papel, lápiz y mucha fe. Todo empezó aquí.',
+    aged:         6,
+  },
+];
+ 
+/* ════════════════════════════════════════════════════════════
+   Motor del carrusel — no necesitas tocar nada de aquí abajo
+   ════════════════════════════════════════════════════════════ */
+(function() {
+  const ROTS   = [0, -2.8, 2.1, -4.0, 3.3, -1.6];
+  const OFFSET = [0,  3,   6,   9,   12,   14  ];
+  let current    = 0;
+  let isAnimating = false;
+ 
+  const stackEl   = document.getElementById('bv-stack');
+  const dotsEl    = document.getElementById('bv-dots');
+  const counterEl = document.getElementById('bv-counter');
+  const btnPrev   = document.getElementById('bv-prev');
+  const btnNext   = document.getElementById('bv-next');
+  const total     = EDICIONES.length;
+ 
+  /* ── Construir una tarjeta ── */
+  function buildCard(ed, stackPos) {
+    const isTop   = stackPos === 0;
+    const rotDeg  = ROTS[stackPos % ROTS.length];
+    const offsetY = OFFSET[stackPos];
+    const zIndex  = total - stackPos;
+ 
+    const card = document.createElement('div');
+    card.className = 'bv-card' +
+      (ed.aged >= 2 ? ` aged-${Math.min(ed.aged, 6)}` : '') +
+      (isTop ? ' is-top' : '');
+    card.style.cssText =
+      `z-index:${zIndex};` +
+      `--rot-base:rotate(${rotDeg}deg) translateY(${offsetY}px);` +
+      `transform:rotate(${rotDeg}deg) translateY(${offsetY}px);`;
+ 
+    const imgHTML = ed.img
+      ? `<img src="${ed.img}" alt="${ed.imgAlt}"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      : '';
+    const fallbackStyle = ed.img ? 'style="display:none"' : '';
+ 
+    card.innerHTML = `
+      <div class="bv-tape"></div>
+      <div class="bv-tape bv-tape-2"></div>
+      <div class="card-photo">
+        ${imgHTML}
+        <span class="photo-fallback" ${fallbackStyle}>${ed.fallbackEmoji}</span>
+        <span class="card-photo-num">${ed.exp}</span>
+        <span class="card-photo-year">${ed.year}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-row-top">
+          <span class="card-exp-num">${ed.exp}</span>
+          <span class="card-stamp ${ed.status}">${ed.stampTxt}</span>
+        </div>
+        <div class="card-sede">${ed.sede}</div>
+        <div class="card-year-big">${ed.year}</div>
+        <div class="card-divider"></div>
+        <div class="card-meta">
+          <div class="card-meta-item">
+            <div class="card-meta-label">Participantes</div>
+            <div class="card-meta-val">${ed.participantes}</div>
+          </div>
+          <div class="card-meta-item">
+            <div class="card-meta-label">Top puntos</div>
+            <div class="card-meta-val">${ed.topPuntos}</div>
+          </div>
+          <div class="card-meta-item" style="grid-column:1/-1">
+            <div class="card-meta-label">Campeón</div>
+            <div class="card-meta-val">${ed.campeon}</div>
+          </div>
+        </div>
+        <div class="card-caption">
+          <p class="card-caption-text">&ldquo;${ed.caption}&rdquo;</p>
+        </div>
+      </div>
+      ${isTop ? '<span class="card-hover-hint">clic para pasar ›</span>' : ''}
+    `;
+ 
+    if (isTop) {
+      card.addEventListener('click', () => advance('left'));
     }
-
-    function playBeep() {
-        if (!soundEnabled || !audioCtx) return;
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.type = 'sine';
-        osc.frequency.value = 880;
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
-        osc.start();
-        osc.stop(now + 0.25);
-        // un segundo sonido más grave para dar textura "pergamino"
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.connect(gain2);
-        gain2.connect(audioCtx.destination);
-        osc2.type = 'triangle';
-        osc2.frequency.value = 220;
-        gain2.gain.setValueAtTime(0.04, now + 0.03);
-        gain2.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
-        osc2.start(now + 0.03);
-        osc2.stop(now + 0.38);
+    return card;
+  }
+ 
+  /* ── Reconstruir el stack completo ── */
+  function buildStack() {
+    /* Conservar la sombra */
+    const shadow = stackEl.querySelector('.stack-shadow');
+    stackEl.innerHTML = '';
+    if (shadow) stackEl.appendChild(shadow);
+ 
+    for (let i = total - 1; i >= 0; i--) {
+      const idx = (current + i) % total;
+      stackEl.appendChild(buildCard(EDICIONES[idx], i));
     }
-
-    // Renderizar tarjeta actual con todos los elementos museo
-    function renderCard() {
-        const data = archives[currentIndex];
-        // Construir HTML de la cartulina
-        const stampText = data.stamp || "DESCLASIFICADO";
-        const secondStamp = data.secret || "ARCHIVO INÉDITO";
-        
-        const cardHTML = `
-            <div class="card-img-frame">
-                <img src="${data.imageUrl}" alt="Archivo visual ${data.catalog}" loading="lazy" onerror="this.src='https://picsum.photos/id/1/500/350'">
-            </div>
-            <div class="card-metadata">
-                <p><strong>📅 Año:</strong> ${data.year} | <strong>🏆 Evento:</strong> ${data.event}</p>
-                <p><strong>🔮 Predicción:</strong> <span class="prediction-text">“${data.prediction}”</span></p>
-                <p><strong>🏅 Vidente/Ganador:</strong> ${data.winner}</p>
-                <div class="catalog-number">📇 Nº Catálogo: ${data.catalog}</div>
-            </div>
-            <div class="ink-stamp">✧ ${stampText} ✧</div>
-            <div class="ink-stamp second">⚡ ${secondStamp} ⚡</div>
-        `;
-        
-        // Aplicar animación de entrada
-        cardContainer.style.animation = 'none';
-        cardContainer.offsetHeight; // forzar reflow
-        cardContainer.innerHTML = cardHTML;
-        cardContainer.classList.add('card-animate');
-        setTimeout(() => {
-            cardContainer.classList.remove('card-animate');
-        }, 280);
-        
-        // Actualizar indicador
-        currentIdxDisplay.innerText = currentIndex + 1;
-        
-        // Reproducir sonido al cambiar de ficha (efecto museo)
-        playArchiveSound();
-    }
-
-    // Navegación
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % archives.length;
-        renderCard();
-    }
-    
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + archives.length) % archives.length;
-        renderCard();
-    }
-    
-    // Alternar sonido
-    function toggleSound() {
-        soundEnabled = !soundEnabled;
-        soundToggleBtn.innerText = soundEnabled ? "🔊" : "🔇";
-        if (soundEnabled && audioCtx && audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-        // Pequeño feedback táctil sin sonido
-    }
-    
-    // Eventos y teclado
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-    soundToggleBtn.addEventListener('click', toggleSound);
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') prevSlide();
-        if (e.key === 'ArrowRight') nextSlide();
+    updateDots();
+    counterEl.textContent = `${current + 1} / ${total}`;
+  }
+ 
+  /* ── Avanzar al siguiente ── */
+  function advance(dir) {
+    if (isAnimating) return;
+    isAnimating = true;
+    vibrate();
+ 
+    const topCard = stackEl.querySelector('.is-top');
+    if (!topCard) { isAnimating = false; return; }
+ 
+    topCard.classList.add(dir === 'left' ? 'bv-fly-left' : 'bv-fly-right');
+ 
+    setTimeout(() => {
+      current = (current + 1) % total;
+      buildStack();
+      isAnimating = false;
+    }, 560);
+  }
+ 
+  /* ── Retroceder ── */
+  function retreat() {
+    if (isAnimating) return;
+    current = (current - 1 + total) % total;
+    buildStack();
+    vibrate();
+  }
+ 
+  /* ── Puntos indicadores ── */
+  function updateDots() {
+    dotsEl.innerHTML = '';
+    EDICIONES.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'bv-dot' + (i === current ? ' active' : '');
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', `Edición ${EDICIONES[i].year}`);
+      dot.setAttribute('aria-selected', i === current ? 'true' : 'false');
+      dot.addEventListener('click', () => {
+        if (isAnimating || i === current) return;
+        current = i;
+        buildStack();
+      });
+      dotsEl.appendChild(dot);
     });
-    
-    // Inicializar primera tarjeta y precargar contexto de audio bajo demanda (se activa con primer click)
-    renderCard();
-    
-    // Pequeño helper: activar audio al primer clic en cualquier parte del carrusel (mejor UX)
-    const warmAudio = () => {
-        if (!audioCtx && soundEnabled) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
-        document.removeEventListener('click', warmAudio);
-        document.removeEventListener('touchstart', warmAudio);
-    };
-    document.addEventListener('click', warmAudio);
-    document.addEventListener('touchstart', warmAudio);
+  }
+ 
+  /* ── Vibración suave en móvil ── */
+  function vibrate() {
+    if (navigator.vibrate) navigator.vibrate(18);
+  }
+ 
+  /* ── Swipe táctil ── */
+  let touchStartX = 0;
+  let touchStartY = 0;
+  stackEl.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  stackEl.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      if (dx < 0) advance('left');
+      else retreat();
+    }
+  }, { passive: true });
+ 
+  /* ── Teclado ── */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') advance('left');
+    if (e.key === 'ArrowLeft')  retreat();
+  });
+ 
+  /* ── Botones ── */
+  btnNext.addEventListener('click', () => advance('left'));
+  btnPrev.addEventListener('click', () => retreat());
+ 
+  /* ── Init ── */
+  buildStack();
+ 
+})();
 </script>
+
 
 
     <script src="js/config.js"></script>
