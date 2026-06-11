@@ -1119,12 +1119,12 @@ function iniciarCountdown() {
     function actualizar() {
         const distancia = fechaMundial - new Date().getTime();
 
-        const dias     = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        
         const horas    = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutos  = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
         const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-        document.getElementById('days').textContent  = dias;
+        
         document.getElementById('hours').textContent = horas.toString().padStart(2, '0');
         document.getElementById('mins').textContent  = minutos.toString().padStart(2, '0');
         document.getElementById('secs').textContent  = segundos.toString().padStart(2, '0');
