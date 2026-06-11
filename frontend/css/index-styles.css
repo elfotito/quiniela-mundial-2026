@@ -959,9 +959,6 @@
         margin: 0;
     }
     
-    .countdown-label div {
-        display: none;
-    }
     
     .countdown-timer {
         gap: 2px; 
@@ -2658,9 +2655,6 @@
         object-fit: contain;
     }
 
-    .countdown-label div { 
-        display: none; 
-    }
 
     .countdown-timer {
         display: flex;
