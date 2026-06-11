@@ -893,7 +893,6 @@
 
 .countdown-label p {
     margin: 0;
-    opacity: 0.8;
 }
 
 .countdown-timer {
@@ -2655,11 +2654,19 @@
         object-fit: contain;
     }
 
+    .countdown-label h2 {
+    font-size: 0.7rem;
+    font-weight: 900;
+    margin: 0;
+}
+    .countdown-label p {
+    font-size: 12px;
+}
 
     .countdown-timer {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 5px;
     }
 
     .time-box {
