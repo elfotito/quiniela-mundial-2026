@@ -91,6 +91,8 @@ function configurarTabs() {
             cambiarTab(targetTab);
         });
     });
+    const segundaTab = document.querySelectorAll('.pred-tab-btn')[1];
+if (segundaTab) segundaTab.click();
 }
 
 function cargarStatsHero() {
