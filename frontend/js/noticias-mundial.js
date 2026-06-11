@@ -12,6 +12,12 @@
 
 const NOTICIAS_MUNDIAL = [
     {
+    titulo: "🇲🇽 México supera a Sudáfrica y sonríe en el debut",
+    imagen: "https://digitalhub.fifa.com/transform/16aa0b54-a296-4f63-97c9-580ea4f8019d/Mexico-v-South-Africa-Group-A-FIFA-World-Cup-2026?focuspoint=0.5,0.35&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+    categoria: "PARTIDO",
+    url: "#"
+  },
+    {
     titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane ganara la bota de oro por segunda vez? Seria el primero en hacerlo.",
     imagen: "https://digitalhub.fifa.com/transform/38f4af27-b519-4fde-a6d0-44d339831b12/Harry-Kane-celebrates-after-England-beat-Serbia-in-European-qualifying-for-the-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
     categoria: "BOTA DE ORO",
@@ -39,18 +45,6 @@ const NOTICIAS_MUNDIAL = [
     titulo: "500 millones de solicitudes durante última fase para la compra de boletos",
     imagen: "https://digitalhub.fifa.com/transform/7e47ea3b-bf2d-42ed-9bc7-837c2e4f11b7/FIFA-com_FWC26_Ticketing-Thumbnail_3840x2160",
     categoria: "Entradas",
-    url: "#"
-  },
-  {
-    titulo: "Mbappé liderará a Francia en busca del bicampeonato",
-    imagen: "https://digitalhub.fifa.com/transform/f07890cb-352c-4424-92cf-7b49a6130e8d/GettyImages-2246154907",
-    categoria: "Favoritos",
-    url: "#"
-  },
-  {
-    titulo: "Vinícius Júnior es uno de los mejores representantes que el Jogo Bonito podría tener",
-    imagen: "https://digitalhub.fifa.com/transform/edbce853-55bc-49fc-ac93-4b5ffea0bd30/Vinicius-Junior-of-Brazil-during-the-International-Friendly-match-against-Senegal",
-    categoria: "Favoritos",
     url: "#"
   }
 ];
