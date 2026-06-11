@@ -1114,7 +1114,7 @@ function logout() {
 // ===============================================
 
 function iniciarCountdown() {
-    const fechaMundial = new Date('June 11, 2026 15:00:00').getTime();
+    const fechaMundial = new Date('June 11, 2026 22:00:00').getTime();
 
     function actualizar() {
         const distancia = fechaMundial - new Date().getTime();
