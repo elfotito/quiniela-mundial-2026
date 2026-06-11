@@ -13,7 +13,7 @@
 const NOTICIAS_MUNDIAL = [
     {
     titulo: "🇲🇽 México supera a Sudáfrica y sonríe en el debut",
-    imagen: "https://digitalhub.fifa.com/transform/16aa0b54-a296-4f63-97c9-580ea4f8019d/Mexico-v-South-Africa-Group-A-FIFA-World-Cup-2026?focuspoint=0.5,0.35&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+    imagen: "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0611%2Fr1671534_1296x729_16%2D9.jpg",
     categoria: "PARTIDO",
     url: "#"
   },
