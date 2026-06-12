@@ -11,6 +11,12 @@
  */
 
 const NOTICIAS_MUNDIAL = [
+{
+    titulo: "🇰🇷 Corea del sur le da vuelta a Rep Checa y asegura sus 3 puntos vitales",
+    imagen: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
+    categoria: "PARTIDO",
+    url: "#"
+  },
     {
     titulo: "🇲🇽 México supera a Sudáfrica y sonríe en el debut",
     imagen: "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0611%2Fr1671534_1296x729_16%2D9.jpg",
