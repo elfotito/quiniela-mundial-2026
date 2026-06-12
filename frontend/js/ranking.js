@@ -193,18 +193,26 @@ async function cargarRankingCompleto() {
 }
 
 async function cargarLigasUsuarios() {
+    const fetchLigasUsuario = async (usuarioId) => {
+        const response = await fetch(`${CONFIG.API_URL}/usuarios/${usuarioId}/ligas`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+    };
+
     const promesas = rankingCompleto.map(async (user) => {
         try {
-            const response = await fetch(`${CONFIG.API_URL}/usuarios/${user.usuario_id}/ligas`);
-            if (response.ok) {
-                const ligasUsuario = await response.json();
-                user.ligas = ligasUsuario.map(l => l.liga_id || l.id);
-            } else {
-                user.ligas = [];
-            }
+            const ligasUsuario = await fetchLigasUsuario(user.usuario_id);
+            user.ligas = ligasUsuario.map(l => l.liga_id || l.id);
         } catch (error) {
-            console.error(`Error cargando ligas para usuario ${user.usuario_id}:`, error);
-            user.ligas = [];
+            // Reintento único: bajo Render free tier, fetches paralelos a veces fallan/timeout
+            try {
+                const ligasUsuario = await fetchLigasUsuario(user.usuario_id);
+                user.ligas = ligasUsuario.map(l => l.liga_id || l.id);
+            } catch (error2) {
+                console.error(`Error cargando ligas para usuario ${user.usuario_id}:`, error2);
+                // No forzar [] aquí: deja user.ligas como venía (undefined si nunca se cargó),
+                // así el render puede distinguir "sin liga real" de "fallo de carga".
+            }
         }
     });
     
