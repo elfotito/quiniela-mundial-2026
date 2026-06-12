@@ -691,6 +691,8 @@ app.get('/api/ranking/detallado', async (req, res) => {
     }
 });
 
+
+
 // ===============================================
 // RUTAS DE ESTADÍSTICAS
 // ===============================================
@@ -991,6 +993,13 @@ app.get('/api/ranking/liga/:ligaId', async (req, res) => {
                 COALESCE(SUM(p.puntos_obtenidos), 0) as puntos_totales,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) as total_predicciones,
                 COUNT(p.id) FILTER (WHERE p.puntos_obtenidos > 0) as aciertos,
+                
+                -- Contadores individuales (lo que necesitas)
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 9) as aciertos_9,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 7) as aciertos_7,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 5) as aciertos_5,
+                COUNT(p.id) FILTER (WHERE p.puntos_obtenidos = 2) as aciertos_2,
+                
                 ROUND(
                     CASE 
                         WHEN COUNT(p.id) FILTER (WHERE p.puntos_obtenidos IS NOT NULL) > 0 
