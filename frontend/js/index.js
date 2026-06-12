@@ -675,14 +675,21 @@ async function cargarLigaRankingWidget() {
             ligaNombre.textContent = `${liga.icono || '🏅'} ${liga.nombre}`;
         }
  
-        // 2. Obtener ranking completo y filtrar por liga
-        const resRanking = await fetch(`${CONFIG.API_URL}/ranking/top`);
+        // 2. Obtener ranking DETALLADO (no top)
+        const resRanking = await fetch(`${CONFIG.API_URL}/ranking/detallado`);
         if (!resRanking.ok) throw new Error('Sin ranking');
-        const rankingCompleto = await resRanking.json();
+        const rankingResponse = await resRanking.json();
+        
+        // Extraer el array de usuarios (ajusta según la estructura real)
+        const rankingCompleto = rankingResponse.data || rankingResponse;
  
         // Filtrar usuarios que pertenecen a esta liga
         const rankingLiga = rankingCompleto
-            .filter(u => u.ligas && u.ligas.includes(parseInt(liga.id)))
+            .filter(u => {
+                // u.ligas es un array de IDs de ligas
+                // Pueden ser strings o números, por eso usamos == en lugar de ===
+                return u.ligas && u.ligas.some(ligaId => ligaId == liga.id);
+            })
             .sort((a, b) => (b.puntos_totales || 0) - (a.puntos_totales || 0));
  
         if (!rankingLiga.length) {
@@ -694,7 +701,7 @@ async function cargarLigaRankingWidget() {
  
         const filas = rankingLiga.map((user, index) => {
             const posicion = index + 1;
-            const esYo = user.usuario_id === parseInt(usuarioId);
+            const esYo = user.id === parseInt(usuarioId);
             const claseMe = esYo ? 'liga-me' : '';
  
             const pos = posicion <= 3
@@ -704,6 +711,9 @@ async function cargarLigaRankingWidget() {
             const nombre = user.nombre_publico || user.nombre || 'Usuario';
             const nombreCorto = nombre.length > 14 ? nombre.substring(0, 13) + '…' : nombre;
  
+            // Usar los campos correctos según el endpoint /detallado
+            // Nota: Este endpoint no tiene aciertos_9,7,5,2 individuales
+            // Si necesitas esos datos, tendrás que usar /ranking (sin /top)
             const c9 = user.aciertos_9 ?? '—';
             const c7 = user.aciertos_7 ?? '—';
             const c5 = user.aciertos_5 ?? '—';
@@ -718,7 +728,7 @@ async function cargarLigaRankingWidget() {
                 <td class="liga-td-col">${c5}</td>
                 <td class="liga-td-col">${c2}</td>
                 <td class="liga-td-total">${user.puntos_totales || 0}</td>
-            </tr>`;
+             </tr>`;
         }).join('');
  
         container.innerHTML = `
