@@ -715,11 +715,11 @@ async function cargarLigaRankingWidget() {
             <tr style="background: ${bgColor}; border-left: ${borderLeft};">
                 <td style="padding: 10px 6px; text-align: center; width: 45px;">${posHtml}</td>
                 <td style="padding: 10px 6px; text-align: left;">${nombreCorto}</td>
-                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c9}</td>
-                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c7}</td>
-                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c5}</td>
-                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c2}</td>
-                <td style="padding: 10px 6px; text-align: center; font-weight: bold; color: #ffd700;">${user.puntos_totales || 0}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #61615f;">${c9}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #61615f;">${c7}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #61615f;">${c5}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #61615f;">${c2}</td>
+                <td style="padding: 10px 6px; text-align: center; font-weight: bold; color: #000000;">${user.puntos_totales || 0}</td>
             </tr>
             `;
         }).join('');
