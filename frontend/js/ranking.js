@@ -18,8 +18,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await verificarLogin();
     configurarUI();
     
+    // cargarLigas() debe completarse ANTES de cargarRankingCompleto(),
+    // ya que este último usa ligasDisponibles para resolver nombre/icono de cada usuario.
+    // Si no, hay un race condition que deja "🏅 Sin liga" según qué request responda primero.
+    await cargarLigas();
+
     await Promise.all([
-        cargarLigas(),
         cargarRankingCompleto(),
         cargarEstadisticas(),
         cargarLigasRegistradas(),
