@@ -690,31 +690,38 @@ async function cargarLigaRankingWidget() {
         const filas = rankingLiga.map((user, index) => {
             const posicion = index + 1;
             const esYo = user.id === parseInt(usuarioId);
+            const bgColor = esYo ? 'rgba(255, 215, 0, 0.15)' : 'transparent';
+            const borderLeft = esYo ? '3px solid #ffd700' : 'none';
+            // Asegurar que la clase se aplique correctamente
             const claseMe = esYo ? 'liga-me' : '';
- 
-            const pos = posicion <= 3
-                ? `<span style="font-size:13px">${medallas[index]}</span>`
-                : `<span style="font-size:11px;color:#aaa">${posicion}°</span>`;
+            
+            // Formatear posición
+            let posHtml = '';
+            if (posicion <= 3) {
+                posHtml = `<span style="font-size:16px">${medallas[index]}</span>`;
+            } else {
+                posHtml = `<span style="font-size:12px;color:#aaa">${posicion}°</span>`;
+            }
  
             const nombre = user.nombre_publico || user.nombre || 'Usuario';
             const nombreCorto = nombre.length > 14 ? nombre.substring(0, 13) + '…' : nombre;
  
-            // Ahora estos campos existen en la respuesta
             const c9 = user.aciertos_9 || 0;
             const c7 = user.aciertos_7 || 0;
             const c5 = user.aciertos_5 || 0;
             const c2 = user.aciertos_2 || 0;
  
             return `
-            <tr class="${claseMe}">
-                <td class="liga-td-pos left">${pos}</td>
-                <td class="liga-td-name left">${nombreCorto}</td>
-                <td class="liga-td-col">${c9}</td>
-                <td class="liga-td-col">${c7}</td>
-                <td class="liga-td-col">${c5}</td>
-                <td class="liga-td-col">${c2}</td>
-                <td class="liga-td-total"><strong>${user.puntos_totales || 0}</strong></td>
-            </table>`;
+            <tr style="background: ${bgColor}; border-left: ${borderLeft};">
+                <td style="padding: 10px 6px; text-align: center; width: 45px;">${posHtml}</td>
+                <td style="padding: 10px 6px; text-align: left;">${nombreCorto}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c9}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c7}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c5}</td>
+                <td style="padding: 10px 6px; text-align: center; color: #ffd700;">${c2}</td>
+                <td style="padding: 10px 6px; text-align: center; font-weight: bold; color: #ffd700;">${user.puntos_totales || 0}</td>
+            </tr>
+            `;
         }).join('');
  
         container.innerHTML = `
@@ -722,7 +729,7 @@ async function cargarLigaRankingWidget() {
             <thead>
                 <tr>
                     <th class="left">#</th>
-                    <th class="left">Jugador</th>
+                    <th class="left">Usuario</th>
                     <th title="Resultado exacto (+9)">+9</th>
                     <th title="Ganador y Marcador (+7)">+7</th>
                     <th title="Ganador o Empate (+5)">+5</th>
@@ -731,12 +738,23 @@ async function cargarLigaRankingWidget() {
                 </tr>
             </thead>
             <tbody>${filas}</tbody>
-        </table>`;
- 
+        </table>
+        `;
+        
+        // Debug: Verificar las clases aplicadas
+        console.log('Filas generadas:', document.querySelectorAll('#ligaRankingWidget tbody tr'));
+        
     } catch (err) {
         console.error('Error cargando liga ranking widget:', err);
-        container.innerHTML = '<div class="liga-empty">No disponible</div>';
+        container.innerHTML = '<div class="liga-empty">⚠️ Error al cargar el ranking</div>';
     }
+}
+
+// Función de seguridad para escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 // ===============================================
 // MEME EASTER EGG
