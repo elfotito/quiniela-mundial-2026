@@ -704,7 +704,7 @@ async function cargarLigaRankingWidget() {
             }
  
             const nombre = user.nombre_publico || user.nombre || 'Usuario';
-            const nombreCorto = nombre.length > 14 ? nombre.substring(0, 13) + '…' : nombre;
+            const nombreCorto = nombre.length > 20 ? nombre.substring(0, 19) + '…' : nombre;
  
             const c9 = user.aciertos_9 || 0;
             const c7 = user.aciertos_7 || 0;
