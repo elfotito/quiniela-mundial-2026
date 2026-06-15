@@ -20,15 +20,53 @@
     <link rel="stylesheet" href="css/index-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Ya inicializado en otro lugar, usar la existente -->
+    <!-- const supabase = window.supabase.createClient(...) -->
     <script>
-    const supabase = window.supabase.createClient(
-        'https://aohnbafexgwkugtryrk.supabase.co',
-        'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
-    );
-    window.supabase = supabase;
-    window.SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
-    window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+    // Supabase ya está inicializado globalmente
+    // Solo asegurar que estén disponibles las variables globales
+    if (!window.SUPABASE_URL) {
+        window.SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
+    }
+    if (!window.SUPABASE_ANON_KEY) {
+        window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+    }
 </script>
+
+<!-- Array de noticias fallback (tu contenido actual) -->
+<script>
+    const NOTICIAS_MUNDIAL = [
+        {
+            titulo: "🇰🇷 Corea del sur le da vuelta a Rep Checa y asegura sus 3 puntos vitales",
+            imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
+            categoria: "PARTIDO",
+            url: "#"
+        },
+        {
+            titulo: "🇲🇽 México supera a Sudáfrica y sonríe en el debut",
+            imagen_url: "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0611%2Fr1671534_1296x729_16%2D9.jpg",
+            categoria: "PARTIDO",
+            url: "#"
+        },
+        {
+            titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane ganara la bota de oro por segunda vez? Seria el primero en hacerlo.",
+            imagen_url: "https://digitalhub.fifa.com/transform/38f4af27-b519-4fde-a6d0-44d339831b12/Harry-Kane-celebrates-after-England-beat-Serbia-in-European-qualifying-for-the-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+            categoria: "BOTA DE ORO",
+            url: "#"
+        },
+        {
+            titulo: "🇲🇽 México ya tiene listo su espectáculo para inaugurar el Mundial 2026.",
+            imagen_url: "https://i.ibb.co/Z69TCzdP/Getty-Images-2268851671-ee7486.png",
+            categoria: "INAUGURACION",
+            url: "#"
+        }
+    ];
+</script>
+
+<!-- Widgets ESPN (EN ORDEN IMPORTANTE) -->
+<script src="js/widget-espn.js"></script>
+<script src="js/inicializar-carrusel-dinamico.js"></script>
+<script src="js/widget-noticias-secundario.js"></script>
 
     
 </head>
@@ -286,32 +324,18 @@
         </div>
     </div>
 <section class="news-hero">
-
   <!-- SWIPER PRINCIPAL -->
-
   <div class="swiper" id="heroSwiper">
-
     <div class="swiper-wrapper">
-
       <!-- Se llena dinámicamente con noticias de Supabase -->
-
     </div>
-
   </div>
 
-
-
   <!-- BARRA DE NAVEGACIÓN INFERIOR -->
-
     <nav class="news-nav" id="newsNav">
-
         <!-- Se llena dinámicamente con noticias de Supabase -->
-
     </nav>
-
 </section>
-
-
     
 <!-- STAS RAPIDAS PA PENDEJOS-->
 <div class="uib-wrapper">
@@ -634,11 +658,9 @@
         <script src="js/widget-estadios.js"></script>
         <script src="js/pwa-install.js"></script>
         <script src="js/noticias-mundial.js"></script>
-        
-        <script src="js/widget-espn.js"></script>
-        <script src="js/inicializar-carrusel-dinamico.js"></script>
-        <script src="js/widget-noticias-secundario.js"></script>
-
+        <!-- Comentado: conflictúa con el nuevo sistema dinámico
+        <script src="js/noticias-carrusel.js"></script>
+        -->
         <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js?v=2', { scope: '/' })
