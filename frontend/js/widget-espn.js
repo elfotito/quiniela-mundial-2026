@@ -30,6 +30,24 @@
     // Array fallback (SIEMPRE disponible)
     noticias_fallback: [
       {
+        titulo: "⚽ Japón empata ante Países Bajos en un vibrante partido",
+        imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
+        categoria: "PARTIDO",
+        descripcion: "Un gol tardío de Kamada le da un valioso empate a Japón sobre Países Bajos (2-2)."
+      },
+      {
+        titulo: "🇩🇪 Alemania arranca con una contundente goleada de 7-1",
+        imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
+        categoria: "RESULTADOS",
+        descripcion: "Alemania demostró su poderío ofensivo al vencer 7-1 a Curazao en su debut."
+      },
+      {
+        titulo: "🌍 13 naciones critican al presidente de la UEFA",
+        imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
+        categoria: "POLÉMICA",
+        descripcion: "Selecciones rechazan declaraciones de Ceferin sobre partidos 'poco interesantes'."
+      },
+      {
         titulo: "🇰🇷 Corea del sur le da vuelta a Rep Checa y asegura sus 3 puntos vitales",
         imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
         categoria: "PARTIDO",
