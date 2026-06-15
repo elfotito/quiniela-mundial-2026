@@ -9,10 +9,10 @@ let uibEvoChart = null;
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://i.ibb.co/WN8rGNtr/Metlife-stadium-Aerial-view.jpg", badge:"🏆 Final · Nueva York", fact:"MetLife Stadium — 82,500 espectadores · Sede de la Gran Final" },
-  { img:"https://i.ibb.co/BHr1PZPk/AZTECA.jpg", badge:"⚽ Inauguración · Ciudad de México", fact:"Estadio Azteca — El único con dos inauguraciones mundialistas" },
-  { img:"https://i.ibb.co/HL8gzc8R/ATT-Stadium-AP.jpg", badge:"🌟 Dallas · AT&T Stadium", fact:"AT&T Stadium — La pantalla más grande del mundo en un estadio" },
-  { img:"https://i.ibb.co/0jJtK9zq/una-vista-dallalto-del-rose-bowl-stadium-di-pasadena-77xtyf1lmfjf106jhptoygoxr.jpg", badge:"🌹 Los Ángeles · Rose Bowl", fact:"Rose Bowl — Sede de la final del Mundial 1994" },
+  { img:"https://digitalhub.fifa.com/transform/47cf57da-4cc3-46dd-9834-db87d2595a9f/Erling-Haaland-celebrates-following-Norway-s-4-1-win-over-Estonia-in-Oslo-in-European-qualifying-for-the-FIFA-World-Cup-2026?focuspoint=0.52,0.49&io=transform:fill,height:910,width:1536&quality=75", badge:"🇳🇴 Noruega", fact:"Erling Haaland — Gobierna el reino del gol y sus cifras son casi mitológicas" },
+  { img:"https://digitalhub.fifa.com/transform/6dc9f252-8b09-4e33-8fad-aa3f9473e44c/GettyImages-2161532093?focuspoint=0.54,0.02&io=transform:fill,height:910,width:1536&quality=75", badge:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra", fact:"Harry Kane — Sin duda uno de los futbolistas con más calidad del mundo" },
+  { img:"https://digitalhub.fifa.com/transform/17c4bc55-1869-4ee2-ae2d-d44fa16b4fcf/GettyImages-2218119058?focuspoint=0.5,0.29&io=transform:fill,height:910,width:1536&quality=75", badge:"🌟 Dallas · AT&T Stadium", fact:"Lamine Yamal — Es un jugador diferente, un genio. Es especial" },
+  { img:"https://digitalhub.fifa.com/transform/fe038a01-61f4-4a66-b473-bb2d4ecafed0/Portugal-s-Bruno-Fernandes-during-the-FIFA-World-Cup-2022-match-against-Ghana?focuspoint=0.51,0.13&io=transform:fill,height:910,width:1536&quality=75", badge:"🇵🇹 Portugal", fact:"Bruno Fernandes — Lo que ha hecho es colosal. Sus números son formidables" },
 ];
 
 const LV_ETAPAS = [
@@ -25,14 +25,14 @@ const LV_ETAPAS = [
 ];
 
 const LV_TIPS = [
-  { icon:"🇲🇽", texto:"Memo Ochoa hará historia al convertirse en el primer jugador en estar en 6 mundiales." },
-  { icon:"🌍", texto:"Por primera vez el Mundial se juega en 3 países. Estados Unidos, Mexico y Canada" },
+  { icon:"🔥", texto:"Arranque monumental de dresko, lleva 4 aciertos perfecto de +9 pts" },
+  { icon:"🎯", texto:"Yosiris Casique, Yaneska y Miguel acertaron la victoria de Costa de Marfil, ¡Un tumbaquiniela!" },
   { icon:"💡", texto:"Cerca del 30% de los partidos terminan en empate, 1-1 es el marcador más probable" },
   { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
-  { icon:"📊", texto:"Hay 72 partidos en Fase de Grupos. ¡Ponte al dia con tus predicciones!." },
+  { icon:"🤑", texto:"La liga mas cerrada es la CriptoCarrisan, el que no suma baja como 5 puestos" },
   { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
-  { icon:"🇻🇪", texto:"4 paises vivirán su primera participación histórica, ninguna es la Vinotinto." },
-  { icon:"📅", texto:"El torneo arranca el 11 de junio de 2026. ¡Marca la fecha!" },
+  { icon:"🗃️", texto:"Mantente atento a las novedades que trae QuinielaMundial2026" },
+  { icon:"📅", texto:"El siguiente partido tumbaquinielas es el Mexico-Corea del Sur. Mantente atento al dato de Mr. Chip" },
 ];
 
 // ============================================
