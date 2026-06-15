@@ -12,21 +12,21 @@
 
 const NOTICIAS_MUNDIAL = [
 {
-    titulo: "🇪🇦 España y una etiqueta que no pesa",
-    imagen: "https://digitalhub.fifa.com/transform/200d531a-ccda-477c-9f55-a5796df2d195/Spain-Training-And-Press-Conference-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:4x3,width:960&quality=75",
-    categoria: "RUEDA DE PRENSA",
-    url: "#"
-  },
-    {
-    titulo: "🇺🇾 José María Giménez, un joven experimentado en la nueva era de Uruguay",
-    imagen: "https://digitalhub.fifa.com/transform/412f332c-ee45-46c7-b45a-1d2c6c418e98/FWC-Jose-Maria-Gimenez-Uruguay?focuspoint=0.58,0.35&io=transform:fill,aspectratio:4x3,width:960&quality=75",
+    titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Jordan Henderson, el guardián detrás de la cultura inglesa ",
+    imagen: "https://digitalhub.fifa.com/transform/e11fce69-05de-48d5-aae9-8a2dbaff7660/Jordan-Henderson-plays-darts-before-a-press-conference?&io=transform:fill,aspectratio:4x3,width:640&quality=75",
     categoria: "REFERENTE",
     url: "#"
   },
     {
-    titulo: "🇪🇦 España arranca la conquista de la segunda estrella ante Cabo Verde",
-    imagen: "https://digitalhub.fifa.com/transform/bd0a6adc-adc8-4421-8332-f578ecbcf26b/Mikel-Oyarzabal-celebrates-scoring-for-Spain-against-Peru-at-the-Estadio-Cuauhtemoc-in-Puebla-in-a-FIFA-World-Cup-2026-warm-up-friendly?focuspoint=0.51,0.23&io=transform:fill,aspectratio:4x3,width:960&quality=75",
-    categoria: "BOTA DE ORO",
+    titulo: "🇺🇾 José María Giménez, un joven experimentado en la nueva era de Uruguay",
+    imagen: "https://digitalhub.fifa.com/transform/412f332c-ee45-46c7-b45a-1d2c6c418e98/FWC-Jose-Maria-Gimenez-Uruguay?focuspoint=0.58,0.35&io=transform:fill,aspectratio:4x3,width:640&quality=75",
+    categoria: "REFERENTE",
+    url: "#"
+  },
+    {
+    titulo: "🇪🇦 Cabo Verde realiza una hazaña historica",
+    imagen: "https://digitalhub.fifa.com/transform/b09c5893-6c7e-429c-8dfd-536c496e9d63/Spain-v-Cabo-Verde-Group-H-FIFA-World-Cup-2026?focuspoint=0.77,0.22&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+    categoria: "ULTIMO MOMENTO",
     url: "#"
   }
 ];
