@@ -1127,25 +1127,141 @@ function logout() {
 // COUNTDOWN AL MUNDIAL
 // ===============================================
 
-function iniciarCountdown() {
-    const fechaMundial = new Date('June 15, 2026 12:00:00').getTime();
+async function iniciarCountdown() {
+    // Referencias a los elementos del DOM
+    const hoursEl = document.getElementById('hours');
+    const minsEl = document.getElementById('mins');
+    const secsEl = document.getElementById('secs');
+    const partidoTitulo = document.querySelector('.countdown-label p'); // El <p> que muestra los equipos
+    const countdownWrapper = document.querySelector('.countdown-wrapper');
+    
+    if (!hoursEl || !minsEl || !secsEl) return;
 
-    function actualizar() {
-        const distancia = fechaMundial - new Date().getTime();
+    let proximoPartido = null;
+    let intervalId = null;
 
-        
-        const horas    = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutos  = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-        
-        document.getElementById('hours').textContent = horas.toString().padStart(2, '0');
-        document.getElementById('mins').textContent  = minutos.toString().padStart(2, '0');
-        document.getElementById('secs').textContent  = segundos.toString().padStart(2, '0');
+    // Función para obtener el próximo partido desde el backend
+    async function obtenerProximoPartido() {
+        try {
+            const response = await fetch(`${CONFIG.API_URL}/partidos?estado=pendiente&limit=1`);
+            if (!response.ok) throw new Error('Error cargando próximo partido');
+            const partidos = await response.json();
+            
+            if (!partidos || partidos.length === 0) {
+                // No hay más partidos
+                proximoPartido = null;
+                if (partidoTitulo) {
+                    partidoTitulo.textContent = 'No hay partidos programados';
+                }
+                hoursEl.textContent = '00';
+                minsEl.textContent = '00';
+                secsEl.textContent = '00';
+                return null;
+            }
+            
+            proximoPartido = partidos[0];
+            
+            // Actualizar el título con los equipos
+            if (partidoTitulo && proximoPartido) {
+                partidoTitulo.textContent = `${proximoPartido.equipo_local} - ${proximoPartido.equipo_visitante}`;
+            }
+            
+            return proximoPartido;
+        } catch (err) {
+            console.error('Error obteniendo próximo partido:', err);
+            if (partidoTitulo) {
+                partidoTitulo.textContent = 'Error al cargar partido';
+            }
+            return null;
+        }
     }
 
-    actualizar();
-    setInterval(actualizar, 1000);
+    // Función para actualizar el contador
+    function actualizarCountdown() {
+        if (!proximoPartido) {
+            hoursEl.textContent = '00';
+            minsEl.textContent = '00';
+            secsEl.textContent = '00';
+            return;
+        }
+
+        const fechaPartido = new Date(proximoPartido.fecha).getTime();
+        const ahora = new Date().getTime();
+        const distancia = fechaPartido - ahora;
+
+        // Si el partido ya comenzó, buscar el siguiente partido
+        if (distancia <= 0) {
+            obtenerProximoPartido().then(() => {
+                if (proximoPartido) {
+                    actualizarCountdown();
+                }
+            });
+            return;
+        }
+
+        // Calcular tiempo restante
+        const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        // Si hay días, los sumamos a las horas para mostrar horas totales
+        const horasTotales = dias * 24 + horas;
+
+        // Actualizar el DOM con el formato deseado
+        hoursEl.textContent = horasTotales.toString().padStart(2, '0');
+        minsEl.textContent = minutos.toString().padStart(2, '0');
+        secsEl.textContent = segundos.toString().padStart(2, '0');
+
+        // Opcional: Cambiar el label de horas según el contexto
+        const horasLabel = document.querySelector('[for="hours"], .time-box:first-child .time-label');
+        if (horasLabel) {
+            horasLabel.textContent = dias > 0 ? 'hrs' : 'horas';
+        }
+    }
+
+    // Mostrar estado de carga mientras se obtiene el partido
+    if (partidoTitulo) {
+        partidoTitulo.textContent = 'Cargando próximo partido...';
+    }
+    hoursEl.textContent = '--';
+    minsEl.textContent = '--';
+    secsEl.textContent = '--';
+
+    // Iniciar el proceso
+    const partido = await obtenerProximoPartido();
+    
+    if (partido) {
+        // Primera actualización inmediata
+        actualizarCountdown();
+        
+        // Limpiar intervalo anterior si existe
+        if (intervalId) clearInterval(intervalId);
+        
+        // Iniciar el contador cada segundo
+        intervalId = setInterval(actualizarCountdown, 1000);
+        
+        // Recargar el próximo partido cada 5 minutos para mantener actualizado
+        // (por si se agregan nuevos partidos o cambian horarios)
+        const refreshInterval = setInterval(async () => {
+            const nuevoPartido = await obtenerProximoPartido();
+            if (nuevoPartido && proximoPartido && 
+                (nuevoPartido.id !== proximoPartido.id || 
+                 nuevoPartido.fecha !== proximoPartido.fecha)) {
+                actualizarCountdown();
+            }
+        }, 300000); // 5 minutos
+    } else {
+        // No hay partidos disponibles
+        hoursEl.textContent = '00';
+        minsEl.textContent = '00';
+        secsEl.textContent = '00';
+    }
+
+    // Retornar función de limpieza por si necesitas detener el contador
+    return () => {
+        if (intervalId) clearInterval(intervalId);
+    };
 }
 
 // ===============================================
