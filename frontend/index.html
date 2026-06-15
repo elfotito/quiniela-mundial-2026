@@ -286,117 +286,32 @@
         </div>
     </div>
 <section class="news-hero">
+
   <!-- SWIPER PRINCIPAL -->
+
   <div class="swiper" id="heroSwiper">
+
     <div class="swiper-wrapper">
 
-      <!-- ===== SLIDE 1 ===== -->
-      <div class="swiper-slide">
-        <div class="slide-inner">
-
-          <div class="slide-text">
-            <p class="slide-category">Copa Mundial de Futbol 2026</p>
-            <h2 class="slide-title">Un heroico Cabo Verde da la sorpresa y se lleva un empate ante España</h2>
-            <p class="slide-desc">
-         </p>
-
-          </div>
-          <div class="slide-img">
-            <img src="https://digitalhub.fifa.com/transform/b09c5893-6c7e-429c-8dfd-536c496e9d63/Spain-v-Cabo-Verde-Group-H-FIFA-World-Cup-2026?focuspoint=0.77,0.22&io=transform:fill,aspectratio:1x1,width:1536&quality=75" alt="vinosofa">
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== SLIDE 2 ===== -->
-      <div class="swiper-slide">
-        <div class="slide-inner">
-
-          <div class="slide-text">
-            <p class="slide-category">Copa Mundial de Futbol 2026</p>
-            <h2 class="slide-title">Listos para el partido inaugural del Grupo G</h2>
-            <p class="slide-desc">
-              Bélgica-Egipto: sigue el partido inaugural del Grupo G</p>
-
-          </div>
-          <div class="slide-img">
-            <img src="https://digitalhub.fifa.com/transform/830000c6-7efd-4d70-99a9-7f0b2b111503/Belgium-v-Egypt-Group-G-FIFA-World-Cup-2026?focuspoint=0.52,0.4&io=transform:fill,aspectratio:1x1,width:1536&quality=75" alt="vinosofa">
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== SLIDE 3 ===== -->
-      <div class="swiper-slide">
-        <div class="slide-inner">
-
-          <div class="slide-text">
-            <p class="slide-category">Selección nacional</p>
-            <h2 class="slide-title">Salomon Rondon: "El equipo esta preparado para buscar el hielo y las curdas"</h2>
-            <p class="slide-desc">
-              Mientras las 48 selecciones hacen las maletas, la Vinotinto ha hecho un anuncio que estremece las estructuras del fútbol mundial: verán todo por MagisTV con Starlink.</p>
-            <a href="noticia1.html" class="slide-btn">
-              Leer más
-            </a>
-          </div>
-          <div class="slide-img">
-            <img src="img/vinosofa.png" alt="vinosofa">
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== SLIDE 4 ===== -->
-      <div class="swiper-slide">
-        <div class="slide-inner">
-          <div class="slide-text">
-            <p class="slide-category">Patrocinador Oficial</p>
-            <h2 class="slide-title">Drogueria Carrisan lanza su quiniela digital</h2>
-            <p class="slide-desc">
-              Droguería Carrisan ha decidido digitalizar la tradición más sagrada de todo Mundial de Fútbol: la quiniela.
-            </p>
-            <a href="noticia2.html" class="slide-btn">
-              Leer más
-            </a>
-          </div>
-          <div class="slide-img">
-            <img src="img/noticiaquiniela.png" alt="noticia2">
-          </div>
-        </div>
-      </div>
+      <!-- Se llena dinámicamente con noticias de Supabase -->
 
     </div>
+
   </div>
 
+
+
   <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+
     <nav class="news-nav" id="newsNav">
-        <div class="nav-item active" data-idx="0">
-            <div class="nav-progress-track">
-                <div class="nav-progress-fill" id="p0"></div>
-            </div>
-            <p class="nav-cat">Copa Mundial de Futbol 2026</p>
-            <p class="nav-title">Hazaña historica de Cabo Verde</p>
-        </div>
-        <div class="nav-item" data-idx="1">
-            <div class="nav-progress-track">
-                <div class="nav-progress-fill" id="p1"></div>
-            </div>
-            <p class="nav-cat">Copa Mundial de Futbol 2026</p>
-            <p class="nav-title">Listos para el partido inaugural del Grupo G</p>
-        </div>
-        <div class="nav-item" data-idx="2">
-            <div class="nav-progress-track">
-                <div class="nav-progress-fill" id="p2"></div>
-            </div>
-            <p class="nav-cat">Selección Nacional</p>
-            <p class="nav-title">Se confirma la alineacion de la vinotinto de cara al televisor</p>
-        </div>
-        <div class="nav-item" data-idx="3">
-            <div class="nav-progress-track">
-                <div class="nav-progress-fill" id="p3"></div>
-            </div>
-<p class="nav-cat">Patrocinador Oficial</p>
-           <p class="nav-title">Drogueria Carrisan lanza su quiniela digital</p>
-        </div>
+
+        <!-- Se llena dinámicamente con noticias de Supabase -->
+
     </nav>
+
 </section>
+
+
     
 <!-- STAS RAPIDAS PA PENDEJOS-->
 <div class="uib-wrapper">
@@ -720,6 +635,10 @@
         <script src="js/pwa-install.js"></script>
         <script src="js/noticias-mundial.js"></script>
         <script src="js/noticias-carrusel.js"></script>
+        <script src="js/widget-espn.js"></script>
+        <script src="js/inicializar-carrusel-dinamico.js"></script>
+        <script src="js/widget-noticias-secundario.js"></script>
+
         <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js?v=2', { scope: '/' })
