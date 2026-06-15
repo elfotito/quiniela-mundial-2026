@@ -1675,6 +1675,56 @@ app.post('/api/push/broadcast', verificarAdmin, async (req, res) => {
     }
 });
 
+app.get('/api/proximo-partido-countdown', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                id,
+                equipo_local,
+                equipo_visitante,
+                fecha_hora,
+                fase,
+                estado
+            FROM partidos
+            WHERE fecha_hora > NOW()
+            AND estado = 'pendiente'
+            ORDER BY fecha_hora ASC
+            LIMIT 1
+        `;
+
+        const result = await pool.query(query);
+
+        if (result.rows.length === 0) {
+            return res.json({ 
+                hayPartido: false,
+                mensaje: 'No hay partidos programados'
+            });
+        }
+
+        const partido = result.rows[0];
+        
+        res.json({
+            hayPartido: true,
+            partido: {
+                id: partido.id,
+                equipo_local: partido.equipo_local,
+                equipo_visitante: partido.equipo_visitante,
+                fecha: partido.fecha_hora, // Convertimos fecha_hora a fecha para el frontend
+                fase: partido.fase,
+                estado: partido.estado
+            }
+        });
+
+    } catch (error) {
+        console.error('Error en proximo-partido-countdown:', error);
+        res.status(500).json({ 
+            hayPartido: false,
+            error: error.message,
+            mensaje: 'Error al cargar el partido'
+        });
+    }
+});
+
 // ===============================================
 // 💬 RUTAS DE CHAT GENERAL
 // ===============================================

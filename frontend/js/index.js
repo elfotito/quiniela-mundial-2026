@@ -1139,10 +1139,11 @@ async function iniciarCountdown() {
 
     async function obtenerProximoPartido() {
         try {
-            // Usar el nuevo endpoint
             const response = await fetch(`${CONFIG.API_URL}/proximo-partido-countdown`);
             
-            if (!response.ok) throw new Error('Error del servidor');
+            if (!response.ok) {
+                throw new Error('Error del servidor');
+            }
             
             const data = await response.json();
             
@@ -1160,7 +1161,7 @@ async function iniciarCountdown() {
             // Verificar si cambió el partido
             if (!proximoPartido || proximoPartido.id !== data.partido.id) {
                 console.log('Nuevo partido:', data.partido.equipo_local, 'vs', data.partido.equipo_visitante);
-                console.log('Fecha:', new Date(data.partido.fecha));
+                console.log('Fecha:', data.partido.fecha);
                 
                 proximoPartido = data.partido;
                 
@@ -1176,7 +1177,7 @@ async function iniciarCountdown() {
             if (partidoTitulo) {
                 partidoTitulo.textContent = 'Error al cargar';
             }
-            return proximoPartido; // Mantener el actual
+            return proximoPartido;
         }
     }
 
@@ -1192,13 +1193,14 @@ async function iniciarCountdown() {
         const ahora = new Date().getTime();
         const distancia = fechaPartido - ahora;
 
-        // Si llegó a 0, buscar siguiente partido
+        // Si llegó a 0 o menos, buscar siguiente partido
         if (distancia <= 0) {
-            console.log('Countdown llegó a 0, buscando siguiente partido...');
+            console.log('⏰ Partido alcanzado, buscando siguiente...');
             hoursEl.textContent = '00';
             minsEl.textContent = '00';
             secsEl.textContent = '00';
             
+            // Buscar siguiente partido
             obtenerProximoPartido().then(nuevoPartido => {
                 if (nuevoPartido) {
                     actualizarCountdown();
@@ -1207,7 +1209,7 @@ async function iniciarCountdown() {
             return;
         }
 
-        // Calcular tiempo
+        // Calcular tiempo restante
         const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
         const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
@@ -1221,21 +1223,25 @@ async function iniciarCountdown() {
         secsEl.textContent = segundos.toString().padStart(2, '0');
     }
 
-    // Iniciar
+    // Estado inicial
     if (partidoTitulo) partidoTitulo.textContent = 'Cargando...';
     hoursEl.textContent = '--';
     minsEl.textContent = '--';
     secsEl.textContent = '--';
 
+    // Iniciar
     await obtenerProximoPartido();
     
     if (proximoPartido) {
         actualizarCountdown();
+        
         if (intervalId) clearInterval(intervalId);
         intervalId = setInterval(actualizarCountdown, 1000);
         
-        // Verificar cada minuto si hay un partido más cercano
-        setInterval(obtenerProximoPartido, 60000);
+        // Verificar cada 30 segundos si hay un partido más cercano
+        setInterval(async () => {
+            await obtenerProximoPartido();
+        }, 30000);
     }
 
     return () => {
