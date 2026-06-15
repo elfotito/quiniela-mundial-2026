@@ -459,7 +459,21 @@
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/widget-espn.js"></script>
+    
+    <!-- Inicializar Supabase -->
+    <script>
+        const supabaseClient = window.supabase.createClient(
+            'https://aohnbafexgwkugtryrk.supabase.co',
+            'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
+        );
+        window.supabase = supabaseClient;
+        window.SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
+        window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+        
+        console.log('✅ Supabase inicializado en noticias.html');
+    </script>
+    
+    <script src="js/widget-espn-PARCHE.js"></script>
 
     <script>
         // ===== INICIALIZACIÓN SUPABASE =====

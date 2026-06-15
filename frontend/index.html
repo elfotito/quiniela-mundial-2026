@@ -20,50 +20,79 @@
     <link rel="stylesheet" href="css/index-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Ya inicializado en otro lugar, usar la existente -->
-    <!-- const supabase = window.supabase.createClient(...) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-    // Supabase ya está inicializado globalmente
-    // Solo asegurar que estén disponibles las variables globales
-    if (!window.SUPABASE_URL) {
-        window.SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
-    }
-    if (!window.SUPABASE_ANON_KEY) {
-        window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
-    }
+    // Inicializar Supabase CORRECTAMENTE (antes de todo)
+    const supabaseClient = window.supabase.createClient(
+        'https://aohnbafexgwkugtryrk.supabase.co',
+        'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
+    );
+    
+    // Guardar en window para acceso global
+    window.supabase = supabaseClient;
+    window.SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
+    window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+    
+    console.log('✅ Supabase inicializado correctamente');
 </script>
 
-<!-- Array de noticias fallback (tu contenido actual) -->
+<!-- ARRAY DE NOTICIAS - INYECTADO DIRECTAMENTE AQUÍ -->
 <script>
-    const NOTICIAS_MUNDIAL = [
+    window.NOTICIAS_MUNDIAL = [
         {
             titulo: "🇰🇷 Corea del sur le da vuelta a Rep Checa y asegura sus 3 puntos vitales",
             imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
             categoria: "PARTIDO",
+            descripcion: "Corea del Sur remonta y vence a República Checa",
             url: "#"
         },
         {
             titulo: "🇲🇽 México supera a Sudáfrica y sonríe en el debut",
             imagen_url: "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0611%2Fr1671534_1296x729_16%2D9.jpg",
             categoria: "PARTIDO",
+            descripcion: "México inicia su campaña con una victoria",
             url: "#"
         },
         {
-            titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane ganara la bota de oro por segunda vez? Seria el primero en hacerlo.",
+            titulo: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ¿Kane ganara la bota de oro por segunda vez?",
             imagen_url: "https://digitalhub.fifa.com/transform/38f4af27-b519-4fde-a6d0-44d339831b12/Harry-Kane-celebrates-after-England-beat-Serbia-in-European-qualifying-for-the-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
             categoria: "BOTA DE ORO",
+            descripcion: "Kane podría ser el primer jugador en ganar dos botas de oro",
             url: "#"
         },
         {
-            titulo: "🇲🇽 México ya tiene listo su espectáculo para inaugurar el Mundial 2026.",
+            titulo: "🇲🇽 México ya tiene listo su espectáculo para inaugurar el Mundial 2026",
             imagen_url: "https://i.ibb.co/Z69TCzdP/Getty-Images-2268851671-ee7486.png",
             categoria: "INAUGURACION",
+            descripcion: "México prepara una ceremonia espectacular",
+            url: "#"
+        },
+        {
+            titulo: "🇧🇪 Bélgica lista para el debut ante Egipto",
+            imagen_url: "https://digitalhub.fifa.com/transform/830000c6-7efd-4d70-99a9-7f0b2b111503/Belgium-v-Egypt-Group-G-FIFA-World-Cup-2026?focuspoint=0.52,0.4&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+            categoria: "PARTIDO",
+            descripcion: "Bélgica se prepara para enfrentar a Egipto",
+            url: "#"
+        },
+        {
+            titulo: "🇪🇸 España busca revancha ante Cabo Verde",
+            imagen_url: "https://digitalhub.fifa.com/transform/b09c5893-6c7e-429c-8dfd-536c496e9d63/Spain-v-Cabo-Verde-Group-H-FIFA-World-Cup-2026?focuspoint=0.77,0.22&io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+            categoria: "PARTIDO",
+            descripcion: "España enfrentará a Cabo Verde en el Grupo H",
+            url: "#"
+        },
+        {
+            titulo: "🇦🇷 Argentina defiende su título como campeona",
+            imagen_url: "https://digitalhub.fifa.com/transform/argentina-2026?io=transform:fill,aspectratio:1x1,width:1536&quality=75",
+            categoria: "MUNDIAL 2026",
+            descripcion: "Argentina buscará defender su título en el Mundial 2026",
             url: "#"
         }
     ];
+    console.log('✅ NOTICIAS_MUNDIAL inyectado:', window.NOTICIAS_MUNDIAL.length, 'noticias');
 </script>
 
-<!-- Widgets ESPN (EN ORDEN IMPORTANTE) -->
+<!-- Widgets ESPN (EN ORDEN) -->
 <script src="js/widget-espn.js"></script>
 <script src="js/inicializar-carrusel-dinamico.js"></script>
 <script src="js/widget-noticias-secundario.js"></script>
