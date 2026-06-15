@@ -30,6 +30,12 @@
     // Array fallback (SIEMPRE disponible)
     noticias_fallback: [
       {
+    titulo: "🇪🇸 España debuta hoy ante Cabo Verde en el Grupo G",
+    imagen_url: "https://images.pexels.com/photos/258366/pexels-photo-258366.jpeg?auto=compress&cs=tinysrgb&w=600",
+    categoria: "PREVIA",
+    descripcion: "La Roja de Luis de la Fuente enfrenta a la sorprendente Cabo Verde a las 15:00 horas."
+      },
+      {
         titulo: "⚽ Japón empata ante Países Bajos en un vibrante partido",
         imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
         categoria: "PARTIDO",
@@ -40,12 +46,6 @@
         imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
         categoria: "RESULTADOS",
         descripcion: "Alemania demostró su poderío ofensivo al vencer 7-1 a Curazao en su debut."
-      },
-      {
-        titulo: "🌍 13 naciones critican al presidente de la UEFA",
-        imagen_url: "https://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0612%2Fr1671753_1296x729_16%2D9.jpg&w=1140&cquality=40&format=jpg",
-        categoria: "POLÉMICA",
-        descripcion: "Selecciones rechazan declaraciones de Ceferin sobre partidos 'poco interesantes'."
       },
       {
         titulo: "🇰🇷 Corea del sur le da vuelta a Rep Checa y asegura sus 3 puntos vitales",
