@@ -218,8 +218,16 @@
      * Obtener noticias (intenta Supabase → localStorage → hardcodeado)
      */
     async obtenerNoticias(tipo = 'todas') {
-      // Intento 1: Supabase
-      if (window.supabase) {
+      // TEMPORALMENTE: Saltamos Supabase y vamos directo al fallback
+      // (Supabase necesita CORS configurado)
+      
+      console.log('💾 Leyendo del array local (fallback)');
+      this.estado.fuente = 'hardcodeado';
+      return this.noticias_fallback || [];
+
+      /* CÓDIGO SUPABASE DESACTIVADO TEMPORALMENTE
+      // Intento 1: Supabase (SI ESTÁ DISPONIBLE)
+      if (window.supabase && typeof window.supabase.from === 'function') {
         try {
           const { data, error } = await window.supabase
             .from('noticias_carrusel')
@@ -233,7 +241,7 @@
             return data;
           }
         } catch (e) {
-          console.warn('⚠️  Supabase no disponible:', e.message);
+          console.warn('⚠️  Supabase query error:', e.message);
         }
       }
 
@@ -256,6 +264,7 @@
       console.log('🔴 Usando array hardcodeado local (fallback)');
       this.estado.fuente = 'hardcodeado';
       return this.noticias_fallback || [];
+      */
     },
 
     /**
