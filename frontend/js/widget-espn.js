@@ -30,10 +30,10 @@
     // Array fallback (SIEMPRE disponible)
     noticias_fallback: [
       {
-    titulo: "🇪🇸 España debuta hoy ante Cabo Verde en el Grupo G",
-    imagen_url: "https://images.pexels.com/photos/258366/pexels-photo-258366.jpeg?auto=compress&cs=tinysrgb&w=600",
+    titulo: "🇪🇸 Desastre: las reacciones en España tras empatar con Cabo Verde",
+    imagen_url: "https://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0615%2Fr1673627_1296x518_5%2D2.jpg&w=686&h=274&scale=crop&cquality=40&location=center&format=jpg",
     categoria: "PREVIA",
-    descripcion: "La Roja de Luis de la Fuente enfrenta a la sorprendente Cabo Verde a las 15:00 horas."
+    descripcion: "Las reacciones en los medios ibéricos no tardaron en llegar."
       },
       {
         titulo: "⚽ Japón empata ante Países Bajos en un vibrante partido",
