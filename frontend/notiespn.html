@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Noticias - Quiniela Carrisan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fifa-blue: #0066CC;
+            --fifa-dark-blue: #003d7a;
+            --fifa-gold: #FFD700;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --border: #333;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--fifa-gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--fifa-gold);
+            border-bottom-color: var(--fifa-gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===== FORMULARIO MANUAL ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--fifa-gold);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            color: #fff;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--fifa-gold);
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--fifa-blue);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--fifa-dark-blue);
+        }
+
+        .btn-success {
+            background: #00aa44;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background: #008833;
+        }
+
+        .btn-danger {
+            background: #cc3333;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #aa2222;
+        }
+
+        /* ===== ESPN SECTION ===== */
+        .espn-section {
+            background: var(--dark-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .espn-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .espn-header h2 {
+            color: var(--fifa-gold);
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .status-badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: var(--dark-bg);
+            color: #999;
+        }
+
+        .status-badge.loading {
+            color: #ffaa00;
+        }
+
+        .status-badge.success {
+            color: #00aa44;
+        }
+
+        .status-badge.error {
+            color: #cc3333;
+        }
+
+        .btn-traer-espn {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-traer-espn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-traer-espn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .preview-noticias {
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            background: var(--dark-bg);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--fifa-gold);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preview-item:hover {
+            background: #1a1a1a;
+            transform: translateX(4px);
+        }
+
+        .preview-item h4 {
+            color: var(--fifa-gold);
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .preview-item p {
+            color: #ccc;
+            font-size: 13px;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .preview-item small {
+            color: #666;
+            font-size: 12px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .preview-item.selected {
+            background: rgba(255, 215, 0, 0.1);
+            border-left-color: var(--fifa-gold);
+        }
+
+        /* ===== HISTORIAL ===== */
+        .historial-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .historial-item {
+            background: var(--dark-card);
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--fifa-blue);
+        }
+
+        .historial-item.espn {
+            border-left-color: #ff6b35;
+        }
+
+        .historial-info {
+            flex: 1;
+        }
+
+        .historial-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+
+        .historial-info small {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .historial-info .fuente {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 8px;
+            background: var(--dark-bg);
+            border-radius: 12px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-top-color: var(--fifa-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert.success {
+            background: rgba(0, 170, 68, 0.1);
+            color: #00aa44;
+            border: 1px solid rgba(0, 170, 68, 0.3);
+        }
+
+        .alert.error {
+            background: rgba(204, 51, 51, 0.1);
+            color: #cc3333;
+            border: 1px solid rgba(204, 51, 51, 0.3);
+        }
+
+        .alert.info {
+            background: rgba(0, 102, 204, 0.1);
+            color: #0066cc;
+            border: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .espn-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📰 Admin Noticias - Quiniela Carrisan</h1>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="cambiarTab('manual')">Ingresar Manual</button>
+            <button class="tab-btn" onclick="cambiarTab('espn')">Traer de ESPN</button>
+            <button class="tab-btn" onclick="cambiarTab('historial')">Historial</button>
+        </div>
+
+        <!-- TAB 1: FORMULARIO MANUAL -->
+        <div id="tab-manual" class="tab-content active">
+            <form id="formNoticia">
+                <div class="form-group">
+                    <label for="titulo">Título de la noticia *</label>
+                    <input type="text" id="titulo" name="titulo" required placeholder="Ej: México supera a Sudáfrica en su debut">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria">
+                            <option value="MUNDIAL 2026">MUNDIAL 2026</option>
+                            <option value="PARTIDO">PARTIDO</option>
+                            <option value="BOTA DE ORO">BOTA DE ORO</option>
+                            <option value="INAUGURACION">INAUGURACION</option>
+                            <option value="Estadios">ESTADIOS</option>
+                            <option value="Fixture">FIXTURE</option>
+                            <option value="Entradas">ENTRADAS</option>
+                            <option value="Selección Nacional">SELECCIÓN NACIONAL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fuente">Fuente</label>
+                        <input type="text" id="fuente" name="fuente" value="Manual" placeholder="Manual">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Detalles adicionales..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen">URL de la Imagen</label>
+                    <input type="url" id="imagen" name="imagen" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="url">URL de la Noticia (Opcional)</label>
+                    <input type="url" id="url" name="url" placeholder="https://ejemplo.com">
+                </div>
+
+                <button type="submit" class="btn btn-success">✅ Guardar Noticia</button>
+            </form>
+        </div>
+
+        <!-- TAB 2: TRAER DE ESPN -->
+        <div id="tab-espn" class="tab-content">
+            <div class="espn-section">
+                <div class="espn-header">
+                    <h2>🏆 Traer Noticias de ESPN Deportes</h2>
+                    <span class="status-badge" id="espnStatus">Listo</span>
+                </div>
+
+                <p style="color: #999; margin-bottom: 20px; font-size: 14px;">
+                    Pullea automáticamente las últimas noticias de Copa 2026 desde ESPN Deportes en español.
+                    Las noticias se guardan en la base de datos.
+                </p>
+
+                <button class="btn-traer-espn" id="btnTraerEspn" onclick="traerDelEspn()">
+                    📡 Traer Últimas Noticias
+                </button>
+
+                <div class="preview-noticias" id="previewEspn" style="display: none;">
+                    <h3 style="color: var(--fifa-gold); margin-bottom: 15px;">Noticias encontradas:</h3>
+                    <div id="previewContainer"></div>
+                    <button class="btn btn-success" onclick="guardarSeleccionadas()" style="margin-top: 20px;">
+                        ✅ Guardar Seleccionadas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: HISTORIAL -->
+        <div id="tab-historial" class="tab-content">
+            <h2 style="color: var(--fifa-gold); margin-bottom: 20px;">Noticias Recientes</h2>
+            <div class="historial-list" id="historialList">
+                <p style="color: #999; text-align: center;">Cargando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/widget-espn.js"></script>
+
+    <script>
+        // ===== INICIALIZACIÓN SUPABASE =====
+        const SUPABASE_URL = 'https://aohnbafexgwkugtryrk.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        window.supabase = supabase;
+        window.SUPABASE_URL = SUPABASE_URL;
+        window.SUPABASE_ANON_KEY = SUPABASE_KEY;
+
+        // ===== TABS =====
+        function cambiarTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('tab-' + tab).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tab === 'historial') {
+                cargarHistorial();
+            }
+        }
+
+        // ===== FORMULARIO MANUAL =====
+        document.getElementById('formNoticia').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const noticia = {
+                titulo: document.getElementById('titulo').value,
+                categoria: document.getElementById('categoria').value,
+                descripcion: document.getElementById('descripcion').value,
+                imagen_url: document.getElementById('imagen').value,
+                url: document.getElementById('url').value,
+                fuente: document.getElementById('fuente').value,
+                fecha_publicacion: new Date().toISOString(),
+                tipo_carrusel: 'manual',
+                activo: true
+            };
+
+            try {
+                const { error } = await supabase
+                    .from('noticias_carrusel')
+                    .insert([noticia]);
+
+                if (error) throw error;
+
+                mostrarAlerta('✅ Noticia guardada exitosamente', 'success');
+                document.getElementById('formNoticia').reset();
+
+                // Reinicializar carruseles en index.html (si está abierto)
+                if (window.reinicializarCarruselDinamico) {
+                    window.reinicializarCarruselDinamico();
+                }
+                if (window.reinicializarWidgetNoticias) {
+                    window.reinicializarWidgetNoticias();
+                }
+
+            } catch (error) {
+                mostrarAlerta('❌ Error: ' + error.message, 'error');
+            }
+        });
+
+        // ===== TRAER DE ESPN =====
+        async function traerDelEspn() {
+            const btn = document.getElementById('btnTraerEspn');
+            const status = document.getElementById('espnStatus');
+            const preview = document.getElementById('previewEspn');
+
+            btn.disabled = true;
+            status.textContent = '⏳ Cargando...';
+            status.className = 'status-badge loading';
+
+            try {
+                const noticias = await window.widgetESPN.traeFeedEspn();
+
+                if (noticias && noticias.length > 0) {
+                    mostrarPreviewEspn(noticias);
+                    preview.style.display = 'block';
+                    status.textContent = '✅ ' + noticias.length + ' encontradas';
+                    status.className = 'status-badge success';
+                } else {
+                    mostrarAlerta('⚠️  No se encontraron noticias', 'info');
+                    status.textContent = 'Sin resultados';
+                }
+
+            } catch (error) {
+                status.textContent = '❌ Error';
+                status.className = 'status-badge error';
+                mostrarAlerta('❌ Error: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        function mostrarPreviewEspn(noticias) {
+            const container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+
+            noticias.forEach((noticia, idx) => {
+                const item = document.createElement('div');
+                item.className = 'preview-item';
+                item.dataset.idx = idx;
+                item.innerHTML = `
+                    <h4>📰 ${noticia.titulo}</h4>
+                    <p>${noticia.descripcion}</p>
+                    <small>Fuente: ${noticia.fuente} | ${formatDate(noticia.fecha_publicacion)}</small>
+                `;
+
+                item.onclick = () => {
+                    item.classList.toggle('selected');
+                };
+
+                container.appendChild(item);
+            });
+
+            // Guardar referencia global
+            window.noticiasEspnCargadas = noticias;
+        }
+
+        async function guardarSeleccionadas() {
+            const seleccionados = document.querySelectorAll('.preview-item.selected');
+            if (seleccionados.length === 0) {
+                mostrarAlerta('⚠️  Selecciona al menos una noticia', 'info');
+                return;
+            }
+
+            const indices = Array.from(seleccionados).map(el => parseInt(el.dataset.idx));
+            const noticiasAGuardar = indices.map(idx => window.noticiasEspnCargadas[idx]);
+
+            try {
+                const { error } = await supabase
+                    .from('noticias_carrusel')
+                    .insert(noticiasAGuardar);
+
+                if (error) throw error;
+
+                mostrarAlerta(`✅ ${noticiasAGuardar.length} noticias guardadas`, 'success');
+                document.getElementById('previewEspn').style.display = 'none';
+
+                // Reinicializar carruseles
+                if (window.reinicializarCarruselDinamico) {
+                    window.reinicializarCarruselDinamico();
+                }
+                if (window.reinicializarWidgetNoticias) {
+                    window.reinicializarWidgetNoticias();
+                }
+
+            } catch (error) {
+                mostrarAlerta('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        async function cargarHistorial() {
+            try {
+                const { data, error } = await supabase
+                    .from('noticias_carrusel')
+                    .select('*')
+                    .order('creado_en', { ascending: false })
+                    .limit(15);
+
+                if (error) throw error;
+
+                const container = document.getElementById('historialList');
+                container.innerHTML = '';
+
+                if (data && data.length > 0) {
+                    data.forEach(noticia => {
+                        const item = document.createElement('div');
+                        item.className = 'historial-item ' + (noticia.fuente === 'ESPN' ? 'espn' : '');
+                        item.innerHTML = `
+                            <div class="historial-info">
+                                <h4>${noticia.titulo}</h4>
+                                <small>${formatDate(noticia.creado_en)}</small>
+                                <div class="fuente">📌 ${noticia.fuente}</div>
+                            </div>
+                            <button class="btn btn-danger" onclick="eliminarNoticia(${noticia.id})" style="padding: 6px 12px; font-size: 12px;">
+                                🗑️
+                            </button>
+                        `;
+                        container.appendChild(item);
+                    });
+                } else {
+                    container.innerHTML = '<p style="color: #999; text-align: center;">No hay noticias</p>';
+                }
+
+            } catch (error) {
+                mostrarAlerta('❌ Error al cargar historial', 'error');
+            }
+        }
+
+        async function eliminarNoticia(id) {
+            if (confirm('¿Eliminar esta noticia?')) {
+                try {
+                    const { error } = await supabase
+                        .from('noticias_carrusel')
+                        .delete()
+                        .eq('id', id);
+
+                    if (error) throw error;
+                    cargarHistorial();
+                    mostrarAlerta('✅ Noticia eliminada', 'success');
+                } catch (error) {
+                    mostrarAlerta('❌ Error: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // ===== UTILIDADES =====
+        function mostrarAlerta(msg, tipo = 'info') {
+            const alert = document.createElement('div');
+            alert.className = 'alert ' + tipo;
+            alert.textContent = msg;
+            document.querySelector('.container').insertBefore(alert, document.querySelector('.tabs'));
+            setTimeout(() => alert.remove(), 4000);
+        }
+
+        function formatDate(fecha) {
+            return new Date(fecha).toLocaleString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    </script>
+</body>
+</html>

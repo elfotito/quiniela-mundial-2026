@@ -395,73 +395,62 @@ function renderUibEvo(evaluadas) {
 // CARRUSEL DE NOTICIAS (SWIPER)
 // ===============================================
 
-function inicializarCarrusel() {
-    if (!document.getElementById('heroSwiper')) return;
-
-    const DURATION = 5000;
-    let activeIdx = 0;
-    let timer = null;
-
-    const swiper = new Swiper('#heroSwiper', {
-        slidesPerView: 1,
-        speed: 600,
-        allowTouchMove: true,
-        on: {
-            slideChange: function () {
-                if (this.activeIndex !== activeIdx) {
-                    goTo(this.activeIndex);
+    function inicializarCarrusel() {
+        if (!document.getElementById('heroSwiper')) return;
+        const DURATION = 5000;
+        let activeIdx = 0;
+        let timer = null;
+        const swiper = new Swiper('#heroSwiper', {
+            slidesPerView: 1,
+            speed: 600,
+            allowTouchMove: true,
+            on: {
+                slideChange: function () {
+                    if (this.activeIndex !== activeIdx) {
+                        goTo(this.activeIndex);
+                    }
                 }
             }
-        }
-    });
-
-    const navItems = document.querySelectorAll('.nav-item');
-    // ✅ IDs corregidos: 'p0', 'p1', 'p2', 'p3'
-    const progs = [0, 1, 2, 3].map(i => document.getElementById('p' + i));
-
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const idx = parseInt(item.dataset.idx);
-            swiper.slideTo(idx);
-            goTo(idx);
         });
-    });
-
-    function goTo(idx) {
-        clearTimeout(timer);
-
-        if (progs[activeIdx]) {
-            progs[activeIdx].style.transition = 'none';
-            progs[activeIdx].style.width = '0%';
+        const navItems = document.querySelectorAll('.nav-item');
+        const progs = [0, 1, 2, 3].map(i => document.getElementById('p' + i));
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const idx = parseInt(item.dataset.idx);
+                swiper.slideTo(idx);
+                goTo(idx);
+            });
+        });
+        function goTo(idx) {
+            clearTimeout(timer);
+            if (progs[activeIdx]) {
+                progs[activeIdx].style.transition = 'none';
+                progs[activeIdx].style.width = '0%';
+            }
+            navItems[activeIdx]?.classList.remove('active');
+            activeIdx = idx;
+            navItems[activeIdx]?.classList.add('active');
+            const fill = progs[activeIdx];
+            if (fill) {
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    fill.style.transition = `width ${DURATION}ms linear`;
+                    fill.style.width = '100%';
+                }));
+            }
+            timer = setTimeout(() => {
+                const next = (activeIdx + 1) % navItems.length;
+                swiper.slideTo(next);
+                goTo(next);
+            }, DURATION);
         }
-        navItems[activeIdx]?.classList.remove('active');
-
-        activeIdx = idx;
-        navItems[activeIdx]?.classList.add('active');
-
-        const fill = progs[activeIdx];
-        if (fill) {
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                fill.style.transition = `width ${DURATION}ms linear`;
-                fill.style.width = '100%';
-            }));
+        swiper.on('init', () => {
+            goTo(0);
+        });
+        if (swiper.initialized) {
+            goTo(0);
         }
-
-        timer = setTimeout(() => {
-            const next = (activeIdx + 1) % navItems.length;
-            swiper.slideTo(next);
-            goTo(next);
-        }, DURATION);
     }
 
-    swiper.on('init', () => {
-        goTo(0);
-    });
-
-    if (swiper.initialized) {
-        goTo(0);
-    }
-}
 
 
 // ===============================================

@@ -4,9 +4,10 @@
  * Fallback automático: Supabase → localStorage → NOTICIAS_MUNDIAL hardcodeado
  */
 
+
 (function() {
   'use strict';
-
+ 
   window.widgetESPN = {
     
     // Configuración
@@ -16,9 +17,10 @@
       keywords: ['Copa Mundial 2026', 'FIFA World Cup 2026', 'Mundial de Fútbol 2026', 'Partidos Mundial 2026'],
       maxNoticias: 15,
       cacheDuracion: 1800000, // 30 min en ms
-      supabaseUrl: window.SUPABASE_URL,
-      supabaseKey: window.SUPABASE_ANON_KEY
+      supabaseUrl: 'https://aohnbafexgwkugtryrk.supabase.co',
+      supabaseKey: 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
     },
+
 
     // Estado
     estado: {

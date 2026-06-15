@@ -1,7 +1,4 @@
-/**
- * INICIALIZADOR CARRUSEL DINÁMICO
- * Trae noticias de Supabase, inyecta en Swiper y Nav, luego inicializa
- */
+
 
 (function() {
   'use strict';
