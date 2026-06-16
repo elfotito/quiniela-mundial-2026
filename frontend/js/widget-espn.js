@@ -1,6 +1,6 @@
 /**
- * WIDGET ESPN PARSER - Robusto con Supabase + Fallbacks
- * Trae noticias de ESPN Deportes RSS, las parsea y las guarda en Supabase
+ * WIDGET NOTICIAS PARSER - Robusto con Supabase + Fallbacks
+ * Trae noticias del Mundial 2026 desde el RSS de Marca, las parsea y las guarda en Supabase
  * Fallback automático: Supabase → localStorage → NOTICIAS_MUNDIAL hardcodeado
  */
 
@@ -11,9 +11,9 @@
     
     // Configuración
     config: {
-      rssUrl: 'https://www.espndeportes.espn.com/feeds/rss/futbol.xml',
+      rssUrl: 'https://e00-marca.uecdn.es/rss/futbol/futbol-internacional.xml',
       corsProxy: 'https://api.allorigins.win/get',
-      keywords: ['Copa Mundial 2026', 'FIFA World Cup 2026', 'Mundial de Fútbol 2026', 'Partidos Mundial 2026'],
+      filtroCategoria: 'mundial', // Filtra por la etiqueta <category> o <media:title> del feed, no por frases textuales
       maxNoticias: 15,
       cacheDuracion: 1800000, // 30 min en ms
       supabaseUrl: 'https://aohnbafexgwkugtfryrk.supabase.co',
@@ -99,11 +99,11 @@
     ],
 
     /**
-     * Traer y parsear RSS de ESPN
+     * Traer y parsear RSS de Marca (Mundial 2026)
      */
     async traeFeedEspn() {
       this.estado.cargando = true;
-      console.log('📡 Trayendo feed ESPN...');
+      console.log('📡 Trayendo feed de noticias...');
 
       try {
         const response = await fetch(
@@ -125,30 +125,38 @@
 
         items.forEach(item => {
           const titulo = item.querySelector('title')?.textContent?.trim() || '';
-          const descripcion = item.querySelector('description')?.textContent?.trim() || '';
+          let descripcion = item.querySelector('description')?.textContent?.trim() || '';
           const url = item.querySelector('link')?.textContent?.trim() || '#';
           const pubDate = item.querySelector('pubDate')?.textContent?.trim() || new Date().toISOString();
 
-          // Extraer imagen si existe
+          // Limpiar descripción: el feed de Marca incluye un link "Leer" y un pixel de tracking dentro del CDATA
+          descripcion = descripcion
+            .replace(/<a[^>]*>.*?<\/a>/gi, '')
+            .replace(/<img[^>]*>/gi, '')
+            .replace(/&nbsp;/gi, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+
+          // Extraer imagen desde <media:content url="...">  (getElementsByTagName maneja el namespace de forma confiable)
           let imagen = '';
-          const content = item.querySelector('content:encoded')?.textContent || '';
-          const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/);
-          if (imgMatch) imagen = imgMatch[1];
+          const mediaContent = item.getElementsByTagName('media:content')[0];
+          if (mediaContent) imagen = mediaContent.getAttribute('url') || '';
 
-          // Filtrar por keywords
-          const textoCompleto = (titulo + ' ' + descripcion).toLowerCase();
-          const tieneKeyword = this.config.keywords.some(kw => 
-            textoCompleto.includes(kw.toLowerCase())
-          );
+          // Filtrar por categoría real del feed (más confiable que buscar frases textuales)
+          const categorias = Array.from(item.getElementsByTagName('category'))
+            .map(c => c.textContent?.toLowerCase() || '');
+          const mediaTitle = item.getElementsByTagName('media:title')[0]?.textContent?.toLowerCase() || '';
+          const esMundial = categorias.some(c => c.includes(this.config.filtroCategoria)) ||
+            mediaTitle.includes(this.config.filtroCategoria);
 
-          if (tieneKeyword && titulo) {
+          if (esMundial && titulo) {
             noticias.push({
               titulo,
               descripcion,
-              imagen_url: imagen || 'https://via.placeholder.com/600x400?text=ESPN',
+              imagen_url: imagen || 'https://via.placeholder.com/600x400?text=Mundial+2026',
               categoria: 'MUNDIAL 2026',
               url,
-              fuente: 'ESPN',
+              fuente: 'MARCA',
               fecha_publicacion: pubDate
             });
           }
@@ -157,7 +165,7 @@
         // Limitar a maxNoticias
         noticias = noticias.slice(0, this.config.maxNoticias);
 
-        console.log(`✅ ESPN: ${noticias.length} noticias filtradas`);
+        console.log(`✅ Noticias: ${noticias.length} filtradas`);
         
         // Guardar en Supabase
         await this.guardarEnSupabase(noticias);
@@ -166,13 +174,13 @@
         this.guardarEnLocal(noticias);
         
         this.estado.ultimaActualizacion = new Date();
-        this.estado.fuente = 'espn';
+        this.estado.fuente = 'marca';
         this.estado.cargando = false;
 
         return noticias;
 
       } catch (error) {
-        console.error('❌ Error en ESPN:', error.message);
+        console.error('❌ Error trayendo noticias:', error.message);
         this.estado.cargando = false;
         this.estado.fuente = 'fallback';
         
@@ -191,11 +199,11 @@
       }
 
       try {
-        // Limpiar noticias antiguas de ESPN
+        // Limpiar noticias antiguas de Marca
         await window.supabase
           .from('noticias_carrusel')
           .delete()
-          .eq('fuente', 'ESPN');
+          .eq('fuente', 'MARCA');
 
         // Insertar nuevas
         const { error } = await window.supabase
@@ -271,7 +279,7 @@
     },
 
     /**
-     * Obtener del fallback (cuando ESPN falla)
+     * Obtener del fallback (cuando falla la traída de noticias)
      */
     async obtenerDelFallback() {
       return await this.obtenerNoticias();
@@ -311,5 +319,5 @@
     }
   };
 
-  console.log('✅ Widget ESPN cargado');
+  console.log('✅ Widget Noticias cargado');
 })();
