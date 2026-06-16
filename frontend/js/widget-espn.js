@@ -215,9 +215,6 @@
       }
     },
 
-    /**
-     * Guardar en localStorage como backup
-     */
     guardarEnLocal(noticias) {
       try {
         const backup = {
@@ -231,19 +228,13 @@
         console.warn('⚠️  localStorage lleno:', error.message);
       }
     },
-
-    /**
-     * Obtener noticias (intenta Supabase → localStorage → hardcodeado)
-     */
+    
     async obtenerNoticias(tipo = 'todas') {
-      // TEMPORALMENTE: Saltamos Supabase y vamos directo al fallback
-      // (Supabase necesita CORS configurado)
-      
       console.log('💾 Leyendo del array local (fallback)');
       this.estado.fuente = 'hardcodeado';
       return this.noticias_fallback || [];
 
-      /* CÓDIGO SUPABASE DESACTIVADO TEMPORALMENTE
+      
       // Intento 1: Supabase (SI ESTÁ DISPONIBLE)
       if (window.supabase && typeof window.supabase.from === 'function') {
         try {
@@ -282,7 +273,6 @@
       console.log('🔴 Usando array hardcodeado local (fallback)');
       this.estado.fuente = 'hardcodeado';
       return this.noticias_fallback || [];
-      */
     },
 
     /**
