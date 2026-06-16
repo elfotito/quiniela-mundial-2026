@@ -230,11 +230,6 @@
     },
     
     async obtenerNoticias(tipo = 'todas') {
-      console.log('💾 Leyendo del array local (fallback)');
-      this.estado.fuente = 'hardcodeado';
-      return this.noticias_fallback || [];
-
-      
       // Intento 1: Supabase (SI ESTÁ DISPONIBLE)
       if (window.supabase && typeof window.supabase.from === 'function') {
         try {
