@@ -476,14 +476,8 @@
     <script src="js/widget-espn.js"></script>
 
     <script>
-        // ===== INICIALIZACIÓN SUPABASE =====
-        const SUPABASE_URL = 'https://aohnbafexgwkugtfryrk.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        window.supabase = supabase;
-        window.SUPABASE_URL = SUPABASE_URL;
-        window.SUPABASE_ANON_KEY = SUPABASE_KEY;
+        // Supabase ya fue inicializado arriba (window.supabase)
+        // Reutilizamos esa misma instancia, sin redeclarar la variable global
 
         // ===== TABS =====
         function cambiarTab(tab) {
@@ -515,7 +509,7 @@
             };
 
             try {
-                const { error } = await supabase
+                const { error } = await window.supabase
                     .from('noticias_carrusel')
                     .insert([noticia]);
 
@@ -605,7 +599,7 @@
             const noticiasAGuardar = indices.map(idx => window.noticiasEspnCargadas[idx]);
 
             try {
-                const { error } = await supabase
+                const { error } = await window.supabase
                     .from('noticias_carrusel')
                     .insert(noticiasAGuardar);
 
@@ -629,7 +623,7 @@
 
         async function cargarHistorial() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await window.supabase
                     .from('noticias_carrusel')
                     .select('*')
                     .order('creado_en', { ascending: false })
@@ -668,7 +662,7 @@
         async function eliminarNoticia(id) {
             if (confirm('¿Eliminar esta noticia?')) {
                 try {
-                    const { error } = await supabase
+                    const { error } = await window.supabase
                         .from('noticias_carrusel')
                         .delete()
                         .eq('id', id);
