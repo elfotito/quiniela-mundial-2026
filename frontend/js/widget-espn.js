@@ -14,12 +14,6 @@
       rssUrl: 'https://e00-marca.uecdn.es/rss/futbol/futbol-internacional.xml',
       corsProxy: 'https://api.allorigins.win/get',
       filtroCategoria: 'mundial', // Filtra por la etiqueta <category> o <media:title> del feed, no por frases textuales
-      soloPartidos: true, // Si es true, exige además señales de que la noticia es sobre un partido jugado
-      palabrasPartido: [
-        'vence', 'venció', 'gana', 'ganó', 'golea', 'goleó', 'remonta', 'remontó',
-        'empata', 'empató', 'cae ante', 'cayó ante', 'derrota', 'derrotó', 'pierde', 'perdió',
-        'triunfo', 'victoria', 'debuta', 'debutó', 'se impone', 'resultado', 'crónica', 'marcador', 'anota'
-      ],
       maxNoticias: 15,
       cacheDuracion: 1800000, // 30 min en ms
       supabaseUrl: 'https://aohnbafexgwkugtfryrk.supabase.co',
@@ -155,17 +149,7 @@
           const esMundial = categorias.some(c => c.includes(this.config.filtroCategoria)) ||
             mediaTitle.includes(this.config.filtroCategoria);
 
-          // Segundo filtro opcional: exigir señales de que la noticia es sobre un partido jugado
-          // (verbo de resultado en el título/descripción, o un patrón de marcador como "2-1")
-          let esPartido = true;
-          if (this.config.soloPartidos) {
-            const textoCompleto = (titulo + ' ' + descripcion).toLowerCase();
-            const tieneVerboPartido = this.config.palabrasPartido.some(p => textoCompleto.includes(p));
-            const tieneMarcador = /\b\d{1,2}-\d{1,2}\b/.test(textoCompleto);
-            esPartido = tieneVerboPartido || tieneMarcador;
-          }
-
-          if (esMundial && esPartido && titulo) {
+          if (esMundial && titulo) {
             noticias.push({
               titulo,
               descripcion,
