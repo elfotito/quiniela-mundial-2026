@@ -1308,7 +1308,7 @@ function obtenerBandera(nombre) {
     'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
     'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
     'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬',
-    'Congo': '🇨🇬',
+    'Congo': '🇨🇩',
     
     // Oceanía (OFC)
     'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨',
