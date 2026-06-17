@@ -1,19 +1,20 @@
 /**
- * WIDGET NOTICIAS PARSER - Robusto con Supabase + Fallbacks
- * Trae noticias del Mundial 2026 desde el RSS de Marca, las parsea y las guarda en Supabase
+ * WIDGET NOTICIAS PARSER - Adaptado para As.com + Supabase + Fallbacks
+ * Trae noticias del Mundial 2026 desde el feed de As.com
  * Fallback automático: Supabase → localStorage → NOTICIAS_MUNDIAL hardcodeado
  */
 
 (function() {
   'use strict';
 
-  window.widgetESPN = {
+  window.widgetMundial = {
     
-    // Configuración
+    // Configuración actualizada para As.com
     config: {
-      rssUrl: 'https://e00-marca.uecdn.es/rss/futbol/futbol-internacional.xml',
+      rssUrl: 'https://feeds.as.com/mrss-s/pages/as/site/as.com/section/futbol/subsection/mundial/',
       corsProxy: 'https://api.allorigins.win/get',
-      filtroCategoria: 'mundial', // Filtra por la etiqueta <category> o <media:title> del feed, no por frases textuales
+      filtroCategoria: 'mundial 2026', // Filtro principal
+      categoriasValidas: ['mundial 2026', 'mundial fútbol', 'fifa'], // Categorías que indican contenido del Mundial
       maxNoticias: 15,
       cacheDuracion: 1800000, // 30 min en ms
       supabaseUrl: 'https://aohnbafexgwkugtfryrk.supabase.co',
@@ -24,16 +25,16 @@
     estado: {
       cargando: false,
       ultimaActualizacion: null,
-      fuente: 'ninguna' // 'espn', 'supabase', 'localstorage', 'hardcodeado'
+      fuente: 'ninguna' // 'as', 'supabase', 'localstorage', 'hardcodeado'
     },
 
     // Array fallback (SIEMPRE disponible)
     noticias_fallback: [
       {
-    titulo: "🇪🇸 Desastre: las reacciones en España tras empatar con Cabo Verde",
-    imagen_url: "https://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0615%2Fr1673627_1296x518_5%2D2.jpg&w=686&h=274&scale=crop&cquality=40&location=center&format=jpg",
-    categoria: "PREVIA",
-    descripcion: "Las reacciones en los medios ibéricos no tardaron en llegar."
+        titulo: "🇪🇸 Desastre: las reacciones en España tras empatar con Cabo Verde",
+        imagen_url: "https://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2026%2F0615%2Fr1673627_1296x518_5%2D2.jpg&w=686&h=274&scale=crop&cquality=40&location=center&format=jpg",
+        categoria: "PREVIA",
+        descripcion: "Las reacciones en los medios ibéricos no tardaron en llegar."
       },
       {
         titulo: "⚽ Japón empata ante Países Bajos en un vibrante partido",
@@ -99,11 +100,11 @@
     ],
 
     /**
-     * Traer y parsear RSS de Marca (Mundial 2026)
+     * Traer y parsear RSS de As.com (Mundial 2026)
      */
-    async traeFeedEspn() {
+    async traerFeedAs() {
       this.estado.cargando = true;
-      console.log('📡 Trayendo feed de noticias...');
+      console.log('📡 Trayendo feed de As.com...');
 
       try {
         const response = await fetch(
@@ -124,39 +125,85 @@
         let noticias = [];
 
         items.forEach(item => {
+          // 1. Extraer título
           const titulo = item.querySelector('title')?.textContent?.trim() || '';
-          let descripcion = item.querySelector('description')?.textContent?.trim() || '';
-          const url = item.querySelector('link')?.textContent?.trim() || '#';
-          const pubDate = item.querySelector('pubDate')?.textContent?.trim() || new Date().toISOString();
-
-          // Limpiar descripción: el feed de Marca incluye un link "Leer" y un pixel de tracking dentro del CDATA
+          
+          // 2. Extraer descripción - priorizar dcterms:alternative que es más descriptivo
+          let descripcion = '';
+          const alternativa = item.getElementsByTagNameNS('http://purl.org/dc/terms/', 'alternative')[0];
+          if (alternativa && alternativa.textContent?.trim()) {
+            descripcion = alternativa.textContent.trim();
+          } else {
+            descripcion = item.querySelector('description')?.textContent?.trim() || '';
+          }
+          
+          // Limpiar descripción
           descripcion = descripcion
-            .replace(/<a[^>]*>.*?<\/a>/gi, '')
-            .replace(/<img[^>]*>/gi, '')
+            .replace(/<[^>]*>/g, '') // Eliminar cualquier HTML residual
             .replace(/&nbsp;/gi, ' ')
+            .replace(/&amp;/gi, '&')
+            .replace(/&lt;/gi, '<')
+            .replace(/&gt;/gi, '>')
+            .replace(/&quot;/gi, '"')
             .replace(/\s+/g, ' ')
             .trim();
+          
+          const url = item.querySelector('link')?.textContent?.trim() || '#';
+          const pubDate = item.querySelector('pubDate')?.textContent?.trim() || new Date().toISOString();
+          
+          // 3. Extraer autor
+          const autor = item.getElementsByTagNameNS('http://purl.org/dc/elements/1.1/', 'creator')[0]?.textContent?.trim() || '';
 
-          // Extraer imagen desde <media:content url="...">  (getElementsByTagName maneja el namespace de forma confiable)
+          // 4. Extraer imagen
           let imagen = '';
-          const mediaContent = item.getElementsByTagName('media:content')[0];
-          if (mediaContent) imagen = mediaContent.getAttribute('url') || '';
+          const mediaContents = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'content');
+          
+          // Buscar la primera imagen
+          for (let media of mediaContents) {
+            const tipo = media.getAttribute('type') || '';
+            const url_media = media.getAttribute('url') || '';
+            
+            if (tipo.startsWith('image/') && url_media) {
+              imagen = url_media;
+              break;
+            }
+          }
+          
+          // Si no hay imagen, buscar en <media:thumbnail> (común en videos)
+          if (!imagen) {
+            const thumbnail = item.getElementsByTagNameNS('http://search.yahoo.com/mrss/', 'thumbnail')[0];
+            if (thumbnail) {
+              imagen = thumbnail.getAttribute('url') || '';
+            }
+          }
 
-          // Filtrar por categoría real del feed (más confiable que buscar frases textuales)
+          // 5. Filtrar por categorías del Mundial 2026
           const categorias = Array.from(item.getElementsByTagName('category'))
-            .map(c => c.textContent?.toLowerCase() || '');
-          const mediaTitle = item.getElementsByTagName('media:title')[0]?.textContent?.toLowerCase() || '';
-          const esMundial = categorias.some(c => c.includes(this.config.filtroCategoria)) ||
-            mediaTitle.includes(this.config.filtroCategoria);
+            .map(c => c.textContent?.toLowerCase().trim() || '');
+          
+          const esMundial = categorias.some(c => 
+            this.config.categoriasValidas.some(filtro => c.includes(filtro))
+          );
+
+          // 6. Extraer categoría principal
+          let categoriaPrincipal = 'MUNDIAL 2026';
+          const categoriasEspecificas = categorias.filter(c => 
+            !['fútbol', 'fifa', 'mundial fútbol', 'mundial 2026'].includes(c)
+          );
+          if (categoriasEspecificas.length > 0) {
+            // Tomar la categoría más específica (generalmente la última o la que no es genérica)
+            categoriaPrincipal = categoriasEspecificas[categoriasEspecificas.length - 1].toUpperCase();
+          }
 
           if (esMundial && titulo) {
             noticias.push({
-              titulo,
-              descripcion,
+              titulo: titulo.replace(/\s+/g, ' ').trim(),
+              descripcion: descripcion,
               imagen_url: imagen || 'https://via.placeholder.com/600x400?text=Mundial+2026',
-              categoria: 'MUNDIAL 2026',
+              categoria: categoriaPrincipal,
               url,
-              fuente: 'MARCA',
+              fuente: 'AS',
+              autor: autor,
               fecha_publicacion: pubDate
             });
           }
@@ -165,7 +212,11 @@
         // Limitar a maxNoticias
         noticias = noticias.slice(0, this.config.maxNoticias);
 
-        console.log(`✅ Noticias: ${noticias.length} filtradas`);
+        console.log(`✅ Noticias As.com: ${noticias.length} filtradas`);
+        
+        if (noticias.length === 0) {
+          console.warn('⚠️ No se encontraron noticias del Mundial 2026 en el feed');
+        }
         
         // Guardar en Supabase
         await this.guardarEnSupabase(noticias);
@@ -174,13 +225,13 @@
         this.guardarEnLocal(noticias);
         
         this.estado.ultimaActualizacion = new Date();
-        this.estado.fuente = 'marca';
+        this.estado.fuente = 'as';
         this.estado.cargando = false;
 
         return noticias;
 
       } catch (error) {
-        console.error('❌ Error trayendo noticias:', error.message);
+        console.error('❌ Error trayendo noticias de As.com:', error.message);
         this.estado.cargando = false;
         this.estado.fuente = 'fallback';
         
@@ -194,16 +245,16 @@
      */
     async guardarEnSupabase(noticias) {
       if (!window.supabase) {
-        console.warn('⚠️  Supabase no inicializado');
+        console.warn('⚠️ Supabase no inicializado');
         return false;
       }
 
       try {
-        // Limpiar noticias antiguas de Marca
+        // Limpiar noticias antiguas de AS
         await window.supabase
           .from('noticias_carrusel')
           .delete()
-          .eq('fuente', 'MARCA');
+          .eq('fuente', 'AS');
 
         // Insertar nuevas
         const { error } = await window.supabase
@@ -228,12 +279,12 @@
         const backup = {
           noticias,
           timestamp: Date.now(),
-          fuente: 'espn'
+          fuente: 'as'
         };
         localStorage.setItem('noticias_mundial_cache', JSON.stringify(backup));
         console.log('💾 Backup en localStorage');
       } catch (error) {
-        console.warn('⚠️  localStorage lleno:', error.message);
+        console.warn('⚠️ localStorage lleno:', error.message);
       }
     },
     
@@ -253,7 +304,7 @@
             return data;
           }
         } catch (e) {
-          console.warn('⚠️  Supabase query error:', e.message);
+          console.warn('⚠️ Supabase query error:', e.message);
         }
       }
 
@@ -269,7 +320,7 @@
           }
         }
       } catch (e) {
-        console.warn('⚠️  localStorage error:', e.message);
+        console.warn('⚠️ localStorage error:', e.message);
       }
 
       // Intento 3: Fallback hardcodeado
@@ -315,9 +366,9 @@
         console.warn('⏳ Espera 60s antes de actualizar de nuevo');
         return false;
       }
-      return await this.traeFeedEspn();
+      return await this.traerFeedAs();
     }
   };
 
-  console.log('✅ Widget Noticias cargado');
+  console.log('✅ Widget Mundial 2026 (As.com) cargado');
 })();
