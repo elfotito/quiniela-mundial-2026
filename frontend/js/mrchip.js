@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     await cargarPartidos();
     await cargarProximoPartido();
+    await cargarParticipantesDuelo();
+
+    const btnDuel = document.getElementById('btnIniciarDuelo');
+    if (btnDuel) {
+        btnDuel.addEventListener('click', iniciarDuelo);
+    }
 
     const select = document.getElementById('partidoSelect');
     if (select) {
@@ -670,7 +676,7 @@ const obtenerBandera = (nombre) => {
         'Irak': '🇮🇶',
         'Marruecos': '🇲🇦', 'Senegal': '🇸🇳', 'Túnez': '🇹🇳', 'Egipto': '🇪🇬',
         'Argelia': '🇩🇿', 'Ghana': '🇬🇭', 'Cabo Verde': '🇨🇻', 'Sudáfrica': '🇿🇦',
-        'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬', 'Congo': '🇨🇩',
+        'Costa de Marfil': '🇨🇮', 'Camerún': '🇨🇲', 'Nigeria': '🇳🇬', 'Congo': '🇨🇬',
         'Nueva Zelanda': '🇳🇿', 'Nueva Caledonia': '🇳🇨', 'Surinam': '🇸🇷'
     };
     return banderas[nombre] || '🏴';
@@ -915,6 +921,271 @@ function generarFraseFinalizado(ganador, mayoria, esConsenso, esCaos, local, vis
         `FINAL: ${marcador}. Mr. Chip ha registrado el resultado. Los ganadores celebran. Los demás están "revisando su metodología".`
     ];
     return genericas[Math.floor(Math.random() * genericas.length)];
+}
+
+// ================================================================
+// DUELO VS — selección de participantes y comparación cabeza a cabeza
+// ================================================================
+let listaParticipantes = [];
+
+async function cargarParticipantesDuelo() {
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/ranking`);
+        const data = await response.json();
+        listaParticipantes = data;
+
+        const selA = document.getElementById('vsParticipanteA');
+        const selB = document.getElementById('vsParticipanteB');
+        if (!selA || !selB) return;
+
+        const opciones = data.map(u => `<option value="${u.id}">${u.nombre}</option>`).join('');
+
+        selA.innerHTML = '<option value="">Seleccionar...</option>' + opciones;
+        selB.innerHTML = '<option value="">Seleccionar...</option>' + opciones;
+    } catch (error) {
+        mostrarError('Error cargando participantes para el duelo: ' + error.message);
+    }
+}
+
+async function iniciarDuelo() {
+    const selA = document.getElementById('vsParticipanteA');
+    const selB = document.getElementById('vsParticipanteB');
+    const idA = selA ? selA.value : null;
+    const idB = selB ? selB.value : null;
+    if (!idA || !idB || idA === idB) return;
+
+    const loadingVS = document.getElementById('loadingVS');
+    const scoreboard = document.getElementById('vsScoreboard');
+    const matchTable = document.getElementById('vsMatchTable');
+    const emptyVS = document.getElementById('emptyVS');
+
+    if (loadingVS) loadingVS.style.display = 'flex';
+    if (scoreboard) scoreboard.style.display = 'none';
+    if (matchTable) matchTable.style.display = 'none';
+    if (emptyVS) emptyVS.style.display = 'none';
+
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/mrchip/duelo/${idA}/${idB}`);
+        const data = await response.json();
+
+        if (loadingVS) loadingVS.style.display = 'none';
+
+        if (!response.ok) {
+            mostrarError(data.error || 'Error obteniendo el duelo');
+            if (emptyVS) emptyVS.style.display = 'flex';
+            return;
+        }
+
+        mostrarDuelo(data);
+
+    } catch (error) {
+        if (loadingVS) loadingVS.style.display = 'none';
+        mostrarError('Error cargando el duelo: ' + error.message);
+    }
+}
+
+function mostrarDuelo(data) {
+    const { usuario_a, usuario_b, partidos, resumen } = data;
+
+    document.getElementById('vsAvatarA').textContent = obtenerCampeon(usuario_a.campeon_elegido);
+    document.getElementById('vsAvatarB').textContent = obtenerCampeon(usuario_b.campeon_elegido);
+    document.getElementById('vsNameA').textContent = usuario_a.nombre;
+    document.getElementById('vsNameB').textContent = usuario_b.nombre;
+    document.getElementById('vsPtsA').textContent = resumen.puntos_a;
+    document.getElementById('vsPtsB').textContent = resumen.puntos_b;
+
+    const headerA = document.getElementById('duelColHeaderA');
+    const headerB = document.getElementById('duelColHeaderB');
+    if (headerA) headerA.textContent = usuario_a.nombre;
+    if (headerB) headerB.textContent = usuario_b.nombre;
+
+    let veredicto;
+    if (resumen.puntos_a > resumen.puntos_b) {
+        veredicto = `${usuario_a.nombre} domina el duelo`;
+    } else if (resumen.puntos_b > resumen.puntos_a) {
+        veredicto = `${usuario_b.nombre} domina el duelo`;
+    } else {
+        veredicto = 'Empate técnico. Ninguno entiende de fútbol más que el otro.';
+    }
+    document.getElementById('vsDuelVerdict').textContent = veredicto;
+
+    const chipDuel = document.getElementById('chipDuelComment');
+    if (chipDuel) {
+        chipDuel.textContent = `${resumen.total_partidos} partidos analizados. ${usuario_a.nombre} ganó ${resumen.partidos_ganados_a}, ${usuario_b.nombre} ganó ${resumen.partidos_ganados_b}, empataron en ${resumen.empates}.`;
+    }
+
+    const rows = document.getElementById('vsDuelRows');
+    if (rows) {
+        if (partidos.length === 0) {
+            rows.innerHTML = '<div class="mc-rank-empty">Aún no hay partidos finalizados entre estos dos participantes.</div>';
+        } else {
+            rows.innerHTML = partidos.map(p => {
+                const predA = p.a ? `${p.a.goles_local}-${p.a.goles_visitante}` : '—';
+                const predB = p.b ? `${p.b.goles_local}-${p.b.goles_visitante}` : '—';
+                const ptsA = p.a ? p.a.puntos : 0;
+                const ptsB = p.b ? p.b.puntos : 0;
+                const claseA = getMcPuntosClass(p.a ? p.a.puntos : null);
+                const claseB = getMcPuntosClass(p.b ? p.b.puntos : null);
+                return `
+                    <div class="mc-duel-row">
+                        <div class="mc-duel-row-a ${claseA}">${predA} <span class="mc-duel-row-pts">${ptsA} pts</span></div>
+                        <div class="mc-duel-row-partido">
+                            <div class="mc-duel-row-teams">${obtenerBandera(p.equipo_local)} ${p.equipo_local} vs ${p.equipo_visitante} ${obtenerBandera(p.equipo_visitante)}</div>
+                            <div class="mc-duel-row-resultado">${p.goles_local_real}-${p.goles_visitante_real}</div>
+                        </div>
+                        <div class="mc-duel-row-b ${claseB}">${predB} <span class="mc-duel-row-pts">${ptsB} pts</span></div>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    const scoreboard = document.getElementById('vsScoreboard');
+    const matchTable = document.getElementById('vsMatchTable');
+    if (scoreboard) scoreboard.style.display = 'block';
+    if (matchTable) matchTable.style.display = 'block';
+}
+
+// ================================================================
+// RANKINGS GLOBALES — Oráculo, Mufas y estadísticas del torneo
+// ================================================================
+window.mrchipCargarRankings = async function() {
+    const loading = document.getElementById('loadingRankings');
+    if (loading) loading.style.display = 'flex';
+
+    try {
+        const [resOraculo, resMufas, resStats] = await Promise.all([
+            fetch(`${CONFIG.API_URL}/rankings/oraculo?limit=5`),
+            fetch(`${CONFIG.API_URL}/rankings/mufas?limit=5`),
+            fetch(`${CONFIG.API_URL}/rankings/estadisticas-torneo`)
+        ]);
+
+        const oraculo = await resOraculo.json();
+        const mufas   = await resMufas.json();
+        const stats   = await resStats.json();
+
+        if (loading) loading.style.display = 'none';
+
+        mostrarRankingLista('listOraculo', oraculo, 'exactos', 'aciertos exactos');
+        mostrarRankingLista('listMufas', mufas, 'ceros', 'predicciones en 0 pts');
+        mostrarEstadisticasTorneo(stats);
+
+    } catch (error) {
+        if (loading) loading.style.display = 'none';
+        mostrarError('Error cargando rankings: ' + error.message);
+    }
+};
+
+function mostrarRankingLista(containerId, lista, campo, etiqueta) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (!lista || lista.length === 0) {
+        container.innerHTML = '<div class="mc-rank-empty">Sin datos suficientes todavía.</div>';
+        return;
+    }
+
+    container.innerHTML = lista.map((u, i) => `
+        <div class="mc-rank-item">
+            <div class="mc-rank-item-pos">#${i + 1}</div>
+            <div class="mc-rank-item-avatar">${obtenerCampeon(u.emoji)}</div>
+            <div class="mc-rank-item-name">${u.nombre}</div>
+            <div class="mc-rank-item-val">${u[campo]} <span>${etiqueta}</span></div>
+        </div>
+    `).join('');
+}
+
+function mostrarEstadisticasTorneo(stats) {
+    const setText = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+    };
+
+    const consensoCard = document.getElementById('statMasConsenso');
+    if (consensoCard) {
+        const valEl = consensoCard.querySelector('.mc-stat-global-val');
+        if (valEl) valEl.textContent = stats.partido_mas_consenso_pct ? `${stats.partido_mas_consenso_pct}%` : '—';
+    }
+    setText('statMasConsensoSub', stats.partido_mas_consenso || '—');
+
+    setText('statMarcadorTopVal', stats.marcador_top || '—');
+    setText('statMarcadorTopSub', `Predicho ${stats.marcador_top_veces || 0} veces`);
+    setText('statTotalPerfectasVal', stats.total_perfectas || 0);
+    setText('statMejorRachaVal', stats.mejor_racha || 0);
+    setText('statMejorRachaSub', stats.mejor_racha_usuario || '—');
+    setText('statTotalPredVal', stats.total_predicciones || 0);
+    setText('statPartidoMasLocoVal', stats.partido_mas_polarizado || '—');
+    setText('statPartidoMasLocoSub', stats.partido_mas_polarizado_detalle || '—');
+}
+
+// ================================================================
+// SALA DE GUERRA — vista general de partidos y predicciones
+// ================================================================
+window.mrchipCargarGuerra = async function(filtro) {
+    filtro = filtro || 'hoy';
+    const loading = document.getElementById('loadingGuerra');
+    const grid    = document.getElementById('guerraGrid');
+    const empty   = document.getElementById('guerraEmpty');
+
+    if (loading) loading.style.display = 'flex';
+    if (empty) empty.style.display = 'none';
+
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/partidos/sala-guerra?filtro=${filtro}`);
+        const partidos = await response.json();
+
+        if (loading) loading.style.display = 'none';
+
+        if (!partidos || partidos.length === 0) {
+            if (grid) grid.innerHTML = '';
+            if (empty) empty.style.display = 'flex';
+            return;
+        }
+
+        if (grid) grid.innerHTML = partidos.map(p => mcGuerraCardHTML(p)).join('');
+
+    } catch (error) {
+        if (loading) loading.style.display = 'none';
+        mostrarError('Error cargando Sala de Guerra: ' + error.message);
+    }
+};
+
+function mcGuerraCardHTML(p) {
+    let estadoClass = 'mc-guerra-pendiente';
+    let estadoTxt = 'Pendiente';
+    if (p.estado === 'en_juego') { estadoClass = 'mc-guerra-vivo'; estadoTxt = '🔴 En vivo'; }
+    if (p.estado === 'finalizado') { estadoClass = 'mc-guerra-finalizado'; estadoTxt = 'Finalizado'; }
+
+    const marcador = (p.goles_local !== null && p.goles_visitante !== null)
+        ? `${p.goles_local}-${p.goles_visitante}` : 'vs';
+
+    return `
+        <div class="mc-guerra-match-card ${estadoClass}">
+            <div class="mc-guerra-card-top">
+                <span class="mc-guerra-fase">${p.fase}</span>
+                <span class="mc-guerra-estado">${estadoTxt}</span>
+            </div>
+            <div class="mc-guerra-card-teams">
+                <span>${p.bandera_local} ${p.equipo_local}</span>
+                <span class="mc-guerra-marcador">${marcador}</span>
+                <span>${p.equipo_visitante} ${p.bandera_visitante}</span>
+            </div>
+            <div class="mc-guerra-card-fecha">${p.fecha}</div>
+            <div class="mc-guerra-card-votos">
+                <div class="mc-guerra-voto-bar">
+                    <div class="mc-guerra-voto-local" style="width:${p.pct_local}%"></div>
+                    <div class="mc-guerra-voto-empate" style="width:${p.pct_empate}%"></div>
+                    <div class="mc-guerra-voto-visitante" style="width:${p.pct_visitante}%"></div>
+                </div>
+                <div class="mc-guerra-voto-labels">
+                    <span>${p.votos_local} (${p.pct_local}%)</span>
+                    <span>${p.votos_empate} (${p.pct_empate}%)</span>
+                    <span>${p.votos_visitante} (${p.pct_visitante}%)</span>
+                </div>
+            </div>
+            <div class="mc-guerra-card-total">${p.total_pred} predicciones</div>
+        </div>
+    `;
 }
 
 // ── Mostrar con animación de typing ──────────────────────────────

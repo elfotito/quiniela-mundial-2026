@@ -1279,6 +1279,104 @@ app.get('/api/mrchip/proximo-partido', async (req, res) => {
     }
 });
 
+// GET /api/mrchip/duelo/:idA/:idB
+// Comparación cabeza a cabeza entre dos participantes, partido por partido
+app.get('/api/mrchip/duelo/:idA/:idB', async (req, res) => {
+    try {
+        const { idA, idB } = req.params;
+
+        if (idA === idB) {
+            return res.status(400).json({ error: 'Selecciona dos participantes distintos' });
+        }
+
+        const usuariosRes = await pool.query(`
+            SELECT id, nombre_publico AS nombre, campeon_elegido
+            FROM usuarios
+            WHERE id IN ($1, $2) AND esta_activo = true
+        `, [idA, idB]);
+
+        if (usuariosRes.rows.length < 2) {
+            return res.status(404).json({ error: 'Uno o ambos participantes no existen' });
+        }
+
+        const usuarioA = usuariosRes.rows.find(u => String(u.id) === String(idA));
+        const usuarioB = usuariosRes.rows.find(u => String(u.id) === String(idB));
+
+        const partidosRes = await pool.query(`
+            SELECT
+                pa.id AS partido_id,
+                pa.equipo_local,
+                pa.equipo_visitante,
+                pa.fecha_hora,
+                pa.fase,
+                pa.goles_local_real,
+                pa.goles_visitante_real,
+                pA.goles_local_pred     AS a_goles_local,
+                pA.goles_visitante_pred AS a_goles_visitante,
+                pA.puntos_obtenidos     AS a_puntos,
+                pB.goles_local_pred     AS b_goles_local,
+                pB.goles_visitante_pred AS b_goles_visitante,
+                pB.puntos_obtenidos     AS b_puntos
+            FROM partidos pa
+            LEFT JOIN predicciones pA ON pA.partido_id = pa.id AND pA.usuario_id = $1
+            LEFT JOIN predicciones pB ON pB.partido_id = pa.id AND pB.usuario_id = $2
+            WHERE pa.estado = 'finalizado'
+              AND (pA.id IS NOT NULL OR pB.id IS NOT NULL)
+            ORDER BY pa.fecha_hora ASC
+        `, [idA, idB]);
+
+        let puntosA = 0, puntosB = 0, ganadosA = 0, ganadosB = 0, empatesDuelo = 0;
+
+        const partidos = partidosRes.rows.map(row => {
+            const aPts = row.a_puntos ?? 0;
+            const bPts = row.b_puntos ?? 0;
+            puntosA += aPts;
+            puntosB += bPts;
+            if (aPts > bPts) ganadosA++;
+            else if (bPts > aPts) ganadosB++;
+            else empatesDuelo++;
+
+            return {
+                partido_id: row.partido_id,
+                equipo_local: row.equipo_local,
+                equipo_visitante: row.equipo_visitante,
+                fecha_hora: row.fecha_hora,
+                fase: row.fase,
+                goles_local_real: row.goles_local_real,
+                goles_visitante_real: row.goles_visitante_real,
+                a: row.a_puntos === null ? null : {
+                    goles_local: row.a_goles_local,
+                    goles_visitante: row.a_goles_visitante,
+                    puntos: row.a_puntos
+                },
+                b: row.b_puntos === null ? null : {
+                    goles_local: row.b_goles_local,
+                    goles_visitante: row.b_goles_visitante,
+                    puntos: row.b_puntos
+                }
+            };
+        });
+
+        res.json({
+            usuario_a: usuarioA,
+            usuario_b: usuarioB,
+            partidos,
+            resumen: {
+                puntos_a: puntosA,
+                puntos_b: puntosB,
+                partidos_ganados_a: ganadosA,
+                partidos_ganados_b: ganadosB,
+                empates: empatesDuelo,
+                total_partidos: partidos.length
+            }
+        });
+
+    } catch (error) {
+        console.error('❌ Error /api/mrchip/duelo:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+    }
+});
+
 // ===============================================
 // AGREGAR AL FINAL DE TU SERVER.JS (antes del app.listen)
 // ===============================================
