@@ -169,33 +169,42 @@
     },
 
     guardarEnSupabase: async function(noticias) {
-      if (!window.supabase) {
-        console.warn('⚠️ Supabase no inicializado');
-        return false;
-      }
+  if (!window.supabase) {
+    console.warn('⚠️ Supabase no inicializado');
+    return false;
+  }
 
-      try {
-        await window.supabase
-          .from('noticias_carrusel')
-          .delete()
-          .eq('fuente', 'AS');
+  try {
+    // Limpiar noticias antiguas de AS
+    await window.supabase
+      .from('noticias_carrusel')
+      .delete()
+      .eq('fuente', 'AS');
 
-        const { error } = await window.supabase
-          .from('noticias_carrusel')
-          .insert(noticias.map(n => ({
-            ...n,
-            tipo_carrusel: 'automatica'
-          })));
+    // Insertar nuevas - SIN el campo 'autor'
+    const { error } = await window.supabase
+      .from('noticias_carrusel')
+      .insert(noticias.map(n => ({
+        titulo: n.titulo,
+        descripcion: n.descripcion,
+        imagen_url: n.imagen_url,
+        categoria: n.categoria,
+        url: n.url,
+        fuente: n.fuente,
+        fecha_publicacion: n.fecha_publicacion,
+        tipo_carrusel: 'automatica'
+        // autor: n.autor  ← QUITAMOS ESTE CAMPO
+      })));
 
-        if (error) throw error;
-        console.log('✅ Guardado en Supabase');
-        return true;
+    if (error) throw error;
+    console.log('✅ Guardado en Supabase');
+    return true;
 
-      } catch (error) {
-        console.error('❌ Error Supabase:', error.message);
-        return false;
-      }
-    },
+  } catch (error) {
+    console.error('❌ Error Supabase:', error.message);
+    return false;
+  }
+},
 
     guardarEnLocal: function(noticias) {
       try {
