@@ -2029,10 +2029,10 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
         // 3. Marcador más predicho en todo el torneo
         const marcadorTopRes = await pool.query(`
             SELECT
-                goles_local || '-' || goles_visitante AS marcador,
+                goles_local_pred || '-' || goles_visitante_pred AS marcador,
                 COUNT(*)::int AS veces
             FROM predicciones
-            GROUP BY goles_local, goles_visitante
+            GROUP BY goles_local_pred, goles_visitante_pred
             ORDER BY veces DESC
             LIMIT 1
         `);
@@ -2045,9 +2045,9 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
                     p.partido_id,
                     pa.equipo_local,
                     pa.equipo_visitante,
-                    COUNT(*) FILTER (WHERE p.goles_local > p.goles_visitante)  AS votos_local,
-                    COUNT(*) FILTER (WHERE p.goles_local = p.goles_visitante)  AS votos_empate,
-                    COUNT(*) FILTER (WHERE p.goles_local < p.goles_visitante)  AS votos_visitante,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred > p.goles_visitante_pred)  AS votos_local,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred = p.goles_visitante_pred)  AS votos_empate,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred < p.goles_visitante_pred)  AS votos_visitante,
                     COUNT(*) AS total_votos
                 FROM predicciones p
                 JOIN partidos pa ON pa.id = p.partido_id
@@ -2070,9 +2070,9 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
                     p.partido_id,
                     pa.equipo_local,
                     pa.equipo_visitante,
-                    COUNT(*) FILTER (WHERE p.goles_local > p.goles_visitante)  AS votos_local,
-                    COUNT(*) FILTER (WHERE p.goles_local = p.goles_visitante)  AS votos_empate,
-                    COUNT(*) FILTER (WHERE p.goles_local < p.goles_visitante)  AS votos_visitante,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred > p.goles_visitante_pred)  AS votos_local,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred = p.goles_visitante_pred)  AS votos_empate,
+                    COUNT(*) FILTER (WHERE p.goles_local_pred < p.goles_visitante_pred)  AS votos_visitante,
                     COUNT(*) AS total_votos
                 FROM predicciones p
                 JOIN partidos pa ON pa.id = p.partido_id
@@ -2192,19 +2192,19 @@ app.get('/api/partidos/sala-guerra', async (req, res) => {
                 COUNT(p.id)::int AS total_pred,
 
                 -- Votos por resultado
-                COUNT(p.id) FILTER (WHERE p.goles_local > p.goles_visitante)::int  AS votos_local,
-                COUNT(p.id) FILTER (WHERE p.goles_local = p.goles_visitante)::int  AS votos_empate,
-                COUNT(p.id) FILTER (WHERE p.goles_local < p.goles_visitante)::int  AS votos_visitante,
+                COUNT(p.id) FILTER (WHERE p.goles_local_pred > p.goles_visitante_pred)::int  AS votos_local,
+                COUNT(p.id) FILTER (WHERE p.goles_local_pred = p.goles_visitante_pred)::int  AS votos_empate,
+                COUNT(p.id) FILTER (WHERE p.goles_local_pred < p.goles_visitante_pred)::int  AS votos_visitante,
 
                 -- Porcentajes (0 si no hay predicciones)
                 CASE WHEN COUNT(p.id) > 0
-                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local > p.goles_visitante) * 100.0 / COUNT(p.id))
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local_pred > p.goles_visitante_pred) * 100.0 / COUNT(p.id))
                     ELSE 0 END::int AS pct_local,
                 CASE WHEN COUNT(p.id) > 0
-                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local = p.goles_visitante) * 100.0 / COUNT(p.id))
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local_pred = p.goles_visitante_pred) * 100.0 / COUNT(p.id))
                     ELSE 0 END::int AS pct_empate,
                 CASE WHEN COUNT(p.id) > 0
-                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local < p.goles_visitante) * 100.0 / COUNT(p.id))
+                    THEN ROUND(COUNT(p.id) FILTER (WHERE p.goles_local_pred < p.goles_visitante_pred) * 100.0 / COUNT(p.id))
                     ELSE 0 END::int AS pct_visitante
 
             FROM partidos pa
