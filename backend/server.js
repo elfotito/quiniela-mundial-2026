@@ -1311,17 +1311,17 @@ app.get('/api/mrchip/duelo/:idA/:idB', async (req, res) => {
                 pa.fase,
                 pa.goles_local_real,
                 pa.goles_visitante_real,
-                pA.goles_local_pred     AS a_goles_local,
-                pA.goles_visitante_pred AS a_goles_visitante,
-                pA.puntos_obtenidos     AS a_puntos,
-                pB.goles_local_pred     AS b_goles_local,
-                pB.goles_visitante_pred AS b_goles_visitante,
-                pB.puntos_obtenidos     AS b_puntos
+                pra.goles_local_pred     AS a_goles_local,
+                pra.goles_visitante_pred AS a_goles_visitante,
+                pra.puntos_obtenidos     AS a_puntos,
+                prb.goles_local_pred     AS b_goles_local,
+                prb.goles_visitante_pred AS b_goles_visitante,
+                prb.puntos_obtenidos     AS b_puntos
             FROM partidos pa
-            LEFT JOIN predicciones pA ON pA.partido_id = pa.id AND pA.usuario_id = $1
-            LEFT JOIN predicciones pB ON pB.partido_id = pa.id AND pB.usuario_id = $2
+            LEFT JOIN predicciones pra ON pra.partido_id = pa.id AND pra.usuario_id = $1
+            LEFT JOIN predicciones prb ON prb.partido_id = pa.id AND prb.usuario_id = $2
             WHERE pa.estado = 'finalizado'
-              AND (pA.id IS NOT NULL OR pB.id IS NOT NULL)
+              AND (pra.id IS NOT NULL OR prb.id IS NOT NULL)
             ORDER BY pa.fecha_hora ASC
         `, [idA, idB]);
 
