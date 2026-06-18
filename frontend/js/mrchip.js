@@ -1066,9 +1066,23 @@ window.mrchipCargarRankings = async function() {
 
         if (loading) loading.style.display = 'none';
 
-        mostrarRankingLista('listOraculo', oraculo, 'exactos', 'aciertos exactos');
-        mostrarRankingLista('listMufas', mufas, 'ceros', 'predicciones en 0 pts');
-        mostrarEstadisticasTorneo(stats);
+        if (resOraculo.ok) {
+            mostrarRankingLista('listOraculo', oraculo, 'exactos', 'aciertos exactos');
+        } else {
+            mostrarError(oraculo.error || 'Error cargando El Oráculo');
+        }
+
+        if (resMufas.ok) {
+            mostrarRankingLista('listMufas', mufas, 'ceros', 'predicciones en 0 pts');
+        } else {
+            mostrarError(mufas.error || 'Error cargando El Mufa');
+        }
+
+        if (resStats.ok) {
+            mostrarEstadisticasTorneo(stats);
+        } else {
+            mostrarError(stats.error || 'Error cargando estadísticas del torneo');
+        }
 
     } catch (error) {
         if (loading) loading.style.display = 'none';
@@ -1136,7 +1150,14 @@ window.mrchipCargarGuerra = async function(filtro) {
 
         if (loading) loading.style.display = 'none';
 
-        if (!partidos || partidos.length === 0) {
+        if (!response.ok) {
+            mostrarError((partidos && partidos.error) || 'Error obteniendo la Sala de Guerra');
+            if (grid) grid.innerHTML = '';
+            if (empty) empty.style.display = 'flex';
+            return;
+        }
+
+        if (!Array.isArray(partidos) || partidos.length === 0) {
             if (grid) grid.innerHTML = '';
             if (empty) empty.style.display = 'flex';
             return;
