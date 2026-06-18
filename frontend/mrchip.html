@@ -1026,112 +1026,227 @@
             `;
 
             el.innerHTML = `
-                <div style="background:#000; position:relative; overflow:hidden;">
+<div style="background:#000; position:relative; overflow:hidden; width:2428px; height:2428px;">
 
-                    <!-- Grid decorativo -->
-                    <div style="
-                        position:absolute; inset:0; pointer-events:none;
-                        background:
-                            repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px),
-                            repeating-linear-gradient(0deg,  rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px);
-                    "></div>
-                    <!-- Glow azul -->
-                    <div style="
-                        position:absolute; right:-60px; top:40%;
-                        transform:translateY(-50%); pointer-events:none;
-                        width:500px; height:500px;
-                        background:radial-gradient(circle, rgba(0,102,204,0.18) 0%, transparent 70%);
-                    "></div>
+    <!-- Grid decorativo (fondo) -->
+    <div style="
+        position:absolute; inset:0; pointer-events:none;
+        background:
+            repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px),
+            repeating-linear-gradient(0deg,  rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 64px);
+    "></div>
+    
+    <!-- Glow azul -->
+    <div style="
+        position:absolute; right:-60px; top:40%;
+        transform:translateY(-50%); pointer-events:none;
+        width:500px; height:500px;
+        background:radial-gradient(circle, rgba(0,102,204,0.18) 0%, transparent 70%);
+    "></div>
 
-                    <div style="position:relative; z-index:2; padding:32px 40px 28px;">
+    <!-- Contenedor principal con 2 columnas -->
+    <div style="
+        position:relative; 
+        z-index:2; 
+        display:grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 30px; 
+        padding: 32px 40px 28px;
+        height: 100%;
+        box-sizing: border-box;
+    ">
 
+        <!-- ===== COLUMNA IZQUIERDA (datos existentes) ===== -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
 
-                      <!-- ③ DISTRIBUCIÓN -->
-                        <div style="margin-bottom:20px;">
-                            <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.8); text-transform:uppercase; margin-bottom:10px;">
-                                DISTRIBUCIÓN · ${total} predicciones
-                            </div>
-                            <div style="height:10px; border-radius:5px; background:#1a1a1a; display:flex; overflow:hidden; margin-bottom:8px;">
-                                <div style="width:${pctH}; background:#0066CC; height:100%;"></div>
-                                <div style="width:${pctD}; background:#FFB800; height:100%;"></div>
-                                <div style="width:${pctA}; background:#FF4444; height:100%;"></div>
-                            </div>
-                            <div style="display:flex; justify-content:space-between;">
-                                <div><span style="font-size:16px; font-weight:900; color:#5bb3ff;">${pctH}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">${name1}</span></div>
-                                <div style="text-align:center;"><span style="font-size:16px; font-weight:900; color:#FFB800;">${pctD}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">Empate</span></div>
-                                <div style="text-align:right;"><span style="font-size:16px; font-weight:900; color:#ff6b6b;">${pctA}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">${name2}</span></div>
-                            </div>
-                        </div>
+            <!-- ③ DISTRIBUCIÓN -->
+            <div>
+                <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.8); text-transform:uppercase; margin-bottom:10px;">
+                    DISTRIBUCIÓN · ${total} predicciones
+                </div>
+                <div style="height:10px; border-radius:5px; background:#1a1a1a; display:flex; overflow:hidden; margin-bottom:8px;">
+                    <div style="width:${pctH}; background:#0066CC; height:100%;"></div>
+                    <div style="width:${pctD}; background:#FFB800; height:100%;"></div>
+                    <div style="width:${pctA}; background:#FF4444; height:100%;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                    <div><span style="font-size:16px; font-weight:900; color:#5bb3ff;">${pctH}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">${name1}</span></div>
+                    <div style="text-align:center;"><span style="font-size:16px; font-weight:900; color:#FFB800;">${pctD}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">Empate</span></div>
+                    <div style="text-align:right;"><span style="font-size:16px; font-weight:900; color:#ff6b6b;">${pctA}</span> <span style="font-size:9px; color:rgba(255,255,255,0.8); text-transform:uppercase;">${name2}</span></div>
+                </div>
+            </div>
 
-                        <!-- Separador -->
-                        <div style="height:1px; background:rgba(255,255,255,0.06); margin-bottom:20px;"></div>
+            <!-- Separador -->
+            <div style="height:1px; background:rgba(255,255,255,0.06);"></div>
 
-                        <!-- ④ BANDOS — 3 columnas de usuarios -->
-                        <div style="margin-bottom:${comentario ? '20px' : '24px'};">
-                            <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:14px;">
-                                ⚔️ LOS BANDOS · ${hayResultado ? 'con puntos obtenidos' : 'partido pendiente'}
-                            </div>
-                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+            <!-- ④ BANDOS — 3 columnas -->
+            <div style="flex:1; min-height:0;">
+                <div style="font-size:9px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin-bottom:14px;">
+                    ⚔️ LOS BANDOS · ${hayResultado ? 'con puntos obtenidos' : 'partido pendiente'}
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; height:calc(100% - 30px);">
 
-                                <!-- Columna Local -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#5bb3ff; text-transform:uppercase; margin-bottom:8px;
-                                        padding-bottom:6px; border-bottom:1px solid rgba(0,102,204,0.3);
-                                    ">
-                                        🏠 ${name1} (${usuariosLocal.length})
-                                    </div>
-                                    ${renderUsersHTML(usuariosLocal, '#5bb3ff')}
-                                </div>
-
-                                <!-- Columna Empate -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#FFB800; text-transform:uppercase; margin-bottom:8px;
-                                        padding-bottom:6px; border-bottom:1px solid rgba(255,184,0,0.3);
-                                    ">
-                                        🤝 Empate (${usuariosEmpate.length})
-                                    </div>
-                                    ${renderUsersHTML(usuariosEmpate, '#FFB800')}
-                                </div>
-
-                                <!-- Columna Visitante -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#ff6b6b; text-transform:uppercase; margin-bottom:8px;
-                                        padding-bottom:6px; border-bottom:1px solid rgba(255,68,68,0.3);
-                                    ">
-                                        ✈️ ${name2} (${usuariosVisitante.length})
-                                    </div>
-                                    ${renderUsersHTML(usuariosVisitante, '#ff6b6b')}
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- ⑤ COMENTARIO MR. CHIP (opcional)
-                        ${comentario ? `
+                    <!-- Columna Local -->
+                    <div style="display:flex; flex-direction:column;">
                         <div style="
-                            background:rgba(0,102,204,0.06);
-                            border:1px solid rgba(0,102,204,0.2);
-                            border-left:3px solid #FFD700;
-                            border-radius:8px; padding:12px 16px;
-                            margin-bottom:20px;
-                            display:flex; align-items:flex-start; gap:10px;
+                            font-size:9px; font-weight:900; letter-spacing:1.5px;
+                            color:#5bb3ff; text-transform:uppercase; margin-bottom:8px;
+                            padding-bottom:6px; border-bottom:1px solid rgba(0,102,204,0.3);
                         ">
-                            <span style="font-size:20px; line-height:1; flex-shrink:0;">🤖</span>
-                            <div>
-                                <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:#FFD700; text-transform:uppercase; margin-bottom:4px;">MR. CHIP DICE:</div>
-                                <div style="font-size:11px; color:rgba(255,255,255,0.72); line-height:1.6; font-style:italic;">"${comentario}"</div>
-                            </div>
+                            🏠 ${name1} (${usuariosLocal.length})
                         </div>
-                        ` : ''} --!>
+                        <div style="flex:1; overflow:hidden;">
+                            ${renderUsersHTML(usuariosLocal, '#5bb3ff')}
+                        </div>
+                    </div>
 
+                    <!-- Columna Empate -->
+                    <div style="display:flex; flex-direction:column;">
+                        <div style="
+                            font-size:9px; font-weight:900; letter-spacing:1.5px;
+                            color:#FFB800; text-transform:uppercase; margin-bottom:8px;
+                            padding-bottom:6px; border-bottom:1px solid rgba(255,184,0,0.3);
+                        ">
+                            🤝 Empate (${usuariosEmpate.length})
+                        </div>
+                        <div style="flex:1; overflow:hidden;">
+                            ${renderUsersHTML(usuariosEmpate, '#FFB800')}
+                        </div>
+                    </div>
+
+                    <!-- Columna Visitante -->
+                    <div style="display:flex; flex-direction:column;">
+                        <div style="
+                            font-size:9px; font-weight:900; letter-spacing:1.5px;
+                            color:#ff6b6b; text-transform:uppercase; margin-bottom:8px;
+                            padding-bottom:6px; border-bottom:1px solid rgba(255,68,68,0.3);
+                        ">
+                            ✈️ ${name2} (${usuariosVisitante.length})
+                        </div>
+                        <div style="flex:1; overflow:hidden;">
+                            ${renderUsersHTML(usuariosVisitante, '#ff6b6b')}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== COLUMNA DERECHA (NUEVO ESPACIO) ===== -->
+        <div style="
+            display:flex; 
+            flex-direction:column; 
+            gap: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 20px;
+            height: 100%;
+        ">
+
+            <!-- 🖼 IMAGEN DE IMPACTO -->
+            <div style="
+                flex: 2;
+                background: rgba(255,255,255,0.03);
+                border-radius: 10px;
+                border: 1px solid rgba(255,255,255,0.05);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 200px;
+                position: relative;
+                overflow: hidden;
+            ">
+                <div style="
+                    font-size: 12px; 
+                    color: rgba(255,255,255,0.2);
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                ">
+                    🖼 IMAGEN DE IMPACTO
+                </div>
+                <!-- <img src="${imagenImpacto}" style="width:100%; height:100%; object-fit:cover;"> -->
+            </div>
+
+            <!-- 📊 INFORMACIÓN ADICIONAL + MR. CHIP -->
+            <div style="
+                flex: 1.5;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                min-height: 120px;
+            ">
+
+                <!-- Datos extra -->
+                <div style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 8px;
+                ">
+                    <div style="
+                        background: rgba(255,255,255,0.03);
+                        border-radius: 6px;
+                        padding: 8px 12px;
+                        border: 1px solid rgba(255,255,255,0.04);
+                    ">
+                        <div style="font-size:8px; color:rgba(255,255,255,0.3); text-transform:uppercase;">Dato 1</div>
+                        <div style="font-size:14px; font-weight:800; color:#fff;">${datoExtra1}</div>
+                    </div>
+                    <div style="
+                        background: rgba(255,255,255,0.03);
+                        border-radius: 6px;
+                        padding: 8px 12px;
+                        border: 1px solid rgba(255,255,255,0.04);
+                    ">
+                        <div style="font-size:8px; color:rgba(255,255,255,0.3); text-transform:uppercase;">Dato 2</div>
+                        <div style="font-size:14px; font-weight:800; color:#fff;">${datoExtra2}</div>
                     </div>
                 </div>
+
+                <!-- ⭐ MR. CHIP (opcional) -->
+                ${comentario ? `
+                <div style="
+                    flex: 1;
+                    background: rgba(0,102,204,0.06);
+                    border: 1px solid rgba(0,102,204,0.2);
+                    border-left: 3px solid #FFD700;
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+                ">
+                    <span style="font-size:20px; line-height:1; flex-shrink:0;">🤖</span>
+                    <div style="flex:1; min-width:0;">
+                        <div style="
+                            font-size:8px; 
+                            font-weight:900; 
+                            letter-spacing:2px; 
+                            color:#FFD700; 
+                            text-transform:uppercase; 
+                            margin-bottom:4px;
+                        ">
+                            MR. CHIP DICE:
+                        </div>
+                        <div style="
+                            font-size:11px; 
+                            color:rgba(255,255,255,0.72); 
+                            line-height:1.6; 
+                            font-style:italic;
+                        ">
+                            "${comentario}"
+                        </div>
+                    </div>
+                </div>
+                ` : ''}
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
             `;
 
             document.body.appendChild(el);
