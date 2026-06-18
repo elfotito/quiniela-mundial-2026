@@ -1759,3 +1759,1009 @@
 @media (max-width: 400px) {
     .mc-stats-global-grid { grid-template-columns: 1fr; }
 }
+
+/* ================================================================
+   DUELO (TAB 2) + ESTAMÍSTICA (TAB 3)
+   Diseño NEXT-GEN para móvil · Estilo neón + glassmorphism
+   ================================================================ */
+
+/* ── GLOW DE FONDO ANIMADO ──────────────────────────────────── */
+.mc-duel-bg-glow {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(255, 0, 150, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: duelGlowFloat 20s ease-in-out infinite alternate;
+}
+@keyframes duelGlowFloat {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    33%  { transform: translate(5%, -5%) scale(1.1) rotate(5deg); }
+    66%  { transform: translate(-5%, 5%) scale(0.9) rotate(-5deg); }
+    100% { transform: translate(3%, -3%) scale(1.05) rotate(3deg); }
+}
+
+/* ── VERSUS SELECTOR ──────────────────────────────────────────── */
+.mc-vs-selector-section {
+    background: rgba(20, 20, 30, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin-bottom: 28px;
+    box-shadow: 
+        0 8px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+.mc-vs-selector-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.03), transparent, rgba(0, 102, 255, 0.03), transparent);
+    animation: duelSelectorSpin 20s linear infinite;
+}
+@keyframes duelSelectorSpin {
+    to { transform: rotate(360deg); }
+}
+.mc-vs-selector-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+.mc-vs-sel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+.mc-vs-sel-icon {
+    font-size: 32px;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+    animation: duelIconPulse 2s ease-in-out infinite;
+}
+@keyframes duelIconPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(10deg); }
+}
+
+.mc-vs-sel-header .mc-selector-title {
+    font-size: 15px;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.mc-vs-sel-header .mc-selector-sub {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+}
+
+/* ── PICKERS ───────────────────────────────────────────────────── */
+.mc-vs-pickers {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.mc-picker-label {
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.mc-picker-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, currentColor, transparent);
+}
+.mc-picker-a .mc-picker-label { 
+    color: #00D4FF;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+.mc-picker-b .mc-picker-label { 
+    color: #FF6B6B;
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+}
+
+.mc-select-vs {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border: 2px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 14px !important;
+    padding: 16px 20px !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.mc-select-vs:focus {
+    border-color: #FFD700 !important;
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.15), 0 0 30px rgba(255, 215, 0, 0.05) !important;
+}
+.mc-picker-a .mc-select-vs:focus { border-color: #00D4FF !important; box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.15) !important; }
+.mc-picker-b .mc-select-vs:focus { border-color: #FF6B6B !important; box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.15) !important; }
+
+.mc-vs-picker-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 6px;
+}
+.mc-vs-swords {
+    font-size: 24px;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4));
+    animation: duelSwordsClash 1.5s ease-in-out infinite;
+}
+@keyframes duelSwordsClash {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.1); }
+}
+
+/* ── BOTÓN DUELO ────────────────────────────────────────────────── */
+.mc-btn-duel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #FFD700, #FF6B35, #FF1493);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 30px rgba(255, 215, 0, 0.3);
+    animation: duelBtnGradient 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+@keyframes duelBtnGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+.mc-btn-duel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+.mc-btn-duel:hover:not(:disabled)::before {
+    transform: translateX(100%);
+}
+.mc-btn-duel:hover:not(:disabled) {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 8px 40px rgba(255, 215, 0, 0.5);
+}
+.mc-btn-duel:active:not(:disabled) {
+    transform: scale(0.98);
+}
+.mc-btn-duel:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(0.8);
+}
+
+/* ── DUEL SCOREBOARD ───────────────────────────────────────────── */
+.mc-duel-scoreboard {
+    margin-bottom: 28px;
+}
+.mc-duel-score-wrap {
+    display: grid;
+    grid-template-columns: 1fr 140px 1fr;
+    align-items: center;
+    gap: 16px;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 215, 0, 0.12);
+    border-radius: 24px;
+    padding: 32px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 12px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.mc-duel-score-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.06), transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(255, 107, 107, 0.06), transparent 60%);
+}
+.mc-duel-score-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+}
+
+.mc-duel-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    z-index: 1;
+}
+.mc-duel-player-a { align-items: flex-start; }
+.mc-duel-player-b { align-items: flex-end; }
+
+.mc-duel-avatar {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.2));
+    transition: all 0.3s;
+}
+.mc-duel-player-a .mc-duel-avatar { 
+    filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.3)); 
+}
+.mc-duel-player-b .mc-duel-avatar { 
+    filter: drop-shadow(0 0 30px rgba(255, 107, 107, 0.3)); 
+}
+.mc-duel-player:hover .mc-duel-avatar {
+    transform: scale(1.1) rotate(-5deg);
+}
+.mc-duel-player-b:hover .mc-duel-avatar {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.mc-duel-name {
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+.mc-duel-player-a .mc-duel-name { color: #00D4FF; }
+.mc-duel-player-b .mc-duel-name { color: #FF6B6B; }
+
+.mc-duel-pts {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.3));
+}
+.mc-duel-pts-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.mc-duel-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+.mc-duel-vs-orb {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.02));
+    border: 2px solid rgba(255, 215, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    color: #FFD700;
+    letter-spacing: 3px;
+    box-shadow: 
+        0 0 40px rgba(255, 215, 0, 0.1),
+        inset 0 0 40px rgba(255, 215, 0, 0.03);
+    animation: duelOrbPulse 3s ease-in-out infinite;
+}
+@keyframes duelOrbPulse {
+    0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.1), inset 0 0 40px rgba(255, 215, 0, 0.03); }
+    50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.2), inset 0 0 60px rgba(255, 215, 0, 0.06); }
+}
+
+.mc-duel-verdict {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ── DUEL TABLE ─────────────────────────────────────────────────── */
+.mc-duel-table-section {
+    background: rgba(20, 20, 30, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mc-duel-table-header {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.mc-duel-col-a { color: #00D4FF; text-shadow: 0 0 20px rgba(0, 212, 255, 0.15); }
+.mc-duel-col-partido { color: rgba(255, 255, 255, 0.15); text-align: center; }
+.mc-duel-col-b { color: #FF6B6B; text-align: right; text-shadow: 0 0 20px rgba(255, 107, 107, 0.15); }
+
+.mc-duel-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    transition: all 0.3s;
+    animation: mc-fade-in 0.4s ease-out;
+    position: relative;
+}
+.mc-duel-row:last-child { border-bottom: none; }
+.mc-duel-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+.mc-duel-row.mc-duel-win {
+    border-left: 3px solid #00D084;
+}
+.mc-duel-row.mc-duel-lose {
+    border-left: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.mc-duel-cell-a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.mc-duel-cell-b {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-end;
+}
+.mc-duel-cell-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.mc-duel-match {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.15);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+.mc-duel-result {
+    font-size: 15px;
+    font-weight: 900;
+    color: #FFD700;
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.mc-duel-pred {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+.mc-duel-win .mc-duel-pred { 
+    color: #00D084;
+    text-shadow: 0 0 20px rgba(0, 208, 132, 0.15);
+}
+.mc-duel-lose .mc-duel-pred { 
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.mc-duel-pts-tag {
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    align-self: flex-start;
+}
+.mc-duel-win .mc-duel-pts-tag {
+    background: rgba(0, 208, 132, 0.12);
+    color: #00D084;
+    border: 1px solid rgba(0, 208, 132, 0.15);
+}
+.mc-duel-lose .mc-duel-pts-tag {
+    background: rgba(255, 255, 255, 0.02);
+    color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ── ESTAMÍSTICA (Rankings) ────────────────────────────────────── */
+.mc-rank-card {
+    background: rgba(20, 20, 30, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+.mc-rank-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+}
+.mc-rank-oraculo::before {
+    background: linear-gradient(90deg, #FFD700, #FF6B35, #FF1493);
+}
+.mc-rank-mufas::before {
+    background: linear-gradient(90deg, #FF4444, #FF6B6B, #FF1493);
+}
+
+.mc-rank-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 215, 0, 0.1);
+}
+
+.mc-rank-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 22px 0;
+}
+.mc-rank-card-icon {
+    font-size: 36px;
+    line-height: 1;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+}
+.mc-rank-oraculo .mc-rank-card-icon { animation: rankGlowGold 2s ease-in-out infinite; }
+@keyframes rankGlowGold {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.2)); }
+    50% { filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.5)); }
+}
+
+.mc-rank-card-title {
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+}
+.mc-rank-oraculo .mc-rank-card-title {
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.mc-rank-mufas .mc-rank-card-title {
+    background: linear-gradient(135deg, #FF4444, #FF6B6B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.mc-rank-card-sub {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.mc-rank-chip-comment {
+    margin: 14px 22px;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.35);
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 2px solid rgba(255, 215, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.mc-rank-mufas .mc-rank-chip-comment {
+    border-left-color: rgba(255, 68, 68, 0.15);
+}
+
+/* ── RANK ROW ───────────────────────────────────────────────────── */
+.mc-rank-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    margin: 0 12px 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.3s;
+    animation: mc-fade-in 0.4s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+.mc-rank-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 215, 0, 0.02), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.mc-rank-row:hover::before {
+    opacity: 1;
+}
+.mc-rank-row:hover {
+    transform: translateX(4px) scale(1.01);
+    border-color: rgba(255, 215, 0, 0.05);
+}
+
+.mc-rank-pos {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 900;
+    flex-shrink: 0;
+    position: relative;
+}
+.mc-pos-1 { 
+    background: linear-gradient(135deg, #FFD700, #F0A500);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    color: #000;
+}
+.mc-pos-2 { 
+    background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.2);
+    color: #000;
+}
+.mc-pos-3 { 
+    background: linear-gradient(135deg, #CD7F32, #A06428);
+    box-shadow: 0 0 20px rgba(205, 127, 50, 0.2);
+    color: #fff;
+}
+.mc-pos-n { 
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.mc-rank-avatar {
+    font-size: 24px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.1));
+}
+.mc-rank-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.85);
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.3px;
+}
+.mc-rank-val {
+    font-size: 20px;
+    font-weight: 900;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.mc-rank-mufas .mc-rank-val {
+    background: linear-gradient(135deg, #FF4444, #FF6B6B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.mc-rank-val-label {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.1);
+    font-weight: 700;
+    flex-shrink: 0;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+/* ── ESTADÍSTICAS GLOBALES ─────────────────────────────────────── */
+.mc-stats-global-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+}
+.mc-stat-global-card {
+    background: rgba(20, 20, 30, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+.mc-stat-global-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(255, 215, 0, 0.03), transparent 60%);
+}
+.mc-stat-global-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+.mc-stat-global-card:active {
+    transform: scale(0.98);
+}
+.mc-stat-global-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: inline-block;
+    animation: statIconFloat 3s ease-in-out infinite;
+}
+@keyframes statIconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+.mc-stat-global-val {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFD700, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    text-shadow: none;
+}
+.mc-stat-global-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+.mc-stat-global-sub {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.1);
+    line-height: 1.4;
+}
+
+/* ================================================================
+   RESPONSIVE DUELO + ESTAMÍSTICA
+   ================================================================ */
+
+@media (max-width: 768px) {
+    .mc-vs-pickers {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .mc-vs-picker-divider {
+        display: none;
+    }
+    .mc-duel-score-wrap {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 28px 20px;
+        text-align: center;
+    }
+    .mc-duel-player-a,
+    .mc-duel-player-b {
+        align-items: center;
+    }
+    .mc-duel-center {
+        flex-direction: row;
+        justify-content: center;
+        gap: 16px;
+    }
+    .mc-duel-vs-orb {
+        width: 60px;
+        height: 60px;
+        font-size: 12px;
+    }
+    .mc-duel-pts {
+        font-size: 44px;
+    }
+    .mc-duel-name {
+        font-size: 14px;
+    }
+    .mc-duel-avatar {
+        font-size: 40px;
+    }
+
+    .mc-duel-table-header,
+    .mc-duel-row {
+        grid-template-columns: 1fr 80px 1fr;
+        padding: 12px 14px;
+    }
+    .mc-duel-match {
+        font-size: 8px;
+    }
+    .mc-duel-result {
+        font-size: 13px;
+    }
+    .mc-duel-pred {
+        font-size: 12px;
+    }
+
+    .mc-stats-global-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    .mc-stat-global-card {
+        padding: 18px 12px;
+    }
+    .mc-stat-global-val {
+        font-size: 22px;
+    }
+    .mc-stat-global-label {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mc-vs-selector-section {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+    .mc-select-vs {
+        padding: 14px 16px !important;
+        font-size: 13px !important;
+        border-radius: 12px !important;
+    }
+    .mc-btn-duel {
+        padding: 16px 20px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+    .mc-vs-sel-header .mc-selector-title {
+        font-size: 13px;
+    }
+
+    .mc-duel-score-wrap {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+    .mc-duel-pts {
+        font-size: 36px;
+    }
+    .mc-duel-name {
+        font-size: 12px;
+    }
+    .mc-duel-avatar {
+        font-size: 32px;
+    }
+    .mc-duel-vs-orb {
+        width: 48px;
+        height: 48px;
+        font-size: 10px;
+    }
+    .mc-duel-verdict {
+        font-size: 9px;
+        padding: 4px 12px;
+    }
+
+    .mc-duel-table-header,
+    .mc-duel-row {
+        grid-template-columns: 1fr 60px 1fr;
+        padding: 10px 12px;
+        gap: 4px;
+    }
+    .mc-duel-match {
+        font-size: 7px;
+        letter-spacing: 0;
+    }
+    .mc-duel-result {
+        font-size: 11px;
+    }
+    .mc-duel-pred {
+        font-size: 10px;
+    }
+    .mc-duel-pts-tag {
+        font-size: 7px;
+        padding: 1px 6px;
+    }
+
+    .mc-stats-global-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .mc-stat-global-card {
+        padding: 14px 8px;
+        border-radius: 14px;
+    }
+    .mc-stat-global-icon {
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+    .mc-stat-global-val {
+        font-size: 18px;
+    }
+    .mc-stat-global-label {
+        font-size: 8px;
+        letter-spacing: 0.5px;
+    }
+    .mc-stat-global-sub {
+        font-size: 8px;
+    }
+
+    .mc-rank-card {
+        border-radius: 16px;
+    }
+    .mc-rank-card-header {
+        padding: 16px 16px 0;
+    }
+    .mc-rank-card-icon {
+        font-size: 28px;
+    }
+    .mc-rank-card-title {
+        font-size: 14px;
+    }
+    .mc-rank-card-sub {
+        font-size: 8px;
+    }
+    .mc-rank-chip-comment {
+        margin: 10px 14px;
+        padding: 10px 14px;
+        font-size: 10px;
+    }
+    .mc-rank-row {
+        padding: 10px 12px;
+        margin: 0 8px 6px;
+        border-radius: 10px;
+    }
+    .mc-rank-pos {
+        width: 26px;
+        height: 26px;
+        font-size: 10px;
+    }
+    .mc-rank-avatar {
+        font-size: 18px;
+    }
+    .mc-rank-name {
+        font-size: 12px;
+    }
+    .mc-rank-val {
+        font-size: 16px;
+    }
+    .mc-rank-val-label {
+        font-size: 7px;
+    }
+}
+
+/* ================================================================
+   ELEMENTOS DECORATIVOS ADICIONALES
+   ================================================================ */
+
+/* Partículas de fondo para DUELO */
+.mc-duel-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.mc-duel-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.1);
+    animation: duelParticleFloat linear infinite;
+}
+@keyframes duelParticleFloat {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* Borde brillante para tarjetas */
+.mc-glow-border {
+    position: relative;
+}
+.mc-glow-border::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, transparent 40%, rgba(255, 215, 0, 0.1) 50%, transparent 60%);
+    background-size: 200% 200%;
+    animation: glowBorderMove 3s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+@keyframes glowBorderMove {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 200%; }
+}
+
+/* Efecto de "holograma" para el VS */
+.mc-hologram-text {
+    background: linear-gradient(135deg, #FFD700, #FF6B35, #FF1493, #FFD700);
+    background-size: 300% 300%;
+    animation: hologramShine 3s ease-in-out infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+@keyframes hologramShine {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Animación de "winner" en duelo */
+.mc-duel-win-glow {
+    animation: winGlow 0.5s ease-out 4;
+}
+@keyframes winGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 208, 132, 0); }
+    50% { box-shadow: 0 0 40px rgba(0, 208, 132, 0.2); }
+}

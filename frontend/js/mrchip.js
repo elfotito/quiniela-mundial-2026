@@ -1209,6 +1209,24 @@ function mcGuerraCardHTML(p) {
     `;
 }
 
+// Generar partículas para DUELO
+if (document.getElementById('panelVersus')) {
+    const container = document.getElementById('duelParticles');
+    if (container) {
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'mc-duel-particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.width = (Math.random() * 4 + 2) + 'px';
+            p.style.height = p.style.width;
+            p.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            p.style.animationDelay = (Math.random() * 15) + 's';
+            p.style.background = `rgba(255, 215, 0, ${Math.random() * 0.08 + 0.02})`;
+            container.appendChild(p);
+        }
+    }
+}
+
 // ── Mostrar con animación de typing ──────────────────────────────
 function mostrarChipComment(chipBox, texto) {
     const chipText = document.getElementById('chipCommentText');
