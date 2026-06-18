@@ -1018,253 +1018,106 @@
             `;
 
             el.innerHTML = `
-                <div style="background:#0a0a0a; position:relative; overflow:hidden; font-family:'Segoe UI',Arial,sans-serif;">
-
-                    <!-- Grid decorativo de fondo -->
-                    <div style="
-                        position:absolute; inset:0; pointer-events:none; z-index:0;
-                        background:
-                            repeating-linear-gradient(90deg, rgba(255,255,255,0.014) 0, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 72px),
-                            repeating-linear-gradient(0deg,  rgba(255,255,255,0.014) 0, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 72px);
-                    "></div>
-
-                    <!-- Glow azul fondo derecha -->
-                    <div style="
-                        position:absolute; right:-80px; top:20%;
-                        width:700px; height:700px; pointer-events:none; z-index:0;
-                        background:radial-gradient(circle, rgba(0,102,204,0.10) 0%, transparent 65%);
-                    "></div>
-
-                    <!-- Acento dorado top -->
-                    <div style="height:3px; background:linear-gradient(90deg, #FFD700 0%, #C9A84C 40%, transparent 100%); position:relative; z-index:2;"></div>
-
-                    <!-- ① HEADER BAR -->
-                    <div style="
-                        position:relative; z-index:2;
-                        padding:13px 36px;
-                        display:flex; align-items:center; justify-content:space-between;
-                        border-bottom:1px solid rgba(255,255,255,0.06);
-                    ">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <span style="font-size:18px; line-height:1;">🤖</span>
-                            <span style="font-size:9px; font-weight:900; letter-spacing:3px; color:rgba(255,215,0,0.85); text-transform:uppercase;">
-                                MR. CHIP · ANÁLISIS DE PARTIDO
-                            </span>
-                        </div>
-                        <div style="font-size:9px; color:rgba(255,255,255,0.35); letter-spacing:1px; text-transform:uppercase;">
-                            ${fecha} &nbsp;·&nbsp; ${fase}
-                        </div>
-                    </div>
-
-                    <!-- ② BODY: DOS COLUMNAS -->
-                    <div style="position:relative; z-index:2; display:flex; align-items:stretch;">
-
-                        <!-- ═══ COLUMNA IZQUIERDA — LOS BANDOS (60%) ═══ -->
-                        <div style="
-                            flex:0 0 60%;
-                            padding:26px 30px 30px;
-                            border-right:1px solid rgba(255,255,255,0.06);
-                        ">
-                            <!-- Título sección -->
-                            <div style="
-                                font-size:8px; font-weight:900; letter-spacing:2.5px;
-                                color:rgba(255,255,255,0.22); text-transform:uppercase;
-                                margin-bottom:18px;
-                            ">
-                                ⚔️ &nbsp;LOS BANDOS &nbsp;·&nbsp; ${total} predicciones &nbsp;·&nbsp; ${hayResultado ? 'con puntos obtenidos' : 'partido pendiente'}
-                            </div>
-
-                            <!-- 3 COLUMNAS -->
-                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;">
-
-                                <!-- LOCAL -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#5bb3ff; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(0,102,204,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>🏠 ${name1}</span>
-                                        <span style="
-                                            background:rgba(0,102,204,0.2);
-                                            border:1px solid rgba(91,179,255,0.35);
-                                            border-radius:10px; padding:1px 8px;
-                                            font-size:9px;
-                                        ">${usuariosLocal.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosLocal, '#5bb3ff')}
-                                </div>
-
-                                <!-- EMPATE -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#FFB800; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(255,184,0,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>🤝 Empate</span>
-                                        <span style="
-                                            background:rgba(255,184,0,0.15);
-                                            border:1px solid rgba(255,184,0,0.35);
-                                            border-radius:10px; padding:1px 8px;
-                                            font-size:9px;
-                                        ">${usuariosEmpate.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosEmpate, '#FFB800')}
-                                </div>
-
-                                <!-- VISITANTE -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#ff6b6b; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(255,68,68,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>✈️ ${name2}</span>
-                                        <span style="
-                                            background:rgba(255,68,68,0.15);
-                                            border:1px solid rgba(255,107,107,0.35);
-                                            border-radius:10px; padding:1px 8px;
-                                            font-size:9px;
-                                        ">${usuariosVisitante.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosVisitante, '#ff6b6b')}
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- ═══ COLUMNA DERECHA — PARTIDO + MR. CHIP (40%) ═══ -->
-                        <div style="
-                            flex:0 0 40%;
-                            padding:26px 30px 30px;
-                            display:flex; flex-direction:column; gap:18px;
-                            background:rgba(0,30,70,0.05);
-                        ">
-
-                            <!-- VS HEADER -->
-                            <div style="
-                                background:rgba(255,255,255,0.02);
-                                border:1px solid rgba(255,255,255,0.07);
-                                border-radius:12px;
-                                padding:20px 16px;
-                            ">
-                                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-
-                                    <!-- LOCAL -->
-                                    <div style="flex:1; text-align:center;">
-                                        <div style="font-size:48px; line-height:1; margin-bottom:8px;">${flag1}</div>
-                                        <div style="font-size:13px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:0.3px; word-break:break-word; line-height:1.2;">${name1}</div>
-                                    </div>
-
-                                    <!-- SCORE / VS -->
-                                    <div style="flex:0 0 auto; text-align:center; padding:0 6px;">
-                                        ${hayResultado
-                                            ? `<div style="font-size:38px; font-weight:900; color:#FFD700; letter-spacing:3px; line-height:1;">${score1}–${score2}</div>
-                                               <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,215,0,0.5); text-transform:uppercase; margin-top:5px;">RESULTADO</div>`
-                                            : `<div style="font-size:22px; font-weight:900; color:rgba(255,255,255,0.18); letter-spacing:4px;">VS</div>
-                                               <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.2); text-transform:uppercase; margin-top:5px;">PENDIENTE</div>`
-                                        }
-                                    </div>
-
-                                    <!-- VISITANTE -->
-                                    <div style="flex:1; text-align:center;">
-                                        <div style="font-size:48px; line-height:1; margin-bottom:8px;">${flag2}</div>
-                                        <div style="font-size:13px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:0.3px; word-break:break-word; line-height:1.2;">${name2}</div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- DISTRIBUCIÓN -->
-                            <div style="
-                                background:rgba(255,255,255,0.02);
-                                border:1px solid rgba(255,255,255,0.07);
-                                border-radius:12px; padding:16px 18px;
-                            ">
-                                <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.25); text-transform:uppercase; margin-bottom:12px;">
-                                    DISTRIBUCIÓN · ${total} PREDICCIONES
-                                </div>
-                                <div style="height:10px; border-radius:5px; background:#111; display:flex; overflow:hidden; margin-bottom:14px;">
-                                    <div style="width:${pctH}; background:linear-gradient(90deg, #004aad, #0066CC); height:100%;"></div>
-                                    <div style="width:${pctD}; background:linear-gradient(90deg, #cc8800, #FFB800); height:100%;"></div>
-                                    <div style="width:${pctA}; background:linear-gradient(90deg, #cc2222, #FF4444); height:100%;"></div>
-                                </div>
-                                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                                    <div>
-                                        <div style="font-size:24px; font-weight:900; color:#5bb3ff; line-height:1;">${pctH}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px; max-width:110px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${name1}</div>
-                                    </div>
-                                    <div style="text-align:center;">
-                                        <div style="font-size:24px; font-weight:900; color:#FFB800; line-height:1;">${pctD}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px;">Empate</div>
-                                    </div>
-                                    <div style="text-align:right;">
-                                        <div style="font-size:24px; font-weight:900; color:#ff6b6b; line-height:1;">${pctA}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px; max-width:110px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${name2}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SPACER FLEXIBLE -->
-                            <div style="flex:1; min-height:8px;"></div>
-
-                            <!-- MR. CHIP AVATAR + COMENTARIO -->
-                            <div style="
-                                background:rgba(0,40,100,0.28);
-                                border:1px solid rgba(0,102,204,0.2);
-                                border-left:3px solid #FFD700;
-                                border-radius:10px; padding:16px 18px;
-                            ">
-                                <div style="display:flex; gap:14px; align-items:flex-start;">
-
-                                    <!-- Avatar circular -->
-                                    <div style="flex-shrink:0; text-align:center;">
-                                        <div style="
-                                            width:54px; height:54px; border-radius:50%;
-                                            background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);
-                                            border:2px solid rgba(0,102,204,0.5);
-                                            display:flex; align-items:center; justify-content:center;
-                                            font-size:28px; line-height:1;
-                                        ">🤖</div>
-                                        <div style="font-size:7px; font-weight:900; color:rgba(255,215,0,0.45); text-align:center; letter-spacing:1.5px; margin-top:5px; text-transform:uppercase;">v2.026</div>
-                                    </div>
-
-                                    <!-- Texto del comentario -->
-                                    <div style="flex:1; min-width:0;">
-                                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:#FFD700; text-transform:uppercase; margin-bottom:8px;">
-                                            MR. CHIP DICE:
-                                        </div>
-                                        <div style="font-size:12px; color:rgba(255,255,255,0.78); line-height:1.7; font-style:italic;">
-                                            "${comentario || 'Los datos no mienten. Las predicciones de algunos participantes, en cambio, sí que lo hacen.'}"
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- ③ FOOTER -->
-                    <div style="
-                        position:relative; z-index:2;
-                        padding:11px 36px;
-                        border-top:1px solid rgba(255,255,255,0.06);
-                        display:flex; align-items:center; justify-content:space-between;
-                        background:rgba(0,0,0,0.25);
-                    ">
-                        <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px; font-weight:600;">quinielacarrisan.com.ve</div>
-                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:rgba(255,215,0,0.28); text-transform:uppercase;">COPA MUNDIAL FIFA 2026™</div>
-                    </div>
-
-                </div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.4); margin-bottom:10px; font-family:monospace; letter-spacing:1px;">PREVIEW v2 — header eliminado · fecha+fase dentro del VS</div>
+  <div class="card">
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="inner">
+      <div class="gold-stripe"></div>
+      <!-- SIN HEADER BAR — va directo al body -->
+      <div class="body">
+        <!-- IZQUIERDA: LOS BANDOS -->
+        <div class="left-col">
+          <div class="section-label">⚔️ &nbsp;LOS BANDOS · 42 predicciones · partido pendiente</div>
+          <div class="bandos-grid">
+            <div>
+              <div class="col-header local"><span>🏠 Argentina</span><span class="badge-count badge-local">18</span></div>
+              <div class="user-row"><span class="user-pts local">+7</span><span class="user-name">Alejandro</span><span class="user-pred local">2-1</span></div>
+              <div class="user-row"><span class="user-pts local">+5</span><span class="user-name">Mariangela</span><span class="user-pred local">1-0</span></div>
+              <div class="user-row"><span class="user-pts local">+9</span><span class="user-name">Roberto</span><span class="user-pred local">3-1</span></div>
+              <div class="user-row"><span class="user-pts local">+2</span><span class="user-name">Patricia</span><span class="user-pred local">1-0</span></div>
+              <div class="user-row"><span class="user-pts local">+5</span><span class="user-name">Carlos</span><span class="user-pred local">2-0</span></div>
+              <div class="user-row"><span class="user-pts local">—</span><span class="user-name">Valentina</span><span class="user-pred local">1-0</span></div>
+            </div>
+            <div>
+              <div class="col-header empate"><span>🤝 Empate</span><span class="badge-count badge-empate">14</span></div>
+              <div class="user-row"><span class="user-pts empate">+0</span><span class="user-name">Tito</span><span class="user-pred empate">1-1</span></div>
+              <div class="user-row"><span class="user-pts empate">+0</span><span class="user-name">Luisa</span><span class="user-pred empate">0-0</span></div>
+              <div class="user-row"><span class="user-pts empate">+2</span><span class="user-name">Manuel</span><span class="user-pred empate">2-2</span></div>
+              <div class="user-row"><span class="user-pts empate">+0</span><span class="user-name">Daniela</span><span class="user-pred empate">0-0</span></div>
+              <div class="user-row"><span class="user-pts empate">+0</span><span class="user-name">Francisco</span><span class="user-pred empate">1-1</span></div>
+            </div>
+            <div>
+              <div class="col-header visita"><span>✈️ Francia</span><span class="badge-count badge-visita">10</span></div>
+              <div class="user-row"><span class="user-pts visita">+7</span><span class="user-name">Gabriela</span><span class="user-pred visita">0-2</span></div>
+              <div class="user-row"><span class="user-pts visita">+5</span><span class="user-name">Eduardo</span><span class="user-pred visita">1-2</span></div>
+              <div class="user-row"><span class="user-pts visita">+2</span><span class="user-name">Stephania</span><span class="user-pred visita">0-1</span></div>
+              <div class="user-row"><span class="user-pts visita">+9</span><span class="user-name">Andrés</span><span class="user-pred visita">0-3</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- DERECHA -->
+        <div class="right-col">
+          <!-- VS BOX con meta integrada -->
+          <div class="vs-box">
+            <div class="vs-meta-bar">
+              <div class="vs-fase"><span class="dot"></span>Fase de Grupos · Grupo C</div>
+              <div class="vs-fecha">11 Jun 2026 · 14:00</div>
+            </div>
+            <div class="vs-teams">
+              <div class="team">
+                <div class="flag">🇦🇷</div>
+                <div class="tname">Argentina</div>
+              </div>
+              <div class="score-center">
+                <div class="score">2–1</div>
+                <div class="score-label">RESULTADO</div>
+              </div>
+              <div class="team">
+                <div class="flag">🇫🇷</div>
+                <div class="tname">Francia</div>
+              </div>
+            </div>
+          </div>
+          <!-- DISTRIBUCIÓN -->
+          <div class="dist-box">
+            <div class="section-label" style="margin-bottom:0;">DISTRIBUCIÓN · 42 PREDICCIONES</div>
+            <div class="dist-bar">
+              <div style="width:43%; background:linear-gradient(90deg,#004aad,#0066CC);"></div>
+              <div style="width:33%; background:linear-gradient(90deg,#cc8800,#FFB800);"></div>
+              <div style="width:24%; background:linear-gradient(90deg,#cc2222,#FF4444);"></div>
+            </div>
+            <div class="dist-stats">
+              <div><div class="dist-pct" style="color:#5bb3ff;">43%</div><div class="dist-team">Argentina</div></div>
+              <div style="text-align:center;"><div class="dist-pct" style="color:#FFB800;">33%</div><div class="dist-team">Empate</div></div>
+              <div style="text-align:right;"><div class="dist-pct" style="color:#ff6b6b;">24%</div><div class="dist-team">Francia</div></div>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <!-- MR CHIP -->
+          <div class="chip-box">
+            <div class="chip-inner">
+              <div class="chip-avatar">
+                <div class="orb">🤖</div>
+                <div class="ver">v2.026</div>
+              </div>
+              <div class="chip-text">
+                <div class="lbl">MR. CHIP DICE:</div>
+                <div class="quote">"El 43% apostó por Argentina. El 57% restante entrará en una espiral existencial mañana a las 9pm."</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:14px;">🤖</span>
+          <div class="domain">quinielacarrisan.com.ve</div>
+        </div>
+        <div class="cup">COPA MUNDIAL FIFA 2026™</div>
+      </div>
+    </div>
+  </div>
             `;
 
             document.body.appendChild(el);
