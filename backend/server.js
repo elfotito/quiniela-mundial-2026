@@ -2211,7 +2211,7 @@ app.get('/api/partidos/sala-guerra', async (req, res) => {
             LEFT JOIN predicciones p ON p.partido_id = pa.id
             WHERE 1=1
             ${condicion}
-            GROUP BY pa.id
+            GROUP BY pa.id, pa.equipo_local, pa.equipo_visitante, pa.fecha_hora, pa.fase, pa.estado, pa.goles_local_real, pa.goles_visitante_real
             ORDER BY pa.fecha_hora ASC
         `);
 
