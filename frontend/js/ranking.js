@@ -691,38 +691,39 @@ async function compartirRanking() {
             const fontPts    = esTop3 ? '900' : '500';
 
             return `
-                <div style="
-                    display:flex; align-items:center; gap:8px;
-                    padding:7px 10px;
-                    background:${esTop1
-                        ? 'linear-gradient(90deg, rgba(201,168,76,0.10) 0%, transparent 60%)'
-                        : bgFila};
-                    border-bottom:1px solid rgba(255,255,255,0.035);
-                    border-left:${borderLeft};
-                ">
-                    <div style="
-                        font-size:${esTop3 ? '16px' : '12px'};
-                        width:32px; text-align:center; flex-shrink:0;
-                        color:rgba(255,255,255,0.45);
-                        font-family:Arial Black,Arial,sans-serif;
-                    ">${medalla}</div>
-                    <div style="
-                        flex:1; min-width:0;
-                        font-size:13px;
-                        font-weight:${esTop3 ? '700' : '400'};
-                        color:${esTop1 ? '#fff' : 'rgba(255,255,255,0.82)'};
-                        font-family:Arial,sans-serif;
-                        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-                    ">${nombre}</div>
-                    <div style="
-                        font-size:${sizePts};
-                        font-weight:${fontPts};
-                        color:${colorPts};
-                        font-family:Arial Black,Arial,sans-serif;
-                        flex-shrink:0;
-                        letter-spacing:-0.5px;
-                    ">${puntos}</div>
-                </div>`;
+    <div style="
+        display:flex; align-items:center;
+        padding:5px 10px;
+        background:${esTop1
+            ? 'linear-gradient(90deg, rgba(201,168,76,0.10) 0%, transparent 60%)'
+            : bgFila};
+        border-bottom:1px solid rgba(255,255,255,0.03);
+        border-left:${borderLeft};
+        gap:6px;
+    ">
+        <div style="
+            font-size:${esTop3 ? '14px' : '11px'};
+            width:26px; text-align:center; flex-shrink:0;
+            color:rgba(255,255,255,0.45);
+            font-family:Arial Black,Arial,sans-serif;
+        ">${medalla}</div>
+        <div style="
+            flex:1; min-width:0;
+            font-size:12px;
+            font-weight:${esTop3 ? '700' : '400'};
+            color:${esTop1 ? '#fff' : 'rgba(255,255,255,0.82)'};
+            font-family:Arial,sans-serif;
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        ">${nombre}</div>
+        <div style="
+            font-size:${sizePts};
+            font-weight:${fontPts};
+            color:${colorPts};
+            font-family:Arial Black,Arial,sans-serif;
+            flex-shrink:0;
+            letter-spacing:-0.5px;
+        ">${puntos}</div>
+    </div>`;
         }).join('');
     }
 
