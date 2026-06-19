@@ -2218,11 +2218,10 @@
 
 /* ── ESTAMÍSTICA (Rankings) ────────────────────────────────────── */
 .mc-rank-card {
-    background: rgba(20, 20, 30, 0.75);
+    background: rgb(0, 0, 0);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -2635,9 +2634,6 @@
         font-size: 8px;
     }
 
-    .mc-rank-card {
-        border-radius: 16px;
-    }
     .mc-rank-card-header {
         padding: 16px 16px 0;
     }
