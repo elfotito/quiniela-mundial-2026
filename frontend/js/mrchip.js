@@ -1011,7 +1011,7 @@ function mostrarDuelo(data) {
 
     const chipDuel = document.getElementById('chipDuelComment');
     if (chipDuel) {
-        chipDuel.textContent = `${resumen.total_partidos} partidos analizados.\n ${usuario_a.nombre} ganó ${resumen.partidos_ganados_a}\n ${usuario_b.nombre} ganó ${resumen.partidos_ganados_b}\n empataron en ${resumen.empates}.`;
+        chipDuel.innerHTML = `${resumen.total_partidos} partidos analizados.<br>${usuario_a.nombre} ganó ${resumen.partidos_ganados_a}<br> ${usuario_b.nombre} ganó ${resumen.partidos_ganados_b}<br> Empataron en ${resumen.empates}.`;
     }
 
     const rows = document.getElementById('vsDuelRows');
