@@ -960,11 +960,11 @@ async function compartirRanking() {
         height:200px; overflow:hidden;
         margin-bottom:-2px;
     ">
-        <img src="/img/jugador1.png" crossorigin="anonymous"
+        <img src="/img/olise.png" crossorigin="anonymous"
             style="height:185px; margin-right:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
-        <img src="/img/jugador2.png" crossorigin="anonymous"
+        <img src="/img/trofeo.png" crossorigin="anonymous"
             style="height:200px; position:relative; z-index:2; opacity:1; filter:drop-shadow(0 0 16px rgba(201,168,76,0.35));">
-        <img src="/img/jugador3.png" crossorigin="anonymous"
+        <img src="/img/diaz.png" crossorigin="anonymous"
             style="height:185px; margin-left:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
     </div>
 
@@ -976,34 +976,11 @@ async function compartirRanking() {
         background:rgba(0,0,0,0.35);
         text-align:center;
     ">
-        <img src="/assets/img/logo-carrisan.png" crossorigin="anonymous"
+        <img src="/img/logoblancomenu.png" crossorigin="anonymous"
             style="height:32px; display:block; margin:0 auto 4px;">
         <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
     </div>
 </div>
-
-    <!-- Jugadores PNG sin fondo -->
-    <div style="
-        position:relative; z-index:1;
-        display:flex; justify-content:center; align-items:flex-end;
-        gap:0; margin:0 -2px;
-    ">
-        <img
-            src="/img/olise.png"
-            style="height:90px; margin-right:-8px; opacity:0.92;"
-            crossorigin="anonymous"
-        >
-        <img
-            src="/img/trofeo.png"
-            style="height:105px; position:relative; z-index:2; opacity:1;"
-            crossorigin="anonymous"
-        >
-        <img
-            src="/img/diaz.png"
-            style="height:90px; margin-left:-8px; opacity:0.92;"
-            crossorigin="anonymous"
-        >
-    </div>
 </div>
 
                 </div>
