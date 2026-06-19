@@ -849,7 +849,7 @@ async function compartirRanking() {
             <div style="position:relative; z-index:2; display:flex; align-items:stretch;">
 
                 <!-- ══ IZQUIERDA — TABLA (60%) ══ -->
-                <div style="flex:0 0 60%; border-right:1px solid rgba(255,255,255,0.06);">
+                <div style="flex:0 0 52%; border-right:1px solid rgba(255,255,255,0.06);">
 
                     <!-- Header tabla -->
                     <div style="
@@ -874,8 +874,8 @@ async function compartirRanking() {
 
                 <!-- ══ DERECHA — INFO + STATS (40%) ══ -->
                 <div style="
-                    flex:0 0 40%;
-                    padding:24px 26px 28px;
+                    flex:0 0 48%;
+padding:20px 24px 0;
                     display:flex; flex-direction:column; gap:16px;
                     background:rgba(0,30,70,0.04);
                 ">
