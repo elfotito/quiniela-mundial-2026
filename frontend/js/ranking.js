@@ -666,7 +666,7 @@ async function compartirRanking() {
     const total   = datos.length;
     const lider   = datos[0];
     const ultimo  = datos[total - 1];
-    const promedio = Math.round(datos.reduce((a, b) => a + (b.puntos_totales || 0), 0) / total);
+    const promedio = (datos.reduce((a, b) => a + (b.puntos_totales || 0), 0) / total).toFixed(2);
     const top3    = datos.slice(0, 3);
 
     // ── Filas de la tabla ──────────────────────────────────────
