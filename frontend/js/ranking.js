@@ -873,118 +873,210 @@ async function compartirRanking() {
                 </div>
 
                 <!-- ══ DERECHA — INFO + STATS (40%) ══ -->
-                <div style="
-                    flex:0 0 40%;
-                    padding:24px 26px 28px;
-                    display:flex; flex-direction:column; gap:16px;
-                    background:rgba(0,30,70,0.04);
-                ">
-
-                    <!-- Liga + Fecha -->
-                    <div style="
-                        background:rgba(255,255,255,0.025);
-                        border:1px solid rgba(255,255,255,0.07);
-                        border-radius:12px; overflow:hidden;
-                    ">
-                        <div style="
-                            padding:8px 14px;
-                            border-bottom:1px solid rgba(255,255,255,0.06);
-                            background:rgba(255,255,255,0.02);
-                            display:flex; align-items:center; gap:7px;
-                        ">
-                            <div style="width:6px; height:6px; border-radius:50%; background:#C9A84C; opacity:0.8; flex-shrink:0;"></div>
-                            <span style="font-size:9px; font-weight:900; letter-spacing:1.5px; color:rgba(201,168,76,0.85); text-transform:uppercase;">${ligaNombre}</span>
-                        </div>
-                        <div style="padding:13px 16px; display:flex; flex-direction:column; gap:7px;">
-                            <div style="font-size:12px; color:rgba(255,255,255,0.5); letter-spacing:0.3px;">📅 ${fechaFormateada}</div>
-                            <div style="font-size:12px; color:rgba(255,255,255,0.5);">👥 ${total} participante${total !== 1 ? 's' : ''}</div>
-                        </div>
-                    </div>
-
-                    <!-- Podio -->
-                    <div>
-                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:rgba(255,255,255,0.22); text-transform:uppercase; margin-bottom:16px;">
-                            🏆 PODIO ACTUAL
-                        </div>
-                        ${renderPodium()}
-                    </div>
-
-                    <!-- Stats grid 2×2 -->
-                    <div style="
-                        background:rgba(255,255,255,0.025);
-                        border:1px solid rgba(255,255,255,0.07);
-                        border-radius:12px; padding:14px 16px;
-                        display:grid; grid-template-columns:1fr 1fr; gap:12px;
-                    ">
-                        <div style="text-align:center;">
-                            <div style="font-size:22px; font-weight:900; color:#C9A84C; font-family:Arial Black,Arial,sans-serif; line-height:1;">${lider ? lider.puntos_totales || 0 : 0}</div>
-                            <div style="font-size:8px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:3px;">Máx. pts</div>
-                        </div>
-                        <div style="text-align:center;">
-                            <div style="font-size:22px; font-weight:900; color:#5bb3ff; font-family:Arial Black,Arial,sans-serif; line-height:1;">${promedio}</div>
-                            <div style="font-size:8px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:3px;">Promedio</div>
-                        </div>
-                        <div style="text-align:center;">
-                            <div style="font-size:22px; font-weight:900; color:rgba(255,255,255,0.38); font-family:Arial Black,Arial,sans-serif; line-height:1;">${ultimo ? ultimo.puntos_totales || 0 : 0}</div>
-                            <div style="font-size:8px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:3px;">Mín. pts</div>
-                        </div>
-                        <div style="text-align:center;">
-                            <div style="font-size:22px; font-weight:900; color:rgba(255,255,255,0.5); font-family:Arial Black,Arial,sans-serif; line-height:1;">${total}</div>
-                            <div style="font-size:8px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:3px;">Jugadores</div>
-                        </div>
-                    </div>
-
-                    <!-- Spacer flexible -->
-                    <div style="flex:1; min-height:8px;"></div>
-
-                    <!-- Branding -->
 <div style="
-    background:rgba(201,168,76,0.06);
-    border:1px solid rgba(201,168,76,0.15);
-    border-left:3px solid #C9A84C;
-    border-radius:10px;
-    overflow:hidden;
-    position:relative;
+    flex:0 0 40%;
+    padding:20px 24px 0;
+    display:flex; flex-direction:column;
+    background:rgba(0,30,70,0.04);
 ">
-    <!-- Glow fondo -->
-    <div style="
-        position:absolute; inset:0; pointer-events:none;
-        background:radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.10) 0%, transparent 70%);
-        z-index:0;
-    "></div>
 
-    <!-- Jugadores GRANDES, saliendo desde abajo del bloque -->
+    <!-- ① LIGA + FECHA — una sola línea compacta -->
     <div style="
-        position:relative; z-index:1;
-        display:flex; justify-content:center; align-items:flex-end;
-        height:200px; overflow:hidden;
-        margin-bottom:-2px;
+        display:flex; align-items:center; justify-content:space-between;
+        padding:10px 14px;
+        background:rgba(255,255,255,0.025);
+        border:1px solid rgba(255,255,255,0.07);
+        border-radius:10px;
+        margin-bottom:20px;
     ">
-        <img src="/img/olise.png" crossorigin="anonymous"
-            style="height:185px; margin-right:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
-        <img src="/img/trofeo.png" crossorigin="anonymous"
-            style="height:200px; position:relative; z-index:2; opacity:1; filter:drop-shadow(0 0 16px rgba(201,168,76,0.35));">
-        <img src="/img/diaz.png" crossorigin="anonymous"
-            style="height:185px; margin-left:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
+        <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:6px; height:6px; border-radius:50%; background:#C9A84C; flex-shrink:0;"></div>
+            <span style="font-size:10px; font-weight:900; letter-spacing:1.5px; color:rgba(201,168,76,0.9); text-transform:uppercase;">${ligaNombre}</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:10px; color:rgba(255,255,255,0.35); letter-spacing:0.3px;">${fechaFormateada}</span>
+            <span style="
+                font-size:10px; font-weight:700; color:rgba(255,255,255,0.55);
+                background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+                border-radius:8px; padding:1px 8px;
+            ">👥 ${total}</span>
+        </div>
     </div>
 
-    <!-- Logo + URL abajo -->
-    <div style="
-        position:relative; z-index:2;
-        padding:10px 16px 12px;
-        border-top:1px solid rgba(201,168,76,0.15);
-        background:rgba(0,0,0,0.35);
-        text-align:center;
-    ">
-        <img src="/img/logoblancomenu.png" crossorigin="anonymous"
-            style="height:32px; display:block; margin:0 auto 4px;">
-        <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
-    </div>
-</div>
-</div>
+    <!-- ② PODIO — protagonista total -->
+    <div style="position:relative; margin-bottom:16px;">
 
+        <div style="font-size:8px; font-weight:900; letter-spacing:3px; color:rgba(255,255,255,0.15); text-transform:uppercase; text-align:center; margin-bottom:14px;">
+            ─── PODIO ACTUAL ───
+        </div>
+
+        <!-- Watermark trofeo de fondo -->
+        <div style="
+            position:absolute; top:10px; left:50%; margin-left:-55px;
+            font-size:110px; line-height:1;
+            color:rgba(201,168,76,0.035);
+            pointer-events:none; z-index:0;
+        ">🏆</div>
+
+        <!-- 3 columnas del podio: 3° | 1° | 2° -->
+        <div style="display:flex; align-items:flex-end; justify-content:center; gap:6px; position:relative; z-index:1;">
+
+            <!-- 3er lugar -->
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+                <div style="font-size:15px; line-height:1; margin-bottom:5px;">🥉</div>
+                <div style="
+                    width:64px; height:64px; border-radius:50%;
+                    border:2px solid #8B5E3C;
+                    box-shadow:0 0 14px rgba(139,94,60,0.4), 0 0 0 3px rgba(0,0,0,0.5);
+                    overflow:hidden; background:#111; margin-bottom:6px;
+                ">
+                    <img src="/img/turquia.jpg" crossorigin="anonymous"
+                        style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+                <div style="
+                    font-size:10px; font-weight:700; color:rgba(255,255,255,0.88);
+                    text-align:center; max-width:108px;
+                    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+                    margin-bottom:7px;
+                ">${top3[2] ? (top3[2].nombre_publico || top3[2].nombre) : ''}</div>
+                <div style="
+                    width:100%; height:70px;
+                    background:linear-gradient(180deg, rgba(139,94,60,0.18) 0%, rgba(139,94,60,0.04) 100%);
+                    border:1px solid rgba(139,94,60,0.5); border-bottom:none;
+                    border-radius:6px 6px 0 0;
+                    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+                ">
+                    <span style="font-size:9px; color:rgba(139,94,60,0.7); font-weight:900; letter-spacing:1px;">3°</span>
+                    <span style="font-size:20px; font-weight:900; color:#8B5E3C; font-family:Arial Black,Arial,sans-serif; line-height:1;">${top3[2] ? Number(top3[2].puntos_totales)||0 : ''}</span>
+                    <span style="font-size:7px; color:rgba(255,255,255,0.25); text-transform:uppercase; letter-spacing:1px;">pts</span>
                 </div>
             </div>
+
+            <!-- 1er lugar — centro y más alto -->
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+                <div style="font-size:22px; line-height:1; margin-bottom:5px; filter:drop-shadow(0 0 8px rgba(201,168,76,0.9));">👑</div>
+                <div style="
+                    width:84px; height:84px; border-radius:50%;
+                    border:3px solid #C9A84C;
+                    box-shadow:0 0 24px rgba(201,168,76,0.55), 0 0 0 4px rgba(0,0,0,0.5), 0 0 50px rgba(201,168,76,0.2);
+                    overflow:hidden; background:#111; margin-bottom:6px;
+                ">
+                    <img src="/img/messi.png" crossorigin="anonymous"
+                        style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+                <div style="
+                    font-size:11px; font-weight:900; color:#fff;
+                    text-align:center; max-width:118px;
+                    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+                    margin-bottom:7px;
+                ">${top3[0] ? (top3[0].nombre_publico || top3[0].nombre) : ''}</div>
+                <div style="
+                    width:100%; height:112px;
+                    background:linear-gradient(180deg, rgba(201,168,76,0.22) 0%, rgba(201,168,76,0.05) 100%);
+                    border:1px solid rgba(201,168,76,0.65); border-bottom:none;
+                    border-radius:6px 6px 0 0;
+                    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+                    box-shadow:inset 0 1px 0 rgba(255,255,255,0.12), 0 0 24px rgba(201,168,76,0.18);
+                ">
+                    <span style="font-size:9px; color:rgba(201,168,76,0.75); font-weight:900; letter-spacing:1px;">1°</span>
+                    <span style="font-size:30px; font-weight:900; color:#C9A84C; font-family:Arial Black,Arial,sans-serif; line-height:1;">${top3[0] ? Number(top3[0].puntos_totales)||0 : ''}</span>
+                    <span style="font-size:7px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px;">pts</span>
+                </div>
+            </div>
+
+            <!-- 2do lugar -->
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center;">
+                <div style="font-size:15px; line-height:1; margin-bottom:5px;">🥈</div>
+                <div style="
+                    width:72px; height:72px; border-radius:50%;
+                    border:2px solid #9e9e9e;
+                    box-shadow:0 0 16px rgba(158,158,158,0.38), 0 0 0 3px rgba(0,0,0,0.5);
+                    overflow:hidden; background:#111; margin-bottom:6px;
+                ">
+                    <img src="/img/baggio.jpg" crossorigin="anonymous"
+                        style="width:100%; height:100%; object-fit:cover; display:block;">
+                </div>
+                <div style="
+                    font-size:10px; font-weight:700; color:rgba(255,255,255,0.88);
+                    text-align:center; max-width:108px;
+                    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+                    margin-bottom:7px;
+                ">${top3[1] ? (top3[1].nombre_publico || top3[1].nombre) : ''}</div>
+                <div style="
+                    width:100%; height:88px;
+                    background:linear-gradient(180deg, rgba(158,158,158,0.14) 0%, rgba(158,158,158,0.04) 100%);
+                    border:1px solid rgba(158,158,158,0.48); border-bottom:none;
+                    border-radius:6px 6px 0 0;
+                    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+                ">
+                    <span style="font-size:9px; color:rgba(158,158,158,0.7); font-weight:900; letter-spacing:1px;">2°</span>
+                    <span style="font-size:24px; font-weight:900; color:#9e9e9e; font-family:Arial Black,Arial,sans-serif; line-height:1;">${top3[1] ? Number(top3[1].puntos_totales)||0 : ''}</span>
+                    <span style="font-size:7px; color:rgba(255,255,255,0.25); text-transform:uppercase; letter-spacing:1px;">pts</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Arena floor -->
+        <div style="height:3px; background:linear-gradient(90deg, transparent, rgba(201,168,76,0.4) 20%, rgba(201,168,76,0.6) 50%, rgba(201,168,76,0.4) 80%, transparent);"></div>
+        <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(201,168,76,0.15) 30%, rgba(201,168,76,0.25) 50%, rgba(201,168,76,0.15) 70%, transparent); margin-bottom:4px;"></div>
+    </div>
+
+    <!-- ③ STATS TICKER — franja horizontal slim -->
+    <div style="
+        display:flex; align-items:center;
+        padding:12px 10px;
+        background:rgba(255,255,255,0.02);
+        border:1px solid rgba(255,255,255,0.06);
+        border-radius:10px;
+        margin-bottom:0;
+    ">
+        <div style="flex:1; text-align:center;">
+            <div style="font-size:20px; font-weight:900; color:#C9A84C; font-family:Arial Black,Arial,sans-serif; line-height:1;">${lider ? Number(lider.puntos_totales)||0 : 0}</div>
+            <div style="font-size:7px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px;">Máx.</div>
+        </div>
+        <div style="width:1px; height:28px; background:rgba(255,255,255,0.07);"></div>
+        <div style="flex:1; text-align:center;">
+            <div style="font-size:20px; font-weight:900; color:#5bb3ff; font-family:Arial Black,Arial,sans-serif; line-height:1;">${promedio}</div>
+            <div style="font-size:7px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px;">Prom.</div>
+        </div>
+        <div style="width:1px; height:28px; background:rgba(255,255,255,0.07);"></div>
+        <div style="flex:1; text-align:center;">
+            <div style="font-size:20px; font-weight:900; color:rgba(255,255,255,0.35); font-family:Arial Black,Arial,sans-serif; line-height:1;">${ultimo ? Number(ultimo.puntos_totales)||0 : 0}</div>
+            <div style="font-size:7px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px;">Mín.</div>
+        </div>
+        <div style="width:1px; height:28px; background:rgba(255,255,255,0.07);"></div>
+        <div style="flex:1; text-align:center;">
+            <div style="font-size:20px; font-weight:900; color:rgba(255,255,255,0.5); font-family:Arial Black,Arial,sans-serif; line-height:1;">${total}</div>
+            <div style="font-size:7px; color:rgba(255,255,255,0.28); text-transform:uppercase; letter-spacing:1.5px; margin-top:2px;">Jgdrs.</div>
+        </div>
+    </div>
+
+    <!-- Spacer flexible -->
+    <div style="flex:1; min-height:12px;"></div>
+
+    <!-- ④ BRANDING — sin cambios -->
+    <div style="
+        background:rgba(201,168,76,0.06);
+        border:1px solid rgba(201,168,76,0.15);
+        border-left:3px solid #C9A84C;
+        border-radius:10px;
+        overflow:hidden;
+        position:relative;
+    ">
+        <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at 50% 40%, rgba(201,168,76,0.10) 0%, transparent 65%); z-index:0;"></div>
+        <div style="position:relative; z-index:1; display:flex; justify-content:center; align-items:flex-end; height:200px; overflow:hidden; margin-bottom:-2px;">
+            <img src="/img/olise.png" crossorigin="anonymous" style="height:185px; margin-right:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
+            <img src="/img/trofeo.png" crossorigin="anonymous" style="height:200px; position:relative; z-index:2; opacity:1; filter:drop-shadow(0 0 16px rgba(201,168,76,0.35));">
+            <img src="/img/diaz.png" crossorigin="anonymous" style="height:185px; margin-left:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
+        </div>
+        <div style="position:relative; z-index:2; padding:10px 16px 12px; border-top:1px solid rgba(201,168,76,0.15); background:rgba(0,0,0,0.35); text-align:center;">
+            <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:32px; display:block; margin:0 auto 4px;">
+            <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
+        </div>
+    </div>
+
+</div>
 
             <!-- FOOTER -->
             <div style="
