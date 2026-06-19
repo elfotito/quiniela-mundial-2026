@@ -1033,7 +1033,7 @@ function mostrarDuelo(data) {
                             <div class="mc-duel-row-teams">${obtenerBandera(p.equipo_local)} ${p.equipo_local} vs ${p.equipo_visitante} ${obtenerBandera(p.equipo_visitante)}</div>
                             <div class="mc-duel-row-resultado">${p.goles_local_real}-${p.goles_visitante_real}</div>
                         </div>
-                        <div class="mc-duel-row-b ${claseB}">${predB} <span class="mc-duel-row-pts">${ptsB} pts</span></div>
+                        <div class="mc-duel-row-b ${claseB}">${predB} <span class="mc-duel-row-pts">+${ptsB}</span></div>
                     </div>
                 `;
             }).join('');

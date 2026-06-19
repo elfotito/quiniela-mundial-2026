@@ -1137,8 +1137,6 @@
    ================================================================ */
 .mc-duel-table-section {
     background: var(--dark-card);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
     overflow: hidden;
     margin-bottom: 28px;
 }
@@ -1229,7 +1227,6 @@
     .mc-vs-picker-divider { display: none; }
 
     .mc-duel-score-wrap {
-        grid-template-columns: 1fr;
         gap: 24px;
         padding: 28px 20px;
     }
@@ -2112,11 +2109,9 @@
 
 /* ── DUEL TABLE ─────────────────────────────────────────────────── */
 .mc-duel-table-section {
-    background: rgba(20, 20, 30, 0.7);
+    background: rgba(20, 20, 30, 0.16);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
     overflow: hidden;
     margin-bottom: 28px;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
@@ -2502,7 +2497,6 @@
         display: none;
     }
     .mc-duel-score-wrap {
-        grid-template-columns: 1fr;
         gap: 20px;
         padding: 28px 20px;
         text-align: center;
