@@ -666,7 +666,7 @@ async function compartirRanking() {
     const total   = datos.length;
     const lider   = datos[0];
     const ultimo  = datos[total - 1];
-    const promedio = (datos.reduce((a, b) => a + (b.puntos_totales || 0), 0) / total).toFixed(2);
+    const promedio = Number((datos.reduce((a, b) => a + (b.puntos_totales || 0), 0) / total).toFixed(2));
     const top3    = datos.slice(0, 3);
 
     // ── Filas de la tabla ──────────────────────────────────────
@@ -727,28 +727,78 @@ async function compartirRanking() {
     }
 
     // ── Mini podio derecha ─────────────────────────────────────
-    function renderPodium() {
-        const colores  = ['#C9A84C', '#9e9e9e', '#8B5E3C'];
-        const medallas = ['🥇', '🥈', '🥉'];
-        return top3.map((user, i) => {
-            const nombre = user.nombre_publico || user.nombre || 'Usuario';
-            const puntos = user.puntos_totales || 0;
-            return `
-                <div style="
-                    display:flex; align-items:center; gap:9px;
-                    padding:7px 10px;
-                    background:rgba(255,255,255,0.03);
-                    border:1px solid rgba(255,255,255,0.07);
-                    border-left:3px solid ${colores[i]};
-                    border-radius:8px;
-                    margin-bottom:7px;
-                ">
-                    <span style="font-size:18px; flex-shrink:0;">${medallas[i]}</span>
-                    <div style="flex:1; min-width:0; font-size:13px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${nombre}</div>
-                    <div style="font-size:18px; font-weight:900; color:${colores[i]}; font-family:Arial Black,Arial,sans-serif; flex-shrink:0;">${puntos}</div>
+        function renderPodium() {
+    const podiumImages = [
+        'img/messi.png',   // 1er lugar
+        'img/baggio.jpg',  // 2do lugar
+        'img/turquia.jpg'  // 3er lugar
+    ];
+
+    // Orden visual: 3ro izquierda | 1ro centro | 2do derecha
+    const ordenVisual = [
+        { idx: 2, corona: '🥉', color: '#8B5E3C', altColor: 'rgba(139,94,60,0.3)',  base: 44, avatar: 64 },
+        { idx: 0, corona: '👑',  color: '#C9A84C', altColor: 'rgba(201,168,76,0.3)', base: 72, avatar: 78 },
+        { idx: 1, corona: '🥈', color: '#9e9e9e', altColor: 'rgba(158,158,158,0.3)', base: 56, avatar: 70 }
+    ];
+
+    return `
+        <div style="display:flex; align-items:flex-end; justify-content:center; gap:6px; padding:4px 0 0;">
+            ${ordenVisual.map(({ idx, corona, color, altColor, base, avatar }) => {
+                const user   = top3[idx];
+                if (!user) return '';
+                const nombre = user.nombre_publico || user.nombre || 'Usuario';
+                const pts    = user.puntos_totales || 0;
+                const pos    = idx + 1;
+                return `
+                <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
+
+                    <!-- Avatar + corona -->
+                    <div style="position:relative; margin-bottom:6px;">
+                        <span style="
+                            position:absolute; top:-10px; left:50%; margin-left:-10px;
+                            font-size:16px; line-height:1; z-index:2;
+                        ">${corona}</span>
+                        <div style="
+                            width:${avatar}px; height:${avatar}px; border-radius:50%;
+                            border:2px solid ${color};
+                            overflow:hidden;
+                            background:#111;
+                            box-shadow:0 0 10px ${altColor};
+                        ">
+                            <img src="${podiumImages[idx]}"
+                                crossorigin="anonymous"
+                                style="width:100%; height:100%; object-fit:cover; display:block;">
+                        </div>
+                    </div>
+
+                    <!-- Nombre -->
+                    <div style="
+                        font-size:11px; font-weight:700; color:#fff;
+                        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+                        max-width:130px; text-align:center;
+                        margin-bottom:6px;
+                    ">${nombre}</div>
+
+                    <!-- Base del podio -->
+                    <div style="
+                        width:100%;
+                        height:${base}px;
+                        background:linear-gradient(180deg, ${altColor} 0%, rgba(255,255,255,0.03) 100%);
+                        border:1px solid ${color};
+                        border-bottom:none;
+                        border-radius:6px 6px 0 0;
+                        display:flex; flex-direction:column;
+                        align-items:center; justify-content:center; gap:2px;
+                    ">
+                        <span style="font-size:20px; font-weight:900; color:${color}; font-family:Arial Black,Arial,sans-serif; line-height:1;">${pos}</span>
+                        <span style="font-size:14px; font-weight:900; color:#fff; font-family:Arial Black,Arial,sans-serif; line-height:1;">${pts}</span>
+                        <span style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:1px;">pts</span>
+                    </div>
                 </div>`;
-        }).join('');
-    }
+            }).join('')}
+        </div>
+    `;
+}
 
     // ── Contenedor offscreen ───────────────────────────────────
     const el = document.createElement('div');
@@ -848,8 +898,8 @@ async function compartirRanking() {
 
                     <!-- Podio -->
                     <div>
-                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:rgba(255,255,255,0.22); text-transform:uppercase; margin-bottom:11px;">
-                            🏅 PODIO ACTUAL
+                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:rgba(255,255,255,0.22); text-transform:uppercase; margin-bottom:16px;">
+                            🏆 PODIO ACTUAL
                         </div>
                         ${renderPodium()}
                     </div>
@@ -883,19 +933,57 @@ async function compartirRanking() {
                     <div style="flex:1; min-height:8px;"></div>
 
                     <!-- Branding -->
-                    <div style="
-                        background:rgba(201,168,76,0.06);
-                        border:1px solid rgba(201,168,76,0.15);
-                        border-left:3px solid #C9A84C;
-                        border-radius:10px; padding:14px 16px;
-                        text-align:center;
-                    ">
-                        <div style="font-size:20px; margin-bottom:5px;">🌎</div>
-                        <div style="font-size:11px; font-weight:900; color:rgba(201,168,76,0.8); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px;">
-                            Quiniela Carrisan
-                        </div>
-                        <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
-                    </div>
+                    <!-- Branding -->
+<div style="
+    background:rgba(201,168,76,0.06);
+    border:1px solid rgba(201,168,76,0.15);
+    border-left:3px solid #C9A84C;
+    border-radius:10px;
+    overflow:hidden;
+    position:relative;
+">
+    <!-- Glow de fondo -->
+    <div style="
+        position:absolute; bottom:-30px; left:50%;
+        margin-left:-100px;
+        width:200px; height:120px;
+        background:radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
+        pointer-events:none; z-index:0;
+    "></div>
+
+    <!-- Logo + texto -->
+    <div style="position:relative; z-index:2; text-align:center; padding:12px 16px 8px;">
+        <img
+            src="/img/logoblancomenu.png"
+            style="height:36px; margin-bottom:5px; display:block; margin-left:auto; margin-right:auto;"
+            crossorigin="anonymous"
+        >
+        <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
+    </div>
+
+    <!-- Jugadores PNG sin fondo -->
+    <div style="
+        position:relative; z-index:1;
+        display:flex; justify-content:center; align-items:flex-end;
+        gap:0; margin:0 -2px;
+    ">
+        <img
+            src="/img/olise.png"
+            style="height:90px; margin-right:-8px; opacity:0.92;"
+            crossorigin="anonymous"
+        >
+        <img
+            src="/img/trofeo.png"
+            style="height:105px; position:relative; z-index:2; opacity:1;"
+            crossorigin="anonymous"
+        >
+        <img
+            src="/img/diaz.png"
+            style="height:90px; margin-left:-8px; opacity:0.92;"
+            crossorigin="anonymous"
+        >
+    </div>
+</div>
 
                 </div>
             </div>
