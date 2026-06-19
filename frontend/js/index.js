@@ -5,6 +5,9 @@
 const API_URL = CONFIG.API_URL;
 let usuarioId = null;
 let uibEvoChart = null;
+// ===== VARIABLE GLOBAL PARA FILTRO =====
+let noticiasTodas = [];
+let filtroActual = 'todas';
 
 // ===============================================
 
@@ -554,28 +557,136 @@ async function cargarRankingTop5() {
         container.innerHTML = '<div style="text-align:center;padding:12px 0;font-size:12px;color:#aaa;">No disponible</div>';
     }
 }
-// ─── NOTICIAS FEED A LO ESPN MAANOOO ───────────────────────────────────────
 async function cargarNoticiasIndex() {
     const feed = document.getElementById('noticiasFeed');
     if (!feed) return;
 
     try {
-        const res = await fetch(`${CONFIG.API_URL}/noticias?limit=8`);
-        if (!res.ok) throw new Error(`Error ${res.status}: ${await res.text()}`);
+        const res = await fetch(`${CONFIG.API_URL}/noticias?limit=20`);
+        if (!res.ok) throw new Error(`Error ${res.status}`);
         const noticias = await res.json();
 
         if (!noticias.length) {
-            feed.innerHTML = '<div style="text-align:center;padding:24px;font-size:12px;color:#aaa;">No hay noticias publicadas aún</div>';
+            feed.innerHTML = `
+                <div class="noticias-empty">
+                    <span class="empty-icon">📭</span>
+                    <p>No hay noticias publicadas aún</p>
+                </div>`;
             return;
         }
 
-        feed.innerHTML = noticias.map(n => renderNoticia(n)).join('');
+        // Guardar todas las noticias para el filtro
+        noticiasTodas = noticias;
+        
+        // Mostrar todas inicialmente
+        renderizarNoticias(noticiasTodas);
         inicializarReacciones();
 
     } catch (err) {
         console.error('Error cargando noticias:', err);
-        feed.innerHTML = '<div style="text-align:center;padding:24px;font-size:12px;color:#aaa;">No disponible</div>';
+        feed.innerHTML = `
+            <div class="noticias-empty">
+                <span class="empty-icon">⚠️</span>
+                <p>No disponible en este momento</p>
+            </div>`;
     }
+}
+
+// ===== FILTRAR NOTICIAS =====
+function filtrarNoticias(fuente, btn) {
+    // Actualizar botones activos
+    document.querySelectorAll('.nf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    filtroActual = fuente;
+    
+    const noticiasFiltradas = fuente === 'todas' 
+        ? noticiasTodas 
+        : noticiasTodas.filter(n => n.fuente === fuente);
+    
+    renderizarNoticias(noticiasFiltradas);
+}
+
+// ===== RENDERIZAR NOTICIAS =====
+function renderizarNoticias(noticias) {
+    const feed = document.getElementById('noticiasFeed');
+    
+    if (!noticias.length) {
+        feed.innerHTML = `
+            <div class="noticias-empty">
+                <span class="empty-icon">🔍</span>
+                <p>No hay noticias de ${filtroActual === 'todas' ? 'esta fuente' : filtroActual}</p>
+            </div>`;
+        return;
+    }
+
+    feed.innerHTML = noticias.map(n => renderNoticia(n)).join('');
+}
+
+// ===== RENDERIZAR UNA NOTICIA =====
+function renderNoticia(n) {
+    const fuente = n.fuente || 'Manual';
+    const fuenteClass = fuente.toLowerCase().replace(/[^a-z]/g, '');
+    const imagenHTML = n.imagen_url 
+        ? `<img src="${n.imagen_url}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'noticia-imagen-placeholder\\'>${iconoPorFuente(fuente)}</div>'">`
+        : `<div class="noticia-imagen-placeholder">${iconoPorFuente(fuente)}</div>`;
+    
+    const badgeClass = `badge-${fuenteClass}`;
+    const dotClass = `dot-${fuenteClass}`;
+    
+    return `
+        <div class="noticia-card" onclick="window.open('${n.url || '#'}', '_blank')">
+            <div class="noticia-card-inner">
+                <div class="noticia-imagen">
+                    ${imagenHTML}
+                    <span class="noticia-badge ${badgeClass}">${fuente}</span>
+                </div>
+                <div class="noticia-content">
+                    <h3>${n.titulo}</h3>
+                    <p>${n.descripcion || ''}</p>
+                    <div class="noticia-meta">
+                        <span class="noticia-fuente">
+                            <span class="noticia-fuente-dot ${dotClass}"></span>
+                            ${fuente}
+                        </span>
+                        <span class="noticia-fecha">${formatearFechaNoticia(n.fecha_publicacion || n.created_at)}</span>
+                        ${n.categoria ? `<span class="noticia-categoria">${n.categoria}</span>` : ''}
+                    </div>
+                </div>
+                <span class="noticia-flecha">→</span>
+            </div>
+        </div>`;
+}
+
+// ===== ICONO POR FUENTE =====
+function iconoPorFuente(fuente) {
+    const iconos = {
+        'FutbolRed': '🔴',
+        'ESPN': '🟠',
+        'Manual': '🔵',
+        'Olé': '⚪'
+    };
+    return iconos[fuente] || '📰';
+}
+
+// ===== FORMATEAR FECHA =====
+function formatearFechaNoticia(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    const ahora = new Date();
+    const diff = Math.floor((ahora - d) / 60000);
+    
+    if (diff < 1) return 'Ahora mismo';
+    if (diff < 60) return `Hace ${diff} min`;
+    if (diff < 1440) return `Hace ${Math.floor(diff / 60)}h`;
+    if (diff < 43200) return `Hace ${Math.floor(diff / 1440)}d`;
+    
+    return d.toLocaleDateString('es-CO', { 
+        day: '2-digit', 
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }
 
 function formatearFechaNoticia(iso) {

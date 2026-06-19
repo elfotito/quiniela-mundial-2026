@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Noticias - FutbolRed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fifa-blue: #0066CC;
+            --fifa-dark-blue: #003d7a;
+            --fifa-gold: #FFD700;
+            --fr-red: #CC0000;
+            --fr-dark-red: #990000;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --border: #333;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--fifa-gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--fifa-gold);
+            border-bottom-color: var(--fifa-gold);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ===== FUTBOLRED SECTION ===== */
+        .fr-section {
+            background: var(--dark-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .fr-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .fr-header h2 {
+            color: var(--fifa-gold);
+            font-size: 18px;
+            flex: 1;
+        }
+
+        .status-badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            background: var(--dark-bg);
+            color: #999;
+        }
+
+        .status-badge.loading {
+            color: #ffaa00;
+        }
+
+        .status-badge.success {
+            color: #00aa44;
+        }
+
+        .status-badge.error {
+            color: #cc3333;
+        }
+
+        .btn-traer-fr {
+            background: linear-gradient(135deg, var(--fr-red) 0%, var(--fr-dark-red) 100%);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 4px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-traer-fr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(204, 0, 0, 0.3);
+        }
+
+        .btn-traer-fr:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .preview-noticias {
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            background: var(--dark-bg);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--fr-red);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preview-item:hover {
+            background: #1a1a1a;
+            transform: translateX(4px);
+        }
+
+        .preview-item h4 {
+            color: var(--fifa-gold);
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .preview-item p {
+            color: #ccc;
+            font-size: 13px;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .preview-item small {
+            color: #666;
+            font-size: 12px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .preview-item.selected {
+            background: rgba(204, 0, 0, 0.15);
+            border-left-color: var(--fr-red);
+        }
+
+        /* ===== HISTORIAL ===== */
+        .historial-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .historial-item {
+            background: var(--dark-card);
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--fifa-blue);
+        }
+
+        .historial-item.futbolred {
+            border-left-color: var(--fr-red);
+        }
+
+        .historial-info {
+            flex: 1;
+        }
+
+        .historial-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+        }
+
+        .historial-info small {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .historial-info .fuente {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 8px;
+            background: var(--dark-bg);
+            border-radius: 12px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-top-color: var(--fifa-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert.success {
+            background: rgba(0, 170, 68, 0.1);
+            color: #00aa44;
+            border: 1px solid rgba(0, 170, 68, 0.3);
+        }
+
+        .alert.error {
+            background: rgba(204, 51, 51, 0.1);
+            color: #cc3333;
+            border: 1px solid rgba(204, 51, 51, 0.3);
+        }
+
+        .alert.info {
+            background: rgba(0, 102, 204, 0.1);
+            color: #0066cc;
+            border: 1px solid rgba(0, 102, 204, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .fr-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📰 Admin Noticias - FutbolRed</h1>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="cambiarTab('futbolred')">Traer de FutbolRed</button>
+            <button class="tab-btn" onclick="cambiarTab('historial')">Historial</button>
+        </div>
+
+        <!-- TAB 1: TRAER DE FUTBOLRED -->
+        <div id="tab-futbolred" class="tab-content active">
+            <div class="fr-section">
+                <div class="fr-header">
+                    <h2>⚽ Traer Noticias de FutbolRed</h2>
+                    <span class="status-badge" id="frStatus">Listo</span>
+                </div>
+
+                <p style="color: #999; margin-bottom: 20px; font-size: 14px;">
+                    Pullea automáticamente las últimas noticias de Selecciones Nacionales y Mundial 2026 desde FutbolRed.
+                    Las noticias se guardan en el carrusel.
+                </p>
+
+                <button class="btn-traer-fr" id="btnTraerFR" onclick="traerDeFutbolRed()">
+                    📡 Traer Últimas Noticias
+                </button>
+
+                <div class="preview-noticias" id="previewFR" style="display: none;">
+                    <h3 style="color: var(--fifa-gold); margin-bottom: 15px;">Noticias encontradas:</h3>
+                    <div id="previewContainer"></div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="guardarSeleccionadas()" style="padding: 10px 20px; background: #00aa44; border: none; border-radius: 4px; color: #fff; cursor: pointer; font-weight: bold;">
+                            ✅ Guardar Seleccionadas
+                        </button>
+                        <button class="btn btn-primary" onclick="guardarTodas()" style="padding: 10px 20px; background: var(--fifa-blue); border: none; border-radius: 4px; color: #fff; cursor: pointer; font-weight: bold;">
+                            📥 Guardar Todas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: HISTORIAL -->
+        <div id="tab-historial" class="tab-content">
+            <h2 style="color: var(--fifa-gold); margin-bottom: 20px;">Noticias de FutbolRed</h2>
+            <div class="historial-list" id="historialList">
+                <p style="color: #999; text-align: center;">Cargando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Inicializar Supabase -->
+    <script>
+        const supabaseClient = window.supabase.createClient(
+            'https://aohnbafexgwkugtfryrk.supabase.co',
+            'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
+        );
+        window.supabase = supabaseClient;
+        window.SUPABASE_URL = 'https://aohnbafexgwkugtfryrk.supabase.co';
+        window.SUPABASE_ANON_KEY = 'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8';
+        
+        console.log('✅ Supabase inicializado en noticias-futbolred.html');
+    </script>
+    
+    <!-- Widget específico para FutbolRed -->
+    <script>
+        // ===== WIDGET FUTBOLRED =====
+        window.widgetFutbolRed = {
+            rssUrl: 'https://www.futbolred.com/rss-news/selecciones-nacionales.xml',
+
+            async traerNoticias() {
+                console.log('🔍 Pulleando noticias de FutbolRed...');
+
+                try {
+                    // Usamos api.rss2json.com como proxy para evitar CORS
+                    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(this.rssUrl)}`;
+                    
+                    const response = await fetch(proxyUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.status !== 'ok' || !data.items || data.items.length === 0) {
+                        throw new Error('No se encontraron noticias en el feed');
+                    }
+
+                    console.log(`📥 ${data.items.length} noticias recibidas de FutbolRed`);
+
+                    // Transformar a nuestro formato para Supabase
+                    const noticias = data.items.map(item => {
+                        // Limpiar título (viene con saltos de línea en el XML)
+                        const titulo = this.limpiarTexto(item.title);
+                        
+                        // Limpiar descripción
+                        const descripcion = this.limpiarTexto(item.description);
+                        
+                        // Extraer imagen del enclosure
+                        const imagen_url = item.enclosure?.url || 
+                                          item.enclosure?.link || 
+                                          this.extraerImagenDeContenido(item.content) || 
+                                          this.extraerImagenDeDescripcion(item.description) || 
+                                          '';
+                        
+                        // Determinar categoría basada en el contenido
+                        const categoria = this.determinarCategoria(item.categories, titulo, descripcion);
+                        
+                        return {
+                            titulo: titulo.slice(0, 100),
+                            descripcion: descripcion.slice(0, 200),
+                            imagen_url: imagen_url,
+                            url: item.link || '',
+                            fuente: 'FutbolRed',
+                            categoria: categoria,
+                            fecha_publicacion: item.pubDate || new Date().toISOString(),
+                            tipo_carrusel: 'auto',
+                            activo: true
+                        };
+                    });
+
+                    return noticias;
+
+                } catch (error) {
+                    console.error('❌ Error fetching RSS:', error);
+                    
+                    // Si falla el proxy, intentamos con otro método
+                    if (error.message.includes('fetch')) {
+                        return this.traerNoticiasAlternativo();
+                    }
+                    
+                    throw error;
+                }
+            },
+
+            async traerNoticiasAlternativo() {
+                // Método alternativo usando Google Feed API
+                console.log('🔄 Intentando método alternativo...');
+                
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(this.rssUrl)}`;
+                
+                const response = await fetch(proxyUrl);
+                const text = await response.text();
+                
+                // Parsear XML manualmente
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, 'text/xml');
+                const items = xmlDoc.querySelectorAll('item');
+                
+                const noticias = [];
+                
+                items.forEach(item => {
+                    const titulo = this.limpiarTexto(item.querySelector('title')?.textContent || '');
+                    const descripcion = this.limpiarTexto(item.querySelector('description')?.textContent || '');
+                    const link = item.querySelector('link')?.textContent?.trim() || '';
+                    const enclosure = item.querySelector('enclosure');
+                    const imagen_url = enclosure?.getAttribute('url') || '';
+                    const pubDate = item.querySelector('pubDate')?.textContent || new Date().toISOString();
+                    const categoria = item.querySelector('category')?.textContent || 'MUNDIAL 2026';
+                    
+                    if (titulo) {
+                        noticias.push({
+                            titulo: titulo.slice(0, 100),
+                            descripcion: descripcion.slice(0, 200),
+                            imagen_url: imagen_url,
+                            url: link,
+                            fuente: 'FutbolRed',
+                            categoria: categoria.toUpperCase(),
+                            fecha_publicacion: pubDate,
+                            tipo_carrusel: 'auto',
+                            activo: true
+                        });
+                    }
+                });
+                
+                console.log(`📥 ${noticias.length} noticias (método alternativo)`);
+                return noticias;
+            },
+
+            limpiarTexto(texto) {
+                if (!texto) return '';
+                return texto
+                    .replace(/\s+/g, ' ')
+                    .replace(/\n/g, ' ')
+                    .replace(/\t/g, ' ')
+                    .trim();
+            },
+
+            extraerImagenDeContenido(content) {
+                if (!content) return '';
+                const match = content.match(/<img[^>]+src=["']([^"']+)["']/);
+                return match ? match[1] : '';
+            },
+
+            extraerImagenDeDescripcion(description) {
+                if (!description) return '';
+                const match = description.match(/<img[^>]+src=["']([^"']+)["']/);
+                return match ? match[1] : '';
+            },
+
+            determinarCategoria(categories, titulo, descripcion) {
+                const texto = (titulo + ' ' + descripcion).toLowerCase();
+                
+                if (Array.isArray(categories) && categories.length > 0) {
+                    const cat = categories[0].toUpperCase();
+                    if (cat.includes('MUNDIAL')) return 'MUNDIAL 2026';
+                    if (cat.includes('SELECCI')) return 'Selección Nacional';
+                    return cat;
+                }
+                
+                if (texto.includes('gole') || texto.includes('gol') || texto.includes('marcador')) return 'PARTIDO';
+                if (texto.includes('clasific') || texto.includes('dieciseisavos')) return 'MUNDIAL 2026';
+                if (texto.includes('messi') || texto.includes('argentina')) return 'Selección Nacional';
+                if (texto.includes('colombia') || texto.includes('méxico')) return 'Selección Nacional';
+                
+                return 'MUNDIAL 2026';
+            }
+        };
+
+        console.log('✅ Widget FutbolRed inicializado');
+    </script>
+
+    <script>
+        // ===== TABS =====
+        function cambiarTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById('tab-' + tab).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tab === 'historial') {
+                cargarHistorial();
+            }
+        }
+
+        // ===== TRAER DE FUTBOLRED =====
+        async function traerDeFutbolRed() {
+            const btn = document.getElementById('btnTraerFR');
+            const status = document.getElementById('frStatus');
+            const preview = document.getElementById('previewFR');
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading-spinner"></span> Cargando...';
+            status.textContent = '⏳ Pulleando RSS...';
+            status.className = 'status-badge loading';
+
+            try {
+                const noticias = await window.widgetFutbolRed.traerNoticias();
+
+                if (noticias && noticias.length > 0) {
+                    mostrarPreviewFR(noticias);
+                    preview.style.display = 'block';
+                    status.textContent = '✅ ' + noticias.length + ' noticias';
+                    status.className = 'status-badge success';
+                    mostrarAlerta(`✅ Se encontraron ${noticias.length} noticias de FutbolRed`, 'success');
+                } else {
+                    mostrarAlerta('⚠️ No se encontraron noticias', 'info');
+                    status.textContent = 'Sin resultados';
+                    status.className = 'status-badge';
+                }
+
+            } catch (error) {
+                status.textContent = '❌ Error';
+                status.className = 'status-badge error';
+                mostrarAlerta('❌ Error: ' + error.message, 'error');
+                console.error('Error:', error);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '📡 Traer Últimas Noticias';
+            }
+        }
+
+        function mostrarPreviewFR(noticias) {
+            const container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+
+            noticias.forEach((noticia, idx) => {
+                const item = document.createElement('div');
+                item.className = 'preview-item';
+                item.dataset.idx = idx;
+                
+                // Mostrar miniatura si hay imagen
+                const imagenHTML = noticia.imagen_url 
+                    ? `<img src="${noticia.imagen_url}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px; margin-bottom: 8px;" onerror="this.style.display='none'">`
+                    : '';
+                
+                item.innerHTML = `
+                    ${imagenHTML}
+                    <h4>📰 ${noticia.titulo}</h4>
+                    <p>${noticia.descripcion}</p>
+                    <small>📂 ${noticia.categoria} | 🕐 ${formatDate(noticia.fecha_publicacion)}</small>
+                `;
+
+                item.onclick = () => {
+                    item.classList.toggle('selected');
+                };
+
+                container.appendChild(item);
+            });
+
+            // Guardar referencia global para usar al guardar
+            window.noticiasFRCargadas = noticias;
+        }
+
+        async function guardarSeleccionadas() {
+            const seleccionados = document.querySelectorAll('.preview-item.selected');
+            if (seleccionados.length === 0) {
+                mostrarAlerta('⚠️ Selecciona al menos una noticia haciendo clic en ella', 'info');
+                return;
+            }
+
+            const indices = Array.from(seleccionados).map(el => parseInt(el.dataset.idx));
+            const noticiasAGuardar = indices.map(idx => window.noticiasFRCargadas[idx]);
+
+            await guardarEnSupabase(noticiasAGuardar);
+        }
+
+        async function guardarTodas() {
+            if (!window.noticiasFRCargadas || window.noticiasFRCargadas.length === 0) {
+                mostrarAlerta('⚠️ No hay noticias para guardar', 'info');
+                return;
+            }
+
+            if (confirm(`¿Guardar las ${window.noticiasFRCargadas.length} noticias?`)) {
+                await guardarEnSupabase(window.noticiasFRCargadas);
+            }
+        }
+
+        async function guardarEnSupabase(noticias) {
+            try {
+                // Verificar duplicados antes de insertar
+                const { data: existentes } = await window.supabase
+                    .from('noticias_carrusel')
+                    .select('url')
+                    .eq('fuente', 'FutbolRed');
+
+                const urlsExistentes = new Set((existentes || []).map(n => n.url));
+                
+                // Filtrar noticias que ya existen
+                const nuevasNoticias = noticias.filter(n => !urlsExistentes.has(n.url));
+
+                if (nuevasNoticias.length === 0) {
+                    mostrarAlerta('⚠️ Todas las noticias ya existen en la base de datos', 'info');
+                    return;
+                }
+
+                const { error } = await window.supabase
+                    .from('noticias_carrusel')
+                    .insert(nuevasNoticias);
+
+                if (error) throw error;
+
+                const omitidas = noticias.length - nuevasNoticias.length;
+                let mensaje = `✅ ${nuevasNoticias.length} noticias guardadas`;
+                if (omitidas > 0) {
+                    mensaje += ` (${omitidas} duplicadas omitidas)`;
+                }
+
+                mostrarAlerta(mensaje, 'success');
+                document.getElementById('previewFR').style.display = 'none';
+
+                // Reinicializar carruseles si están disponibles
+                if (window.reinicializarCarruselDinamico) {
+                    window.reinicializarCarruselDinamico();
+                }
+                if (window.reinicializarWidgetNoticias) {
+                    window.reinicializarWidgetNoticias();
+                }
+
+            } catch (error) {
+                mostrarAlerta('❌ Error al guardar: ' + error.message, 'error');
+            }
+        }
+
+        async function cargarHistorial() {
+            try {
+                const { data, error } = await window.supabase
+                    .from('noticias_carrusel')
+                    .select('*')
+                    .eq('fuente', 'FutbolRed')
+                    .order('creado_en', { ascending: false })
+                    .limit(20);
+
+                if (error) throw error;
+
+                const container = document.getElementById('historialList');
+                container.innerHTML = '';
+
+                if (data && data.length > 0) {
+                    data.forEach(noticia => {
+                        const item = document.createElement('div');
+                        item.className = 'historial-item futbolred';
+                        item.innerHTML = `
+                            <div class="historial-info">
+                                <h4>${noticia.titulo}</h4>
+                                <small>${formatDate(noticia.creado_en)}</small>
+                                <div class="fuente">📌 FutbolRed | ${noticia.categoria || 'MUNDIAL 2026'}</div>
+                            </div>
+                            <button class="btn btn-danger" onclick="eliminarNoticia(${noticia.id})" style="padding: 6px 12px; font-size: 12px; background: #cc3333; border: none; border-radius: 4px; color: #fff; cursor: pointer;">
+                                🗑️
+                            </button>
+                        `;
+                        container.appendChild(item);
+                    });
+                } else {
+                    container.innerHTML = '<p style="color: #999; text-align: center;">No hay noticias de FutbolRed guardadas aún</p>';
+                }
+
+            } catch (error) {
+                console.error('Error cargando historial:', error);
+                document.getElementById('historialList').innerHTML = 
+                    '<p style="color: #cc3333; text-align: center;">Error al cargar el historial</p>';
+            }
+        }
+
+        async function eliminarNoticia(id) {
+            if (confirm('¿Eliminar esta noticia de FutbolRed?')) {
+                try {
+                    const { error } = await window.supabase
+                        .from('noticias_carrusel')
+                        .delete()
+                        .eq('id', id);
+
+                    if (error) throw error;
+                    cargarHistorial();
+                    mostrarAlerta('✅ Noticia eliminada', 'success');
+                } catch (error) {
+                    mostrarAlerta('❌ Error: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // ===== UTILIDADES =====
+        function mostrarAlerta(msg, tipo = 'info') {
+            // Eliminar alertas anteriores
+            document.querySelectorAll('.alert').forEach(a => a.remove());
+            
+            const alert = document.createElement('div');
+            alert.className = 'alert ' + tipo;
+            alert.textContent = msg;
+            const container = document.querySelector('.container');
+            container.insertBefore(alert, document.querySelector('.tabs'));
+            
+            setTimeout(() => alert.remove(), 5000);
+        }
+
+        function formatDate(fecha) {
+            if (!fecha) return 'Sin fecha';
+            try {
+                return new Date(fecha).toLocaleString('es-CO', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch {
+                return fecha;
+            }
+        }
+
+        console.log('✅ Panel FutbolRed listo');
+    </script>
+</body>
+</html>
