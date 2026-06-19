@@ -666,7 +666,7 @@ async function compartirRanking() {
     const total   = datos.length;
     const lider   = datos[0];
     const ultimo  = datos[total - 1];
-    const promedio = Number((datos.reduce((a, b) => a + (b.puntos_totales || 0), 0) / total).toFixed(2));
+    const promedio = Math.round(datos.reduce((a, b) => a + (Number(b.puntos_totales) || 0), 0) / total);
     const top3    = datos.slice(0, 3);
 
     // ── Filas de la tabla ──────────────────────────────────────
@@ -729,70 +729,75 @@ async function compartirRanking() {
     // ── Mini podio derecha ─────────────────────────────────────
         function renderPodium() {
     const podiumImages = [
-        'img/messi.png',   // 1er lugar
-        'img/baggio.jpg',  // 2do lugar
-        'img/turquia.jpg'  // 3er lugar
+        '/img/messi.png',
+        '/img/baggio.jpg',
+        '/img/turquia.jpg'
     ];
 
-    // Orden visual: 3ro izquierda | 1ro centro | 2do derecha
     const ordenVisual = [
-        { idx: 2, corona: '🥉', color: '#8B5E3C', altColor: 'rgba(139,94,60,0.3)',  base: 44, avatar: 64 },
-        { idx: 0, corona: '👑',  color: '#C9A84C', altColor: 'rgba(201,168,76,0.3)', base: 72, avatar: 78 },
-        { idx: 1, corona: '🥈', color: '#9e9e9e', altColor: 'rgba(158,158,158,0.3)', base: 56, avatar: 70 }
+        { idx: 2, corona: '🥉', color: '#8B5E3C', glow: 'rgba(139,94,60,0.4)',  baseH: 50,  avatarS: 62 },
+        { idx: 0, corona: '👑',  color: '#C9A84C', glow: 'rgba(201,168,76,0.45)', baseH: 76, avatarS: 76 },
+        { idx: 1, corona: '🥈', color: '#9e9e9e', glow: 'rgba(158,158,158,0.35)', baseH: 62, avatarS: 68 }
     ];
 
     return `
-        <div style="display:flex; align-items:flex-end; justify-content:center; gap:6px; padding:4px 0 0;">
-            ${ordenVisual.map(({ idx, corona, color, altColor, base, avatar }) => {
+        <div style="display:flex; align-items:flex-end; justify-content:center; gap:4px;">
+            ${ordenVisual.map(({ idx, corona, color, glow, baseH, avatarS }) => {
                 const user   = top3[idx];
                 if (!user) return '';
                 const nombre = user.nombre_publico || user.nombre || 'Usuario';
-                const pts    = user.puntos_totales || 0;
+                const pts    = Number(user.puntos_totales) || 0;
                 const pos    = idx + 1;
-                return `
-                <div style="display:flex; flex-direction:column; align-items:center; flex:1;">
 
-                    <!-- Avatar + corona -->
-                    <div style="position:relative; margin-bottom:6px;">
-                        <span style="
-                            position:absolute; top:-10px; left:50%; margin-left:-10px;
-                            font-size:16px; line-height:1; z-index:2;
-                        ">${corona}</span>
-                        <div style="
-                            width:${avatar}px; height:${avatar}px; border-radius:50%;
-                            border:2px solid ${color};
-                            overflow:hidden;
-                            background:#111;
-                            box-shadow:0 0 10px ${altColor};
-                        ">
-                            <img src="${podiumImages[idx]}"
-                                crossorigin="anonymous"
-                                style="width:100%; height:100%; object-fit:cover; display:block;">
-                        </div>
+                return `
+                <div style="display:flex; flex-direction:column; align-items:center; flex:1; min-width:0;">
+
+                    <!-- Corona -->
+                    <div style="font-size:${idx===0?'18px':'14px'}; line-height:1; margin-bottom:4px;">${corona}</div>
+
+                    <!-- Avatar -->
+                    <div style="
+                        width:${avatarS}px; height:${avatarS}px;
+                        border-radius:50%;
+                        border:2px solid ${color};
+                        box-shadow:0 0 14px ${glow}, 0 0 0 4px rgba(0,0,0,0.4);
+                        overflow:hidden;
+                        background:#111;
+                        margin-bottom:6px;
+                        flex-shrink:0;
+                    ">
+                        <img src="${podiumImages[idx]}"
+                            crossorigin="anonymous"
+                            style="width:100%; height:100%; object-fit:cover; display:block;">
                     </div>
 
                     <!-- Nombre -->
                     <div style="
-                        font-size:11px; font-weight:700; color:#fff;
+                        font-size:10px; font-weight:700; color:#fff;
+                        text-align:center; line-height:1.3;
                         white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-                        max-width:130px; text-align:center;
+                        max-width:120px;
                         margin-bottom:6px;
                     ">${nombre}</div>
 
-                    <!-- Base del podio -->
+                    <!-- Base / pedestal -->
                     <div style="
                         width:100%;
-                        height:${base}px;
-                        background:linear-gradient(180deg, ${altColor} 0%, rgba(255,255,255,0.03) 100%);
+                        height:${baseH}px;
+                        background:linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.2) 100%);
                         border:1px solid ${color};
                         border-bottom:none;
                         border-radius:6px 6px 0 0;
                         display:flex; flex-direction:column;
-                        align-items:center; justify-content:center; gap:2px;
+                        align-items:center; justify-content:center; gap:1px;
+                        box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
                     ">
-                        <span style="font-size:20px; font-weight:900; color:${color}; font-family:Arial Black,Arial,sans-serif; line-height:1;">${pos}</span>
-                        <span style="font-size:14px; font-weight:900; color:#fff; font-family:Arial Black,Arial,sans-serif; line-height:1;">${pts}</span>
-                        <span style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:1px;">pts</span>
+                        <span style="
+                            font-size:${idx===0?'22px':'18px'};
+                            font-weight:900; color:${color};
+                            font-family:Arial Black,Arial,sans-serif; line-height:1;
+                        ">${pts}</span>
+                        <span style="font-size:8px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px;">pts</span>
                     </div>
                 </div>`;
             }).join('')}
@@ -933,7 +938,6 @@ async function compartirRanking() {
                     <div style="flex:1; min-height:8px;"></div>
 
                     <!-- Branding -->
-                    <!-- Branding -->
 <div style="
     background:rgba(201,168,76,0.06);
     border:1px solid rgba(201,168,76,0.15);
@@ -942,24 +946,41 @@ async function compartirRanking() {
     overflow:hidden;
     position:relative;
 ">
-    <!-- Glow de fondo -->
+    <!-- Glow fondo -->
     <div style="
-        position:absolute; bottom:-30px; left:50%;
-        margin-left:-100px;
-        width:200px; height:120px;
-        background:radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
-        pointer-events:none; z-index:0;
+        position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.10) 0%, transparent 70%);
+        z-index:0;
     "></div>
 
-    <!-- Logo + texto -->
-    <div style="position:relative; z-index:2; text-align:center; padding:12px 16px 8px;">
-        <img
-            src="/img/logoblancomenu.png"
-            style="height:36px; margin-bottom:5px; display:block; margin-left:auto; margin-right:auto;"
-            crossorigin="anonymous"
-        >
+    <!-- Jugadores GRANDES, saliendo desde abajo del bloque -->
+    <div style="
+        position:relative; z-index:1;
+        display:flex; justify-content:center; align-items:flex-end;
+        height:200px; overflow:hidden;
+        margin-bottom:-2px;
+    ">
+        <img src="/img/jugador1.png" crossorigin="anonymous"
+            style="height:185px; margin-right:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
+        <img src="/img/jugador2.png" crossorigin="anonymous"
+            style="height:200px; position:relative; z-index:2; opacity:1; filter:drop-shadow(0 0 16px rgba(201,168,76,0.35));">
+        <img src="/img/jugador3.png" crossorigin="anonymous"
+            style="height:185px; margin-left:-18px; opacity:0.88; filter:drop-shadow(0 0 12px rgba(201,168,76,0.25));">
+    </div>
+
+    <!-- Logo + URL abajo -->
+    <div style="
+        position:relative; z-index:2;
+        padding:10px 16px 12px;
+        border-top:1px solid rgba(201,168,76,0.15);
+        background:rgba(0,0,0,0.35);
+        text-align:center;
+    ">
+        <img src="/assets/img/logo-carrisan.png" crossorigin="anonymous"
+            style="height:32px; display:block; margin:0 auto 4px;">
         <div style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
     </div>
+</div>
 
     <!-- Jugadores PNG sin fondo -->
     <div style="
