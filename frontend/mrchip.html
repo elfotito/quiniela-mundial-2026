@@ -279,11 +279,6 @@
                 <span>EstaMisticas</span>
                 <span class="mc-tab-badge">NUEVO</span>
             </button>
-            <button class="mc-tab" data-tab="guerra" id="tabGuerra">
-                <i class="bi bi-grid-3x3-gap-fill"></i>
-                <span>Sala de Guerra</span>
-                <span class="mc-tab-badge">NUEVO</span>
-            </button>
             <div class="mc-tab-indicator" id="mcTabIndicator"></div>
         </div> 
     </div> 
@@ -573,16 +568,21 @@
         <div class="mc-container">
 
             <!-- Header de sección -->
-            <div class="mc-section-head">
-                <div class="mc-section-head-icon">🏆</div>
-                <div>
-                    <div class="mc-section-head-title">Rankings del Torneo</div>
-                    <div class="mc-section-head-sub">Mr. Chip ha analizado cada predicción. Los resultados son devastadores para algunos.</div>
-                </div>
+            <div class="mc-rank-card mc-rank-oraculo">
+                    <div class="mc-rank-card-header">
+                        <span class="mc-rank-card-icon">📊</span>
+                        <div>
+                            <div class="mc-rank-card-title">Estamisticas</div>
+                            <div class="mc-rank-card-sub">Mr. Chip ha analizado cada predicción. Los resultados son devastadores para algunos.</div>
+                        </div>
+                    </div>
+                    <div class="mc-rank-chip-comment">
+                        "Las estadisticas personales no ganan partidos, pero siempre hacen falta."
+                    </div>
                 <button class="mc-btn-refresh-rankings" id="btnRefreshRankings" onclick="cargarRankingsGlobales()">
                     <i class="bi bi-arrow-clockwise"></i> Actualizar
                 </button>
-            </div>
+                </div>
 
             <!-- Loading Rankings -->
             <div id="loadingRankings" class="mc-loading" style="display:none;">
@@ -633,11 +633,20 @@
             </div>
 
             <!-- Estadísticas globales del torneo -->
+            <div class="mc-rank-card mc-rank-oraculo">
+                    <div class="mc-rank-card-header">
+                        <span class="mc-rank-card-icon">📡</span>
+                        <div>
+                            <div class="mc-rank-card-title">Estadísticas del Torneo</div>
+                            <div class="mc-rank-card-sub">Datos que nadie pidió pero que Mr. Chip tiene preparados</div>
+                        </div>
+                    </div>
+                </div>
             <div class="mc-stats-global-head">
-                <span class="mc-stats-global-icon">📡</span>
+                <span class="mc-stats-global-icon"></span>
                 <div>
-                    <div class="mc-section-head-title">Estadísticas del Torneo</div>
-                    <div class="mc-section-head-sub">Datos que nadie pidió pero que Mr. Chip tiene preparados</div>
+                    <div class="mc-section-head-title"></div>
+                    <div class="mc-section-head-sub"></div>
                 </div>
             </div>
 
@@ -681,7 +690,7 @@
                 <div class="mc-stat-global-card" id="statPartidoMasLoco">
                     <div class="mc-stat-global-icon">🤪</div>
                     <div class="mc-stat-global-val" id="statPartidoMasLocoVal">—</div>
-                    <div class="mc-stat-global-label">Partido más polarizado</div>
+                    <div class="mc-stat-global-label">Partido más polemico</div>
                     <div class="mc-stat-global-sub" id="statPartidoMasLocoSub">Donde más opiniones divergieron</div>
                 </div>
 

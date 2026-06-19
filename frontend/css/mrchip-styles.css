@@ -462,7 +462,6 @@
 .mc-loading-text {
     font-size: 13px;
     color: var(--text-muted);
-    font-style: italic;
     letter-spacing: .5px;
 }
 
@@ -884,7 +883,6 @@
     text-align: center;
     color: #555;
     font-size: 13px;
-    font-style: italic;
 }
 
 /* ================================================================
@@ -1440,7 +1438,6 @@
     border-radius: 0 8px 8px 0;
     font-size: 12px;
     color: rgba(255,255,255,0.45);
-    font-style: italic;
     line-height: 1.6;
 }
 .mc-rank-mufas .mc-rank-chip-comment { border-left-color: var(--error); }
@@ -1454,7 +1451,6 @@
     text-align: center;
     color: #555;
     font-size: 13px;
-    font-style: italic;
 }
 
 /* Fila del ranking */
@@ -2301,7 +2297,6 @@
     border-radius: 12px;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.35);
-    font-style: italic;
     line-height: 1.6;
     border-left: 2px solid rgba(255, 215, 0, 0.1);
     backdrop-filter: blur(10px);
@@ -2423,7 +2418,7 @@
     margin-bottom: 40px;
 }
 .mc-stat-global-card {
-    background: rgba(20, 20, 30, 0.7);
+    background: rgb(26, 26, 28);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.03);
@@ -2480,7 +2475,7 @@
 }
 .mc-stat-global-sub {
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.1);
+    color: rgb(255, 255, 255);
     line-height: 1.4;
 }
 

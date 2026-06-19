@@ -1028,7 +1028,7 @@ function mostrarDuelo(data) {
                 const claseB = getMcPuntosClass(p.b ? p.b.puntos : null);
                 return `
                     <div class="mc-duel-row">
-                        <div class="mc-duel-row-a ${claseA}">${predA} <span class="mc-duel-row-pts">${ptsA} pts</span></div>
+                        <div class="mc-duel-row-a ${claseA}">${predA} <span class="mc-duel-row-pts">+${ptsA}</span></div>
                         <div class="mc-duel-row-partido">
                             <div class="mc-duel-row-teams">${obtenerBandera(p.equipo_local)} ${p.equipo_local} vs ${p.equipo_visitante} ${obtenerBandera(p.equipo_visitante)}</div>
                             <div class="mc-duel-row-resultado">${p.goles_local_real}-${p.goles_visitante_real}</div>
