@@ -1975,7 +1975,7 @@
     grid-template-columns: 1fr 140px 1fr;
     align-items: center;
     gap: 16px;
-    background: rgba(10, 10, 20, 0.85);
+    background: rgb(0, 0, 0);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 215, 0, 0.12);
@@ -2121,7 +2121,7 @@
     display: grid;
     grid-template-columns: 1fr 120px 1fr;
     padding: 16px 20px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgb(0, 0, 0);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     font-size: 9px;
     font-weight: 900;
