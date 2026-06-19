@@ -1163,7 +1163,6 @@
     animation: mc-fade-in .3s ease-out;
 }
 .mc-duel-row:last-child { border-bottom: none; }
-.mc-duel-row:hover { background: var(--dark-card-alt); }
 
 .mc-duel-cell-a    { display: flex; flex-direction: column; gap: 4px; }
 .mc-duel-cell-b    { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
@@ -2139,9 +2138,7 @@
     position: relative;
 }
 .mc-duel-row:last-child { border-bottom: none; }
-.mc-duel-row:hover {
-    background: rgba(255, 255, 255, 0.02);
-}
+
 .mc-duel-row.mc-duel-win {
     border-left: 3px solid #00D084;
 }
