@@ -2807,7 +2807,7 @@
     color: #aaa;
     min-width: 160px;
 }
-.mc-duel-row-teams { margin-bottom: 2px; color: #ccc; }
+.mc-duel-row-teams { margin-bottom: 2px; color: #ccc; max-width: 166px; }
 .mc-duel-row-resultado {
     font-size: 1rem;
     font-weight: 700;
