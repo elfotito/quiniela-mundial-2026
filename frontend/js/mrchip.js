@@ -1007,7 +1007,7 @@ function mostrarDuelo(data) {
     } else {
         veredicto = 'Empate técnico. Ninguno entiende de fútbol más que el otro.';
     }
-    document.getElementById('vsDuelVerdict').textContent = veredicto;
+    
 
     const chipDuel = document.getElementById('chipDuelComment');
     if (chipDuel) {
