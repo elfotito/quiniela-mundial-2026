@@ -812,7 +812,7 @@ async function compartirRanking() {
     el.style.cssText = `
         position: fixed;
         left: -9999px; top: 0;
-        width: 1200px;
+        width: 1440px;
         background: #0a0a0a;
         font-family: 'Segoe UI', Arial, sans-serif;
         overflow: hidden;
@@ -850,7 +850,7 @@ async function compartirRanking() {
             <div style="position:relative; z-index:2; display:flex; align-items:stretch;">
 
                 <!-- ══ IZQUIERDA — TABLA (60%) ══ -->
-                <div style="flex:0 0 52%; border-right:1px solid rgba(255,255,255,0.06);">
+                <div style="flex:0 0 25%; border-right:1px solid rgba(255,255,255,0.06);">
 
                     <!-- Header tabla -->
                     <div style="
@@ -875,7 +875,7 @@ async function compartirRanking() {
 
                 <!-- ══ DERECHA — INFO + STATS (40%) ══ -->
                 <div style="
-                    flex:0 0 48%;
+                    flex:0 0 75%;
 padding:20px 24px 0;
                     display:flex; flex-direction:column; gap:16px;
                     background:rgba(0,30,70,0.04);
