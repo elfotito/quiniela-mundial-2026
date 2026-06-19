@@ -344,161 +344,250 @@
     
     <!-- Widget específico para FutbolRed -->
     <script>
-        // ===== WIDGET FUTBOLRED =====
         window.widgetFutbolRed = {
             rssUrl: 'https://www.futbolred.com/rss-news/selecciones-nacionales.xml',
 
             async traerNoticias() {
                 console.log('🔍 Pulleando noticias de FutbolRed...');
+                console.log('📡 URL RSS:', this.rssUrl);
 
+                // Método 1: api.allorigins.win
                 try {
-                    // Usamos api.rss2json.com como proxy para evitar CORS
-                    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(this.rssUrl)}`;
-                    
-                    const response = await fetch(proxyUrl);
-                    
-                    if (!response.ok) {
-                        throw new Error(`Error HTTP: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    if (data.status !== 'ok' || !data.items || data.items.length === 0) {
-                        throw new Error('No se encontraron noticias en el feed');
-                    }
-
-                    console.log(`📥 ${data.items.length} noticias recibidas de FutbolRed`);
-
-                    // Transformar a nuestro formato para Supabase
-                    const noticias = data.items.map(item => {
-                        // Limpiar título (viene con saltos de línea en el XML)
-                        const titulo = this.limpiarTexto(item.title);
-                        
-                        // Limpiar descripción
-                        const descripcion = this.limpiarTexto(item.description);
-                        
-                        // Extraer imagen del enclosure
-                        const imagen_url = item.enclosure?.url || 
-                                          item.enclosure?.link || 
-                                          this.extraerImagenDeContenido(item.content) || 
-                                          this.extraerImagenDeDescripcion(item.description) || 
-                                          '';
-                        
-                        // Determinar categoría basada en el contenido
-                        const categoria = this.determinarCategoria(item.categories, titulo, descripcion);
-                        
-                        return {
-                            titulo: titulo.slice(0, 100),
-                            descripcion: descripcion.slice(0, 200),
-                            imagen_url: imagen_url,
-                            url: item.link || '',
-                            fuente: 'FutbolRed',
-                            categoria: categoria,
-                            fecha_publicacion: item.pubDate || new Date().toISOString(),
-                            tipo_carrusel: 'auto',
-                            activo: true
-                        };
-                    });
-
-                    return noticias;
-
-                } catch (error) {
-                    console.error('❌ Error fetching RSS:', error);
-                    
-                    // Si falla el proxy, intentamos con otro método
-                    if (error.message.includes('fetch')) {
-                        return this.traerNoticiasAlternativo();
-                    }
-                    
-                    throw error;
+                    console.log('🔄 Intentando método 1: allorigins.win...');
+                    return await this.traerConAllOrigins();
+                } catch (error1) {
+                    console.warn('⚠️ Método 1 falló:', error1.message);
                 }
+
+                // Método 2: corsproxy.io
+                try {
+                    console.log('🔄 Intentando método 2: corsproxy.io...');
+                    return await this.traerConCorsProxy();
+                } catch (error2) {
+                    console.warn('⚠️ Método 2 falló:', error2.message);
+                }
+
+                // Método 3: api.allorigins.win con get (formato alternativo)
+                try {
+                    console.log('🔄 Intentando método 3: allorigins (get)...');
+                    return await this.traerConAllOriginsGet();
+                } catch (error3) {
+                    console.warn('⚠️ Método 3 falló:', error3.message);
+                }
+
+                // Respaldo
+                console.log('📋 Usando datos de respaldo...');
+                return this.getNoticiasRespaldo();
             },
 
-            async traerNoticiasAlternativo() {
-                // Método alternativo usando Google Feed API
-                console.log('🔄 Intentando método alternativo...');
-                
+            // MÉTODO 1: AllOrigins raw
+            async traerConAllOrigins() {
                 const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(this.rssUrl)}`;
-                
+                console.log('   URL proxy:', proxyUrl);
+
                 const response = await fetch(proxyUrl);
+                console.log('   Response status:', response.status);
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
                 const text = await response.text();
+                console.log('   Respuesta recibida:', text.substring(0, 200) + '...');
+                return this.parsearXML(text);
+            },
+
+            // MÉTODO 2: CORS Proxy
+            async traerConCorsProxy() {
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(this.rssUrl)}`;
+                console.log('   URL proxy:', proxyUrl);
+
+                const response = await fetch(proxyUrl);
+                console.log('   Response status:', response.status);
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const text = await response.text();
+                console.log('   Respuesta recibida:', text.substring(0, 200) + '...');
+                return this.parsearXML(text);
+            },
+
+            // MÉTODO 3: AllOrigins con formato get
+            async traerConAllOriginsGet() {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(this.rssUrl)}`;
+                console.log('   URL proxy:', proxyUrl);
+
+                const response = await fetch(proxyUrl);
+                console.log('   Response status:', response.status);
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const data = await response.json();
+                console.log('   Contenido recibido');
+                return this.parsearXML(data.contents);
+            },
+
+            // PARSEAR XML
+            parsearXML(xmlText) {
+                console.log('📄 Parseando XML...');
                 
-                // Parsear XML manualmente
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(text, 'text/xml');
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+                // Verificar errores
+                const parseError = xmlDoc.querySelector('parsererror');
+                if (parseError) {
+                    console.error('❌ Error de parseo:', parseError.textContent);
+                    throw new Error('XML inválido');
+                }
+
                 const items = xmlDoc.querySelectorAll('item');
-                
+                console.log(`📦 ${items.length} items encontrados`);
+
+                if (items.length === 0) {
+                    throw new Error('No se encontraron noticias');
+                }
+
                 const noticias = [];
-                
-                items.forEach(item => {
-                    const titulo = this.limpiarTexto(item.querySelector('title')?.textContent || '');
-                    const descripcion = this.limpiarTexto(item.querySelector('description')?.textContent || '');
-                    const link = item.querySelector('link')?.textContent?.trim() || '';
-                    const enclosure = item.querySelector('enclosure');
-                    const imagen_url = enclosure?.getAttribute('url') || '';
-                    const pubDate = item.querySelector('pubDate')?.textContent || new Date().toISOString();
-                    const categoria = item.querySelector('category')?.textContent || 'MUNDIAL 2026';
-                    
-                    if (titulo) {
-                        noticias.push({
-                            titulo: titulo.slice(0, 100),
-                            descripcion: descripcion.slice(0, 200),
-                            imagen_url: imagen_url,
-                            url: link,
-                            fuente: 'FutbolRed',
-                            categoria: categoria.toUpperCase(),
-                            fecha_publicacion: pubDate,
-                            tipo_carrusel: 'auto',
-                            activo: true
-                        });
+
+                items.forEach((item, index) => {
+                    try {
+                        const titulo = this.limpiarTexto(this.getText(item, 'title'));
+                        const descripcion = this.limpiarTexto(this.getText(item, 'description'));
+                        const link = this.getText(item, 'link');
+                        const pubDate = this.getText(item, 'pubDate');
+                        const categoria = this.getText(item, 'category') || 'Mundial 2026';
+
+                        // Imagen del enclosure
+                        const enclosure = item.querySelector('enclosure');
+                        let imagen_url = enclosure ? enclosure.getAttribute('url') : '';
+
+                        // Si no hay enclosure, buscar en content:encoded
+                        if (!imagen_url) {
+                            const contentEncoded = item.querySelector('content\\:encoded, encoded');
+                            if (contentEncoded) {
+                                imagen_url = this.extraerImagen(contentEncoded.textContent);
+                            }
+                        }
+
+                        if (titulo) {
+                            noticias.push({
+                                titulo: titulo.slice(0, 100),
+                                descripcion: descripcion.slice(0, 200),
+                                imagen_url: imagen_url,
+                                url: link,
+                                fuente: 'FutbolRed',
+                                categoria: this.mapearCategoria(categoria),
+                                fecha_publicacion: pubDate || new Date().toISOString(),
+                                tipo_carrusel: 'auto',
+                                activo: true
+                            });
+                        }
+                    } catch (err) {
+                        console.warn(`⚠️ Error en noticia #${index + 1}:`, err.message);
                     }
                 });
-                
-                console.log(`📥 ${noticias.length} noticias (método alternativo)`);
+
+                console.log(`✅ ${noticias.length} noticias procesadas`);
                 return noticias;
+            },
+
+            getText(parent, tagName) {
+                const el = parent.querySelector(tagName);
+                return el ? el.textContent : '';
             },
 
             limpiarTexto(texto) {
                 if (!texto) return '';
                 return texto
+                    .replace(/<!\[CDATA\[(.*?)\]\]>/gs, '$1')
+                    .replace(/<[^>]+>/g, '')
+                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&#39;/g, "'")
+                    .replace(/&nbsp;/g, ' ')
                     .replace(/\s+/g, ' ')
-                    .replace(/\n/g, ' ')
-                    .replace(/\t/g, ' ')
                     .trim();
             },
 
-            extraerImagenDeContenido(content) {
-                if (!content) return '';
-                const match = content.match(/<img[^>]+src=["']([^"']+)["']/);
+            extraerImagen(html) {
+                if (!html) return '';
+                const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
                 return match ? match[1] : '';
             },
 
-            extraerImagenDeDescripcion(description) {
-                if (!description) return '';
-                const match = description.match(/<img[^>]+src=["']([^"']+)["']/);
-                return match ? match[1] : '';
-            },
-
-            determinarCategoria(categories, titulo, descripcion) {
-                const texto = (titulo + ' ' + descripcion).toLowerCase();
-                
-                if (Array.isArray(categories) && categories.length > 0) {
-                    const cat = categories[0].toUpperCase();
-                    if (cat.includes('MUNDIAL')) return 'MUNDIAL 2026';
-                    if (cat.includes('SELECCI')) return 'Selección Nacional';
-                    return cat;
-                }
-                
-                if (texto.includes('gole') || texto.includes('gol') || texto.includes('marcador')) return 'PARTIDO';
-                if (texto.includes('clasific') || texto.includes('dieciseisavos')) return 'MUNDIAL 2026';
-                if (texto.includes('messi') || texto.includes('argentina')) return 'Selección Nacional';
-                if (texto.includes('colombia') || texto.includes('méxico')) return 'Selección Nacional';
-                
+            mapearCategoria(categoria) {
+                const cat = categoria.toLowerCase().trim();
+                if (cat.includes('mundial')) return 'MUNDIAL 2026';
+                if (cat.includes('selecc')) return 'Selección Nacional';
+                if (cat.includes('partido')) return 'PARTIDO';
                 return 'MUNDIAL 2026';
+            },
+
+            getNoticiasRespaldo() {
+                console.log('📋 Generando noticias de respaldo...');
+                const ahora = new Date().toISOString();
+                return [
+                    {
+                        titulo: 'Así quedó el grupo A del Mundial 2026: México está clasificado',
+                        descripcion: 'El Tri tiene cupo a dieciseisavos de final.',
+                        imagen_url: 'https://www.futbolred.com/files/article_graphic/uploads/2026/06/18/6a34b53b10701.jpeg',
+                        url: '#',
+                        fuente: 'FutbolRed',
+                        categoria: 'MUNDIAL 2026',
+                        fecha_publicacion: ahora,
+                        tipo_carrusel: 'auto',
+                        activo: true
+                    },
+                    {
+                        titulo: 'México aprovechó regalo coreano: clasificó a dieciseisavos',
+                        descripcion: 'Luis Romo anotó el gol del triunfo.',
+                        imagen_url: 'https://www.futbolred.com/files/article_graphic/uploads/2026/06/18/6a34ae1191953.jpeg',
+                        url: '#',
+                        fuente: 'FutbolRed',
+                        categoria: 'MUNDIAL 2026',
+                        fecha_publicacion: ahora,
+                        tipo_carrusel: 'auto',
+                        activo: true
+                    },
+                    {
+                        titulo: 'Alfaro confía "a muerte" en Paraguay',
+                        descripcion: 'El entrenador respaldó su proceso.',
+                        imagen_url: 'https://www.futbolred.com/files/article_graphic/uploads/2026/06/18/6a34a0ba46d47.jpeg',
+                        url: '#',
+                        fuente: 'FutbolRed',
+                        categoria: 'MUNDIAL 2026',
+                        fecha_publicacion: ahora,
+                        tipo_carrusel: 'auto',
+                        activo: true
+                    },
+                    {
+                        titulo: 'Canadá arrolló a Catar: triplete de David',
+                        descripcion: 'El anfitrión firmó una actuación histórica.',
+                        imagen_url: 'https://www.futbolred.com/files/article_graphic/uploads/2026/06/18/6a3487ba40a58.jpeg',
+                        url: '#',
+                        fuente: 'FutbolRed',
+                        categoria: 'MUNDIAL 2026',
+                        fecha_publicacion: ahora,
+                        tipo_carrusel: 'auto',
+                        activo: true
+                    },
+                    {
+                        titulo: 'Colombia y Argentina sacan la casta por Sudamérica',
+                        descripcion: 'Los únicos que ganaron en sus debuts.',
+                        imagen_url: 'https://www.futbolred.com/files/article_graphic/files/crop/uploads/2026/06/18/6a33903fe754a.r_1355092.0-0-700-350.jpeg',
+                        url: '#',
+                        fuente: 'FutbolRed',
+                        categoria: 'MUNDIAL 2026',
+                        fecha_publicacion: ahora,
+                        tipo_carrusel: 'auto',
+                        activo: true
+                    }
+                ];
             }
         };
 
-        console.log('✅ Widget FutbolRed inicializado');
+        console.log('✅ Widget FutbolRed cargado');
     </script>
 
     <script>
