@@ -711,14 +711,14 @@ async function compartirRanking() {
             return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px;height:28px;background:${rowBg};border-radius:6px;margin-bottom:2px;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-        <div style="width:20px;height:20px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;">
+        <div style="width:20px;height:20px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">
             ${pos}
         </div>
-        <div style="font-size:11px;font-weight:600;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.2px;">
+        <div style="font-size:14px;font-weight:600;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.2px;">
             ${nombre}
         </div>
     </div>
-    <div style="font-size:12px;font-weight:800;color:${ptsColor};min-width:30px;text-align:right;">
+    <div style="font-size:15px;font-weight:800;color:${ptsColor};min-width:30px;text-align:right;">
         ${puntos}
     </div>
 </div>`;
@@ -730,8 +730,8 @@ async function compartirRanking() {
         const podiumImages = ['/img/messi.png', '/img/baggio.jpg', '/img/turquia.jpg'];
         // Orden: 2do (Izq), 1ro (Centro), 3ro (Der)
         const slots = [
-            { idx: 1, color: K_COLOR.silver, label: '2DO LUGAR', bg: 'linear-gradient(135deg, #1E2538 0%, #151A28 100%)' },
             { idx: 0, color: K_COLOR.gold, label: '1ER LUGAR', bg: `linear-gradient(135deg, rgba(251,191,36,0.15) 0%, #151A28 100%)`, border: `1px solid ${K_COLOR.gold}` },
+            { idx: 1, color: K_COLOR.silver, label: '2DO LUGAR', bg: 'linear-gradient(135deg, #1E2538 0%, #151A28 100%)' },
             { idx: 2, color: K_COLOR.bronze, label: '3ER LUGAR', bg: 'linear-gradient(135deg, #1E2538 0%, #151A28 100%)' }
         ];
 
@@ -790,7 +790,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
                 EN VIVO
             </div>
             <div style="font-size:22px;font-weight:900;line-height:1.1;margin-bottom:4px;letter-spacing:-0.5px;">
-                CLASIFICACIÓN
+                TABLA DE POSICIONES
             </div>
             <div style="font-size:12px;color:${K_COLOR.textMuted};font-weight:500;">
                 ${ligaNombre}
@@ -813,9 +813,9 @@ ${slots.map(({ idx, color, label, bg, border }) => {
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:30px;">
             <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:38px;">
             <div style="text-align:right;">
-                <div style="font-size:12px;font-weight:700;color:${K_COLOR.text};margin-bottom:4px;">Torneo 2026</div>
+                <div style="font-size:12px;font-weight:700;color:${K_COLOR.text};margin-bottom:4px;">COPA MUNDIAL FIFA 2026™</div>
                 <div style="font-size:11px;color:${K_COLOR.textMuted};display:flex;align-items:center;gap:6px;">
-                    <span style="font-size:12px;">📅</span> ${fechaFormateada}
+                    <span style="font-size:16px;">📅</span> ${fechaFormateada}
                 </div>
             </div>
         </div>
@@ -826,13 +826,13 @@ ${slots.map(({ idx, color, label, bg, border }) => {
             
             <div style="position:relative;z-index:4;width:45%;">
                 <div style="background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);color:${K_COLOR.gold};font-size:10px;font-weight:800;padding:6px 14px;border-radius:20px;display:inline-block;margin-bottom:15px;letter-spacing:1px;">
-                    ⚽ COPA MUNDIAL FIFA 2026™
+                    🏆 RANKING
                 </div>
                 <div style="font-size:36px;font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:10px;">
                     RESUMEN<br><span style="color:${K_COLOR.primary};">DE LA JORNADA</span>
                 </div>
                 <div style="font-size:13px;color:${K_COLOR.textMuted};line-height:1.4;">
-                    Revisa las estadísticas actuales y la tabla de clasificación actualizada en tiempo real.
+                    Revisa las posiciones de tu liga y estadísticas actuales en tiempo real en la plataforma web.
                 </div>
             </div>
 
@@ -882,7 +882,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
                 <div style="background:${K_COLOR.surface};border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:20px 15px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;">
                     <div style="position:absolute;top:0;left:0;width:100%;height:3px;background:#EF4444;"></div>
                     <div style="width:32px;height:32px;border-radius:8px;background:rgba(239,68,68,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-                        <span style="font-size:16px;">📉</span>
+                        <span style="font-size:16px;">🥶</span>
                     </div>
                     <div>
                         <div style="font-size:11px;color:${K_COLOR.textMuted};font-weight:600;margin-bottom:4px;letter-spacing:0.5px;">PUNTUACIÓN MÍN</div>
@@ -909,7 +909,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
                 QUINIELACARRISAN.COM.VE
             </div>
             <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:${K_COLOR.primary};">
-                CARRISÁN · 2026
+                TABLA DE POSICIONES
             </div>
         </div>
 
@@ -926,7 +926,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
             backgroundColor: K_COLOR.bg,
             logging: false,
             width: 1080,
-            height: 1350
+            height: 1200
         });
 
         document.body.removeChild(el);
