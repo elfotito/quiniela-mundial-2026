@@ -750,7 +750,7 @@ async function compartirRanking() {
     
     <div style="display:flex;flex-direction:column;align-items:center;width:28%;z-index:2;">
         <div style="width:85px;height:85px;border-radius:50%;padding:4px;background:linear-gradient(180deg, ${K_COLOR.silver}, transparent);margin-bottom:-42px;z-index:3;">
-            <img src="/img/baggio.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
+            <img src="/img/baggio.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:none;border-radius:50%;border:4px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.silver};width:100%;height:200px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:55px;box-shadow:0 15px 30px rgba(0,0,0,0.4);">
             <div style="color:${K_COLOR.silver};font-size:32px;font-weight:900;">2</div>
@@ -762,7 +762,7 @@ async function compartirRanking() {
     <div style="display:flex;flex-direction:column;align-items:center;width:38%;z-index:3;">
         <div style="font-size:45px;margin-bottom:-15px;z-index:4;filter:drop-shadow(0 5px 15px rgba(251,191,36,0.6));">👑</div>
         <div style="width:120px;height:120px;border-radius:50%;padding:5px;background:linear-gradient(180deg, ${K_COLOR.gold}, transparent);margin-bottom:-60px;z-index:3;box-shadow:0 0 40px rgba(251,191,36,0.2);">
-            <img src="/img/messi.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #151A28;">
+            <img src="/img/messi.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:none;border-radius:50%;border:5px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, rgba(251,191,36,0.15) 0%, #151A28 100%);border-top:5px solid ${K_COLOR.gold};width:100%;height:270px;border-radius:20px 20px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:75px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
             <div style="color:${K_COLOR.gold};font-size:42px;font-weight:900;">1</div>
@@ -775,7 +775,7 @@ async function compartirRanking() {
 
     <div style="display:flex;flex-direction:column;align-items:center;width:28%;z-index:1;">
         <div style="width:75px;height:75px;border-radius:50%;padding:4px;background:linear-gradient(180deg, ${K_COLOR.bronze}, transparent);margin-bottom:-37px;z-index:3;">
-            <img src="/img/turquia.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
+            <img src="/img/turquia.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:none;border-radius:50%;border:4px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.bronze};width:100%;height:170px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:48px;box-shadow:0 15px 30px rgba(0,0,0,0.3);">
             <div style="color:${K_COLOR.bronze};font-size:26px;font-weight:900;">3</div>
@@ -900,8 +900,8 @@ async function compartirRanking() {
 
         <div style="margin-top:auto;display:flex;align-items:center;justify-content:center;padding-top:30px;">
             <div style="font-size:13px;color:${K_COLOR.textMuted};letter-spacing:2px;font-weight:700;text-align:center;">
-                QUINIELACARRISAN.COM.VE <br>
-                <span style="color:${K_COLOR.primary};font-size:11px;">CARRISÁN · 2026</span>
+                    quinielacarrisan.com.ve <br>
+                <span style="color:${K_COLOR.primary};font-size:11px;">El mundial al alcance de tus manos</span>
             </div>
         </div>
 
