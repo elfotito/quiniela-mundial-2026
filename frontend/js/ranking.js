@@ -719,18 +719,18 @@ async function compartirRanking() {
             return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 15px 0 10px;height:35px;background:${rowBg};border-left:${borderLeft};margin-bottom:3px;border-radius:0 8px 8px 0;">
     <div style="display:flex;align-items:center;gap:12px;min-width:0;">
-        <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '14px' : '13px'};font-weight:900;flex-shrink:0;">
+        <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '17px' : '16px'};font-weight:900;flex-shrink:0;">
             ${displayPos}
         </div>
-        <div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:16px;">
+        <div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:18px;">
             ${obtenerCampeon(user.campeon_elegido)}
         </div>
-        <div style="font-size:17px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
+        <div style="font-size:20px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
             ${nombre}
         </div>
     </div>
     
-    <div style="font-size:19px;font-weight:900;color:${ptsColor};width:40px;text-align:right;">
+    <div style="font-size:21px;font-weight:900;color:${ptsColor};width:40px;text-align:right;">
         ${puntos}
     </div>
 </div>`;
@@ -741,9 +741,9 @@ async function compartirRanking() {
     function renderPodiumImpactante() {
         const u1 = top3[0] || {}; const u2 = top3[1] || {}; const u3 = top3[2] || {};
         
-        const n1 = (u1.nombre_publico || u1.nombre || 'N/A').substring(0, 12);
-        const n2 = (u2.nombre_publico || u2.nombre || 'N/A').substring(0, 12);
-        const n3 = (u3.nombre_publico || u3.nombre || 'N/A').substring(0, 12);
+        const n1 = (u1.nombre_publico || u1.nombre || 'N/A').substring(0, 17);
+        const n2 = (u2.nombre_publico || u2.nombre || 'N/A').substring(0, 17);
+        const n3 = (u3.nombre_publico || u3.nombre || 'N/A').substring(0, 17);
 
         return `
 <div style="display:flex;align-items:flex-end;justify-content:center;gap:15px;height:400px;margin-top:20px;padding-bottom:20px;">
