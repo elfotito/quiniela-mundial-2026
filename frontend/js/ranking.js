@@ -715,7 +715,8 @@ async function compartirRanking() {
     if (pos <= 3) borderLeft = '3px solid #10B981'; // Verde: Zona de clasificación
     else if (pos >= datos.length - 2) borderLeft = '3px solid #EF4444'; // Rojo: Zona de descenso
 
-    return `
+    
+            return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 8px;height:30px;background:${rowBg};border-left:${borderLeft};margin-bottom:2px;">
     <div style="display:flex;align-items:center;gap:12px;min-width:0;">
         <div style="width:20px;text-align:center;font-size:11px;font-weight:800;color:${numColor};">
@@ -733,20 +734,6 @@ async function compartirRanking() {
         <div style="font-size:13px;font-weight:900;color:${ptsColor};width:35px;text-align:right;">
             ${puntos}
         </div>
-    </div>
-</div>`;
-            return `
-<div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px;height:28px;background:${rowBg};border-radius:6px;margin-bottom:2px;">
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-        <div style="width:20px;height:20px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">
-            ${pos}
-        </div>
-        <div style="font-size:14px;font-weight:600;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.2px;">
-            ${nombre}
-        </div>
-    </div>
-    <div style="font-size:15px;font-weight:800;color:${ptsColor};min-width:30px;text-align:right;">
-        ${puntos}
     </div>
 </div>`;
         }).join('');
