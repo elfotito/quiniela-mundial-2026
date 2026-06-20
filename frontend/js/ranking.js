@@ -685,6 +685,10 @@ async function compartirRanking() {
             const pos    = index + 1;
             const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18);
             const puntos = user.puntos_totales || 0;
+            const esAntepenultimo = index === datos.length - 2;
+                if (esAntepenultimo) {
+                    nombre += ' 🚑';
+                }
             
             const esTop1 = pos === 1;
             const esTop2 = pos === 2;
@@ -707,7 +711,30 @@ async function compartirRanking() {
             } else {
                 numBg = 'rgba(255,255,255,0.05)'; // Pastilla gris para el resto
             }
+            let borderLeft = '3px solid transparent';
+    if (pos <= 3) borderLeft = '3px solid #10B981'; // Verde: Zona de clasificación
+    else if (pos >= datos.length - 2) borderLeft = '3px solid #EF4444'; // Rojo: Zona de descenso
 
+    return `
+<div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 8px;height:30px;background:${rowBg};border-left:${borderLeft};margin-bottom:2px;">
+    <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <div style="width:20px;text-align:center;font-size:11px;font-weight:800;color:${numColor};">
+            ${pos}
+        </div>
+        <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:9px;">
+            🛡️
+        </div>
+        <div style="font-size:12px;font-weight:700;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;">
+            ${nombre}
+        </div>
+    </div>
+    
+    <div style="display:flex;align-items:center;gap:15px;">
+        <div style="font-size:13px;font-weight:900;color:${ptsColor};width:35px;text-align:right;">
+            ${puntos}
+        </div>
+    </div>
+</div>`;
             return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px;height:28px;background:${rowBg};border-radius:6px;margin-bottom:2px;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;">
@@ -783,7 +810,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
     
     <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);background-size:24px 24px;z-index:0;pointer-events:none;"></div>
 
-    <div style="position:relative;z-index:2;width:330px;background:${K_COLOR.surface};display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.05);padding:25px 15px;">
+    <div style="position:relative;z-index:2;width:420px;background:${K_COLOR.surface};display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.05);padding:25px 15px;">
         
         <div style="margin-bottom:20px;padding:0 5px;">
             <div style="display:inline-block;background:rgba(99,102,241,0.15);color:${K_COLOR.primary};font-size:10px;font-weight:800;padding:4px 10px;border-radius:8px;margin-bottom:8px;letter-spacing:1px;">
