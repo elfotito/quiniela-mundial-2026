@@ -29,10 +29,10 @@ const LV_ETAPAS = [
 
 const LV_TIPS = [
   { icon:"🔥", texto:"Arranque monumental de dresko, lleva 6 aciertos perfecto de +9 pts" },
-  { icon:"🎯", texto:"Yosiris Casique, Yaneska y Miguel acertaron la victoria de Costa de Marfil, ¡Un tumbaquiniela!" },
+  { icon:"🔮", texto:"Ya esta el top 5 Oraculo en la seccion de Mr Chip" },
   { icon:"💡", texto:"Cerca del 30% de los partidos terminan en empate, 1-1 es el marcador más probable" },
   { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
-  { icon:"🤑", texto:"La liga mas cerrada es la CriptoCarrisan, el que no suma baja como 5 puestos" },
+  { icon:"🤑", texto:"CriptoCarrisan lleva mas cambio de lider que Peru" },
   { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
   { icon:"🗃️", texto:"Mantente atento a las novedades que trae QuinielaMundial2026" },
   { icon:"📅", texto:"Se acerca un partido Polemico Noruega-Senegal" },
