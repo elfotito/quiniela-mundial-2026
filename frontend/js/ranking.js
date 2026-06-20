@@ -723,7 +723,7 @@ async function compartirRanking() {
             ${displayPos}
         </div>
         <div style="width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:10px;">
-            🛡️
+            ${obtenerCampeon(user.campeon_elegido)}
         </div>
         <div style="font-size:13px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
             ${nombre}
@@ -750,7 +750,7 @@ async function compartirRanking() {
     
     <div style="display:flex;flex-direction:column;align-items:center;width:28%;z-index:2;">
         <div style="width:85px;height:85px;border-radius:50%;padding:4px;background:linear-gradient(180deg, ${K_COLOR.silver}, transparent);margin-bottom:-42px;z-index:3;">
-            <img src="/img/messi.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
+            <img src="/img/baggio.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.silver};width:100%;height:200px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:55px;box-shadow:0 15px 30px rgba(0,0,0,0.4);">
             <div style="color:${K_COLOR.silver};font-size:32px;font-weight:900;">2</div>
@@ -762,7 +762,7 @@ async function compartirRanking() {
     <div style="display:flex;flex-direction:column;align-items:center;width:38%;z-index:3;">
         <div style="font-size:45px;margin-bottom:-15px;z-index:4;filter:drop-shadow(0 5px 15px rgba(251,191,36,0.6));">👑</div>
         <div style="width:120px;height:120px;border-radius:50%;padding:5px;background:linear-gradient(180deg, ${K_COLOR.gold}, transparent);margin-bottom:-60px;z-index:3;box-shadow:0 0 40px rgba(251,191,36,0.2);">
-            <img src="/img/baggio.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #151A28;">
+            <img src="/img/messi.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, rgba(251,191,36,0.15) 0%, #151A28 100%);border-top:5px solid ${K_COLOR.gold};width:100%;height:270px;border-radius:20px 20px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:75px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
             <div style="color:${K_COLOR.gold};font-size:42px;font-weight:900;">1</div>
@@ -788,12 +788,12 @@ async function compartirRanking() {
 
     // ── CONTENEDOR MAESTRO 9:16 (1080x1920) ──
     const el = document.createElement('div');
-    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1920px;overflow:hidden;background:${K_COLOR.bg};`;
+    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1720px;overflow:hidden;background:${K_COLOR.bg};`;
 
     el.innerHTML = `
-<div style="width:1080px;height:1920px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI', Roboto, sans-serif;color:${K_COLOR.text};">
+<div style="width:1080px;height:1720px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI', Roboto, sans-serif;color:${K_COLOR.text};">
 
-    <div style="position:absolute;top:-200px;left:400px;width:1000px;height:1000px;background:radial-gradient(circle, ${K_COLOR.primaryGlow} 0%, transparent 60%);border-radius:50%;z-index:0;pointer-events:none;"></div>
+    <div style="position:absolute;top:-200px;left:400px;width:1000px;height:800px;background:radial-gradient(circle, ${K_COLOR.primaryGlow} 0%, transparent 60%);border-radius:50%;z-index:0;pointer-events:none;"></div>
     <div style="position:absolute;bottom:-150px;right:-150px;width:800px;height:800px;background:radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 60%);border-radius:50%;z-index:0;pointer-events:none;"></div>
     <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);background-size:24px 24px;z-index:0;pointer-events:none;"></div>
 
@@ -801,10 +801,10 @@ async function compartirRanking() {
         
         <div style="margin-bottom:30px;padding:0 5px;">
             <div style="display:inline-block;background:rgba(99,102,241,0.15);color:${K_COLOR.primary};font-size:12px;font-weight:800;padding:6px 14px;border-radius:10px;margin-bottom:12px;letter-spacing:1px;">
-                🔴 EN VIVO
+                EN VIVO
             </div>
             <div style="font-size:32px;font-weight:900;line-height:1.1;margin-bottom:6px;letter-spacing:-1px;">
-                CLASIFICACIÓN
+                TABLA DE POSICIONES
             </div>
             <div style="font-size:16px;color:${K_COLOR.textMuted};font-weight:600;">
                 ${ligaNombre}
@@ -827,7 +827,7 @@ async function compartirRanking() {
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
             <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:45px;">
             <div style="text-align:right;">
-                <div style="font-size:14px;font-weight:800;color:${K_COLOR.text};margin-bottom:4px;letter-spacing:0.5px;">TORNEO 2026</div>
+                <div style="font-size:14px;font-weight:800;color:${K_COLOR.text};margin-bottom:4px;letter-spacing:0.5px;">COPA MUNDIAL FIFA 2026</div>
                 <div style="font-size:12px;color:${K_COLOR.textMuted};font-weight:600;">${fechaFormateada}</div>
             </div>
         </div>
@@ -835,7 +835,7 @@ async function compartirRanking() {
         <div style="position:relative;height:380px;border-radius:24px;background:linear-gradient(135deg, ${K_COLOR.surface} 0%, #080B12 100%);border:1px solid rgba(255,255,255,0.05);box-shadow:0 20px 40px rgba(0,0,0,0.4);overflow:hidden;margin-bottom:30px;display:flex;flex-direction:column;justify-content:center;padding:0 35px;">
             <div style="position:relative;z-index:4;width:60%;">
                 <div style="background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);color:${K_COLOR.gold};font-size:11px;font-weight:800;padding:8px 16px;border-radius:20px;display:inline-block;margin-bottom:20px;letter-spacing:1px;">
-                    ⚽ COPA MUNDIAL
+                    RANKING
                 </div>
                 <div style="font-size:42px;font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:15px;">
                     RESUMEN<br><span style="color:${K_COLOR.primary};">JORNADA</span>
