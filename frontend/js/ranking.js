@@ -642,10 +642,6 @@ function actualizarContador(cantidad) {
     }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// REEMPLAZA la función completa compartirRanking() en tu .js
-// ═══════════════════════════════════════════════════════════════
-
 async function compartirRanking() {
     const datos = rankingFiltrado;
     if (!datos || datos.length === 0) {
@@ -669,36 +665,35 @@ async function compartirRanking() {
     const promedio = Math.round(datos.reduce((a, b) => a + (Number(b.puntos_totales) || 0), 0) / total);
     const top3     = datos.slice(0, 3);
 
-    // ── Filas tabla compacta ────────────────────────────────────
+    // ── Filas tabla ─────────────────────────────────────────────
     function renderFilas() {
         return datos.map((user, index) => {
             const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 14);
+            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 15);
             const puntos = user.puntos_totales || 0;
             const esTop1 = pos === 1;
-            const esTop3 = pos <= 3;
+            const esTop2 = pos === 2;
+            const esTop3 = pos === 3;
+            const esTop  = pos <= 3;
 
-            const medallaEmoji = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : `${pos}`;
-            const bgFila   = index % 2 === 0 ? 'rgba(255,255,255,0.03)' : 'transparent';
-            const colorNom = esTop1 ? '#fff' : esTop3 ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.55)';
-            const colorPts = esTop1 ? '#C9A84C' : esTop3 ? 'rgba(201,168,76,0.7)' : 'rgba(255,255,255,0.4)';
-            const fwNom    = esTop3 ? '700' : '400';
-            const borderL  = esTop1 ? '3px solid #C9A84C'
-                           : pos === 2 ? '3px solid #9e9e9e'
-                           : pos === 3 ? '3px solid #8B5E3C'
-                           : '3px solid transparent';
+            const icono  = esTop1 ? '🥇' : esTop2 ? '🥈' : esTop3 ? '🥉' : `${pos}`;
+            const bgFila = index % 2 === 0 ? 'rgba(255,255,255,0.025)' : 'transparent';
+            const bLeft  = esTop1 ? '3px solid #C9A84C'
+                         : esTop2 ? '3px solid #a0a0a0'
+                         : esTop3 ? '3px solid #8B5E3C'
+                         : '3px solid transparent';
 
             return `
 <div style="
-    display:flex; align-items:center; gap:5px;
-    padding:6px 8px;
-    background:${esTop1 ? 'linear-gradient(90deg,rgba(201,168,76,0.10) 0%,transparent 80%)' : bgFila};
+    display:flex;align-items:center;gap:6px;
+    padding:5px 10px 5px 7px;
+    background:${esTop1 ? 'linear-gradient(90deg,rgba(201,168,76,0.12) 0%,transparent 75%)' : bgFila};
     border-bottom:1px solid rgba(255,255,255,0.03);
-    border-left:${borderL};
+    border-left:${bLeft};
 ">
-    <div style="width:20px;text-align:center;font-size:${esTop3?'12px':'10px'};flex-shrink:0;font-family:Arial,sans-serif;color:rgba(255,255,255,0.35);">${medallaEmoji}</div>
-    <div style="flex:1;min-width:0;font-size:11px;font-weight:${fwNom};color:${colorNom};font-family:Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
-    <div style="font-size:${esTop1?'13px':esTop3?'12px':'11px'};font-weight:${esTop3?'900':'400'};color:${colorPts};font-family:Arial Black,Arial,sans-serif;flex-shrink:0;">${puntos}</div>
+    <div style="width:22px;text-align:center;flex-shrink:0;font-size:${esTop?'12px':'10px'};color:rgba(255,255,255,0.3);font-family:Arial,sans-serif;">${icono}</div>
+    <div style="flex:1;min-width:0;font-size:11.5px;font-weight:${esTop?'700':'400'};color:${esTop1?'#fff':esTop?'rgba(255,255,255,0.88)':'rgba(255,255,255,0.5)'};font-family:Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
+    <div style="font-size:${esTop1?'14px':esTop?'12px':'11px'};font-weight:${esTop?'900':'400'};color:${esTop1?'#C9A84C':esTop?'rgba(201,168,76,0.65)':'rgba(255,255,255,0.35)'};font-family:Arial Black,Arial,sans-serif;flex-shrink:0;">${puntos}</div>
 </div>`;
         }).join('');
     }
@@ -706,219 +701,276 @@ async function compartirRanking() {
     // ── Podio ────────────────────────────────────────────────────
     function renderPodium() {
         const podiumImages = ['/img/messi.png', '/img/baggio.jpg', '/img/turquia.jpg'];
-        const ordenVisual  = [
-            { idx: 2, corona: '🥉', color: '#8B5E3C', glow: 'rgba(139,94,60,0.4)',   baseH: 60,  avatarS: 68  },
-            { idx: 0, corona: '👑',  color: '#C9A84C', glow: 'rgba(201,168,76,0.45)', baseH: 90,  avatarS: 86  },
-            { idx: 1, corona: '🥈', color: '#9e9e9e', glow: 'rgba(158,158,158,0.35)', baseH: 74,  avatarS: 74  }
+
+        // orden visual: 3ro izq, 1ro centro, 2do der
+        const slots = [
+            { idx: 2, color: '#8B5E3C', silverGold: 'rgba(139,94,60,0.5)',  baseH: 80,  avatarS: 80,  numSize: '28px', crown: '🥉' },
+            { idx: 0, color: '#C9A84C', silverGold: 'rgba(201,168,76,0.6)', baseH: 120, avatarS: 100, numSize: '38px', crown: '👑'  },
+            { idx: 1, color: '#9e9e9e', silverGold: 'rgba(158,158,158,0.5)', baseH: 96, avatarS: 88,  numSize: '30px', crown: '🥈' }
         ];
 
-        return `
-<div style="display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:0 8px;">
-${ordenVisual.map(({ idx, corona, color, glow, baseH, avatarS }) => {
+        return `<div style="display:flex;align-items:flex-end;justify-content:center;gap:10px;width:100%;">
+${slots.map(({ idx, color, silverGold, baseH, avatarS, numSize, crown }) => {
     const user   = top3[idx];
-    if (!user) return '';
-    const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 12);
+    if (!user) return '<div style="flex:1;"></div>';
+    const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 13);
     const pts    = Number(user.puntos_totales) || 0;
+
     return `
 <div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;">
-    <div style="font-size:${idx===0?'20px':'15px'};line-height:1;margin-bottom:5px;">${corona}</div>
+
+    <!-- Corona -->
+    <div style="font-size:${idx===0?'22px':'17px'};line-height:1;margin-bottom:6px;">${crown}</div>
+
+    <!-- Avatar con ring de color -->
     <div style="
         width:${avatarS}px;height:${avatarS}px;border-radius:50%;
-        border:2.5px solid ${color};
-        box-shadow:0 0 18px ${glow},0 0 0 4px rgba(0,0,0,0.5);
-        overflow:hidden;background:#111;margin-bottom:7px;flex-shrink:0;
+        border:3px solid ${color};
+        outline:1px solid rgba(0,0,0,0.6);
+        box-shadow:0 0 24px ${silverGold};
+        overflow:hidden;background:#0d0d0d;flex-shrink:0;margin-bottom:8px;
     ">
         <img src="${podiumImages[idx]}" crossorigin="anonymous"
             style="width:100%;height:100%;object-fit:cover;display:block;">
     </div>
+
+    <!-- Nombre -->
     <div style="
-        font-size:10px;font-weight:700;color:#fff;text-align:center;
-        line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-        max-width:110px;margin-bottom:7px;font-family:Arial,sans-serif;
+        font-size:${idx===0?'12px':'10px'};font-weight:700;color:#fff;
+        text-align:center;line-height:1.2;
+        white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+        max-width:120px;margin-bottom:8px;font-family:Arial,sans-serif;
     ">${nombre}</div>
+
+    <!-- Pedestal -->
     <div style="
         width:100%;height:${baseH}px;
-        background:linear-gradient(180deg,rgba(255,255,255,0.06) 0%,rgba(0,0,0,0.25) 100%);
-        border:1px solid ${color};border-bottom:none;border-radius:6px 6px 0 0;
-        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
-        box-shadow:inset 0 1px 0 rgba(255,255,255,0.07);
+        background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,rgba(0,0,0,0.3) 100%);
+        border:1px solid ${color};border-bottom:none;
+        border-radius:8px 8px 0 0;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+        position:relative;overflow:hidden;
     ">
-        <span style="font-size:${idx===0?'26px':'20px'};font-weight:900;color:${color};font-family:Arial Black,Arial,sans-serif;line-height:1;">${pts}</span>
-        <span style="font-size:8px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1.5px;">pts</span>
+        <!-- Brillo interno top -->
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:${color};opacity:0.5;"></div>
+        <div style="font-size:${numSize};font-weight:900;color:${color};font-family:Arial Black,Arial,sans-serif;line-height:1;">${pts}</div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:2px;">pts</div>
     </div>
 </div>`;
 }).join('')}
 </div>`;
     }
 
-    // ── Canvas offscreen 1080×1350 (4:5) ────────────────────────
+    // ── Contenedor 1080×1350 ─────────────────────────────────────
     const el = document.createElement('div');
-    el.style.cssText = `
-        position:fixed; left:-9999px; top:0;
-        width:1080px; height:1350px;
-        background:#0a0a0a;
-        font-family:'Segoe UI',Arial,sans-serif;
-        overflow:hidden;
-        display:flex; flex-direction:column;
-    `;
+    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1350px;overflow:hidden;`;
 
     el.innerHTML = `
-<div style="position:relative;width:1080px;height:1350px;background:#0a0a0a;overflow:hidden;display:flex;flex-direction:column;">
+<div style="width:1080px;height:1350px;background:#080808;position:relative;overflow:hidden;display:flex;font-family:'Segoe UI',Arial,sans-serif;">
 
-    <!-- Fondo decorativo: grid sutil -->
-    <div style="position:absolute;inset:0;pointer-events:none;z-index:0;background:
-        repeating-linear-gradient(90deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 60px),
-        repeating-linear-gradient(0deg,rgba(255,255,255,0.012) 0,rgba(255,255,255,0.012) 1px,transparent 1px,transparent 60px);
+    <!-- ═══════════ FONDO ═══════════ -->
+
+    <!-- Grid sutil -->
+    <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:
+        repeating-linear-gradient(90deg,rgba(255,255,255,0.008) 0,rgba(255,255,255,0.008) 1px,transparent 1px,transparent 54px),
+        repeating-linear-gradient(0deg,rgba(255,255,255,0.008) 0,rgba(255,255,255,0.008) 1px,transparent 1px,transparent 54px);
     "></div>
 
-    <!-- Glow central azul-dorado -->
-    <div style="position:absolute;top:30%;left:50%;transform:translateX(-50%);width:800px;height:600px;pointer-events:none;z-index:0;
-        background:radial-gradient(ellipse at center, rgba(0,102,204,0.07) 0%, transparent 60%);"></div>
-    <div style="position:absolute;bottom:10%;left:60%;width:500px;height:400px;pointer-events:none;z-index:0;
-        background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%);"></div>
+    <!-- Diagonal decorativo dorado esquina superior derecha -->
+    <div style="position:absolute;top:-60px;right:-40px;width:420px;height:420px;z-index:0;pointer-events:none;
+        background:conic-gradient(from 210deg at 85% 15%, rgba(201,168,76,0.14) 0deg, transparent 45deg, transparent 360deg);
+        border-radius:50%;
+    "></div>
 
-    <!-- Franja top dorada -->
-    <div style="height:4px;background:linear-gradient(90deg,#C9A84C 0%,#FFD700 40%,transparent 100%);position:relative;z-index:2;flex-shrink:0;"></div>
+    <!-- Glow dorado difuso — arriba derecha del panel -->
+    <div style="position:absolute;top:0;right:270px;width:600px;height:500px;z-index:0;pointer-events:none;
+        background:radial-gradient(ellipse at 80% 10%, rgba(201,168,76,0.09) 0%, transparent 60%);
+    "></div>
 
-    <!-- HEADER -->
+    <!-- Glow azul FIFA — centro panel derecho -->
+    <div style="position:absolute;top:40%;right:0;width:700px;height:700px;z-index:0;pointer-events:none;
+        background:radial-gradient(ellipse at 70% 50%, rgba(0,80,180,0.10) 0%, transparent 60%);
+    "></div>
+
+    <!-- Línea diagonal decorativa fondo -->
+    <div style="position:absolute;top:0;right:270px;width:3px;height:100%;z-index:0;pointer-events:none;
+        background:linear-gradient(180deg,rgba(201,168,76,0.25) 0%,rgba(201,168,76,0.04) 50%,transparent 100%);
+        transform:skewX(-6deg);transform-origin:top;
+    "></div>
+
+    <!-- ═══════════ TABLA IZQUIERDA (25%) ═══════════ -->
     <div style="
-        position:relative;z-index:2;flex-shrink:0;
-        padding:22px 36px 18px;
-        border-bottom:1px solid rgba(255,255,255,0.06);
-        display:flex;align-items:center;justify-content:space-between;
-        background:rgba(0,0,0,0.2);
+        position:relative;z-index:2;
+        flex:0 0 270px;width:270px;
+        border-right:1px solid rgba(201,168,76,0.12);
+        display:flex;flex-direction:column;
+        background:rgba(0,0,0,0.35);
     ">
-        <div style="display:flex;align-items:center;gap:14px;">
-            <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:36px;">
-            <div>
-                <div style="font-size:22px;font-weight:900;color:#fff;font-family:Arial Black,Arial,sans-serif;letter-spacing:-0.5px;line-height:1;">TABLA DE POSICIONES</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.38);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Copa Mundial FIFA 2026™</div>
-            </div>
-        </div>
-        <div style="text-align:right;">
+        <!-- Header tabla -->
+        <div style="
+            padding:16px 14px 12px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            background:rgba(201,168,76,0.04);
+        ">
+            <div style="font-size:8px;font-weight:900;letter-spacing:3px;color:rgba(201,168,76,0.5);text-transform:uppercase;margin-bottom:5px;">🏆 POSICIONES</div>
             <div style="
                 display:inline-block;
-                font-size:11px;font-weight:900;letter-spacing:1.5px;color:rgba(201,168,76,0.9);
-                background:rgba(201,168,76,0.10);border:1px solid rgba(201,168,76,0.25);
-                border-radius:20px;padding:5px 16px;text-transform:uppercase;
-            ">${ligaNombre}</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">📅 ${fechaFormateada}</div>
+                font-size:9px;font-weight:700;letter-spacing:1px;
+                color:rgba(255,255,255,0.35);
+                border:1px solid rgba(255,255,255,0.08);
+                border-radius:20px;padding:2px 10px;
+            ">${ligaNombre} · ${total} jugadores</div>
+        </div>
+        <!-- Filas -->
+        <div style="flex:1;overflow:hidden;">${renderFilas()}</div>
+        <!-- Footer tabla -->
+        <div style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.04);">
+            <div style="font-size:8px;color:rgba(255,255,255,0.12);letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
         </div>
     </div>
 
-    <!-- BODY: tabla izq + panel der -->
-    <div style="position:relative;z-index:2;flex:1;display:flex;min-height:0;">
-
-        <!-- ═══ TABLA IZQUIERDA (25%) ═══ -->
-        <div style="
-            flex:0 0 270px;width:270px;
-            border-right:1px solid rgba(255,255,255,0.06);
-            display:flex;flex-direction:column;
-            overflow:hidden;
-        ">
-            <!-- Sub-header tabla -->
-            <div style="
-                padding:10px 14px;
-                border-bottom:1px solid rgba(255,255,255,0.05);
-                background:rgba(255,255,255,0.02);
-            ">
-                <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;">
-                    🏆 Ranking · ${total} jugadores
-                </div>
-            </div>
-            <!-- Filas -->
-            <div style="flex:1;overflow:hidden;">
-                ${renderFilas()}
-            </div>
-        </div>
-
-        <!-- ═══ PANEL DERECHO (75%) ═══ -->
-        <div style="
-            flex:1;min-width:0;
-            padding:28px 36px 24px;
-            display:flex;flex-direction:column;gap:24px;
-        ">
-
-            <!-- STATS GRID 2×2 -->
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                <div style="
-                    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
-                    border-radius:12px;padding:16px 20px;text-align:center;
-                ">
-                    <div style="font-size:36px;font-weight:900;color:#C9A84C;font-family:Arial Black,Arial,sans-serif;line-height:1;">${lider ? lider.puntos_totales || 0 : 0}</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2px;margin-top:5px;">Puntos lider</div>
-                </div>
-                <div style="
-                    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
-                    border-radius:12px;padding:16px 20px;text-align:center;
-                ">
-                    <div style="font-size:36px;font-weight:900;color:#5bb3ff;font-family:Arial Black,Arial,sans-serif;line-height:1;">${promedio}</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2px;margin-top:5px;">Promedio</div>
-                </div>
-                <div style="
-                    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
-                    border-radius:12px;padding:16px 20px;text-align:center;
-                ">
-                    <div style="font-size:36px;font-weight:900;color:rgba(255,255,255,0.32);font-family:Arial Black,Arial,sans-serif;line-height:1;">${ultimo ? ultimo.puntos_totales || 0 : 0}</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2px;margin-top:5px;">Puntos mínimos</div>
-                </div>
-                <div style="
-                    background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
-                    border-radius:12px;padding:16px 20px;text-align:center;
-                ">
-                    <div style="font-size:36px;font-weight:900;color:rgba(255,255,255,0.5);font-family:Arial Black,Arial,sans-serif;line-height:1;">${total}</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2px;margin-top:5px;">Participantes</div>
-                </div>
-            </div>
-
-            <!-- PODIO -->
-            <div style="flex:1;display:flex;flex-direction:column;min-height:0;">
-                <div style="font-size:9px;font-weight:900;letter-spacing:2.5px;color:rgba(255,255,255,0.18);text-transform:uppercase;margin-bottom:18px;">
-                    🏆 PODIO ACTUAL
-                </div>
-                <div style="flex:1;display:flex;align-items:flex-end;">
-                    ${renderPodium()}
-                </div>
-            </div>
-
-            <!-- BRANDING -->
-            <div style="
-                background:rgba(201,168,76,0.05);
-                border:1px solid rgba(201,168,76,0.15);
-                border-left:4px solid #C9A84C;
-                border-radius:12px;padding:16px 20px;
-                display:flex;align-items:center;justify-content:space-between;
-            ">
-                <div style="display:flex;align-items:center;gap:14px;">
-                    <img src="/img/trofeo.png" crossorigin="anonymous" style="height:48px;opacity:0.9;filter:drop-shadow(0 0 8px rgba(201,168,76,0.3));">
-                    <div>
-                        <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:28px;display:block;margin-bottom:5px;">
-                        <div style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1.5px;">quinielacarrisan.com.ve</div>
-                    </div>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-size:11px;font-weight:900;letter-spacing:2px;color:rgba(201,168,76,0.4);text-transform:uppercase;">Copa Mundial</div>
-                    <div style="font-size:11px;font-weight:900;letter-spacing:2px;color:rgba(201,168,76,0.4);text-transform:uppercase;">FIFA 2026™</div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- FOOTER -->
+    <!-- ═══════════ PANEL DERECHO (75%) ═══════════ -->
     <div style="
-        position:relative;z-index:2;flex-shrink:0;
-        padding:10px 36px;
-        border-top:1px solid rgba(255,255,255,0.05);
-        background:rgba(0,0,0,0.3);
-        display:flex;align-items:center;justify-content:space-between;
+        position:relative;z-index:2;
+        flex:1;min-width:0;
+        display:flex;flex-direction:column;
     ">
-        <div style="font-size:9px;color:rgba(255,255,255,0.15);letter-spacing:2px;font-weight:600;">quinielacarrisan.com.ve</div>
-        <div style="height:2px;flex:1;margin:0 20px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.15),transparent);"></div>
-        <div style="font-size:9px;font-weight:900;letter-spacing:2px;color:rgba(201,168,76,0.2);text-transform:uppercase;">CARRISÁN · 2026</div>
-    </div>
 
-</div>
+        <!-- ── HEADER con logo + fecha ── -->
+        <div style="
+            padding:20px 32px 16px;
+            border-bottom:1px solid rgba(255,255,255,0.05);
+            display:flex;align-items:center;justify-content:space-between;
+            background:rgba(0,0,0,0.2);flex-shrink:0;
+        ">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:34px;">
+                <div style="width:1px;height:34px;background:rgba(255,255,255,0.08);"></div>
+                <div>
+                    <div style="font-size:18px;font-weight:900;color:#fff;font-family:Arial Black,Arial,sans-serif;letter-spacing:-0.5px;line-height:1.1;">TABLA DE</div>
+                    <div style="font-size:18px;font-weight:900;color:#C9A84C;font-family:Arial Black,Arial,sans-serif;letter-spacing:-0.5px;line-height:1.1;">POSICIONES</div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <div style="
+                    font-size:10px;font-weight:900;color:rgba(201,168,76,0.85);letter-spacing:1.5px;
+                    background:rgba(201,168,76,0.10);border:1px solid rgba(201,168,76,0.2);
+                    border-radius:20px;padding:4px 14px;text-transform:uppercase;display:inline-block;margin-bottom:6px;
+                ">${ligaNombre}</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;">📅 ${fechaFormateada}</div>
+            </div>
+        </div>
+
+        <!-- Franja dorada header -->
+        <div style="height:3px;background:linear-gradient(90deg,transparent 0%,#C9A84C 30%,#FFD700 55%,transparent 100%);flex-shrink:0;"></div>
+
+        <!-- ── HERO: Jugadores sobresaliendo ── -->
+        <div style="
+            position:relative;flex-shrink:0;
+            height:320px;
+            overflow:hidden;
+            background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,20,50,0.3) 100%);
+        ">
+            <!-- Halo circular dorado detrás de trofeo -->
+            <div style="
+                position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);
+                width:280px;height:280px;border-radius:50%;
+                background:radial-gradient(circle, rgba(201,168,76,0.18) 0%, rgba(201,168,76,0.04) 50%, transparent 70%);
+                pointer-events:none;
+            "></div>
+
+            <!-- Olise - izquierda, saliendo desde abajo -->
+            <img src="/img/olise.png" crossorigin="anonymous" style="
+                position:absolute;bottom:-10px;left:20px;
+                height:310px;
+                object-fit:contain;object-position:bottom;
+                opacity:0.85;
+                filter:drop-shadow(-8px 0 20px rgba(0,80,180,0.25));
+            ">
+
+            <!-- Trofeo - centro -->
+            <img src="/img/trofeo.png" crossorigin="anonymous" style="
+                position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+                height:300px;
+                object-fit:contain;object-position:bottom;
+                opacity:1;
+                filter:drop-shadow(0 0 30px rgba(201,168,76,0.45)) drop-shadow(0 0 8px rgba(201,168,76,0.6));
+                z-index:2;
+            ">
+
+            <!-- Diaz - derecha, saliendo desde abajo -->
+            <img src="/img/diaz.png" crossorigin="anonymous" style="
+                position:absolute;bottom:-10px;right:20px;
+                height:310px;
+                object-fit:contain;object-position:bottom;
+                opacity:0.85;
+                filter:drop-shadow(8px 0 20px rgba(0,80,180,0.25));
+            ">
+
+            <!-- Gradiente para que se fundan hacia abajo -->
+            <div style="
+                position:absolute;bottom:0;left:0;right:0;height:80px;pointer-events:none;
+                background:linear-gradient(0deg,#080808 0%,transparent 100%);
+            "></div>
+
+            <!-- Tag Copa Mundial encima -->
+            <div style="
+                position:absolute;top:16px;left:50%;transform:translateX(-50%);
+                background:rgba(0,0,0,0.6);border:1px solid rgba(201,168,76,0.3);
+                border-radius:20px;padding:4px 18px;
+                font-size:9px;font-weight:900;letter-spacing:3px;color:rgba(201,168,76,0.75);text-transform:uppercase;
+                white-space:nowrap;
+            ">⚽ COPA MUNDIAL FIFA 2026™</div>
+        </div>
+
+        <!-- ── PODIO ── -->
+        <div style="padding:20px 28px 16px;flex-shrink:0;">
+            <div style="font-size:8px;font-weight:900;letter-spacing:3px;color:rgba(255,255,255,0.16);text-transform:uppercase;margin-bottom:16px;">🏆 PODIO ACTUAL</div>
+            ${renderPodium()}
+        </div>
+
+        <!-- ── STATS 4 cajas ── -->
+        <div style="
+            padding:0 28px 16px;flex-shrink:0;
+            display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;
+        ">
+            <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.18);border-radius:10px;padding:12px 10px;text-align:center;">
+                <div style="font-size:26px;font-weight:900;color:#C9A84C;font-family:Arial Black,Arial,sans-serif;line-height:1;">${lider ? lider.puntos_totales || 0 : 0}</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;">Líder</div>
+            </div>
+            <div style="background:rgba(91,179,255,0.06);border:1px solid rgba(91,179,255,0.15);border-radius:10px;padding:12px 10px;text-align:center;">
+                <div style="font-size:26px;font-weight:900;color:#5bb3ff;font-family:Arial Black,Arial,sans-serif;line-height:1;">${promedio}</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;">Promedio</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 10px;text-align:center;">
+                <div style="font-size:26px;font-weight:900;color:rgba(255,255,255,0.3);font-family:Arial Black,Arial,sans-serif;line-height:1;">${ultimo ? ultimo.puntos_totales || 0 : 0}</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;">Mínimo</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 10px;text-align:center;">
+                <div style="font-size:26px;font-weight:900;color:rgba(255,255,255,0.45);font-family:Arial Black,Arial,sans-serif;line-height:1;">${total}</div>
+                <div style="font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;">Jugadores</div>
+            </div>
+        </div>
+
+        <!-- Spacer -->
+        <div style="flex:1;min-height:4px;"></div>
+
+        <!-- ── FOOTER BRANDING ── -->
+        <div style="
+            padding:14px 28px;
+            border-top:1px solid rgba(201,168,76,0.12);
+            background:rgba(0,0,0,0.4);
+            display:flex;align-items:center;justify-content:space-between;
+            flex-shrink:0;
+        ">
+            <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:26px;opacity:0.7;">
+            <div style="font-size:8px;color:rgba(255,255,255,0.15);letter-spacing:2px;">quinielacarrisan.com.ve</div>
+            <div style="font-size:8px;font-weight:900;letter-spacing:2px;color:rgba(201,168,76,0.25);text-transform:uppercase;">CARRISÁN · 2026</div>
+        </div>
+
+    </div><!-- /panel derecho -->
+
+</div><!-- /root -->
     `;
 
     document.body.appendChild(el);
@@ -927,7 +979,7 @@ ${ordenVisual.map(({ idx, corona, color, glow, baseH, avatarS }) => {
         const canvas = await html2canvas(el.firstElementChild, {
             scale: 1,
             useCORS: true,
-            backgroundColor: '#0a0a0a',
+            backgroundColor: '#080808',
             logging: false,
             width: 1080,
             height: 1350
@@ -960,32 +1012,6 @@ ${ordenVisual.map(({ idx, corona, color, glow, baseH, avatarS }) => {
         if (document.body.contains(el)) document.body.removeChild(el);
         console.error('Error generando imagen:', err);
         alert('No se pudo generar la imagen. Intenta de nuevo.');
-    }
-}
-
-function mostrarErrorCarga() {
-    const podiumSection = document.getElementById('podiumSection');
-    const tbody = document.getElementById('rankingTableBody');
-    
-    if (podiumSection) {
-        podiumSection.innerHTML = `
-            <div style="text-align: center; color: var(--error); padding: 2rem;">
-                <p>❌ Error al cargar el ranking</p>
-                <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--fifa-blue); border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 600;">
-                    Reintentar
-                </button>
-            </div>
-        `;
-    }
-    
-    if (tbody) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="11" style="text-align: center; padding: 3rem; color: var(--text-gray);">
-                    ❌ Error al cargar el ranking
-                </td>
-            </tr>
-        `;
     }
 }
 
