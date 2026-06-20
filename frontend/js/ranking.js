@@ -665,201 +665,286 @@ async function compartirRanking() {
     const promedio = Math.round(datos.reduce((a, b) => a + (Number(b.puntos_totales) || 0), 0) / total);
     const top3     = datos.slice(0, 3);
 
-    // ── Filas tabla ─────────────────────────────────────────────
+    // ── PALETA DE COLORES EDITORIAL DEPORTIVA ──────────────────────
+    const K_COLOR = {
+        bg: '#0A0B0E',        // Obsidian Dark
+        card: '#13151B',      // Carbon Slate
+        gold: '#F4C430',      // Trophy Gold
+        silver: '#E5E8EB',    // Silver Metallic
+        bronze: '#CD7F32',    // Bronze Core
+        textMain: '#FFFFFF',  // Crisp White
+        textMuted: '#6B7280'  // Slate Muted
+    };
+
+    // ── FILAS DE LA TABLA (IZQUIERDA) ─────────────────────────────
     function renderFilas() {
         return datos.map((user, index) => {
             const pos    = index + 1;
             const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 16);
             const puntos = user.puntos_totales || 0;
+            
             const esTop1 = pos === 1;
             const esTop2 = pos === 2;
             const esTop3 = pos === 3;
             const esTop  = pos <= 3;
 
-            const icono  = esTop1 ? '🥇' : esTop2 ? '🥈' : esTop3 ? '🥉' : pos;
-            const bgFila = esTop1
-                ? 'linear-gradient(90deg, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0.04) 100%)'
-                : index % 2 === 0
-                    ? 'rgba(255,255,255,0.02)'
-                    : 'transparent';
-            const bLeft  = esTop1
-                ? '3px solid #D4AF37'
-                : esTop2
-                    ? '3px solid #B0B0B0'
-                    : esTop3
-                        ? '3px solid #CD7F32'
-                        : '3px solid transparent';
-            const nameColor = esTop1 ? '#fff' : esTop ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.55)';
-            const ptsColor  = esTop1 ? '#D4AF37' : esTop ? 'rgba(212,175,55,0.7)' : 'rgba(255,255,255,0.3)';
+            // Configuración visual por rango
+            let badgeBg = 'rgba(255,255,255,0.05)';
+            let badgeColor = K_COLOR.textMuted;
+            let rowBg = index % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent';
+            let nameColor = K_COLOR.textMain;
+            let ptsColor = 'rgba(255,255,255,0.85)';
+            let borderLeft = 'none';
+
+            if (esTop1) {
+                badgeBg = K_COLOR.gold;
+                badgeColor = '#000';
+                rowBg = 'linear-gradient(90deg, rgba(244,196,48,0.12) 0%, transparent 100%)';
+                ptsColor = K_COLOR.gold;
+                borderLeft = `3px solid ${K_COLOR.gold}`;
+            } else if (esTop2) {
+                badgeBg = K_COLOR.silver;
+                badgeColor = '#000';
+                rowBg = 'linear-gradient(90deg, rgba(229,232,235,0.06) 0%, transparent 100%)';
+                borderLeft = `3px solid ${K_COLOR.silver}`;
+            } else if (esTop3) {
+                badgeBg = K_COLOR.bronze;
+                badgeColor = '#fff';
+                borderLeft = `3px solid ${K_COLOR.bronze}`;
+            }
 
             return `
-<div style="display:flex;align-items:center;gap:8px;padding:7px 12px 7px 9px;background:${bgFila};border-left:${bLeft};border-bottom:1px solid rgba(255,255,255,0.025);">
-    <div style="width:26px;text-align:center;flex-shrink:0;font-size:${esTop?'13px':'10px'};color:rgba(255,255,255,0.4);font-weight:${esTop?'800':'500'};font-family:'Arial Black',Arial,sans-serif;">${icono}</div>
-    <div style="flex:1;min-width:0;font-size:11px;font-weight:${esTop?'700':'400'};color:${nameColor};font-family:Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.2px;">${nombre}</div>
-    <div style="font-size:${esTop1?'13px':esTop?'11.5px':'10px'};font-weight:${esTop?'800':'500'};color:${ptsColor};font-family:'Arial Black',Arial,sans-serif;flex-shrink:0;min-width:32px;text-align:right;">${puntos}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:${rowBg};border-left:${borderLeft};border-bottom:1px solid rgba(255,255,255,0.03);margin-bottom:2px;">
+    <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <div style="width:24px;height:24px;border-radius:4px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;font-family:'Impact','Arial Black',sans-serif;flex-shrink:0;">
+            ${pos}
+        </div>
+        <div style="font-size:12px;font-weight:${esTop?'700':'500'};color:${nameColor};font-family:'Segoe UI',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.3px;text-transform:uppercase;">
+            ${nombre}
+        </div>
+    </div>
+    <div style="font-size:13px;font-weight:800;color:${ptsColor};font-family:'Impact',sans-serif;letter-spacing:0.5px;text-align:right;min-width:35px;">
+        ${puntos} <span style="font-size:9px;color:${K_COLOR.textMuted};font-weight:400;font-family:sans-serif;">PTS</span>
+    </div>
 </div>`;
         }).join('');
     }
 
-    // ── Podio ────────────────────────────────────────────────────
+    // ── PODIO (DERECHA) ───────────────────────────────────────────
     function renderPodium() {
         const podiumImages = ['/img/messi.png', '/img/baggio.jpg', '/img/turquia.jpg'];
-        // orden visual: 3ro izq, 1ro centro, 2do der
+        // Orden deportivo moderno en paralelo: 3ro Izquierda, 1ro Centro, 2do Derecha
         const slots = [
-            { idx: 2, color: '#CD7F32', glow: 'rgba(205,127,50,0.5)', baseH: 70, avatarS: 72, crown: '🥉', label: '3RO' },
-            { idx: 0, color: '#D4AF37', glow: 'rgba(212,175,55,0.7)', baseH: 105, avatarS: 92, crown: '👑', label: '1RO' },
-            { idx: 1, color: '#B0B0B0', glow: 'rgba(176,176,176,0.5)', baseH: 84, avatarS: 80, crown: '🥈', label: '2DO' }
+            { idx: 2, color: K_COLOR.bronze, height: '150px', label: '03', textPos: '3RD PLACE', avatarSize: '80px' },
+            { idx: 0, color: K_COLOR.gold, height: '200px', label: '01', textPos: 'LEADER', avatarSize: '105px' },
+            { idx: 1, color: K_COLOR.silver, height: '170px', label: '02', textPos: '2ND PLACE', avatarSize: '90px' }
         ];
 
-        return `<div style="display:flex;align-items:flex-end;justify-content:center;gap:14px;width:100%;">
-${slots.map(({ idx, color, glow, baseH, avatarS, crown, label }) => {
+        return `
+<div style="display:flex;align-items:flex-end;justify-content:center;gap:20px;width:100%;padding:10px 0;">
+${slots.map(({ idx, color, height, label, textPos, avatarSize }) => {
     const user = top3[idx];
-    if (!user) return '<div style="flex:1;min-width:0;"></div>';
-    const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 12);
+    if (!user) return '<div style="flex:1;min-width:0;visibility:hidden;"></div>';
+    const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 14);
     const pts    = Number(user.puntos_totales) || 0;
     const isFirst = idx === 0;
+
     return `
-<div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;max-width:180px;">
-    <div style="font-size:${isFirst?'20px':'16px'};line-height:1;margin-bottom:5px;filter:drop-shadow(0 0 8px ${glow});">${crown}</div>
-    <div style="width:${avatarS}px;height:${avatarS}px;border-radius:50%;border:2.5px solid ${color};box-shadow:0 0 22px ${glow}, inset 0 0 10px rgba(0,0,0,0.4);overflow:hidden;background:#0d0d0d;flex-shrink:0;margin-bottom:7px;position:relative;">
-        <img src="${podiumImages[idx]}" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 -8px 16px rgba(0,0,0,0.5);pointer-events:none;"></div>
+<div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;position:relative;">
+    
+    <!-- Avatar con marco poligonal / circular tecnológico -->
+    <div style="position:relative;margin-bottom:15px;z-index:2;">
+        <div style="width:${avatarSize};height:${avatarSize};border-radius:50%;border:3px solid ${color};padding:4px;background:${K_COLOR.bg};box-shadow: 0 10px 25px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+            <div style="width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative;background:'#111';">
+                <img src="${podiumImages[idx]}" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+        </div>
+        <!-- Indicador flotante superior -->
+        <div style="position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:${color};color:#000;font-size:9px;font-weight:900;font-family:'Impact',sans-serif;padding:2px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 4px 10px rgba(0,0,0,0.3);">
+            ${textPos}
+        </div>
     </div>
-    <div style="font-size:${isFirst?'11px':'9.5px'};font-weight:700;color:#fff;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;margin-bottom:8px;font-family:Arial,sans-serif;letter-spacing:0.3px;">${nombre}</div>
-    <div style="width:100%;height:${baseH}px;background:linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.35) 100%);border:1.5px solid ${color};border-bottom:none;border-radius:10px 10px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative;overflow:hidden;box-shadow:0 -4px 16px ${glow};">
-        <div style="position:absolute;top:0;left:4px;right:4px;height:1.5px;background:${color};opacity:0.6;border-radius:1px;"></div>
-        <div style="position:absolute;top:6px;left:6px;width:12px;height:40%;background:linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 100%);border-radius:2px;pointer-events:none;"></div>
-        <div style="font-size:${isFirst?'32px':'26px'};font-weight:900;color:${color};font-family:'Arial Black',Arial,sans-serif;line-height:1;">${pts}</div>
-        <div style="font-size:7.5px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:2px;font-weight:600;">${label}</div>
+
+    <!-- Bloque de Podio Estilo Tarjeta EA Sports -->
+    <div style="width:100%;height:${height};background:linear-gradient(180deg, ${K_COLOR.card} 0%, rgba(19,21,27,0.4) 100%);border-top:4px solid ${color};border-radius:6px 6px 0 0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 10px;box-shadow:0 15px 35px rgba(0,0,0,0.4);position:relative;overflow:hidden;">
+        
+        <!-- Número gigante de fondo difuminado de posición -->
+        <div style="position:absolute;bottom:-20px;right:-10px;font-size:110px;font-weight:900;font-family:'Impact',sans-serif;color:rgba(255,255,255,0.02);line-height:1;pointer-events:none;user-select:none;">
+            ${label}
+        </div>
+
+        <div style="text-align:center;width:100%;z-index:1;">
+            <div style="font-size:12px;font-weight:700;color:${K_COLOR.textMain};font-family:'Segoe UI',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">
+                ${nombre}
+            </div>
+        </div>
+
+        <div style="text-align:center;z-index:1;">
+            <div style="font-size:${isFirst?'38px':'30px'};font-weight:900;color:${color};font-family:'Impact',Arial,sans-serif;line-height:1;">
+                ${pts}
+            </div>
+            <div style="font-size:9px;color:${K_COLOR.textMuted};font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:2px;">
+                PUNTOS TOTALES
+            </div>
+        </div>
     </div>
 </div>`;
 }).join('')}
 </div>`;
     }
 
-    // ── Contenedor 1080×1350 ─────────────────────────────────────
+    // ── CONTENEDOR MAESTRO 1080×1350 (FORMATO INSTAGRAM) ──────────
     const el = document.createElement('div');
-    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1350px;overflow:hidden;font-family:'Segoe UI','Arial Black',Arial,sans-serif;`;
+    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1350px;overflow:hidden;background:${K_COLOR.bg};`;
 
     el.innerHTML = `
-<div style="width:1080px;height:1350px;background:#060606;position:relative;overflow:hidden;display:flex;">
+<div style="width:1080px;height:1350px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI',sans-serif;color:${K_COLOR.textMain};">
 
-    <!-- ═══════════ FONDO ═══════════ -->
-    <div style="position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0.06;background:
-        repeating-linear-gradient(-28deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 40.5px),
-        repeating-linear-gradient(28deg, transparent, transparent 40px, rgba(255,255,255,0.2) 40px, rgba(255,255,255,0.2) 40.5px);
-    "></div>
-
-    <div style="position:absolute;top:-120px;right:-80px;width:700px;height:700px;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center, rgba(212,175,55,0.12) 0%, transparent 70%);border-radius:50%;"></div>
-    <div style="position:absolute;bottom:-100px;left:-60px;width:600px;height:600px;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center, rgba(30,100,200,0.1) 0%, transparent 70%);border-radius:50%;"></div>
-    <div style="position:absolute;top:35%;right:15%;width:400px;height:400px;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center, rgba(180,60,120,0.06) 0%, transparent 70%);border-radius:50%;"></div>
-
-    <!-- Partículas -->
-    <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
-        <div style="position:absolute;top:8%;left:18%;width:3px;height:3px;background:rgba(255,255,255,0.5);border-radius:50%;box-shadow:0 0 4px rgba(255,255,255,0.3);"></div>
-        <div style="position:absolute;top:15%;left:80%;width:2px;height:2px;background:rgba(212,175,55,0.6);border-radius:50%;box-shadow:0 0 5px rgba(212,175,55,0.4);"></div>
-        <div style="position:absolute;top:72%;left:10%;width:3px;height:3px;background:rgba(255,255,255,0.4);border-radius:50%;box-shadow:0 0 4px rgba(255,255,255,0.2);"></div>
-        <div style="position:absolute;top:60%;left:88%;width:2px;height:2px;background:rgba(100,170,255,0.6);border-radius:50%;box-shadow:0 0 6px rgba(100,170,255,0.4);"></div>
-        <div style="position:absolute;top:22%;left:6%;width:2px;height:2px;background:rgba(212,175,55,0.5);border-radius:50%;box-shadow:0 0 5px rgba(212,175,55,0.3);"></div>
-        <div style="position:absolute;top:85%;left:75%;width:2px;height:2px;background:rgba(255,255,255,0.45);border-radius:50%;box-shadow:0 0 4px rgba(255,255,255,0.2);"></div>
+    <!-- ═══════════ TEXTURAS Y GEOMETRÍAS DE FONDO DEPORTIVAS ═══════════ -->
+    <!-- Líneas dinámicas cinéticas oblicuas -->
+    <div style="position:absolute;inset:0;opacity:0.04;background:repeating-linear-gradient(-45deg, transparent, transparent 60px, #fff 60px, #fff 62px);z-index:0;"></div>
+    
+    <!-- Bloques geométricos abstractos de iluminación -->
+    <div style="position:absolute;top:-300px;left:400px;width:800px;height:800px;background:radial-gradient(circle, rgba(244,196,48,0.08) 0%, transparent 70%);border-radius:50%;z-index:0;"></div>
+    <div style="position:absolute;bottom:-200px;right:-100px;width:600px;height:600px;background:radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);border-radius:50%;z-index:0;"></div>
+    
+    <!-- Marca de Agua Monumental Trasera -->
+    <div style="position:absolute;right:-150px;top:40%;transform:translateY(-50%) rotate(-90deg);font-size:160px;font-weight:900;font-family:'Impact',sans-serif;color:rgba(255,255,255,0.015);letter-spacing:10px;pointer-events:none;white-space:nowrap;z-index:0;">
+        LEADERBOARD 2026
     </div>
 
-    <!-- Línea divisoria -->
-    <div style="position:absolute;left:270px;top:0;bottom:0;width:1px;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0.08) 40%, rgba(100,170,255,0.08) 70%, rgba(100,170,255,0.2) 100%);"></div>
-    <div style="position:absolute;left:269px;top:0;bottom:0;width:3px;z-index:1;pointer-events:none;background:linear-gradient(180deg, transparent 0%, rgba(212,175,55,0.25) 15%, transparent 50%, rgba(100,170,255,0.15) 85%, transparent 100%);filter:blur(3px);"></div>
-
-    <!-- ═══════════ TABLA IZQUIERDA ═══════════ -->
-    <div style="position:relative;z-index:2;flex:0 0 270px;width:270px;display:flex;flex-direction:column;background:rgba(6,6,6,0.7);backdrop-filter:blur(2px);">
-        <div style="padding:18px 14px 14px;border-bottom:1px solid rgba(212,175,55,0.2);background:linear-gradient(180deg, rgba(212,175,55,0.08) 0%, rgba(0,0,0,0.3) 100%);position:relative;">
-            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.5) 20%, rgba(212,175,55,0.5) 80%, transparent 100%);"></div>
-            <div style="font-size:8px;font-weight:900;letter-spacing:3.5px;color:rgba(212,175,55,0.6);text-transform:uppercase;margin-bottom:7px;">🏆 CLASIFICACIÓN</div>
-            <div style="display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:3px 12px;background:rgba(255,255,255,0.02);">${ligaNombre}</div>
-            <div style="font-size:8px;color:rgba(255,255,255,0.25);margin-top:5px;letter-spacing:0.5px;">${total} jugadores</div>
+    <!-- ═══════════ SECCIÓN IZQUIERDA: TABLA COMPLETA ═══════════ -->
+    <div style="position:relative;z-index:2;width:310px;background:linear-gradient(180deg, #111319 0%, #0A0B0E 100%);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.05);box-shadow:10px 0 30px rgba(0,0,0,0.5);">
+        
+        <!-- Encabezado Tabla -->
+        <div style="padding:35px 20px 20px;border-bottom:2px solid ${K_COLOR.gold};background:rgba(0,0,0,0.25);">
+            <div style="font-size:10px;font-weight:900;letter-spacing:3px;color:${K_COLOR.gold};text-transform:uppercase;margin-bottom:6px;font-family:'Impact',sans-serif;">
+                LIVE STANDINGS
+            </div>
+            <div style="font-size:24px;font-weight:900;font-family:'Impact',sans-serif;letter-spacing:0.5px;text-transform:uppercase;line-height:1.1;color:#fff;">
+                CLASIFICACIÓN
+            </div>
+            <div style="margin-top:12px;display:inline-block;font-size:10px;font-weight:700;color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.15);border-radius:4px;padding:4px 10px;background:rgba(255,255,255,0.03);text-transform:uppercase;letter-spacing:0.5px;">
+                ${ligaNombre}
+            </div>
         </div>
-        <div style="flex:1;overflow:hidden;padding-top:4px;">${renderFilas()}</div>
-        <div style="padding:10px 14px;border-top:1px solid rgba(255,255,255,0.05);background:rgba(0,0,0,0.3);">
-            <div style="font-size:7px;color:rgba(255,255,255,0.15);letter-spacing:2px;text-align:center;">QUINIELACARRISAN</div>
+
+        <!-- Contenedor Scrollable simulado para filas -->
+        <div style="flex:1;overflow:hidden;padding:15px 8px 0;">
+            ${renderFilas()}
+        </div>
+
+        <!-- Footer Izquierdo -->
+        <div style="padding:15px 20px;background:rgba(0,0,0,0.4);border-top:1px solid rgba(255,255,255,0.05);text-align:center;">
+            <div style="font-size:9px;font-weight:700;color:${K_COLOR.textMuted};letter-spacing:2px;text-transform:uppercase;">
+                TOTAL: ${total} PARTICIPANTES
+            </div>
         </div>
     </div>
 
-    <!-- ═══════════ PANEL DERECHO ═══════════ -->
-    <div style="position:relative;z-index:2;flex:1;min-width:0;display:flex;flex-direction:column;">
+    <!-- ═══════════ SECCIÓN DERECHA: PANEL PRINCIPAL SHOWCASE ═══════════ -->
+    <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;">
 
-        <!-- HEADER -->
-        <div style="padding:20px 30px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;">
-            <div style="position:absolute;top:0;left:30px;right:30px;height:1px;background:linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.4) 50%, transparent 100%);"></div>
-            <div style="display:flex;align-items:center;gap:14px;">
-                <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:36px;filter:drop-shadow(0 0 10px rgba(255,255,255,0.3));">
-                <div style="width:1px;height:30px;background:rgba(255,255,255,0.12);"></div>
+        <!-- HEADER PRINCIPAL -->
+        <div style="padding:40px 45px 25px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <div style="display:flex;align-items:center;gap:18px;">
+                <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:45px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));">
+                <div style="width:2px;height:35px;background:rgba(255,255,255,0.15);"></div>
                 <div>
-                    <div style="font-size:20px;font-weight:900;color:#fff;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-0.5px;line-height:1.05;">TABLA DE</div>
-                    <div style="font-size:20px;font-weight:900;color:#D4AF37;font-family:'Arial Black',Arial,sans-serif;letter-spacing:-0.5px;line-height:1.05;">POSICIONES</div>
+                    <h1 style="margin:0;font-size:26px;font-weight:900;font-family:'Impact',sans-serif;letter-spacing:0.5px;line-height:0.95;color:#fff;text-transform:uppercase;">
+                        TABLA DE <span style="color:${K_COLOR.gold};">POSICIONES</span>
+                    </h1>
                 </div>
             </div>
+            
             <div style="text-align:right;">
-                <div style="font-size:9px;font-weight:900;color:rgba(212,175,55,0.85);letter-spacing:2px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);border-radius:20px;padding:5px 16px;text-transform:uppercase;display:inline-block;margin-bottom:7px;">${ligaNombre}</div>
-                <div style="font-size:9.5px;color:rgba(255,255,255,0.35);letter-spacing:0.5px;">📅 ${fechaFormateada}</div>
+                <div style="font-size:11px;font-weight:900;color:#000;background:${K_COLOR.gold};letter-spacing:1px;border-radius:4px;padding:5px 14px;text-transform:uppercase;display:inline-block;margin-bottom:6px;font-family:'Impact',sans-serif;">
+                    ${ligaNombre}
+                </div>
+                <div style="font-size:11px;color:${K_COLOR.textMuted};font-weight:600;letter-spacing:0.5px;">
+                    📅 ${fechaFormateada}
+                </div>
             </div>
         </div>
 
-        <!-- Franja dorada -->
-        <div style="height:2px;background:linear-gradient(90deg, transparent 0%, #D4AF37 30%, #FFE082 50%, #D4AF37 70%, transparent 100%);flex-shrink:0;position:relative;">
-            <div style="position:absolute;inset:0;background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);filter:blur(4px);"></div>
+        <!-- HERO COMPOSICIÓN GRÁFICA (ESTILO FIFA WORLD CUP COPA MUNDIAL) -->
+        <div style="position:relative;height:340px;margin:0 45px;border-radius:12px;background:linear-gradient(135deg, #161922 0%, #0D0F14 100%);border:1px solid rgba(255,255,255,0.05);box-shadow:0 20px 40px rgba(0,0,0,0.6);overflow:hidden;flex-shrink:0;">
+            
+            <!-- Iluminaciones de fondo en la tarjeta Hero -->
+            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 120%, rgba(244,196,48,0.15) 0%, transparent 60%);z-index:1;"></div>
+            <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:rgba(255,255,255,0.02);transform:rotate(45deg);z-index:1;"></div>
+
+            <!-- Insignia Central Superior de Torneo -->
+            <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.75);border:1px solid ${K_COLOR.gold};border-radius:4px;padding:6px 18px;font-size:10px;font-weight:900;letter-spacing:2.5px;color:${K_COLOR.gold};text-transform:uppercase;white-space:nowrap;z-index:4;font-family:'Impact',sans-serif;box-shadow:0 4px 15px rgba(0,0,0,0.5);">
+                ⚽ COPA MUNDIAL FIFA 2026™
+            </div>
+
+            <!-- Recortes de Jugadores con Estilo de Sombra Profunda Dinámica -->
+            <img src="/img/olise.png" crossorigin="anonymous" style="position:absolute;bottom:0;left:40px;height:310px;object-fit:contain;z-index:2;filter:drop-shadow(-10px 10px 20px rgba(0,0,0,0.8));">
+            <img src="/img/trofeo.png" crossorigin="anonymous" style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);height:315px;object-fit:contain;z-index:3;filter:drop-shadow(0 15px 30px rgba(0,0,0,0.7)) drop-shadow(0 0 40px rgba(244,196,48,0.3));">
+            <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute;bottom:0;right:40px;height:310px;object-fit:contain;z-index:2;filter:drop-shadow(10px 10px 20px rgba(0,0,0,0.8));">
         </div>
 
-        <!-- HÉROE -->
-        <div style="position:relative;flex-shrink:0;height:300px;overflow:hidden;background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(5,15,30,0.5) 60%, rgba(6,6,6,1) 100%);">
-            <div style="position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:500px;height:200px;background:radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, transparent 70%);pointer-events:none;z-index:1;"></div>
-            <div style="position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);width:260px;height:260px;border-radius:50%;background:radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 45%, transparent 70%);pointer-events:none;z-index:1;"></div>
-            <div style="position:absolute;bottom:-20px;left:50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(30,100,200,0.15) 0%, transparent 70%);pointer-events:none;z-index:1;"></div>
-            <div style="position:absolute;bottom:-20px;right:50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(30,100,200,0.15) 0%, transparent 70%);pointer-events:none;z-index:1;"></div>
-
-            <img src="/img/olise.png" crossorigin="anonymous" style="position:absolute;bottom:-8px;left:30px;height:290px;object-fit:contain;object-position:bottom;opacity:0.9;filter:drop-shadow(-6px 0 18px rgba(0,60,150,0.4)) drop-shadow(0 0 30px rgba(0,0,0,0.5));z-index:2;">
-            <img src="/img/trofeo.png" crossorigin="anonymous" style="position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);height:285px;object-fit:contain;object-position:bottom;opacity:1;filter:drop-shadow(0 0 35px rgba(212,175,55,0.55)) drop-shadow(0 0 10px rgba(212,175,55,0.7)) drop-shadow(0 0 60px rgba(0,0,0,0.6));z-index:3;">
-            <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute;bottom:-8px;right:30px;height:290px;object-fit:contain;object-position:bottom;opacity:0.9;filter:drop-shadow(6px 0 18px rgba(0,60,150,0.4)) drop-shadow(0 0 30px rgba(0,0,0,0.5));z-index:2;">
-
-            <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.65);border:1px solid rgba(212,175,55,0.35);border-radius:20px;padding:5px 20px;font-size:8.5px;font-weight:900;letter-spacing:3.5px;color:rgba(212,175,55,0.8);text-transform:uppercase;white-space:nowrap;z-index:4;backdrop-filter:blur(4px);">⚽ COPA MUNDIAL FIFA 2026™</div>
-        </div>
-
-        <!-- PODIO -->
-        <div style="padding:14px 28px 10px;flex-shrink:0;position:relative;">
-            <div style="font-size:8px;font-weight:900;letter-spacing:4px;color:rgba(255,255,255,0.14);text-transform:uppercase;margin-bottom:14px;text-align:center;">PODIO ACTUAL</div>
+        <!-- PODIO CORONA DE LÍDERES -->
+        <div style="margin:30px 45px 10px;flex-shrink:0;">
+            <div style="font-size:10px;font-weight:900;letter-spacing:4px;color:${K_COLOR.textMuted};text-transform:uppercase;margin-bottom:15px;text-align:center;font-family:'Impact',sans-serif;">
+                CURRENT TOP THREE / PODIO ACTUAL
+            </div>
             ${renderPodium()}
         </div>
 
-        <!-- STATS -->
-        <div style="padding:6px 28px 10px;flex-shrink:0;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;">
-            <div style="background:linear-gradient(180deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.02) 100%);border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:#D4AF37;border-radius:2px;opacity:0.5;"></div>
-                <div style="font-size:30px;font-weight:900;color:#D4AF37;font-family:'Arial Black',Arial,sans-serif;line-height:1;">${lider ? lider.puntos_totales || 0 : 0}</div>
-                <div style="font-size:7.5px;color:rgba(255,255,255,0.22);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-weight:600;">Líder</div>
+        <!-- MÉTRICAS Y ESTADÍSTICAS DEL TORNEO -->
+        <div style="margin:25px 45px 15px;display:grid;grid-template-columns:repeat(4, 1fr);gap:15px;flex-shrink:0;">
+            
+            <!-- Bloque Líder -->
+            <div style="background:${K_COLOR.card};border:1px solid rgba(255,255,255,0.04);border-top:3px solid ${K_COLOR.gold};border-radius:6px;padding:16px 10px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.25);">
+                <div style="font-size:10px;color:${K_COLOR.textMuted};text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;">MAX SCORE</div>
+                <div style="font-size:32px;font-weight:900;color:${K_COLOR.gold};font-family:'Impact',sans-serif;line-height:1;">
+                    ${lider ? lider.puntos_totales || 0 : 0}
+                </div>
+                <div style="font-size:9px;color:${K_COLOR.textMain};font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:6px;opacity:0.8;">LÍDER</div>
             </div>
-            <div style="background:linear-gradient(180deg, rgba(70,150,255,0.08) 0%, rgba(70,150,255,0.02) 100%);border:1px solid rgba(70,150,255,0.2);border-radius:12px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:#4696ff;border-radius:2px;opacity:0.5;"></div>
-                <div style="font-size:30px;font-weight:900;color:#5bb3ff;font-family:'Arial Black',Arial,sans-serif;line-height:1;">${promedio}</div>
-                <div style="font-size:7.5px;color:rgba(255,255,255,0.22);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-weight:600;">Promedio</div>
+
+            <!-- Bloque Promedio -->
+            <div style="background:${K_COLOR.card};border:1px solid rgba(255,255,255,0.04);border-top:3px solid #2563EB;border-radius:6px;padding:16px 10px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.25);">
+                <div style="font-size:10px;color:${K_COLOR.textMuted};text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;">AVERAGE</div>
+                <div style="font-size:32px;font-weight:900;color:#3B82F6;font-family:'Impact',sans-serif;line-height:1;">
+                    ${promedio}
+                </div>
+                <div style="font-size:9px;color:${K_COLOR.textMain};font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:6px;opacity:0.8;">PROMEDIO</div>
             </div>
-            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:rgba(255,255,255,0.2);border-radius:2px;opacity:0.5;"></div>
-                <div style="font-size:30px;font-weight:900;color:rgba(255,255,255,0.35);font-family:'Arial Black',Arial,sans-serif;line-height:1;">${ultimo ? ultimo.puntos_totales || 0 : 0}</div>
-                <div style="font-size:7.5px;color:rgba(255,255,255,0.22);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-weight:600;">Mínimo</div>
+
+            <!-- Bloque Mínimo -->
+            <div style="background:${K_COLOR.card};border:1px solid rgba(255,255,255,0.04);border-top:3px solid #EF4444;border-radius:6px;padding:16px 10px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.25);">
+                <div style="font-size:10px;color:${K_COLOR.textMuted};text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;">MIN SCORE</div>
+                <div style="font-size:32px;font-weight:900;color:#EF4444;font-family:'Impact',sans-serif;line-height:1;">
+                    ${ultimo ? ultimo.puntos_totales || 0 : 0}
+                </div>
+                <div style="font-size:9px;color:${K_COLOR.textMain};font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:6px;opacity:0.8;">MÍNIMO</div>
             </div>
-            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:30px;height:3px;background:rgba(212,175,55,0.4);border-radius:2px;opacity:0.5;"></div>
-                <div style="font-size:30px;font-weight:900;color:rgba(255,255,255,0.45);font-family:'Arial Black',Arial,sans-serif;line-height:1;">${total}</div>
-                <div style="font-size:7.5px;color:rgba(255,255,255,0.22);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-weight:600;">Jugadores</div>
+
+            <!-- Bloque Jugadores -->
+            <div style="background:${K_COLOR.card};border:1px solid rgba(255,255,255,0.04);border-top:3px solid ${K_COLOR.textMuted};border-radius:6px;padding:16px 10px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,0.25);">
+                <div style="font-size:10px;color:${K_COLOR.textMuted};text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;">PLAYERS</div>
+                <div style="font-size:32px;font-weight:900;color:${K_COLOR.textMain};font-family:'Impact',sans-serif;line-height:1;">
+                    ${total}
+                </div>
+                <div style="font-size:9px;color:${K_COLOR.textMain};font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-top:6px;opacity:0.8;">JUGADORES</div>
             </div>
         </div>
 
-        <!-- Spacer -->
-        <div style="flex:1;min-height:6px;"></div>
+        <!-- Flex spacer para empujar el footer perfectamente al borde inferior -->
+        <div style="flex:1;"></div>
 
-        <!-- FOOTER -->
-        <div style="padding:16px 30px;border-top:1px solid rgba(212,175,55,0.15);background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:relative;">
-            <div style="position:absolute;top:0;left:30px;right:30px;height:1px;background:linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.3) 50%, transparent 100%);"></div>
-            <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:28px;opacity:0.65;filter:drop-shadow(0 0 8px rgba(255,255,255,0.2));">
-            <div style="font-size:7.5px;color:rgba(255,255,255,0.18);letter-spacing:2px;font-weight:500;">QUINIELACARRISAN.COM.VE</div>
-            <div style="font-size:8px;font-weight:900;letter-spacing:2.5px;color:rgba(212,175,55,0.3);text-transform:uppercase;">CARRISÁN · 2026</div>
+        <!-- FOOTER CORPORATIVO -->
+        <div style="padding:25px 45px;background:#0A0B0E;border-top:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+            <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:32px;opacity:0.8;">
+            <div style="font-size:10px;color:${K_COLOR.textMuted};letter-spacing:2.5px;font-weight:700;font-family:sans-serif;text-transform:uppercase;">
+                QUINIELACARRISAN.COM.VE
+            </div>
+            <div style="font-size:10px;font-weight:900;letter-spacing:1.5px;color:${K_COLOR.gold};text-transform:uppercase;font-family:'Impact',sans-serif;">
+                CARRISÁN · 2026
+            </div>
         </div>
 
     </div><!-- /panel derecho -->
@@ -868,14 +953,14 @@ ${slots.map(({ idx, color, glow, baseH, avatarS, crown, label }) => {
 
     document.body.appendChild(el);
 
-    // Pequeña pausa para carga de imágenes
-    await new Promise(r => setTimeout(r, 300));
+    // Pausa para la correcta renderización interna y carga de imágenes
+    await new Promise(r => setTimeout(r, 400));
 
     try {
         const canvas = await html2canvas(el.firstElementChild, {
-            scale: 1,
+            scale: 1.2, // Ligero aumento de escala para nitidez en pantallas de alta densidad (Retina)
             useCORS: true,
-            backgroundColor: '#060606',
+            backgroundColor: K_COLOR.bg,
             logging: false,
             width: 1080,
             height: 1350
@@ -891,7 +976,7 @@ ${slots.map(({ idx, color, glow, baseH, avatarS, crown, label }) => {
                     await navigator.share({
                         files: [archivo],
                         title: 'Ranking Quiniela Carrisán',
-                        text: '¡Mira cómo va la tabla! 😱'
+                        text: '¡Mira cómo va la tabla de posiciones! 😱⚽'
                     });
                 } catch (err) {
                     if (err.name !== 'AbortError') console.error('Share error:', err);
@@ -907,7 +992,7 @@ ${slots.map(({ idx, color, glow, baseH, avatarS, crown, label }) => {
     } catch (err) {
         if (document.body.contains(el)) document.body.removeChild(el);
         console.error('Error generando imagen:', err);
-        alert('No se pudo generar la imagen. Intenta de nuevo.');
+        alert('No se pudo generar la imagen para compartir. Inténtalo de nuevo.');
     }
 }
 
