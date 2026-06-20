@@ -730,7 +730,7 @@ async function compartirRanking() {
         </div>
     </div>
     
-    <div style="font-size:15px;font-weight:900;color:${ptsColor};width:40px;text-align:right;">
+    <div style="font-size:19px;font-weight:900;color:${ptsColor};width:40px;text-align:right;">
         ${puntos}
     </div>
 </div>`;
@@ -754,7 +754,7 @@ async function compartirRanking() {
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.silver};width:100%;height:200px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:55px;box-shadow:0 15px 30px rgba(0,0,0,0.4);">
             <div style="color:${K_COLOR.silver};font-size:32px;font-weight:900;">2</div>
-            <div style="color:#FFF;font-size:13px;font-weight:900;text-transform:uppercase;margin:10px 0 5px 0;">${n2}</div>
+            <div style="color:#FFF;font-size:11px;font-weight:900;text-transform:uppercase;margin:10px 0 5px 0;">${n2}</div>
             <div style="color:${K_COLOR.silver};font-size:24px;font-weight:900;">${u2.puntos_totales || 0}</div>
         </div>
     </div>
@@ -766,9 +766,9 @@ async function compartirRanking() {
         </div>
         <div style="background:linear-gradient(180deg, rgba(251,191,36,0.15) 0%, #151A28 100%);border-top:5px solid ${K_COLOR.gold};width:100%;height:270px;border-radius:20px 20px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:75px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
             <div style="color:${K_COLOR.gold};font-size:42px;font-weight:900;">1</div>
-            <div style="color:#FFF;font-size:16px;font-weight:900;text-transform:uppercase;margin:12px 0 5px 0;">${n1}</div>
+            <div style="color:#FFF;font-size:17px;font-weight:900;text-transform:uppercase;margin:12px 0 5px 0;">${n1}</div>
             <div style="color:${K_COLOR.gold};font-size:36px;font-weight:900;display:flex;align-items:baseline;gap:4px;">
-                ${u1.puntos_totales || 0} <span style="font-size:14px;color:${K_COLOR.textMuted};">PTS</span>
+                ${u1.puntos_totales || 0} <span style="font-size:14px;color:${K_COLOR.textMuted};"></span>
             </div>
         </div>
     </div>
@@ -779,7 +779,7 @@ async function compartirRanking() {
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.bronze};width:100%;height:170px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:48px;box-shadow:0 15px 30px rgba(0,0,0,0.3);">
             <div style="color:${K_COLOR.bronze};font-size:26px;font-weight:900;">3</div>
-            <div style="color:#FFF;font-size:12px;font-weight:900;text-transform:uppercase;margin:8px 0 5px 0;">${n3}</div>
+            <div style="color:#FFF;font-size:11px;font-weight:900;text-transform:uppercase;margin:8px 0 5px 0;">${n3}</div>
             <div style="color:${K_COLOR.bronze};font-size:22px;font-weight:900;">${u3.puntos_totales || 0}</div>
         </div>
     </div>
@@ -850,7 +850,7 @@ async function compartirRanking() {
         </div>
     </div>
 
-    <div style="position:absolute; right:0; bottom:0; width:50%; height:100%; z-index:10; pointer-events:none;">
+    <div style="position:absolute; right:0; bottom:0; width:50%; height:100%; z-index:1; pointer-events:none;">
         
         <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute; right:-20px; bottom:0; height:370px; object-fit:contain; filter:drop-shadow(15px 15px 25px rgba(0,0,0,0.7)); z-index:1;">
         
