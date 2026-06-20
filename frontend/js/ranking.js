@@ -750,7 +750,7 @@ async function compartirRanking() {
     
     <div style="display:flex;flex-direction:column;align-items:center;width:28%;z-index:2;">
         <div style="width:85px;height:85px;border-radius:50%;padding:4px;background:linear-gradient(180deg, ${K_COLOR.silver}, transparent);margin-bottom:-42px;z-index:3;">
-            <img src="/img/baggio.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
+            <img src="/img/baggio.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, #1E2538 0%, #151A28 100%);border-top:4px solid ${K_COLOR.silver};width:100%;height:200px;border-radius:16px 16px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:55px;box-shadow:0 15px 30px rgba(0,0,0,0.4);">
             <div style="color:${K_COLOR.silver};font-size:32px;font-weight:900;">2</div>
@@ -762,7 +762,7 @@ async function compartirRanking() {
     <div style="display:flex;flex-direction:column;align-items:center;width:38%;z-index:3;">
         <div style="font-size:45px;margin-bottom:-15px;z-index:4;filter:drop-shadow(0 5px 15px rgba(251,191,36,0.6));">👑</div>
         <div style="width:120px;height:120px;border-radius:50%;padding:5px;background:linear-gradient(180deg, ${K_COLOR.gold}, transparent);margin-bottom:-60px;z-index:3;box-shadow:0 0 40px rgba(251,191,36,0.2);">
-            <img src="/img/messi.jpg" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #151A28;">
+            <img src="/img/messi.png" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:50%;border:5px solid #151A28;">
         </div>
         <div style="background:linear-gradient(180deg, rgba(251,191,36,0.15) 0%, #151A28 100%);border-top:5px solid ${K_COLOR.gold};width:100%;height:270px;border-radius:20px 20px 8px 8px;display:flex;flex-direction:column;align-items:center;padding-top:75px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
             <div style="color:${K_COLOR.gold};font-size:42px;font-weight:900;">1</div>
@@ -827,26 +827,39 @@ async function compartirRanking() {
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
             <img src="/img/logoblancomenu.png" crossorigin="anonymous" style="height:45px;">
             <div style="text-align:right;">
-                <div style="font-size:14px;font-weight:800;color:${K_COLOR.text};margin-bottom:4px;letter-spacing:0.5px;">COPA MUNDIAL FIFA 2026</div>
+                <div style="font-size:12px;font-weight:800;color:${K_COLOR.text};margin-bottom:4px;letter-spacing:0.5px;">COPA MUNDIAL FIFA 2026</div>
                 <div style="font-size:12px;color:${K_COLOR.textMuted};font-weight:600;">${fechaFormateada}</div>
             </div>
         </div>
 
-        <div style="position:relative;height:380px;border-radius:24px;background:linear-gradient(135deg, ${K_COLOR.surface} 0%, #080B12 100%);border:1px solid rgba(255,255,255,0.05);box-shadow:0 20px 40px rgba(0,0,0,0.4);overflow:hidden;margin-bottom:30px;display:flex;flex-direction:column;justify-content:center;padding:0 35px;">
-            <div style="position:relative;z-index:4;width:60%;">
-                <div style="background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);color:${K_COLOR.gold};font-size:11px;font-weight:800;padding:8px 16px;border-radius:20px;display:inline-block;margin-bottom:20px;letter-spacing:1px;">
-                    RANKING
-                </div>
-                <div style="font-size:42px;font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:15px;">
-                    RESUMEN<br><span style="color:${K_COLOR.primary};">JORNADA</span>
-                </div>
+        <div style="position:relative; width:100%; height:380px; margin-bottom:30px; display:flex; align-items:flex-end;">
+
+    <div style="position:relative; width:100%; height:250px; border-radius:24px; background:linear-gradient(135deg, #151A28 0%, #080B12 100%); border:1px solid rgba(255,255,255,0.08); box-shadow:0 30px 60px rgba(0,0,0,0.6); overflow:hidden; display:flex; align-items:center; padding:0 35px;">
+        
+        <div style="position:absolute; top:-50px; right:10%; width:280px; height:280px; background:rgba(99,102,241,0.35); filter:blur(90px); border-radius:50%; z-index:1;"></div>
+        <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size:15px 15px; opacity:0.5; z-index:2;"></div>
+
+        <div style="position:relative; z-index:5; width:55%; transform:translateY(-10px);">
+            <div style="background:rgba(99,102,241,0.15); backdrop-filter:blur(10px); border:1px solid rgba(99,102,241,0.4); color:#818CF8; font-size:11px; font-weight:900; padding:6px 14px; border-radius:20px; display:inline-block; margin-bottom:12px; letter-spacing:1.5px; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+                ⚡ RANKING OFICIAL
             </div>
-            <div style="position:absolute;right:-20px;bottom:-10px;width:320px;height:100%;z-index:2;display:flex;justify-content:center;align-items:flex-end;">
-                <img src="/img/olise.png" crossorigin="anonymous" style="position:absolute;left:-40px;height:280px;object-fit:contain;filter:drop-shadow(-5px 5px 15px rgba(0,0,0,0.6));z-index:1;opacity:0.9;">
-                <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute;right:20px;height:280px;object-fit:contain;filter:drop-shadow(5px 5px 15px rgba(0,0,0,0.6));z-index:1;opacity:0.9;">
-                <img src="/img/trofeo.png" crossorigin="anonymous" style="position:absolute;height:330px;object-fit:contain;z-index:3;filter:drop-shadow(0 10px 25px rgba(0,0,0,0.8));">
+            <div style="font-size:46px; font-weight:900; line-height:1.05; letter-spacing:-1.5px; text-shadow:0 10px 20px rgba(0,0,0,0.5);">
+                <span style="color:#FFF;">RESUMEN</span><br>
+                <span style="color:${K_COLOR.primary};">JORNADA</span>
             </div>
         </div>
+    </div>
+
+    <div style="position:absolute; right:0; bottom:0; width:50%; height:100%; z-index:10; pointer-events:none;">
+        
+        <img src="/img/olise.png" crossorigin="anonymous" style="position:absolute; right:160px; bottom:0; height:300px; object-fit:contain; filter:drop-shadow(-10px 15px 20px rgba(0,0,0,0.6)) brightness(0.85); z-index:1;">
+        
+        <img src="/img/trofeo.png" crossorigin="anonymous" style="position:absolute; right:70px; bottom:-10px; height:340px; object-fit:contain; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8)); z-index:2;">
+        
+        <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute; right:-20px; bottom:0; height:370px; object-fit:contain; filter:drop-shadow(15px 15px 25px rgba(0,0,0,0.7)); z-index:3;">
+        
+    </div>
+</div>
 
         <div>
             <div style="font-size:18px;font-weight:900;color:${K_COLOR.text};margin-bottom:10px;letter-spacing:1px;text-align:center;">
@@ -911,7 +924,7 @@ async function compartirRanking() {
             backgroundColor: K_COLOR.bg,
             logging: false,
             width: 1080,
-            height: 1920 // ¡Nuevas dimensiones de Stories!
+            height: 1720 // ¡Nuevas dimensiones de Stories!
         });
 
         document.body.removeChild(el);
