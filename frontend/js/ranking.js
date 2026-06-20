@@ -681,42 +681,46 @@ async function compartirRanking() {
 
     // ── TABLA IZQUIERDA COMPACTA (HASTA ~36 FILAS) ───────────────
     function renderFilas() {
-        return datos.map((user, index) => {
-            const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18);
-            const puntos = user.puntos_totales || 0;
-            const esAntepenultimo = index === datos.length - 2;
-                if (esAntepenultimo) {
-                    nombre += ' 🚑';
-                }
-            
-            const esTop1 = pos === 1;
-            const esTop2 = pos === 2;
-            const esTop3 = pos === 3;
+    return datos.map((user, index) => {
+        const pos    = index + 1;
+        // CAMBIO AQUÍ: 'const' por 'let' para permitir agregar el emoji
+        let nombre   = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18);
+        const puntos = user.puntos_totales || 0;
+        
+        // Ojo: index === datos.length - 2 es el PENÚLTIMO. 
+        // Si quieres el ANTEPENÚLTIMO estricto sería datos.length - 3
+        const esAntepenultimo = index === datos.length - 2;
+        if (esAntepenultimo) {
+            nombre += ' 🚑';
+        }
+        
+        const esTop1 = pos === 1;
+        const esTop2 = pos === 2;
+        const esTop3 = pos === 3;
 
-            // Estilos modulares por posición
-            let numBg = 'transparent';
-            let numColor = K_COLOR.textMuted;
-            let rowBg = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
-            let nameColor = K_COLOR.text;
-            let ptsColor = K_COLOR.text;
+        // Estilos modulares por posición
+        let numBg = 'transparent';
+        let numColor = K_COLOR.textMuted;
+        let rowBg = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
+        let nameColor = K_COLOR.text;
+        let ptsColor = K_COLOR.text;
 
-            if (esTop1) {
-                numBg = K_COLOR.gold; numColor = '#000'; ptsColor = K_COLOR.gold;
-                rowBg = 'linear-gradient(90deg, rgba(251,191,36,0.1) 0%, transparent 100%)';
-            } else if (esTop2) {
-                numBg = K_COLOR.silver; numColor = '#000'; ptsColor = K_COLOR.silver;
-            } else if (esTop3) {
-                numBg = K_COLOR.bronze; numColor = '#fff'; ptsColor = K_COLOR.bronze;
-            } else {
-                numBg = 'rgba(255,255,255,0.05)'; // Pastilla gris para el resto
-            }
-            let borderLeft = '3px solid transparent';
-    if (pos <= 3) borderLeft = '3px solid #10B981'; // Verde: Zona de clasificación
-    else if (pos >= datos.length - 2) borderLeft = '3px solid #EF4444'; // Rojo: Zona de descenso
+        if (esTop1) {
+            numBg = K_COLOR.gold; numColor = '#000'; ptsColor = K_COLOR.gold;
+            rowBg = 'linear-gradient(90deg, rgba(251,191,36,0.1) 0%, transparent 100%)';
+        } else if (esTop2) {
+            numBg = K_COLOR.silver; numColor = '#000'; ptsColor = K_COLOR.silver;
+        } else if (esTop3) {
+            numBg = K_COLOR.bronze; numColor = '#fff'; ptsColor = K_COLOR.bronze;
+        } else {
+            numBg = 'rgba(255,255,255,0.05)'; // Pastilla gris para el resto
+        }
+        
+        let borderLeft = '3px solid transparent';
+        if (pos <= 3) borderLeft = '3px solid #10B981'; // Verde: Zona de clasificación
+        else if (pos >= datos.length - 2) borderLeft = '3px solid #EF4444'; // Rojo: Zona de descenso
 
-    
-            return `
+        return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 8px;height:30px;background:${rowBg};border-left:${borderLeft};margin-bottom:2px;">
     <div style="display:flex;align-items:center;gap:12px;min-width:0;">
         <div style="width:20px;text-align:center;font-size:11px;font-weight:800;color:${numColor};">
@@ -736,8 +740,8 @@ async function compartirRanking() {
         </div>
     </div>
 </div>`;
-        }).join('');
-    }
+    }).join('');
+}
 
     // ── NUEVO PODIO MODULAR Y COMPACTO ─────────────────────────────
     function renderPodium() {
