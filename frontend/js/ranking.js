@@ -752,7 +752,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
         ${label}
     </div>
 
-    <div style="width:55px;height:55px;border-radius:14px;padding:3px;background:rgba(255,255,255,0.05);border:2px solid ${color};margin-bottom:12px;position:relative;">
+    <div style="width:80px;height:80px;border-radius:14px;padding:3px;background:rgba(255,255,255,0.05);border:2px solid ${color};margin-bottom:12px;position:relative;">
         <img src="${podiumImages[idx]}" crossorigin="anonymous" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">
     </div>
 
@@ -773,7 +773,7 @@ ${slots.map(({ idx, color, label, bg, border }) => {
 
     // ── CONTENEDOR MAESTRO 1080×1350 ─────────────────────────────
     const el = document.createElement('div');
-    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1350px;overflow:hidden;background:${K_COLOR.bg};`;
+    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1200px;overflow:hidden;background:${K_COLOR.bg};`;
 
     el.innerHTML = `
 <div style="width:1080px;height:1350px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;color:${K_COLOR.text};">
