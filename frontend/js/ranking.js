@@ -722,10 +722,10 @@ async function compartirRanking() {
         <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '14px' : '13px'};font-weight:900;flex-shrink:0;">
             ${displayPos}
         </div>
-        <div style="width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:10px;">
+        <div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:16px;">
             ${obtenerCampeon(user.campeon_elegido)}
         </div>
-        <div style="font-size:13px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
+        <div style="font-size:17px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
             ${nombre}
         </div>
     </div>
@@ -788,10 +788,10 @@ async function compartirRanking() {
 
     // ── CONTENEDOR MAESTRO 9:16 (1080x1920) ──
     const el = document.createElement('div');
-    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1720px;overflow:hidden;background:${K_COLOR.bg};`;
+    el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;height:1615px;overflow:hidden;background:${K_COLOR.bg};`;
 
     el.innerHTML = `
-<div style="width:1080px;height:1720px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI', Roboto, sans-serif;color:${K_COLOR.text};">
+<div style="width:1080px;height:1615px;background:${K_COLOR.bg};position:relative;overflow:hidden;display:flex;font-family:'Segoe UI', Roboto, sans-serif;color:${K_COLOR.text};">
 
     <div style="position:absolute;top:-200px;left:400px;width:1000px;height:800px;background:radial-gradient(circle, ${K_COLOR.primaryGlow} 0%, transparent 60%);border-radius:50%;z-index:0;pointer-events:none;"></div>
     <div style="position:absolute;bottom:-150px;right:-150px;width:800px;height:800px;background:radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 60%);border-radius:50%;z-index:0;pointer-events:none;"></div>
@@ -839,9 +839,9 @@ async function compartirRanking() {
         <div style="position:absolute; top:-50px; right:10%; width:280px; height:280px; background:rgba(99,102,241,0.35); filter:blur(90px); border-radius:50%; z-index:1;"></div>
         <div style="position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size:15px 15px; opacity:0.5; z-index:2;"></div>
 
-        <div style="position:relative; z-index:5; width:55%; transform:translateY(-10px);">
+        <div style="position:relative; z-index:2; width:55%; transform:translateY(-10px);">
             <div style="background:rgba(99,102,241,0.15); backdrop-filter:blur(10px); border:1px solid rgba(99,102,241,0.4); color:#818CF8; font-size:11px; font-weight:900; padding:6px 14px; border-radius:20px; display:inline-block; margin-bottom:12px; letter-spacing:1.5px; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
-                ⚡ RANKING OFICIAL
+                🏆 RANKING OFICIAL
             </div>
             <div style="font-size:46px; font-weight:900; line-height:1.05; letter-spacing:-1.5px; text-shadow:0 10px 20px rgba(0,0,0,0.5);">
                 <span style="color:#FFF;">RESUMEN</span><br>
@@ -852,11 +852,7 @@ async function compartirRanking() {
 
     <div style="position:absolute; right:0; bottom:0; width:50%; height:100%; z-index:10; pointer-events:none;">
         
-        <img src="/img/olise.png" crossorigin="anonymous" style="position:absolute; right:160px; bottom:0; height:300px; object-fit:contain; filter:drop-shadow(-10px 15px 20px rgba(0,0,0,0.6)) brightness(0.85); z-index:1;">
-        
-        <img src="/img/trofeo.png" crossorigin="anonymous" style="position:absolute; right:70px; bottom:-10px; height:340px; object-fit:contain; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.8)); z-index:2;">
-        
-        <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute; right:-20px; bottom:0; height:370px; object-fit:contain; filter:drop-shadow(15px 15px 25px rgba(0,0,0,0.7)); z-index:3;">
+        <img src="/img/diaz.png" crossorigin="anonymous" style="position:absolute; right:-20px; bottom:0; height:370px; object-fit:contain; filter:drop-shadow(15px 15px 25px rgba(0,0,0,0.7)); z-index:1;">
         
     </div>
 </div>
@@ -924,7 +920,7 @@ async function compartirRanking() {
             backgroundColor: K_COLOR.bg,
             logging: false,
             width: 1080,
-            height: 1720 // ¡Nuevas dimensiones de Stories!
+            height: 1615 // ¡Nuevas dimensiones de Stories!
         });
 
         document.body.removeChild(el);
