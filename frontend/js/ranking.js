@@ -719,18 +719,18 @@ async function compartirRanking() {
             return `
 <div style="display:flex;align-items:center;justify-content:space-between;padding:0 15px 0 10px;height:35px;background:${rowBg};border-left:${borderLeft};margin-bottom:3px;border-radius:0 8px 8px 0;">
     <div style="display:flex;align-items:center;gap:12px;min-width:0;">
-        <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '17px' : '16px'};font-weight:900;flex-shrink:0;">
+        <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '17px' : '16px'};font-weight:700;flex-shrink:0;">
             ${displayPos}
         </div>
         <div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:18px;">
             ${obtenerCampeon(user.campeon_elegido)}
         </div>
-        <div style="font-size:20px;font-weight:800;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
+        <div style="font-size:20px;font-weight:600;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
             ${nombre}
         </div>
     </div>
     
-    <div style="font-size:21px;font-weight:900;color:${ptsColor};width:40px;text-align:right;">
+    <div style="font-size:21px;font-weight:700;color:${ptsColor};width:40px;text-align:right;">
         ${puntos}
     </div>
 </div>`;
