@@ -723,13 +723,13 @@ async function compartirRanking() {
             }
 
             return `
-<div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
+<div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <div style="width:38px;height:38px;border-radius:6px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '22px' : '17px'};font-weight:700;flex-shrink:0;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
-        <div style="font-size:24px;line-height:1;flex-shrink:0;width:26px;text-align:center;">${bandera}</div>
-        <div style="font-size:21px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:0.8px;">${nombre}</div>
+        <div style="width:34px;height:34px;border-radius:6px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '19px' : '14px'};font-weight:700;flex-shrink:0;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
+        <div style="font-size:21px;line-height:1;flex-shrink:0;width:23px;text-align:center;">${bandera}</div>
+        <div style="font-size:18px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:0.8px;">${nombre}</div>
     </div>
-    <div style="font-size:23px;font-weight:700;color:${ptsColor};font-family:'Inter','Helvetica Neue',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
+    <div style="font-size:20px;font-weight:700;color:${ptsColor};font-family:'Inter','Helvetica Neue',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
 </div>`;
         }).join('');
     }
@@ -740,9 +740,9 @@ async function compartirRanking() {
         const puntos  = user?.puntos_totales || 0;
         const bandera = obtenerCampeon(user?.campeon_elegido);
         const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
-        const sizes   = { 1: { h: '100px', font: '20px', pts: '26px' },
-                          2: { h: '84px',  font: '18px', pts: '22px' },
-                          3: { h: '76px',  font: '16px', pts: '20px' } };
+        const sizes   = { 1: { h: '88px', font: '18px', pts: '23px' },
+                          2: { h: '74px',  font: '16px', pts: '19px' },
+                          3: { h: '68px',  font: '14px', pts: '18px' } };
         const bgs     = { 1: C.goldDim,   2: C.silverDim,   3: C.bronzeDim  };
         const border  = { 1: C.gold,      2: C.silver,      3: C.bronze     };
         const ptsClr  = { 1: C.gold,      2: C.silver,      3: C.bronze     };
@@ -751,7 +751,7 @@ async function compartirRanking() {
 
         return `
 <div style="display:flex;align-items:center;gap:12px;background:${bgs[pos]};border:1px solid ${border[pos]}33;border-radius:10px;padding:10px 14px;margin-bottom:10px;height:${sz.h};box-sizing:border-box;">
-    <div style="width:64px;height:64px;border-radius:50%;border:2px solid ${border[pos]};overflow:hidden;flex-shrink:0;background:${C.surfaceAlt};display:flex;align-items:center;justify-content:center;">
+    <div style="width:56px;height:56px;border-radius:50%;border:2px solid ${border[pos]};overflow:hidden;flex-shrink:0;background:${C.surfaceAlt};display:flex;align-items:center;justify-content:center;">
         ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />` : `<span style="font-size:28px;">${medals[pos]}</span>`}
     </div>
     <div style="flex:1;min-width:0;">
@@ -775,7 +775,7 @@ async function compartirRanking() {
             ${stats.map(s => `
             <div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:12px;text-align:center;">
                 <div style="font-size:24px;margin-bottom:4px;">${s.icon}</div>
-                <div style="font-size:30px;font-weight:800;color:${s.color};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-1px;">${s.value}</div>
+                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-1px;">${s.value}</div>
                 <div style="font-size:12px;color:${C.textMuted};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
             </div>`).join('')}
         </div>`;
@@ -797,13 +797,13 @@ async function compartirRanking() {
     colLeft.style.cssText = `width:540px;height:1400px;display:flex;flex-direction:column;padding:28px 20px 28px 28px;box-sizing:border-box;border-right:1px solid ${C.border};`;
     colLeft.innerHTML = `
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid ${C.border};">
-            <div style="width:70px;height:70px;border-radius:10px;background:${C.surfaceAlt};border:1px solid ${C.border};display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
+            <div style="width:60px;height:60px;border-radius:10px;background:${C.surfaceAlt};border:1px solid ${C.border};display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
                 <img src="" alt="" style="width:100%;height:100%;object-fit:contain;" />
             </div>
             <div style="flex:1;">
                 <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">⚽ COPA MUNDIAL FIFA 2026</div>
-                <div style="font-size:32px;font-weight:800;color:${C.white};letter-spacing:-0.5px;line-height:1;">TABLA DE POSICIONES</div>
-                <div style="font-size:15px;color:${C.textMuted};margin-top:5px;">${ligaNombre} · ${fechaFormateada}</div>
+                <div style="font-size:26px;font-weight:800;color:${C.white};letter-spacing:-0.5px;line-height:1;">TABLA DE POSICIONES</div>
+                <div style="font-size:12px;color:${C.textMuted};margin-top:5px;">${ligaNombre} · ${fechaFormateada}</div>
             </div>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 58px;margin-bottom:6px;">
@@ -833,14 +833,14 @@ async function compartirRanking() {
             ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
             ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
         </div>
-        <div style="position:relative;border-radius:14px;overflow:hidden;height:300px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-10px;height:295px;object-fit:contain;z-index:1;filter:drop-shadow(0 0 30px rgba(212,168,67,0.25));" crossorigin="anonymous"/>
+        <div style="position:relative;border-radius:14px;overflow:hidden;height:260px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;">
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-10px;height:260px;object-fit:contain;z-index:1;filter:drop-shadow(0 0 30px rgba(212,168,67,0.25));" crossorigin="anonymous"/>
             <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.95) 0%,rgba(13,13,13,0.7) 50%,rgba(13,13,13,0.1) 100%);z-index:2;"></div>
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">⚡ EN VIVO</div>
                 <div style="font-size:15px;color:${C.gold};font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;">RANKING OFICIAL</div>
-                <div style="font-size:46px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;">RESUMEN</div>
-                <div style="font-size:46px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;margin-bottom:12px;">JORNADA</div>
+                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;">RESUMEN</div>
+                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;margin-bottom:12px;">JORNADA</div>
                 <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
             </div>
         </div>
