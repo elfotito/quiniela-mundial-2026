@@ -642,7 +642,7 @@ function actualizarContador(cantidad) {
     }
 }
 
-async function compartirRanking() {
+function compartirRanking() {
     const datos = rankingFiltrado;
     if (!datos || datos.length === 0) {
         alert('No hay datos para compartir.');
