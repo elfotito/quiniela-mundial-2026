@@ -541,32 +541,21 @@
          (feed de noticias principal)
     ══════════════════════════════════ -->
     
-        <section class="col-centro">
-    <div class="widget">
-        <!-- Encabezado del widget -->
-        <div class="noticias-header">
-            <div class="noticias-header-left">
-                <span class="noticias-icon">📰</span>
-                <h2 class="noticias-title">Últimas Noticias</h2>
-                <span class="noticias-live">EN VIVO</span>
-            </div>
-            <div class="noticias-filters">
-                <button class="nf-btn active" onclick="filtrarNoticias('todas', this)">Todas</button>
-                <button class="nf-btn" onclick="filtrarNoticias('FutbolRed', this)">FutbolRed</button>
-                <button class="nf-btn" onclick="filtrarNoticias('ESPN', this)">ESPN</button>
-                <button class="nf-btn" onclick="filtrarNoticias('Manual', this)">Manual</button>
-            </div>
-        </div>
-
-        <!-- Contenedor de noticias -->
-        <div id="noticiasFeed" style="padding: 0;">
-            <div class="noticias-loading">
-                <div class="loading-pulse"></div>
-                <span>Cargando noticias...</span>
-            </div>
+<!-- WIDGET DE RESULTADOS -->
+<div class="widget resultados-widget">
+    <div class="noticias-header">
+        <div class="noticias-header-left">
+            <span class="noticias-icon">⚽</span>
+            <h2 class="noticias-title">Resultados Mundial 2026</h2>
         </div>
     </div>
-</section>
+    <div id="resultadosFeed" style="padding:0;">
+        <div class="noticias-loading">
+            <div class="loading-pulse"></div>
+            <span>Cargando resultados...</span>
+        </div>
+    </div>
+</div>
     <!-- ══════════════════════════════════
          COLUMNA DERECHA
          (próximos partidos, stats, etc.)

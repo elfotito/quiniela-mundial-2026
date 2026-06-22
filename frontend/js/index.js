@@ -1580,6 +1580,72 @@ function renderNoticia(n) {
 
     return '';
 }
+
+async function cargarResultadosWidget() {
+    const feed = document.getElementById('resultadosFeed');
+    if (!feed) return;
+    try {
+        const { data: resultados } = await supabaseClient
+            .from('resultados')
+            .select('*')
+            .order('fecha_partido', { ascending: false })
+            .limit(10);
+
+        if (!resultados || resultados.length === 0) {
+            feed.innerHTML = '<div class="noticias-empty"><span class="empty-icon">🏟</span><p>No hay resultados aún</p></div>';
+            return;
+        }
+
+        feed.innerHTML = resultados.map(r => {
+            const estadoClass = r.estado === 'finalizado' ? 'estado-finalizado' : 
+                                r.estado === 'en_juego' ? 'estado-en_juego' : 'estado-programado';
+            const estadoTexto = r.estado.replace('_', ' ');
+            return `
+                <div class="resultado-card">
+                    <div class="resultado-equipos">
+                        <span class="equipo"><span class="bandera">${obtenerBandera(r.equipo_local)}</span> ${r.equipo_local}</span>
+                        <span class="resultado-marcador">${r.marcador_local} - ${r.marcador_visitante}</span>
+                        <span class="equipo"><span class="bandera">${obtenerBandera(r.equipo_visitante)}</span> ${r.equipo_visitante}</span>
+                    </div>
+                    <div class="resultado-info">
+                        <span>🏟 ${r.estadio || ''}</span>
+                        <span>📅 ${new Date(r.fecha_partido).toLocaleDateString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</span>
+                        <span class="estado-badge ${estadoClass}">${estadoTexto}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } catch(e) {
+        console.error('Error cargando resultados:', e);
+        feed.innerHTML = '<div class="noticias-empty"><p>Error al cargar</p></div>';
+    }
+}
+
+function obtenerBandera(nombreEquipo) {
+    const mapeo = {
+        'México': '🇲🇽', 'Argentina': '🇦🇷', 'Brasil': '🇧🇷', 'Colombia': '🇨🇴', 'Uruguay': '🇺🇾',
+        'Paraguay': '🇵🇾', 'Ecuador': '🇪🇨', 'Chile': '🇨🇱', 'Perú': '🇵🇪', 'Bolivia': '🇧🇴',
+        'Venezuela': '🇻🇪', 'Estados Unidos': '🇺🇸', 'Canadá': '🇨🇦', 'Catar': '🇶🇦',
+        'Corea del Sur': '🇰🇷', 'Japón': '🇯🇵', 'Australia': '🇦🇺',
+        'Inglaterra': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'Francia': '🇫🇷', 'Alemania': '🇩🇪', 'Italia': '🇮🇹', 'España': '🇪🇸',
+        'Portugal': '🇵🇹', 'Países Bajos': '🇳🇱', 'Bélgica': '🇧🇪', 'Croacia': '🇭🇷', 'Marruecos': '🇲🇦',
+        'Senegal': '🇸🇳', 'Ghana': '🇬🇭', 'Camerún': '🇨🇲', 'Túnez': '🇹🇳', 'Arabia Saudita': '🇸🇦',
+        'Irán': '🇮🇷', 'Costa Rica': '🇨🇷', 'Sudáfrica': '🇿🇦', 'República Checa': '🇨🇿', 'Turquía': '🇹🇷',
+        'Uzbekistán': '🇺🇿', 'Congo': '🇨🇬', 'Bosnia y Herzegovina': '🇧🇦', 'Austria': '🇦🇹',
+        'Argelia': '🇩🇿', 'Costa de Marfil': '🇨🇮', 'Serbia': '🇷🇸', 'Suiza': '🇨🇭'
+    };
+    return mapeo[nombreEquipo] || '🏳️';
+}
+
+// Inicializar ambos widgets
+document.addEventListener('DOMContentLoaded', () => {
+    cargarNoticiasIndex();
+    cargarResultadosWidget();
+});
+
+// Para refrescar desde el panel admin
+window.refreshResultadosWidget = cargarResultadosWidget;
+
 function obtenerBandera(nombre) {
     const banderas = {
         // Anfitriones y CONCACAF

@@ -642,7 +642,7 @@ function actualizarContador(cantidad) {
     }
 }
 
-function compartirRanking() {
+async function compartirRanking() {
     const datos = rankingFiltrado;
     if (!datos || datos.length === 0) {
         alert('No hay datos para compartir.');
@@ -1208,15 +1208,16 @@ function compartirRanking() {
 
     // ── CAPTURA CON HTML2CANVAS ──
     try {
-        const canvas = await html2canvas(wrapper, {
+        datos.forEach(async (usuario) => { 
+        const canvas = await html2canvas(wrapper, { 
             scale: 3,                   // 3x DPI → nitidez anti-compresión WhatsApp
             useCORS: true,
             allowTaint: true,
             backgroundColor: C.bg,
             width: 1200,
             height: 1900,
-            logging: false,
-        });
+            logging: false, }); 
+    });
 
         document.body.removeChild(wrapper);
 
