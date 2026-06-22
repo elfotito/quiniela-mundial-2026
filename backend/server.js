@@ -2157,7 +2157,32 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
     }
 });
 
+// Al inicio del archivo (si no usas Node 18+, instala node-fetch: npm install node-fetch@2)
+const fetch = require('node-fetch');
 
+// Ruta proxy para football-data.org
+app.get('/api/football/matches', async (req, res) => {
+    try {
+        const apiKey = 'd7ea5324baf74ba6885ffa05df48b59e';   // tu key real aquí
+
+        const response = await fetch(
+            'https://api.football-data.org/v4/competitions/WC/matches?status=FINISHED&status=SCHEDULED&status=LIVE',
+            {
+                headers: { 'X-Auth-Token': apiKey }
+            }
+        );
+
+        if (!response.ok) {
+            return res.status(response.status).json({ error: 'Error al obtener datos de football-data.org' });
+        }
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error en /api/football/matches:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 // ─────────────────────────────────────────────────────────────────
 // GET /api/partidos/sala-guerra?filtro=hoy|todos|pendientes|jugados
 // Todos los partidos con estadísticas de predicciones para Sala de Guerra
