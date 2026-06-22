@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Resultados (RSS) - Mundial 2026</title>
+    <style>
+        :root { --fifa-gold:#FFD700; --dark-bg:#0a0a0a; --dark-card:#1a1a1a; --border:#333; --success:#00aa44; --danger:#cc3333; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--dark-bg);color:#fff;font-family:'Segoe UI',sans-serif;padding:20px}
+        .container{max-width:900px;margin:0 auto}
+        h1{color:var(--fifa-gold);margin-bottom:30px;text-align:center}
+        .tabs{display:flex;gap:10px;margin-bottom:30px;border-bottom:2px solid var(--border)}
+        .tab-btn{background:transparent;border:none;color:#999;padding:12px 20px;font-weight:bold;cursor:pointer;border-bottom:3px solid transparent;font-size:16px}
+        .tab-btn.active{color:var(--fifa-gold);border-bottom-color:var(--fifa-gold)}
+        .tab-content{display:none}.tab-content.active{display:block}
+        .fr-section{background:var(--dark-card);padding:20px;border-radius:8px;border:1px solid var(--border);margin-bottom:20px}
+        .fr-header{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+        .fr-header h2{color:var(--fifa-gold);font-size:18px;flex:1}
+        .status-badge{padding:8px 12px;border-radius:20px;font-size:12px;font-weight:bold;background:var(--dark-bg);color:#999}
+        .status-badge.loading{color:#ffaa00}.status-badge.success{color:#00aa44}.status-badge.error{color:var(--danger)}
+        .btn-traer{background:linear-gradient(135deg,#CC0000,#990000);color:#fff;padding:12px 24px;border:none;border-radius:4px;font-weight:bold;cursor:pointer;font-size:14px}
+        .btn-traer:hover{transform:translateY(-2px)}
+        .btn-traer:disabled{opacity:0.5;cursor:not-allowed}
+        .preview-match{background:var(--dark-bg);padding:15px;border-radius:6px;margin-bottom:12px;border-left:4px solid var(--fifa-gold);cursor:pointer;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+        .preview-match.selected{background:rgba(255,215,0,0.1)}
+        .match-teams{display:flex;align-items:center;gap:10px;font-weight:bold;font-size:16px}
+        .match-score{font-size:20px;font-weight:800;color:var(--fifa-gold)}
+        .match-info{font-size:12px;color:#999}
+        .btn-success{background:var(--success);border:none;color:#fff;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:bold}
+        .btn-primary{background:#0066CC;border:none;color:#fff;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:bold}
+        .btn-danger{background:var(--danger);border:none;color:#fff;padding:6px 12px;font-size:12px;border-radius:4px;cursor:pointer}
+        .alert{padding:12px;border-radius:4px;margin-bottom:20px;font-size:14px}
+        .alert.success{background:rgba(0,170,68,0.1);color:var(--success);border:1px solid rgba(0,170,68,0.3)}
+        .alert.error{background:rgba(204,51,51,0.1);color:var(--danger);border:1px solid rgba(204,51,51,0.3)}
+        .loading-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,215,0,0.3);border-top-color:var(--fifa-gold);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚽ Admin Resultados (RSS FutbolRed)</h1>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="cambiarTab('traer')">Extraer del RSS</button>
+        <button class="tab-btn" onclick="cambiarTab('historial')">Historial guardado</button>
+    </div>
+
+    <div id="tab-traer" class="tab-content active">
+        <div class="fr-section">
+            <div class="fr-header">
+                <h2>📰 Extraer resultados desde FutbolRed RSS</h2>
+                <span class="status-badge" id="status">Listo</span>
+            </div>
+            <p style="color:#999;margin-bottom:20px;font-size:14px">
+                Analiza las últimas noticias del RSS y detecta automáticamente aquellas que contienen un marcador.
+            </p>
+            <button class="btn-traer" id="btnTraer" onclick="traerResultados()">📡 Buscar resultados</button>
+            <div id="previewContainer" style="margin-top:20px"></div>
+            <div style="display:flex;gap:10px;margin-top:20px">
+                <button class="btn-success" onclick="guardarSeleccionados()">✅ Guardar Seleccionados</button>
+                <button class="btn-primary" onclick="guardarTodos()">📥 Guardar Todos</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-historial" class="tab-content">
+        <h2 style="color:var(--fifa-gold);margin-bottom:20px">Resultados guardados</h2>
+        <div id="historialList"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const sb = supabase.createClient(
+        'https://aohnbafexgwkugtfryrk.supabase.co',
+        'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
+    );
+
+    // URL del RSS de FutbolRed (el mismo que ya usas)
+    const RSS_URL = 'https://www.futbolred.com/rss-news/selecciones-nacionales.xml';
+
+    let resultadosDetectados = [];
+
+    function cambiarTab(tab){
+        document.querySelectorAll('.tab-content,.tab-btn').forEach(el=>el.classList.remove('active'));
+        document.getElementById('tab-'+tab).classList.add('active');
+        event.target.classList.add('active');
+        if(tab==='historial') cargarHistorial();
+    }
+
+    async function traerResultados(){
+        const btn = document.getElementById('btnTraer');
+        const status = document.getElementById('status');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span> Analizando...';
+        status.textContent = '⏳ Descargando RSS...';
+        status.className = 'status-badge loading';
+        try{
+            // Usamos el mismo proxy que tienes en tu backend para evitar CORS
+            const res = await fetch(`https://quinielamundial2026.onrender.com/api/proxy/rss?url=${encodeURIComponent(RSS_URL)}`);
+            if(!res.ok) throw new Error(`HTTP ${res.status}`);
+            const xml = await res.text();
+            const partidos = extraerResultadosDeXML(xml);
+            resultadosDetectados = partidos;
+            mostrarPreview();
+            status.textContent = `✅ ${partidos.length} resultados detectados`;
+            status.className = 'status-badge success';
+        }catch(e){
+            console.error(e);
+            status.textContent = '❌ Error';
+            status.className = 'status-badge error';
+            alert('Error: '+e.message);
+        }finally{
+            btn.disabled = false;
+            btn.innerHTML = '📡 Buscar resultados';
+        }
+    }
+
+    function extraerResultadosDeXML(xmlText){
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xmlText, 'text/xml');
+        const items = doc.querySelectorAll('item');
+        const resultados = [];
+
+        // Patrones para detectar marcadores en el título o descripción
+        const patronMarcador = /(\d+)\s*[-–—]\s*(\d+)/; // ej: "3-0", "1 - 0"
+        // Nombres de equipos frecuentes (puedes ampliar esta lista)
+        const equiposConocidos = [
+            'México', 'Argentina', 'Brasil', 'Colombia', 'Uruguay', 'Paraguay', 'Ecuador', 'Chile',
+            'Perú', 'Bolivia', 'Venezuela', 'Estados Unidos', 'Canadá', 'Catar',
+            'Corea del Sur', 'Japón', 'Australia', 'Arabia Saudita', 'Irán',
+            'Inglaterra', 'Francia', 'Alemania', 'Italia', 'España', 'Portugal',
+            'Países Bajos', 'Bélgica', 'Croacia', 'Marruecos', 'Senegal', 'Ghana',
+            'Camerún', 'Túnez', 'Costa Rica', 'Sudáfrica', 'República Checa',
+            'Turquía', 'Uzbekistán', 'Congo', 'Bosnia y Herzegovina', 'Austria',
+            'Argelia', 'Costa de Marfil', 'Serbia', 'Suiza'
+        ];
+
+        items.forEach(item => {
+            const titulo = item.querySelector('title')?.textContent?.trim() || '';
+            const descripcion = item.querySelector('description')?.textContent?.trim() || '';
+            const textoCompleto = titulo + ' ' + descripcion;
+
+            // Buscar un marcador
+            const matchMarcador = textoCompleto.match(patronMarcador);
+            if (!matchMarcador) return;
+
+            const marcadorLocal = parseInt(matchMarcador[1]);
+            const marcadorVisitante = parseInt(matchMarcador[2]);
+
+            // Buscar equipos alrededor del marcador
+            let equipoLocal = '', equipoVisitante = '';
+            // Buscar antes y después del marcador en el texto
+            const partes = textoCompleto.split(patronMarcador);
+            if (partes.length >= 3) {
+                equipoLocal = partes[0].trim();
+                equipoVisitante = partes[2].trim();
+            }
+
+            // Intentar extraer nombres de equipos de esas partes
+            for (const nombre of equiposConocidos) {
+                if (equipoLocal.includes(nombre)) equipoLocal = nombre;
+                if (equipoVisitante.includes(nombre)) equipoVisitante = nombre;
+            }
+
+            // Si no se pudo extraer, usar el marcador en crudo como respaldo
+            if (!equipoLocal || !equipoVisitante) {
+                // Extraer del título general
+                const tituloPartido = titulo;
+                for (const nombre of equiposConocidos) {
+                    if (tituloPartido.includes(nombre)) {
+                        if (!equipoLocal) equipoLocal = nombre;
+                        else if (!equipoVisitante && nombre !== equipoLocal) equipoVisitante = nombre;
+                    }
+                }
+            }
+
+            if (equipoLocal && equipoVisitante) {
+                resultados.push({
+                    equipo_local: equipoLocal,
+                    equipo_visitante: equipoVisitante,
+                    marcador_local: marcadorLocal,
+                    marcador_visitante: marcadorVisitante,
+                    fecha_partido: item.querySelector('pubDate')?.textContent || new Date().toISOString(),
+                    estadio: 'No especificado',
+                    estado: 'finalizado', // asumimos que son finalizados si hay marcador
+                    fuente: 'FutbolRed (RSS)',
+                    match_api_id: null // dejamos null para evitar conflictos
+                });
+            }
+        });
+
+        return resultados;
+    }
+
+    function mostrarPreview(){
+        const container = document.getElementById('previewContainer');
+        container.innerHTML = resultadosDetectados.map((p,i) => `
+            <div class="preview-match" data-idx="${i}" onclick="this.classList.toggle('selected')">
+                <div class="match-teams">
+                    <span>${p.equipo_local}</span>
+                    <span class="match-score">${p.marcador_local} - ${p.marcador_visitante}</span>
+                    <span>${p.equipo_visitante}</span>
+                </div>
+                <div class="match-info">
+                    📅 ${new Date(p.fecha_partido).toLocaleDateString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})} | 
+                    🏟 ${p.estadio}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function guardarSeleccionados(){
+        const idxs = Array.from(document.querySelectorAll('.preview-match.selected')).map(el=>parseInt(el.dataset.idx));
+        if(!idxs.length) return alert('Selecciona al menos un resultado');
+        await guardarEnDB(idxs.map(i=>resultadosDetectados[i]));
+    }
+
+    async function guardarTodos(){
+        if(!resultadosDetectados.length) return alert('No hay resultados');
+        if(confirm(`¿Guardar ${resultadosDetectados.length} resultados?`)) await guardarEnDB(resultadosDetectados);
+    }
+
+    async function guardarEnDB(partidos){
+        try{
+            // Evitar duplicados por equipo_local + equipo_visitante + fecha (aproximadamente)
+            // Como no tenemos match_api_id, verificamos uno por uno
+            const {data:existentes} = await sb.from('resultados').select('equipo_local,equipo_visitante,fecha_partido');
+            const nuevas = partidos.filter(p => {
+                return !(existentes||[]).some(e => 
+                    e.equipo_local === p.equipo_local &&
+                    e.equipo_visitante === p.equipo_visitante &&
+                    Math.abs(new Date(e.fecha_partido) - new Date(p.fecha_partido)) < 3600000 // misma hora
+                );
+            });
+            if(!nuevas.length) return alert('Todos los resultados ya existen');
+            const {error} = await sb.from('resultados').insert(nuevas);
+            if(error) throw error;
+            alert(`✅ ${nuevas.length} resultados guardados`);
+            if(window.refreshResultadosWidget) window.refreshResultadosWidget();
+            if(window.reinicializarWidgetNoticias) window.reinicializarWidgetNoticias();
+        }catch(e){
+            alert('❌ Error: '+e.message);
+        }
+    }
+
+    async function cargarHistorial(){
+        const list = document.getElementById('historialList');
+        try{
+            const {data} = await sb.from('resultados').select('*').order('fecha_partido',{ascending:false}).limit(20);
+            list.innerHTML = data?.length ? data.map(r=>`
+                <div style="background:var(--dark-card);padding:12px;border-radius:6px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--fifa-gold)">
+                    <div>
+                        <strong>${r.equipo_local} ${r.marcador_local} - ${r.marcador_visitante} ${r.equipo_visitante}</strong><br>
+                        <small>${new Date(r.fecha_partido).toLocaleString()} | ${r.estado}</small>
+                    </div>
+                    <button class="btn-danger" onclick="eliminarResultado(${r.id})">🗑️</button>
+                </div>
+            `).join('') : '<p style="color:#999">No hay resultados guardados</p>';
+        }catch(e){
+            list.innerHTML = '<p style="color:red">Error al cargar</p>';
+        }
+    }
+
+    async function eliminarResultado(id){
+        if(!confirm('¿Eliminar?')) return;
+        await sb.from('resultados').delete().eq('id',id);
+        cargarHistorial();
+    }
+</script>
+</body>
+</html>
