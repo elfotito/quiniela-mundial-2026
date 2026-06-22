@@ -2157,13 +2157,10 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
     }
 });
 
-// Al inicio del archivo (si no usas Node 18+, instala node-fetch: npm install node-fetch@2)
-const fetch = require('node-fetch');
-
-// Ruta proxy para football-data.org
+// Sin require de fetch, Node 18+ lo tiene nativo
 app.get('/api/football/matches', async (req, res) => {
     try {
-        const apiKey = 'd7ea5324baf74ba6885ffa05df48b59e';   // tu key real aquí
+        const apiKey = 'd7ea5324baf74ba6885ffa05df48b59e';
 
         const response = await fetch(
             'https://api.football-data.org/v4/competitions/WC/matches?status=FINISHED&status=SCHEDULED&status=LIVE',
@@ -2173,7 +2170,7 @@ app.get('/api/football/matches', async (req, res) => {
         );
 
         if (!response.ok) {
-            return res.status(response.status).json({ error: 'Error al obtener datos de football-data.org' });
+            return res.status(response.status).json({ error: 'Error de la API externa' });
         }
 
         const data = await response.json();
