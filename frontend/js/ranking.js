@@ -725,11 +725,11 @@ async function compartirRanking() {
             return `
 <div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <div style="width:34px;height:34px;border-radius:6px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '19px' : '14px'};font-weight:700;flex-shrink:0;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
+        <div style="width:34px;height:34px;border-radius:6px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '19px' : '14px'};font-weight:700;flex-shrink:0;font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
         <div style="font-size:21px;line-height:1;flex-shrink:0;width:23px;text-align:center;">${bandera}</div>
-        <div style="font-size:18px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:0.8px;">${nombre}</div>
+        <div style="font-size:18px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:0.8px;">${nombre}</div>
     </div>
-    <div style="font-size:20px;font-weight:700;color:${ptsColor};font-family:'Inter','Helvetica Neue',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
+    <div style="font-size:20px;font-weight:700;color:${ptsColor};font-family:'Barlow Condensed','Inter',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
 </div>`;
         }).join('');
     }
@@ -755,11 +755,11 @@ async function compartirRanking() {
         ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />` : `<span style="font-size:28px;">${medals[pos]}</span>`}
     </div>
     <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;font-weight:500;color:${border[pos]};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${medals[pos]} ${posLabel}</div>
-        <div style="font-size:${sz.font};font-weight:700;color:${C.white};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
-        <div style="font-size:13px;color:${C.textMuted};font-family:'Inter','Helvetica Neue',sans-serif;margin-top:1px;">${bandera} ${puntos} pts</div>
+        <div style="font-size:13px;font-weight:500;color:${border[pos]};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${medals[pos]} ${posLabel}</div>
+        <div style="font-size:${sz.font};font-weight:700;color:${C.white};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
+        <div style="font-size:13px;color:${C.textMuted};font-family:'Barlow Condensed','Inter',sans-serif;margin-top:1px;">${bandera} ${puntos} pts</div>
     </div>
-    <div style="font-size:${sz.pts};font-weight:800;color:${ptsClr[pos]};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-1px;flex-shrink:0;">${puntos}</div>
+    <div style="font-size:${sz.pts};font-weight:800;color:${ptsClr[pos]};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-1px;flex-shrink:0;">${puntos}</div>
 </div>`;
     }
 
@@ -775,10 +775,63 @@ async function compartirRanking() {
             ${stats.map(s => `
             <div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:12px;text-align:center;">
                 <div style="font-size:24px;margin-bottom:4px;">${s.icon}</div>
-                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:-1px;">${s.value}</div>
-                <div style="font-size:12px;color:${C.textMuted};font-family:'Inter','Helvetica Neue',sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
+                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-1px;">${s.value}</div>
+                <div style="font-size:12px;color:${C.textMuted};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
             </div>`).join('')}
         </div>`;
+    }
+
+    // ── ÚLTIMOS RESULTADOS: fetch los más recientes ──
+    let ultimosResultados = [];
+    try {
+        const resPartidos = await fetch(`${CONFIG.API_URL}/partidos?estado=finalizado&limit=50`);
+        if (resPartidos.ok) {
+            const todos = await resPartidos.json();
+            // El endpoint devuelve ASC → invertimos y tomamos los 3 últimos
+            ultimosResultados = todos.slice(-3).reverse();
+        }
+    } catch(e) {
+        console.warn('No se pudieron cargar resultados:', e);
+    }
+
+    function renderResultados() {
+        if (!ultimosResultados.length) {
+            return `<div style="text-align:center;padding:14px 0;font-size:12px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">⏳ Sin resultados disponibles</div>`;
+        }
+        return ultimosResultados.map(p => {
+            const fecha = new Date(p.fecha);
+            const fechaCorta = fecha.toLocaleDateString('es-ES', { day:'2-digit', month:'2-digit' });
+            const gl = p.goles_local !== null && p.goles_local !== undefined ? p.goles_local : '—';
+            const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—';
+            const local = (p.equipo_local || '').toUpperCase();
+            const visita = (p.equipo_visitante || '').toUpperCase();
+            const ganLocal  = Number(gl) > Number(gv);
+            const ganVisita = Number(gv) > Number(gl);
+            return `
+<div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:8px 10px;margin-bottom:6px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:10px;color:${C.gold};letter-spacing:1.5px;font-family:'Barlow Condensed',sans-serif;font-weight:600;">⚽ FASE DE GRUPOS</span>
+        <span style="font-size:10px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">${fechaCorta} · FINALIZADO</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+        <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_local)}</span>
+                <span style="font-size:13px;font-weight:${ganLocal?'800':'500'};color:${ganLocal?C.white:C.textMuted};font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${local}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_visitante)}</span>
+                <span style="font-size:13px;font-weight:${ganVisita?'800':'500'};color:${ganVisita?C.white:C.textMuted};font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${visita}</span>
+            </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;background:${C.bg};border:1px solid ${C.border};border-radius:6px;padding:4px 10px;flex-shrink:0;min-width:42px;">
+            <span style="font-size:16px;font-weight:800;color:${ganLocal?C.gold:C.white};font-family:'Bebas Neue','Barlow Condensed',sans-serif;line-height:1.1;">${gl}</span>
+            <div style="width:16px;height:1px;background:${C.border};margin:2px 0;"></div>
+            <span style="font-size:16px;font-weight:800;color:${ganVisita?C.gold:C.white};font-family:'Bebas Neue','Barlow Condensed',sans-serif;line-height:1.1;">${gv}</span>
+        </div>
+    </div>
+</div>`;
+        }).join('');
     }
 
     // ── IMÁGENES DEL PODIO — cámbielas manualmente ──
@@ -789,12 +842,20 @@ async function compartirRanking() {
     };
 
     // ── CONSTRUCCIÓN DEL DOM ──
+    // ── FUENTE: inyectar en DOM para html2canvas ──
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&display=swap');
+        * { font-family: 'Barlow Condensed', 'Inter', sans-serif !important; }
+    `;
+    document.head.appendChild(styleEl);
+
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1400px;background:${C.bg};display:flex;font-family:'Inter','Helvetica Neue',Arial,sans-serif;overflow:hidden;`;
+    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Barlow Condensed','Inter',Arial,sans-serif;overflow:hidden;`;
 
     // COLUMNA IZQUIERDA (60% = 540px)
     const colLeft = document.createElement('div');
-    colLeft.style.cssText = `width:540px;height:1400px;display:flex;flex-direction:column;padding:28px 20px 28px 28px;box-sizing:border-box;border-right:1px solid ${C.border};`;
+    colLeft.style.cssText = `width:540px;height:1600px;display:flex;flex-direction:column;padding:28px 20px 28px 28px;box-sizing:border-box;border-right:1px solid ${C.border};`;
     colLeft.innerHTML = `
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid ${C.border};">
             <div style="width:60px;height:60px;border-radius:10px;background:${C.surfaceAlt};border:1px solid ${C.border};display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
@@ -822,7 +883,7 @@ async function compartirRanking() {
 
     // COLUMNA DERECHA (40% = 360px)
     const colRight = document.createElement('div');
-    colRight.style.cssText = `width:360px;height:1400px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
+    colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
     colRight.innerHTML = `
         <div style="display:flex;justify-content:center;align-items:center;height:70px;background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:12px;overflow:hidden;flex-shrink:0;">
             <img src="" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
@@ -833,14 +894,14 @@ async function compartirRanking() {
             ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
             ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
         </div>
-        <div style="position:relative;border-radius:14px;overflow:hidden;height:260px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-10px;height:260px;object-fit:contain;z-index:1;filter:drop-shadow(0 0 30px rgba(212,168,67,0.25));" crossorigin="anonymous"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.95) 0%,rgba(13,13,13,0.7) 50%,rgba(13,13,13,0.1) 100%);z-index:2;"></div>
-            <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;">
+        <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-30px;right:-15px;height:280px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 25px rgba(212,168,67,0.4)) drop-shadow(-4px -4px 0px rgba(0,0,0,0.8));" crossorigin="anonymous"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.95) 0%,rgba(13,13,13,0.75) 45%,rgba(13,13,13,0.05) 100%);z-index:2;border-radius:14px;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">⚡ EN VIVO</div>
                 <div style="font-size:15px;color:${C.gold};font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;">RANKING OFICIAL</div>
-                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;">RESUMEN</div>
-                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:-2px;text-transform:uppercase;margin-bottom:12px;">JORNADA</div>
+                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Bebas Neue','Barlow Condensed',sans-serif;">RESUMEN</div>
+                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Bebas Neue','Barlow Condensed',sans-serif;">JORNADA</div>
                 <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
             </div>
         </div>
@@ -848,8 +909,12 @@ async function compartirRanking() {
             <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📈 ESTADÍSTICAS</div>
             ${renderStats()}
         </div>
+        <div style="flex-shrink:0;">
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
+            ${renderResultados()}
+        </div>
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
-            <div style="font-size:13px;color:${C.textMuted};">El mundial al alcance de tus manos</div>
+            <div style="font-size:13px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">El mundial al alcance de tus manos</div>
         </div>`;
 
     wrapper.appendChild(colLeft);
@@ -863,11 +928,12 @@ async function compartirRanking() {
             allowTaint: true,
             backgroundColor: C.bg,
             width: 900,
-            height: 1400,
+            height: 1600,
             logging: false,
         });
 
         document.body.removeChild(wrapper);
+        if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
 
         canvas.toBlob(blob => {
             if (!blob) { alert('Error generando imagen.'); return; }
@@ -881,6 +947,7 @@ async function compartirRanking() {
 
     } catch (err) {
         document.body.removeChild(wrapper);
+        if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
         console.error('Error generando ranking:', err);
         alert('Error generando la imagen. Revisa la consola.');
     }
