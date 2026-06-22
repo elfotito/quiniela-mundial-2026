@@ -668,23 +668,24 @@ async function compartirRanking() {
     const top3     = datos.slice(0, 3);
 
     const C = {
-        bg:          '#0D0D0D',
-        surface:     '#161616',
-        surfaceAlt:  '#1C1C1C',
-        border:      '#2A2A2A',
-        gold:        '#D4A843',
-        goldDim:     'rgba(212,168,67,0.12)',
-        silver:      '#A8B4C0',
-        silverDim:   'rgba(168,180,192,0.12)',
-        bronze:      '#A0653A',
-        bronzeDim:   'rgba(160,101,58,0.12)',
+        bg:          '#0A0A0A',        // negro casi puro
+        surface:     '#111111',        // negro suave
+        surfaceAlt:  '#181818',        // negro elevado
+        border:      '#2C2C2C',        // borde sutil
+        gold:        '#C9A84C',        // dorado Carrisán (igual que --fifa-gold)
+        goldBright:  '#F0C866',        // dorado brillante para highlights
+        goldDim:     'rgba(201,168,76,0.15)',
+        silver:      '#C0C0C0',        // plata limpia
+        silverDim:   'rgba(192,192,192,0.10)',
+        bronze:      '#CD7F32',        // bronce
+        bronzeDim:   'rgba(205,127,50,0.12)',
         white:       '#FFFFFF',
-        textMain:    '#F0F0F0',
-        textMuted:   '#6B6B6B',
-        green:       '#22C55E',
-        red:         '#EF4444',
-        greenDim:    'rgba(34,197,94,0.15)',
-        redDim:      'rgba(239,68,68,0.15)',
+        textMain:    '#FFFFFF',        // blanco puro
+        textMuted:   '#707070',        // gris medio
+        green:       '#2ECC71',        // verde clasificación
+        red:         '#E74C3C',        // rojo descenso
+        greenDim:    'rgba(46,204,113,0.12)',
+        redDim:      'rgba(231,76,60,0.12)',
     };
 
     // ── FILAS TABLA ──
@@ -723,13 +724,13 @@ async function compartirRanking() {
             }
 
             return `
-<div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
+<div style="display:flex;align-items:center;justify-content:space-between;height:41px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <div style="width:34px;height:34px;border-radius:6px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '19px' : '14px'};font-weight:700;flex-shrink:0;font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
-        <div style="font-size:21px;line-height:1;flex-shrink:0;width:23px;text-align:center;">${bandera}</div>
-        <div style="font-size:18px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:0.8px;">${nombre}</div>
+        <div style="width:30px;height:30px;border-radius:5px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '17px' : '13px'};font-weight:700;flex-shrink:0;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
+        <div style="font-size:19px;line-height:1;flex-shrink:0;width:21px;text-align:center;">${bandera}</div>
+        <div style="font-size:16px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.8px;">${nombre}</div>
     </div>
-    <div style="font-size:20px;font-weight:700;color:${ptsColor};font-family:'Barlow Condensed','Inter',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
+    <div style="font-size:18px;font-weight:700;color:${ptsColor};font-family:'Roboto Condensed','Arial Narrow',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
 </div>`;
         }).join('');
     }
@@ -745,7 +746,7 @@ async function compartirRanking() {
                           3: { h: '68px',  font: '14px', pts: '18px' } };
         const bgs     = { 1: C.goldDim,   2: C.silverDim,   3: C.bronzeDim  };
         const border  = { 1: C.gold,      2: C.silver,      3: C.bronze     };
-        const ptsClr  = { 1: C.gold,      2: C.silver,      3: C.bronze     };
+        const ptsClr  = { 1: C.goldBright, 2: C.silver,      3: C.bronze     };
         const sz      = sizes[pos];
         const posLabel = pos === 1 ? '1ER LUGAR' : pos === 2 ? '2DO LUGAR' : '3ER LUGAR';
 
@@ -755,11 +756,11 @@ async function compartirRanking() {
         ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />` : `<span style="font-size:28px;">${medals[pos]}</span>`}
     </div>
     <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;font-weight:500;color:${border[pos]};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${medals[pos]} ${posLabel}</div>
-        <div style="font-size:${sz.font};font-weight:700;color:${C.white};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
-        <div style="font-size:13px;color:${C.textMuted};font-family:'Barlow Condensed','Inter',sans-serif;margin-top:1px;">${bandera} ${puntos} pts</div>
+        <div style="font-size:13px;font-weight:500;color:${border[pos]};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;">${medals[pos]} ${posLabel}</div>
+        <div style="font-size:${sz.font};font-weight:700;color:${C.white};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nombre}</div>
+        <div style="font-size:13px;color:${C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;margin-top:1px;">${bandera} ${puntos} pts</div>
     </div>
-    <div style="font-size:${sz.pts};font-weight:800;color:${ptsClr[pos]};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-1px;flex-shrink:0;">${puntos}</div>
+    <div style="font-size:${sz.pts};font-weight:800;color:${ptsClr[pos]};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:-1px;flex-shrink:0;">${puntos}</div>
 </div>`;
     }
 
@@ -775,8 +776,8 @@ async function compartirRanking() {
             ${stats.map(s => `
             <div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:12px;text-align:center;">
                 <div style="font-size:24px;margin-bottom:4px;">${s.icon}</div>
-                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:-1px;">${s.value}</div>
-                <div style="font-size:12px;color:${C.textMuted};font-family:'Barlow Condensed','Inter',sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
+                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:-1px;">${s.value}</div>
+                <div style="font-size:12px;color:${C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
             </div>`).join('')}
         </div>`;
     }
@@ -796,7 +797,7 @@ async function compartirRanking() {
 
     function renderResultados() {
         if (!ultimosResultados.length) {
-            return `<div style="text-align:center;padding:14px 0;font-size:12px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">⏳ Sin resultados disponibles</div>`;
+            return `<div style="text-align:center;padding:14px 0;font-size:12px;color:${C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;">⏳ Sin resultados disponibles</div>`;
         }
         return ultimosResultados.map(p => {
             const fecha = new Date(p.fecha);
@@ -810,24 +811,24 @@ async function compartirRanking() {
             return `
 <div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:8px 10px;margin-bottom:6px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <span style="font-size:10px;color:${C.gold};letter-spacing:1.5px;font-family:'Barlow Condensed',sans-serif;font-weight:600;">⚽ FASE DE GRUPOS</span>
-        <span style="font-size:10px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">${fechaCorta} · FINALIZADO</span>
+        <span style="font-size:10px;color:${C.gold};letter-spacing:1.5px;font-family:'Roboto Condensed','Arial Narrow',sans-serif;font-weight:600;">⚽ FASE DE GRUPOS</span>
+        <span style="font-size:10px;color:${C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;">${fechaCorta} · FINALIZADO</span>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
         <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
                 <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_local)}</span>
-                <span style="font-size:13px;font-weight:${ganLocal?'800':'500'};color:${ganLocal?C.white:C.textMuted};font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${local}</span>
+                <span style="font-size:13px;font-weight:${ganLocal?'800':'500'};color:${ganLocal?C.white:C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${local}</span>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
                 <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_visitante)}</span>
-                <span style="font-size:13px;font-weight:${ganVisita?'800':'500'};color:${ganVisita?C.white:C.textMuted};font-family:'Barlow Condensed',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${visita}</span>
+                <span style="font-size:13px;font-weight:${ganVisita?'800':'500'};color:${ganVisita?C.white:C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${visita}</span>
             </div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;background:${C.bg};border:1px solid ${C.border};border-radius:6px;padding:4px 10px;flex-shrink:0;min-width:42px;">
-            <span style="font-size:16px;font-weight:800;color:${ganLocal?C.gold:C.white};font-family:'Bebas Neue','Barlow Condensed',sans-serif;line-height:1.1;">${gl}</span>
+            <span style="font-size:16px;font-weight:800;color:${ganLocal?C.gold:C.white};font-family:'Oswald','Arial Narrow',sans-serif;line-height:1.1;">${gl}</span>
             <div style="width:16px;height:1px;background:${C.border};margin:2px 0;"></div>
-            <span style="font-size:16px;font-weight:800;color:${ganVisita?C.gold:C.white};font-family:'Bebas Neue','Barlow Condensed',sans-serif;line-height:1.1;">${gv}</span>
+            <span style="font-size:16px;font-weight:800;color:${ganVisita?C.gold:C.white};font-family:'Oswald','Arial Narrow',sans-serif;line-height:1.1;">${gv}</span>
         </div>
     </div>
 </div>`;
@@ -845,13 +846,13 @@ async function compartirRanking() {
     // ── FUENTE: inyectar en DOM para html2canvas ──
     const styleEl = document.createElement('style');
     styleEl.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&display=swap');
-        * { font-family: 'Barlow Condensed', 'Inter', sans-serif !important; }
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700;800&display=swap');
+        * { font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif !important; }
     `;
     document.head.appendChild(styleEl);
 
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Barlow Condensed','Inter',Arial,sans-serif;overflow:hidden;`;
+    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
 
     // COLUMNA IZQUIERDA (60% = 540px)
     const colLeft = document.createElement('div');
@@ -895,13 +896,13 @@ async function compartirRanking() {
             ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
         </div>
         <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-30px;right:-15px;height:280px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 25px rgba(212,168,67,0.4)) drop-shadow(-4px -4px 0px rgba(0,0,0,0.8));" crossorigin="anonymous"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.95) 0%,rgba(13,13,13,0.75) 45%,rgba(13,13,13,0.05) 100%);z-index:2;border-radius:14px;"></div>
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-30px;right:-15px;height:280px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.80) 40%,rgba(10,10,10,0.0) 100%);z-index:1;border-radius:14px;"></div>
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">⚡ EN VIVO</div>
                 <div style="font-size:15px;color:${C.gold};font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;">RANKING OFICIAL</div>
-                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Bebas Neue','Barlow Condensed',sans-serif;">RESUMEN</div>
-                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Bebas Neue','Barlow Condensed',sans-serif;">JORNADA</div>
+                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Oswald','Arial Narrow',sans-serif;">RESUMEN</div>
+                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Oswald','Arial Narrow',sans-serif;">JORNADA</div>
                 <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
             </div>
         </div>
@@ -910,11 +911,11 @@ async function compartirRanking() {
             ${renderStats()}
         </div>
         <div style="flex-shrink:0;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Barlow Condensed',sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Roboto Condensed','Arial Narrow',sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
             ${renderResultados()}
         </div>
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
-            <div style="font-size:13px;color:${C.textMuted};font-family:'Barlow Condensed',sans-serif;">El mundial al alcance de tus manos</div>
+            <div style="font-size:13px;color:${C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;">El mundial al alcance de tus manos</div>
         </div>`;
 
     wrapper.appendChild(colLeft);
