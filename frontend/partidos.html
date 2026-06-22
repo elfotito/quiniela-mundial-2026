@@ -41,8 +41,8 @@
 <div class="container">
     <h1>⚽ Admin Resultados - Mundial 2026</h1>
     <div class="tabs">
-        <button class="tab-btn active" onclick="cambiarTab('traer')">Traer de football-data.org</button>
-        <button class="tab-btn" onclick="cambiarTab('historial')">Historial de resultados</button>
+        <button class="tab-btn active" onclick="cambiarTab('traer')">Traer partidos</button>
+        <button class="tab-btn" onclick="cambiarTab('historial')">Historial</button>
     </div>
 
     <div id="tab-traer" class="tab-content active">
@@ -52,7 +52,7 @@
                 <span class="status-badge" id="status">Listo</span>
             </div>
             <p style="color:#999;margin-bottom:20px;font-size:14px">
-                Pulla los últimos partidos finalizados, en vivo y próximos desde football-data.org.
+                Pulla partidos finalizados, en vivo y próximos desde football-data.org (vía tu backend).
             </p>
             <button class="btn-traer" id="btnTraer" onclick="traerResultados()">📡 Traer Partidos</button>
             <div id="previewContainer" style="margin-top:20px"></div>
@@ -75,7 +75,9 @@
         'https://aohnbafexgwkugtfryrk.supabase.co',
         'sb_publishable_LG2mW2C2kgi_dZrB4C9jgw_cMywfRB8'
     );
-    const API_KEY = 'd7ea5324baf74ba6885ffa05df48b59e'; // Tu API key
+
+    // URL de tu backend (Render)
+    const BACKEND_URL = 'https://quinielamundial2026.onrender.com';
 
     let partidosCargados = [];
 
@@ -94,12 +96,11 @@
         status.textContent = '⏳ Conectando...';
         status.className = 'status-badge loading';
         try{
-            // WC = World Cup (competición oficial en football-data.org)
-            const res = await fetch('https://api.football-data.org/v4/competitions/WC/matches?status=FINISHED&status=SCHEDULED&status=LIVE', {
-                headers: { 'X-Auth-Token': API_KEY }
-            });
+            // Llamamos a nuestro backend, no directamente a football-data.org
+            const res = await fetch(`${BACKEND_URL}/api/football/matches`);
             if(!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
+            if(data.error) throw new Error(data.error);
             const matches = data.matches || [];
             if(!matches.length) throw new Error('No se encontraron partidos');
 
