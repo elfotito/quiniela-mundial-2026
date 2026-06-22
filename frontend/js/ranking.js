@@ -1424,9 +1424,14 @@ async function compartirRanking() {
 
         document.body.removeChild(el);
 
-        canvas.toBlob(async (blob) => {
-            const archivo = new File([blob], 'ranking-quiniela.png', { type: 'image/png' });
+        canvas.toBlob(async (blob) => {  
+    const archivo = new File([blob], 'ranking.png', { type: blob.type });
 
+    // LÍNEA 1413:
+    await navigator.share({ // ✅ ¡Ahora ya funciona!
+        files: [archivo],
+        title: 'Mi Ranking'
+    });
             if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
                 try {
                     await navigator.share({
