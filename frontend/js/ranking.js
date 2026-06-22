@@ -392,638 +392,35 @@ function filtrarRanking() {
 // ===============================================
 
 async function compartirRanking() {
-    const datos = rankingFiltrado;
-    if (!datos || datos.length === 0) {
-        alert('No hay datos para compartir.');
-        return;
-    }
-
-    const ligaSelect = document.getElementById('ligaFilter');
-    const ligaNombre = ligaSelect && ligaSelect.selectedIndex > 0
-        ? ligaSelect.options[ligaSelect.selectedIndex].text
-        : 'Todas las Ligas';
-
-    const fecha = new Date().toLocaleDateString('es-ES', {
-        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-    });
-    const fechaFormateada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-
-    const total    = datos.length;
-    const lider    = datos[0];
-    const ultimo   = datos[total - 1];
-    const promedio = Math.round(datos.reduce((a, b) => a + (Number(b.puntos_totales) || 0), 0) / total);
-    const maxPts   = Number(datos[0]?.puntos_totales) || 0;
-    const minPts   = Number(datos[total - 1]?.puntos_totales) || 0;
-    const top3     = datos.slice(0, 3);
-
-    // ── PALETA ──
-    const C = {
-        bg:          '#0D0D0D',
-        surface:     '#161616',
-        surfaceAlt:  '#1C1C1C',
-        border:      '#2A2A2A',
-        gold:        '#D4A843',
-        goldLight:   '#F0C866',
-        goldDim:     'rgba(212,168,67,0.12)',
-        silver:      '#A8B4C0',
-        silverDim:   'rgba(168,180,192,0.12)',
-        bronze:      '#A0653A',
-        bronzeDim:   'rgba(160,101,58,0.12)',
-        white:       '#FFFFFF',
-        textMain:    '#F0F0F0',
-        textMuted:   '#6B6B6B',
-        green:       '#22C55E',
-        red:         '#EF4444',
-        greenDim:    'rgba(34,197,94,0.15)',
-        redDim:      'rgba(239,68,68,0.15)',
-    };
-
-    // ── HELPERS ──
-    const px = n => `${n}px`;
-
-    // ── FILAS DE LA TABLA IZQUIERDA ──
-    function renderFilas() {
-        return datos.map((user, index) => {
-            const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18).toUpperCase();
-            const puntos = user.puntos_totales || 0;
-            const bandera = obtenerCampeon(user.campeon_elegido);
-
-            // Zona indicadores
-            const esTop1        = pos === 1;
-            const esTop2        = pos === 2;
-            const esTop3        = pos === 3;
-            const esPenultimo   = index === total - 2;
-            const esUltimo      = index === total - 1;
-            const esZonaRoja    = esPenultimo || esUltimo;
-            const esZonaVerde   = esTop1 || esTop2 || esTop3;
-
-            // Ambulancia en penúltimo
-            const displayPos = esPenultimo ? '🚑' : String(pos);
-
-            // Colores por posición
-            let badgeBg    = C.surfaceAlt;
-            let badgeColor = C.textMuted;
-            let ptsColor   = C.textMain;
-            let rowBg      = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
-            let leftBorder = `3px solid transparent`;
-
-            if (esTop1) {
-                badgeBg    = C.gold;
-                badgeColor = '#000';
-                ptsColor   = C.gold;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.goldDim;
-            } else if (esTop2) {
-                badgeBg    = C.silver;
-                badgeColor = '#000';
-                ptsColor   = C.silver;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.silverDim;
-            } else if (esTop3) {
-                badgeBg    = C.bronze;
-                badgeColor = '#FFF';
-                ptsColor   = C.bronze;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.bronzeDim;
-            } else if (esZonaRoja) {
-                leftBorder = `3px solid ${C.red}`;
-                rowBg      = C.redDim;
-                ptsColor   = C.red;
-            }
-
-            return `
-<div style="
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    height:42px;
-    padding:0 18px 0 0;
-    background:${rowBg};
-    border-left:${leftBorder};
-    margin-bottom:2px;
-    border-radius:0 6px 6px 0;
-">
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <!-- POSICIÓN -->
-        <div style="
-            width:32px;height:32px;
-            border-radius:6px;
-            background:${badgeBg};
-            color:${badgeColor};
-            display:flex;align-items:center;justify-content:center;
-            font-size:${esPenultimo ? '18px' : '15px'};
-            font-weight:700;
-            flex-shrink:0;
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:-0.5px;
-            margin-left:10px;
-        ">${displayPos}</div>
-
-        <!-- BANDERA CAMPEÓN -->
-        <div style="
-            font-size:20px;
-            line-height:1;
-            flex-shrink:0;
-            width:22px;
-            text-align:center;
-        ">${bandera}</div>
-
-        <!-- NOMBRE -->
-        <div style="
-            font-size:17px;
-            font-weight:600;
-            color:${C.textMain};
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:0.8px;
-        ">${nombre}</div>
-    </div>
-
-    <!-- PUNTOS -->
-    <div style="
-        font-size:19px;
-        font-weight:700;
-        color:${ptsColor};
-        font-family:'Inter','Helvetica Neue',sans-serif;
-        flex-shrink:0;
-        min-width:42px;
-        text-align:right;
-        letter-spacing:-0.5px;
-    ">${puntos}</div>
-</div>`;
-        }).join('');
-    }
-
-    // ── PODIO VERTICAL — 3 badges apilados ──
-    function renderPodioItem(user, pos, imgSrc) {
-        const nombre   = (user?.nombre_publico || user?.nombre || '—').substring(0, 16).toUpperCase();
-        const puntos   = user?.puntos_totales || 0;
-        const bandera  = obtenerCampeon(user?.campeon_elegido);
-
-        const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
-        const sizes  = { 1: { h: '88px', font: '17px', pts: '22px' },
-                         2: { h: '72px', font: '15px', pts: '18px' },
-                         3: { h: '66px', font: '14px', pts: '17px' } };
-
-        const bgs    = { 1: C.goldDim,   2: C.silverDim,   3: C.bronzeDim   };
-        const border = { 1: C.gold,      2: C.silver,      3: C.bronze      };
-        const ptsClr = { 1: C.gold,      2: C.silver,      3: C.bronze      };
-        const sz     = sizes[pos];
-
-        return `
-<div style="
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:${bgs[pos]};
-    border:1px solid ${border[pos]}33;
-    border-radius:10px;
-    padding:10px 14px;
-    margin-bottom:10px;
-    height:${sz.h};
-    box-sizing:border-box;
-">
-    <!-- FOTO HISTÓRICA -->
-    <div style="
-        width:54px;height:54px;
-        border-radius:50%;
-        border:2px solid ${border[pos]};
-        overflow:hidden;
-        flex-shrink:0;
-        background:${C.surfaceAlt};
-        display:flex;align-items:center;justify-content:center;
-    ">
-        ${imgSrc
-            ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />`
-            : `<span style="font-size:24px;">${medals[pos]}</span>`
-        }
-    </div>
-
-    <!-- INFO -->
-    <div style="flex:1;min-width:0;">
-        <div style="
-            font-size:11px;
-            font-weight:500;
-            color:${border[pos]};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:2px;
-            text-transform:uppercase;
-            margin-bottom:3px;
-        ">${medals[pos]} ${pos === 1 ? '1ER LUGAR' : pos === 2 ? '2DO LUGAR' : '3ER LUGAR'}</div>
-        <div style="
-            font-size:${sz.font};
-            font-weight:700;
-            color:${C.white};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:0.5px;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        ">${nombre}</div>
-        <div style="
-            font-size:11px;
-            color:${C.textMuted};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            margin-top:1px;
-        ">${bandera} ${puntos} pts</div>
-    </div>
-
-    <!-- PTS GRANDE -->
-    <div style="
-        font-size:${sz.pts};
-        font-weight:800;
-        color:${ptsClr[pos]};
-        font-family:'Inter','Helvetica Neue',sans-serif;
-        letter-spacing:-1px;
-        flex-shrink:0;
-    ">${puntos}</div>
-</div>`;
-    }
-
-    // ── STATS ──
-    function renderStats() {
-        const stats = [
-            { label: 'PUNTAJE MÁX',  value: maxPts,  icon: '👑', color: C.gold    },
-            { label: 'PUNTAJE MÍN',  value: minPts,  icon: '📉', color: C.red     },
-            { label: 'PROMEDIO',     value: promedio, icon: '📊', color: C.silver  },
-            { label: 'JUGADORES',    value: total,    icon: '👥', color: C.green   },
-        ];
-        return `
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-    ${stats.map(s => `
-    <div style="
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        border-radius:8px;
-        padding:12px;
-        text-align:center;
-    ">
-        <div style="font-size:20px;margin-bottom:4px;">${s.icon}</div>
-        <div style="
-            font-size:24px;
-            font-weight:800;
-            color:${s.color};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:-1px;
-        ">${s.value}</div>
-        <div style="
-            font-size:10px;
-            color:${C.textMuted};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:1.5px;
-            margin-top:2px;
-        ">${s.label}</div>
-    </div>`).join('')}
-</div>`;
-    }
-
-    // ── CONSTRUCCIÓN DEL DOM TEMPORAL ──
-    const wrapper = document.createElement('div');
-    wrapper.style.cssText = `
-        position:fixed;
-        top:-9999px;
-        left:-9999px;
-        width:1200px;
-        height:1900px;
-        background:${C.bg};
-        display:flex;
-        font-family:'Inter','Helvetica Neue',Arial,sans-serif;
-        overflow:hidden;
-    `;
-
-    // ──────────────── COLUMNA IZQUIERDA (60% = 720px) ────────────────
-    const colLeft = document.createElement('div');
-    colLeft.style.cssText = `
-        width:720px;
-        height:1900px;
-        display:flex;
-        flex-direction:column;
-        padding:32px 24px 32px 32px;
-        box-sizing:border-box;
-        border-right:1px solid ${C.border};
-    `;
-    colLeft.innerHTML = `
-        <!-- HEADER IZQUIERDO: logo + título -->
-        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid ${C.border};">
-            <!-- ESPACIO LOGO (minilogo vertical) -->
-            <div style="
-                width:80px;height:80px;
-                border-radius:10px;
-                background:${C.surfaceAlt};
-                border:1px solid ${C.border};
-                display:flex;align-items:center;justify-content:center;
-                overflow:hidden;
-                flex-shrink:0;
-            ">
-                <img id="logo-izq" src="" alt="" style="width:100%;height:100%;object-fit:contain;" />
-            </div>
-            <div style="flex:1;">
-                <div style="
-                    font-size:11px;
-                    color:${C.gold};
-                    letter-spacing:3px;
-                    font-weight:600;
-                    text-transform:uppercase;
-                    margin-bottom:4px;
-                ">⚽ COPA MUNDIAL FIFA 2026</div>
-                <div style="
-                    font-size:28px;
-                    font-weight:800;
-                    color:${C.white};
-                    letter-spacing:-0.5px;
-                    line-height:1;
-                ">TABLA DE POSICIONES</div>
-                <div style="
-                    font-size:13px;
-                    color:${C.textMuted};
-                    margin-top:5px;
-                ">${ligaNombre} · ${fechaFormateada}</div>
-            </div>
-        </div>
-
-        <!-- CABECERA DE COLUMNAS -->
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:0 18px 0 55px;
-            margin-bottom:8px;
-        ">
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">JUGADOR</div>
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">PTS</div>
-        </div>
-
-        <!-- LEYENDA ZONAS -->
-        <div style="display:flex;gap:16px;margin-bottom:10px;padding-left:10px;">
-            <div style="display:flex;align-items:center;gap:5px;">
-                <div style="width:10px;height:10px;border-radius:2px;background:${C.green};"></div>
-                <span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">CLASIFICACIÓN</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:5px;">
-                <div style="width:10px;height:10px;border-radius:2px;background:${C.red};"></div>
-                <span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">ZONA PELIGRO</span>
-            </div>
-        </div>
-
-        <!-- TABLA -->
-        <div style="flex:1;overflow:hidden;">
-            ${renderFilas()}
-        </div>
-
-        <!-- FOOTER IZQUIERDO -->
-        <div style="
-            padding-top:16px;
-            border-top:1px solid ${C.border};
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-        ">
-            <div style="font-size:11px;color:${C.textMuted};">TOTAL: ${total} PARTICIPANTES</div>
-            <div style="font-size:11px;color:${C.gold};letter-spacing:1px;">quinielacarrisan.com.ve</div>
-        </div>
-    `;
-
-    // ──────────────── COLUMNA DERECHA (40% = 480px) ────────────────
-    const colRight = document.createElement('div');
-    colRight.style.cssText = `
-        width:480px;
-        height:1900px;
-        display:flex;
-        flex-direction:column;
-        padding:32px 32px 32px 24px;
-        box-sizing:border-box;
-        gap:20px;
-    `;
-
-    // SECCIÓN 1: LOGO DERECHO
-    const secLogo = `
-    <div style="
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:80px;
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        border-radius:12px;
-        overflow:hidden;
-    ">
-        <img id="logo-der" src="" alt="" style="max-height:70px;max-width:90%;object-fit:contain;" />
-    </div>`;
-
-    // SECCIÓN 2: PODIO VERTICAL
-    // Las 3 imágenes históricas — modifícalas manualmente
-    const PODIO_IMG = {
-        1: '',   // ruta foto 1er lugar histórico
-        2: '',   // ruta foto 2do lugar histórico
-        3: '',   // ruta foto 3er lugar histórico
-    };
-
-    const secPodio = `
-    <div>
-        <div style="
-            font-size:11px;
-            color:${C.gold};
-            letter-spacing:3px;
-            font-weight:600;
-            margin-bottom:12px;
-        ">🏆 LÍDERES ACTUALES</div>
-        ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
-        ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
-        ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
-    </div>`;
-
-    // SECCIÓN 3: IMAGEN DE IMPACTO — jugador + overlay tipográfico
-    const secImpacto = `
-    <div style="
-        position:relative;
-        border-radius:14px;
-        overflow:hidden;
-        height:380px;
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        flex-shrink:0;
-    ">
-        <!-- JUGADOR PNG -->
-        <img src="/img/diaz.png" alt="" style="
-            position:absolute;
-            bottom:0;
-            right:-10px;
-            height:370px;
-            object-fit:contain;
-            z-index:1;
-            filter:drop-shadow(0 0 30px rgba(212,168,67,0.25));
-        " />
-
-        <!-- GRADIENTE OVERLAY -->
-        <div style="
-            position:absolute;
-            inset:0;
-            background:linear-gradient(135deg, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.7) 50%, rgba(13,13,13,0.1) 100%);
-            z-index:2;
-        "></div>
-
-        <!-- TEXTO OVERLAY -->
-        <div style="
-            position:absolute;
-            top:0;left:0;right:0;bottom:0;
-            z-index:3;
-            padding:24px;
-            display:flex;
-            flex-direction:column;
-            justify-content:flex-end;
-        ">
-            <!-- BADGE RANKING OFICIAL -->
-            <div style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                background:${C.gold};
-                color:#000;
-                font-size:10px;
-                font-weight:700;
-                letter-spacing:2px;
-                padding:4px 10px;
-                border-radius:4px;
-                margin-bottom:10px;
-                width:fit-content;
-            ">⚡ EN VIVO</div>
-
-            <div style="
-                font-size:13px;
-                color:${C.gold};
-                font-weight:600;
-                letter-spacing:4px;
-                text-transform:uppercase;
-                margin-bottom:4px;
-            ">RANKING OFICIAL</div>
-
-            <div style="
-                font-size:42px;
-                font-weight:900;
-                color:${C.white};
-                line-height:0.95;
-                letter-spacing:-2px;
-                text-transform:uppercase;
-            ">RESUMEN</div>
-            <div style="
-                font-size:42px;
-                font-weight:900;
-                color:${C.gold};
-                line-height:0.95;
-                letter-spacing:-2px;
-                text-transform:uppercase;
-                margin-bottom:16px;
-            ">JORNADA</div>
-
-            <div style="
-                font-size:12px;
-                color:rgba(255,255,255,0.5);
-                letter-spacing:1px;
-            ">${fechaFormateada}</div>
-        </div>
-    </div>`;
-
-    // SECCIÓN 4: STATS
-    const secStats = `
-    <div>
-        <div style="
-            font-size:11px;
-            color:${C.gold};
-            letter-spacing:3px;
-            font-weight:600;
-            margin-bottom:12px;
-        ">📈 ESTADÍSTICAS</div>
-        ${renderStats()}
-    </div>`;
-
-    // FOOTER DERECHO
-    const secFooter = `
-    <div style="
-        padding-top:12px;
-        border-top:1px solid ${C.border};
-        text-align:center;
-    ">
-        <div style="font-size:11px;color:${C.textMuted};">El mundial al alcance de tus manos</div>
-    </div>`;
-
-    colRight.innerHTML = secLogo + secPodio + secImpacto + secStats + secFooter;
-
-    wrapper.appendChild(colLeft);
-    wrapper.appendChild(colRight);
-    document.body.appendChild(wrapper);
-
-    // ── CAPTURA CON HTML2CANVAS ──
     try {
-        // Verificar que html2canvas esté disponible
-        if (typeof html2canvas === 'undefined') {
-            document.body.removeChild(wrapper);
-            alert('La librería html2canvas no está cargada. Por favor, inclúyela en tu HTML.');
-            return;
+        // Opción 1: Compartir URL con filtros
+        const ligaId = document.getElementById('ligaFilter').value;
+        const ligaName = ligaId ? 
+            ligasDisponibles.find(l => l.id === parseInt(ligaId))?.nombre || 'General' : 
+            'General';
+        
+        const shareData = {
+            title: 'Ranking Quiniela Mundial 2026',
+            text: `🏆 Ranking ${ligaName}\n${rankingFiltrado.length} participantes\n\nTop 3:\n${rankingFiltrado.slice(0, 3).map((u, i) => `${i + 1}. ${u.nombre_publico || u.nombre} - ${u.puntos_totales} pts`).join('\n')}`,
+            url: window.location.href
+        };
+        
+        // Si el navegador soporta Web Share API
+        if (navigator.share) {
+            await navigator.share(shareData);
+            console.log('✅ Compartido exitosamente');
+        } else {
+            // Fallback: Copiar al portapapeles
+            await navigator.clipboard.writeText(shareData.text + '\n\n' + shareData.url);
+            mostrarToast('📋 Texto copiado al portapapeles', 'success');
         }
-
-        const canvas = await html2canvas(wrapper, {
-            scale: 3,                   // 3x DPI → nitidez anti-compresión WhatsApp
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: C.bg,
-            width: 1200,
-            height: 1900,
-            logging: false,
-        });
-
-        document.body.removeChild(wrapper);
-
-        return new Promise((resolve, reject) => {
-            canvas.toBlob(async (blob) => {
-                if (!blob) {
-                    alert('Error generando imagen.');
-                    reject('No se pudo generar el blob');
-                    return;
-                }
-
-                const archivo = new File([blob], `ranking-${new Date().toISOString().slice(0,10)}.png`, { type: blob.type });
-
-                // Intentar compartir nativamente
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [archivo] })) {
-                    try {
-                        await navigator.share({
-                            files: [archivo],
-                            title: 'Ranking Quiniela',
-                            text: '¡Mira la tabla de posiciones! ⚽📊'
-                        });
-                        resolve();
-                    } catch (err) {
-                        if (err.name !== 'AbortError') {
-                            console.error('Share error:', err);
-                            // Fallback a descarga
-                            descargarImagen(canvas);
-                        }
-                        resolve();
-                    }
-                } else {
-                    // Fallback: descarga directa
-                    descargarImagen(canvas);
-                    resolve();
-                }
-            }, 'image/png');
-        });
-
-    } catch (err) {
-        if (document.body.contains(wrapper)) document.body.removeChild(wrapper);
-        console.error('Error generando ranking:', err);
-        alert('Error generando la imagen. Revisa la consola.');
+        
+    } catch (error) {
+        if (error.name !== 'AbortError') {
+            console.error('Error al compartir:', error);
+            mostrarToast('❌ Error al compartir', 'error');
+        }
     }
-}
-
-// Función auxiliar para descargar imagen
-function descargarImagen(canvas) {
-    const link = document.createElement('a');
-    link.download = `ranking-${new Date().toISOString().slice(0,10)}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
 }
 
 // Alternativa: Generar imagen del ranking (más avanzado)
@@ -1266,579 +663,80 @@ async function compartirRanking() {
     const lider    = datos[0];
     const ultimo   = datos[total - 1];
     const promedio = Math.round(datos.reduce((a, b) => a + (Number(b.puntos_totales) || 0), 0) / total);
-    const maxPts   = Number(datos[0]?.puntos_totales) || 0;
-    const minPts   = Number(datos[total - 1]?.puntos_totales) || 0;
     const top3     = datos.slice(0, 3);
 
-    // ── PALETA ──
-    const C = {
-        bg:          '#0D0D0D',
-        surface:     '#161616',
-        surfaceAlt:  '#1C1C1C',
-        border:      '#2A2A2A',
-        gold:        '#D4A843',
-        goldLight:   '#F0C866',
-        goldDim:     'rgba(212,168,67,0.12)',
-        silver:      '#A8B4C0',
-        silverDim:   'rgba(168,180,192,0.12)',
-        bronze:      '#A0653A',
-        bronzeDim:   'rgba(160,101,58,0.12)',
-        white:       '#FFFFFF',
-        textMain:    '#F0F0F0',
-        textMuted:   '#6B6B6B',
-        green:       '#22C55E',
-        red:         '#EF4444',
-        greenDim:    'rgba(34,197,94,0.15)',
-        redDim:      'rgba(239,68,68,0.15)',
+    // ── PALETA DE COLORES PREMIUM ──
+    const K_COLOR = {
+        bg: '#0B0F19',
+        surface: '#151A28',
+        surfaceLight: '#1E2538',
+        primary: '#6366F1',
+        primaryGlow: 'rgba(99, 102, 241, 0.15)',
+        gold: '#FBBF24',
+        silver: '#CBD5E1',
+        bronze: '#D97706',
+        text: '#F8FAFC',
+        textMuted: '#94A3B8'
     };
 
-    // ── HELPERS ──
-    const px = n => `${n}px`;
-
-    // ── FILAS DE LA TABLA IZQUIERDA ──
+    // ── COLUMNA IZQ: FILAS (Más amplias para aprovechar los 1920px) ──
     function renderFilas() {
         return datos.map((user, index) => {
-            const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18).toUpperCase();
+            const pos = index + 1;
+            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 20);
             const puntos = user.puntos_totales || 0;
-            const bandera = obtenerCampeon(user.campeon_elegido);
+            
+            // Lógica de la Ambulancia en la POSICIÓN
+            // Ojo: index === datos.length - 2 es el PENÚLTIMO. Si quieres el antepenúltimo usa -3.
+            const esAntepenultimo = index === datos.length - 2; 
+            const displayPos = esAntepenultimo ? '🚑' : pos;
 
-            // Zona indicadores
-            const esTop1        = pos === 1;
-            const esTop2        = pos === 2;
-            const esTop3        = pos === 3;
-            const esPenultimo   = index === total - 2;
-            const esUltimo      = index === total - 1;
-            const esZonaRoja    = esPenultimo || esUltimo;
-            const esZonaVerde   = esTop1 || esTop2 || esTop3;
+            const esTop1 = pos === 1;
+            const esTop2 = pos === 2;
+            const esTop3 = pos === 3;
 
-            // Ambulancia en penúltimo
-            const displayPos = esPenultimo ? '🚑' : String(pos);
+            let numBg = 'rgba(255,255,255,0.05)';
+            let numColor = K_COLOR.textMuted;
+            let rowBg = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
+            let nameColor = K_COLOR.text;
+            let ptsColor = K_COLOR.text;
 
-            // Colores por posición
-            let badgeBg    = C.surfaceAlt;
-            let badgeColor = C.textMuted;
-            let ptsColor   = C.textMain;
-            let rowBg      = index % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent';
-            let leftBorder = `3px solid transparent`;
-
+            // Arreglado el color del número (numColor) a blanco (#FFF)
             if (esTop1) {
-                badgeBg    = C.gold;
-                badgeColor = '#000';
-                ptsColor   = C.gold;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.goldDim;
+                numBg = K_COLOR.gold; numColor = '#FFF'; ptsColor = K_COLOR.gold;
+                rowBg = 'linear-gradient(90deg, rgba(251,191,36,0.1) 0%, transparent 100%)';
             } else if (esTop2) {
-                badgeBg    = C.silver;
-                badgeColor = '#000';
-                ptsColor   = C.silver;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.silverDim;
+                numBg = K_COLOR.silver; numColor = '#FFF'; ptsColor = K_COLOR.silver;
             } else if (esTop3) {
-                badgeBg    = C.bronze;
-                badgeColor = '#FFF';
-                ptsColor   = C.bronze;
-                leftBorder = `3px solid ${C.green}`;
-                rowBg      = C.bronzeDim;
-            } else if (esZonaRoja) {
-                leftBorder = `3px solid ${C.red}`;
-                rowBg      = C.redDim;
-                ptsColor   = C.red;
+                numBg = K_COLOR.bronze; numColor = '#FFF'; ptsColor = K_COLOR.bronze;
             }
 
+            // Franjas de zonas de clasificación
+            let borderLeft = '4px solid transparent';
+            if (pos <= 3) borderLeft = '4px solid #10B981'; // Clasificación
+            else if (pos >= datos.length - 2) borderLeft = '4px solid #EF4444'; // Descenso
+
             return `
-<div style="
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    height:42px;
-    padding:0 18px 0 0;
-    background:${rowBg};
-    border-left:${leftBorder};
-    margin-bottom:2px;
-    border-radius:0 6px 6px 0;
-">
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <!-- POSICIÓN -->
-        <div style="
-            width:32px;height:32px;
-            border-radius:6px;
-            background:${badgeBg};
-            color:${badgeColor};
-            display:flex;align-items:center;justify-content:center;
-            font-size:${esPenultimo ? '18px' : '15px'};
-            font-weight:700;
-            flex-shrink:0;
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:-0.5px;
-            margin-left:10px;
-        ">${displayPos}</div>
-
-        <!-- BANDERA CAMPEÓN -->
-        <div style="
-            font-size:20px;
-            line-height:1;
-            flex-shrink:0;
-            width:22px;
-            text-align:center;
-        ">${bandera}</div>
-
-        <!-- NOMBRE -->
-        <div style="
-            font-size:17px;
-            font-weight:600;
-            color:${C.textMain};
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:0.8px;
-        ">${nombre}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;padding:0 15px 0 10px;height:35px;background:${rowBg};border-left:${borderLeft};margin-bottom:3px;border-radius:0 8px 8px 0;">
+    <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <div style="width:26px;height:26px;border-radius:6px;background:${numBg};color:${numColor};display:flex;align-items:center;justify-content:center;font-size:${esAntepenultimo ? '17px' : '16px'};font-weight:700;flex-shrink:0;">
+            ${displayPos}
+        </div>
+        <div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:18px;">
+            ${obtenerCampeon(user.campeon_elegido)}
+        </div>
+        <div style="font-size:20px;font-weight:600;color:${nameColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.5px;">
+            ${nombre}
+        </div>
     </div>
-
-    <!-- PUNTOS -->
-    <div style="
-        font-size:19px;
-        font-weight:700;
-        color:${ptsColor};
-        font-family:'Inter','Helvetica Neue',sans-serif;
-        flex-shrink:0;
-        min-width:42px;
-        text-align:right;
-        letter-spacing:-0.5px;
-    ">${puntos}</div>
+    
+    <div style="font-size:21px;font-weight:700;color:${ptsColor};width:40px;text-align:right;">
+        ${puntos}
+    </div>
 </div>`;
         }).join('');
     }
 
-    // ── PODIO VERTICAL — 3 badges apilados ──
-    function renderPodioItem(user, pos, imgSrc) {
-        const nombre   = (user?.nombre_publico || user?.nombre || '—').substring(0, 16).toUpperCase();
-        const puntos   = user?.puntos_totales || 0;
-        const bandera  = obtenerCampeon(user?.campeon_elegido);
-
-        const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
-        const sizes  = { 1: { h: '88px', font: '17px', pts: '22px' },
-                         2: { h: '72px', font: '15px', pts: '18px' },
-                         3: { h: '66px', font: '14px', pts: '17px' } };
-
-        const bgs    = { 1: C.goldDim,   2: C.silverDim,   3: C.bronzeDim   };
-        const border = { 1: C.gold,      2: C.silver,      3: C.bronze      };
-        const ptsClr = { 1: C.gold,      2: C.silver,      3: C.bronze      };
-        const sz     = sizes[pos];
-
-        return `
-<div style="
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:${bgs[pos]};
-    border:1px solid ${border[pos]}33;
-    border-radius:10px;
-    padding:10px 14px;
-    margin-bottom:10px;
-    height:${sz.h};
-    box-sizing:border-box;
-">
-    <!-- FOTO HISTÓRICA -->
-    <div style="
-        width:54px;height:54px;
-        border-radius:50%;
-        border:2px solid ${border[pos]};
-        overflow:hidden;
-        flex-shrink:0;
-        background:${C.surfaceAlt};
-        display:flex;align-items:center;justify-content:center;
-    ">
-        ${imgSrc
-            ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />`
-            : `<span style="font-size:24px;">${medals[pos]}</span>`
-        }
-    </div>
-
-    <!-- INFO -->
-    <div style="flex:1;min-width:0;">
-        <div style="
-            font-size:11px;
-            font-weight:500;
-            color:${border[pos]};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:2px;
-            text-transform:uppercase;
-            margin-bottom:3px;
-        ">${medals[pos]} ${pos === 1 ? '1ER LUGAR' : pos === 2 ? '2DO LUGAR' : '3ER LUGAR'}</div>
-        <div style="
-            font-size:${sz.font};
-            font-weight:700;
-            color:${C.white};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:0.5px;
-            white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-        ">${nombre}</div>
-        <div style="
-            font-size:11px;
-            color:${C.textMuted};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            margin-top:1px;
-        ">${bandera} ${puntos} pts</div>
-    </div>
-
-    <!-- PTS GRANDE -->
-    <div style="
-        font-size:${sz.pts};
-        font-weight:800;
-        color:${ptsClr[pos]};
-        font-family:'Inter','Helvetica Neue',sans-serif;
-        letter-spacing:-1px;
-        flex-shrink:0;
-    ">${puntos}</div>
-</div>`;
-    }
-
-    // ── STATS ──
-    function renderStats() {
-        const stats = [
-            { label: 'PUNTAJE MÁX',  value: maxPts,  icon: '👑', color: C.gold    },
-            { label: 'PUNTAJE MÍN',  value: minPts,  icon: '📉', color: C.red     },
-            { label: 'PROMEDIO',     value: promedio, icon: '📊', color: C.silver  },
-            { label: 'JUGADORES',    value: total,    icon: '👥', color: C.green   },
-        ];
-        return `
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-    ${stats.map(s => `
-    <div style="
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        border-radius:8px;
-        padding:12px;
-        text-align:center;
-    ">
-        <div style="font-size:20px;margin-bottom:4px;">${s.icon}</div>
-        <div style="
-            font-size:24px;
-            font-weight:800;
-            color:${s.color};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:-1px;
-        ">${s.value}</div>
-        <div style="
-            font-size:10px;
-            color:${C.textMuted};
-            font-family:'Inter','Helvetica Neue',sans-serif;
-            letter-spacing:1.5px;
-            margin-top:2px;
-        ">${s.label}</div>
-    </div>`).join('')}
-</div>`;
-    }
-
-    // ── CONSTRUCCIÓN DEL DOM TEMPORAL ──
-    const wrapper = document.createElement('div');
-    wrapper.style.cssText = `
-        position:fixed;
-        top:-9999px;
-        left:-9999px;
-        width:1200px;
-        height:1900px;
-        background:${C.bg};
-        display:flex;
-        font-family:'Inter','Helvetica Neue',Arial,sans-serif;
-        overflow:hidden;
-    `;
-
-    // ──────────────── COLUMNA IZQUIERDA (60% = 720px) ────────────────
-    const colLeft = document.createElement('div');
-    colLeft.style.cssText = `
-        width:720px;
-        height:1900px;
-        display:flex;
-        flex-direction:column;
-        padding:32px 24px 32px 32px;
-        box-sizing:border-box;
-        border-right:1px solid ${C.border};
-    `;
-    colLeft.innerHTML = `
-        <!-- HEADER IZQUIERDO: logo + título -->
-        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid ${C.border};">
-            <!-- ESPACIO LOGO (minilogo vertical) -->
-            <div style="
-                width:80px;height:80px;
-                border-radius:10px;
-                background:${C.surfaceAlt};
-                border:1px solid ${C.border};
-                display:flex;align-items:center;justify-content:center;
-                overflow:hidden;
-                flex-shrink:0;
-            ">
-                <img id="logo-izq" src="" alt="" style="width:100%;height:100%;object-fit:contain;" />
-            </div>
-            <div style="flex:1;">
-                <div style="
-                    font-size:11px;
-                    color:${C.gold};
-                    letter-spacing:3px;
-                    font-weight:600;
-                    text-transform:uppercase;
-                    margin-bottom:4px;
-                ">⚽ COPA MUNDIAL FIFA 2026</div>
-                <div style="
-                    font-size:28px;
-                    font-weight:800;
-                    color:${C.white};
-                    letter-spacing:-0.5px;
-                    line-height:1;
-                ">TABLA DE POSICIONES</div>
-                <div style="
-                    font-size:13px;
-                    color:${C.textMuted};
-                    margin-top:5px;
-                ">${ligaNombre} · ${fechaFormateada}</div>
-            </div>
-        </div>
-
-        <!-- CABECERA DE COLUMNAS -->
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:0 18px 0 55px;
-            margin-bottom:8px;
-        ">
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">JUGADOR</div>
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">PTS</div>
-        </div>
-
-        <!-- LEYENDA ZONAS -->
-        <div style="display:flex;gap:16px;margin-bottom:10px;padding-left:10px;">
-            <div style="display:flex;align-items:center;gap:5px;">
-                <div style="width:10px;height:10px;border-radius:2px;background:${C.green};"></div>
-                <span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">CLASIFICACIÓN</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:5px;">
-                <div style="width:10px;height:10px;border-radius:2px;background:${C.red};"></div>
-                <span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">ZONA PELIGRO</span>
-            </div>
-        </div>
-
-        <!-- TABLA -->
-        <div style="flex:1;overflow:hidden;">
-            ${renderFilas()}
-        </div>
-
-        <!-- FOOTER IZQUIERDO -->
-        <div style="
-            padding-top:16px;
-            border-top:1px solid ${C.border};
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-        ">
-            <div style="font-size:11px;color:${C.textMuted};">TOTAL: ${total} PARTICIPANTES</div>
-            <div style="font-size:11px;color:${C.gold};letter-spacing:1px;">quinielacarrisan.com.ve</div>
-        </div>
-    `;
-
-    // ──────────────── COLUMNA DERECHA (40% = 480px) ────────────────
-    const colRight = document.createElement('div');
-    colRight.style.cssText = `
-        width:480px;
-        height:1900px;
-        display:flex;
-        flex-direction:column;
-        padding:32px 32px 32px 24px;
-        box-sizing:border-box;
-        gap:20px;
-    `;
-
-    // SECCIÓN 1: LOGO DERECHO
-    const secLogo = `
-    <div style="
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height:80px;
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        border-radius:12px;
-        overflow:hidden;
-    ">
-        <img id="logo-der" src="" alt="" style="max-height:70px;max-width:90%;object-fit:contain;" />
-    </div>`;
-
-    // SECCIÓN 2: PODIO VERTICAL
-    // Las 3 imágenes históricas — modifícalas manualmente
-    const PODIO_IMG = {
-        1: '',   // ruta foto 1er lugar histórico
-        2: '',   // ruta foto 2do lugar histórico
-        3: '',   // ruta foto 3er lugar histórico
-    };
-
-    const secPodio = `
-    <div>
-        <div style="
-            font-size:11px;
-            color:${C.gold};
-            letter-spacing:3px;
-            font-weight:600;
-            margin-bottom:12px;
-        ">🏆 LÍDERES ACTUALES</div>
-        ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
-        ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
-        ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
-    </div>`;
-
-    // SECCIÓN 3: IMAGEN DE IMPACTO — jugador + overlay tipográfico
-    const secImpacto = `
-    <div style="
-        position:relative;
-        border-radius:14px;
-        overflow:hidden;
-        height:380px;
-        background:${C.surfaceAlt};
-        border:1px solid ${C.border};
-        flex-shrink:0;
-    ">
-        <!-- JUGADOR PNG -->
-        <img src="/img/diaz.png" alt="" style="
-            position:absolute;
-            bottom:0;
-            right:-10px;
-            height:370px;
-            object-fit:contain;
-            z-index:1;
-            filter:drop-shadow(0 0 30px rgba(212,168,67,0.25));
-        " />
-
-        <!-- GRADIENTE OVERLAY -->
-        <div style="
-            position:absolute;
-            inset:0;
-            background:linear-gradient(135deg, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.7) 50%, rgba(13,13,13,0.1) 100%);
-            z-index:2;
-        "></div>
-
-        <!-- TEXTO OVERLAY -->
-        <div style="
-            position:absolute;
-            top:0;left:0;right:0;bottom:0;
-            z-index:3;
-            padding:24px;
-            display:flex;
-            flex-direction:column;
-            justify-content:flex-end;
-        ">
-            <!-- BADGE RANKING OFICIAL -->
-            <div style="
-                display:inline-flex;
-                align-items:center;
-                gap:6px;
-                background:${C.gold};
-                color:#000;
-                font-size:10px;
-                font-weight:700;
-                letter-spacing:2px;
-                padding:4px 10px;
-                border-radius:4px;
-                margin-bottom:10px;
-                width:fit-content;
-            ">⚡ EN VIVO</div>
-
-            <div style="
-                font-size:13px;
-                color:${C.gold};
-                font-weight:600;
-                letter-spacing:4px;
-                text-transform:uppercase;
-                margin-bottom:4px;
-            ">RANKING OFICIAL</div>
-
-            <div style="
-                font-size:42px;
-                font-weight:900;
-                color:${C.white};
-                line-height:0.95;
-                letter-spacing:-2px;
-                text-transform:uppercase;
-            ">RESUMEN</div>
-            <div style="
-                font-size:42px;
-                font-weight:900;
-                color:${C.gold};
-                line-height:0.95;
-                letter-spacing:-2px;
-                text-transform:uppercase;
-                margin-bottom:16px;
-            ">JORNADA</div>
-
-            <div style="
-                font-size:12px;
-                color:rgba(255,255,255,0.5);
-                letter-spacing:1px;
-            ">${fechaFormateada}</div>
-        </div>
-    </div>`;
-
-    // SECCIÓN 4: STATS
-    const secStats = `
-    <div>
-        <div style="
-            font-size:11px;
-            color:${C.gold};
-            letter-spacing:3px;
-            font-weight:600;
-            margin-bottom:12px;
-        ">📈 ESTADÍSTICAS</div>
-        ${renderStats()}
-    </div>`;
-
-    // FOOTER DERECHO
-    const secFooter = `
-    <div style="
-        padding-top:12px;
-        border-top:1px solid ${C.border};
-        text-align:center;
-    ">
-        <div style="font-size:11px;color:${C.textMuted};">El mundial al alcance de tus manos</div>
-    </div>`;
-
-    colRight.innerHTML = secLogo + secPodio + secImpacto + secStats + secFooter;
-
-    wrapper.appendChild(colLeft);
-    wrapper.appendChild(colRight);
-    document.body.appendChild(wrapper);
-
-    // ── CAPTURA CON HTML2CANVAS ──
-    try {
-        const canvas = await html2canvas(wrapper, {
-            scale: 3,                   // 3x DPI → nitidez anti-compresión WhatsApp
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: C.bg,
-            width: 1200,
-            height: 1900,
-            logging: false,
-        });
-
-        document.body.removeChild(wrapper);
-
-        canvas.toBlob(blob => {
-            if (!blob) { alert('Error generando imagen.'); return; }
-            const url = URL.createObjectURL(blob);
-            const a   = document.createElement('a');
-            a.href     = url;
-            a.download = `ranking-carrisán-${new Date().toISOString().slice(0,10)}.png`;
-            a.click();
-            setTimeout(() => URL.revokeObjectURL(url), 3000);
-        }, 'image/png');
-
-    } catch (err) {
-        document.body.removeChild(wrapper);
-        console.error('Error generando ranking:', err);
-        alert('Error generando la imagen. Revisa la consola.');
-    }
-}
     // ── COLUMNA DER: PODIO IMPACTANTE ESCALONADO ──
     function renderPodiumImpactante() {
         const u1 = top3[0] || {}; const u2 = top3[1] || {}; const u3 = top3[2] || {};
@@ -2027,14 +925,9 @@ async function compartirRanking() {
 
         document.body.removeChild(el);
 
-        canvas.toBlob(async (blob) => {  
-    const archivo = new File([blob], 'ranking.png', { type: blob.type });
+        canvas.toBlob(async (blob) => {
+            const archivo = new File([blob], 'ranking-quiniela.png', { type: 'image/png' });
 
-    // LÍNEA 1413:
-    await navigator.share({ // ✅ ¡Ahora ya funciona!
-        files: [archivo],
-        title: 'Mi Ranking'
-    });
             if (navigator.canShare && navigator.canShare({ files: [archivo] })) {
                 try {
                     await navigator.share({
@@ -2058,7 +951,7 @@ async function compartirRanking() {
         console.error('Error generando imagen:', err);
         alert('No se pudo generar la imagen. Inténtalo de nuevo.');
     }
-
+}
 
 function mostrarToast(mensaje, opciones = {}) {
   const {
