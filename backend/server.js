@@ -2157,24 +2157,31 @@ app.get('/api/rankings/estadisticas-torneo', async (req, res) => {
     }
 });
 
-// Sin require de fetch, Node 18+ lo tiene nativo
 app.get('/api/football/matches', async (req, res) => {
     try {
         const apiKey = 'd7ea5324baf74ba6885ffa05df48b59e';
 
         const response = await fetch(
             'https://api.football-data.org/v4/competitions/WC/matches?status=FINISHED&status=SCHEDULED&status=LIVE',
-            {
-                headers: { 'X-Auth-Token': apiKey }
-            }
+            { headers: { 'X-Auth-Token': apiKey } }
         );
 
+        // --- DEBUG ---
+        const status = response.status;
+        const text = await response.text();
+        console.log('>>> football-data status:', status);
+        console.log('>>> football-data body (primeros 500 chars):', text.substring(0, 500));
+
         if (!response.ok) {
-            return res.status(response.status).json({ error: 'Error de la API externa' });
+            return res.status(502).json({
+                error: 'Error de la API externa',
+                statusExterno: status,
+                mensaje: text.substring(0, 300)
+            });
         }
 
-        const data = await response.json();
-        res.json(data);
+        // Si OK, parseamos JSON y respondemos
+        res.json(JSON.parse(text));
     } catch (error) {
         console.error('Error en /api/football/matches:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
