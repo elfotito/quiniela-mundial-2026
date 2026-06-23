@@ -724,11 +724,11 @@ async function compartirRanking() {
             }
 
             return `
-<div style="display:flex;align-items:center;justify-content:space-between;height:41px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
+<div style="display:flex;align-items:center;justify-content:space-between;height:39px;padding:0 14px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 6px 6px 0;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;flex:1;">
-        <div style="width:30px;height:30px;border-radius:5px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '17px' : '13px'};font-weight:700;flex-shrink:0;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
-        <div style="font-size:19px;line-height:1;flex-shrink:0;width:21px;text-align:center;">${bandera}</div>
-        <div style="font-size:16px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.8px;">${nombre}</div>
+        <div style="width:30px;height:30px;border-radius:5px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${esPenultimo ? '16px' : '12px'};font-weight:700;flex-shrink:0;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:-0.5px;margin-left:10px;">${displayPos}</div>
+        <div style="font-size:18px;line-height:1;flex-shrink:0;width:21px;text-align:center;">${bandera}</div>
+        <div style="font-size:15px;font-weight:600;color:${C.textMain};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;">${nombre}</div>
     </div>
     <div style="font-size:18px;font-weight:700;color:${ptsColor};font-family:'Roboto Condensed','Arial Narrow',sans-serif;flex-shrink:0;min-width:42px;text-align:right;letter-spacing:-0.5px;">${puntos}</div>
 </div>`;
@@ -737,7 +737,7 @@ async function compartirRanking() {
 
     // ── PODIO VERTICAL ──
     function renderPodioItem(user, pos, imgSrc) {
-        const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 16).toUpperCase();
+        const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 16);
         const puntos  = user?.puntos_totales || 0;
         const bandera = obtenerCampeon(user?.campeon_elegido);
         const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
@@ -768,8 +768,8 @@ async function compartirRanking() {
     function renderStats() {
         const stats = [
             { label: 'PUNTAJE MÁX', value: maxPts,   icon: '👑', color: C.gold   },
+            { label: 'PROMEDIO',    value: promedio,  icon: '➗', color: C.silver },
             { label: 'PUNTAJE MÍN', value: minPts,   icon: '📉', color: C.red    },
-            { label: 'PROMEDIO',    value: promedio,  icon: '📊', color: C.silver },
             { label: 'JUGADORES',   value: total,     icon: '👥', color: C.green  },
         ];
         return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
@@ -860,7 +860,7 @@ async function compartirRanking() {
     colLeft.innerHTML = `
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid ${C.border};">
             <div style="width:60px;height:60px;border-radius:10px;background:${C.surfaceAlt};border:1px solid ${C.border};display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
-                <img src="" alt="" style="width:100%;height:100%;object-fit:contain;" />
+                <img src="/img/logomenu.png" alt="" style="width:100%;height:100%;object-fit:contain;" />
             </div>
             <div style="flex:1;">
                 <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">⚽ COPA MUNDIAL FIFA 2026</div>
@@ -868,13 +868,9 @@ async function compartirRanking() {
                 <div style="font-size:12px;color:${C.textMuted};margin-top:5px;">${ligaNombre} · ${fechaFormateada}</div>
             </div>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 58px;margin-bottom:6px;">
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">JUGADOR</div>
-            <div style="font-size:11px;color:${C.textMuted};letter-spacing:2px;font-weight:600;">PTS</div>
-        </div>
         <div style="display:flex;gap:16px;margin-bottom:8px;padding-left:10px;">
-            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:${C.green};"></div><span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">CLASIFICACIÓN</span></div>
-            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:${C.red};"></div><span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">ZONA PELIGRO</span></div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:${C.green};"></div><span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">ZONA DE REGODEO</span></div>
+            <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:2px;background:${C.red};"></div><span style="font-size:10px;color:${C.textMuted};letter-spacing:1px;">ZONA DE BULLYING</span></div>
         </div>
         <div style="flex:1;overflow:hidden;">${renderFilas()}</div>
         <div style="padding-top:14px;border-top:1px solid ${C.border};display:flex;justify-content:space-between;align-items:center;">
@@ -887,16 +883,10 @@ async function compartirRanking() {
     colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
     colRight.innerHTML = `
         <div style="display:flex;justify-content:center;align-items:center;height:70px;background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:12px;overflow:hidden;flex-shrink:0;">
-            <img src="" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
-        </div>
-        <div style="flex-shrink:0;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">🏆 LÍDERES ACTUALES</div>
-            ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
-            ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
-            ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
+            <img src="/img/logoblancomenu.png" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
         </div>
         <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-30px;right:-15px;height:280px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-15px;right:-15px;height:240px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.80) 40%,rgba(10,10,10,0.0) 100%);z-index:1;border-radius:14px;"></div>
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">⚡ EN VIVO</div>
@@ -906,8 +896,14 @@ async function compartirRanking() {
                 <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
             </div>
         </div>
+        <div style="flex-shrink:0;">
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">🏆 LÍDERES ACTUALES</div>
+            ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
+            ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
+            ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
+        </div>
         <div style="flex:1;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📈 ESTADÍSTICAS</div>
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📊 ESTADÍSTICAS</div>
             ${renderStats()}
         </div>
         <div style="flex-shrink:0;">
