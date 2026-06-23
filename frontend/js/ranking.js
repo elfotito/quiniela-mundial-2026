@@ -807,8 +807,8 @@ async function compartirRanking() {
             const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—';
             const local = (p.equipo_local || '').toUpperCase();
             const visita = (p.equipo_visitante || '').toUpperCase();
-            const flagLocal = obtenerBandera(p.equipo_local || '')
-            const flagVisitante = obtenerBandera(p.equipo_visitante || '')
+            const flagLocal = obtenerBandera(p.equipo_local || '');
+            const flagVisitante = obtenerBandera(p.equipo_visitante || '');
             const ganLocal  = Number(gl) > Number(gv);
             const ganVisita = Number(gv) > Number(gl);
             return `
