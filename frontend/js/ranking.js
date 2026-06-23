@@ -692,16 +692,17 @@ async function compartirRanking() {
     function renderFilas() {
         return datos.map((user, index) => {
             const pos     = index + 1;
-            const nombre  = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18).toUpperCase();
+            const nombre  = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18);
             const puntos  = user.puntos_totales || 0;
             const bandera = obtenerCampeon(user.campeon_elegido);
 
             const esTop1        = pos === 1;
             const esTop2        = pos === 2;
             const esTop3        = pos === 3;
+            const esAntePenultimo   = index === total - 3;
             const esPenultimo   = index === total - 2;
             const esUltimo      = index === total - 1;
-            const esZonaRoja    = esPenultimo || esUltimo;
+            const esZonaRoja    = esPenultimo || esUltimo || esAntePenultimo;
             const displayPos    = esPenultimo ? '🚑' : String(pos);
 
             let badgeBg    = C.surfaceAlt;
@@ -737,7 +738,7 @@ async function compartirRanking() {
 
     // ── PODIO VERTICAL ──
     function renderPodioItem(user, pos, imgSrc) {
-        const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 16);
+        const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 16).toUpperCase();
         const puntos  = user?.puntos_totales || 0;
         const bandera = obtenerCampeon(user?.campeon_elegido);
         const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
@@ -806,6 +807,8 @@ async function compartirRanking() {
             const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—';
             const local = (p.equipo_local || '').toUpperCase();
             const visita = (p.equipo_visitante || '').toUpperCase();
+            const flagLocal = obtenerBandera(p.equipo_local || '')
+            const flagVisitante = obtenerBandera(p.equipo_visitante || '')
             const ganLocal  = Number(gl) > Number(gv);
             const ganVisita = Number(gv) > Number(gl);
             return `
@@ -817,11 +820,11 @@ async function compartirRanking() {
     <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
         <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-                <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_local)}</span>
+                <span style="font-size:17px;line-height:1;">${flagLocal}</span>
                 <span style="font-size:13px;font-weight:${ganLocal?'800':'500'};color:${ganLocal?C.white:C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${local}</span>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
-                <span style="font-size:17px;line-height:1;">${obtenerBandera(p.equipo_visitante)}</span>
+                <span style="font-size:17px;line-height:1;">${flagVisitante}</span>
                 <span style="font-size:13px;font-weight:${ganVisita?'800':'500'};color:${ganVisita?C.white:C.textMuted};font-family:'Roboto Condensed','Arial Narrow',sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${visita}</span>
             </div>
         </div>
@@ -837,9 +840,9 @@ async function compartirRanking() {
 
     // ── IMÁGENES DEL PODIO — cámbielas manualmente ──
     const PODIO_IMG = {
-        1: '',   // ruta foto 1er lugar histórico
-        2: '',   // ruta foto 2do lugar histórico
-        3: '',   // ruta foto 3er lugar histórico
+        1: '/img/messi.png',   // ruta foto 1er lugar histórico
+        2: '/img/baggio.jpg',   // ruta foto 2do lugar histórico
+        3: '/img/turquia.jpg',   // ruta foto 3er lugar histórico
     };
 
     // ── CONSTRUCCIÓN DEL DOM ──
@@ -860,10 +863,10 @@ async function compartirRanking() {
     colLeft.innerHTML = `
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid ${C.border};">
             <div style="width:60px;height:60px;border-radius:10px;background:${C.surfaceAlt};border:1px solid ${C.border};display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;">
-                <img src="/img/logomenu.png" alt="" style="width:100%;height:100%;object-fit:contain;" />
+                <img src="/img/logomenu.png" alt="" style="max-width:100%; max-height:100%; object-fit:contain;" />
             </div>
             <div style="flex:1;">
-                <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">⚽ COPA MUNDIAL FIFA 2026</div>
+                <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;text-transform:uppercase;margin-bottom:4px;">COPA MUNDIAL FIFA 2026</div>
                 <div style="font-size:26px;font-weight:800;color:${C.white};letter-spacing:-0.5px;line-height:1;">TABLA DE POSICIONES</div>
                 <div style="font-size:12px;color:${C.textMuted};margin-top:5px;">${ligaNombre} · ${fechaFormateada}</div>
             </div>
@@ -886,11 +889,11 @@ async function compartirRanking() {
             <img src="/img/logoblancomenu.png" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
         </div>
         <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:-15px;right:-15px;height:240px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom: 0px;right:-15px;height:240px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.80) 40%,rgba(10,10,10,0.0) 100%);z-index:1;border-radius:14px;"></div>
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
-                <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">⚡ EN VIVO</div>
-                <div style="font-size:15px;color:${C.gold};font-weight:600;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;">RANKING OFICIAL</div>
+                <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">🏆 RANKING</div>
+                <div style="font-size:14px;color:${C.gold};font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">TABLA DE POSICIONES</div>
                 <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Oswald','Arial Narrow',sans-serif;">RESUMEN</div>
                 <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Oswald','Arial Narrow',sans-serif;">JORNADA</div>
                 <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
