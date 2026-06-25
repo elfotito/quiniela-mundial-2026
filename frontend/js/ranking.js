@@ -877,7 +877,49 @@ document.head.appendChild(styleEl);
             <div style="font-size:13px;color:${C.textMuted};">TOTAL: ${total} PARTICIPANTES</div>
             <div style="font-size:13px;color:${C.gold};letter-spacing:1px;">quinielacarrisan.com.ve</div>
         </div>`;
-    const bgOverlay = document.createElement('div');
+wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absoluto del SVG funcione
+
+// Asegura que las columnas estén sobre el fondo
+colLeft.style.position = 'relative';
+colLeft.style.zIndex = '1';
+colRight.style.position = 'relative';
+colRight.style.zIndex = '1';
+    // COLUMNA DERECHA (40% = 360px)
+    const colRight = document.createElement('div');
+    colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
+    colRight.innerHTML = `
+        <div style="display:flex;justify-content:center;align-items:center;height:70px;background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:12px;overflow:hidden;flex-shrink:0;">
+            <img src="/img/logoblancomenu.png" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
+        </div>
+        <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom: 0px;right:-15px;height:240px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.80) 40%,rgba(10,10,10,0.0) 100%);z-index:1;border-radius:14px;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
+                <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">🏆 RANKING</div>
+                <div style="font-size:14px;color:${C.gold};font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">TABLA DE POSICIONES</div>
+                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Yolk',Arial,sans-serif;">RESUMEN</div>
+                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Yolk',Arial,sans-serif;">JORNADA</div>
+                <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
+            </div>
+        </div>
+        <div style="flex-shrink:0;">
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">🏆 LÍDERES ACTUALES</div>
+            ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
+            ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
+            ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
+        </div>
+        <div style="flex:1;">
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📊 ESTADÍSTICAS</div>
+            ${renderStats()}
+        </div>
+        <div style="flex-shrink:0;">
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Yolk',Arial,sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
+            ${renderResultados()}
+        </div>
+        <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
+            <div style="font-size:13px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;">El mundial al alcance de tus manos</div>
+        </div>`;
+        const bgOverlay = document.createElement('div');
 bgOverlay.style.cssText = `position:absolute;top:0;left:0;width:900px;height:1600px;pointer-events:none;z-index:0;overflow:hidden;`;
 bgOverlay.innerHTML = `
 <svg width="900" height="1600" viewBox="0 0 900 1600" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
@@ -982,49 +1024,6 @@ bgOverlay.innerHTML = `
   <line x1="540" y1="1170" x2="900" y2="1170" stroke="rgba(255,255,255,0.025)" stroke-width="1.2"/>
 
 </svg>`;
-
-wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absoluto del SVG funcione
-
-// Asegura que las columnas estén sobre el fondo
-colLeft.style.position = 'relative';
-colLeft.style.zIndex = '1';
-colRight.style.position = 'relative';
-colRight.style.zIndex = '1';
-    // COLUMNA DERECHA (40% = 360px)
-    const colRight = document.createElement('div');
-    colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
-    colRight.innerHTML = `
-        <div style="display:flex;justify-content:center;align-items:center;height:70px;background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:12px;overflow:hidden;flex-shrink:0;">
-            <img src="/img/logoblancomenu.png" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
-        </div>
-        <div style="position:relative;border-radius:14px;height:220px;background:${C.surfaceAlt};border:1px solid ${C.border};flex-shrink:0;position:relative;">
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom: 0px;right:-15px;height:240px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px rgba(201,168,76,0.5)) drop-shadow(-3px -3px 0px rgba(0,0,0,0.9));" crossorigin="anonymous"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,0.97) 0%,rgba(10,10,10,0.80) 40%,rgba(10,10,10,0.0) 100%);z-index:1;border-radius:14px;"></div>
-            <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;padding:16px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
-                <div style="display:inline-flex;align-items:center;gap:6px;background:${C.gold};color:#000;font-size:12px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:8px;width:fit-content;">🏆 RANKING</div>
-                <div style="font-size:14px;color:${C.gold};font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">TABLA DE POSICIONES</div>
-                <div style="font-size:40px;font-weight:900;color:${C.white};line-height:0.95;letter-spacing:2px;text-transform:uppercase;font-family:'Yolk',Arial,sans-serif;">RESUMEN</div>
-                <div style="font-size:40px;font-weight:900;color:${C.gold};line-height:0.95;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;font-family:'Yolk',Arial,sans-serif;">JORNADA</div>
-                <div style="font-size:14px;color:rgba(255,255,255,0.5);letter-spacing:1px;">${fechaFormateada}</div>
-            </div>
-        </div>
-        <div style="flex-shrink:0;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">🏆 LÍDERES ACTUALES</div>
-            ${renderPodioItem(top3[0], 1, PODIO_IMG[1])}
-            ${renderPodioItem(top3[1], 2, PODIO_IMG[2])}
-            ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
-        </div>
-        <div style="flex:1;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📊 ESTADÍSTICAS</div>
-            ${renderStats()}
-        </div>
-        <div style="flex-shrink:0;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Yolk',Arial,sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
-            ${renderResultados()}
-        </div>
-        <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
-            <div style="font-size:13px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;">El mundial al alcance de tus manos</div>
-        </div>`;
 
     wrapper.appendChild(bgOverlay);
     wrapper.appendChild(colLeft);
