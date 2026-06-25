@@ -1026,6 +1026,7 @@ colRight.style.zIndex = '1';
             <div style="font-size:13px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;">El mundial al alcance de tus manos</div>
         </div>`;
 
+    wrapper.appendChild(bgOverlay);
     wrapper.appendChild(colLeft);
     wrapper.appendChild(colRight);
     document.body.appendChild(wrapper);
