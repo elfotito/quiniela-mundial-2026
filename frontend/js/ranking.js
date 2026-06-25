@@ -879,11 +879,7 @@ document.head.appendChild(styleEl);
         </div>`;
 wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absoluto del SVG funcione
 
-// Asegura que las columnas estén sobre el fondo
-colLeft.style.position = 'relative';
-colLeft.style.zIndex = '1';
-colRight.style.position = 'relative';
-colRight.style.zIndex = '1';
+
     // COLUMNA DERECHA (40% = 360px)
     const colRight = document.createElement('div');
     colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
@@ -919,6 +915,11 @@ colRight.style.zIndex = '1';
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
             <div style="font-size:13px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;">El mundial al alcance de tus manos</div>
         </div>`;
+        // Asegura que las columnas estén sobre el fondo
+colLeft.style.position = 'relative';
+colLeft.style.zIndex = '1';
+colRight.style.position = 'relative';
+colRight.style.zIndex = '1';
         const bgOverlay = document.createElement('div');
 bgOverlay.style.cssText = `position:absolute;top:0;left:0;width:900px;height:1600px;pointer-events:none;z-index:0;overflow:hidden;`;
 bgOverlay.innerHTML = `
