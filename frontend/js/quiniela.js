@@ -992,7 +992,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_9pts', 
-            imagen: '/images/logros/goat.png',
+            imagen: 'img/logros/goat.png',
             titulo: 'The GOAT', 
             descripcion: 'Consigue 2 predicciones exactas consecutivas',
             rareza: 'oro',
@@ -1012,7 +1012,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_0pts', 
-            imagen: '/images/logros/mike.jpg',
+            imagen: 'img/logros/mike.jpg',
             titulo: 'Maquina de la Mufa', 
             descripcion: 'Consigue no sumar puntos en 2 predicciones consecutivas',
             rareza: 'oro',
@@ -1032,7 +1032,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_7pts', 
-            imagen: '/images/logros/siuu.png',
+            imagen: 'img/logros/siuu.png',
             titulo: '¡SIIUU!', 
             descripcion: 'Consigue 2 predicciones de ganador y un marcador consecutivas',
             rareza: 'oro',
@@ -1052,7 +1052,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_5pts', 
-            imagen: '/images/logros/italia82.jpg',
+            imagen: 'img/logros/italia82.jpg',
             titulo: 'El fútbol no es para bailarinas', 
             descripcion: 'Consigue 2 predicciones de solo ganador o empate consecutivas',
             rareza: 'plata',
@@ -1072,7 +1072,7 @@ const LOGROS = [
         },
         { 
             id: 'racha_2_consecutivos_2pts', 
-            imagen: '/images/logros/gasparin.jpg',
+            imagen: 'img/logros/gasparin.jpg',
             titulo: 'El mas fantasma', 
             descripcion: 'Consigue 2 predicciones sumando con solo un marcador',
             rareza: 'bronce',
