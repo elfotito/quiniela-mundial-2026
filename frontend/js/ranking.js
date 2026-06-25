@@ -984,7 +984,7 @@ bgOverlay.innerHTML = `
 </svg>`;
 
 wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absoluto del SVG funcione
-wrapper.insertBefore(bgOverlay, colLeft);
+
 // Asegura que las columnas estén sobre el fondo
 colLeft.style.position = 'relative';
 colLeft.style.zIndex = '1';
