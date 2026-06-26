@@ -807,8 +807,6 @@ async function compartirRanking() {
             const gv = p.goles_visitante !== null && p.goles_visitante !== undefined ? p.goles_visitante : '—';
             const local = (p.equipo_local || '').toUpperCase();
             const visita = (p.equipo_visitante || '').toUpperCase();
-            const flagLocal = obtenerBandera(p.equipo_local || '');
-            const flagVisitante = obtenerBandera(p.equipo_visitante || '');
             const ganLocal  = Number(gl) > Number(gv);
             const ganVisita = Number(gv) > Number(gl);
             return `
@@ -820,11 +818,11 @@ async function compartirRanking() {
     <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
         <div style="flex:1;min-width:0;">
             <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-                <span style="font-size:17px;line-height:1;">${flagLocal}</span>
+                <span style="font-size:17px;line-height:1;"></span>
                 <span style="font-size:13px;font-weight:${ganLocal?'800':'500'};color:${ganLocal?C.white:C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${local}</span>
             </div>
             <div style="display:flex;align-items:center;gap:6px;">
-                <span style="font-size:17px;line-height:1;">${flagVisitante}</span>
+                <span style="font-size:17px;line-height:1;"></span>
                 <span style="font-size:13px;font-weight:${ganVisita?'800':'500'};color:${ganVisita?C.white:C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${visita}</span>
             </div>
         </div>
@@ -848,11 +846,14 @@ async function compartirRanking() {
     // ── CONSTRUCCIÓN DEL DOM ──
     // ── FUENTE: inyectar en DOM para html2canvas ──
     const styleEl = document.createElement('style');
-styleEl.textContent = `* { font-family: 'Yolk', Arial, sans-serif !important; }`;
-document.head.appendChild(styleEl);
+    styleEl.textContent = `
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700;800&display=swap');
+        * { font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif !important; }
+    `;
+    document.head.appendChild(styleEl);
 
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Yolk',Arial,sans-serif;overflow:hidden;`;
+    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
 
     // COLUMNA IZQUIERDA (60% = 540px)
     const colLeft = document.createElement('div');
@@ -877,8 +878,6 @@ document.head.appendChild(styleEl);
             <div style="font-size:13px;color:${C.textMuted};">TOTAL: ${total} PARTICIPANTES</div>
             <div style="font-size:13px;color:${C.gold};letter-spacing:1px;">quinielacarrisan.com.ve</div>
         </div>`;
-wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absoluto del SVG funcione
-
 
     // COLUMNA DERECHA (40% = 360px)
     const colRight = document.createElement('div');
@@ -915,118 +914,7 @@ wrapper.style.position = 'relative'; // aseguramos que el posicionamiento absolu
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
             <div style="font-size:13px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;">El mundial al alcance de tus manos</div>
         </div>`;
-        // Asegura que las columnas estén sobre el fondo
-colLeft.style.position = 'relative';
-colLeft.style.zIndex = '1';
-colRight.style.position = 'relative';
-colRight.style.zIndex = '1';
-        const bgOverlay = document.createElement('div');
-bgOverlay.style.cssText = `position:absolute;top:0;left:0;width:900px;height:1600px;pointer-events:none;z-index:0;overflow:hidden;`;
-bgOverlay.innerHTML = `
-<svg width="900" height="1600" viewBox="0 0 900 1600" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
-  <defs>
-    <!-- Fondo base con gradiente rico -->
-    <linearGradient id="bgBase" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0D0D0D"/>
-      <stop offset="50%" style="stop-color:#0A0A0A"/>
-      <stop offset="100%" style="stop-color:#080810"/>
-    </linearGradient>
-    <!-- Spotlight dorado arriba derecha -->
-    <radialGradient id="spotlight1" cx="80%" cy="10%" r="55%">
-      <stop offset="0%" style="stop-color:rgba(201,168,76,0.18)"/>
-      <stop offset="60%" style="stop-color:rgba(201,168,76,0.04)"/>
-      <stop offset="100%" style="stop-color:rgba(201,168,76,0)"/>
-    </radialGradient>
-    <!-- Spotlight azul abajo izquierda -->
-    <radialGradient id="spotlight2" cx="15%" cy="85%" r="45%">
-      <stop offset="0%" style="stop-color:rgba(0,102,204,0.12)"/>
-      <stop offset="100%" style="stop-color:rgba(0,102,204,0)"/>
-    </radialGradient>
-    <!-- Spotlight sutil centro -->
-    <radialGradient id="spotlight3" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:rgba(201,168,76,0.05)"/>
-      <stop offset="100%" style="stop-color:rgba(0,0,0,0)"/>
-    </radialGradient>
-    <!-- Pattern diamante campo fútbol -->
-    <pattern id="diamondPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-      <polygon points="30,2 58,30 30,58 2,30" fill="none" stroke="rgba(201,168,76,0.045)" stroke-width="0.8"/>
-    </pattern>
-    <!-- Pattern hexagonal sutil -->
-    <pattern id="hexPattern" x="0" y="0" width="40" height="46" patternUnits="userSpaceOnUse">
-      <polygon points="20,1 39,11.5 39,34.5 20,45 1,34.5 1,11.5" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="0.6"/>
-    </pattern>
-    <!-- Glow dorado para línea divisoria -->
-    <filter id="goldGlow">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="softGlow">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="8"/>
-    </filter>
-  </defs>
 
-  <!-- Base negro profundo -->
-  <rect width="900" height="1600" fill="url(#bgBase)"/>
-
-  <!-- Pattern diamante sobre toda la imagen -->
-  <rect width="900" height="1600" fill="url(#diamondPattern)" opacity="1"/>
-
-  <!-- Pattern hexagonal en zona derecha -->
-  <rect x="540" width="360" height="1600" fill="url(#hexPattern)" opacity="0.8"/>
-
-  <!-- Spotlights de luz -->
-  <rect width="900" height="1600" fill="url(#spotlight1)"/>
-  <rect width="900" height="1600" fill="url(#spotlight2)"/>
-  <rect width="900" height="1600" fill="url(#spotlight3)"/>
-
-  <!-- Línea divisoria vertical con glow dorado -->
-  <!-- Primero el glow difuso -->
-  <line x1="540" y1="0" x2="540" y2="1600" stroke="rgba(201,168,76,0.5)" stroke-width="8" filter="url(#softGlow)"/>
-  <!-- Luego la línea nítida -->
-  <line x1="540" y1="0" x2="540" y2="1600" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
-
-  <!-- Acento esquina superior izquierda — arco de estadio -->
-  <ellipse cx="-30" cy="-30" rx="280" ry="280" fill="none" stroke="rgba(201,168,76,0.07)" stroke-width="1"/>
-  <ellipse cx="-30" cy="-30" rx="350" ry="350" fill="none" stroke="rgba(201,168,76,0.04)" stroke-width="1"/>
-
-  <!-- Acento esquina inferior derecha -->
-  <ellipse cx="930" cy="1630" rx="280" ry="280" fill="none" stroke="rgba(0,102,204,0.08)" stroke-width="1"/>
-  <ellipse cx="930" cy="1630" rx="370" ry="370" fill="none" stroke="rgba(0,102,204,0.05)" stroke-width="1"/>
-
-  <!-- Destellos/partículas dispersas -->
-  <circle cx="80"  cy="120" r="1.5" fill="rgba(201,168,76,0.6)"/>
-  <circle cx="480" cy="300" r="1"   fill="rgba(201,168,76,0.4)"/>
-  <circle cx="820" cy="80"  r="2"   fill="rgba(201,168,76,0.7)"/>
-  <circle cx="700" cy="450" r="1.2" fill="rgba(255,255,255,0.3)"/>
-  <circle cx="200" cy="800" r="1"   fill="rgba(201,168,76,0.35)"/>
-  <circle cx="860" cy="1100" r="1.8" fill="rgba(201,168,76,0.5)"/>
-  <circle cx="50"  cy="1400" r="1.2" fill="rgba(0,102,204,0.5)"/>
-  <circle cx="750" cy="1500" r="1"   fill="rgba(201,168,76,0.4)"/>
-  <circle cx="420" cy="700" r="0.8"  fill="rgba(255,255,255,0.25)"/>
-  <circle cx="310" cy="1200" r="1.5" fill="rgba(201,168,76,0.3)"/>
-
-  <!-- Líneas de velocidad / energía en zona header -->
-  <line x1="0" y1="0" x2="400" y2="0" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
-  <line x1="0" y1="1600" x2="900" y2="1600" stroke="rgba(201,168,76,0.10)" stroke-width="1"/>
-
-  <!-- Barra superior coloreada sutil -->
-  <rect x="0" y="0" width="900" height="3" fill="rgba(201,168,76,0.6)"/>
-
-  <!-- Barra inferior -->
-  <rect x="0" y="1597" width="900" height="3" fill="rgba(201,168,76,0.3)"/>
-
-  <!-- Marca de agua campo fútbol esquina derecha — círculo central -->
-  <circle cx="720" cy="1300" r="130" fill="none" stroke="rgba(255,255,255,0.025)" stroke-width="1.5"/>
-  <circle cx="720" cy="1300" r="15" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-  <!-- línea de medio campo fantasma -->
-  <line x1="540" y1="1170" x2="900" y2="1170" stroke="rgba(255,255,255,0.025)" stroke-width="1.2"/>
-
-</svg>`;
-
-    wrapper.appendChild(bgOverlay);
     wrapper.appendChild(colLeft);
     wrapper.appendChild(colRight);
     document.body.appendChild(wrapper);
@@ -1045,42 +933,15 @@ bgOverlay.innerHTML = `
         document.body.removeChild(wrapper);
         if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
 
-        canvas.toBlob(async blob => {
-    if (!blob) { alert('Error generando imagen.'); return; }
-
-    const fileName = `ranking-carrisán-${new Date().toISOString().slice(0,10)}.png`;
-
-    // Intentar Web Share API (móvil — pregunta adónde compartir)
-    if (navigator.canShare && navigator.share) {
-        const file = new File([blob], fileName, { type: 'image/png' });
-        if (navigator.canShare({ files: [file] })) {
-            try {
-                await navigator.share({
-                    files: [file],
-                    title: 'Tabla de Posiciones – Quiniela Carrisan 2026',
-                    text: 'Mira como va la tabla'
-                });
-                URL.revokeObjectURL(URL.createObjectURL(blob)); // cleanup
-                return;
-            } catch (shareErr) {
-                if (shareErr.name !== 'AbortError') {
-                    console.warn('Share falló, usando descarga:', shareErr);
-                }
-                // Si el usuario canceló (AbortError) o falló → caemos al download
-            }
-        }
-    }
-
-    // Fallback: descarga directa
-    const url = URL.createObjectURL(blob);
-    const a   = document.createElement('a');
-    a.href     = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 3000);
-}, 'image/png');
+        canvas.toBlob(blob => {
+            if (!blob) { alert('Error generando imagen.'); return; }
+            const url = URL.createObjectURL(blob);
+            const a   = document.createElement('a');
+            a.href     = url;
+            a.download = `ranking-carrisán-${new Date().toISOString().slice(0,10)}.png`;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 3000);
+        }, 'image/png');
 
     } catch (err) {
         document.body.removeChild(wrapper);
