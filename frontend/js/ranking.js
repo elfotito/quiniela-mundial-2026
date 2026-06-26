@@ -846,10 +846,6 @@ async function compartirRanking() {
     // ── CONSTRUCCIÓN DEL DOM ──
     // ── FUENTE: inyectar en DOM para html2canvas ──
     const styleEl = document.createElement('style');
-    styleEl.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700;800&display=swap');
-        * { font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif !important; }
-    `;
     document.head.appendChild(styleEl);
 
     const wrapper = document.createElement('div');
