@@ -275,6 +275,11 @@ function renderizarPartidos() {
     let partidosFiltrados;
     if (filtroFase === 'all') {
         partidosFiltrados = partidosPendientes;
+    } else if (filtroFase === 'grupos') {
+        partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
+    } else {
+        // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
+        partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
     }
 
     if (ordenamiento === 'fechacercana') partidosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
