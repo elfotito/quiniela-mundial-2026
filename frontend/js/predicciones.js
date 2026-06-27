@@ -275,7 +275,7 @@ function renderizarPartidos() {
     let partidosFiltrados;
     if (filtroFase === 'all') {
         partidosFiltrados = partidosPendientes;
-    } else if (filtroFase === '16avos') {
+    } else if (filtroFase === '16vos') {
         partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
     } else {
         partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
