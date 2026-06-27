@@ -753,7 +753,7 @@ async function compartirRanking() {
 
         return `
 <div style="display:flex;align-items:center;gap:12px;background:${bgs[pos]};border:1px solid ${border[pos]}33;border-radius:10px;padding:10px 14px;margin-bottom:10px;height:${sz.h};box-sizing:border-box;">
-    <div style="width:80px;height:80px;border-radius:50%;border:2px solid ${border[pos]};overflow:hidden;flex-shrink:0;background:${C.surfaceAlt};display:flex;align-items:center;justify-content:center;">
+    <div style="width:60px;height:60px;border-radius:50%;border:2px solid ${border[pos]};overflow:hidden;flex-shrink:0;background:${C.surfaceAlt};display:flex;align-items:center;justify-content:center;">
         ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;" />` : `<span style="font-size:28px;">${medals[pos]}</span>`}
     </div>
     <div style="flex:1;min-width:0;">
