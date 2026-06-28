@@ -6,9 +6,9 @@ let usuario = null;
 let usuarioId = null;
 let partidosPendientes = [];
 let prediccionesRealizadas = [];
-let filtroFase = '16vos';
+let filtroFase = 'all';
 let ordenamiento = 'fechacercana';
-let filtroFaseCompleted = 'grupos';        
+let filtroFaseCompleted = 'all';        
 let ordenamientoCompleted = 'fechacercana'; 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -272,7 +272,12 @@ function renderizarPartidos() {
     const container = document.getElementById('matchesGrid');
     if (!container) return;
 
-    let partidosFiltrados = [...partidosPendientes];
+    let partidosFiltrados;
+if (filtroFase === 'all') {
+    partidosFiltrados = [...partidosPendientes];
+} else {
+    partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
+}
 
     if (ordenamiento === 'fechacercana') partidosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     if (ordenamiento === 'fechalejana')  partidosFiltrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
