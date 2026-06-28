@@ -374,7 +374,7 @@ function renderizarPredicciones() {
     let partidosFiltrados;
     if (filtroFase === 'all') {
         partidosFiltrados = partidosPendientes;
-    } else if (filtroFase === '16vos') {
+    } else if (filtroFase === 'grupos') {
         partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
     } else {
         // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
