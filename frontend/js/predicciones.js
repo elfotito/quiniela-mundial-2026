@@ -91,7 +91,7 @@ function configurarTabs() {
             cambiarTab(targetTab);
         });
     });
-    const segundaTab = document.querySelectorAll('.pred-tab-btn')[1];
+    const segundaTab = document.querySelectorAll('.pred-tab-btn')[0];
 if (segundaTab) segundaTab.click();
 }
 
