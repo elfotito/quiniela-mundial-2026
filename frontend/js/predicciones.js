@@ -272,15 +272,7 @@ function renderizarPartidos() {
     const container = document.getElementById('matchesGrid');
     if (!container) return;
 
-    let partidosFiltrados;
-    if (filtroFase === 'all') {
-        partidosFiltrados = partidosPendientes;
-    } else if (filtroFase === '16vos') {
-        partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
-    } else {
-        // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
-        partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
-    }
+    let partidosFiltrados = [...partidosPendientes];
 
     if (ordenamiento === 'fechacercana') partidosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     if (ordenamiento === 'fechalejana')  partidosFiltrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
@@ -374,7 +366,15 @@ function renderizarPredicciones() {
         return;
     }
 
-    let partidosFiltrados = [...partidosPendientes];
+    let partidosFiltrados;
+    if (filtroFase === 'all') {
+        partidosFiltrados = partidosPendientes;
+    } else if (filtroFase === '16vos') {
+        partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
+    } else {
+        // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
+        partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
+    }
 
     let prediccionesOrdenadas = [...prediccionesFiltradas];
     if (ordenamientoCompleted === 'fechacercana') prediccionesOrdenadas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
