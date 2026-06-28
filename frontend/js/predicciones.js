@@ -374,14 +374,7 @@ function renderizarPredicciones() {
         return;
     }
 
-    let prediccionesFiltradas;
-    if (filtroFaseCompleted === 'all') {
-        prediccionesFiltradas = prediccionesRealizadas;
-    } else if (filtroFaseCompleted === 'grupos') {
-        prediccionesFiltradas = prediccionesRealizadas.filter(p => p.fase.startsWith('Grupo '));
-    } else {
-        prediccionesFiltradas = prediccionesRealizadas.filter(p => p.fase === filtroFaseCompleted);
-    }
+    let partidosFiltrados = [...partidosPendientes];
 
     let prediccionesOrdenadas = [...prediccionesFiltradas];
     if (ordenamientoCompleted === 'fechacercana') prediccionesOrdenadas.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
