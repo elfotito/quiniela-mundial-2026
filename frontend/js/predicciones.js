@@ -111,7 +111,9 @@ function configurarEventos() {
     const filterPhase = document.getElementById('filterPhase');
     const sortBy = document.getElementById('sortBy');
 
-    if (filterPhase) filterPhase.addEventListener('change', (e) => { filtroFase = e.target.value; renderizarPartidos(); });
+    if (filterPhase) filterPhase.addEventListener('change', (e) => { filtroFase = e.target.value;
+renderizarPartidos(); });
+if (filterPhase) filtroFase = filterPhase.value;
     if (sortBy)      sortBy.addEventListener('change',      (e) => { ordenamiento = e.target.value; renderizarPartidos(); });
 
     const filterPhaseCompleted = document.getElementById('filterPhaseCompleted');
@@ -273,7 +275,7 @@ function renderizarPartidos() {
     if (!container) return;
 
     let partidosFiltrados;
-if (filtroFase === '16vos') {
+if (filtroFase === 'all') {
     partidosFiltrados = [...partidosPendientes];
 } else {
     partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
