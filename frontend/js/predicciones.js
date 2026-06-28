@@ -273,7 +273,7 @@ function renderizarPartidos() {
     if (!container) return;
 
     let partidosFiltrados;
-if (filtroFase === 'all') {
+if (filtroFase === '16vos') {
     partidosFiltrados = [...partidosPendientes];
 } else {
     partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
