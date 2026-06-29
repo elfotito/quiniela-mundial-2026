@@ -6,7 +6,7 @@ let usuario = null;
 let estadisticas = null;
 let predicciones = [];
 let ranking = [];
-let filtroFase = 'todas'; 
+let filtroFase = 'no_grupos'; 
 let filtroActual = 'todas';
 let logrosDesbloqueadosDB = [];
 
@@ -197,6 +197,11 @@ function mostrarPrediccionesFiltradas() {
         // Filtrar Final y Tercer Puesto
         prediccionesFiltradas = prediccionesFiltradas.filter(p => 
             p.fase === 'Final' || p.fase === '3er Puesto'
+        );
+    } else if (filtroFase === 'no_grupos') {
+        // Excluir fase de grupos (mostrar TODO EXCEPTO Grupo X)
+        prediccionesFiltradas = prediccionesFiltradas.filter(p => 
+            !p.fase || !p.fase.startsWith('Grupo ')
         );
     } else if (filtroFase !== 'todas') {
         // Filtrar por fase específica
@@ -1643,133 +1648,149 @@ function formatearFechaPrediccion(fechaStr) {
 }
 
 function exportarPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
 
-    const FIFA_BLUE = [0, 102, 204];
-    const FIFA_GOLD = [255, 215, 0];
-    const DARK = [10, 10, 10];
-// ── Header ──
-    doc.setFillColor(...DARK);
-    doc.rect(0, 0, 210, 38, 'F');
+        const FIFA_BLUE = [0, 102, 204];
+        const FIFA_GOLD = [255, 215, 0];
+        const DARK = [10, 10, 10];
 
-    // Acento dorado lateral
-    doc.setFillColor(...FIFA_GOLD);
-    doc.rect(0, 0, 4, 38, 'F');
+        // ── Header ──
+        doc.setFillColor(...DARK);
+        doc.rect(0, 0, 210, 38, 'F');
 
-    // Línea decorativa diagonal tipo "deportivo"
-    doc.setFillColor(...FIFA_BLUE);
-    doc.triangle(160, 0, 210, 0, 210, 38, 'F');
-    doc.setFillColor(...FIFA_GOLD);
-    doc.triangle(170, 0, 210, 0, 210, 28, 'F');
+        doc.setFillColor(...FIFA_GOLD);
+        doc.rect(0, 0, 4, 38, 'F');
 
-    // Eyebrow
-    doc.setTextColor(...FIFA_GOLD);
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'bold');
-    doc.text('QUINIELA MUNDIAL 2026', 14, 11);
+        doc.setFillColor(...FIFA_BLUE);
+        doc.triangle(160, 0, 210, 0, 210, 38, 'F');
+        doc.setFillColor(...FIFA_GOLD);
+        doc.triangle(170, 0, 210, 0, 210, 28, 'F');
 
-    // Nombre del usuario, grande
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.setFont(undefined, 'bold');
-    doc.text(usuario.nombre.toUpperCase(), 14, 24);
-
-    // Subtítulo
-    doc.setTextColor(180, 180, 180);
-    doc.setFontSize(8);
-    doc.setFont(undefined, 'normal');
-    doc.text('HISTORIAL OFICIAL DE PREDICCIONES', 14, 31);
-
-    doc.setFontSize(7);
-    doc.setTextColor(140, 140, 140);
-    doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 14, 36);
-    // ── Resumen (franja gold con tarjetas) ──
-    doc.setFillColor(...FIFA_GOLD);
-    doc.rect(0, 32, 210, 14, 'F');
-    doc.setTextColor(...DARK);
-
-    const resumenItems = [
-        { label: 'Predicciones', val: `${predicciones.length}` },
-        { label: 'Puntos', val: document.getElementById('resPuntos')?.textContent || '—' },
-        { label: 'Efectividad', val: document.getElementById('resEfectividad')?.textContent || '—' },
-        { label: 'Campeón', val: obtenerNombrePais(usuario.campeon_elegido) }
-    ];
-
-    let xPos = 14;
-    resumenItems.forEach(item => {
-        doc.setFontSize(7);
-        doc.setFont(undefined, 'normal');
-        doc.text(item.label.toUpperCase(), xPos, 38);
-        doc.setFontSize(11);
+        doc.setTextColor(...FIFA_GOLD);
+        doc.setFontSize(9);
         doc.setFont(undefined, 'bold');
-        doc.text(item.val, xPos, 43);
-        xPos += 50;
-    });
+        doc.text('QUINIELA MUNDIAL 2026', 14, 11);
 
-    // ── Tabla ──
-    const filas = [...predicciones]
-        .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha))
-        .map(p => {
-            const fechaPartido = new Date(p.fecha_partido || p.fecha);
-            const fechaPartidoStr = fechaPartido.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(24);
+        doc.setFont(undefined, 'bold');
+        doc.text(usuario.nombre.toUpperCase(), 14, 24);
 
-            const golesLocalReal = p.goles_local_real ?? p.goles_local ?? null;
-            const golesVisitanteReal = p.goles_visitante_real ?? p.goles_visitante ?? null;
-            const tieneResultado = golesLocalReal !== null && golesLocalReal !== undefined;
+        doc.setTextColor(180, 180, 180);
+        doc.setFontSize(8);
+        doc.setFont(undefined, 'normal');
+        doc.text('HISTORIAL OFICIAL DE PREDICCIONES', 14, 31);
 
-            const resultado = tieneResultado
-                ? `${golesLocalReal} - ${golesVisitanteReal}`
-                : 'Pendiente';
+        doc.setFontSize(7);
+        doc.setTextColor(140, 140, 140);
+        doc.text(`Generado: ${new Date().toLocaleString('es-VE')}`, 14, 36);
 
-            const partido = `${p.equipo_local} vs ${p.equipo_visitante}`;
-            const prediccion = `${p.goles_local_pred} - ${p.goles_visitante_pred}`;
+        // ── Resumen (franja gold) ──
+        doc.setFillColor(...FIFA_GOLD);
+        doc.rect(0, 32, 210, 14, 'F');
+        doc.setTextColor(...DARK);
 
-            const pts = p.puntos_obtenidos === null ? '—' : `+${p.puntos_obtenidos}`;
+        // Filtrar predicciones: excluir grupos
+        const prediccionesFiltradas = predicciones.filter(p => 
+            !p.fase || !p.fase.startsWith('Grupo ')
+        );
 
-            return [fechaPartidoStr, partido, resultado, prediccion, pts, formatearFechaPrediccion(p.fecha_prediccion)];
+        const totalPuntos = prediccionesFiltradas.reduce((sum, p) => 
+            sum + (p.puntos_obtenidos || 0), 0
+        );
+        const efectividad = prediccionesFiltradas.length > 0 
+            ? Math.round((totalPuntos / (prediccionesFiltradas.length * 9)) * 100) 
+            : 0;
+
+        const resumenItems = [
+            { label: 'Predicciones', val: `${prediccionesFiltradas.length}` },
+            { label: 'Puntos', val: `${totalPuntos}` },
+            { label: 'Efectividad', val: `${efectividad}%` },
+            { label: 'Campeón', val: obtenerNombrePais(usuario.campeon_elegido) }
+        ];
+
+        let xPos = 14;
+        resumenItems.forEach(item => {
+            doc.setFontSize(7);
+            doc.setFont(undefined, 'normal');
+            doc.text(item.label.toUpperCase(), xPos, 38);
+            doc.setFontSize(11);
+            doc.setFont(undefined, 'bold');
+            doc.text(item.val, xPos, 43);
+            xPos += 50;
         });
 
-    doc.autoTable({
-        startY: 44,
-        head: [['Fecha partido', 'Partido', 'Resultado', 'Predicción', 'Pts', 'Fecha de predicción']],
-        body: filas,
-        styles: { fontSize: 8, cellPadding: 3 },
-        headStyles: { fillColor: DARK, textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: [245, 245, 245] },
-        columnStyles: {
-                    0: { cellWidth: 20 },
-                    1: { cellWidth: 55 },
-                    2: { halign: 'center', cellWidth: 20 },
-                    3: { halign: 'center', cellWidth: 20 },
-                    4: { halign: 'center', cellWidth: 12 },
-                    5: { cellWidth: 38, fontSize: 7 }
-                },
-        didParseCell: function (data) {
-            if (data.section === 'body' && data.column.index === 4) {
-                const val = data.cell.raw;
-                const colores = {
-                    '+9': [209, 242, 235], '+7': [234, 243, 222],
-                    '+5': [250, 238, 218], '+2': [235, 243, 255], '+0': [254, 242, 242]
-                };
-                if (colores[val]) {
-                    data.cell.styles.fillColor = colores[val];
-                    data.cell.styles.fontStyle = 'bold';
-                }
-            }
-        },
-        didDrawPage: function (data) {
-            const pageCount = doc.internal.getNumberOfPages();
-            doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.text(
-                `Quiniela Mundial 2026 © Droguería Carrisan — Página ${doc.internal.getCurrentPageInfo().pageNumber} de ${pageCount}`,
-                14, doc.internal.pageSize.height - 8
-            );
-        }
-    });
+        // ── Tabla ──
+        const filas = prediccionesFiltradas
+            .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha))
+            .map(p => {
+                const fechaPartido = new Date(p.fecha_partido || p.fecha);
+                const fechaPartidoStr = fechaPartido.toLocaleDateString('es-VE', { 
+                    day: '2-digit', month: '2-digit', year: 'numeric' 
+                });
 
-    doc.save(`quiniela_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
+                const golesLocalReal = p.goles_local_real ?? p.goles_local ?? null;
+                const golesVisitanteReal = p.goles_visitante_real ?? p.goles_visitante ?? null;
+                const tieneResultado = golesLocalReal !== null && golesLocalReal !== undefined;
+
+                const resultado = tieneResultado
+                    ? `${golesLocalReal} - ${golesVisitanteReal}`
+                    : 'Pendiente';
+
+                const partido = `${p.equipo_local} vs ${p.equipo_visitante}`;
+                const prediccion = `${p.goles_local_pred} - ${p.goles_visitante_pred}`;
+                const pts = p.puntos_obtenidos === null ? '—' : `+${p.puntos_obtenidos}`;
+
+                return [fechaPartidoStr, partido, resultado, prediccion, pts, formatearFechaPrediccion(p.fecha_prediccion)];
+            });
+
+        doc.autoTable({
+            startY: 44,
+            head: [['Fecha partido', 'Partido', 'Resultado', 'Predicción', 'Pts', 'Fecha de predicción']],
+            body: filas,
+            styles: { fontSize: 8, cellPadding: 3 },
+            headStyles: { fillColor: DARK, textColor: 255, fontStyle: 'bold' },
+            alternateRowStyles: { fillColor: [245, 245, 245] },
+            columnStyles: {
+                0: { cellWidth: 20 },
+                1: { cellWidth: 55 },
+                2: { halign: 'center', cellWidth: 20 },
+                3: { halign: 'center', cellWidth: 20 },
+                4: { halign: 'center', cellWidth: 12 },
+                5: { cellWidth: 38, fontSize: 7 }
+            },
+            didParseCell: function (data) {
+                if (data.section === 'body' && data.column.index === 4) {
+                    const val = data.cell.raw;
+                    const colores = {
+                        '+9': [209, 242, 235], '+7': [234, 243, 222],
+                        '+5': [250, 238, 218], '+2': [235, 243, 255], '+0': [254, 242, 242]
+                    };
+                    if (colores[val]) {
+                        data.cell.styles.fillColor = colores[val];
+                        data.cell.styles.fontStyle = 'bold';
+                    }
+                }
+            },
+            didDrawPage: function (data) {
+                const pageCount = doc.internal.getNumberOfPages();
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text(
+                    `Quiniela Mundial 2026 © Droguería Carrisan — Página ${doc.internal.getCurrentPageInfo().pageNumber} de ${pageCount}`,
+                    14, doc.internal.pageSize.height - 8
+                );
+            }
+        });
+
+        doc.save(`quiniela_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
+
+    } catch (error) {
+        console.error('❌ Error en exportarPDF:', error);
+        alert('❌ Error al generar PDF: ' + error.message);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

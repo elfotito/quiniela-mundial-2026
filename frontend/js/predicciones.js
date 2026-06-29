@@ -6,9 +6,9 @@ let usuario = null;
 let usuarioId = null;
 let partidosPendientes = [];
 let prediccionesRealizadas = [];
-let filtroFase = '16vos';
+let filtroFase = 'all';
 let ordenamiento = 'fechacercana';
-let filtroFaseCompleted = 'grupos';        
+let filtroFaseCompleted = 'all';        
 let ordenamientoCompleted = 'fechacercana'; 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -91,7 +91,7 @@ function configurarTabs() {
             cambiarTab(targetTab);
         });
     });
-    const segundaTab = document.querySelectorAll('.pred-tab-btn')[1];
+    const segundaTab = document.querySelectorAll('.pred-tab-btn')[0];
 if (segundaTab) segundaTab.click();
 }
 
@@ -111,7 +111,9 @@ function configurarEventos() {
     const filterPhase = document.getElementById('filterPhase');
     const sortBy = document.getElementById('sortBy');
 
-    if (filterPhase) filterPhase.addEventListener('change', (e) => { filtroFase = e.target.value; renderizarPartidos(); });
+    if (filterPhase) filterPhase.addEventListener('change', (e) => { filtroFase = e.target.value;
+renderizarPartidos(); });
+if (filterPhase) filtroFase = filterPhase.value;
     if (sortBy)      sortBy.addEventListener('change',      (e) => { ordenamiento = e.target.value; renderizarPartidos(); });
 
     const filterPhaseCompleted = document.getElementById('filterPhaseCompleted');
@@ -273,6 +275,7 @@ function renderizarPartidos() {
     if (!container) return;
 
     let partidosFiltrados;
+<<<<<<< HEAD
     if (filtroFase === 'all') {
         partidosFiltrados = [...partidosPendientes];
     } else if (filtroFase === 'grupos') {
@@ -280,6 +283,13 @@ function renderizarPartidos() {
     } else {
         partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
     }
+=======
+if (filtroFase === 'all') {
+    partidosFiltrados = [...partidosPendientes];
+} else {
+    partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
+}
+>>>>>>> e6e31f0d08a9a4d8e6e0f97314d91ba39c8a42c4
 
     if (ordenamiento === 'fechacercana') partidosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     if (ordenamiento === 'fechalejana')  partidosFiltrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
@@ -373,13 +383,14 @@ function renderizarPredicciones() {
         return;
     }
 
-    let prediccionesFiltradas;
-    if (filtroFaseCompleted === 'all') {
-        prediccionesFiltradas = prediccionesRealizadas;
-    } else if (filtroFaseCompleted === 'grupos') {
-        prediccionesFiltradas = prediccionesRealizadas.filter(p => p.fase.startsWith('Grupo '));
+    let partidosFiltrados;
+    if (filtroFase === 'all') {
+        partidosFiltrados = partidosPendientes;
+    } else if (filtroFase === 'grupos') {
+        partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
     } else {
-        prediccionesFiltradas = prediccionesRealizadas.filter(p => p.fase === filtroFaseCompleted);
+        // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
+        partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
     }
 
     let prediccionesOrdenadas = [...prediccionesFiltradas];
