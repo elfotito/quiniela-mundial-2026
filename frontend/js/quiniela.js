@@ -6,7 +6,7 @@ let usuario = null;
 let estadisticas = null;
 let predicciones = [];
 let ranking = [];
-let filtroFase = 'todas'; 
+let filtroFase = 'no_grupos'; 
 let filtroActual = 'todas';
 let logrosDesbloqueadosDB = [];
 
@@ -197,6 +197,11 @@ function mostrarPrediccionesFiltradas() {
         // Filtrar Final y Tercer Puesto
         prediccionesFiltradas = prediccionesFiltradas.filter(p => 
             p.fase === 'Final' || p.fase === '3er Puesto'
+        );
+    } else if (filtroFase === 'no_grupos') {
+        // Excluir fase de grupos (mostrar TODO EXCEPTO Grupo X)
+        prediccionesFiltradas = prediccionesFiltradas.filter(p => 
+            !p.fase || !p.fase.startsWith('Grupo ')
         );
     } else if (filtroFase !== 'todas') {
         // Filtrar por fase específica
