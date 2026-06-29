@@ -274,11 +274,10 @@ function renderizarPartidos() {
 
     let partidosFiltrados;
     if (filtroFase === 'all') {
-        partidosFiltrados = partidosPendientes;
-    } else if (filtroFase === '16vos') {
+        partidosFiltrados = [...partidosPendientes];
+    } else if (filtroFase === 'grupos') {
         partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
     } else {
-        // 16vos, Cuartos, Semis, Final, etc. — coincidencia exacta con la BD
         partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
     }
 
@@ -829,7 +828,7 @@ const backToTopBtn = document.getElementById('backToTop');
             });
         });
 function iniciarCountdown() {
-    const target = new Date('June 11, 2026 14:50:00').getTime();
+    const target = new Date('July 4, 2026 12:50:00').getTime();
     const els = {
         d: document.getElementById('cw-days'),
         h: document.getElementById('cw-hours'),

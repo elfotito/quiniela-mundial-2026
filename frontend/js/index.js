@@ -12,10 +12,10 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/47cf57da-4cc3-46dd-9834-db87d2595a9f/Erling-Haaland-celebrates-following-Norway-s-4-1-win-over-Estonia-in-Oslo-in-European-qualifying-for-the-FIFA-World-Cup-2026?focuspoint=0.52,0.49&io=transform:fill,height:910,width:1536&quality=75", badge:"🇳🇴 Noruega", fact:"Erling Haaland — Gobierna el reino del gol y sus cifras son casi mitológicas" },
-  { img:"https://digitalhub.fifa.com/transform/6dc9f252-8b09-4e33-8fad-aa3f9473e44c/GettyImages-2161532093?focuspoint=0.54,0.02&io=transform:fill,height:910,width:1536&quality=75", badge:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra", fact:"Harry Kane — Sin duda uno de los futbolistas con más calidad del mundo" },
-  { img:"https://digitalhub.fifa.com/transform/17c4bc55-1869-4ee2-ae2d-d44fa16b4fcf/GettyImages-2218119058?focuspoint=0.5,0.29&io=transform:fill,height:910,width:1536&quality=75", badge:"🇪🇦 España", fact:"Lamine Yamal — Es un jugador diferente, un genio. Es especial" },
-  { img:"https://digitalhub.fifa.com/transform/fe038a01-61f4-4a66-b473-bb2d4ecafed0/Portugal-s-Bruno-Fernandes-during-the-FIFA-World-Cup-2022-match-against-Ghana?focuspoint=0.51,0.13&io=transform:fill,height:910,width:1536&quality=75", badge:"🇵🇹 Portugal", fact:"Bruno Fernandes — Lo que ha hecho es colosal. Sus números son formidables" },
+  { img:"https://digitalhub.fifa.com/transform/b41fbbc8-71ef-4a1b-98fb-6c6fa5762058/Portugal-v-Uzbekistan-Group-K-FIFA-World-Cup-2026?focuspoint=0.43,0.38&io=transform:fill,height:910,width:1536&quality=75", badge:"Record Historico", fact:"Cristiano Ronaldo bate el récord de goles en ediciones diferentes de la Copa Mundial" },
+  { img:"https://digitalhub.fifa.com/transform/20447d50-1257-4367-b44c-b4e3d57cf03b/Brazil-v-Japan-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.38,0.3&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Remontada Brazuca", fact:"Martinelli le da a Brasil una victoria agónica ante Japón" },
+  { img:"https://digitalhub.fifa.com/transform/a3347f8f-f030-45e6-aeef-6a0b28a27948/Argentina-v-Algeria-Group-J-FIFA-World-Cup-2026?focuspoint=0.52,0.39&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de oro", fact:"Messi lidera la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/6678e88a-27cf-480c-a714-fa10a4ba720e/Norway-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.48,0.23&io=transform:fill,height:910,width:1536&quality=75", badge:"Promesa", fact:"Haaland, el delantero nórdico lleva más goles que partidos con su Selección" },
 ];
 
 const LV_ETAPAS = [
@@ -28,14 +28,12 @@ const LV_ETAPAS = [
 ];
 
 const LV_TIPS = [
-  { icon:"🔥", texto:"Arranque monumental de dresko, lleva 6 aciertos perfecto de +9 pts" },
-  { icon:"🔮", texto:"Ya esta el top 5 Oraculo en la seccion de Mr Chip" },
-  { icon:"💡", texto:"Cerca del 30% de los partidos terminan en empate, 1-1 es el marcador más probable" },
+  { icon:"🏆", texto:"¡Felicidades a EL MAGALLANERO! por quedar 1er lugar en la fase de grupos" },
+  { icon:"🥶", texto:"Tito y Fabio Zavarse cayeron junto con japon " },
+  { icon:"💡", texto:"El 25.3% de los partidos de eliminación directa llegaron a la tanda de penales" },
   { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
-  { icon:"🤑", texto:"CriptoCarrisan lleva mas cambio de lider que Peru" },
   { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
   { icon:"🗃️", texto:"Mantente atento a las novedades que trae QuinielaMundial2026" },
-  { icon:"📅", texto:"Se acerca un partido Polemico Noruega-Senegal" },
 ];
 
 // ============================================
