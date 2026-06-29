@@ -1695,7 +1695,7 @@ function exportarPDF() {
     doc.setTextColor(...DARK);
 
     const resumenItems = [
-        { label: 'Predicciones', val: `${predicciones.length}` },
+        { label: 'Predicciones', val: `${prediccionesFiltradas.length}` },
         { label: 'Puntos', val: document.getElementById('resPuntos')?.textContent || '—' },
         { label: 'Efectividad', val: document.getElementById('resEfectividad')?.textContent || '—' },
         { label: 'Campeón', val: obtenerNombrePais(usuario.campeon_elegido) }
@@ -1713,7 +1713,12 @@ function exportarPDF() {
     });
 
     // ── Tabla ──
-    const filas = [...predicciones]
+    // Filtrar predicciones: excluir fase "Grupo X"
+    const prediccionesFiltradas = predicciones.filter(p => 
+        !p.fase || !p.fase.startsWith('Grupo ')
+    );
+    
+    const filas = [...prediccionesFiltradas]
         .sort((a, b) => new Date(a.fecha_partido || a.fecha) - new Date(b.fecha_partido || b.fecha))
         .map(p => {
             const fechaPartido = new Date(p.fecha_partido || p.fecha);
