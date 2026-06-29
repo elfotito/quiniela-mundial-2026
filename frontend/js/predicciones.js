@@ -274,22 +274,12 @@ function renderizarPartidos() {
     const container = document.getElementById('matchesGrid');
     if (!container) return;
 
-    let partidosFiltrados;
-<<<<<<< HEAD
-    if (filtroFase === 'all') {
-        partidosFiltrados = [...partidosPendientes];
-    } else if (filtroFase === 'grupos') {
-        partidosFiltrados = partidosPendientes.filter(p => p.fase.startsWith('Grupo '));
-    } else {
-        partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
-    }
-=======
 if (filtroFase === 'all') {
     partidosFiltrados = [...partidosPendientes];
 } else {
     partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
 }
->>>>>>> e6e31f0d08a9a4d8e6e0f97314d91ba39c8a42c4
+
 
     if (ordenamiento === 'fechacercana') partidosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     if (ordenamiento === 'fechalejana')  partidosFiltrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
