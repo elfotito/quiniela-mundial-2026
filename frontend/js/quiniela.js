@@ -1786,7 +1786,6 @@ function exportarPDF() {
         });
 
         doc.save(`quiniela_${usuario.nombre.replace(/\s+/g, '_')}.pdf`);
-        alert('✅ PDF descargado correctamente');
 
     } catch (error) {
         console.error('❌ Error en exportarPDF:', error);
