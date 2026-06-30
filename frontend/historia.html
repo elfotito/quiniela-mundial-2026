@@ -3368,6 +3368,28 @@ const EDICIONES = [
 })();
 </script>
 <script>
+    /**
+ * Toggle del timeline moderno
+ * Expande/contrae la tarjeta al hacer clic en su header
+ */
+function toggleTL(headerEl) {
+  const card = headerEl.closest('.tl-card');
+  if (!card) return;
+  
+  // Si es la última tarjeta (2026), puedes forzar que se cierre? No, toggle normal.
+  card.classList.toggle('expanded');
+  
+  // Cerrar las demás tarjetas (opcional: comportamiento de acordeón)
+  // Descomenta las siguientes líneas si quieres que solo una se abra a la vez:
+  /*
+  const allCards = document.querySelectorAll('.tl-card');
+  allCards.forEach(c => {
+    if (c !== card && c.classList.contains('expanded')) {
+      c.classList.remove('expanded');
+    }
+  });
+  */
+}
 /**
  * TIMELINE ACCORDION COMPONENT
  * Manejo de expansión/contracción de items de cronología
