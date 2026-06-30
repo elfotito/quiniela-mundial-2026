@@ -1634,7 +1634,292 @@
   }
 }
 
+/* ============================================================
+   TIMELINE MODERNO - Versión Rediseñada
+   ============================================================ */
 
+/* Contenedor principal */
+.timeline-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+  max-width: 100%;
+}
+
+/* ── TARJETA INDIVIDUAL ────────────────────────────────────── */
+.tl-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tl-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  border-color: #d4d4d4;
+}
+
+.tl-card-last {
+  border-color: var(--fifa-gold, #FFD700);
+  background: linear-gradient(135deg, #fff8f0, #ffffff);
+}
+
+.tl-card-last:hover {
+  border-color: #e6b800;
+}
+
+/* ── HEADER (clicable) ──────────────────────────────────────── */
+.tl-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.tl-card-header:hover {
+  background: #f9f9f9;
+}
+
+.tl-card-last .tl-card-header:hover {
+  background: #fff5e8;
+}
+
+/* Año + bandera */
+.tl-year-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 60px;
+  padding-right: 4px;
+}
+
+.tl-year-num {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--fifa-gold, #BA7517);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.tl-year-flag {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+/* Título + subtítulo */
+.tl-card-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.tl-card-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tl-card-sub {
+  font-size: 12px;
+  color: #777;
+  font-weight: 600;
+  display: block;
+  margin-top: 1px;
+}
+
+/* Icono toggle */
+.tl-toggle-icon {
+  font-size: 18px;
+  color: #aaa;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.tl-card.expanded .tl-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* ── BODY (expandible) ──────────────────────────────────────── */
+.tl-card-body {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 18px;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.3s ease,
+              opacity 0.25s ease;
+  opacity: 0;
+  border-top: 0px solid #f0f0f0;
+}
+
+.tl-card.expanded .tl-card-body {
+  max-height: 1200px;
+  padding: 0 18px 20px 18px;
+  opacity: 1;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #f0f0f0;
+}
+
+/* Grid interno */
+.tl-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 14px;
+}
+
+.tl-grid-2col p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #444;
+  margin: 0 0 8px 0;
+}
+
+.tl-grid-2col p:last-child {
+  margin-bottom: 0;
+}
+
+.tl-grid-2col strong {
+  color: #0a0a0a;
+}
+
+/* Mini estadísticas */
+.tl-stat-mini {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tl-stat-mini + .tl-stat-mini {
+  margin-top: 10px;
+}
+
+.tl-stat-mini div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #444;
+  padding: 2px 0;
+  border-bottom: 1px dashed #eee;
+}
+
+.tl-stat-mini div:last-child {
+  border-bottom: none;
+}
+
+.tl-stat-label {
+  color: #888;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.tl-stat-mini strong {
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+/* Cita */
+.tl-quote {
+  background: #fafaf5;
+  border-left: 3px solid var(--fifa-gold, #FFD700);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-style: italic;
+  color: #555;
+  border-radius: 0 6px 6px 0;
+  margin-top: 4px;
+}
+
+.tl-quote::before {
+  content: '"';
+  color: var(--fifa-gold, #FFD700);
+  font-size: 20px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.tl-quote::after {
+  content: '"';
+  color: var(--fifa-gold, #FFD700);
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .tl-card-header {
+    padding: 12px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .tl-year-badge {
+    min-width: 48px;
+  }
+  
+  .tl-year-num {
+    font-size: 18px;
+  }
+  
+  .tl-year-flag {
+    font-size: 15px;
+  }
+  
+  .tl-card-title {
+    font-size: 14px;
+  }
+  
+  .tl-card-sub {
+    font-size: 11px;
+  }
+  
+  .tl-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .tl-card-body {
+    padding: 0 14px;
+  }
+  
+  .tl-card.expanded .tl-card-body {
+    padding: 0 14px 16px 14px;
+  }
+  
+  .tl-stat-mini div {
+    font-size: 12px;
+  }
+  
+  .tl-quote {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+/* ── ANIMACIÓN DE APERTURA ────────────────────────────────── */
+.tl-card.expanded .tl-card-body {
+  animation: tlFadeIn 0.35s ease forwards;
+}
+
+@keyframes tlFadeIn {
+  0% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 
@@ -2011,354 +2296,245 @@
     </div>
 </div>
 
-            <!-- Timeline -->
             <div class="hist-section" id="timeline">
   <div class="hist-section-header">
     <span class="hist-section-icon">📜</span>
     <span class="hist-section-title">Cronología de Torneos</span>
   </div>
   <div class="hist-section-body">
- 
-    <ul class="tl-accordion">
- 
-      <!-- 2006 ALEMANIA -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2006 Alemania">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/2006_FIFA_World_Cup.svg/250px-2006_FIFA_World_Cup.svg.png" alt="2006 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2006</div>
-            <div class="tl-tournament-name">🇩🇪 Alemania – Cuando todo comenzó</div>
-            <div class="tl-description">
-              Todo empezó aquí. <strong>Italia</strong> ganó su cuarto Mundial, y nuestra quiniela dio sus primeros pasos.
+    
+    <!-- ========== NUEVO TIMELINE ========== -->
+    <div class="timeline-modern">
+      
+      <!-- 2006 -->
+      <div class="tl-card" data-year="2006">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2006</span>
+            <span class="tl-year-flag">🇩🇪</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Alemania 2006</h3>
+            <span class="tl-card-sub">🏆 Italia · Wilson Arteaga</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>📖 El Origen:</strong> Todo empezó aquí. Italia ganó su cuarto Mundial, y nuestra quiniela dio sus primeros pasos.</p>
+              <p><strong>👥 Los Pioneros:</strong> El círculo familiar cercano se consideraba "experto", pero irónicamente nunca lograba ganar.</p>
+              <p><strong>⚡ Los Canteranos:</strong> Amigos del hijo del creador. Resultados académicos desastrosos, pero fútbol de alto nivel.</p>
             </div>
-            <div class="tl-description">
-              <strong>Los Carrisan Pioneros:</strong> El círculo familiar cercano, que se consideraba a sí mismo como "experto" en esta naciente quiniela. Sin embargo, la vida tiene su ironía: a pesar de ser los arquitectos del sistema, se encontraban crónicamente desafiados para ganarlo.
-            </div>
-            <div class="tl-description">
-              <strong>Los Canteranos:</strong> Los amigos del hijo del creador, un grupo para el cual el fútbol no era un hobby, sino una religión. Estos jóvenes literalmente respiraban futbolística. Los resultados académicos fueron desastrosos, pero ejecutaron un juego que habría hecho sonrojar a cualquier analista deportivo.
-            </div>
-            <div class="tl-description">
-              <strong>El Ganador: Wilson Arteaga</strong><br>
-              "Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. Y siempre los mismos marcadores: 1-0. Es el resultado más lógico."
-            </div>
-            <div class="tl-description">
-              <strong>La Economía del Juego:</strong> Cada participante invertía 4.300 Bolívares, generando un fondo acumulado de 64.500 Bolívares (15 participantes). Ganador: 70%, Segundo: 20%, Tercero: 10%. No había margen para los organizadores. Era un juego de pasión, no de lucro.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/2006_FIFA_World_Cup.svg/250px-2006_FIFA_World_Cup.svg.png" alt="2006 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador</div>
-                <div class="tl-stat-value">Wilson A.</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Ganador</span> <strong>Wilson Arteaga</strong></div>
+                <div><span class="tl-stat-label">Participantes</span> <strong>15</strong></div>
+                <div><span class="tl-stat-label">Puntos TOP</span> <strong>84</strong></div>
               </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">15</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">Italia 🇮🇹</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Premio 1ro</div>
-                <div class="tl-stat-value">45mil Bs</div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Premio 1er</span> <strong>45.000 Bs</strong></div>
+                <div><span class="tl-stat-label">Inscripción</span> <strong>4.300 Bs</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. 1-0 siempre." — Wilson</div>
         </div>
-      </li>
- 
-      <!-- 2010 SUDÁFRICA -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2010 Sudáfrica">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/2010_FIFA_World_Cup.svg/250px-2010_FIFA_World_Cup.svg.png" alt="2010 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2010</div>
-            <div class="tl-tournament-name">🇿🇦 Sudáfrica – Plantando las bases</div>
-            <div class="tl-description">
-              <strong>España</strong> ganó su primer Mundial con gol de Iniesta en el minuto 116. Nuestra quiniela agregó la ronda eliminatoria con la regla de que el partido se juega hasta los 90min.
+      </div>
+      
+      <!-- 2010 -->
+      <div class="tl-card" data-year="2010">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2010</span>
+            <span class="tl-year-flag">🇿🇦</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Sudáfrica 2010</h3>
+            <span class="tl-card-sub">🏆 España · Víctor Carrillo</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>👑 La Visión:</strong> Víctor Carrillo creyó en España desde el principio, cuando nadie más lo hacía. Vio el futuro del fútbol de toque.</p>
+              <p><strong>⚙️ El Sistema:</strong> En este torneo se consolidó el sistema de puntos que sigue siendo la columna vertebral de la Quiniela.</p>
             </div>
-            <div class="tl-description">
-              Mientras la mayoría de los quinielistas pensaba convencionalmente, Víctor Carrillo hizo algo audaz: <strong>creyó en España desde el principio del torneo.</strong>
-            </div>
-            <div class="tl-description">
-              España no era aún la dinastía que se convertiría. No eran los favoritos. Pero Víctor vio algo en el juego de toque y posesión que Xavi e Iniesta encarnaban. Vio el futuro del fútbol antes de que el futuro llegara.
-            </div>
-            <div class="tl-description">
-              <strong>Víctor Carrillo ganó Sudáfrica 2010.</strong> En el proceso, consolidó el sistema de puntos que sigue siendo la columna vertebral de la Quiniela hoy en día. Creó una fórmula que es justa, precisa, y que recompensa tanto la visión como la consistencia.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/2010_FIFA_World_Cup.svg/250px-2010_FIFA_World_Cup.svg.png" alt="2010 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador</div>
-                <div class="tl-stat-value">Victor C.</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">20</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">España 🇪🇸</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Points Top</div>
-                <div class="tl-stat-value">110 pts</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Ganador</span> <strong>Víctor Carrillo</strong></div>
+                <div><span class="tl-stat-label">Participantes</span> <strong>20</strong></div>
+                <div><span class="tl-stat-label">Puntos TOP</span> <strong>110</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"Vi en Xavi e Iniesta algo que los demás no veían. El fútbol no es solo goles." — Víctor</div>
         </div>
-      </li>
- 
-      <!-- 2014 BRASIL -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2014 Brasil">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/2014_FIFA_World_Cup.svg/250px-2014_FIFA_World_Cup.svg.png" alt="2014 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2014</div>
-            <div class="tl-tournament-name">🇧🇷 Brasil – El dominio alemán</div>
-            <div class="tl-description">
-              <strong>Alemania</strong> ejecutó lo que muchos consideran el mejor fútbol del siglo XXI. Su semifinal contra Brasil (1-7) fue la humillación más épica jamás vista en un Mundial.
+      </div>
+      
+      <!-- 2014 -->
+      <div class="tl-card" data-year="2014">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2014</span>
+            <span class="tl-year-flag">🇧🇷</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Brasil 2014</h3>
+            <span class="tl-card-sub">🏆 Alemania · Luis Carrillo</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>💥 El 7-1:</strong> Alemania humilló a Brasil en la semifinal más épica de la historia. Solo el 7% de los participantes acertó.</p>
+              <p><strong>👑 Dinastía:</strong> Luis Carrillo continuó la tradición familiar. Primera vez que un miembro de la familia ganaba después del fundador.</p>
             </div>
-            <div class="tl-description">
-              En 2014, solo el 7% de los participantes acertó ganador Alemania en el famoso 1-7 de Brasil-Alemania. Pero <strong>Luis Carrillo</strong> lo supo. Continuó la tradición familiar ganadora.
-            </div>
-            <div class="tl-description">
-              Fue la primera vez que un miembro de la familia Carrillo ganaba después que el fundador. Luis no solo ganó; ganó con estilo, con precisión, con la misma intuición futbolística que define a la dinastía.
-            </div>
-            <div class="tl-description">
-              Este mundial fue la prueba de que la Quiniela no era casualidad. Era un sistema que trascendía. Era tradición.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/2014_FIFA_World_Cup.svg/250px-2014_FIFA_World_Cup.svg.png" alt="2014 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador</div>
-                <div class="tl-stat-value">Luis C.</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">28</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">Alemania 🇩🇪</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Points Top</div>
-                <div class="tl-stat-value">111 pts</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Ganador</span> <strong>Luis Carrillo</strong></div>
+                <div><span class="tl-stat-label">Participantes</span> <strong>28</strong></div>
+                <div><span class="tl-stat-label">Puntos TOP</span> <strong>111</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"La quiniela no es casualidad. Es un sistema que trasciende. Es tradición."</div>
         </div>
-      </li>
- 
-      <!-- 2018 RUSIA -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2018 Rusia">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/2018_FIFA_World_Cup.svg/250px-2018_FIFA_World_Cup.svg.png" alt="2018 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2018</div>
-            <div class="tl-tournament-name">🇷🇺 Rusia – La supremacía de la consistencia</div>
-            <div class="tl-description">
-              <strong>Francia</strong> ganó su segundo mundial en un torneo que vio a Argentina lamerse las heridas. Fue el torneo de Mbappé. Fue el torneo de Griezmann. Fue el torneo de los jóvenes talentos.
+      </div>
+      
+      <!-- 2018 -->
+      <div class="tl-card" data-year="2018">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2018</span>
+            <span class="tl-year-flag">🇷🇺</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Rusia 2018</h3>
+            <span class="tl-card-sub">🏆 Francia · Jorge Molina</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>📈 La Consistencia:</strong> Jorge Molina demostró que en la Quiniela, como en el fútbol, la constancia triunfa.</p>
+              <p><strong>🔥 Récord:</strong> Con 172 puntos, la puntuación más alta jamás registrada hasta entonces.</p>
             </div>
-            <div class="tl-description">
-              Pero la Quiniela tuvo su propio campeón: <strong>Jorge Molina</strong>. Un nombre respetado en los círculos quinielistas. Jorge no era un novato; era un veterano que finalmente alcanzaba su cúspide.
-            </div>
-            <div class="tl-description">
-              Con 172 puntos, la puntuación más alta que se había visto hasta entonces, Jorge demostró que en la Quiniela, como en el fútbol, la consistencia triunfa. Las predicciones precisas, año tras año, finalmente alcanzan su recompensa.
-            </div>
-            <div class="tl-description">
-              Este fue el torneo que probaría que la Quiniela había evolucionado: más participantes, más competencia, más intensidad. Pero el modelo de puntos de Víctor Carrillo Sr. seguía siendo perfecto.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/2018_FIFA_World_Cup.svg/250px-2018_FIFA_World_Cup.svg.png" alt="2018 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador</div>
-                <div class="tl-stat-value">Jorge M.</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">35</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">Francia 🇫🇷</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Points Top</div>
-                <div class="tl-stat-value">172 pts</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Ganador</span> <strong>Jorge Molina</strong></div>
+                <div><span class="tl-stat-label">Participantes</span> <strong>35</strong></div>
+                <div><span class="tl-stat-label">Puntos TOP</span> <strong>172</strong> 🔥</div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"Predicciones precisas, año tras año, finalmente alcanzan su recompensa."</div>
         </div>
-      </li>
- 
-      <!-- 2022 QATAR -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2022 Qatar">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/2022_FIFA_World_Cup.svg/250px-2022_FIFA_World_Cup.svg.png" alt="2022 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2022</div>
-            <div class="tl-tournament-name">🇶🇦 Qatar – El torneo del cambio</div>
-            <div class="tl-description">
-              <strong>Argentina</strong> reivindicó una dinastía, ganando su tercera copa mundial. Lionel Messi finalmente alzó el trofeo que le faltaba. El fútbol sudamericano resurgió.
+      </div>
+      
+      <!-- 2022 -->
+      <div class="tl-card" data-year="2022">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2022</span>
+            <span class="tl-year-flag">🇶🇦</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Qatar 2022</h3>
+            <span class="tl-card-sub">🏆 Argentina · Tito</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>🌟 La Nueva Generación:</strong> Tito, presente desde los primeros días, colocó su nombre en el Salón de la Fama.</p>
+              <p><strong>🌍 Cambio de Era:</strong> Primer Mundial invernal, en Oriente Medio. La quiniela coronaba a una nueva generación.</p>
             </div>
-            <div class="tl-description">
-              En la Quiniela, <strong>Tito</strong> se coronó campeón. Tito, quien había estado presente en los primeros días, quien había crecido viendo a sus tíos y primos competir en esta tradición, finalmente colocó su nombre en el Salón de la Fama.
-            </div>
-            <div class="tl-description">
-              Con 162 puntos, Tito demostró que la juventud aún podía competir contra los veteranos. Que la intuición y la pasión aún valían tanto como la experiencia acumulada.
-            </div>
-            <div class="tl-description">
-              Qatar 2022 fue el torneo que sacudió las expectativas. Fue el primer mundial invernal. Fue el primer mundial en Oriente Medio. Y fue el primer mundial donde la Quiniela coronaba a una nueva generación de campeones.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/3/30/2022_FIFA_World_Cup.svg/250px-2022_FIFA_World_Cup.svg.png" alt="2022 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador</div>
-                <div class="tl-stat-value">Tito</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">42</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">Argentina 🇦🇷</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Points Top</div>
-                <div class="tl-stat-value">162 pts</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Ganador</span> <strong>Tito</strong></div>
+                <div><span class="tl-stat-label">Participantes</span> <strong>42</strong></div>
+                <div><span class="tl-stat-label">Puntos TOP</span> <strong>162</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"La intuición y la pasión aún valen tanto como la experiencia acumulada."</div>
         </div>
-      </li>
- 
-      <!-- 2024 EURO & COPA AMÉRICA -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2024 Copa Continental">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/26/UEFA_Euro_2024_Logo.svg/250px-UEFA_Euro_2024_Logo.svg.png" alt="2024 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2024</div>
-            <div class="tl-tournament-name">🇪🇸🇦🇷 Copa Continental – Las Batallas Paralelas</div>
-            <div class="tl-description">
-              Por primera vez, la Quiniela se dividió en dos frentes: <strong>Eurocopa</strong> en Europa y <strong>Copa América</strong> en América. Dos continentes, dos campeones, una sola tradición.
+      </div>
+      
+      <!-- 2024 (Euro + Copa América) -->
+      <div class="tl-card" data-year="2024">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2024</span>
+            <span class="tl-year-flag">🌍</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">Eurocopa · Copa América</h3>
+            <span class="tl-card-sub">🏆 España · Jose / 🏆 Argentina · Vicente O.</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>⚔️ Batalla Paralela:</strong> Dos quinielas simultáneas. Jose vs Luis Carrillo, nueva guardia contra vieja guardia.</p>
+              <p><strong>❤️ Sin Inscripción:</strong> Primera quiniela sin cobro. Nació espontáneamente del entusiasmo de la comunidad.</p>
+              <p><strong>🇦🇷 Copa América:</strong> Vicente Olivares leyó las cartas correctamente con 121 puntos.</p>
             </div>
-            <div class="tl-description">
-              <strong>Copa América 2024:</strong> Argentina revalidó su campeonato anterior ganando 2-1 contra Colombia. <strong>Vicente Olivares</strong> leyó las cartas correctamente. Con 121 puntos, Vicente se convirtió en el campeón de América.
-            </div>
-            <div class="tl-description">
-              <strong>Eurocopa 2024:</strong> España resurgió con una nueva generación. La "Roja" finalmente rompió su sequía después de 12 años sin ganar un título continental. <strong>José</strong> fue quien leyó este futuro.
-            </div>
-            <div class="tl-description">
-              La batalla fue épica: José contra Luis Carrillo, la nueva guardia contra la vieja guardia. José emergió apenas un paso adelante. 156 puntos contra un oponente que conocía todos los trucos del oficio.
-            </div>
-            <div class="tl-description">
-              <strong>Primera quiniela sin cobro de inscripción</strong>. Nació espontáneamente del entusiasmo de la comunidad. Fue puro pasión, pura tradición, sin márgenes de lucro. Fue fútbol en su estado más puro.
-            </div>
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/2/26/UEFA_Euro_2024_Logo.svg/250px-UEFA_Euro_2024_Logo.svg.png" alt="2024 Euro">
-            <img class="tl-image" src="https://upload.wikimedia.org/wikipedia/en/thumb/4/45/2024_Copa_Am%C3%A9rica_logo.svg/1280px-2024_Copa_Am%C3%A9rica_logo.svg.png" alt="2024 Copa América">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador Euro</div>
-                <div class="tl-stat-value">Jose</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador América</div>
-                <div class="tl-stat-value">Vicente O.</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón Euro</div>
-                <div class="tl-stat-value">España 🇪🇸</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón América</div>
-                <div class="tl-stat-value">Argentina 🇦🇷</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Euro Ganador</span> <strong>Jose</strong> (156 pts)</div>
+                <div><span class="tl-stat-label">América Ganador</span> <strong>Vicente O.</strong> (121 pts)</div>
+                <div><span class="tl-stat-label">Campeón Euro</span> <strong>España 🇪🇸</strong></div>
+                <div><span class="tl-stat-label">Campeón América</span> <strong>Argentina 🇦🇷</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"Pasión pura, tradición sin márgenes de lucro. Fútbol en su estado más puro."</div>
         </div>
-      </li>
- 
-      <!-- 2026 USA-MÉXICO-CANADÁ -->
-      <li class="tl-accordion-item">
-        <button class="tl-icon-btn" aria-label="2026 USA-México-Canadá">
-          <img src="https://i.pinimg.com/736x/63/5d/5f/635d5f83049f08c3926756a234c206fb.jpg" alt="2026 Logo" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="tl-emoji" style="display:none;">⚽</span>
-        </button>
-        <div class="tl-content-wrapper">
-          <div class="tl-content-box">
-            <div class="tl-year">2026</div>
-            <div class="tl-tournament-name">🇺🇸🇨🇦🇲🇽 La Plataforma Definitiva</div>
-            <div class="tl-description">
-              El Mundial se expande a <strong>48 selecciones</strong> y tres países anfitriones. Nosotros también nos expandimos: esta vez con una <strong>plataforma web completa</strong>, sistema de puntos automático, ranking en vivo, ligas privadas y todo lo que soñamos hace 20 años.
+      </div>
+      
+      <!-- 2026 -->
+      <div class="tl-card tl-card-last" data-year="2026">
+        <div class="tl-card-header" onclick="toggleTL(this)">
+          <div class="tl-year-badge">
+            <span class="tl-year-num">2026</span>
+            <span class="tl-year-flag">🇺🇸🇨🇦🇲🇽</span>
+          </div>
+          <div class="tl-card-title-group">
+            <h3 class="tl-card-title">USA · México · Canadá</h3>
+            <span class="tl-card-sub">🏆 ??? · ¿Tú?</span>
+          </div>
+          <span class="tl-toggle-icon">▾</span>
+        </div>
+        <div class="tl-card-body">
+          <div class="tl-grid-2col">
+            <div>
+              <p><strong>🚀 La Plataforma Definitiva:</strong> 48 selecciones. Tres países. Plataforma web completa con ranking en vivo.</p>
+              <p><strong>🏠 20 Años Después:</strong> Víctor Carrillo Sr. escribió la fórmula con lápiz y papel en 2006. Hoy tiene su hogar definitivo.</p>
+              <p><strong>🎯 ¿Serás Tú?</strong> El próximo nombre en el Salón de la Fama está por escribirse. ¿Será el tuyo?</p>
             </div>
-            <div class="tl-description">
-              El primer Mundial donde puedes predecir desde tu celular sin mandar capturas por WhatsApp. Bienvenido al futuro de nuestra tradición.
-            </div>
-            <div class="tl-description">
-              20 años después de que Víctor Carrillo Sr. escribiera la fórmula con lápiz y papel en 2006, la Quiniela Mundial finalmente consiguió su hogar definitivo: <strong>quinielacarrisan.com.ve</strong>
-            </div>
-            <div class="tl-description">
-              <strong>Una Plataforma, Un Ecosistema Completo.</strong> No es solo un formulario de predicciones. Es un mundo: Noticias en tiempo real • Memes y contenido viral • Videos y análisis • Efemérides futbolísticas • Ranking en vivo • Ligas privadas • Sistema de logros y coleccionables.
-            </div>
-            <div class="tl-description">
-              <strong>No sabemos quién será el campeón en el campo.</strong> Pero sabemos que la Quiniela lo coronará correctamente. Que lo celebrará adecuadamente. Que su nombre estará aquí, para siempre, en el Salón de la Fama. <strong>¿Será el tuyo?</strong>
-            </div>
-            <img class="tl-image" src="https://i.pinimg.com/736x/63/5d/5f/635d5f83049f08c3926756a234c206fb.jpg" alt="2026 Mundial">
-            <div class="tl-stats-grid">
-              <div class="tl-stat">
-                <div class="tl-stat-label">Participantes</div>
-                <div class="tl-stat-value">26 +</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Campeón FIFA</div>
-                <div class="tl-stat-value">???</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Ganador Quiniela</div>
-                <div class="tl-stat-value">¿Tú?</div>
-              </div>
-              <div class="tl-stat">
-                <div class="tl-stat-label">Selecciones</div>
-                <div class="tl-stat-value">48 🌍</div>
+            <div>
+              <div class="tl-stat-mini">
+                <div><span class="tl-stat-label">Participantes</span> <strong>50+</strong></div>
+                <div><span class="tl-stat-label">Selecciones</span> <strong>48 🌍</strong></div>
+                <div><span class="tl-stat-label">Campeón FIFA</span> <strong>???</strong></div>
+                <div><span class="tl-stat-label">Ganador</span> <strong>¿Tú?</strong></div>
               </div>
             </div>
           </div>
+          <div class="tl-quote">"No sabemos quién será el campeón en el campo. Pero sabemos que la Quiniela lo coronará correctamente."</div>
         </div>
-      </li>
- 
-    </ul>
- 
-    <!-- DOTS INDICADORES -->
-    <div class="tl-dots-container">
-      <button class="tl-dot active" aria-label="Año 2006"></button>
-      <button class="tl-dot" aria-label="Año 2010"></button>
-      <button class="tl-dot" aria-label="Año 2014"></button>
-      <button class="tl-dot" aria-label="Año 2018"></button>
-      <button class="tl-dot" aria-label="Año 2022"></button>
-      <button class="tl-dot" aria-label="Año 2024"></button>
-      <button class="tl-dot" aria-label="Año 2026"></button>
+      </div>
+      
     </div>
+    <!-- ========== FIN NUEVO TIMELINE ========== -->
+    
  
   </div>
 </div>
