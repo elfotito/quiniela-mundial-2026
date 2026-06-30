@@ -2083,6 +2083,79 @@
   0% { opacity: 0; transform: translateY(-8px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+/* ── AUTOR DE LA CITA ───────────────────────────────────────── */
+.tl-quote-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(186, 117, 23, 0.2);
+}
+
+.tl-quote-author .tl-quote-dash {
+  width: 24px;
+  height: 2px;
+  background: var(--fifa-gold, #BA7517);
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.tl-quote-author .tl-quote-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0a;
+  letter-spacing: 0.3px;
+}
+
+.tl-quote-author .tl-quote-role {
+  font-size: 11px;
+  color: #999;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.tl-quote-author .tl-quote-role::before {
+  content: "· ";
+  color: #ccc;
+}
+
+/* ── VARIANTE CON ICONO ────────────────────────────────────── */
+.tl-quote-author .tl-quote-icon {
+  font-size: 14px;
+  color: var(--fifa-gold, #BA7517);
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tl-quote-author .tl-quote-name {
+    font-size: 12px;
+  }
+  
+  .tl-quote-author .tl-quote-role {
+    font-size: 10px;
+  }
+  
+  .tl-quote-author .tl-quote-dash {
+    width: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tl-quote-author {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .tl-quote-author .tl-quote-name {
+    font-size: 11px;
+  }
+  
+  .tl-quote-author .tl-quote-role {
+    font-size: 10px;
+  }
+}
 
     </style>
 </head>
@@ -2510,7 +2583,17 @@
           </div>
         </div>
       </div>
-      <div class="tl-quote">"Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. Y siempre los mismos marcadores: 1-0."</div> — Wilson Arteaga
+      <div class="tl-quote">
+  "Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. Y siempre los mismos marcadores: 1-0. Es el resultado más lógico."
+  
+  <!-- AUTOR DE LA CITA -->
+  <div class="tl-quote-author">
+    <span class="tl-quote-dash"></span>
+    <span class="tl-quote-icon">✍</span>
+    <span class="tl-quote-name">Wilson Arteaga</span>
+    <span class="tl-quote-role">Ganador 2006</span>
+  </div>
+</div>
     </div>
   </div>
 
