@@ -1848,36 +1848,107 @@
   font-weight: 700;
 }
 
-/* ── IMÁGENES DE LOGOS ────────────────────────────────────── */
+/* ── BANNER DE IMAGEN (FOTO DE CELEBRACIÓN) ────────────────── */
 .tl-image-wrap {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  background: #fafafa;
+  width: 100%;
+  margin-top: 16px;
   border-radius: 10px;
-  padding: 12px;
-  border: 1px solid #eee;
-  min-height: 80px;
+  overflow: hidden;
+  background: #1a1a1a;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 280px;
+  padding: 0 !important; /* Anula el padding que tenías antes */
+  border: none !important; /* Anula el borde que tenías antes */
+  min-height: unset !important;
 }
 
 .tl-image-wrap img {
-  max-width: 100%;
-  max-height: 80px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
+/* Efecto zoom sutil al abrir la tarjeta */
+.tl-card.expanded .tl-image-wrap img {
+  transform: scale(1.03);
+}
+
+/* ── Overlay opcional (solo si usas el span dentro de .tl-image-wrap) ── */
+.tl-image-wrap .tl-banner-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 20px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+/* ── Para las imágenes dobles (Euro + Copa América) ────────── */
 .tl-double-images {
   display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;
 }
 
-.tl-double-images img {
-  max-width: 45%;
-  max-height: 80px;
-  object-fit: contain;
+.tl-double-images .tl-image-wrap {
+  flex: 1;
+  max-height: 200px;
+}
+
+.tl-double-images .tl-image-wrap img {
+  object-fit: cover;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .tl-image-wrap {
+    aspect-ratio: 16 / 10;
+    max-height: 200px;
+    margin-top: 12px;
+    border-radius: 8px;
+  }
+  
+  .tl-image-wrap .tl-banner-text {
+    font-size: 11px;
+    padding: 20px 14px 10px;
+  }
+  
+  .tl-double-images {
+    flex-wrap: wrap;
+  }
+  
+  .tl-double-images .tl-image-wrap {
+    max-height: 150px;
+    flex: 1 1 48%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tl-image-wrap {
+    aspect-ratio: 16 / 11;
+    max-height: 160px;
+    margin-top: 10px;
+    border-radius: 6px;
+  }
+  
+  .tl-image-wrap .tl-banner-text {
+    font-size: 10px;
+    padding: 16px 10px 8px;
+  }
+  
+  .tl-double-images .tl-image-wrap {
+    max-height: 120px;
+  }
 }
 
 /* ── CITA ────────────────────────────────────────────────────── */
@@ -1963,15 +2034,6 @@
   .tl-quote {
     font-size: 12px;
     padding: 10px 14px;
-  }
-  
-  .tl-image-wrap {
-    min-height: 60px;
-    padding: 10px;
-  }
-  
-  .tl-image-wrap img {
-    max-height: 60px;
   }
   
   .tl-double-images img {
