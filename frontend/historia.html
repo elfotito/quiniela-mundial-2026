@@ -2083,22 +2083,33 @@
   0% { opacity: 0; transform: translateY(-8px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-/* ── AUTOR DE LA CITA ───────────────────────────────────────── */
+/* ── AUTOR DE LA CITA (ALINEADO A LA DERECHA) ─────────────── */
 .tl-quote-author {
   display: flex;
   align-items: center;
+  justify-content: flex-end; /* ← ALINEA TODO A LA DERECHA */
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 10px;
   padding-top: 10px;
   border-top: 1px dashed rgba(186, 117, 23, 0.2);
+  text-align: right; /* ← POR SI EL TEXTO SE DESBORDA */
 }
 
+/* Invertir el orden de los elementos para que quede bien visualmente */
 .tl-quote-author .tl-quote-dash {
   width: 24px;
   height: 2px;
   background: var(--fifa-gold, #BA7517);
   flex-shrink: 0;
   border-radius: 2px;
+  order: 3; /* ← La línea va al final (derecha) */
+}
+
+.tl-quote-author .tl-quote-icon {
+  font-size: 14px;
+  color: var(--fifa-gold, #BA7517);
+  flex-shrink: 0;
+  order: 1; /* ← El icono va primero */
 }
 
 .tl-quote-author .tl-quote-name {
@@ -2106,6 +2117,7 @@
   font-weight: 700;
   color: #0a0a0a;
   letter-spacing: 0.3px;
+  order: 2; /* ← El nombre va después del icono */
 }
 
 .tl-quote-author .tl-quote-role {
@@ -2113,18 +2125,12 @@
   color: #999;
   font-weight: 400;
   margin-left: 4px;
+  order: 2; /* ← Junto al nombre */
 }
 
 .tl-quote-author .tl-quote-role::before {
   content: "· ";
   color: #ccc;
-}
-
-/* ── VARIANTE CON ICONO ────────────────────────────────────── */
-.tl-quote-author .tl-quote-icon {
-  font-size: 14px;
-  color: var(--fifa-gold, #BA7517);
-  flex-shrink: 0;
 }
 
 /* ── RESPONSIVE ────────────────────────────────────────────── */
@@ -2146,6 +2152,7 @@
   .tl-quote-author {
     flex-wrap: wrap;
     gap: 6px;
+    justify-content: flex-end; /* Mantiene alineación a derecha */
   }
   
   .tl-quote-author .tl-quote-name {
@@ -2584,7 +2591,7 @@
         </div>
       </div>
       <div class="tl-quote">
-  "Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. Y siempre los mismos marcadores: 1-0. Es el resultado más lógico."
+  Puse a ganar a todos los sudamericanos y a perder a todos los asiáticos. Y siempre los mismos marcadores: 1-0.
         </div>
   <!-- AUTOR DE LA CITA -->
   <div class="tl-quote-author">
@@ -2669,7 +2676,7 @@
             <div><span class="tl-stat-label">Acertaron el 7-1</span> <strong>7%</strong></div>
           </div>
           <div class="tl-image-wrap">
-            <img src="img/mundial-2014.jpg" alt="Logo 2014" loading="lazy"
+            <img src="img/campeon-2014.jpg" alt="Logo 2014" loading="lazy"
                  onerror="this.style.display='none'">
           </div>
         </div>
