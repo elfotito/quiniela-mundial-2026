@@ -765,24 +765,6 @@ async function compartirRanking() {
 </div>`;
     }
 
-    // ── STATS ──
-    function renderStats() {
-        const stats = [
-            { label: 'PUNTAJE MÁX', value: maxPts,   icon: '👑', color: C.gold   },
-            { label: 'PROMEDIO',    value: promedio,  icon: '➗', color: C.silver },
-            { label: 'PUNTAJE MÍN', value: minPts,   icon: '📉', color: C.red    },
-            { label: 'JUGADORES',   value: total,     icon: '👥', color: C.green  },
-        ];
-        return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-            ${stats.map(s => `
-            <div style="background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:8px;padding:12px;text-align:center;">
-                <div style="font-size:24px;margin-bottom:4px;">${s.icon}</div>
-                <div style="font-size:26px;font-weight:800;color:${s.color};font-family:'Yolk',Arial,sans-serif;letter-spacing:-1px;">${s.value}</div>
-                <div style="font-size:12px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1.5px;margin-top:2px;">${s.label}</div>
-            </div>`).join('')}
-        </div>`;
-    }
-
     // ── ÚLTIMOS RESULTADOS: fetch los más recientes ──
     let ultimosResultados = [];
     try {
@@ -901,10 +883,6 @@ async function compartirRanking() {
         </div>
         <div style="flex:1;">
             <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📊 ESTADÍSTICAS</div>
-            ${renderStats()}
-        </div>
-        <div style="flex-shrink:0;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:8px;font-family:'Yolk',Arial,sans-serif;">🏟️ ÚLTIMOS RESULTADOS</div>
             ${renderResultados()}
         </div>
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
