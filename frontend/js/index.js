@@ -12,9 +12,9 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/b41fbbc8-71ef-4a1b-98fb-6c6fa5762058/Portugal-v-Uzbekistan-Group-K-FIFA-World-Cup-2026?focuspoint=0.43,0.38&io=transform:fill,height:910,width:1536&quality=75", badge:"Record Historico", fact:"Cristiano Ronaldo bate el récord de goles en ediciones diferentes de la Copa Mundial" },
-  { img:"https://digitalhub.fifa.com/transform/20447d50-1257-4367-b44c-b4e3d57cf03b/Brazil-v-Japan-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.38,0.3&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Remontada Brazuca", fact:"Martinelli le da a Brasil una victoria agónica ante Japón" },
-  { img:"https://digitalhub.fifa.com/transform/a3347f8f-f030-45e6-aeef-6a0b28a27948/Argentina-v-Algeria-Group-J-FIFA-World-Cup-2026?focuspoint=0.52,0.39&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de oro", fact:"Messi lidera la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/cd18bc06-f27b-49ff-8ec7-a6e9c195e200/England-v-Congo-DR-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.55,0.38&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Remontada Epica", fact:"Kane salva a Inglaterra, una vez más. Los analistas ya lo dan como fuerte candidato a Balon de Oro" },
+  { img:"https://digitalhub.fifa.com/transform/e4f7a45a-344d-4751-ba79-1ca41ae6ab5d/Argentina-v-Algeria-Group-J-FIFA-World-Cup-2026?focuspoint=0.46,0.36&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Remontada Brazuca", fact:"En la Copa Mundial 2026, Lionel Messi superó al alemán Miroslav Klose en la cima." },
+  { img:"https://digitalhub.fifa.com/transform/d0656ad7-fc5c-4936-aea7-913b307c5ce6/France-v-Sweden-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.54,0.47&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Mbappe", fact:"Mbappé y Messi lideran la carrera por la Bota de Oro adidas" },
   { img:"https://digitalhub.fifa.com/transform/6678e88a-27cf-480c-a714-fa10a4ba720e/Norway-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.48,0.23&io=transform:fill,height:910,width:1536&quality=75", badge:"Promesa", fact:"Haaland, el delantero nórdico lleva más goles que partidos con su Selección" },
 ];
 
