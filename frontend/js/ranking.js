@@ -882,7 +882,7 @@ async function compartirRanking() {
             ${renderPodioItem(top3[2], 3, PODIO_IMG[3])}
         </div>
         <div style="flex:1;">
-            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">📊 ESTADÍSTICAS</div>
+            <div style="font-size:13px;color:${C.gold};letter-spacing:3px;font-weight:600;margin-bottom:10px;">⚽ ULTIMOS RESULTADOS</div>
             ${renderResultados()}
         </div>
         <div style="padding-top:10px;border-top:1px solid ${C.border};text-align:center;flex-shrink:0;">
