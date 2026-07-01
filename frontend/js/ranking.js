@@ -859,7 +859,7 @@ async function compartirRanking() {
 
     // COLUMNA DERECHA (40% = 360px)
     const colRight = document.createElement('div');
-    colRight.style.cssText = `width:360px;height:1600px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
+    colRight.style.cssText = `width:360px;height:1150px;display:flex;flex-direction:column;padding:28px 28px 28px 20px;box-sizing:border-box;gap:16px;`;
     colRight.innerHTML = `
         <div style="display:flex;justify-content:center;align-items:center;height:70px;background:${C.surfaceAlt};border:1px solid ${C.border};border-radius:12px;overflow:hidden;flex-shrink:0;">
             <img src="/img/logoblancomenu.png" alt="" style="max-height:60px;max-width:90%;object-fit:contain;" />
