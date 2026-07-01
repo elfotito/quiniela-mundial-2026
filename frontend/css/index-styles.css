@@ -4172,11 +4172,11 @@
 .estado-programado { background: #3b82f620; color: #3b82f6; }
 
 .mc-tab-badge {
-    font-size: 12px;
+    font-size: 9px;
     font-weight: 900;
     letter-spacing: 1px;
     padding: 2px 7px;
-    background: var(--fifa-blue);
+    background: #3b82f6;
     color: #fff;
     border-radius: 4px;
     margin-left: 4px;
