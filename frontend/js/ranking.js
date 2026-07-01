@@ -831,7 +831,7 @@ async function compartirRanking() {
     document.head.appendChild(styleEl);
 
     const wrapper = document.createElement('div');
-    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1600px;background:${C.bg};display:flex;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
+    wrapper.style.cssText = `position:fixed;top:-9999px;left:-9999px;width:900px;height:1150px;background:${C.bg};display:flex;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
 
     // COLUMNA IZQUIERDA (60% = 540px)
     const colLeft = document.createElement('div');
