@@ -901,418 +901,314 @@
        COMPARTIR ANÁLISIS VS — html2canvas
     ================================================================ */
     async function compartirAnalisisVS() {
-        const btn = document.getElementById('btnCompartirVS');
-        if (!btn) return;
+    const btn = document.getElementById('btnCompartirVS');
+    if (!btn) return;
 
-        // ── Datos del partido ─────────────────────────────────────
-        const flag1      = document.getElementById('flagHome')?.textContent       || '🏠';
-        const flag2      = document.getElementById('flagAway')?.textContent       || '✈️';
-        const name1      = document.getElementById('nameHome')?.textContent       || 'LOCAL';
-        const name2      = document.getElementById('nameAway')?.textContent       || 'VISITANTE';
-        const score1     = document.getElementById('scoreHome')?.textContent      || '—';
-        const score2     = document.getElementById('scoreAway')?.textContent      || '—';
-        const pctH       = document.getElementById('porcentajeLocal')?.textContent   || '0%';
-        const pctD       = document.getElementById('porcentajeEmpate')?.textContent  || '0%';
-        const pctA       = document.getElementById('porcentajeVisitante')?.textContent || '0%';
-        const total      = document.getElementById('totalPredicciones')?.textContent || '0';
-        const fecha      = document.getElementById('matchDate')?.textContent      || '';
-        const fase       = document.getElementById('matchPhase')?.textContent     || '';
-        const comentario = document.getElementById('chipCommentText')?.textContent || '';
+    const flag1      = document.getElementById('flagHome')?.textContent       || '🏠';
+    const flag2      = document.getElementById('flagAway')?.textContent       || '✈️';
+    const name1      = document.getElementById('nameHome')?.textContent       || 'LOCAL';
+    const name2      = document.getElementById('nameAway')?.textContent       || 'VISITANTE';
+    const score1     = document.getElementById('scoreHome')?.textContent      || '—';
+    const score2     = document.getElementById('scoreAway')?.textContent      || '—';
+    const pctH       = document.getElementById('porcentajeLocal')?.textContent   || '0%';
+    const pctD       = document.getElementById('porcentajeEmpate')?.textContent  || '0%';
+    const pctA       = document.getElementById('porcentajeVisitante')?.textContent || '0%';
+    const total      = document.getElementById('totalPredicciones')?.textContent || '0';
+    const fecha      = document.getElementById('matchDate')?.textContent      || '';
+    const fase       = document.getElementById('matchPhase')?.textContent     || '';
+    const comentario = document.getElementById('chipCommentText')?.textContent || '';
 
-        // ── Leer usuarios de las 3 columnas del DOM ───────────────
-        // Cada .mc-user-card tiene: .mc-user-name, .mc-user-pred, .mc-user-pts
-        function leerUsuariosColumna(containerId) {
-            const cards = document.querySelectorAll(`#${containerId} .mc-user-card`);
-            return Array.from(cards).map(card => ({
-                nombre : card.querySelector('.mc-user-name')?.textContent?.trim() || '',
-                pred   : card.querySelector('.mc-user-pred')?.textContent?.trim() || '',
-                pts    : card.querySelector('.mc-user-pts')?.textContent?.trim()  || '—',
-                ptsClass: card.querySelector('.mc-user-pts')?.className || '',
-            }));
-        }
-
-        const usuariosLocal     = leerUsuariosColumna('usersLocal');
-        const usuariosEmpate    = leerUsuariosColumna('usersEmpate');
-        const usuariosVisitante = leerUsuariosColumna('usersVisitante');
-
-        // Determina si el partido ya tiene resultado (para mostrar pts o —)
-        const hayResultado = score1 !== '—' || score2 !== '—';
-
-        // ── Helper: color de pts según clase ─────────────────────
-        function colorPts(className) {
-            if (className.includes('mc-pts-perfect')) return '#00D084';
-            if (className.includes('mc-pts-good'))    return '#5bb3ff';
-            if (className.includes('mc-pts-partial'))  return '#FFB800';
-            if (className.includes('mc-pts-none'))     return '#ff6b6b';
-            return '#666';
-        }
-
-        // ── Helper: renderizar lista de usuarios para la imagen ───
-        function renderUsersHTML(usuarios, accentColor) {
-    if (!usuarios.length) {
-        return `<div style="font-size:11px; color:#444; padding:8px 0;">Sin predicciones</div>`;
+    function leerUsuariosColumna(containerId) {
+        const cards = document.querySelectorAll(`#${containerId} .mc-user-card`);
+        return Array.from(cards).map(card => ({
+            nombre  : card.querySelector('.mc-user-name')?.textContent?.trim() || '',
+            pred    : card.querySelector('.mc-user-pred')?.textContent?.trim() || '',
+            pts     : card.querySelector('.mc-user-pts')?.textContent?.trim()  || '—',
+            ptsClass: card.querySelector('.mc-user-pts')?.className || '',
+        }));
     }
-    return usuarios.map(u => `
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding: 7px 10px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 7px;
-            margin-bottom: 6px;
-            gap: 8px;
-        ">
-            <div style="
-                font-size:12px;
-                font-weight:900;
-                color: ${hayResultado ? colorPts(u.ptsClass) : '#555'};
-                white-space:nowrap;
-                flex-shrink:0;
-                padding: 3px 9px;
-                background: rgba(255,255,255,0.04);
-                border-radius: 5px;
-                border: 1px solid rgba(255,255,255,0.07);
-                min-width: 32px;
-                text-align: center;
-            ">
-                ${hayResultado ? u.pts : '—'}
+
+    const usuariosLocal     = leerUsuariosColumna('usersLocal');
+    const usuariosEmpate    = leerUsuariosColumna('usersEmpate');
+    const usuariosVisitante = leerUsuariosColumna('usersVisitante');
+    const hayResultado = score1 !== '—' || score2 !== '—';
+
+    const pctHNum = parseFloat(pctH) || 0;
+    const pctDNum = parseFloat(pctD) || 0;
+    const pctANum = parseFloat(pctA) || 0;
+    const favorito = pctHNum >= pctDNum && pctHNum >= pctANum ? name1
+                   : pctANum >= pctHNum && pctANum >= pctDNum ? name2
+                   : 'Empate';
+    const favoritoPct = Math.max(pctHNum, pctDNum, pctANum);
+    const totalNum = parseInt(total) || 0;
+    const maxBando = Math.max(usuariosLocal.length, usuariosEmpate.length, usuariosVisitante.length);
+
+    function colorPts(className) {
+        if (className.includes('mc-pts-perfect')) return '#00E676';
+        if (className.includes('mc-pts-good'))    return '#00B4D8';
+        if (className.includes('mc-pts-partial')) return '#C9A84C';
+        if (className.includes('mc-pts-none'))    return '#FF2D55';
+        return '#4A5568';
+    }
+    function bgPts(className) {
+        if (className.includes('mc-pts-perfect')) return 'rgba(0,230,118,0.12)';
+        if (className.includes('mc-pts-good'))    return 'rgba(0,180,216,0.12)';
+        if (className.includes('mc-pts-partial')) return 'rgba(201,168,76,0.12)';
+        if (className.includes('mc-pts-none'))    return 'rgba(255,45,85,0.12)';
+        return 'rgba(255,255,255,0.04)';
+    }
+
+    const C = {
+        bg:       '#060D18',
+        bgMid:    '#0B1929',
+        surface:  'rgba(255,255,255,0.04)',
+        border:   'rgba(255,255,255,0.07)',
+        cyan:     '#00B4D8',
+        cyanDim:  'rgba(0,180,216,0.12)',
+        gold:     '#C9A84C',
+        goldBright:'#F0C866',
+        goldDim:  'rgba(201,168,76,0.15)',
+        silver:   '#C0C0C0',
+        white:    '#FFFFFF',
+        muted:    '#4A5568',
+        red:      '#FF2D55',
+        redDim:   'rgba(255,45,85,0.12)',
+        green:    '#00E676',
+        // columnas
+        colLocal:    { accent: '#00B4D8', dim: 'rgba(0,180,216,0.10)', border: 'rgba(0,180,216,0.25)' },
+        colEmpate:   { accent: '#C9A84C', dim: 'rgba(201,168,76,0.10)', border: 'rgba(201,168,76,0.25)' },
+        colVisita:   { accent: '#FF2D55', dim: 'rgba(255,45,85,0.10)', border: 'rgba(255,45,85,0.25)' },
+    };
+
+    const hexSVG = `<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52'><polygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='rgba(0,180,216,0.05)' stroke-width='1'/></svg>`;
+    const hexB64 = 'data:image/svg+xml;base64,' + btoa(hexSVG);
+
+    function renderUserCard(u, accentColor, accentDim) {
+        const pts     = hayResultado ? u.pts : '—';
+        const ptsBg   = hayResultado ? bgPts(u.ptsClass) : 'rgba(255,255,255,0.04)';
+        const ptsClr  = hayResultado ? colorPts(u.ptsClass) : C.muted;
+        return `
+<div style="display:flex;align-items:center;gap:7px;padding:6px 8px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);border-radius:7px;margin-bottom:5px;">
+    <div style="font-size:11px;font-weight:800;color:${ptsClr};background:${ptsBg};border-radius:4px;padding:2px 7px;min-width:28px;text-align:center;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${pts}</div>
+    <div style="flex:1;min-width:0;font-size:12px;font-weight:700;color:${C.white};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Yolk',Arial,sans-serif;">${u.nombre}</div>
+    <div style="font-size:11px;font-weight:800;color:${accentColor};background:${accentDim};border:1px solid ${accentColor}33;border-radius:4px;padding:2px 7px;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${u.pred}</div>
+</div>`;
+    }
+
+    function renderColumna(usuarios, col, titulo, icono, cantidad) {
+        const cards = usuarios.map(u => renderUserCard(u, col.accent, col.dim)).join('');
+        return `
+<div style="flex:1;min-width:0;background:${col.dim};border:1px solid ${col.border};border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+    <!-- Header columna -->
+    <div style="background:${col.dim};border-bottom:2px solid ${col.accent}44;padding:10px 12px 8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:9px;font-weight:800;color:${col.accent};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">${icono} ${titulo.toUpperCase()}</span>
+            <span style="font-size:11px;font-weight:900;color:${C.white};background:${col.accent}22;border:1px solid ${col.accent}44;border-radius:20px;padding:1px 9px;font-family:'Yolk',Arial,sans-serif;">${cantidad}</span>
+        </div>
+        <div style="font-size:20px;font-weight:900;color:${col.accent};font-family:'Yolk',Arial,sans-serif;line-height:1;letter-spacing:-0.5px;">${titulo === name1 ? pctH : titulo === name2 ? pctA : pctD}</div>
+    </div>
+    <!-- Cards usuarios -->
+    <div style="padding:8px 8px;flex:1;">${cards || `<div style="font-size:11px;color:${C.muted};padding:8px;text-align:center;font-family:'Yolk',Arial,sans-serif;">Sin predicciones</div>`}</div>
+</div>`;
+    }
+
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> <span>Generando...</span>';
+    btn.disabled = true;
+
+    try {
+        const el = document.createElement('div');
+        el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
+
+        // Altura dinámica según cantidad de usuarios
+        const rowsNeeded = Math.max(maxBando, 8);
+        const colHeight  = 80 + (rowsNeeded * 46);
+        const totalH     = 90 + 160 + 30 + colHeight + 20 + 200 + 160 + 60;
+
+        el.innerHTML = `
+<div style="width:1080px;min-height:${totalH}px;background:${C.bg};position:relative;overflow:hidden;">
+
+    <!-- FONDO: hexágonos + gradiente radial -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 20%, ${C.bgMid} 0%, ${C.bg} 100%);z-index:0;"></div>
+    <div style="position:absolute;inset:0;background-image:url('${hexB64}');background-size:60px 52px;opacity:1;z-index:0;"></div>
+    <!-- Glow cian izquierda -->
+    <div style="position:absolute;top:10%;left:-100px;width:500px;height:500px;background:radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 65%);z-index:0;pointer-events:none;"></div>
+    <!-- Glow dorado derecha -->
+    <div style="position:absolute;top:30%;right:-80px;width:400px;height:400px;background:radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);z-index:0;pointer-events:none;"></div>
+
+    <!-- BORDE SUPERIOR -->
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, ${C.cyan}, ${C.gold}, ${C.red});z-index:10;"></div>
+
+    <div style="position:relative;z-index:2;padding:0 36px 36px;">
+
+        <!-- ══ HEADER ══ -->
+        <div style="padding-top:20px;padding-bottom:20px;border-bottom:1px solid ${C.border};display:flex;align-items:center;justify-content:space-between;gap:20px;">
+            <!-- Logo -->
+            <div style="width:70px;height:70px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                <img src="/img/logoblancomenu.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;" crossorigin="anonymous"/>
             </div>
-            <div style="
-                flex:1;
-                min-width:0;
-                font-size:13px;
-                font-weight:700;
-                color:#fff;
-                white-space:nowrap;
-                overflow:hidden;
-                text-overflow:ellipsis;
-                text-align: left;
-            ">
-                ${u.nombre}
+            <!-- Centro: partido -->
+            <div style="flex:1;text-align:center;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;">
+                    <span style="font-size:9px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">${fase.toUpperCase()}</span>
+                    <span style="width:3px;height:3px;border-radius:50%;background:${C.muted};display:inline-block;"></span>
+                    <span style="font-size:9px;color:${C.muted};letter-spacing:1px;font-family:'Yolk',Arial,sans-serif;">${fecha}</span>
+                    <div style="background:${C.red};color:#fff;font-size:8px;font-weight:800;letter-spacing:1.5px;padding:2px 8px;border-radius:3px;font-family:'Yolk',Arial,sans-serif;margin-left:6px;">● ANÁLISIS</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:16px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:52px;line-height:1;">${flag1}</div>
+                        <div style="font-size:18px;font-weight:900;color:${C.white};letter-spacing:0.5px;font-family:'Yolk',Arial,sans-serif;">${name1.toUpperCase()}</div>
+                    </div>
+                    <div style="text-align:center;padding:0 10px;">
+                        ${hayResultado
+                            ? `<div style="font-size:38px;font-weight:900;color:${C.gold};letter-spacing:4px;font-family:'Yolk',Arial,sans-serif;line-height:1;">${score1}–${score2}</div>
+                               <div style="font-size:8px;color:${C.gold}88;letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;margin-top:4px;">RESULTADO FINAL</div>`
+                            : `<div style="font-size:30px;font-weight:900;color:rgba(255,255,255,0.15);letter-spacing:6px;font-family:'Yolk',Arial,sans-serif;">VS</div>
+                               <div style="font-size:8px;color:${C.muted};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;margin-top:4px;">PENDIENTE</div>`
+                        }
+                    </div>
+                    <div style="text-align:left;">
+                        <div style="font-size:52px;line-height:1;">${flag2}</div>
+                        <div style="font-size:18px;font-weight:900;color:${C.white};letter-spacing:0.5px;font-family:'Yolk',Arial,sans-serif;">${name2.toUpperCase()}</div>
+                    </div>
+                </div>
             </div>
-            <div style="
-                font-size:12px;
-                font-weight:800;
-                color: ${accentColor};
-                white-space:nowrap;
-                flex-shrink:0;
-                padding: 3px 9px;
-                background: rgba(255,255,255,0.04);
-                border-radius: 5px;
-                border: 1px solid rgba(255,255,255,0.07);
-            ">
-                ${u.pred}
+            <!-- Derecha: Mr Chip badge -->
+            <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">
+                <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);border:2px solid ${C.cyan}44;display:flex;align-items:center;justify-content:center;font-size:32px;">🤖</div>
+                <div style="font-size:8px;font-weight:800;color:${C.gold};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">MR.CHIP</div>
+                <div style="font-size:7px;color:${C.muted};letter-spacing:1px;font-family:'Yolk',Arial,sans-serif;">v2.026</div>
             </div>
         </div>
-    `).join('');
-}
-        
 
-        // Estado del botón durante generación
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> <span>Generando imagen...</span>';
-        btn.disabled = true;
-
-        try {
-            const el = document.createElement('div');
-            el.id = 'vsShareTarget';
-            el.style.cssText = `
-                position: fixed;
-                left: -9999px; top: 0;
-                width: 1200px;
-                background: #000;
-                font-family: 'Segoe UI', Arial, sans-serif;
-                overflow: hidden;
-                border-radius: 0;
-            `;
-
-            el.innerHTML = `
-                <div style="background:#0a0a0a; position:relative; overflow:hidden; font-family:'Segoe UI',Arial,sans-serif;">
-
-                    <!-- Grid decorativo de fondo -->
-                    <div style="
-                        position:absolute; inset:0; pointer-events:none; z-index:0;
-                        background:
-                            repeating-linear-gradient(90deg, rgba(255,255,255,0.014) 0, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 72px),
-                            repeating-linear-gradient(0deg,  rgba(255,255,255,0.014) 0, rgba(255,255,255,0.014) 1px, transparent 1px, transparent 72px);
-                    "></div>
-
-                    <!-- Glow azul fondo derecho -->
-                    <div style="
-                        position:absolute; right:-80px; top:20%;
-                        width:700px; height:700px; pointer-events:none; z-index:0;
-                        background:radial-gradient(circle, rgba(0,102,204,0.10) 0%, transparent 65%);
-                    "></div>
-
-                    <!-- Franja dorada top -->
-                    <div style="height:3px; background:linear-gradient(90deg, #FFD700 0%, #C9A84C 40%, transparent 100%); position:relative; z-index:2;"></div>
-
-                    <!-- ═══════════════════════════════════════ -->
-                    <!-- BODY: DOS COLUMNAS (sin header bar)     -->
-                    <!-- ═══════════════════════════════════════ -->
-                    <div style="position:relative; z-index:2; display:flex; align-items:stretch;">
-
-                        <!-- ══ IZQUIERDA — LOS BANDOS (60%) ══ -->
-                        <div style="
-                            flex:0 0 60%;
-                            padding:26px 30px 30px;
-                            border-right:1px solid rgba(255,255,255,0.06);
-                        ">
-                            <div style="
-                                font-size:8px; font-weight:900; letter-spacing:2.5px;
-                                color:rgba(255,255,255,0.22); text-transform:uppercase;
-                                margin-bottom:18px;
-                            ">
-                                ⚔️ &nbsp;LOS BANDOS &nbsp;·&nbsp; ${total} predicciones &nbsp;·&nbsp; ${hayResultado ? 'con puntos obtenidos' : 'partido pendiente'}
-                            </div>
-
-                            <!-- 3 COLUMNAS -->
-                            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px;">
-
-                                <!-- LOCAL -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#5bb3ff; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(0,102,204,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>🏠 ${name1}</span>
-                                        <span style="
-                                            background:rgba(0,102,204,0.2);
-                                            border:1px solid rgba(91,179,255,0.35);
-                                            border-radius:10px; padding:1px 8px; font-size:9px;
-                                        ">${usuariosLocal.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosLocal, '#5bb3ff')}
-                                </div>
-
-                                <!-- EMPATE -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#FFB800; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(255,184,0,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>🤝 Empate</span>
-                                        <span style="
-                                            background:rgba(255,184,0,0.15);
-                                            border:1px solid rgba(255,184,0,0.35);
-                                            border-radius:10px; padding:1px 8px; font-size:9px;
-                                        ">${usuariosEmpate.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosEmpate, '#FFB800')}
-                                </div>
-
-                                <!-- VISITANTE -->
-                                <div>
-                                    <div style="
-                                        font-size:9px; font-weight:900; letter-spacing:1.5px;
-                                        color:#ff6b6b; text-transform:uppercase;
-                                        padding-bottom:8px; margin-bottom:10px;
-                                        border-bottom:2px solid rgba(255,68,68,0.4);
-                                        display:flex; align-items:center; justify-content:space-between;
-                                    ">
-                                        <span>✈️ ${name2}</span>
-                                        <span style="
-                                            background:rgba(255,68,68,0.15);
-                                            border:1px solid rgba(255,107,107,0.35);
-                                            border-radius:10px; padding:1px 8px; font-size:9px;
-                                        ">${usuariosVisitante.length}</span>
-                                    </div>
-                                    ${renderUsersHTML(usuariosVisitante, '#ff6b6b')}
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- ══ DERECHA — PARTIDO + MR. CHIP (40%) ══ -->
-                        <div style="
-                            flex:0 0 40%;
-                            padding:26px 30px 30px;
-                            display:flex; flex-direction:column; gap:18px;
-                            background:rgba(0,30,70,0.05);
-                        ">
-
-                            <!-- VS BOX con fecha y fase integradas -->
-                            <div style="
-                                background:rgba(255,255,255,0.025);
-                                border:1px solid rgba(255,255,255,0.07);
-                                border-radius:12px;
-                                overflow:hidden;
-                            ">
-                                <!-- Meta bar: fase + fecha -->
-                                <div style="
-                                    padding:9px 16px;
-                                    border-bottom:1px solid rgba(255,255,255,0.06);
-                                    background:rgba(255,255,255,0.02);
-                                    display:flex; align-items:center; justify-content:space-between;
-                                ">
-                                    <div style="display:flex; align-items:center; gap:7px;">
-                                        <div style="width:6px; height:6px; border-radius:50%; background:#FFD700; opacity:0.7; flex-shrink:0;"></div>
-                                        <span style="font-size:9px; font-weight:900; letter-spacing:1.5px; color:rgba(255,215,0,0.8); text-transform:uppercase;">${fase}</span>
-                                    </div>
-                                    <span style="font-size:9px; color:rgba(255,255,255,0.35); letter-spacing:0.5px;">${fecha}</span>
-                                </div>
-
-                                <!-- Equipos y score -->
-                                <div style="padding:18px 14px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
-
-                                    <div style="flex:1; text-align:center;">
-                                        <div style="font-size:46px; line-height:1; margin-bottom:7px;">${flag1}</div>
-                                        <div style="font-size:13px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:0.3px; word-break:break-word; line-height:1.2;">${name1}</div>
-                                    </div>
-
-                                    <div style="flex:0 0 auto; text-align:center; padding:0 6px;">
-                                        ${hayResultado
-                                            ? `<div style="font-size:36px; font-weight:900; color:#FFD700; letter-spacing:3px; line-height:1;">${score1}–${score2}</div>
-                                               <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,215,0,0.5); text-transform:uppercase; margin-top:5px;">RESULTADO</div>`
-                                            : `<div style="font-size:22px; font-weight:900; color:rgba(255,255,255,0.18); letter-spacing:4px;">VS</div>
-                                               <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.2); text-transform:uppercase; margin-top:5px;">PENDIENTE</div>`
-                                        }
-                                    </div>
-
-                                    <div style="flex:1; text-align:center;">
-                                        <div style="font-size:46px; line-height:1; margin-bottom:7px;">${flag2}</div>
-                                        <div style="font-size:13px; font-weight:900; color:#fff; text-transform:uppercase; letter-spacing:0.3px; word-break:break-word; line-height:1.2;">${name2}</div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- DISTRIBUCIÓN -->
-                            <div style="
-                                background:rgba(255,255,255,0.025);
-                                border:1px solid rgba(255,255,255,0.07);
-                                border-radius:12px; padding:16px 18px;
-                            ">
-                                <div style="font-size:8px; font-weight:800; letter-spacing:2px; color:rgba(255,255,255,0.25); text-transform:uppercase; margin-bottom:12px;">
-                                    DISTRIBUCIÓN · ${total} PREDICCIONES
-                                </div>
-                                <div style="height:10px; border-radius:5px; background:#111; display:flex; overflow:hidden; margin-bottom:14px;">
-                                    <div style="width:${pctH}; background:linear-gradient(90deg, #004aad, #0066CC); height:100%;"></div>
-                                    <div style="width:${pctD}; background:linear-gradient(90deg, #cc8800, #FFB800); height:100%;"></div>
-                                    <div style="width:${pctA}; background:linear-gradient(90deg, #cc2222, #FF4444); height:100%;"></div>
-                                </div>
-                                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                                    <div>
-                                        <div style="font-size:24px; font-weight:900; color:#5bb3ff; line-height:1;">${pctH}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px; max-width:110px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${name1}</div>
-                                    </div>
-                                    <div style="text-align:center;">
-                                        <div style="font-size:24px; font-weight:900; color:#FFB800; line-height:1;">${pctD}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px;">Empate</div>
-                                    </div>
-                                    <div style="text-align:right;">
-                                        <div style="font-size:24px; font-weight:900; color:#ff6b6b; line-height:1;">${pctA}</div>
-                                        <div style="font-size:8px; color:rgba(255,255,255,0.35); text-transform:uppercase; margin-top:3px; max-width:110px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${name2}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SPACER FLEXIBLE -->
-                            <div style="flex:1; min-height:8px;"></div>
-
-                            <!-- MR. CHIP AVATAR + COMENTARIO -->
-                            <div style="
-                                background:rgba(0,40,100,0.28);
-                                border:1px solid rgba(0,102,204,0.2);
-                                border-left:3px solid #FFD700;
-                                border-radius:10px; padding:16px 18px;
-                            ">
-                                <div style="display:flex; gap:14px; align-items:flex-start;">
-                                    <div style="flex-shrink:0; text-align:center;">
-                                        <div style="
-                                            width:54px; height:54px; border-radius:50%;
-                                            background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);
-                                            border:2px solid rgba(0,102,204,0.5);
-                                            display:flex; align-items:center; justify-content:center;
-                                            font-size:28px; line-height:1;
-                                        ">🤖</div>
-                                        <div style="font-size:7px; font-weight:900; color:rgba(255,215,0,0.45); text-align:center; letter-spacing:1.5px; margin-top:5px; text-transform:uppercase;">v2.026</div>
-                                    </div>
-                                    <div style="flex:1; min-width:0;">
-                                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:#FFD700; text-transform:uppercase; margin-bottom:8px;">
-                                            MR. CHIP DICE:
-                                        </div>
-                                        <div style="font-size:12px; color:rgba(255,255,255,0.78); line-height:1.7;">
-                                            "${comentario || 'Los datos no mienten. Las predicciones de algunos participantes, en cambio, sí que lo hacen.'}"
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- FOOTER -->
-                    <div style="
-                        position:relative; z-index:2;
-                        padding:11px 36px;
-                        border-top:1px solid rgba(255,255,255,0.06);
-                        display:flex; align-items:center; justify-content:space-between;
-                        background:rgba(0,0,0,0.25);
-                    ">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:16px; line-height:1;">🤖</span>
-                            <span style="font-size:9px; color:rgba(255,255,255,0.22); letter-spacing:1.5px; font-weight:600;">quinielacarrisan.com.ve</span>
-                        </div>
-                        <div style="font-size:8px; font-weight:900; letter-spacing:2px; color:rgba(255,215,0,0.28); text-transform:uppercase;">
-                            COPA MUNDIAL FIFA 2026™
-                        </div>
-                    </div>
-
+        <!-- ══ DISTRIBUCIÓN BAR ══ -->
+        <div style="margin-top:20px;margin-bottom:20px;background:${C.surface};border:1px solid ${C.border};border-radius:12px;padding:16px 20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <div style="font-size:9px;font-weight:700;color:${C.muted};letter-spacing:2.5px;font-family:'Yolk',Arial,sans-serif;">DISTRIBUCIÓN DE PREDICCIONES · ${total} PARTICIPANTES</div>
+                <div style="font-size:9px;font-weight:700;color:${C.gold};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">FAVORITO: ${favorito.toUpperCase()} ${favoritoPct}%</div>
+            </div>
+            <!-- Barra gruesa -->
+            <div style="height:14px;border-radius:7px;background:#111;display:flex;overflow:hidden;margin-bottom:12px;gap:2px;">
+                <div style="width:${pctH};background:linear-gradient(90deg, #004aad, ${C.cyan});border-radius:7px 0 0 7px;height:100%;"></div>
+                <div style="width:${pctD};background:linear-gradient(90deg, #8B6914, ${C.gold});height:100%;"></div>
+                <div style="width:${pctA};background:linear-gradient(90deg, #8B0000, ${C.red});border-radius:0 7px 7px 0;height:100%;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+                <div style="display:flex;align-items:baseline;gap:6px;">
+                    <div style="font-size:28px;font-weight:900;color:${C.cyan};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctH}</div>
+                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">${name1}</div>
                 </div>
-            `;
+                <div style="display:flex;align-items:baseline;gap:6px;">
+                    <div style="font-size:28px;font-weight:900;color:${C.gold};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctD}</div>
+                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">Empate</div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:6px;flex-direction:row-reverse;">
+                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">${name2}</div>
+                    <div style="font-size:28px;font-weight:900;color:${C.red};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctA}</div>
+                </div>
+            </div>
+        </div>
 
-            document.body.appendChild(el);
+        <!-- ══ LABEL LOS BANDOS ══ -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:3px;height:16px;background:${C.cyan};border-radius:2px;"></div>
+            <div style="font-size:10px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">⚔️ LOS BANDOS</div>
+            <div style="flex:1;height:1px;background:${C.border};"></div>
+            <div style="font-size:9px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">${hayResultado ? 'CON PUNTOS OBTENIDOS' : 'PARTIDO PENDIENTE'}</div>
+        </div>
 
-            // Generar canvas con html2canvas
-            const canvas = await html2canvas(el, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#000000',
-                logging: false,
-            });
+        <!-- ══ TRES COLUMNAS ══ -->
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+            ${renderColumna(usuariosLocal,     C.colLocal,  name1,   '🏠', usuariosLocal.length)}
+            ${renderColumna(usuariosEmpate,    C.colEmpate, 'Empate','🤝', usuariosEmpate.length)}
+            ${renderColumna(usuariosVisitante, C.colVisita, name2,   '✈️', usuariosVisitante.length)}
+        </div>
 
-            document.body.removeChild(el);
-
-            // Intentar Web Share API (móvil) o descargar (desktop)
-            canvas.toBlob(async (blob) => {
-                const file = new File([blob], `mrchip-${name1}-vs-${name2}.png`, { type: 'image/png' });
-
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    try {
-                        await navigator.share({
-                            files: [file],
-                            title: `${name1} vs ${name2} — Análisis Mr. Chip`,
-                            text: `🤖 Mr. Chip analiza el partido · quinielacarrisan.com.ve`,
-                        });
-                    } catch (e) {
-                        // Usuario canceló el share
+        <!-- ══ DATO CURIOSO ══ -->
+        <div style="margin-top:16px;background:${C.cyanDim};border:1px solid rgba(0,180,216,0.20);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+            <div style="font-size:22px;flex-shrink:0;">📊</div>
+            <div>
+                <div style="font-size:9px;font-weight:700;color:${C.cyan};letter-spacing:2.5px;margin-bottom:3px;font-family:'Yolk',Arial,sans-serif;">DATO CARRISÁN</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.75);font-family:'Yolk',Arial,sans-serif;line-height:1.5;">
+                    ${favoritoPct >= 70
+                        ? `${favoritoPct}% del grupo apostó por <strong style="color:${C.white};">${favorito}</strong>. Cuando hay tanto consenso en Carrisán, la historia dice que alguien lo va a lamentar.`
+                        : favoritoPct >= 50
+                        ? `El grupo está dividido. <strong style="color:${C.white};">${favorito}</strong> lidera con solo ${favoritoPct}% — estos son los partidos donde se hacen las fortunas.`
+                        : `Nadie se pone de acuerdo. Con ${favoritoPct}% de consenso máximo, este partido puede disparar o hundir a cualquiera en la tabla.`
                     }
-                } else {
-                    // Fallback: descargar imagen
-                    const link = document.createElement('a');
-                    link.download = `mrchip-${name1}-vs-${name2}.png`;
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                }
-            }, 'image/png');
+                </div>
+            </div>
+        </div>
 
-        } catch (err) {
-            console.error('Error generando imagen:', err);
-            alert('Error al generar la imagen. Intenta de nuevo.');
-        } finally {
-            btn.innerHTML = originalHTML;
-            btn.disabled = false;
-        }
+        <!-- ══ MR. CHIP DICE ══ -->
+        <div style="margin-top:12px;background:rgba(0,40,100,0.25);border:1px solid rgba(0,102,204,0.20);border-left:4px solid ${C.gold};border-radius:10px;padding:16px 20px;">
+            <div style="display:flex;gap:16px;align-items:flex-start;">
+                <div style="flex-shrink:0;text-align:center;">
+                    <div style="width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);border:2px solid rgba(0,102,204,0.5);display:flex;align-items:center;justify-content:center;font-size:30px;">🤖</div>
+                    <div style="font-size:7px;font-weight:800;color:${C.gold}88;letter-spacing:1.5px;margin-top:5px;font-family:'Yolk',Arial,sans-serif;">v2.026</div>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:9px;font-weight:800;letter-spacing:2.5px;color:${C.gold};margin-bottom:8px;font-family:'Yolk',Arial,sans-serif;">MR. CHIP DICE:</div>
+                    <div style="font-size:13px;color:rgba(255,255,255,0.80);line-height:1.7;font-family:'Yolk',Arial,sans-serif;">"${comentario || 'Los datos no mienten. Las predicciones de algunos participantes, en cambio, sí que lo hacen.'}"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ FOOTER ══ -->
+        <div style="margin-top:20px;padding-top:14px;border-top:1px solid ${C.border};display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <img src="/img/logomenu.png" alt="" style="width:28px;height:28px;object-fit:contain;" crossorigin="anonymous"/>
+                <span style="font-size:10px;color:${C.muted};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">quinielacarrisan.com.ve</span>
+            </div>
+            <div style="font-size:8px;font-weight:700;color:${C.gold}55;letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">COPA MUNDIAL FIFA 2026™</div>
+        </div>
+
+    </div>
+
+    <!-- BORDE INFERIOR -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, ${C.cyan}88, transparent);"></div>
+
+</div>`;
+
+        document.body.appendChild(el);
+
+        const canvas = await html2canvas(el, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: C.bg,
+            logging: false,
+        });
+
+        document.body.removeChild(el);
+
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], `mrchip-${name1}-vs-${name2}.png`, { type: 'image/png' });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: `${name1} vs ${name2} — Análisis Mr. Chip`,
+                        text: `🤖 Mr. Chip analiza el partido · quinielacarrisan.com.ve`,
+                    });
+                } catch(e) {}
+            } else {
+                const a = document.createElement('a');
+                a.download = `mrchip-${name1}-vs-${name2}.png`;
+                a.href = canvas.toDataURL('image/png');
+                a.click();
+            }
+        }, 'image/png');
+
+    } catch(err) {
+        console.error('Error generando imagen:', err);
+        alert('Error al generar la imagen. Intenta de nuevo.');
+    } finally {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
     }
+}
 
     /* ================================================================
        RANKINGS GLOBALES — placeholder (conectar con mrchip.js)
