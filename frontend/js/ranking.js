@@ -900,7 +900,7 @@ async function compartirRanking() {
             allowTaint: true,
             backgroundColor: C.bg,
             width: 900,
-            height: 1600,
+            height: 1150,
             logging: false,
         });
 

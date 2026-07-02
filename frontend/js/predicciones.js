@@ -6,7 +6,7 @@ let usuario = null;
 let usuarioId = null;
 let partidosPendientes = [];
 let prediccionesRealizadas = [];
-let filtroFase = 'all';
+let filtroFase = '8vos';
 let ordenamiento = 'fechacercana';
 let filtroFaseCompleted = 'all';        
 let ordenamientoCompleted = 'fechacercana'; 
@@ -274,7 +274,7 @@ function renderizarPartidos() {
     const container = document.getElementById('matchesGrid');
     if (!container) return;
 
-if (filtroFase === 'all') {
+if (filtroFase === '8vos') {
     partidosFiltrados = [...partidosPendientes];
 } else {
     partidosFiltrados = partidosPendientes.filter(p => p.fase === filtroFase);
