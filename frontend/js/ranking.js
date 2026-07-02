@@ -781,7 +781,7 @@ async function compartirRanking() {
         <div style="font-size:9px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">PTS</div>
     </div>
     <!-- Imagen jugador sobresaliendo abajo -->
-    <div style="position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
+    <div style="position:absolute;bottom:0px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
         <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:60px;background:radial-gradient(ellipse, ${glowC[pos]} 0%, transparent 70%);z-index:0;"></div>
         <img src="${PODIO_IMG[pos]}" alt="" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:${imgH[pos]};object-fit:contain;z-index:1;filter:drop-shadow(0 0 10px ${glowC[pos]});" crossorigin="anonymous"/>
     </div>
