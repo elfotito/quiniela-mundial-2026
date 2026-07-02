@@ -763,12 +763,12 @@ async function compartirRanking() {
     const accentC = { 1: C.gold, 2: C.silver, 3: C.bronze };
     const accentD = { 1: 'rgba(201,168,76,0.18)', 2: 'rgba(192,192,192,0.12)', 3: 'rgba(205,127,50,0.14)' };
     const glowC   = { 1: 'rgba(201,168,76,0.30)', 2: 'rgba(192,192,192,0.20)', 3: 'rgba(205,127,50,0.25)' };
-    const imgH    = { 1: '217px', 2: '187px', 3: '172px' };
+    const imgH    = { 1: '145px', 2: '125px', 3: '115px' };
 
     return `
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
     <!-- Card principal -->
-    <div style="width:100%;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
+    <div style="width:100%;height:130px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
         <!-- Borde superior de color -->
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${accentC[pos]};border-radius:10px 10px 0 0;"></div>
         <!-- Badge posición -->
