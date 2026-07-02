@@ -768,7 +768,7 @@ async function compartirRanking() {
     return `
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
     <!-- Card principal -->
-    <div style="width:100%;height:130px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
+    <div style="width:100%;height:240px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
         <!-- Borde superior de color -->
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${accentC[pos]};border-radius:10px 10px 0 0;"></div>
         <!-- Badge posición -->
@@ -781,7 +781,7 @@ async function compartirRanking() {
         <div style="font-size:9px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">PTS</div>
     </div>
     <!-- Imagen jugador sobresaliendo abajo -->
-    <div style="position:absolute;bottom:-50px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
+    <div style="position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
         <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:60px;background:radial-gradient(ellipse, ${glowC[pos]} 0%, transparent 70%);z-index:0;"></div>
         <img src="${PODIO_IMG[pos]}" alt="" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:${imgH[pos]};object-fit:contain;z-index:1;filter:drop-shadow(0 0 10px ${glowC[pos]});" crossorigin="anonymous"/>
     </div>
