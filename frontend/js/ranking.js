@@ -836,9 +836,9 @@ async function compartirRanking() {
     }
 
     const PODIO_IMG = {
-        1: '/img/messi.png',
-        2: '/img/baggio.jpg',
-        3: '/img/turquia.jpg',
+        1: '/img/messi1.png',
+        2: '/img/mbappe2.png',
+        3: '/img/haaland3.png',
     };
 
     // DOM wrapper
@@ -920,7 +920,7 @@ async function compartirRanking() {
             <!-- Jugador -->
             <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-20px;height:300px;object-fit:contain;z-index:3;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
-            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:2;border-radius:12px;overflow:hidden;"></div>
+            
             <!-- Textos hero -->
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;padding:18px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:5px;background:${C.cyan};color:#000;font-size:9px;font-weight:800;letter-spacing:2.5px;padding:3px 8px;border-radius:3px;margin-bottom:8px;width:fit-content;font-family:'Yolk',Arial,sans-serif;">🏆 RANKING</div>
