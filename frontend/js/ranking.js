@@ -756,29 +756,37 @@ async function compartirRanking() {
     }
 
     function renderPodioItem(user, pos) {
-        const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 16).toUpperCase();
-        const puntos  = user?.puntos_totales || 0;
-        const bandera = obtenerCampeon(user?.campeon_elegido);
-        const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
-        const labels  = { 1: '1ER LUGAR', 2: '2DO LUGAR', 3: '3ER LUGAR' };
-        const accentC = { 1: C.gold, 2: C.silver, 3: C.bronze };
-        const accentD = { 1: C.goldDim, 2: C.silverDim, 3: C.bronzeDim };
-        const heights = { 1: '78px', 2: '66px', 3: '60px' };
-        const nameSz  = { 1: '17px', 2: '15px', 3: '14px' };
+    const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 14).toUpperCase();
+    const puntos  = user?.puntos_totales || 0;
+    const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
+    const labels  = { 1: '1ER', 2: '2DO', 3: '3ER' };
+    const accentC = { 1: C.gold, 2: C.silver, 3: C.bronze };
+    const accentD = { 1: 'rgba(201,168,76,0.18)', 2: 'rgba(192,192,192,0.12)', 3: 'rgba(205,127,50,0.14)' };
+    const glowC   = { 1: 'rgba(201,168,76,0.30)', 2: 'rgba(192,192,192,0.20)', 3: 'rgba(205,127,50,0.25)' };
+    const imgH    = { 1: '145px', 2: '125px', 3: '115px' };
 
-        return `
-<div style="display:flex;align-items:center;gap:0;background:${accentD[pos]};border:1px solid ${accentC[pos]}22;border-radius:8px;margin-bottom:8px;height:${heights[pos]};overflow:hidden;box-sizing:border-box;">
-    <div style="width:4px;height:100%;background:${accentC[pos]};flex-shrink:0;"></div>
-    <div style="display:flex;align-items:center;gap:10px;padding:0 12px;flex:1;min-width:0;">
-        <div style="flex:1;min-width:0;">
-            <div style="font-size:9px;font-weight:700;color:${accentC[pos]};letter-spacing:2.5px;margin-bottom:3px;font-family:'Yolk',Arial,sans-serif;">${medals[pos]} ${labels[pos]}</div>
-            <div style="font-size:${nameSz[pos]};font-weight:800;color:${C.white};font-family:'Yolk',Arial,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.5px;">${nombre}</div>
-            <div style="font-size:11px;color:${C.textMuted};margin-top:2px;font-family:'Yolk',Arial,sans-serif;">${bandera} ${puntos} pts</div>
-        </div>
-        <div style="font-size:${pos===1?'32px':'24px'};font-weight:900;color:${accentC[pos]};font-family:'Yolk',Arial,sans-serif;letter-spacing:-1.5px;flex-shrink:0;opacity:0.9;">${puntos}</div>
+    return `
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
+    <!-- Card principal -->
+    <div style="width:100%;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
+        <!-- Borde superior de color -->
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${accentC[pos]};border-radius:10px 10px 0 0;"></div>
+        <!-- Badge posición -->
+        <div style="font-size:22px;margin-top:4px;">${medals[pos]}</div>
+        <div style="font-size:9px;font-weight:700;color:${accentC[pos]};letter-spacing:2.5px;font-family:'Yolk',Arial,sans-serif;">${labels[pos]} LUGAR</div>
+        <!-- Nombre -->
+        <div style="font-size:13px;font-weight:900;color:${C.white};font-family:'Yolk',Arial,sans-serif;text-align:center;letter-spacing:0.5px;line-height:1.1;word-break:break-word;">${nombre}</div>
+        <!-- Puntos -->
+        <div style="font-size:24px;font-weight:900;color:${accentC[pos]};font-family:'Yolk',Arial,sans-serif;letter-spacing:-1px;line-height:1;">${puntos}</div>
+        <div style="font-size:9px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">PTS</div>
+    </div>
+    <!-- Imagen jugador sobresaliendo abajo -->
+    <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
+        <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:60px;background:radial-gradient(ellipse, ${glowC[pos]} 0%, transparent 70%);z-index:0;"></div>
+        <img src="${PODIO_IMG[pos]}" alt="" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:${imgH[pos]};object-fit:contain;z-index:1;filter:drop-shadow(0 0 10px ${glowC[pos]});" crossorigin="anonymous"/>
     </div>
 </div>`;
-    }
+}
 
     // Fetch últimos resultados
     let ultimosResultados = [];
@@ -906,13 +914,13 @@ async function compartirRanking() {
         </div>
 
         <!-- HERO CARD -->
-        <div style="position:relative;border-radius:12px;height:250px;background:linear-gradient(135deg, #060D18 0%, #0B1929 100%);border:1px solid ${C.borderHi};flex-shrink:0;overflow:hidden;">
+        <div style="position:relative;border-radius:12px;height:250px;background:linear-gradient(135deg, #060D18 0%, #0B1929 100%);border:1px solid ${C.borderHi};flex-shrink:0;overflow:visible;">
             <!-- Glow detrás del jugador -->
             <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:1;"></div>
             <!-- Jugador -->
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-10px;height:260px;object-fit:contain;z-index:2;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(-2px -2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-20px;height:300px;object-fit:contain;z-index:3;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
-            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:3;border-radius:12px;"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:2;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;padding:18px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:5px;background:${C.cyan};color:#000;font-size:9px;font-weight:800;letter-spacing:2.5px;padding:3px 8px;border-radius:3px;margin-bottom:8px;width:fit-content;font-family:'Yolk',Arial,sans-serif;">🏆 RANKING</div>
@@ -926,15 +934,17 @@ async function compartirRanking() {
         </div>
 
         <!-- LÍDERES -->
-        <div style="flex-shrink:0;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                <div style="width:3px;height:14px;background:${C.gold};border-radius:2px;"></div>
-                <div style="font-size:10px;color:${C.gold};letter-spacing:3px;font-weight:700;font-family:'Yolk',Arial,sans-serif;">LÍDERES ACTUALES</div>
-            </div>
-            ${renderPodioItem(top3[0], 1)}
-            ${renderPodioItem(top3[1], 2)}
-            ${renderPodioItem(top3[2], 3)}
-        </div>
+<div style="flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <div style="width:3px;height:14px;background:${C.gold};border-radius:2px;"></div>
+        <div style="font-size:10px;color:${C.gold};letter-spacing:3px;font-weight:700;font-family:'Yolk',Arial,sans-serif;">LÍDERES ACTUALES</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-start;padding-bottom:115px;">
+        ${renderPodioItem(top3[0], 1)}
+        ${renderPodioItem(top3[1], 2)}
+        ${renderPodioItem(top3[2], 3)}
+    </div>
+</div>
 
         <!-- RESULTADOS -->
         <div style="flex:1;">
