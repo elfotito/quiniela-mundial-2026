@@ -763,7 +763,7 @@ async function compartirRanking() {
     const accentC = { 1: C.gold, 2: C.silver, 3: C.bronze };
     const accentD = { 1: 'rgba(201,168,76,0.18)', 2: 'rgba(192,192,192,0.12)', 3: 'rgba(205,127,50,0.14)' };
     const glowC   = { 1: 'rgba(201,168,76,0.30)', 2: 'rgba(192,192,192,0.20)', 3: 'rgba(205,127,50,0.25)' };
-    const imgH    = { 1: '145px', 2: '125px', 3: '115px' };
+    const imgH    = { 1: '217px', 2: '187px', 3: '172px' };
 
     return `
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
@@ -781,7 +781,7 @@ async function compartirRanking() {
         <div style="font-size:9px;color:${C.textMuted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">PTS</div>
     </div>
     <!-- Imagen jugador sobresaliendo abajo -->
-    <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
+    <div style="position:absolute;bottom:-50px;left:50%;transform:translateX(-50%);width:90px;height:${imgH[pos]};z-index:5;">
         <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:60px;background:radial-gradient(ellipse, ${glowC[pos]} 0%, transparent 70%);z-index:0;"></div>
         <img src="${PODIO_IMG[pos]}" alt="" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:${imgH[pos]};object-fit:contain;z-index:1;filter:drop-shadow(0 0 10px ${glowC[pos]});" crossorigin="anonymous"/>
     </div>
@@ -920,7 +920,7 @@ async function compartirRanking() {
             <!-- Jugador -->
             <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-20px;height:300px;object-fit:contain;z-index:3;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
-            
+            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:2;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;padding:18px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:5px;background:${C.cyan};color:#000;font-size:9px;font-weight:800;letter-spacing:2.5px;padding:3px 8px;border-radius:3px;margin-bottom:8px;width:fit-content;font-family:'Yolk',Arial,sans-serif;">🏆 RANKING</div>
