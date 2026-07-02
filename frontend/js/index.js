@@ -29,7 +29,7 @@ const LV_ETAPAS = [
 
 const LV_TIPS = [
   { icon:"🏆", texto:"¡Felicidades a EL MAGALLANERO! por quedar 1er lugar en la fase de grupos" },
-  { icon:"🥶", texto:"Tito y Fabio Zavarse cayeron junto con japon " },
+  { icon:"🥶", texto:"Tito y Fabio Zavarse pelea por quien conduce la ambulancia " },
   { icon:"💡", texto:"El 25.3% de los partidos de eliminación directa llegaron a la tanda de penales" },
   { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +40 pts." },
   { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
