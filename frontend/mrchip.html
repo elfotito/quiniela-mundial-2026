@@ -1147,12 +1147,12 @@ async function compartirAnalisisVS() {
         document.body.appendChild(el);
 
         const canvas = await html2canvas(el, {
-            scale: 2,
+            scale: 1,
             useCORS: true,
             allowTaint: true,
             backgroundColor: C.bg,
             width: 1080,
-            height: 2900,
+            height: 1920,
             logging: false,
         });
 
