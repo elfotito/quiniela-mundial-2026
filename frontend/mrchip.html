@@ -900,7 +900,7 @@
     /* ================================================================
        COMPARTIR ANÁLISIS VS — html2canvas
     ================================================================ */
-    async function compartirAnalisisVS() {
+async function compartirAnalisisVS() {
     const btn = document.getElementById('btnCompartirVS');
     if (!btn) return;
 
@@ -916,7 +916,6 @@
     const total      = document.getElementById('totalPredicciones')?.textContent || '0';
     const fecha      = document.getElementById('matchDate')?.textContent      || '';
     const fase       = document.getElementById('matchPhase')?.textContent     || '';
-    const comentario = document.getElementById('chipCommentText')?.textContent || '';
 
     function leerUsuariosColumna(containerId) {
         const cards = document.querySelectorAll(`#${containerId} .mc-user-card`);
@@ -936,79 +935,72 @@
     const pctHNum = parseFloat(pctH) || 0;
     const pctDNum = parseFloat(pctD) || 0;
     const pctANum = parseFloat(pctA) || 0;
-    const favorito = pctHNum >= pctDNum && pctHNum >= pctANum ? name1
-                   : pctANum >= pctHNum && pctANum >= pctDNum ? name2
-                   : 'Empate';
+    const favorito    = pctHNum >= pctDNum && pctHNum >= pctANum ? name1
+                      : pctANum >= pctHNum && pctANum >= pctDNum ? name2 : 'Empate';
     const favoritoPct = Math.max(pctHNum, pctDNum, pctANum);
-    const totalNum = parseInt(total) || 0;
-    const maxBando = Math.max(usuariosLocal.length, usuariosEmpate.length, usuariosVisitante.length);
 
-    function colorPts(className) {
-        if (className.includes('mc-pts-perfect')) return '#00E676';
-        if (className.includes('mc-pts-good'))    return '#00B4D8';
-        if (className.includes('mc-pts-partial')) return '#C9A84C';
-        if (className.includes('mc-pts-none'))    return '#FF2D55';
+    function colorPts(cls) {
+        if (cls.includes('mc-pts-perfect')) return '#00E676';
+        if (cls.includes('mc-pts-good'))    return '#00B4D8';
+        if (cls.includes('mc-pts-partial')) return '#C9A84C';
+        if (cls.includes('mc-pts-none'))    return '#FF2D55';
         return '#4A5568';
     }
-    function bgPts(className) {
-        if (className.includes('mc-pts-perfect')) return 'rgba(0,230,118,0.12)';
-        if (className.includes('mc-pts-good'))    return 'rgba(0,180,216,0.12)';
-        if (className.includes('mc-pts-partial')) return 'rgba(201,168,76,0.12)';
-        if (className.includes('mc-pts-none'))    return 'rgba(255,45,85,0.12)';
-        return 'rgba(255,255,255,0.04)';
+    function bgPts(cls) {
+        if (cls.includes('mc-pts-perfect')) return 'rgba(0,230,118,0.15)';
+        if (cls.includes('mc-pts-good'))    return 'rgba(0,180,216,0.15)';
+        if (cls.includes('mc-pts-partial')) return 'rgba(201,168,76,0.15)';
+        if (cls.includes('mc-pts-none'))    return 'rgba(255,45,85,0.15)';
+        return 'rgba(255,255,255,0.05)';
     }
 
     const C = {
-        bg:       '#060D18',
-        bgMid:    '#0B1929',
-        surface:  'rgba(255,255,255,0.04)',
-        border:   'rgba(255,255,255,0.07)',
-        cyan:     '#00B4D8',
-        cyanDim:  'rgba(0,180,216,0.12)',
-        gold:     '#C9A84C',
-        goldBright:'#F0C866',
-        goldDim:  'rgba(201,168,76,0.15)',
-        silver:   '#C0C0C0',
-        white:    '#FFFFFF',
-        muted:    '#4A5568',
-        red:      '#FF2D55',
-        redDim:   'rgba(255,45,85,0.12)',
-        green:    '#00E676',
-        // columnas
-        colLocal:    { accent: '#00B4D8', dim: 'rgba(0,180,216,0.10)', border: 'rgba(0,180,216,0.25)' },
-        colEmpate:   { accent: '#C9A84C', dim: 'rgba(201,168,76,0.10)', border: 'rgba(201,168,76,0.25)' },
-        colVisita:   { accent: '#FF2D55', dim: 'rgba(255,45,85,0.10)', border: 'rgba(255,45,85,0.25)' },
+        bg:      '#060D18',
+        bgMid:   '#0B1929',
+        surface: 'rgba(255,255,255,0.04)',
+        border:  'rgba(255,255,255,0.08)',
+        cyan:    '#00B4D8',
+        cyanDim: 'rgba(0,180,216,0.12)',
+        gold:    '#C9A84C',
+        goldBright: '#F0C866',
+        goldDim: 'rgba(201,168,76,0.15)',
+        white:   '#FFFFFF',
+        muted:   '#4A5568',
+        red:     '#FF2D55',
+        redDim:  'rgba(255,45,85,0.12)',
+        green:   '#00E676',
+        colLocal:  { accent: '#00B4D8', dim: 'rgba(0,180,216,0.10)', border: 'rgba(0,180,216,0.30)' },
+        colEmpate: { accent: '#C9A84C', dim: 'rgba(201,168,76,0.10)', border: 'rgba(201,168,76,0.30)' },
+        colVisita: { accent: '#FF2D55', dim: 'rgba(255,45,85,0.10)',  border: 'rgba(255,45,85,0.30)'  },
     };
 
     const hexSVG = `<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52'><polygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='rgba(0,180,216,0.05)' stroke-width='1'/></svg>`;
     const hexB64 = 'data:image/svg+xml;base64,' + btoa(hexSVG);
 
     function renderUserCard(u, accentColor, accentDim) {
-        const pts     = hayResultado ? u.pts : '—';
-        const ptsBg   = hayResultado ? bgPts(u.ptsClass) : 'rgba(255,255,255,0.04)';
-        const ptsClr  = hayResultado ? colorPts(u.ptsClass) : C.muted;
+        const pts    = hayResultado ? u.pts : '—';
+        const ptsClr = hayResultado ? colorPts(u.ptsClass) : C.muted;
+        const ptsBg  = hayResultado ? bgPts(u.ptsClass)    : 'rgba(255,255,255,0.04)';
         return `
-<div style="display:flex;align-items:center;gap:7px;padding:6px 8px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);border-radius:7px;margin-bottom:5px;">
-    <div style="font-size:11px;font-weight:800;color:${ptsClr};background:${ptsBg};border-radius:4px;padding:2px 7px;min-width:28px;text-align:center;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${pts}</div>
-    <div style="flex:1;min-width:0;font-size:12px;font-weight:700;color:${C.white};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Yolk',Arial,sans-serif;">${u.nombre}</div>
-    <div style="font-size:11px;font-weight:800;color:${accentColor};background:${accentDim};border:1px solid ${accentColor}33;border-radius:4px;padding:2px 7px;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${u.pred}</div>
+<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:9px;margin-bottom:7px;">
+    <div style="font-size:13px;font-weight:800;color:${ptsClr};background:${ptsBg};border-radius:5px;padding:4px 10px;min-width:36px;text-align:center;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${pts}</div>
+    <div style="flex:1;min-width:0;font-size:15px;font-weight:700;color:${C.white};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Yolk',Arial,sans-serif;">${u.nombre}</div>
+    <div style="font-size:14px;font-weight:800;color:${accentColor};background:${accentDim};border:1px solid ${accentColor}44;border-radius:5px;padding:4px 10px;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;">${u.pred}</div>
 </div>`;
     }
 
     function renderColumna(usuarios, col, titulo, icono, cantidad) {
         const cards = usuarios.map(u => renderUserCard(u, col.accent, col.dim)).join('');
         return `
-<div style="flex:1;min-width:0;background:${col.dim};border:1px solid ${col.border};border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
-    <!-- Header columna -->
-    <div style="background:${col.dim};border-bottom:2px solid ${col.accent}44;padding:10px 12px 8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-            <span style="font-size:9px;font-weight:800;color:${col.accent};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">${icono} ${titulo.toUpperCase()}</span>
-            <span style="font-size:11px;font-weight:900;color:${C.white};background:${col.accent}22;border:1px solid ${col.accent}44;border-radius:20px;padding:1px 9px;font-family:'Yolk',Arial,sans-serif;">${cantidad}</span>
+<div style="flex:1;min-width:0;background:${col.dim};border:1px solid ${col.border};border-radius:14px;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="background:${col.dim};border-bottom:3px solid ${col.accent}55;padding:16px 16px 12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:11px;font-weight:800;color:${col.accent};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">${icono} ${titulo.toUpperCase()}</span>
+            <span style="font-size:13px;font-weight:900;color:${C.white};background:${col.accent}22;border:1px solid ${col.accent}55;border-radius:20px;padding:2px 12px;font-family:'Yolk',Arial,sans-serif;">${cantidad}</span>
         </div>
-        <div style="font-size:20px;font-weight:900;color:${col.accent};font-family:'Yolk',Arial,sans-serif;line-height:1;letter-spacing:-0.5px;">${titulo === name1 ? pctH : titulo === name2 ? pctA : pctD}</div>
+        <div style="font-size:36px;font-weight:900;color:${col.accent};font-family:'Yolk',Arial,sans-serif;line-height:1;letter-spacing:-1px;">${titulo === name1 ? pctH : titulo === name2 ? pctA : pctD}</div>
     </div>
-    <!-- Cards usuarios -->
-    <div style="padding:8px 8px;flex:1;">${cards || `<div style="font-size:11px;color:${C.muted};padding:8px;text-align:center;font-family:'Yolk',Arial,sans-serif;">Sin predicciones</div>`}</div>
+    <div style="padding:10px 10px;flex:1;">${cards || `<div style="font-size:13px;color:${C.muted};padding:12px;text-align:center;font-family:'Yolk',Arial,sans-serif;">Sin predicciones</div>`}</div>
 </div>`;
     }
 
@@ -1020,154 +1012,135 @@
         const el = document.createElement('div');
         el.style.cssText = `position:fixed;left:-9999px;top:0;width:1080px;font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;overflow:hidden;`;
 
-        // Altura dinámica según cantidad de usuarios
-        const rowsNeeded = Math.max(maxBando, 8);
-        const colHeight  = 80 + (rowsNeeded * 46);
-        const totalH     = 90 + 160 + 30 + colHeight + 20 + 200 + 160 + 60;
-
         el.innerHTML = `
-<div style="width:1080px;min-height:${totalH}px;background:${C.bg};position:relative;overflow:hidden;">
+<div style="width:1080px;height:2900px;background:${C.bg};position:relative;overflow:hidden;box-sizing:border-box;">
 
-    <!-- FONDO: hexágonos + gradiente radial -->
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 20%, ${C.bgMid} 0%, ${C.bg} 100%);z-index:0;"></div>
-    <div style="position:absolute;inset:0;background-image:url('${hexB64}');background-size:60px 52px;opacity:1;z-index:0;"></div>
-    <!-- Glow cian izquierda -->
-    <div style="position:absolute;top:10%;left:-100px;width:500px;height:500px;background:radial-gradient(circle, rgba(0,180,216,0.08) 0%, transparent 65%);z-index:0;pointer-events:none;"></div>
-    <!-- Glow dorado derecha -->
-    <div style="position:absolute;top:30%;right:-80px;width:400px;height:400px;background:radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);z-index:0;pointer-events:none;"></div>
+    <!-- FONDOS -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 40% at 50% 10%, ${C.bgMid} 0%, ${C.bg} 100%);z-index:0;"></div>
+    <div style="position:absolute;inset:0;background-image:url('${hexB64}');background-size:60px 52px;z-index:0;"></div>
+    <div style="position:absolute;top:0;left:-150px;width:700px;height:700px;background:radial-gradient(circle, rgba(0,180,216,0.07) 0%, transparent 65%);z-index:0;"></div>
+    <div style="position:absolute;top:0;right:-150px;width:700px;height:700px;background:radial-gradient(circle, rgba(255,45,85,0.06) 0%, transparent 65%);z-index:0;"></div>
 
-    <!-- BORDE SUPERIOR -->
-    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, ${C.cyan}, ${C.gold}, ${C.red});z-index:10;"></div>
+    <!-- BORDE TOP -->
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,${C.cyan},${C.gold},${C.red});z-index:10;"></div>
 
-    <div style="position:relative;z-index:2;padding:0 36px 36px;">
+    <div style="position:relative;z-index:2;padding:0 48px 48px;">
 
-        <!-- ══ HEADER ══ -->
-        <div style="padding-top:20px;padding-bottom:20px;border-bottom:1px solid ${C.border};display:flex;align-items:center;justify-content:space-between;gap:20px;">
-            <!-- Logo -->
-            <div style="width:70px;height:70px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
-                <img src="/img/logoblancomenu.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;" crossorigin="anonymous"/>
-            </div>
-            <!-- Centro: partido -->
-            <div style="flex:1;text-align:center;">
-                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;">
-                    <span style="font-size:9px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">${fase.toUpperCase()}</span>
-                    <span style="width:3px;height:3px;border-radius:50%;background:${C.muted};display:inline-block;"></span>
-                    <span style="font-size:9px;color:${C.muted};letter-spacing:1px;font-family:'Yolk',Arial,sans-serif;">${fecha}</span>
-                    <div style="background:${C.red};color:#fff;font-size:8px;font-weight:800;letter-spacing:1.5px;padding:2px 8px;border-radius:3px;font-family:'Yolk',Arial,sans-serif;margin-left:6px;">● ANÁLISIS</div>
-                </div>
-                <div style="display:flex;align-items:center;justify-content:center;gap:16px;">
-                    <div style="text-align:right;">
-                        <div style="font-size:52px;line-height:1;">${flag1}</div>
-                        <div style="font-size:18px;font-weight:900;color:${C.white};letter-spacing:0.5px;font-family:'Yolk',Arial,sans-serif;">${name1.toUpperCase()}</div>
-                    </div>
-                    <div style="text-align:center;padding:0 10px;">
-                        ${hayResultado
-                            ? `<div style="font-size:38px;font-weight:900;color:${C.gold};letter-spacing:4px;font-family:'Yolk',Arial,sans-serif;line-height:1;">${score1}–${score2}</div>
-                               <div style="font-size:8px;color:${C.gold}88;letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;margin-top:4px;">RESULTADO FINAL</div>`
-                            : `<div style="font-size:30px;font-weight:900;color:rgba(255,255,255,0.15);letter-spacing:6px;font-family:'Yolk',Arial,sans-serif;">VS</div>
-                               <div style="font-size:8px;color:${C.muted};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;margin-top:4px;">PENDIENTE</div>`
-                        }
-                    </div>
-                    <div style="text-align:left;">
-                        <div style="font-size:52px;line-height:1;">${flag2}</div>
-                        <div style="font-size:18px;font-weight:900;color:${C.white};letter-spacing:0.5px;font-family:'Yolk',Arial,sans-serif;">${name2.toUpperCase()}</div>
-                    </div>
-                </div>
-            </div>
-            <!-- Derecha: Mr Chip badge -->
-            <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">
-                <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);border:2px solid ${C.cyan}44;display:flex;align-items:center;justify-content:center;font-size:32px;">🤖</div>
-                <div style="font-size:8px;font-weight:800;color:${C.gold};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">MR.CHIP</div>
-                <div style="font-size:7px;color:${C.muted};letter-spacing:1px;font-family:'Yolk',Arial,sans-serif;">v2.026</div>
+        <!-- ══ HEADER LOGO + BADGE ══ -->
+        <div style="padding-top:28px;padding-bottom:24px;display:flex;align-items:center;justify-content:space-between;">
+            <img src="/img/logoblancomenu.png" alt="" style="height:56px;object-fit:contain;" crossorigin="anonymous"/>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:11px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">${fase.toUpperCase()}</span>
+                <span style="font-size:11px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">·</span>
+                <span style="font-size:11px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">${fecha}</span>
+                <div style="background:${C.red};color:#fff;font-size:9px;font-weight:800;letter-spacing:2px;padding:4px 12px;border-radius:4px;font-family:'Yolk',Arial,sans-serif;">● ANÁLISIS</div>
             </div>
         </div>
 
-        <!-- ══ DISTRIBUCIÓN BAR ══ -->
-        <div style="margin-top:20px;margin-bottom:20px;background:${C.surface};border:1px solid ${C.border};border-radius:12px;padding:16px 20px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                <div style="font-size:9px;font-weight:700;color:${C.muted};letter-spacing:2.5px;font-family:'Yolk',Arial,sans-serif;">DISTRIBUCIÓN DE PREDICCIONES · ${total} PARTICIPANTES</div>
-                <div style="font-size:9px;font-weight:700;color:${C.gold};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">FAVORITO: ${favorito.toUpperCase()} ${favoritoPct}%</div>
-            </div>
-            <!-- Barra gruesa -->
-            <div style="height:14px;border-radius:7px;background:#111;display:flex;overflow:hidden;margin-bottom:12px;gap:2px;">
-                <div style="width:${pctH};background:linear-gradient(90deg, #004aad, ${C.cyan});border-radius:7px 0 0 7px;height:100%;"></div>
-                <div style="width:${pctD};background:linear-gradient(90deg, #8B6914, ${C.gold});height:100%;"></div>
-                <div style="width:${pctA};background:linear-gradient(90deg, #8B0000, ${C.red});border-radius:0 7px 7px 0;height:100%;"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;">
-                <div style="display:flex;align-items:baseline;gap:6px;">
-                    <div style="font-size:28px;font-weight:900;color:${C.cyan};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctH}</div>
-                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">${name1}</div>
+        <!-- ══ TÍTULO PARTIDO ══ -->
+        <div style="text-align:center;padding:40px 0 44px;border-bottom:1px solid ${C.border};position:relative;">
+            <!-- Glow central -->
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse, rgba(0,180,216,0.06) 0%, transparent 70%);pointer-events:none;"></div>
+            <!-- Equipos -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:0;">
+                <!-- LOCAL -->
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:16px;">
+                    <div style="font-size:110px;line-height:1;filter:drop-shadow(0 4px 20px rgba(0,180,216,0.3));">${flag1}</div>
+                    <div style="font-size:38px;font-weight:900;color:${C.white};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;text-align:center;line-height:1.1;text-transform:uppercase;">${name1}</div>
+                    <div style="font-size:13px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">LOCAL</div>
                 </div>
-                <div style="display:flex;align-items:baseline;gap:6px;">
-                    <div style="font-size:28px;font-weight:900;color:${C.gold};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctD}</div>
-                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">Empate</div>
+                <!-- VS / SCORE -->
+                <div style="flex:0 0 220px;text-align:center;padding:0 10px;">
+                    ${hayResultado
+                        ? `<div style="font-size:72px;font-weight:900;color:${C.gold};letter-spacing:6px;font-family:'Yolk',Arial,sans-serif;line-height:1;text-shadow:0 0 40px rgba(201,168,76,0.4);">${score1}–${score2}</div>
+                           <div style="font-size:11px;font-weight:700;color:${C.gold}88;letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;margin-top:8px;">RESULTADO FINAL</div>`
+                        : `<div style="font-size:52px;font-weight:900;color:rgba(255,255,255,0.10);letter-spacing:8px;font-family:'Yolk',Arial,sans-serif;line-height:1;">VS</div>
+                           <div style="font-size:11px;color:${C.muted};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;margin-top:8px;">PENDIENTE</div>`
+                    }
                 </div>
-                <div style="display:flex;align-items:baseline;gap:6px;flex-direction:row-reverse;">
-                    <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;">${name2}</div>
-                    <div style="font-size:28px;font-weight:900;color:${C.red};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctA}</div>
+                <!-- VISITANTE -->
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:16px;">
+                    <div style="font-size:110px;line-height:1;filter:drop-shadow(0 4px 20px rgba(255,45,85,0.3));">${flag2}</div>
+                    <div style="font-size:38px;font-weight:900;color:${C.white};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;text-align:center;line-height:1.1;text-transform:uppercase;">${name2}</div>
+                    <div style="font-size:13px;font-weight:700;color:${C.red};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">VISITANTE</div>
                 </div>
             </div>
         </div>
 
-        <!-- ══ LABEL LOS BANDOS ══ -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <div style="width:3px;height:16px;background:${C.cyan};border-radius:2px;"></div>
-            <div style="font-size:10px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">⚔️ LOS BANDOS</div>
+        <!-- ══ DISTRIBUCIÓN ══ -->
+        <div style="margin-top:32px;background:${C.surface};border:1px solid ${C.border};border-radius:16px;padding:24px 28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div style="width:3px;height:18px;background:${C.cyan};border-radius:2px;"></div>
+                    <span style="font-size:11px;font-weight:700;color:${C.muted};letter-spacing:2.5px;font-family:'Yolk',Arial,sans-serif;">DISTRIBUCIÓN DE PREDICCIONES · ${total} PARTICIPANTES</span>
+                </div>
+                <div style="font-size:12px;font-weight:700;color:${C.gold};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">FAVORITO: ${favorito.toUpperCase()} ${favoritoPct}%</div>
+            </div>
+            <div style="height:18px;border-radius:9px;background:#0a0a0a;display:flex;overflow:hidden;margin-bottom:20px;gap:3px;">
+                <div style="width:${pctH};background:linear-gradient(90deg,#004aad,${C.cyan});border-radius:9px 0 0 9px;height:100%;"></div>
+                <div style="width:${pctD};background:linear-gradient(90deg,#8B6914,${C.gold});height:100%;"></div>
+                <div style="width:${pctA};background:linear-gradient(90deg,#8B0000,${C.red});border-radius:0 9px 9px 0;height:100%;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+                <div>
+                    <div style="font-size:42px;font-weight:900;color:${C.cyan};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctH}</div>
+                    <div style="font-size:12px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;margin-top:4px;">${name1}</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:42px;font-weight:900;color:${C.gold};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctD}</div>
+                    <div style="font-size:12px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;margin-top:4px;">Empate</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:42px;font-weight:900;color:${C.red};font-family:'Yolk',Arial,sans-serif;line-height:1;">${pctA}</div>
+                    <div style="font-size:12px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;margin-top:4px;">${name2}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ LABEL BANDOS ══ -->
+        <div style="display:flex;align-items:center;gap:12px;margin-top:36px;margin-bottom:16px;">
+            <div style="width:4px;height:20px;background:${C.cyan};border-radius:2px;"></div>
+            <div style="font-size:13px;font-weight:700;color:${C.cyan};letter-spacing:3px;font-family:'Yolk',Arial,sans-serif;">⚔️ LOS BANDOS</div>
             <div style="flex:1;height:1px;background:${C.border};"></div>
-            <div style="font-size:9px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1px;">${hayResultado ? 'CON PUNTOS OBTENIDOS' : 'PARTIDO PENDIENTE'}</div>
+            <div style="font-size:10px;color:${C.muted};font-family:'Yolk',Arial,sans-serif;letter-spacing:1.5px;">${hayResultado ? 'CON PUNTOS OBTENIDOS' : 'PARTIDO PENDIENTE'}</div>
         </div>
 
         <!-- ══ TRES COLUMNAS ══ -->
-        <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
             ${renderColumna(usuariosLocal,     C.colLocal,  name1,   '🏠', usuariosLocal.length)}
             ${renderColumna(usuariosEmpate,    C.colEmpate, 'Empate','🤝', usuariosEmpate.length)}
             ${renderColumna(usuariosVisitante, C.colVisita, name2,   '✈️', usuariosVisitante.length)}
         </div>
 
-        <!-- ══ DATO CURIOSO ══ -->
-        <div style="margin-top:16px;background:${C.cyanDim};border:1px solid rgba(0,180,216,0.20);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
-            <div style="font-size:22px;flex-shrink:0;">📊</div>
+        <!-- ══ DATO CARRISÁN ══ -->
+        <div style="margin-top:32px;background:${C.cyanDim};border:1px solid rgba(0,180,216,0.22);border-radius:16px;padding:28px 32px;display:flex;align-items:flex-start;gap:20px;">
+            <div style="font-size:44px;flex-shrink:0;line-height:1;">📊</div>
             <div>
-                <div style="font-size:9px;font-weight:700;color:${C.cyan};letter-spacing:2.5px;margin-bottom:3px;font-family:'Yolk',Arial,sans-serif;">DATO CARRISÁN</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.75);font-family:'Yolk',Arial,sans-serif;line-height:1.5;">
+                <div style="font-size:11px;font-weight:700;color:${C.cyan};letter-spacing:3px;margin-bottom:10px;font-family:'Yolk',Arial,sans-serif;">DATO CARRISÁN</div>
+                <div style="font-size:20px;color:rgba(255,255,255,0.85);font-family:'Yolk',Arial,sans-serif;line-height:1.6;font-weight:500;">
                     ${favoritoPct >= 70
-                        ? `${favoritoPct}% del grupo apostó por <strong style="color:${C.white};">${favorito}</strong>. Cuando hay tanto consenso en Carrisán, la historia dice que alguien lo va a lamentar.`
+                        ? `<strong style="color:${C.white};font-size:22px;">${favoritoPct}%</strong> del grupo apostó por <strong style="color:${C.cyan};">${favorito}</strong>. Cuando hay tanto consenso en Carrisán, la historia dice que alguien lo va a lamentar.`
                         : favoritoPct >= 50
-                        ? `El grupo está dividido. <strong style="color:${C.white};">${favorito}</strong> lidera con solo ${favoritoPct}% — estos son los partidos donde se hacen las fortunas.`
-                        : `Nadie se pone de acuerdo. Con ${favoritoPct}% de consenso máximo, este partido puede disparar o hundir a cualquiera en la tabla.`
+                        ? `El grupo está dividido. <strong style="color:${C.white};">${favorito}</strong> lidera con solo <strong style="color:${C.gold};font-size:22px;">${favoritoPct}%</strong> — estos son los partidos donde se hacen las fortunas.`
+                        : `Nadie se pone de acuerdo. Con solo <strong style="color:${C.red};font-size:22px;">${favoritoPct}%</strong> de consenso máximo, este partido puede disparar o hundir a cualquiera en la tabla.`
                     }
                 </div>
             </div>
         </div>
 
-        <!-- ══ MR. CHIP DICE ══ -->
-        <div style="margin-top:12px;background:rgba(0,40,100,0.25);border:1px solid rgba(0,102,204,0.20);border-left:4px solid ${C.gold};border-radius:10px;padding:16px 20px;">
-            <div style="display:flex;gap:16px;align-items:flex-start;">
-                <div style="flex-shrink:0;text-align:center;">
-                    <div style="width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 40% 35%, #1a3a6e, #050d1a);border:2px solid rgba(0,102,204,0.5);display:flex;align-items:center;justify-content:center;font-size:30px;">🤖</div>
-                    <div style="font-size:7px;font-weight:800;color:${C.gold}88;letter-spacing:1.5px;margin-top:5px;font-family:'Yolk',Arial,sans-serif;">v2.026</div>
-                </div>
-                <div style="flex:1;min-width:0;">
-                    <div style="font-size:9px;font-weight:800;letter-spacing:2.5px;color:${C.gold};margin-bottom:8px;font-family:'Yolk',Arial,sans-serif;">MR. CHIP DICE:</div>
-                    <div style="font-size:13px;color:rgba(255,255,255,0.80);line-height:1.7;font-family:'Yolk',Arial,sans-serif;">"${comentario || 'Los datos no mienten. Las predicciones de algunos participantes, en cambio, sí que lo hacen.'}"</div>
-                </div>
-            </div>
-        </div>
-
         <!-- ══ FOOTER ══ -->
-        <div style="margin-top:20px;padding-top:14px;border-top:1px solid ${C.border};display:flex;align-items:center;justify-content:space-between;">
-            <div style="display:flex;align-items:center;gap:8px;">
-                <img src="/img/logomenu.png" alt="" style="width:28px;height:28px;object-fit:contain;" crossorigin="anonymous"/>
-                <span style="font-size:10px;color:${C.muted};letter-spacing:1.5px;font-family:'Yolk',Arial,sans-serif;">quinielacarrisan.com.ve</span>
+        <div style="margin-top:40px;padding-top:20px;border-top:1px solid ${C.border};display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <img src="/img/logomenu.png" alt="" style="width:36px;height:36px;object-fit:contain;" crossorigin="anonymous"/>
+                <span style="font-size:13px;color:${C.muted};letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">quinielacarrisan.com.ve</span>
             </div>
-            <div style="font-size:8px;font-weight:700;color:${C.gold}55;letter-spacing:2px;font-family:'Yolk',Arial,sans-serif;">COPA MUNDIAL FIFA 2026™</div>
+            <div style="font-size:10px;font-weight:700;color:${C.gold}55;letter-spacing:2.5px;font-family:'Yolk',Arial,sans-serif;">COPA MUNDIAL FIFA 2026™</div>
         </div>
 
     </div>
 
-    <!-- BORDE INFERIOR -->
-    <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, ${C.cyan}88, transparent);"></div>
+    <!-- BORDE BOTTOM -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,${C.cyan}88,transparent);z-index:10;"></div>
 
 </div>`;
 
@@ -1178,6 +1151,8 @@
             useCORS: true,
             allowTaint: true,
             backgroundColor: C.bg,
+            width: 1080,
+            height: 2900,
             logging: false,
         });
 
