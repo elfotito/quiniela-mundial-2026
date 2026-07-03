@@ -763,12 +763,12 @@ async function compartirRanking() {
     const accentC = { 1: C.gold, 2: C.silver, 3: C.bronze };
     const accentD = { 1: 'rgba(201,168,76,0.18)', 2: 'rgba(192,192,192,0.12)', 3: 'rgba(205,127,50,0.14)' };
     const glowC   = { 1: 'rgba(201,168,76,0.30)', 2: 'rgba(192,192,192,0.20)', 3: 'rgba(205,127,50,0.25)' };
-    const imgH    = { 1: '145px', 2: '125px', 3: '115px' };
+    const imgH    = { 1: '145px', 2: '145px', 3: '145px' };
 
     return `
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
     <!-- Card principal -->
-    <div style="width:100%;height:280px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
+    <div style="width:100%;height:280px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 8px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
         <!-- Borde superior de color -->
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${accentC[pos]};border-radius:10px 10px 0 0;"></div>
         <!-- Badge posición -->
@@ -939,7 +939,7 @@ async function compartirRanking() {
         <div style="width:3px;height:14px;background:${C.gold};border-radius:2px;"></div>
         <div style="font-size:10px;color:${C.gold};letter-spacing:3px;font-weight:700;font-family:'Yolk',Arial,sans-serif;">LÍDERES ACTUALES</div>
     </div>
-    <div style="display:flex;gap:10px;align-items:flex-start;padding-bottom:115px;">
+    <div style="display:flex;gap:10px;align-items:flex-start;padding-bottom:15px;">
         ${renderPodioItem(top3[0], 1)}
         ${renderPodioItem(top3[1], 2)}
         ${renderPodioItem(top3[2], 3)}
