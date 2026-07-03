@@ -12,9 +12,9 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/844dcdb4-f38a-4187-b536-c40f87dbfad1/Belgium-v-Senegal-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.52,0.39&io=transform:fill,aspectratio:4x3,width:240&quality=75", badge:"Remontada Epica", fact:"Bélgica logra una remontada épica ante Senegal en el último minuto" },
-  { img:"https://digitalhub.fifa.com/transform/a3421df2-287a-4756-b4bb-97362e7da03d/France-v-Sweden-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.45,0.46&io=transform:fill,aspectratio:4x3,width:640&quality=75", badge:"Mbappe", fact:"Mbappé y Messi lideran la carrera por la Bota de Oro adidas" },
-  { img:"https://digitalhub.fifa.com/transform/8f72e1a7-33ac-495c-9a75-aed4b9539b31/Uzbekistan-v-Colombia-Group-K-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:4x3,width:640&quality=75", badge:"Luis Diaz", fact:"Luis Díaz está entre los futbolistas más destacados de este duelo de 16avos de la Copa Mundial" },
+  { img:"https://digitalhub.fifa.com/transform/5fe0133d-a74f-4aa7-adc9-e9ae46eadbf1/Portugal-v-Croatia-Round-of-32-FIFA-World-Cup-2026?focuspoint=0.48,0.41&io=transform:fill,width:1024&quality=75", badge:"Remontada Epica", fact:"Cristiano Ronaldo anotó su primer gol en una fase eliminatoria de la Copa Mundial." },
+  { img:"https://digitalhub.fifa.com/transform/a3421df2-287a-4756-b4bb-97362e7da03d/France-v-Sweden-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.45,0.46&io=transform:fill,aspectratio:4x3,width:640&quality=75", badge:"Bota de Oro Adidas", fact:"Mbappé y Messi lideran la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/ef919097-5479-475a-a97a-3c14730c342b/Spain-v-Austria-Round-of-32-FIFA-World-Cup-2026?focuspoint=0.56,0.55&io=transform:fill,width:1024&quality=75", badge:"Record Historico", fact:"Unai Simón igualó el récord de Walter Zenga de cinco partidos consecutivos sin recibir goles" },
   { img:"https://digitalhub.fifa.com/transform/6678e88a-27cf-480c-a714-fa10a4ba720e/Norway-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.48,0.23&io=transform:fill,height:910,width:1536&quality=75", badge:"Vikingo", fact:"Haaland, el delantero nórdico lleva más goles que partidos con su Selección" },
 ];
 

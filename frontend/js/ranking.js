@@ -768,7 +768,7 @@ async function compartirRanking() {
     return `
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;position:relative;min-width:0;">
     <!-- Card principal -->
-    <div style="width:100%;height:240px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
+    <div style="width:100%;height:280px;background:${accentD[pos]};border:1px solid ${accentC[pos]}44;border-radius:10px;padding:10px 8px 50px 8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:visible;">
         <!-- Borde superior de color -->
         <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${accentC[pos]};border-radius:10px 10px 0 0;"></div>
         <!-- Badge posición -->
@@ -918,9 +918,9 @@ async function compartirRanking() {
             <!-- Glow detrás del jugador -->
             <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
             <!-- Jugador -->
-            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-20px;height:300px;object-fit:contain;z-index:3;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/diaz.png" alt="" style="position:absolute;bottom:0;right:-20px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
-            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:4;border-radius:12px;overflow:hidden;"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:3;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
             <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:5;padding:18px 20px;display:flex;flex-direction:column;justify-content:flex-end;">
                 <div style="display:inline-flex;align-items:center;gap:5px;background:${C.cyan};color:#000;font-size:9px;font-weight:800;letter-spacing:2.5px;padding:3px 8px;border-radius:3px;margin-bottom:8px;width:fit-content;font-family:'Yolk',Arial,sans-serif;">🏆 RANKING</div>
@@ -930,7 +930,7 @@ async function compartirRanking() {
                 <div style="font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1.5px;margin-top:8px;font-family:'Yolk',Arial,sans-serif;">${fechaFormateada}</div>
             </div>
             <!-- Borde superior cian -->
-            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, ${C.cyan}, transparent);z-index:1;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, ${C.cyan}, transparent);z-index:3;"></div>
         </div>
 
         <!-- LÍDERES -->
