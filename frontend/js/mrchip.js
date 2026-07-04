@@ -397,7 +397,7 @@ function llenarSelectorPartidos() {
     select.innerHTML = '<option value="">-- Selecciona un partido --</option>';
     
     todosPartidos
-        .filter(p => p.fase.startsWith('16vos'))
+        .filter(p => p.fase.startsWith('8vos'))
         .forEach(partido => {
             const option = document.createElement('option');
             option.value = partido.id;
