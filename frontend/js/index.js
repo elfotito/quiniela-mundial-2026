@@ -12,8 +12,8 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/5fe0133d-a74f-4aa7-adc9-e9ae46eadbf1/Portugal-v-Croatia-Round-of-32-FIFA-World-Cup-2026?focuspoint=0.48,0.41&io=transform:fill,width:1024&quality=75", badge:"Remontada Epica", fact:"Cristiano Ronaldo anotó su primer gol en una fase eliminatoria de la Copa Mundial." },
-  { img:"https://digitalhub.fifa.com/transform/a3421df2-287a-4756-b4bb-97362e7da03d/France-v-Sweden-Round-Of-32-FIFA-World-Cup-2026?focuspoint=0.45,0.46&io=transform:fill,aspectratio:4x3,width:640&quality=75", badge:"Bota de Oro Adidas", fact:"Mbappé y Messi lideran la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/59cd0d0d-228d-4b03-84e5-065d11b62f98/Paraguay-v-France-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.46,0.25&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Messi, Mbappé y Haaland lideran la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/6cf44df2-eb7e-4f2e-a28c-64b686fa8dca/Mexico-v-England-Round-Of-16-FIFA-World-Cup-2026?focuspoint=0.38,0.64&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Inglaterra impuso su jerarquía y le puso fin al sueño mundialista de México" },
   { img:"https://digitalhub.fifa.com/transform/ef919097-5479-475a-a97a-3c14730c342b/Spain-v-Austria-Round-of-32-FIFA-World-Cup-2026?focuspoint=0.56,0.55&io=transform:fill,width:1024&quality=75", badge:"Record Historico", fact:"Unai Simón igualó el récord de Walter Zenga de cinco partidos consecutivos sin recibir goles" },
   { img:"https://digitalhub.fifa.com/transform/6678e88a-27cf-480c-a714-fa10a4ba720e/Norway-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.48,0.23&io=transform:fill,height:910,width:1536&quality=75", badge:"Vikingo", fact:"Haaland, el delantero nórdico lleva más goles que partidos con su Selección" },
 ];
