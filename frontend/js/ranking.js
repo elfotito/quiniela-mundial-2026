@@ -744,7 +744,7 @@ async function compartirRanking() {
             const fontSize   = esPenultimo ? '16px' : pos <= 9 ? '13px' : '11px';
 
             return `
-<div style="display:flex;align-items:center;justify-content:space-between;height:37px;padding:0 12px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 5px 5px 0;">
+<div style="display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 12px 0 0;background:${rowBg};border-left:${leftBorder};margin-bottom:2px;border-radius:0 5px 5px 0;">
     <div style="display:flex;align-items:center;gap:9px;min-width:0;flex:1;">
         <div style="width:27px;height:27px;border-radius:5px;background:${badgeBg};color:${badgeColor};display:flex;align-items:center;justify-content:center;font-size:${fontSize};font-weight:800;flex-shrink:0;font-family:'Yolk',Arial,sans-serif;margin-left:8px;border:${badgeBorder};">${displayPos}</div>
         <div style="font-size:19px;line-height:1;flex-shrink:0;width:20px;text-align:center;">${bandera}</div>
@@ -918,7 +918,7 @@ async function compartirRanking() {
             <!-- Glow detrás del jugador -->
             <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
             <!-- Jugador -->
-            <img src="/img/beligol.png" alt="" style="position:absolute;bottom:0;right:-80px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/beligol.png" alt="" style="position:absolute;bottom:0;right:-160px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
             <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:3;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
