@@ -12,8 +12,8 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/6cf44df2-eb7e-4f2e-a28c-64b686fa8dca/Mexico-v-England-Round-Of-16-FIFA-World-Cup-2026?focuspoint=0.38,0.64&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Inglaterra impuso su jerarquía y le puso fin al sueño mundialista de México" },
   { img:"https://digitalhub.fifa.com/transform/926d21f6-ec6b-4f34-bd0b-4a8bd537e159/Portugal-v-Spain-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"Cristiano Ronaldo", fact:"El astro portugués afirmó, tras la eliminación ante España, que ya no defenderá a la selección portuguesa en las Copas del Mundo." },
+  { img:"https://digitalhub.fifa.com/transform/6cf44df2-eb7e-4f2e-a28c-64b686fa8dca/Mexico-v-England-Round-Of-16-FIFA-World-Cup-2026?focuspoint=0.38,0.64&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Inglaterra impuso su jerarquía y le puso fin al sueño mundialista de México" },
   { img:"https://digitalhub.fifa.com/transform/59cd0d0d-228d-4b03-84e5-065d11b62f98/Paraguay-v-France-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.46,0.25&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Messi, Mbappé y Haaland lideran la carrera por la Bota de Oro adidas" },
   { img:"https://digitalhub.fifa.com/transform/59cd0d0d-228d-4b03-84e5-065d11b62f98/Paraguay-v-France-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.46,0.25&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Messi, Mbappé y Haaland lideran la carrera por la Bota de Oro adidas" },
 ];
