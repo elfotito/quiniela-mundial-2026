@@ -3,19 +3,40 @@
 const AD_POOL = {
   // ─── 1:1 (260x260) ───────────────────────────────────────
 '11' : [
-  { url: 'https://i.ibb.co/pBcBXc8w/unicardio.png', link: 'https://www.instagram.com/unicardio.ha/' },
-  { url: 'https://i.ibb.co/pvztDpJL/unbicardio2.png', link: 'https://www.instagram.com/unicardio.ha/' },
-  { url: 'https://i.ibb.co/yFZXrhJB/Sin-t-tulo-1.png', link: 'https://www.instagram.com/unicardio.ha/' },
-  { url: 'https://i.ibb.co/LKyHTd7/Save-Clip-App-655086237-18078404945574082-8845079464837833066-n-1.webp', link: 'https://www.instagram.com/deliverysorpresa/' },
-  { url: 'https://i.ibb.co/Pv6fMMLv/Save-Clip-App-658474710-18370531537202009-7154433570683986532-n.webp', link: 'https://www.instagram.com/deliverysorpresa/' },
-  { url: 'https://i.ibb.co/rRKfbtpH/Save-Clip-App-656057688-18117165637712782-2735713681201846829-n.webp', link: 'https://www.instagram.com/deliverysorpresa/' },
+  { url: 'https://i.ibb.co/G15Jwm7/1.png' },
+  { url: 'https://i.ibb.co/nMsxjCQ3/2.png' },
+  { url: 'https://i.ibb.co/9H8MSkj0/3.png' },
+  { url: 'https://i.ibb.co/ccz3z5xW/4.jpg' },
+  { url: 'https://i.ibb.co/vWvw8V1/5.jpg' },
+  { url: 'https://i.ibb.co/PZdyqM9x/6.jpg' },
+  { url: 'https://i.ibb.co/WpsLqygs/7.jpg' },
+  { url: 'https://i.ibb.co/tpkgJZKG/8.jpg' },
+  { url: 'https://i.ibb.co/67syDtFZ/9.jpg' },
+  { url: 'https://i.ibb.co/mFg5y8LJ/10.jpg' },
+  { url: 'https://i.ibb.co/Hpq0svx8/11.jpg' },
+  { url: 'https://i.ibb.co/s9CnPSxb/12.jpg' },
+  { url: 'https://i.ibb.co/9HmT0YTm/13.jpg' },
+  { url: 'https://i.ibb.co/Fkpz07NV/14.jpg' },
+  { url: 'https://i.ibb.co/9mBRWzHj/15.jpg' },
 ],
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
-'43' : [
-  { url: 'https://i.ibb.co/YT1bj33K/Gemini-Generated-Image-8hk19e8hk19e8hk1.png', link: 'https://www.instagram.com/dcarrisan/' },
-  { url: 'https://i.ibb.co/qYQ1jYmZ/Gemini-Generated-Image-fgsxjlfgsxjlfgsx.png', link: 'https://www.instagram.com/dcarrisan/' },
-  { url: 'https://i.ibb.co/PvpKL0gS/Gemini-Generated-Image-81pq5l81pq5l81pq.png', link: 'https://www.instagram.com/dcarrisan/' },
+'11' : [
+  { url: 'https://i.ibb.co/G15Jwm7/1.png' },
+  { url: 'https://i.ibb.co/nMsxjCQ3/2.png' },
+  { url: 'https://i.ibb.co/9H8MSkj0/3.png' },
+  { url: 'https://i.ibb.co/ccz3z5xW/4.jpg' },
+  { url: 'https://i.ibb.co/vWvw8V1/5.jpg' },
+  { url: 'https://i.ibb.co/PZdyqM9x/6.jpg' },
+  { url: 'https://i.ibb.co/WpsLqygs/7.jpg' },
+  { url: 'https://i.ibb.co/tpkgJZKG/8.jpg' },
+  { url: 'https://i.ibb.co/67syDtFZ/9.jpg' },
+  { url: 'https://i.ibb.co/mFg5y8LJ/10.jpg' },
+  { url: 'https://i.ibb.co/Hpq0svx8/11.jpg' },
+  { url: 'https://i.ibb.co/s9CnPSxb/12.jpg' },
+  { url: 'https://i.ibb.co/9HmT0YTm/13.jpg' },
+  { url: 'https://i.ibb.co/Fkpz07NV/14.jpg' },
+  { url: 'https://i.ibb.co/9mBRWzHj/15.jpg' },
 ],
 };
 

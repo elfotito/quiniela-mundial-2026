@@ -829,7 +829,7 @@ const backToTopBtn = document.getElementById('backToTop');
             });
         });
 function iniciarCountdown() {
-    const target = new Date('July 4, 2026 12:50:00').getTime();
+    const target = new Date('July 9, 2026 15:50:00').getTime();
     const els = {
         d: document.getElementById('cw-days'),
         h: document.getElementById('cw-hours'),
