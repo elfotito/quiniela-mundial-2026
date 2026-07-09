@@ -21,7 +21,7 @@ const AD_POOL = {
 ],
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
-'11' : [
+'43' : [
   { url: 'https://i.ibb.co/G15Jwm7/1.png' },
   { url: 'https://i.ibb.co/nMsxjCQ3/2.png' },
   { url: 'https://i.ibb.co/9H8MSkj0/3.png' },
