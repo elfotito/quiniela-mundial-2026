@@ -12,10 +12,10 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/926d21f6-ec6b-4f34-bd0b-4a8bd537e159/Portugal-v-Spain-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"Cristiano Ronaldo", fact:"El astro portugués afirmó, tras la eliminación ante España, que ya no defenderá a la selección portuguesa en las Copas del Mundo." },
-  { img:"https://digitalhub.fifa.com/transform/6cf44df2-eb7e-4f2e-a28c-64b686fa8dca/Mexico-v-England-Round-Of-16-FIFA-World-Cup-2026?focuspoint=0.38,0.64&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Inglaterra impuso su jerarquía y le puso fin al sueño mundialista de México" },
-  { img:"https://digitalhub.fifa.com/transform/59cd0d0d-228d-4b03-84e5-065d11b62f98/Paraguay-v-France-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.46,0.25&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Messi, Mbappé y Haaland lideran la carrera por la Bota de Oro adidas" },
-  { img:"https://digitalhub.fifa.com/transform/59cd0d0d-228d-4b03-84e5-065d11b62f98/Paraguay-v-France-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.46,0.25&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Messi, Mbappé y Haaland lideran la carrera por la Bota de Oro adidas" },
+  { img:"https://digitalhub.fifa.com/transform/2a1f2641-ae00-4f65-8521-ee2b7979ff15/France-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.55,0.24&io=transform:fill,height:910,width:1536&quality=75", badge:"Francia", fact:"Mbappe buscara lleva a francia a semifinales por 3 vez consecutiva desde el mundial 2018" },
+  { img:"https://digitalhub.fifa.com/transform/a54fd99d-e7dc-4394-b5f9-c066a0c76007/Brazil-v-Norway-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"Noruega", fact:"Noruega ya ha protagonizado una de las grandes historias de la Copa Mundial tras alcanzar los cuartos de final por primera vez en su historia" },
+  { img:"https://digitalhub.fifa.com/transform/c010d17d-99c6-4ea3-8e65-605a8de5391f/Portugal-v-Spain-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"España", fact:"España ha mostrado un crecimiento paulatino pero constante en la actual edición de la Copa Mundial de la FIFA 2026™." },
+  { img:"https://digitalhub.fifa.com/transform/94ea3732-7e3c-4438-bf1c-aa3bc083148c/Argentina-v-Egypt-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.47,0.32&io=transform:fill,height:910,width:1536&quality=75", badge:"Argentina", fact:"Argentina, la campeona defensora, llegó a los cuartos de final atravesando una montaña rusa de sensaciones." },
 ];
 
 const LV_ETAPAS = [
