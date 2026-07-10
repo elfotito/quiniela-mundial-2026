@@ -12,7 +12,7 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/2a1f2641-ae00-4f65-8521-ee2b7979ff15/France-v-Senegal-Group-I-FIFA-World-Cup-2026?focuspoint=0.55,0.24&io=transform:fill,height:910,width:1536&quality=75", badge:"Francia", fact:"Mbappe buscara lleva a francia a semifinales por 3 vez consecutiva desde el mundial 2018" },
+  { img:"https://digitalhub.fifa.com/transform/7407e945-bee2-4030-b0c1-48389fb5621f/France-v-Morocco-Quarter-Final-FIFA-World-Cup-2026?focuspoint=0.44,0.53&io=transform:fill,height:910,width:1536&quality=75", badge:"Francia", fact:"Kylian Mbappé: Tengo que dar ejemplo al equipo" },
   { img:"https://digitalhub.fifa.com/transform/a54fd99d-e7dc-4394-b5f9-c066a0c76007/Brazil-v-Norway-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"Noruega", fact:"Noruega ya ha protagonizado una de las grandes historias de la Copa Mundial tras alcanzar los cuartos de final por primera vez en su historia" },
   { img:"https://digitalhub.fifa.com/transform/c010d17d-99c6-4ea3-8e65-605a8de5391f/Portugal-v-Spain-Round-of-16-FIFA-World-Cup-2026?&io=transform:fill,height:910,width:1536&quality=75", badge:"España", fact:"España ha mostrado un crecimiento paulatino pero constante en la actual edición de la Copa Mundial de la FIFA 2026™." },
   { img:"https://digitalhub.fifa.com/transform/94ea3732-7e3c-4438-bf1c-aa3bc083148c/Argentina-v-Egypt-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.47,0.32&io=transform:fill,height:910,width:1536&quality=75", badge:"Argentina", fact:"Argentina, la campeona defensora, llegó a los cuartos de final atravesando una montaña rusa de sensaciones." },
