@@ -918,7 +918,7 @@ async function compartirRanking() {
             <!-- Glow detrás del jugador -->
             <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
             <!-- Jugador -->
-            <img src="/img/spain.png" alt="" style="position:absolute;bottom:0;left:50px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/spain.png" alt="" style="position:absolute;bottom:0;left:10px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
             <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:3;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
