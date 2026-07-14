@@ -15,7 +15,7 @@ const LV_ESTADIOS = [
   { img:"https://digitalhub.fifa.com/transform/36355a6a-aa24-44e0-840a-b4fc674a3cd4/GettyImages-1245710857?focuspoint=0.39,0.47&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Semifinales", fact:"Cuatro finales posibles, cuatro caminos hacia la gloria" },
   { img:"https://digitalhub.fifa.com/transform/45156800-6887-4e99-aa30-573359b9d451/Norway-v-England-Quarter-Final-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Bellingham, la estrella de Inglaterra que nunca deja de correr" },
   { img:"https://digitalhub.fifa.com/transform/94ea3732-7e3c-4438-bf1c-aa3bc083148c/Argentina-v-Egypt-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.47,0.32&io=transform:fill,height:910,width:1536&quality=75", badge:"Argentina", fact:"Argentina, la campeona defensora, llegó a los cuartos de final atravesando una montaña rusa de sensaciones." },
-  { img:"https://digitalhub.fifa.com/transform/94ea3732-7e3c-4438-bf1c-aa3bc083148c/Argentina-v-Egypt-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.47,0.32&io=transform:fill,height:910,width:1536&quality=75", badge:"Argentina", fact:"Argentina, la campeona defensora, llegó a los cuartos de final atravesando una montaña rusa de sensaciones." },
+  { img:"https://digitalhub.fifa.com/transform/5ab101dc-588b-45b4-b5e0-b19948fdd062/Mikel-Merino?focuspoint=0.5,0.57&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"España", fact:"Merino es el cambio perfecto del mundial, entra y resuelve la partida." },
 ];
 
 const LV_ETAPAS = [
