@@ -916,7 +916,7 @@ async function compartirRanking() {
         <!-- HERO CARD -->
         <div style="position:relative;border-radius:12px;height:250px;background:linear-gradient(135deg, #060D18 0%, #0B1929 100%);border:1px solid ${C.borderHi};flex-shrink:0;overflow:visible;">
             <!-- Glow detrás del jugador -->
-            <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
+            <div style="position:absolute;bottom:0px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
             <!-- Jugador -->
             <img src="/img/spain.png" alt="" style="position:absolute;bottom:0;right:-50px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
