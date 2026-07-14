@@ -756,7 +756,7 @@ async function compartirRanking() {
     }
 
     function renderPodioItem(user, pos) {
-    const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 14).toUpperCase();
+    const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 15).toUpperCase();
     const puntos  = user?.puntos_totales || 0;
     const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
     const labels  = { 1: '1ER', 2: '2DO', 3: '3ER' };
