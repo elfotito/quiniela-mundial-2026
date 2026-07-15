@@ -13,12 +13,15 @@ const AD_POOL = {
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
 '43' : [
-  { url: 'https://i.ibb.co/G15Jwm7/1.png' },
-  { url: 'https://i.ibb.co/1f63gz4K/743541408-1045158827878946-4676420644925089113-n.jpg' },
-  { url: 'https://i.ibb.co/wFggHLtc/745699562-1104784218896155-5488577579258038421-n.jpg' },
-  { url: 'https://i.ibb.co/sdxKHj2D/746042172-1018054201109773-6142336588778628120-n.jpg' },
-  { url: 'https://i.ibb.co/XrzPn6Y4/744441082-915886181534749-8286135704173631644-n.jpg' },
-  { url: 'https://i.ibb.co/dsSxCZ9K/747931520-1025582283504927-8468768908392883282-n.jpg' },
+  { url: 'https://i.ibb.co/PZgb2G2f/Screenshot-52.png' },
+  { url: 'https://i.ibb.co/8DFqNm21/Screenshot-53.png' },
+  { url: 'https://i.ibb.co/Jwn41dV2/Screenshot-54.png' },
+  { url: 'https://i.ibb.co/ds36cXQq/Screenshot-55.png' },
+  { url: 'https://i.ibb.co/vxKPt3f0/Screenshot-56.png' },
+  { url: 'https://i.ibb.co/ZzGHkNqc/Screenshot-57.png' },
+  { url: 'https://i.ibb.co/0jXVGkXd/Screenshot-58.png' },
+  { url: 'https://i.ibb.co/ZRs187TQ/Screenshot-59.png' },
+  { url: 'https://i.ibb.co/v4tZhNyg/Screenshot-60.png' },
 ],
 };
 
