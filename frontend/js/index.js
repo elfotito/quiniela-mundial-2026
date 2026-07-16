@@ -12,9 +12,9 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
+  { img:"https://digitalhub.fifa.com/transform/01c33fe5-7b56-45b0-b0dc-f0ae4d5aa61e/England-v-Argentina-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.54,0.57&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Argentina", fact:"Argentina muestra corazón, remonta de manera agónica ante Inglaterra y se mete en la final" },
+  { img:"https://digitalhub.fifa.com/transform/2bda26e1-ed67-4c7d-b857-6697db8a9afe/England-v-Argentina-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.44,0.39&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Momento historico", fact:"Gol de Enzo Fernandez para empatar el juego" },
   { img:"https://digitalhub.fifa.com/transform/5fb850ff-2085-4b32-b306-5007d0d7413d/France-v-Spain-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.56,0.37&io=transform:fill,width:1024&quality=75", badge:"España", fact:"España encuentra su fútbol total para meterse en la final" },
-  { img:"https://digitalhub.fifa.com/transform/45156800-6887-4e99-aa30-573359b9d451/Norway-v-England-Quarter-Final-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Inglaterra", fact:"Bellingham, la estrella de Inglaterra que nunca deja de correr" },
-  { img:"https://digitalhub.fifa.com/transform/94ea3732-7e3c-4438-bf1c-aa3bc083148c/Argentina-v-Egypt-Round-of-16-FIFA-World-Cup-2026?focuspoint=0.47,0.32&io=transform:fill,height:910,width:1536&quality=75", badge:"Argentina", fact:"Argentina, la campeona defensora, llegó a las semifinales atravesando una montaña rusa de sensaciones." },
   { img:"https://digitalhub.fifa.com/transform/5ab101dc-588b-45b4-b5e0-b19948fdd062/Mikel-Merino?focuspoint=0.5,0.57&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"España", fact:"Merino es el cambio perfecto del mundial, entra y resuelve la partida." },
 ];
 
