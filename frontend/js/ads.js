@@ -3,12 +3,19 @@
 const AD_POOL = {
   // ─── 1:1 (260x260) ───────────────────────────────────────
 '11' : [
-  { url: 'https://i.ibb.co/G15Jwm7/1.png' },
-  { url: 'https://i.ibb.co/1f63gz4K/743541408-1045158827878946-4676420644925089113-n.jpg' },
-  { url: 'https://i.ibb.co/wFggHLtc/745699562-1104784218896155-5488577579258038421-n.jpg' },
-  { url: 'https://i.ibb.co/sdxKHj2D/746042172-1018054201109773-6142336588778628120-n.jpg' },
-  { url: 'https://i.ibb.co/XrzPn6Y4/744441082-915886181534749-8286135704173631644-n.jpg' },
-  { url: 'https://i.ibb.co/dsSxCZ9K/747931520-1025582283504927-8468768908392883282-n.jpg' },
+  { url: 'https://i.ibb.co/5gwSz0wy/Screenshot-64.png' },
+  { url: 'https://i.ibb.co/z3sjb32/Screenshot-65.png' },
+  { url: 'https://i.ibb.co/JRvpWg3C/Screenshot-66.png' },
+  { url: 'https://i.ibb.co/0ptjFGkZ/Screenshot-67.png' },
+  { url: 'https://i.ibb.co/rRGmns53/Screenshot-68.png' },
+  { url: 'https://i.ibb.co/FkgCzVHM/Screenshot-69.png' },
+  { url: 'https://i.ibb.co/2XZM281/Screenshot-70.png' },
+  { url: 'https://i.ibb.co/5WVSQ6Rg/Screenshot-71.png' },
+  { url: 'https://i.ibb.co/7xshbryL/Screenshot-72.png' },
+  { url: 'https://i.ibb.co/Y4W6VvZf/Screenshot-73.png' },
+  { url: 'https://i.ibb.co/rfkbM5Vt/Screenshot-74.png' },
+  { url: 'https://i.ibb.co/v4Xtq3Ks/Screenshot-75.png' },
+  { url: 'https://i.ibb.co/d453Gc3Q/Screenshot-76.png' },
 ],
 
 // ─── 4:3 (260x346) ───────────────────────────────────────
