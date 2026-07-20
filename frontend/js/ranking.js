@@ -704,7 +704,7 @@ async function compartirRanking() {
     function renderFilas() {
         return datos.map((user, index) => {
             const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 18);
+            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 22);
             const puntos = user.puntos_totales || 0;
             const bandera = obtenerCampeon(user.campeon_elegido);
 
@@ -756,7 +756,7 @@ async function compartirRanking() {
     }
 
     function renderPodioItem(user, pos) {
-    const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 15).toUpperCase();
+    const nombre  = (user?.nombre_publico || user?.nombre || '—').substring(0, 8).toUpperCase();
     const puntos  = user?.puntos_totales || 0;
     const medals  = { 1: '🥇', 2: '🥈', 3: '🥉' };
     const labels  = { 1: '1ER', 2: '2DO', 3: '3ER' };
@@ -918,7 +918,7 @@ async function compartirRanking() {
             <!-- Glow detrás del jugador -->
             <div style="position:absolute;bottom:-20px;right:-10px;width:200px;height:280px;background:radial-gradient(ellipse at center, rgba(0,180,216,0.20) 0%, transparent 70%);z-index:2;"></div>
             <!-- Jugador -->
-            <img src="/img/ferran.png" alt="" style="position:absolute;bottom:0;left:200px;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
+            <img src="/img/ferran.png" alt="" style="position:absolute;bottom:0;height:300px;object-fit:contain;z-index:4;filter:drop-shadow(0 0 20px rgba(0,180,216,0.4)) drop-shadow(2px 2px 0 rgba(0,0,0,0.9));" crossorigin="anonymous"/>
             <!-- Gradiente sobre jugador -->
             <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,13,24,0.98) 0%, rgba(6,13,24,0.85) 45%, rgba(6,13,24,0.0) 100%);z-index:3;border-radius:12px;overflow:hidden;"></div>
             <!-- Textos hero -->
