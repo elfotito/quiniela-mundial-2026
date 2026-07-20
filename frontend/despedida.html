@@ -580,6 +580,43 @@
         gap:16px;
     }
 }
+
+/* ── SECCIONES ────────────────────────────────────── */
+    .hist-section {
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border: 1px solid #eee;
+    }
+    .hist-section-header {
+        padding: 18px 24px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex; align-items: center; gap: 12px;
+    }
+    .hist-section-icon { font-size: 22px; line-height: 1; }
+    .hist-section-title {
+        font-size: 16px; font-weight: 800; color: #0a0a0a;
+        letter-spacing: -0.3px;
+    }
+    .hist-section-body { padding: 20px 24px 24px; }
+
+    .hist-text {
+        font-size: 14px; color: #444; line-height: 1.8; margin-bottom: 16px;
+    }
+    .hist-text:last-child { margin-bottom: 0; }
+
+    @media (max-width: 700px) {
+        .hist-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "centro" "derecha" "izquierda";
+            padding: 16px 12px 40px;
+        }
+        .hist-col-left, .hist-col-right { position: static; }
+        .hist-section-body { padding: 16px 16px 20px; }
+        .timeline { padding-left: 30px; }
+        .timeline::before { left: 10px; }
+        .timeline-dot { left: -26px; }
+    }
     </style>
 </head>
 <body>
