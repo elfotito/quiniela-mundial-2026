@@ -704,7 +704,7 @@ async function compartirRanking() {
     function renderFilas() {
         return datos.map((user, index) => {
             const pos    = index + 1;
-            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 22);
+            const nombre = (user.nombre_publico || user.nombre || 'Usuario').substring(0, 25);
             const puntos = user.puntos_totales || 0;
             const bandera = obtenerCampeon(user.campeon_elegido);
 
