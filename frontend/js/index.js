@@ -12,10 +12,10 @@ let filtroActual = 'todas';
 // ===============================================
 
 const LV_ESTADIOS = [
-  { img:"https://digitalhub.fifa.com/transform/01c33fe5-7b56-45b0-b0dc-f0ae4d5aa61e/England-v-Argentina-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.54,0.57&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Argentina", fact:"Argentina muestra corazón, remonta de manera agónica ante Inglaterra y se mete en la final" },
-  { img:"https://digitalhub.fifa.com/transform/2bda26e1-ed67-4c7d-b857-6697db8a9afe/England-v-Argentina-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.44,0.39&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Momento historico", fact:"Gol de Enzo Fernandez para empatar el juego" },
-  { img:"https://digitalhub.fifa.com/transform/5fb850ff-2085-4b32-b306-5007d0d7413d/France-v-Spain-Semi-Final-FIFA-World-Cup-2026?focuspoint=0.56,0.37&io=transform:fill,width:1024&quality=75", badge:"España", fact:"España encuentra su fútbol total para meterse en la final" },
-  { img:"https://digitalhub.fifa.com/transform/5ab101dc-588b-45b4-b5e0-b19948fdd062/Mikel-Merino?focuspoint=0.5,0.57&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"España", fact:"Merino es el cambio perfecto del mundial, entra y resuelve la partida." },
+  { img:"https://digitalhub.fifa.com/transform/dde63590-1a56-4839-8684-2ef0e98413a0/Spain-v-Argentina-Final-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"España", fact:"España derrotó a Argentina y se consagró campeona de la Copa Mundial" },
+  { img:"https://digitalhub.fifa.com/transform/2e7b3d0e-7022-478a-9b45-99ffe6ea56cf/Spain-v-Argentina-Final-FIFA-World-Cup-2026?&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Premios", fact:"Rodri, Pau Cubarsí, Unai Simón y Kylian Mbappé se llevaron premios en el espectacular cierre de la Copa Mundial" },
+  { img:"https://digitalhub.fifa.com/transform/4afdad18-8374-4bf3-bcdf-d2330f159cc8/France-v-England-Bronze-Final-FIFA-World-Cup-2026?focuspoint=0.58,0.48&io=transform:fill,aspectratio:1x1,width:1536&quality=75", badge:"Bota de Oro", fact:"Mbappé se queda con la Bota de Oro de adidas" },
+  { img:"https://digitalhub.fifa.com/transform/40b773b9-e2e0-4f62-81c2-2f09bbbf7cd9/Kylian-Mbappe?focuspoint=0.51,0.3&io=transform:fill,width:1024&quality=75", badge:"Goleador Historico", fact:"en el partido por el tercer puesto Kylian Mbappé marcó un doblete más y se colocó primero con 22 tantos." },
 ];
 
 const LV_ETAPAS = [
