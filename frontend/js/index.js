@@ -28,12 +28,12 @@ const LV_ETAPAS = [
 ];
 
 const LV_TIPS = [
+  { icon:"🏆", texto:"Felicidades a Carlos Carrillos Sr, Luisito, Jose13, miking y claudia por haber acertado el campeon del torneo" },
   { icon:"🚲", texto:"Carlos Carrillo Sr. hizo la de Pogacar y nos ha sacado una ventaja que asegura el campeonato" },
   { icon:"🥶", texto:"Tito y dresko pelean por el premio a el mufador mundialista " },
-  { icon:"💡", texto:"El 25.3% de los partidos de eliminación directa llegaron a la tanda de penales" },
-  { icon:"🏆", texto:"El campeón que eliges al inicio del torneo tendra un bono de +9 pts." },
-  { icon:"🗽", texto:"La final se jugará el 19 de julio de 2026 en Nueva York." },
   { icon:"🗃️", texto:"Dificil ahora ver la liga Futve Apuestas Royal" },
+  { icon:"📺", texto:"De media se reunieron en la emocionante prórroga 16.608.000 espectadores, con una cuota de pantalla del 89,3% en España" },
+  
 ];
 
 // ============================================
